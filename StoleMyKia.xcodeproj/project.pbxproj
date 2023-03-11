@@ -8,17 +8,27 @@
 
 /* Begin PBXBuildFile section */
 		24A5791429BC552C00495E6F /* StoleMyKiaApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 24A5791329BC552C00495E6F /* StoleMyKiaApp.swift */; };
-		24A5791629BC552C00495E6F /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 24A5791529BC552C00495E6F /* ContentView.swift */; };
+		24A5791629BC552C00495E6F /* Tab.swift in Sources */ = {isa = PBXBuildFile; fileRef = 24A5791529BC552C00495E6F /* Tab.swift */; };
 		24A5791829BC552E00495E6F /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 24A5791729BC552E00495E6F /* Assets.xcassets */; };
 		24A5791B29BC552E00495E6F /* Preview Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 24A5791A29BC552E00495E6F /* Preview Assets.xcassets */; };
+		24A5792429BC559100495E6F /* MapView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 24A5792329BC559100495E6F /* MapView.swift */; };
+		24A5792629BC55DF00495E6F /* MapViewRep.swift in Sources */ = {isa = PBXBuildFile; fileRef = 24A5792529BC55DF00495E6F /* MapViewRep.swift */; };
+		24A5792929BC567F00495E6F /* ReportAnnotation.swift in Sources */ = {isa = PBXBuildFile; fileRef = 24A5792829BC567F00495E6F /* ReportAnnotation.swift */; };
+		24A5792C29BC56B000495E6F /* Report.swift in Sources */ = {isa = PBXBuildFile; fileRef = 24A5792B29BC56B000495E6F /* Report.swift */; };
+		24A5792F29BC5C8700495E6F /* ReportsViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 24A5792E29BC5C8700495E6F /* ReportsViewModel.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
 		24A5791029BC552C00495E6F /* StoleMyKia.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = StoleMyKia.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		24A5791329BC552C00495E6F /* StoleMyKiaApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StoleMyKiaApp.swift; sourceTree = "<group>"; };
-		24A5791529BC552C00495E6F /* ContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentView.swift; sourceTree = "<group>"; };
+		24A5791529BC552C00495E6F /* Tab.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Tab.swift; sourceTree = "<group>"; };
 		24A5791729BC552E00495E6F /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		24A5791A29BC552E00495E6F /* Preview Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = "Preview Assets.xcassets"; sourceTree = "<group>"; };
+		24A5792329BC559100495E6F /* MapView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MapView.swift; sourceTree = "<group>"; };
+		24A5792529BC55DF00495E6F /* MapViewRep.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MapViewRep.swift; sourceTree = "<group>"; };
+		24A5792829BC567F00495E6F /* ReportAnnotation.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReportAnnotation.swift; sourceTree = "<group>"; };
+		24A5792B29BC56B000495E6F /* Report.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Report.swift; sourceTree = "<group>"; };
+		24A5792E29BC5C8700495E6F /* ReportsViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReportsViewModel.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -52,7 +62,9 @@
 			isa = PBXGroup;
 			children = (
 				24A5791329BC552C00495E6F /* StoleMyKiaApp.swift */,
-				24A5791529BC552C00495E6F /* ContentView.swift */,
+				24A5792D29BC5C7B00495E6F /* View Models */,
+				24A5792A29BC56A600495E6F /* Models */,
+				24A5792129BC556000495E6F /* Tab View */,
 				24A5791729BC552E00495E6F /* Assets.xcassets */,
 				24A5791929BC552E00495E6F /* Preview Content */,
 			);
@@ -65,6 +77,50 @@
 				24A5791A29BC552E00495E6F /* Preview Assets.xcassets */,
 			);
 			path = "Preview Content";
+			sourceTree = "<group>";
+		};
+		24A5792129BC556000495E6F /* Tab View */ = {
+			isa = PBXGroup;
+			children = (
+				24A5791529BC552C00495E6F /* Tab.swift */,
+				24A5792229BC557100495E6F /* Map */,
+			);
+			path = "Tab View";
+			sourceTree = "<group>";
+		};
+		24A5792229BC557100495E6F /* Map */ = {
+			isa = PBXGroup;
+			children = (
+				24A5792329BC559100495E6F /* MapView.swift */,
+				24A5792729BC565C00495E6F /* MKMap */,
+			);
+			name = Map;
+			path = ..;
+			sourceTree = "<group>";
+		};
+		24A5792729BC565C00495E6F /* MKMap */ = {
+			isa = PBXGroup;
+			children = (
+				24A5792529BC55DF00495E6F /* MapViewRep.swift */,
+				24A5792829BC567F00495E6F /* ReportAnnotation.swift */,
+			);
+			path = MKMap;
+			sourceTree = "<group>";
+		};
+		24A5792A29BC56A600495E6F /* Models */ = {
+			isa = PBXGroup;
+			children = (
+				24A5792B29BC56B000495E6F /* Report.swift */,
+			);
+			path = Models;
+			sourceTree = "<group>";
+		};
+		24A5792D29BC5C7B00495E6F /* View Models */ = {
+			isa = PBXGroup;
+			children = (
+				24A5792E29BC5C8700495E6F /* ReportsViewModel.swift */,
+			);
+			path = "View Models";
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -137,8 +193,13 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				24A5791629BC552C00495E6F /* ContentView.swift in Sources */,
+				24A5791629BC552C00495E6F /* Tab.swift in Sources */,
+				24A5792929BC567F00495E6F /* ReportAnnotation.swift in Sources */,
+				24A5792429BC559100495E6F /* MapView.swift in Sources */,
+				24A5792F29BC5C8700495E6F /* ReportsViewModel.swift in Sources */,
 				24A5791429BC552C00495E6F /* StoleMyKiaApp.swift in Sources */,
+				24A5792629BC55DF00495E6F /* MapViewRep.swift in Sources */,
+				24A5792C29BC56B000495E6F /* Report.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
