@@ -8,9 +8,15 @@
 import SwiftUI
 
 struct Tab: View {
+    
+    @EnvironmentObject var reportsModel: ReportsViewModel
+    
     var body: some View {
         TabView {
-            
+            MapView()
+                .tabItem {
+                    Label("Reports", systemImage: "mappin.and.ellipse")
+                }
         }
     }
 }
@@ -18,5 +24,6 @@ struct Tab: View {
 struct ContentView_Previews: PreviewProvider {
     static var previews: some View {
         Tab()
+            .environmentObject(ReportsViewModel())
     }
 }

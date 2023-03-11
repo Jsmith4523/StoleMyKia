@@ -16,6 +16,8 @@ final class ReportsViewModel: NSObject, ObservableObject {
     
     @Published var selectedReport: Report!
     
+    @Published var locationAuthorizationStatus: CLAuthorizationStatus!
+    
     @Published var userLocation: CLLocation! {
         didSet {
             mapView.setCenter(userLocation.coordinate, animated: true)
@@ -27,7 +29,14 @@ final class ReportsViewModel: NSObject, ObservableObject {
     
     override init() {
         super.init()
+        
+        locationAuthorizationStatus = locationManager.authorizationStatus
         locationManager.delegate = self
+    }
+    
+    
+    func moveToCenter(for coordinates: CLLocationCoordinate2D) {
+        mapView.setCenter(coordinates, animated: true)
     }
 }
 
@@ -54,22 +63,31 @@ extension ReportsViewModel: MKMapViewDelegate {
     }
     
     func mapViewDidFinishRenderingMap(_ mapView: MKMapView, fullyRendered: Bool) {
-        locationManager.requestWhenInUseAuthorization()
+        if !(self.locationAuthorizationStatus.isAuthorized()) {
+            locationManager.requestWhenInUseAuthorization()
+        }
     }
     
     func mapView(_ mapView: MKMapView, viewFor annotation: MKAnnotation) -> MKAnnotationView? {
         if annotation is MKUserLocation {
             return nil
         }
-        
+
         if let annotation = annotation as? ReportAnnotation {
             let reportAnnotation             = MKMarkerAnnotationView(annotation: annotation, reuseIdentifier: MKMapViewDefaultAnnotationViewReuseIdentifier)
             reportAnnotation.glyphImage      = UIImage(named: annotation.report.reportType.annotationImage)
             reportAnnotation.markerTintColor = annotation.report.reportType.annotationColor
-            
+
             return reportAnnotation
         }
-        
         return nil
+    }
+}
+
+extension CLAuthorizationStatus {
+    
+    
+    func isAuthorized() -> Bool {
+        self == .authorizedWhenInUse || self == .authorizedAlways
     }
 }
