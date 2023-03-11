@@ -8,11 +8,12 @@
 import SwiftUI
 
 struct MapView: View {
+    
+    @EnvironmentObject var reportModel: ReportsViewModel
+    
     var body: some View {
         NavigationView {
-            VStack {
-                
-            }
+            MapViewRep()
         }
     }
 }
@@ -20,5 +21,6 @@ struct MapView: View {
 struct MapView_Previews: PreviewProvider {
     static var previews: some View {
         MapView()
+            .environmentObject(ReportsViewModel())
     }
 }

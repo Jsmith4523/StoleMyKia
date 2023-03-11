@@ -9,9 +9,13 @@ import SwiftUI
 
 @main
 struct StoleMyKiaApp: App {
+    
+    @State private var reportsModel = ReportsViewModel()
+    
     var body: some Scene {
         WindowGroup {
             Tab()
+                .environmentObject(reportsModel)
         }
     }
 }

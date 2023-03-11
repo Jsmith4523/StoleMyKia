@@ -7,6 +7,7 @@
 
 import Foundation
 import UIKit
+import MapKit
 
 enum ReportType: String, CaseIterable, Codable {
     
@@ -64,4 +65,13 @@ struct Report: Identifiable, Codable {
     let vehicleMake: VehicleMake
     let vehicleColor: VehicleColor
     let vehicleDescription: String
+    let lat: Double
+    let lon: Double
+}
+
+extension Report {
+    
+    var coordinates: CLLocationCoordinate2D {
+        CLLocationCoordinate2D(latitude: lat, longitude: lon)
+    }
 }

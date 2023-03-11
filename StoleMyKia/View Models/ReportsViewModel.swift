@@ -12,14 +12,64 @@ import MapKit
 
 final class ReportsViewModel: NSObject, ObservableObject {
     
-    
     @Published var reports = [Report]()
     
+    @Published var selectedReport: Report!
+    
+    @Published var userLocation: CLLocation! {
+        didSet {
+            mapView.setCenter(userLocation.coordinate, animated: true)
+        }
+    }
+    
+    let mapView = MKMapView()
+    private let locationManager = CLLocationManager()
+    
+    override init() {
+        super.init()
+        locationManager.delegate = self
+    }
 }
 
+extension ReportsViewModel: CLLocationManagerDelegate {
+    func locationManagerDidChangeAuthorization(_ manager: CLLocationManager) {
+        switch manager.authorizationStatus {
+        case .authorizedWhenInUse:
+            self.userLocation = locationManager.location
+        case .authorizedAlways:
+            self.userLocation = locationManager.location
+        default:
+            break
+        }
+    }
+}
 
 extension ReportsViewModel: MKMapViewDelegate {
     
+    func mapView(_ mapView: MKMapView, didSelect view: MKAnnotationView) {
+        if let reportAnnotation = view.annotation as? ReportAnnotation {
+            self.selectedReport = reportAnnotation.report
+            mapView.setCenter(reportAnnotation.coordinate, animated: true)
+        }
+    }
     
+    func mapViewDidFinishRenderingMap(_ mapView: MKMapView, fullyRendered: Bool) {
+        locationManager.requestWhenInUseAuthorization()
+    }
     
+    func mapView(_ mapView: MKMapView, viewFor annotation: MKAnnotation) -> MKAnnotationView? {
+        if annotation is MKUserLocation {
+            return nil
+        }
+        
+        if let annotation = annotation as? ReportAnnotation {
+            let reportAnnotation             = MKMarkerAnnotationView(annotation: annotation, reuseIdentifier: MKMapViewDefaultAnnotationViewReuseIdentifier)
+            reportAnnotation.glyphImage      = UIImage(named: annotation.report.reportType.annotationImage)
+            reportAnnotation.markerTintColor = annotation.report.reportType.annotationColor
+            
+            return reportAnnotation
+        }
+        
+        return nil
+    }
 }

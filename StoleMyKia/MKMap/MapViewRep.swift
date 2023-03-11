@@ -12,20 +12,24 @@ import MapKit
 
 struct MapViewRep: UIViewRepresentable {
     
-    
+    @EnvironmentObject var reportsModels: ReportsViewModel
     
     func makeUIView(context: Context) -> MKMapView {
-        let mapView = MKMapView()
+        let mapView = context.coordinator.mapView
+        
         mapView.showsCompass      = false
         mapView.showsUserLocation = true
         mapView.isRotateEnabled   = false
+        mapView.delegate = context.coordinator
         
         return mapView
     }
     
-    func updateUIView(_ uiView: MKMapView, context: Context) {
-        
+    func makeCoordinator() -> ReportsViewModel {
+        return reportsModels
     }
+    
+    func updateUIView(_ uiView: MKMapView, context: Context) {}
     
     typealias UIViewType = MKMapView
     
