@@ -86,7 +86,6 @@ extension ReportsViewModel: MKMapViewDelegate {
 
 extension CLAuthorizationStatus {
     
-    
     func isAuthorized() -> Bool {
         self == .authorizedWhenInUse || self == .authorizedAlways
     }

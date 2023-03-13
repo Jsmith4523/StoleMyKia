@@ -10,23 +10,21 @@ import NotificationCenter
 import MapKit
 import SwiftUI
 
-final class NotificationViewModel: NSObject, NotificationRadiusDelegate, ObservableObject {
-    
-    var currentRadius: CLLocationDistance?
-    
+final class NotificationViewModel: NSObject, ObservableObject {
+
     @Published var authorizationStatus: UNAuthorizationStatus!
     
     @AppStorage("notifyOfTheft") var notifyOfTheft = true
     @AppStorage("notifyOfWitness") var notifyOfWitness = true
     @AppStorage("notifyOfFound") var notifyOfFound = true
     
-    @AppStorage("notificationRadius") var notificationRadius: Double?
+    @AppStorage("notificationRadius") var notificationRadius = 25000.0
     
     var notificationsAreAllowed: Bool {
-        if let status = self.authorizationStatus, status.isAuthorized {
-            return true
+        guard let status = self.authorizationStatus, status.isAuthorized else {
+            return false
         }
-        return false
+        return true
     }
 
     private let notificationCenter = UNUserNotificationCenter.current()
@@ -40,7 +38,9 @@ final class NotificationViewModel: NSObject, NotificationRadiusDelegate, Observa
     
     func getNotificaitonAuthStatus() {
         notificationCenter.getNotificationSettings { status in
-            self.authorizationStatus = status.authorizationStatus
+            DispatchQueue.main.async {
+                self.authorizationStatus = status.authorizationStatus
+            }
         }
     }
 }
@@ -49,4 +49,17 @@ final class NotificationViewModel: NSObject, NotificationRadiusDelegate, Observa
 extension NotificationViewModel: UNUserNotificationCenterDelegate {
     
     
+}
+
+extension NotificationViewModel: NotificationRadiusDelegate {
+    var currentRadius: CLLocationDistance? {
+        get {
+            notificationRadius
+        }
+        set {
+            if let newValue {
+                self.notificationRadius = newValue
+            }
+        }
+    }
 }

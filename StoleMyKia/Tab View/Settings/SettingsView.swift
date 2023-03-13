@@ -8,6 +8,10 @@
 import SwiftUI
 
 struct SettingsView: View {
+    
+    @EnvironmentObject var notificationModel: NotificationViewModel
+    @EnvironmentObject var reportsModel: ReportsViewModel
+    
     var body: some View {
         NavigationView {
             List {
@@ -19,6 +23,8 @@ struct SettingsView: View {
             }
             .navigationTitle("Settings")
         }
+        .environmentObject(reportsModel)
+        .environmentObject(notificationModel)
     }
 }
 

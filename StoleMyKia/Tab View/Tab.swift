@@ -9,6 +9,7 @@ import SwiftUI
 
 struct Tab: View {
     
+    @EnvironmentObject var notificationModel: NotificationViewModel
     @EnvironmentObject var reportsModel: ReportsViewModel
     
     var body: some View {
@@ -29,6 +30,8 @@ struct Tab: View {
                 }
         }
         .accentColor(.red)
+        .environmentObject(reportsModel)
+        .environmentObject(notificationModel)
     }
 }
 

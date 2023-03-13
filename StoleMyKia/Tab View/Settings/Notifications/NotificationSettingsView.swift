@@ -42,7 +42,7 @@ struct NotificationSettingsView: View {
                 } header: {
                     Text("Alert Radius")
                 } footer: {
-                    Text("Notifications will only be delivered if they're in the radius you've set from your devices current location. ")
+                    Text("Change your notification radius of locations you would like to be notified on")
                 }
             }
         }
@@ -50,6 +50,10 @@ struct NotificationSettingsView: View {
         .navigationBarTitleDisplayMode(.inline)
         .disabled(!notificationModel.notificationsAreAllowed && !reportsModel.locationAuthorizationStatus.isAuthorized())
         .tint(.red)
+        .sheet(isPresented: $isShowingNotificationRadiusView) {
+            NotificationRadiusView()
+        }
+        .environmentObject(notificationModel)
     }
 }
 
