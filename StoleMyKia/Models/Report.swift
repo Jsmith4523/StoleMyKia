@@ -13,7 +13,7 @@ enum ReportType: String, CaseIterable, Codable {
     
     case stolen      = "Stolen"
     case found       = "Found"
-    case withnessed  = "Withnessed"
+    case withnessed  = "Witnessed"
     
     var annotationImage: String {
         switch self {
@@ -64,6 +64,7 @@ struct Report: Identifiable, Codable {
     let reportType: ReportType
     let vehicleMake: VehicleMake
     let vehicleColor: VehicleColor
+    let vehicleYear: Int
     let vehicleDescription: String
     let lat: Double
     let lon: Double
@@ -73,5 +74,10 @@ extension Report {
     
     var coordinates: CLLocationCoordinate2D {
         CLLocationCoordinate2D(latitude: lat, longitude: lon)
+    }
+    
+    ///Affected vehicle years of both Kia's and Hyundai's
+    static var affectedVehicleYears: ClosedRange<Int> {
+        return 2011...2022
     }
 }

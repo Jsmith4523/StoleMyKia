@@ -15,9 +15,15 @@ struct Tab: View {
         TabView {
             MapView()
                 .tabItem {
-                    Label("Reports", systemImage: "mappin.and.ellipse")
+                    Label("Reports", systemImage: "car.2.fill")
                 }
+            NotificationsView()
+                .tabItem {
+                    Label("Notifications", systemImage: "bell")
+                }
+                .badge(3)
         }
+        .accentColor(.red)
     }
 }
 

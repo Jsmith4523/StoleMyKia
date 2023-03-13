@@ -10,7 +10,7 @@ import SwiftUI
 @main
 struct StoleMyKiaApp: App {
     
-    @State private var reportsModel = ReportsViewModel()
+    @StateObject private var reportsModel = ReportsViewModel()
     
     var body: some Scene {
         WindowGroup {
