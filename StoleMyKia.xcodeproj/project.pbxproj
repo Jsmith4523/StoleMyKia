@@ -10,6 +10,12 @@
 		2437327E29BEF8B6008F4C4E /* NotificationsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2437327D29BEF8B6008F4C4E /* NotificationsView.swift */; };
 		2437328029BEF8FC008F4C4E /* NotificationViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2437327F29BEF8FC008F4C4E /* NotificationViewModel.swift */; };
 		2437328329BEFB2E008F4C4E /* NewReportView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2437328229BEFB2E008F4C4E /* NewReportView.swift */; };
+		24A4CED829BF9E9B00B856BC /* SettingsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 24A4CED729BF9E9B00B856BC /* SettingsView.swift */; };
+		24A4CEDB29BF9F9C00B856BC /* NotificationSettingsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 24A4CEDA29BF9F9C00B856BC /* NotificationSettingsView.swift */; };
+		24A4CEDE29BFA2CE00B856BC /* UNAuth+EXT.swift in Sources */ = {isa = PBXBuildFile; fileRef = 24A4CEDD29BFA2CE00B856BC /* UNAuth+EXT.swift */; };
+		24A4CEE029BFA65100B856BC /* URL+EXT.swift in Sources */ = {isa = PBXBuildFile; fileRef = 24A4CEDF29BFA65100B856BC /* URL+EXT.swift */; };
+		24A4CEE229BFAA8000B856BC /* NotificationRadiusView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 24A4CEE129BFAA8000B856BC /* NotificationRadiusView.swift */; };
+		24A4CEE429BFAC7100B856BC /* CLLocationManager+EXT.swift in Sources */ = {isa = PBXBuildFile; fileRef = 24A4CEE329BFAC7100B856BC /* CLLocationManager+EXT.swift */; };
 		24A5791429BC552C00495E6F /* StoleMyKiaApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 24A5791329BC552C00495E6F /* StoleMyKiaApp.swift */; };
 		24A5791629BC552C00495E6F /* Tab.swift in Sources */ = {isa = PBXBuildFile; fileRef = 24A5791529BC552C00495E6F /* Tab.swift */; };
 		24A5791829BC552E00495E6F /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 24A5791729BC552E00495E6F /* Assets.xcassets */; };
@@ -25,6 +31,12 @@
 		2437327D29BEF8B6008F4C4E /* NotificationsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NotificationsView.swift; sourceTree = "<group>"; };
 		2437327F29BEF8FC008F4C4E /* NotificationViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NotificationViewModel.swift; sourceTree = "<group>"; };
 		2437328229BEFB2E008F4C4E /* NewReportView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NewReportView.swift; sourceTree = "<group>"; };
+		24A4CED729BF9E9B00B856BC /* SettingsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsView.swift; sourceTree = "<group>"; };
+		24A4CEDA29BF9F9C00B856BC /* NotificationSettingsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NotificationSettingsView.swift; sourceTree = "<group>"; };
+		24A4CEDD29BFA2CE00B856BC /* UNAuth+EXT.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UNAuth+EXT.swift"; sourceTree = "<group>"; };
+		24A4CEDF29BFA65100B856BC /* URL+EXT.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "URL+EXT.swift"; sourceTree = "<group>"; };
+		24A4CEE129BFAA8000B856BC /* NotificationRadiusView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NotificationRadiusView.swift; sourceTree = "<group>"; };
+		24A4CEE329BFAC7100B856BC /* CLLocationManager+EXT.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "CLLocationManager+EXT.swift"; sourceTree = "<group>"; };
 		24A5791029BC552C00495E6F /* StoleMyKia.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = StoleMyKia.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		24A5791329BC552C00495E6F /* StoleMyKiaApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StoleMyKiaApp.swift; sourceTree = "<group>"; };
 		24A5791529BC552C00495E6F /* Tab.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Tab.swift; sourceTree = "<group>"; };
@@ -59,10 +71,46 @@
 		2437328129BEFB16008F4C4E /* Views */ = {
 			isa = PBXGroup;
 			children = (
-				2437328229BEFB2E008F4C4E /* NewReportView.swift */,
+				24A4CED529BF9E7C00B856BC /* New Report */,
 			);
 			name = Views;
 			path = Models;
+			sourceTree = "<group>";
+		};
+		24A4CED529BF9E7C00B856BC /* New Report */ = {
+			isa = PBXGroup;
+			children = (
+				2437328229BEFB2E008F4C4E /* NewReportView.swift */,
+			);
+			path = "New Report";
+			sourceTree = "<group>";
+		};
+		24A4CED629BF9E8D00B856BC /* Settings */ = {
+			isa = PBXGroup;
+			children = (
+				24A4CED729BF9E9B00B856BC /* SettingsView.swift */,
+				24A4CED929BF9F9100B856BC /* Notifications */,
+			);
+			path = Settings;
+			sourceTree = "<group>";
+		};
+		24A4CED929BF9F9100B856BC /* Notifications */ = {
+			isa = PBXGroup;
+			children = (
+				24A4CEDA29BF9F9C00B856BC /* NotificationSettingsView.swift */,
+				24A4CEE129BFAA8000B856BC /* NotificationRadiusView.swift */,
+			);
+			path = Notifications;
+			sourceTree = "<group>";
+		};
+		24A4CEDC29BFA2C100B856BC /* Extension */ = {
+			isa = PBXGroup;
+			children = (
+				24A4CEDD29BFA2CE00B856BC /* UNAuth+EXT.swift */,
+				24A4CEDF29BFA65100B856BC /* URL+EXT.swift */,
+				24A4CEE329BFAC7100B856BC /* CLLocationManager+EXT.swift */,
+			);
+			path = Extension;
 			sourceTree = "<group>";
 		};
 		24A5790729BC552C00495E6F = {
@@ -85,6 +133,7 @@
 			isa = PBXGroup;
 			children = (
 				24A5791329BC552C00495E6F /* StoleMyKiaApp.swift */,
+				24A4CEDC29BFA2C100B856BC /* Extension */,
 				24A5792D29BC5C7B00495E6F /* View Models */,
 				24A5792A29BC56A600495E6F /* Models */,
 				2437328129BEFB16008F4C4E /* Views */,
@@ -109,6 +158,7 @@
 				24A5791529BC552C00495E6F /* Tab.swift */,
 				24A5792229BC557100495E6F /* Map */,
 				2437327C29BEF873008F4C4E /* Notifications */,
+				24A4CED629BF9E8D00B856BC /* Settings */,
 			);
 			path = "Tab View";
 			sourceTree = "<group>";
@@ -219,16 +269,22 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				24A4CEDB29BF9F9C00B856BC /* NotificationSettingsView.swift in Sources */,
 				24A5791629BC552C00495E6F /* Tab.swift in Sources */,
 				24A5792929BC567F00495E6F /* ReportAnnotation.swift in Sources */,
 				24A5792429BC559100495E6F /* MapView.swift in Sources */,
+				24A4CEDE29BFA2CE00B856BC /* UNAuth+EXT.swift in Sources */,
+				24A4CEE429BFAC7100B856BC /* CLLocationManager+EXT.swift in Sources */,
 				24A5792F29BC5C8700495E6F /* ReportsViewModel.swift in Sources */,
 				24A5791429BC552C00495E6F /* StoleMyKiaApp.swift in Sources */,
 				2437328029BEF8FC008F4C4E /* NotificationViewModel.swift in Sources */,
 				24A5792629BC55DF00495E6F /* MapViewRep.swift in Sources */,
 				2437328329BEFB2E008F4C4E /* NewReportView.swift in Sources */,
 				24A5792C29BC56B000495E6F /* Report.swift in Sources */,
+				24A4CEE229BFAA8000B856BC /* NotificationRadiusView.swift in Sources */,
+				24A4CEE029BFA65100B856BC /* URL+EXT.swift in Sources */,
 				2437327E29BEF8B6008F4C4E /* NotificationsView.swift in Sources */,
+				24A4CED829BF9E9B00B856BC /* SettingsView.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

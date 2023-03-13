@@ -10,12 +10,14 @@ import SwiftUI
 @main
 struct StoleMyKiaApp: App {
     
+    @StateObject private var notificationModel = NotificationViewModel()
     @StateObject private var reportsModel = ReportsViewModel()
     
     var body: some Scene {
         WindowGroup {
             Tab()
                 .environmentObject(reportsModel)
+                .environmentObject(notificationModel)
         }
     }
 }
