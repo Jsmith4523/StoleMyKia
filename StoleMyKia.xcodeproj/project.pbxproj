@@ -28,6 +28,7 @@
 		24A5792C29BC56B000495E6F /* Report.swift in Sources */ = {isa = PBXBuildFile; fileRef = 24A5792B29BC56B000495E6F /* Report.swift */; };
 		24A5792F29BC5C8700495E6F /* ReportsViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 24A5792E29BC5C8700495E6F /* ReportsViewModel.swift */; };
 		24A5793729BFD9C900495E6F /* RadiusMapCoordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 24A5793629BFD9C900495E6F /* RadiusMapCoordinator.swift */; };
+		24AC77CE29C1110B00768158 /* SelectedReportDetailView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 24AC77CD29C1110B00768158 /* SelectedReportDetailView.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -53,6 +54,7 @@
 		24A5792B29BC56B000495E6F /* Report.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Report.swift; sourceTree = "<group>"; };
 		24A5792E29BC5C8700495E6F /* ReportsViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReportsViewModel.swift; sourceTree = "<group>"; };
 		24A5793629BFD9C900495E6F /* RadiusMapCoordinator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RadiusMapCoordinator.swift; sourceTree = "<group>"; };
+		24AC77CD29C1110B00768158 /* SelectedReportDetailView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SelectedReportDetailView.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -85,7 +87,7 @@
 		2437328129BEFB16008F4C4E /* Views */ = {
 			isa = PBXGroup;
 			children = (
-				24A4CED529BF9E7C00B856BC /* New Report */,
+				24AC77CC29C110F800768158 /* Report */,
 			);
 			name = Views;
 			path = Models;
@@ -232,6 +234,15 @@
 			path = Radius;
 			sourceTree = "<group>";
 		};
+		24AC77CC29C110F800768158 /* Report */ = {
+			isa = PBXGroup;
+			children = (
+				24A4CED529BF9E7C00B856BC /* New Report */,
+				24AC77CD29C1110B00768158 /* SelectedReportDetailView.swift */,
+			);
+			path = Report;
+			sourceTree = "<group>";
+		};
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
@@ -314,6 +325,7 @@
 				24A4CEE729C04CBA00B856BC /* ReportAnnotationCallout.swift in Sources */,
 				24A5792629BC55DF00495E6F /* MapViewRep.swift in Sources */,
 				2437328329BEFB2E008F4C4E /* NewReportView.swift in Sources */,
+				24AC77CE29C1110B00768158 /* SelectedReportDetailView.swift in Sources */,
 				24A5792C29BC56B000495E6F /* Report.swift in Sources */,
 				24A4CEE229BFAA8000B856BC /* NotificationRadiusView.swift in Sources */,
 				24A5793729BFD9C900495E6F /* RadiusMapCoordinator.swift in Sources */,

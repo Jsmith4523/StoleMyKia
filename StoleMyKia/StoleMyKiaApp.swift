@@ -16,11 +16,11 @@ struct StoleMyKiaApp: App {
     var body: some Scene {
         WindowGroup {
             Tab()
+                .sheet(isPresented: $reportsModel.isShowingSelectedReportView) {
+                    SelectedReportDetailView()
+                }
                 .environmentObject(reportsModel)
                 .environmentObject(notificationModel)
-                .sheet(isPresented: $reportsModel.isShowingSelectedReportView) {
-                    Text("It was selected")
-                }
         }
     }
 }

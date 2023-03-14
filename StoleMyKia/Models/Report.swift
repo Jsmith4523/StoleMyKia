@@ -11,9 +11,9 @@ import MapKit
 
 enum ReportType: String, CaseIterable, Codable {
     
-    case stolen      = "Stolen"
-    case found       = "Found"
-    case withnessed  = "Witnessed"
+    case stolen      = "Stolen Vehicle"
+    case found       = "Vehicle Found"
+    case withnessed  = "Theft Witnessed"
     
     var annotationImage: String {
         switch self {
@@ -50,6 +50,33 @@ enum VehicleColor: String, CaseIterable, Codable {
     case lightGray = "Light Gray"
     case brown     = "Brown"
     case violet    = "Violet"
+    
+    var color: UIColor {
+        switch self {
+        case .red:
+            return UIColor(ciColor: CIColor(he))
+        case .green:
+            return UIColor(ciColor: CIColor(red: <#T##CGFloat#>, green: <#T##CGFloat#>, blue: <#T##CGFloat#>))
+        case .blue:
+            return UIColor(ciColor: CIColor(red: <#T##CGFloat#>, green: <#T##CGFloat#>, blue: <#T##CGFloat#>))
+        case .orange:
+            return UIColor(ciColor: CIColor(red: <#T##CGFloat#>, green: <#T##CGFloat#>, blue: <#T##CGFloat#>))
+        case .silver:
+            return UIColor(ciColor: CIColor(red: <#T##CGFloat#>, green: <#T##CGFloat#>, blue: <#T##CGFloat#>))
+        case .black:
+            return UIColor(ciColor: CIColor(red: <#T##CGFloat#>, green: <#T##CGFloat#>, blue: <#T##CGFloat#>))
+        case .gold:
+            return UIColor(ciColor: CIColor(red: <#T##CGFloat#>, green: <#T##CGFloat#>, blue: <#T##CGFloat#>))
+        case .gray:
+            return UIColor(ciColor: CIColor(red: <#T##CGFloat#>, green: <#T##CGFloat#>, blue: <#T##CGFloat#>))
+        case .lightGray:
+            return UIColor(ciColor: CIColor(red: <#T##CGFloat#>, green: <#T##CGFloat#>, blue: <#T##CGFloat#>))
+        case .brown:
+            return UIColor(ciColor: CIColor(red: <#T##CGFloat#>, green: <#T##CGFloat#>, blue: <#T##CGFloat#>))
+        case .violet:
+            return UIColor(ciColor: CIColor(red: <#T##CGFloat#>, green: <#T##CGFloat#>, blue: <#T##CGFloat#>))
+        }
+    }
 }
 
 enum VehicleMake: String, CaseIterable, Codable {

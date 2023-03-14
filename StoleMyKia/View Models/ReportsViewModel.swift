@@ -68,7 +68,6 @@ extension ReportsViewModel: MKMapViewDelegate {
     func mapView(_ mapView: MKMapView, didSelect view: MKAnnotationView) {
         if let reportAnnotation = view.annotation as? ReportAnnotation {
             self.selectedReport = reportAnnotation.report
-            mapView.setCenter(reportAnnotation.coordinate, animated: true)
         }
     }
     
