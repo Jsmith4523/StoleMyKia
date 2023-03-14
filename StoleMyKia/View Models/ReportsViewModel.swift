@@ -18,14 +18,10 @@ final class ReportsViewModel: NSObject, ObservableObject {
     
     @Published var locationAuthorizationStatus: CLAuthorizationStatus!
     
-    @Published var userLocation: CLLocation! {
-        didSet {
-            mapView.setCenter(userLocation.coordinate, animated: true)
-        }
-    }
+    @Published var userLocation: CLLocation!
     
     let mapView = MKMapView()
-    private let locationManager = CLLocationManager()
+    let locationManager = CLLocationManager()
     
     override init() {
         super.init()
@@ -35,8 +31,14 @@ final class ReportsViewModel: NSObject, ObservableObject {
     }
     
     
-    func moveToCenter(for coordinates: CLLocationCoordinate2D) {
-        mapView.setCenter(coordinates, animated: true)
+    func moveToCenter(for coordinates: CLLocationCoordinate2D?) {
+        if let coordinates {
+            mapView.setCenter(coordinates, animated: true)
+        }
+    }
+    
+    func goToUsersLocation() {
+        mapView.setRegion(MKCoordinateRegion(center: userLocation.coordinate, span: .init(latitudeDelta: 0.025, longitudeDelta: 0.025)), animated: true)
     }
 }
 
@@ -45,11 +47,21 @@ extension ReportsViewModel: CLLocationManagerDelegate {
         switch manager.authorizationStatus {
         case .authorizedWhenInUse:
             self.userLocation = locationManager.location
+            goToUsersLocation()
         case .authorizedAlways:
             self.userLocation = locationManager.location
+            goToUsersLocation()
         default:
             break
         }
+    }
+    
+    func mapView(_ mapView: MKMapView, didUpdate userLocation: MKUserLocation) {
+        self.userLocation = userLocation.location
+    }
+    
+    func mapView(_ mapView: MKMapView, clusterAnnotationForMemberAnnotations memberAnnotations: [MKAnnotation]) -> MKClusterAnnotation {
+        MKClusterAnnotation(memberAnnotations: memberAnnotations)
     }
 }
 
@@ -75,11 +87,18 @@ extension ReportsViewModel: MKMapViewDelegate {
 
         if let annotation = annotation as? ReportAnnotation {
             let reportAnnotation             = MKMarkerAnnotationView(annotation: annotation, reuseIdentifier: MKMapViewDefaultAnnotationViewReuseIdentifier)
-            reportAnnotation.glyphImage      = UIImage(named: annotation.report.reportType.annotationImage)
+            reportAnnotation.glyphImage      = UIImage(systemName: annotation.report.reportType.annotationImage)
             reportAnnotation.markerTintColor = annotation.report.reportType.annotationColor
 
             return reportAnnotation
         }
+        
+        if let annotation = annotation as? MKClusterAnnotation {
+            let clusterAnnotation = MKMarkerAnnotationView(annotation: annotation, reuseIdentifier: MKMapViewDefaultClusterAnnotationViewReuseIdentifier)
+            clusterAnnotation.markerTintColor = .gray
+            return clusterAnnotation
+        }
+        
         return nil
     }
 }

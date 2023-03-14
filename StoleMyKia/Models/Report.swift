@@ -22,7 +22,7 @@ enum ReportType: String, CaseIterable, Codable {
         case .found:
             return "car.fill"
         case .withnessed:
-            return "figure.run"
+            return "exclamationmark.triangle.fill"
         }
     }
     
@@ -31,9 +31,9 @@ enum ReportType: String, CaseIterable, Codable {
         case .stolen:
             return UIColor.red
         case .found:
-            return UIColor.green
+            return UIColor.systemBlue
         case .withnessed:
-            return UIColor.orange
+            return UIColor.systemOrange
         }
     }
 }
