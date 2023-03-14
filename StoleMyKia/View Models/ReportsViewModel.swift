@@ -12,6 +12,8 @@ import MapKit
 
 final class ReportsViewModel: NSObject, ObservableObject {
     
+    @Published var isShowingSelectedReportView = false
+    
     @Published var reports = [Report]()
     
     @Published var selectedReport: Report!
@@ -76,21 +78,34 @@ extension ReportsViewModel: MKMapViewDelegate {
         }
     }
     
+    func mapView(_ mapView: MKMapView, didDeselect view: MKAnnotationView) {
+        self.selectedReport = nil
+    }
+    
     func mapView(_ mapView: MKMapView, viewFor annotation: MKAnnotation) -> MKAnnotationView? {
         if annotation is MKUserLocation { return nil }
         
-
         if let annotation = annotation as? ReportAnnotation {
            let reportAnnotation = MKMarkerAnnotationView(annotation: annotation, reuseIdentifier: MKMapViewDefaultAnnotationViewReuseIdentifier)
             reportAnnotation.glyphImage = UIImage(systemName: annotation.report.reportType.annotationImage)
             reportAnnotation.markerTintColor = annotation.report.reportType.annotationColor
             reportAnnotation.canShowCallout = true
-            reportAnnotation.detailCalloutAccessoryView = ReportAnnotationCallOut(report: annotation.report)
+            
+            let calloutView = ReportAnnotationCallOut(report: annotation.report)
+            calloutView.calloutDelegate = self
+            
+            reportAnnotation.detailCalloutAccessoryView = calloutView
             
             return reportAnnotation
         }
         
         return nil
+    }
+}
+
+extension ReportsViewModel: RACalloutDelegate {
+    func reportAnnotationWillPresentSheet() {
+        self.isShowingSelectedReportView.toggle()
     }
 }
 

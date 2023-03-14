@@ -18,6 +18,9 @@ struct StoleMyKiaApp: App {
             Tab()
                 .environmentObject(reportsModel)
                 .environmentObject(notificationModel)
+                .sheet(isPresented: $reportsModel.isShowingSelectedReportView) {
+                    Text("It was selected")
+                }
         }
     }
 }
