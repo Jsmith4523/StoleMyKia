@@ -16,6 +16,7 @@
 		24A4CEE029BFA65100B856BC /* URL+EXT.swift in Sources */ = {isa = PBXBuildFile; fileRef = 24A4CEDF29BFA65100B856BC /* URL+EXT.swift */; };
 		24A4CEE229BFAA8000B856BC /* NotificationRadiusView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 24A4CEE129BFAA8000B856BC /* NotificationRadiusView.swift */; };
 		24A4CEE429BFAC7100B856BC /* CLLocationManager+EXT.swift in Sources */ = {isa = PBXBuildFile; fileRef = 24A4CEE329BFAC7100B856BC /* CLLocationManager+EXT.swift */; };
+		24A4CEE729C04CBA00B856BC /* ReportAnnotationCallout.swift in Sources */ = {isa = PBXBuildFile; fileRef = 24A4CEE629C04CBA00B856BC /* ReportAnnotationCallout.swift */; };
 		24A5791429BC552C00495E6F /* StoleMyKiaApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 24A5791329BC552C00495E6F /* StoleMyKiaApp.swift */; };
 		24A5791629BC552C00495E6F /* Tab.swift in Sources */ = {isa = PBXBuildFile; fileRef = 24A5791529BC552C00495E6F /* Tab.swift */; };
 		24A5791829BC552E00495E6F /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 24A5791729BC552E00495E6F /* Assets.xcassets */; };
@@ -38,6 +39,7 @@
 		24A4CEDF29BFA65100B856BC /* URL+EXT.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "URL+EXT.swift"; sourceTree = "<group>"; };
 		24A4CEE129BFAA8000B856BC /* NotificationRadiusView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NotificationRadiusView.swift; sourceTree = "<group>"; };
 		24A4CEE329BFAC7100B856BC /* CLLocationManager+EXT.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "CLLocationManager+EXT.swift"; sourceTree = "<group>"; };
+		24A4CEE629C04CBA00B856BC /* ReportAnnotationCallout.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReportAnnotationCallout.swift; sourceTree = "<group>"; };
 		24A5791029BC552C00495E6F /* StoleMyKia.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = StoleMyKia.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		24A5791329BC552C00495E6F /* StoleMyKiaApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StoleMyKiaApp.swift; sourceTree = "<group>"; };
 		24A5791529BC552C00495E6F /* Tab.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Tab.swift; sourceTree = "<group>"; };
@@ -123,6 +125,14 @@
 			path = Extension;
 			sourceTree = "<group>";
 		};
+		24A4CEE529C04CA200B856BC /* Callout */ = {
+			isa = PBXGroup;
+			children = (
+				24A4CEE629C04CBA00B856BC /* ReportAnnotationCallout.swift */,
+			);
+			path = Callout;
+			sourceTree = "<group>";
+		};
 		24A5790729BC552C00495E6F = {
 			isa = PBXGroup;
 			children = (
@@ -187,6 +197,7 @@
 			isa = PBXGroup;
 			children = (
 				24A5792529BC55DF00495E6F /* MapViewRep.swift */,
+				24A4CEE529C04CA200B856BC /* Callout */,
 				241D2FFE29BFF88D00E78792 /* Annotations */,
 			);
 			path = MKMap;
@@ -297,6 +308,7 @@
 				24A5792F29BC5C8700495E6F /* ReportsViewModel.swift in Sources */,
 				24A5791429BC552C00495E6F /* StoleMyKiaApp.swift in Sources */,
 				2437328029BEF8FC008F4C4E /* NotificationViewModel.swift in Sources */,
+				24A4CEE729C04CBA00B856BC /* ReportAnnotationCallout.swift in Sources */,
 				24A5792629BC55DF00495E6F /* MapViewRep.swift in Sources */,
 				2437328329BEFB2E008F4C4E /* NewReportView.swift in Sources */,
 				24A5792C29BC56B000495E6F /* Report.swift in Sources */,
@@ -442,6 +454,7 @@
 				INFOPLIST_KEY_UILaunchScreen_Generation = YES;
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPhone = "UIInterfaceOrientationPortrait UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
+				INFOPLIST_KEY_UIUserInterfaceStyle = Light;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
@@ -472,6 +485,7 @@
 				INFOPLIST_KEY_UILaunchScreen_Generation = YES;
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPhone = "UIInterfaceOrientationPortrait UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
+				INFOPLIST_KEY_UIUserInterfaceStyle = Light;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",

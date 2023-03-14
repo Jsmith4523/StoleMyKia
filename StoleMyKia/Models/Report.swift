@@ -29,11 +29,11 @@ enum ReportType: String, CaseIterable, Codable {
     var annotationColor: UIColor {
         switch self {
         case .stolen:
-            return UIColor.red
+            return .red
         case .found:
-            return UIColor.systemBlue
+            return .systemBlue
         case .withnessed:
-            return UIColor.systemOrange
+            return .orange
         }
     }
 }

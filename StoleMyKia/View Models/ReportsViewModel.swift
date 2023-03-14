@@ -59,10 +59,6 @@ extension ReportsViewModel: CLLocationManagerDelegate {
     func mapView(_ mapView: MKMapView, didUpdate userLocation: MKUserLocation) {
         self.userLocation = userLocation.location
     }
-    
-    func mapView(_ mapView: MKMapView, clusterAnnotationForMemberAnnotations memberAnnotations: [MKAnnotation]) -> MKClusterAnnotation {
-        MKClusterAnnotation(memberAnnotations: memberAnnotations)
-    }
 }
 
 extension ReportsViewModel: MKMapViewDelegate {
@@ -81,22 +77,17 @@ extension ReportsViewModel: MKMapViewDelegate {
     }
     
     func mapView(_ mapView: MKMapView, viewFor annotation: MKAnnotation) -> MKAnnotationView? {
-        if annotation is MKUserLocation {
-            return nil
-        }
+        if annotation is MKUserLocation { return nil }
+        
 
         if let annotation = annotation as? ReportAnnotation {
-            let reportAnnotation             = MKMarkerAnnotationView(annotation: annotation, reuseIdentifier: MKMapViewDefaultAnnotationViewReuseIdentifier)
-            reportAnnotation.glyphImage      = UIImage(systemName: annotation.report.reportType.annotationImage)
+           let reportAnnotation = MKMarkerAnnotationView(annotation: annotation, reuseIdentifier: MKMapViewDefaultAnnotationViewReuseIdentifier)
+            reportAnnotation.glyphImage = UIImage(systemName: annotation.report.reportType.annotationImage)
             reportAnnotation.markerTintColor = annotation.report.reportType.annotationColor
-
+            reportAnnotation.canShowCallout = true
+            reportAnnotation.detailCalloutAccessoryView = ReportAnnotationCallOut(report: annotation.report)
+            
             return reportAnnotation
-        }
-        
-        if let annotation = annotation as? MKClusterAnnotation {
-            let clusterAnnotation = MKMarkerAnnotationView(annotation: annotation, reuseIdentifier: MKMapViewDefaultClusterAnnotationViewReuseIdentifier)
-            clusterAnnotation.markerTintColor = .gray
-            return clusterAnnotation
         }
         
         return nil

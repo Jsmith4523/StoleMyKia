@@ -22,7 +22,6 @@ struct NotificationSettingsView: View {
                         Toggle("Vehicle Stolen", isOn: $notificationModel.notifyOfTheft)
                         Toggle("Theft Witnessed", isOn: $notificationModel.notifyOfWitness)
                         Toggle("Vehicle found", isOn: $notificationModel.notifyOfFound)
-                        
                     }
                 } header: {
                     Text("Active Alerts")
