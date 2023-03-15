@@ -51,32 +51,6 @@ enum VehicleColor: String, CaseIterable, Codable {
     case brown     = "Brown"
     case violet    = "Violet"
     
-    var color: UIColor {
-        switch self {
-        case .red:
-            return UIColor(ciColor: CIColor(he))
-        case .green:
-            return UIColor(ciColor: CIColor(red: <#T##CGFloat#>, green: <#T##CGFloat#>, blue: <#T##CGFloat#>))
-        case .blue:
-            return UIColor(ciColor: CIColor(red: <#T##CGFloat#>, green: <#T##CGFloat#>, blue: <#T##CGFloat#>))
-        case .orange:
-            return UIColor(ciColor: CIColor(red: <#T##CGFloat#>, green: <#T##CGFloat#>, blue: <#T##CGFloat#>))
-        case .silver:
-            return UIColor(ciColor: CIColor(red: <#T##CGFloat#>, green: <#T##CGFloat#>, blue: <#T##CGFloat#>))
-        case .black:
-            return UIColor(ciColor: CIColor(red: <#T##CGFloat#>, green: <#T##CGFloat#>, blue: <#T##CGFloat#>))
-        case .gold:
-            return UIColor(ciColor: CIColor(red: <#T##CGFloat#>, green: <#T##CGFloat#>, blue: <#T##CGFloat#>))
-        case .gray:
-            return UIColor(ciColor: CIColor(red: <#T##CGFloat#>, green: <#T##CGFloat#>, blue: <#T##CGFloat#>))
-        case .lightGray:
-            return UIColor(ciColor: CIColor(red: <#T##CGFloat#>, green: <#T##CGFloat#>, blue: <#T##CGFloat#>))
-        case .brown:
-            return UIColor(ciColor: CIColor(red: <#T##CGFloat#>, green: <#T##CGFloat#>, blue: <#T##CGFloat#>))
-        case .violet:
-            return UIColor(ciColor: CIColor(red: <#T##CGFloat#>, green: <#T##CGFloat#>, blue: <#T##CGFloat#>))
-        }
-    }
 }
 
 enum VehicleMake: String, CaseIterable, Codable {
@@ -84,15 +58,147 @@ enum VehicleMake: String, CaseIterable, Codable {
     case kia = "Kia"
 }
 
+//2015-2021 Hyundai Accent (all body styles)
+//2015-2021 Hyundai Elantra (two-door and four-door)
+//2015-2021 Hyundai Kona
+//2015-2021 Hyundai Santa Fe
+//2015-2021 Hyundai Tucson
+//2015-2018 Hyundai Veloster
+//2015-2021 Kia Forte
+//2015-2021 Kia Optima
+//2015-2016 Kia Optima Hybrid
+//2015-2021 Kia Rio (all body styles)
+//2015-2021 Kia Sedona
+//2015-2016 Kia Sorento
+//2015-2021 Kia Soul
+//2015-2021 Kia Sportage
+
+enum VehicleModel: String, CaseIterable, Codable, Comparable {
+    
+    //MARK: - Hyundai
+    case accent = "Accent"
+    case elantra = "Elantra"
+    case kona = "Kona"
+    case santaFe = "Santa Fe"
+    case tuscon = "Tuscon"
+    case veloster = "Veloster"
+    case sonata = "Sonata"
+    case venue = "Venue"
+    
+    //MARK: - Kia
+    case forte = "Forte"
+    case rio = "Rio"
+    case optima = "Optima"
+    case soul = "Soul"
+    case sportage = "Sportage"
+    case sorento = "Sorento"
+    case seltos = "Seltos"
+    
+    ///Vehicle make (ex: Hyundai Elantra)
+    var make: VehicleMake {
+        switch self {
+            
+        case .accent:
+            return .hyundai
+        case .elantra:
+            return .hyundai
+        case .kona:
+            return .hyundai
+        case .santaFe:
+            return .hyundai
+        case .tuscon:
+            return .hyundai
+        case .veloster:
+            return .hyundai
+        case .sonata:
+            return .hyundai
+        case .venue:
+            return .hyundai
+        case .forte:
+            return .kia
+        case .rio:
+            return .kia
+        case .optima:
+            return .kia
+        case .soul:
+            return .kia
+        case .sportage:
+            return .kia
+        case .sorento:
+            return .kia
+        case .seltos:
+            return .kia
+        }
+    }
+    
+    var year: ClosedRange<Int> {
+        switch self {
+        case .accent:
+            return 2011...Report.lastAffectedYear
+        case .elantra:
+            return 2011...Report.lastAffectedYear
+        case .kona:
+            return 2018...Report.lastAffectedYear
+        case .santaFe:
+            return 2011...Report.lastAffectedYear
+        case .tuscon:
+            return 2011...Report.lastAffectedYear
+        case .veloster:
+            return 2011...Report.lastAffectedYear
+        case .sonata:
+            return 2011...Report.lastAffectedYear
+        case .venue:
+            return 2019...Report.lastAffectedYear
+        case .forte:
+            return 2011...Report.lastAffectedYear
+        case .rio:
+            return 2011...Report.lastAffectedYear
+        case .optima:
+            return 2011...Report.lastAffectedYear
+        case .soul:
+            return 2011...Report.lastAffectedYear
+        case .sportage:
+            return 2011...Report.lastAffectedYear
+        case .sorento:
+            return 2011...Report.lastAffectedYear
+        case .seltos:
+            return 2019...Report.lastAffectedYear
+        }
+    }
+    
+    static func < (lhs: VehicleModel, rhs: VehicleModel) -> Bool {
+        lhs.rawValue < rhs.rawValue
+    }
+    
+    static func > (lhs: VehicleModel, rhs: VehicleModel) -> Bool {
+        lhs.rawValue > rhs.rawValue
+    }
+}
+
+extension [VehicleModel] {
+    
+    func filter(_ make: VehicleMake, _ year: Int) -> Self {
+        self.sorted(by: <).manufacturer(make).year(year)
+    }
+    
+    private func manufacturer(_ make: VehicleMake) -> Self {
+        self.filter({$0.make == make})
+    }
+    
+    private func year(_ year: Int) -> Self {
+        self.filter({$0.year.contains(year)})
+    }
+}
+
 struct Report: Identifiable, Codable {
     var id = UUID()
     let title: String
     let description: String
     let reportType: ReportType
+    let vehicleYear: Int
     let vehicleMake: VehicleMake
     let vehicleColor: VehicleColor
-    let vehicleYear: Int
-    let vehicleDescription: String
+    let vehicleModel: VehicleModel
     let lat: Double
     let lon: Double
 }
@@ -105,6 +211,11 @@ extension Report {
     
     ///Affected vehicle years of both Kia's and Hyundai's
     static var affectedVehicleYears: ClosedRange<Int> {
-        return 2011...2022
+        return 2011...lastAffectedYear
+    }
+    
+    ///The final year vehicles were affetced. Subject to change 🤷🏽‍♂️
+    static var lastAffectedYear: Int {
+        2021
     }
 }

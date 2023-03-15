@@ -9,6 +9,9 @@ import SwiftUI
 import MapKit
 
 struct MapView: View {
+    
+    @State private var isShowingNewReportView = false
+    @State private var isShowingMapOptionsView = false
         
     @EnvironmentObject var reportModel: ReportsViewModel
     
@@ -20,8 +23,8 @@ struct MapView: View {
             .navigationTitle("Reports")
             .navigationBarTitleDisplayMode(.inline)
             .toolbar {
-                if reportModel.locationAuthorizationStatus.isAuthorized() {
-                    ToolbarItem(placement: .navigationBarLeading) {
+                ToolbarItem(placement: .navigationBarLeading) {
+                    if reportModel.locationAuthorizationStatus.isAuthorized() {
                         Button {
                             reportModel.goToUsersLocation()
                         } label: {
@@ -31,23 +34,23 @@ struct MapView: View {
                 }
                 ToolbarItemGroup(placement: .navigationBarTrailing) {
                     Button {
-                        
+                        isShowingNewReportView.toggle()
                     } label: {
                         Image(systemName: "plus")
                     }
                     Button {
-                        
+                        isShowingMapOptionsView.toggle()
                     } label: {
                         Image(systemName: "ellipsis")
                     }
                 }
             }
         }
-        .environmentObject(reportModel)
-        .onAppear {
-            reportModel.mapView.addAnnotation(ReportAnnotation(coordinate: CLLocationCoordinate2D(latitude: 38.90220, longitude: -77.02322), report: .init(title: "Stolen", description: "Lorem Ipsum", reportType: .withnessed, vehicleMake: .hyundai, vehicleColor: .gold, vehicleYear: 2017, vehicleDescription: "Elantra", lat: 38.90220, lon: -77.02322)))
-            reportModel.mapView.addAnnotation(ReportAnnotation(coordinate: CLLocationCoordinate2D(latitude: 40.90220, longitude: -79.02322), report: .init(title: "Stolen", description: "Lorem Ipsum", reportType: .found, vehicleMake: .hyundai, vehicleColor: .gold, vehicleYear: 2017, vehicleDescription: "Elantra", lat: 40.90220, lon: -79.02322)))
+        .sheet(isPresented: $isShowingNewReportView) {
+            NewReportView()
+                .accentColor(.red)
         }
+        .environmentObject(reportModel)
     }
 }
 

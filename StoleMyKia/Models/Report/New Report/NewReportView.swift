@@ -6,14 +6,24 @@
 //
 
 import SwiftUI
+import UIKit
 
 struct NewReportView: View {
     
+    @State private var vehicleImage: UIImage?
+    
     @State private var reportType: ReportType = .stolen
+    @State private var reportDescription: String = ""
     
     @State private var vehicleMake: VehicleMake = .hyundai
-    @State private var vehicleModel: String = ""
+    @State private var vehicleModel: VehicleModel = .accent
     @State private var vehicleYear: Int = 2011
+    
+    @State private var vehicleColor: VehicleColor = .black
+    @State private var vehicleDescription: String = ""
+    
+    @State private var source: UIImagePickerController.SourceType = .camera
+    @State private var isShowingPhotoPicker = false
     
     @Environment (\.dismiss) var dismiss
     
@@ -28,7 +38,12 @@ struct NewReportView: View {
                         }
                     }
                 } header: {
-                    Text("Report Information")
+                    Text("Report Type")
+                }
+                Section {
+                    TextEditor(text: $reportDescription)
+                } header: {
+                    Text("Report Description (Input below)")
                 }
                 Section {
                     Picker("Year", selection: $vehicleYear) {
@@ -43,21 +58,42 @@ struct NewReportView: View {
                                 .tag($0)
                         }
                     }
-                    TextField("Model", text: $vehicleModel)
+                    Picker("Model", selection: $vehicleModel) {
+                        ForEach(VehicleModel.allCases.filter(self.vehicleMake, self.vehicleYear), id: \.rawValue) {
+                            Text($0.rawValue)
+                                .tag($0)
+                        }
+                    }
                 } header: {
                     Text("Vehicle Information")
+                }
+                Section {
+                    Picker("Vehicle Color", selection: $vehicleColor) {
+                        ForEach(VehicleColor.allCases, id: \.rawValue) {
+                            Text($0.rawValue)
+                                .tag($0)
+                        }
+                    }
+                } header: {
+                    Text("Appearance")
+                }
+                Section {
+                    TextEditor(text: $vehicleDescription)
+                } header: {
+                    Text("Appearance Description (Input below)")
                 }
             }
             .navigationTitle("New Report")
             .navigationBarTitleDisplayMode(.inline)
             .toolbar {
                 Button {
-                    
+                    dismiss()
                 } label: {
                     Image(systemName: "xmark")
                 }
             }
         }
+        .imagePicker(isPresented: $isShowingPhotoPicker, selectedImage: $vehicleImage, sourceType: $source)
     }
 }
 

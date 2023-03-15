@@ -11,69 +11,72 @@ struct SelectedReportDetailView: View {
     
     @EnvironmentObject var reportsModel: ReportsViewModel
     
-    @State private var report: Report = .init(title: "Stolen", description: "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.", reportType: .found, vehicleMake: .hyundai, vehicleColor: .gold, vehicleYear: 2017, vehicleDescription: "Elantra", lat: 40.90220, lon: -79.02322)
-    
     @Environment (\.dismiss) var dismiss
     
     var body: some View {
-        ZStack {
-            ScrollView {
-                VStack(spacing: 2) {
-                    Image("silvey")
-                        .resizable()
-                        .scaledToFill()
-                        .frame(height: 300)
-                        .clipped()
-                    HStack {
-                        VStack(alignment: .leading) {
-                            Text(report.reportType.rawValue)
-                                .font(.title.bold())
-                            HStack {
-                                
-                                Text("\(String(report.vehicleYear)) \(report.vehicleMake.rawValue) Elantra")
-                                    .font(.subheadline)
-                                    .foregroundColor(.gray)
+        if let report = reportsModel.selectedReport {
+            ZStack(alignment: .top) {
+                ScrollView {
+                    VStack(spacing: 2) {
+                        Image("silvey")
+                            .resizable()
+                            .scaledToFill()
+                            .frame(height: 300)
+                            .clipped()
+                            .edgesIgnoringSafeArea(.top)
+                        HStack {
+                            VStack {
+                                VStack(alignment: .leading) {
+                                    Text(report.reportType.rawValue)
+                                        .font(.system(size: 25).weight(.heavy))
+                                    HStack {
+                                        Text("\(report.vehicleColor.rawValue) \(String(report.vehicleYear)) \(report.vehicleMake.rawValue) Elantra")
+                                            .font(.system(size: 15))
+                                            .foregroundColor(.gray)
+                                    }
+                                    Divider()
+                                    Spacer()
+                                    Text("\(report.description)")
+                                        .multilineTextAlignment(.leading)
+                                        .font(.system(size: 17))
+                                }
                             }
-                            Divider()
                             Spacer()
-                            Text("\(report.description)")
-                                .multilineTextAlignment(.leading)
-                                .font(.system(size: 17))
                         }
+                        .padding()
                         Spacer()
                     }
-                    .padding()
-                    Spacer()
                 }
-            }
-            HStack {
-                Spacer()
-                VStack {
-                    closeButton()
+                HStack {
+                    Button {
+                        dismiss()
+                    } label: {
+                        Image(systemName: "xmark")
+                            .floatingButtonStyle()
+                    }
                     Spacer()
+                    Menu {
+                        Button {
+                            
+                        } label: {
+                            Label("Bookmark", systemImage: "bookmark")
+                        }
+                        Button {
+                            URL.getDirectionsToLocation(coords: report.coordinates)
+                        } label: {
+                            Label("Get Directions", systemImage: "map")
+                        }
+                    } label: {
+                        Image(systemName: "ellipsis")
+                            .floatingButtonStyle()
+                    }
                 }
-            }
-            .padding()
-        }
-    }
-    
-    func closeButton() -> some View {
-        Button {
-            dismiss()
-        } label: {
-            Image(systemName: "xmark")
-                .resizable()
-                .scaledToFit()
-                .bold()
-                .frame(width: 15, height: 15)
                 .padding()
-                .foregroundColor(.black)
-                .background(Color(uiColor: .secondarySystemBackground))
-                .clipShape(Circle())
-                .shadow(radius: 4)
+            }
         }
     }
 }
+
 
 struct SelectedReportDetailView_Previews: PreviewProvider {
     

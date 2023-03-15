@@ -8,6 +8,10 @@
 
 /* Begin PBXBuildFile section */
 		24334CFB29C0E0130084B8EC /* UIImage+EXT.swift in Sources */ = {isa = PBXBuildFile; fileRef = 24334CFA29C0E0130084B8EC /* UIImage+EXT.swift */; };
+		24334CFD29C1846C0084B8EC /* Image+EXT.swift in Sources */ = {isa = PBXBuildFile; fileRef = 24334CFC29C1846C0084B8EC /* Image+EXT.swift */; };
+		24334D0129C187800084B8EC /* Reports.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = 24334CFF29C187800084B8EC /* Reports.xcdatamodeld */; };
+		24334D0429C19E100084B8EC /* UIImagePicker.swift in Sources */ = {isa = PBXBuildFile; fileRef = 24334D0329C19E100084B8EC /* UIImagePicker.swift */; };
+		24334D0629C1A0E10084B8EC /* View+EXT.swift in Sources */ = {isa = PBXBuildFile; fileRef = 24334D0529C1A0E10084B8EC /* View+EXT.swift */; };
 		2437327E29BEF8B6008F4C4E /* NotificationsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2437327D29BEF8B6008F4C4E /* NotificationsView.swift */; };
 		2437328029BEF8FC008F4C4E /* NotificationViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2437327F29BEF8FC008F4C4E /* NotificationViewModel.swift */; };
 		2437328329BEFB2E008F4C4E /* NewReportView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2437328229BEFB2E008F4C4E /* NewReportView.swift */; };
@@ -33,6 +37,10 @@
 
 /* Begin PBXFileReference section */
 		24334CFA29C0E0130084B8EC /* UIImage+EXT.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIImage+EXT.swift"; sourceTree = "<group>"; };
+		24334CFC29C1846C0084B8EC /* Image+EXT.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Image+EXT.swift"; sourceTree = "<group>"; };
+		24334D0029C187800084B8EC /* Bookmark.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = Bookmark.xcdatamodel; sourceTree = "<group>"; };
+		24334D0329C19E100084B8EC /* UIImagePicker.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UIImagePicker.swift; sourceTree = "<group>"; };
+		24334D0529C1A0E10084B8EC /* View+EXT.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "View+EXT.swift"; sourceTree = "<group>"; };
 		2437327D29BEF8B6008F4C4E /* NotificationsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NotificationsView.swift; sourceTree = "<group>"; };
 		2437327F29BEF8FC008F4C4E /* NotificationViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NotificationViewModel.swift; sourceTree = "<group>"; };
 		2437328229BEFB2E008F4C4E /* NewReportView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NewReportView.swift; sourceTree = "<group>"; };
@@ -74,6 +82,22 @@
 				24A5792829BC567F00495E6F /* ReportAnnotation.swift */,
 			);
 			path = Annotations;
+			sourceTree = "<group>";
+		};
+		24334CFE29C187620084B8EC /* CoreData */ = {
+			isa = PBXGroup;
+			children = (
+				24334CFF29C187800084B8EC /* Reports.xcdatamodeld */,
+			);
+			path = CoreData;
+			sourceTree = "<group>";
+		};
+		24334D0229C19DF70084B8EC /* UIKit */ = {
+			isa = PBXGroup;
+			children = (
+				24334D0329C19E100084B8EC /* UIImagePicker.swift */,
+			);
+			path = UIKit;
 			sourceTree = "<group>";
 		};
 		2437327C29BEF873008F4C4E /* Notifications */ = {
@@ -124,8 +148,10 @@
 			children = (
 				24A4CEDD29BFA2CE00B856BC /* UNAuth+EXT.swift */,
 				24A4CEDF29BFA65100B856BC /* URL+EXT.swift */,
+				24334CFC29C1846C0084B8EC /* Image+EXT.swift */,
 				24A4CEE329BFAC7100B856BC /* CLLocationManager+EXT.swift */,
 				24334CFA29C0E0130084B8EC /* UIImage+EXT.swift */,
+				24334D0529C1A0E10084B8EC /* View+EXT.swift */,
 			);
 			path = Extension;
 			sourceTree = "<group>";
@@ -158,9 +184,11 @@
 			isa = PBXGroup;
 			children = (
 				24A5791329BC552C00495E6F /* StoleMyKiaApp.swift */,
+				24334CFE29C187620084B8EC /* CoreData */,
 				24A4CEDC29BFA2C100B856BC /* Extension */,
 				24A5792D29BC5C7B00495E6F /* View Models */,
 				24A5792A29BC56A600495E6F /* Models */,
+				24334D0229C19DF70084B8EC /* UIKit */,
 				2437328129BEFB16008F4C4E /* Views */,
 				24A5792129BC556000495E6F /* Tab View */,
 				24A5791729BC552E00495E6F /* Assets.xcassets */,
@@ -318,8 +346,10 @@
 				24A5792929BC567F00495E6F /* ReportAnnotation.swift in Sources */,
 				24A5792429BC559100495E6F /* MapView.swift in Sources */,
 				24A4CEDE29BFA2CE00B856BC /* UNAuth+EXT.swift in Sources */,
+				24334D0429C19E100084B8EC /* UIImagePicker.swift in Sources */,
 				24A4CEE429BFAC7100B856BC /* CLLocationManager+EXT.swift in Sources */,
 				24A5792F29BC5C8700495E6F /* ReportsViewModel.swift in Sources */,
+				24334D0629C1A0E10084B8EC /* View+EXT.swift in Sources */,
 				24A5791429BC552C00495E6F /* StoleMyKiaApp.swift in Sources */,
 				2437328029BEF8FC008F4C4E /* NotificationViewModel.swift in Sources */,
 				24A4CEE729C04CBA00B856BC /* ReportAnnotationCallout.swift in Sources */,
@@ -330,7 +360,9 @@
 				24A4CEE229BFAA8000B856BC /* NotificationRadiusView.swift in Sources */,
 				24A5793729BFD9C900495E6F /* RadiusMapCoordinator.swift in Sources */,
 				24A4CEE029BFA65100B856BC /* URL+EXT.swift in Sources */,
+				24334D0129C187800084B8EC /* Reports.xcdatamodeld in Sources */,
 				24334CFB29C0E0130084B8EC /* UIImage+EXT.swift in Sources */,
+				24334CFD29C1846C0084B8EC /* Image+EXT.swift in Sources */,
 				2437327E29BEF8B6008F4C4E /* NotificationsView.swift in Sources */,
 				24A4CED829BF9E9B00B856BC /* SettingsView.swift in Sources */,
 			);
@@ -471,6 +503,7 @@
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPhone = "UIInterfaceOrientationPortrait UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
 				INFOPLIST_KEY_UIUserInterfaceStyle = Light;
+				IPHONEOS_DEPLOYMENT_TARGET = 15.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
@@ -502,6 +535,7 @@
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPhone = "UIInterfaceOrientationPortrait UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
 				INFOPLIST_KEY_UIUserInterfaceStyle = Light;
+				IPHONEOS_DEPLOYMENT_TARGET = 15.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
@@ -537,6 +571,19 @@
 			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
+
+/* Begin XCVersionGroup section */
+		24334CFF29C187800084B8EC /* Reports.xcdatamodeld */ = {
+			isa = XCVersionGroup;
+			children = (
+				24334D0029C187800084B8EC /* Bookmark.xcdatamodel */,
+			);
+			currentVersion = 24334D0029C187800084B8EC /* Bookmark.xcdatamodel */;
+			path = Reports.xcdatamodeld;
+			sourceTree = "<group>";
+			versionGroupType = wrapper.xcdatamodel;
+		};
+/* End XCVersionGroup section */
 	};
 	rootObject = 24A5790829BC552C00495E6F /* Project object */;
 }
