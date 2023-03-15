@@ -48,9 +48,10 @@ struct NotificationSettingsView: View {
         .navigationTitle("Notifications")
         .navigationBarTitleDisplayMode(.inline)
         .disabled(!notificationModel.notificationsAreAllowed && !reportsModel.locationAuthorizationStatus.isAuthorized())
-        .tint(.red)
+        .tint(.accentColor)
         .sheet(isPresented: $isShowingNotificationRadiusView) {
             NotificationRadiusView()
+                .accentColor(.accentColor)
         }
         .environmentObject(notificationModel)
     }
@@ -63,6 +64,5 @@ struct NotificationSettingsView_Previews: PreviewProvider {
         }
         .environmentObject(NotificationViewModel())
         .environmentObject(ReportsViewModel())
-        .accentColor(.red)
     }
 }

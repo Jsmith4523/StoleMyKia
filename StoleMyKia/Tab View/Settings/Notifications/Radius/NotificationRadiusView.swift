@@ -25,7 +25,7 @@ struct NotificationRadiusView: View {
                 VStack(spacing: 20) {
                     Slider(value: $radiusMapCoordinator.radiusSize, in: 25000.0...500000.0)
                         .disabled(radiusMapCoordinator.notificationDelegate == nil)
-                    Text(radiusMapCoordinator.radiusSize == 500000.0 ? "You will recieve all notification events you have enabled within and outside the circle" : "You will only recieve all notification events you have enabled from within the circle.")
+                    Text(radiusMapCoordinator.radiusSize == 500000.0 ? "You will recieve all notification events you have enabled within and outside the circle" : "Based of your device location, you will only recieve all notification events you have enabled from within the circle.")
                         .multilineTextAlignment(.center)
                         .font(.caption)
                         .foregroundColor(.gray)
@@ -50,7 +50,6 @@ struct NotificationRadiusView: View {
             Text("We ran into a problem on our end. Please contact the developer if this issue continues.")
         }
         .interactiveDismissDisabled()
-        .accentColor(.red)
     }
 }
 

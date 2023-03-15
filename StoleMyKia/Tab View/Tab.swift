@@ -29,7 +29,7 @@ struct Tab: View {
                     Label("Settings", systemImage: "gear")
                 }
         }
-        .accentColor(.red)
+        .accentColor(.accentColor)
         .environmentObject(reportsModel)
         .environmentObject(notificationModel)
     }

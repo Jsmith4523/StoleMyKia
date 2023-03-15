@@ -66,9 +66,9 @@ extension RadiusMapCoordinator: MKMapViewDelegate {
         
         if overlay is MKCircle {
             let boundCircle = MKCircleRenderer(overlay: overlay)
-            boundCircle.strokeColor = .red
-            boundCircle.lineWidth = CGFloat(0.85)
-            boundCircle.fillColor = .red.withAlphaComponent(0.15)
+            boundCircle.strokeColor = UIColor.tintColor
+            boundCircle.lineWidth = CGFloat(0.90)
+            boundCircle.fillColor = UIColor.tintColor.withAlphaComponent(0.18)
             
             return boundCircle
         }

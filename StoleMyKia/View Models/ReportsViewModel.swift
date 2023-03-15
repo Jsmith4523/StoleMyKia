@@ -28,7 +28,6 @@ final class ReportsViewModel: NSObject, ObservableObject {
     override init() {
         super.init()
         
-        locationAuthorizationStatus = locationManager.authorizationStatus
         locationManager.delegate = self
     }
     
@@ -46,6 +45,8 @@ final class ReportsViewModel: NSObject, ObservableObject {
 
 extension ReportsViewModel: CLLocationManagerDelegate {
     func locationManagerDidChangeAuthorization(_ manager: CLLocationManager) {
+        self.locationAuthorizationStatus = manager.authorizationStatus
+        
         switch manager.authorizationStatus {
         case .authorizedWhenInUse:
             self.userLocation = locationManager.location

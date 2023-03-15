@@ -25,13 +25,14 @@ struct SettingsView: View {
         }
         .environmentObject(reportsModel)
         .environmentObject(notificationModel)
+        .accentColor(.accentColor)
     }
 }
 
 struct SettingsView_Previews: PreviewProvider {
     static var previews: some View {
         SettingsView()
-            .accentColor(.red)
+            .accentColor(.accentColor)
             .environmentObject(ReportsViewModel())
     }
 }

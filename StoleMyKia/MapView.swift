@@ -24,7 +24,7 @@ struct MapView: View {
             .navigationBarTitleDisplayMode(.inline)
             .toolbar {
                 ToolbarItem(placement: .navigationBarLeading) {
-                    if reportModel.locationAuthorizationStatus.isAuthorized() {
+                    if let status = reportModel.locationAuthorizationStatus, status.isAuthorized() {
                         Button {
                             reportModel.goToUsersLocation()
                         } label: {
@@ -48,7 +48,7 @@ struct MapView: View {
         }
         .sheet(isPresented: $isShowingNewReportView) {
             NewReportView()
-                .accentColor(.red)
+                .accentColor(.accentColor)
         }
         .environmentObject(reportModel)
     }
