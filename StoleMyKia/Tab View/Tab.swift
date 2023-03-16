@@ -23,7 +23,7 @@ struct Tab: View {
                     Label("Notifications", systemImage: "bell")
                 }
             //TODO: Setup Notifications
-                .badge(0)
+               // .badge(5)
             SettingsView()
                 .tabItem {
                     Label("Settings", systemImage: "gear")

@@ -29,7 +29,9 @@ struct MapViewRep: UIViewRepresentable {
         return reportsModels
     }
     
-    func updateUIView(_ uiView: MKMapView, context: Context) {}
+    func updateUIView(_ uiView: MKMapView, context: Context) {
+        uiView.mapType = .init(rawValue: UInt(context.coordinator.mapType)) ?? .standard
+    }
     
     typealias UIViewType = MKMapView
     

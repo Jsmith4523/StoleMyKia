@@ -15,3 +15,10 @@ extension CLLocationManager {
         self.location?.coordinate
     }
 }
+
+extension CLAuthorizationStatus {
+    
+    func isAuthorized() -> Bool {
+        self == .authorizedWhenInUse || self == .authorizedAlways
+    }
+}

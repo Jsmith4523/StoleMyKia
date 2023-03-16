@@ -19,8 +19,11 @@ final class ReportsViewModel: NSObject, ObservableObject {
     @Published var selectedReport: Report!
     
     @Published var locationAuthorizationStatus: CLAuthorizationStatus!
-    
+
     @Published var userLocation: CLLocation!
+    
+    //Raw value...
+    @AppStorage ("mapType") var mapType = 0
     
     let mapView = MKMapView()
     let locationManager = CLLocationManager()
@@ -39,10 +42,13 @@ final class ReportsViewModel: NSObject, ObservableObject {
     }
     
     func goToUsersLocation() {
-        mapView.setRegion(MKCoordinateRegion(center: userLocation.coordinate, span: .init(latitudeDelta: 0.025, longitudeDelta: 0.025)), animated: true)
+        if let userLocation {
+            mapView.setRegion(MKCoordinateRegion(center: userLocation.coordinate, span: .init(latitudeDelta: 0.10, longitudeDelta: 0.10)), animated: true)
+        }
     }
 }
 
+//MARK: - CLLocationManagerDelegate
 extension ReportsViewModel: CLLocationManagerDelegate {
     func locationManagerDidChangeAuthorization(_ manager: CLLocationManager) {
         self.locationAuthorizationStatus = manager.authorizationStatus
@@ -64,6 +70,7 @@ extension ReportsViewModel: CLLocationManagerDelegate {
     }
 }
 
+//MARK: - MKMapViewDelegate
 extension ReportsViewModel: MKMapViewDelegate {
     
     func mapView(_ mapView: MKMapView, didSelect view: MKAnnotationView) {
@@ -103,15 +110,9 @@ extension ReportsViewModel: MKMapViewDelegate {
     }
 }
 
+//MARK: - RACalloutDelegate
 extension ReportsViewModel: RACalloutDelegate {
     func reportAnnotationWillPresentSheet() {
         self.isShowingSelectedReportView.toggle()
-    }
-}
-
-extension CLAuthorizationStatus {
-    
-    func isAuthorized() -> Bool {
-        self == .authorizedWhenInUse || self == .authorizedAlways
     }
 }

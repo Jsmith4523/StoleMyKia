@@ -32,10 +32,16 @@
 		24A5792C29BC56B000495E6F /* Report.swift in Sources */ = {isa = PBXBuildFile; fileRef = 24A5792B29BC56B000495E6F /* Report.swift */; };
 		24A5792F29BC5C8700495E6F /* ReportsViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 24A5792E29BC5C8700495E6F /* ReportsViewModel.swift */; };
 		24A5793729BFD9C900495E6F /* RadiusMapCoordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 24A5793629BFD9C900495E6F /* RadiusMapCoordinator.swift */; };
+		24A662F729C2F45B00AD784F /* ReportsManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 24A662F629C2F45B00AD784F /* ReportsManager.swift */; };
 		24AC77CE29C1110B00768158 /* SelectedReportDetailView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 24AC77CD29C1110B00768158 /* SelectedReportDetailView.swift */; };
+		24EAF11729C2A02900B4CBFE /* SFSafariView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 24EAF11629C2A02900B4CBFE /* SFSafariView.swift */; };
+		24EAF11929C2A5D300B4CBFE /* MapSettingsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 24EAF11829C2A5D300B4CBFE /* MapSettingsView.swift */; };
+		24EAF11B29C2C10200B4CBFE /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 24EAF11A29C2C10200B4CBFE /* GoogleService-Info.plist */; };
+		9A8DEA661C19F27F74C6B340 /* Pods_StoleMyKia.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 197A31A21B533A0B83DC4715 /* Pods_StoleMyKia.framework */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		197A31A21B533A0B83DC4715 /* Pods_StoleMyKia.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_StoleMyKia.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		24334CFA29C0E0130084B8EC /* UIImage+EXT.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIImage+EXT.swift"; sourceTree = "<group>"; };
 		24334CFC29C1846C0084B8EC /* Image+EXT.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Image+EXT.swift"; sourceTree = "<group>"; };
 		24334D0029C187800084B8EC /* Bookmark.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = Bookmark.xcdatamodel; sourceTree = "<group>"; };
@@ -62,7 +68,13 @@
 		24A5792B29BC56B000495E6F /* Report.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Report.swift; sourceTree = "<group>"; };
 		24A5792E29BC5C8700495E6F /* ReportsViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReportsViewModel.swift; sourceTree = "<group>"; };
 		24A5793629BFD9C900495E6F /* RadiusMapCoordinator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RadiusMapCoordinator.swift; sourceTree = "<group>"; };
+		24A662F629C2F45B00AD784F /* ReportsManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReportsManager.swift; sourceTree = "<group>"; };
 		24AC77CD29C1110B00768158 /* SelectedReportDetailView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SelectedReportDetailView.swift; sourceTree = "<group>"; };
+		24EAF11629C2A02900B4CBFE /* SFSafariView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SFSafariView.swift; sourceTree = "<group>"; };
+		24EAF11829C2A5D300B4CBFE /* MapSettingsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MapSettingsView.swift; sourceTree = "<group>"; };
+		24EAF11A29C2C10200B4CBFE /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
+		562368835F2B675102514EA4 /* Pods-StoleMyKia.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-StoleMyKia.release.xcconfig"; path = "Target Support Files/Pods-StoleMyKia/Pods-StoleMyKia.release.xcconfig"; sourceTree = "<group>"; };
+		CB1F3C6B9B65B1A9366554C7 /* Pods-StoleMyKia.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-StoleMyKia.debug.xcconfig"; path = "Target Support Files/Pods-StoleMyKia/Pods-StoleMyKia.debug.xcconfig"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -70,6 +82,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				9A8DEA661C19F27F74C6B340 /* Pods_StoleMyKia.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -96,6 +109,7 @@
 			isa = PBXGroup;
 			children = (
 				24334D0329C19E100084B8EC /* UIImagePicker.swift */,
+				24EAF11629C2A02900B4CBFE /* SFSafariView.swift */,
 			);
 			path = UIKit;
 			sourceTree = "<group>";
@@ -129,6 +143,7 @@
 			isa = PBXGroup;
 			children = (
 				24A4CED729BF9E9B00B856BC /* SettingsView.swift */,
+				24EAF11529C29E2200B4CBFE /* Map */,
 				24A4CED929BF9F9100B856BC /* Notifications */,
 			);
 			path = Settings;
@@ -169,6 +184,8 @@
 			children = (
 				24A5791229BC552C00495E6F /* StoleMyKia */,
 				24A5791129BC552C00495E6F /* Products */,
+				6038246990B0B9DAE005F8EA /* Pods */,
+				D5F7A8C256A07441AB8A53B9 /* Frameworks */,
 			);
 			sourceTree = "<group>";
 		};
@@ -184,6 +201,9 @@
 			isa = PBXGroup;
 			children = (
 				24A5791329BC552C00495E6F /* StoleMyKiaApp.swift */,
+				24A5791729BC552E00495E6F /* Assets.xcassets */,
+				24EAF11A29C2C10200B4CBFE /* GoogleService-Info.plist */,
+				24A662F529C2F34700AD784F /* Network */,
 				24334CFE29C187620084B8EC /* CoreData */,
 				24A4CEDC29BFA2C100B856BC /* Extension */,
 				24A5792D29BC5C7B00495E6F /* View Models */,
@@ -191,7 +211,6 @@
 				24334D0229C19DF70084B8EC /* UIKit */,
 				2437328129BEFB16008F4C4E /* Views */,
 				24A5792129BC556000495E6F /* Tab View */,
-				24A5791729BC552E00495E6F /* Assets.xcassets */,
 				24A5791929BC552E00495E6F /* Preview Content */,
 			);
 			path = StoleMyKia;
@@ -262,6 +281,14 @@
 			path = Radius;
 			sourceTree = "<group>";
 		};
+		24A662F529C2F34700AD784F /* Network */ = {
+			isa = PBXGroup;
+			children = (
+				24A662F629C2F45B00AD784F /* ReportsManager.swift */,
+			);
+			path = Network;
+			sourceTree = "<group>";
+		};
 		24AC77CC29C110F800768158 /* Report */ = {
 			isa = PBXGroup;
 			children = (
@@ -271,6 +298,31 @@
 			path = Report;
 			sourceTree = "<group>";
 		};
+		24EAF11529C29E2200B4CBFE /* Map */ = {
+			isa = PBXGroup;
+			children = (
+				24EAF11829C2A5D300B4CBFE /* MapSettingsView.swift */,
+			);
+			path = Map;
+			sourceTree = "<group>";
+		};
+		6038246990B0B9DAE005F8EA /* Pods */ = {
+			isa = PBXGroup;
+			children = (
+				CB1F3C6B9B65B1A9366554C7 /* Pods-StoleMyKia.debug.xcconfig */,
+				562368835F2B675102514EA4 /* Pods-StoleMyKia.release.xcconfig */,
+			);
+			path = Pods;
+			sourceTree = "<group>";
+		};
+		D5F7A8C256A07441AB8A53B9 /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				197A31A21B533A0B83DC4715 /* Pods_StoleMyKia.framework */,
+			);
+			name = Frameworks;
+			sourceTree = "<group>";
+		};
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
@@ -278,9 +330,11 @@
 			isa = PBXNativeTarget;
 			buildConfigurationList = 24A5791E29BC552E00495E6F /* Build configuration list for PBXNativeTarget "StoleMyKia" */;
 			buildPhases = (
+				20AA9D4B464BAC6B495344AA /* [CP] Check Pods Manifest.lock */,
 				24A5790C29BC552C00495E6F /* Sources */,
 				24A5790D29BC552C00495E6F /* Frameworks */,
 				24A5790E29BC552C00495E6F /* Resources */,
+				93F76E43D2965F8C4FAED862 /* [CP] Embed Pods Frameworks */,
 			);
 			buildRules = (
 			);
@@ -331,10 +385,53 @@
 			files = (
 				24A5791B29BC552E00495E6F /* Preview Assets.xcassets in Resources */,
 				24A5791829BC552E00495E6F /* Assets.xcassets in Resources */,
+				24EAF11B29C2C10200B4CBFE /* GoogleService-Info.plist in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXResourcesBuildPhase section */
+
+/* Begin PBXShellScriptBuildPhase section */
+		20AA9D4B464BAC6B495344AA /* [CP] Check Pods Manifest.lock */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+			);
+			inputPaths = (
+				"${PODS_PODFILE_DIR_PATH}/Podfile.lock",
+				"${PODS_ROOT}/Manifest.lock",
+			);
+			name = "[CP] Check Pods Manifest.lock";
+			outputFileListPaths = (
+			);
+			outputPaths = (
+				"$(DERIVED_FILE_DIR)/Pods-StoleMyKia-checkManifestLockResult.txt",
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n# This output is used by Xcode 'outputs' to avoid re-running this script phase.\necho \"SUCCESS\" > \"${SCRIPT_OUTPUT_FILE_0}\"\n";
+			showEnvVarsInLog = 0;
+		};
+		93F76E43D2965F8C4FAED862 /* [CP] Embed Pods Frameworks */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+				"${PODS_ROOT}/Target Support Files/Pods-StoleMyKia/Pods-StoleMyKia-frameworks-${CONFIGURATION}-input-files.xcfilelist",
+			);
+			name = "[CP] Embed Pods Frameworks";
+			outputFileListPaths = (
+				"${PODS_ROOT}/Target Support Files/Pods-StoleMyKia/Pods-StoleMyKia-frameworks-${CONFIGURATION}-output-files.xcfilelist",
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-StoleMyKia/Pods-StoleMyKia-frameworks.sh\"\n";
+			showEnvVarsInLog = 0;
+		};
+/* End PBXShellScriptBuildPhase section */
 
 /* Begin PBXSourcesBuildPhase section */
 		24A5790C29BC552C00495E6F /* Sources */ = {
@@ -347,7 +444,9 @@
 				24A5792429BC559100495E6F /* MapView.swift in Sources */,
 				24A4CEDE29BFA2CE00B856BC /* UNAuth+EXT.swift in Sources */,
 				24334D0429C19E100084B8EC /* UIImagePicker.swift in Sources */,
+				24EAF11929C2A5D300B4CBFE /* MapSettingsView.swift in Sources */,
 				24A4CEE429BFAC7100B856BC /* CLLocationManager+EXT.swift in Sources */,
+				24EAF11729C2A02900B4CBFE /* SFSafariView.swift in Sources */,
 				24A5792F29BC5C8700495E6F /* ReportsViewModel.swift in Sources */,
 				24334D0629C1A0E10084B8EC /* View+EXT.swift in Sources */,
 				24A5791429BC552C00495E6F /* StoleMyKiaApp.swift in Sources */,
@@ -364,6 +463,7 @@
 				24334CFB29C0E0130084B8EC /* UIImage+EXT.swift in Sources */,
 				24334CFD29C1846C0084B8EC /* Image+EXT.swift in Sources */,
 				2437327E29BEF8B6008F4C4E /* NotificationsView.swift in Sources */,
+				24A662F729C2F45B00AD784F /* ReportsManager.swift in Sources */,
 				24A4CED829BF9E9B00B856BC /* SettingsView.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -487,6 +587,7 @@
 		};
 		24A5791F29BC552E00495E6F /* Debug */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = CB1F3C6B9B65B1A9366554C7 /* Pods-StoleMyKia.debug.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
@@ -519,6 +620,7 @@
 		};
 		24A5792029BC552E00495E6F /* Release */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = 562368835F2B675102514EA4 /* Pods-StoleMyKia.release.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;

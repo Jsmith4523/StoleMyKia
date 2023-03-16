@@ -93,6 +93,8 @@ struct NewReportView: View {
                 }
             }
         }
+        .accentColor(.accentColor)
+        .interactiveDismissDisabled()
         .imagePicker(isPresented: $isShowingPhotoPicker, selectedImage: $vehicleImage, sourceType: $source)
     }
 }
