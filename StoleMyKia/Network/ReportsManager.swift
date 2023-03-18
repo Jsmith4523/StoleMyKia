@@ -9,8 +9,9 @@ import Foundation
 import FirebaseStorage
 import FirebaseFirestore
 
-typealias ImageDataCompletion = ((Result<UIImage, Error>)->Void)
-typealias ReportsCompletion   = ((Result<[Report], Error>)->Void)
+typealias ImageDataCompletion    = ((Result<UIImage, Error>)->Void)
+typealias ReportsCompletion      = ((Result<[Report], Error>)->Void)
+typealias UploadReportCompletion = ((Result<Bool, Error>)->Void)
 
 class ReportsManager {
     
@@ -20,7 +21,11 @@ class ReportsManager {
     
     private let storage = Storage.storage()
     private let database = Firestore.firestore()
-
+    
+    private var collection: CollectionReference {
+        database.collection("Reports")
+    }
+    
     func fetchPostImage(from url: URL?, completion: @escaping ImageDataCompletion) {
         guard let url else{
             completion(.failure(ReportManagerError.error("Image url invalid")))
@@ -40,17 +45,47 @@ class ReportsManager {
     }
     
     func fetchReports(completion: @escaping ReportsCompletion) {
-        let collection = database.collection("Reports")
+        var reports = [Report]()
+        
         collection.getDocuments { snapshot, err in
             if let err {
                 completion(.failure(ReportManagerError.error(err.localizedDescription)))
                 return
             }
-            if let snapshot, err == nil {
-                snapshot.documents.compactMap { snapshot in
-                    
+            if let snapshot {
+                do {
+                    for document in snapshot.documents {
+                        let serialData = try JSONSerialization.data(withJSONObject: document.data())
+                        let decodedReport = try JSONDecoder().decode(Report.self, from: serialData)
+                        reports.append(decodedReport)
+                    }
+                } catch {
+                    completion(.failure(ReportManagerError.error("There was an error recieving documents")))
                 }
             }
+            
+            completion(.success(reports))
+        }
+    }
+    
+    
+    func uploadReport(report: Report, completion: @escaping UploadReportCompletion) {
+        do {
+            let ref = collection.document("\(report.id.uuidString)")
+            
+            let data = try JSONEncoder().encode(report)
+            let jsonData = try JSONSerialization.jsonObject(with: data) as? [String: Any]
+            
+            if let encodedData = jsonData {
+                ref.setData(encodedData, merge: true) { err in
+                    if let err {
+                        completion(.failure(ReportManagerError.error(err.localizedDescription)))
+                        return
+                    }
+                }
+            }
+        } catch {
+            completion(.failure(ReportManagerError.error("Failed to encode object")))
         }
     }
 }

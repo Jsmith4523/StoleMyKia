@@ -37,6 +37,7 @@ struct NewReportView: View {
                                 .tag($0)
                         }
                     }
+                    .font(.system(size: 16))
                 } header: {
                     Text("Report Type")
                 }

@@ -31,9 +31,9 @@ enum ReportType: String, CaseIterable, Codable {
         case .stolen:
             return .red
         case .found:
-            return .systemBlue
+            return .tintColor
         case .withnessed:
-            return .orange
+            return .systemOrange
         }
     }
 }
@@ -75,24 +75,24 @@ enum VehicleMake: String, CaseIterable, Codable {
 
 enum VehicleModel: String, CaseIterable, Codable, Comparable {
     
-    //MARK: - Hyundai
-    case accent = "Accent"
-    case elantra = "Elantra"
-    case kona = "Kona"
-    case santaFe = "Santa Fe"
-    case tuscon = "Tuscon"
+    //MARK: - Hyundai Vehicles
+    case accent   = "Accent"
+    case elantra  = "Elantra"
+    case kona     = "Kona"
+    case santaFe  = "Santa Fe"
+    case tuscon   = "Tuscon"
     case veloster = "Veloster"
-    case sonata = "Sonata"
-    case venue = "Venue"
+    case sonata   = "Sonata"
+    case venue    = "Venue"
     
-    //MARK: - Kia
-    case forte = "Forte"
-    case rio = "Rio"
-    case optima = "Optima"
-    case soul = "Soul"
+    //MARK: - Kia Vehicles
+    case forte    = "Forte"
+    case rio      = "Rio"
+    case optima   = "Optima"
+    case soul     = "Soul"
     case sportage = "Sportage"
-    case sorento = "Sorento"
-    case seltos = "Seltos"
+    case sorento  = "Sorento"
+    case seltos   = "Seltos"
     
     ///Vehicle make (ex: Hyundai Elantra)
     var make: VehicleMake {
@@ -131,6 +131,7 @@ enum VehicleModel: String, CaseIterable, Codable, Comparable {
         }
     }
     
+    ///The current affected year range of a vehicle
     var year: ClosedRange<Int> {
         switch self {
         case .accent:
@@ -175,21 +176,6 @@ enum VehicleModel: String, CaseIterable, Codable, Comparable {
     }
 }
 
-extension [VehicleModel] {
-    
-    func filter(_ make: VehicleMake, _ year: Int) -> Self {
-        self.sorted(by: <).manufacturer(make).year(year)
-    }
-    
-    private func manufacturer(_ make: VehicleMake) -> Self {
-        self.filter({$0.make == make})
-    }
-    
-    private func year(_ year: Int) -> Self {
-        self.filter({$0.year.contains(year)})
-    }
-}
-
 struct Report: Identifiable, Codable {
     var id = UUID()
     let title: String
@@ -217,5 +203,20 @@ extension Report {
     ///The final year vehicles were affetced. Subject to change 🤷🏽‍♂️
     static var lastAffectedYear: Int {
         2021
+    }
+}
+
+extension [VehicleModel] {
+    
+    func filter(_ make: VehicleMake, _ year: Int) -> Self {
+        self.sorted(by: <).manufacturer(make).year(year)
+    }
+    
+    private func manufacturer(_ make: VehicleMake) -> Self {
+        self.filter({$0.make == make})
+    }
+    
+    private func year(_ year: Int) -> Self {
+        self.filter({$0.year.contains(year)})
     }
 }

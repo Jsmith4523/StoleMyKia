@@ -20,3 +20,13 @@ class ReportAnnotation: NSObject, MKAnnotation {
         self.report     = report
     }
 }
+
+extension ReportAnnotation {
+    
+    ///Will generate and return an array of ReportAnnotation 
+    static func createAnnotaitons(for reports: [Report]) -> [ReportAnnotation] {
+        return reports.compactMap { report in
+                .init(coordinate: report.coordinates, report: report)
+        }
+    }
+}

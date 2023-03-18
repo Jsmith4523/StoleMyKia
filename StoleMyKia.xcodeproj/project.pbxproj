@@ -33,6 +33,7 @@
 		24A5792F29BC5C8700495E6F /* ReportsViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 24A5792E29BC5C8700495E6F /* ReportsViewModel.swift */; };
 		24A5793729BFD9C900495E6F /* RadiusMapCoordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 24A5793629BFD9C900495E6F /* RadiusMapCoordinator.swift */; };
 		24A662F729C2F45B00AD784F /* ReportsManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 24A662F629C2F45B00AD784F /* ReportsManager.swift */; };
+		24A662FA29C592FF00AD784F /* ReportClusterAnnotation.swift in Sources */ = {isa = PBXBuildFile; fileRef = 24A662F929C592FF00AD784F /* ReportClusterAnnotation.swift */; };
 		24AC77CE29C1110B00768158 /* SelectedReportDetailView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 24AC77CD29C1110B00768158 /* SelectedReportDetailView.swift */; };
 		24EAF11729C2A02900B4CBFE /* SFSafariView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 24EAF11629C2A02900B4CBFE /* SFSafariView.swift */; };
 		24EAF11929C2A5D300B4CBFE /* MapSettingsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 24EAF11829C2A5D300B4CBFE /* MapSettingsView.swift */; };
@@ -69,6 +70,7 @@
 		24A5792E29BC5C8700495E6F /* ReportsViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReportsViewModel.swift; sourceTree = "<group>"; };
 		24A5793629BFD9C900495E6F /* RadiusMapCoordinator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RadiusMapCoordinator.swift; sourceTree = "<group>"; };
 		24A662F629C2F45B00AD784F /* ReportsManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReportsManager.swift; sourceTree = "<group>"; };
+		24A662F929C592FF00AD784F /* ReportClusterAnnotation.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReportClusterAnnotation.swift; sourceTree = "<group>"; };
 		24AC77CD29C1110B00768158 /* SelectedReportDetailView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SelectedReportDetailView.swift; sourceTree = "<group>"; };
 		24EAF11629C2A02900B4CBFE /* SFSafariView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SFSafariView.swift; sourceTree = "<group>"; };
 		24EAF11829C2A5D300B4CBFE /* MapSettingsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MapSettingsView.swift; sourceTree = "<group>"; };
@@ -93,6 +95,7 @@
 			isa = PBXGroup;
 			children = (
 				24A5792829BC567F00495E6F /* ReportAnnotation.swift */,
+				24A662F929C592FF00AD784F /* ReportClusterAnnotation.swift */,
 			);
 			path = Annotations;
 			sourceTree = "<group>";
@@ -108,6 +111,7 @@
 		24334D0229C19DF70084B8EC /* UIKit */ = {
 			isa = PBXGroup;
 			children = (
+				24A662F829C592CA00AD784F /* MKMapView */,
 				24334D0329C19E100084B8EC /* UIImagePicker.swift */,
 				24EAF11629C2A02900B4CBFE /* SFSafariView.swift */,
 			);
@@ -249,8 +253,6 @@
 			isa = PBXGroup;
 			children = (
 				24A5792529BC55DF00495E6F /* MapViewRep.swift */,
-				24A4CEE529C04CA200B856BC /* Callout */,
-				241D2FFE29BFF88D00E78792 /* Annotations */,
 			);
 			path = MKMap;
 			sourceTree = "<group>";
@@ -287,6 +289,15 @@
 				24A662F629C2F45B00AD784F /* ReportsManager.swift */,
 			);
 			path = Network;
+			sourceTree = "<group>";
+		};
+		24A662F829C592CA00AD784F /* MKMapView */ = {
+			isa = PBXGroup;
+			children = (
+				241D2FFE29BFF88D00E78792 /* Annotations */,
+				24A4CEE529C04CA200B856BC /* Callout */,
+			);
+			path = MKMapView;
 			sourceTree = "<group>";
 		};
 		24AC77CC29C110F800768158 /* Report */ = {
@@ -459,6 +470,7 @@
 				24A4CEE229BFAA8000B856BC /* NotificationRadiusView.swift in Sources */,
 				24A5793729BFD9C900495E6F /* RadiusMapCoordinator.swift in Sources */,
 				24A4CEE029BFA65100B856BC /* URL+EXT.swift in Sources */,
+				24A662FA29C592FF00AD784F /* ReportClusterAnnotation.swift in Sources */,
 				24334D0129C187800084B8EC /* Reports.xcdatamodeld in Sources */,
 				24334CFB29C0E0130084B8EC /* UIImage+EXT.swift in Sources */,
 				24334CFD29C1846C0084B8EC /* Image+EXT.swift in Sources */,

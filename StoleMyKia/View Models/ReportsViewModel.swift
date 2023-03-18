@@ -14,7 +14,11 @@ final class ReportsViewModel: NSObject, ObservableObject {
     
     @Published var isShowingSelectedReportView = false
     
-    @Published var reports = [Report]()
+    @Published var reports = [Report]() {
+        didSet {
+            mapView.addAnnotations(ReportAnnotation.createAnnotaitons(for: reports))
+        }
+    }
     
     @Published var selectedReport: Report!
     
@@ -28,22 +32,36 @@ final class ReportsViewModel: NSObject, ObservableObject {
     let mapView = MKMapView()
     let locationManager = CLLocationManager()
     
+    private var manager = ReportsManager()
+    
     override init() {
         super.init()
-        
         locationManager.delegate = self
+        
+        self.getReports()
     }
     
-    
-    func moveToCenter(for coordinates: CLLocationCoordinate2D?) {
-        if let coordinates {
-            mapView.setCenter(coordinates, animated: true)
+    func upload(_ report: Report) {
+        manager.uploadReport(report: report) { result in
+            switch result {
+            case .success(_):
+                return
+            case .failure(let error):
+                fatalError(error.localizedDescription)
+                //return
+            }
         }
     }
     
-    func goToUsersLocation() {
-        if let userLocation {
-            mapView.setRegion(MKCoordinateRegion(center: userLocation.coordinate, span: .init(latitudeDelta: 0.10, longitudeDelta: 0.10)), animated: true)
+    ///Will retrieve latest reports from Google Firestore
+    func getReports() {
+        manager.fetchReports { result in
+            switch result {
+            case .success(let reports):
+                self.reports = reports
+            case .failure(let reason):
+                fatalError(reason.localizedDescription)
+            }
         }
     }
 }
@@ -68,6 +86,18 @@ extension ReportsViewModel: CLLocationManagerDelegate {
     func mapView(_ mapView: MKMapView, didUpdate userLocation: MKUserLocation) {
         self.userLocation = userLocation.location
     }
+    
+    func moveToCenter(for coordinates: CLLocationCoordinate2D?) {
+        if let coordinates {
+            mapView.setCenter(coordinates, animated: true)
+        }
+    }
+    
+    func goToUsersLocation() {
+        if let userLocation {
+            mapView.setRegion(MKCoordinateRegion(center: userLocation.coordinate, span: .init(latitudeDelta: 0.10, longitudeDelta: 0.10)), animated: true)
+        }
+    }
 }
 
 //MARK: - MKMapViewDelegate
@@ -89,6 +119,11 @@ extension ReportsViewModel: MKMapViewDelegate {
         self.selectedReport = nil
     }
     
+    func mapView(_ mapView: MKMapView, clusterAnnotationForMemberAnnotations memberAnnotations: [MKAnnotation]) -> MKClusterAnnotation {
+        //MARK: This may cause issues later down the road...
+        ReportClusterAnnotation(memberAnnotations: memberAnnotations)
+    }
+    
     func mapView(_ mapView: MKMapView, viewFor annotation: MKAnnotation) -> MKAnnotationView? {
         if annotation is MKUserLocation { return nil }
         
@@ -104,6 +139,12 @@ extension ReportsViewModel: MKMapViewDelegate {
             reportAnnotation.detailCalloutAccessoryView = calloutView
             
             return reportAnnotation
+        }
+        
+        if let annotation = annotation as? ReportClusterAnnotation {
+            let clusterAnnotation = MKMarkerAnnotationView(annotation: annotation, reuseIdentifier: MKMapViewDefaultClusterAnnotationViewReuseIdentifier)
+            clusterAnnotation.glyphText = "\(annotation.memberAnnotations.count)"
+            return clusterAnnotation
         }
         
         return nil

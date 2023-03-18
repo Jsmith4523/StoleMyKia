@@ -21,7 +21,7 @@ struct MapViewRep: UIViewRepresentable {
         mapView.showsUserLocation = true
         mapView.isRotateEnabled   = false
         mapView.delegate = context.coordinator
-        
+                
         return mapView
     }
     
