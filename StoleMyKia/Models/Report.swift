@@ -12,9 +12,9 @@ import MapKit
 
 enum ReportType: String, CaseIterable, Codable {
     
-    case stolen      = "Stolen Vehicle"
-    case found       = "Vehicle Found"
-    case withnessed  = "Theft Witnessed"
+    case stolen      = "Stolen"
+    case found       = "Found"
+    case withnessed  = "Withnessed"
     
     var annotationImage: String {
         switch self {
@@ -24,6 +24,17 @@ enum ReportType: String, CaseIterable, Codable {
             return "car.fill"
         case .withnessed:
             return "exclamationmark.triangle.fill"
+        }
+    }
+    
+    var description: String {
+        switch self {
+        case .stolen:
+            return "Your vehicle was stolen and you are reporting it."
+        case .found:
+            return "You've found a vehicle that was stolen."
+        case .withnessed:
+            return "You withnessed a vehicle being stolen."
         }
     }
     
@@ -66,7 +77,11 @@ enum VehicleColor: String, CaseIterable, Codable {
     
 }
 
-enum VehicleMake: String, CaseIterable, Codable {
+enum VehicleMake: String, CaseIterable, Hashable, Codable, Identifiable {
+    
+    var id: UUID {
+        UUID()
+    }
     case hyundai = "Hyundai"
     case kia = "Kia"
 }
@@ -86,7 +101,11 @@ enum VehicleMake: String, CaseIterable, Codable {
 //2015-2021 Kia Soul
 //2015-2021 Kia Sportage
 
-enum VehicleModel: String, CaseIterable, Codable, Comparable {
+enum VehicleModel: String, CaseIterable, Codable, Hashable, Comparable, Identifiable {
+    
+    var id: UUID {
+        UUID()
+    }
     
     //MARK: - Hyundai Vehicles
     case accent   = "Accent"
@@ -144,7 +163,7 @@ enum VehicleModel: String, CaseIterable, Codable, Comparable {
         }
     }
     
-    ///The current affected year range of a vehicle
+    ///The current affected year range of a vehicle. This many change in the future because Hyundai!!!
     var year: ClosedRange<Int> {
         switch self {
         case .accent:
@@ -187,10 +206,23 @@ enum VehicleModel: String, CaseIterable, Codable, Comparable {
     static func > (lhs: VehicleModel, rhs: VehicleModel) -> Bool {
         lhs.rawValue > rhs.rawValue
     }
+    
+    ///Will return a vehicle to the given arguments if the conditions do not match. 
+    func matches(make: VehicleMake, year: Int) -> Self {
+        if (self.make == make && self.year.contains(year)) {
+            return self
+        } else if !(self.year.contains(year)) {
+            return Self.allCases.filter(make, year).first!
+        }
+        else {
+            return Self.allCases.filter(make, year).first!
+        }
+    }
 }
 
 struct Report: Identifiable, Codable {
     var id = UUID()
+    
     let title: String
     let description: String
     let reportType: ReportType
@@ -198,6 +230,9 @@ struct Report: Identifiable, Codable {
     let vehicleMake: VehicleMake
     let vehicleColor: VehicleColor
     let vehicleModel: VehicleModel
+    var licensePlate: String?
+    var vin: String?
+    var imageURL: String?
     let lat: Double
     let lon: Double
 }
