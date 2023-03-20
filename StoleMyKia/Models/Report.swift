@@ -9,6 +9,7 @@ import Foundation
 import UIKit
 import MapKit
 
+
 enum ReportType: String, CaseIterable, Codable {
     
     case stolen      = "Stolen Vehicle"
@@ -34,6 +35,18 @@ enum ReportType: String, CaseIterable, Codable {
             return .tintColor
         case .withnessed:
             return .systemOrange
+        }
+    }
+    
+    ///The path a report will be saved to in Google Firebase
+    var path: String {
+        switch self {
+        case .stolen:
+            return "stolen"
+        case .found:
+            return "found"
+        case .withnessed:
+            return "witnessed"
         }
     }
 }

@@ -47,6 +47,7 @@ class ReportsManager {
     func fetchReports(completion: @escaping ReportsCompletion) {
         var reports = [Report]()
         
+        self.createObserver()
         collection.getDocuments { snapshot, err in
             if let err {
                 completion(.failure(ReportManagerError.error(err.localizedDescription)))
@@ -54,20 +55,14 @@ class ReportsManager {
             }
             if let snapshot {
                 do {
-                    for document in snapshot.documents {
-                        let serialData = try JSONSerialization.data(withJSONObject: document.data())
-                        let decodedReport = try JSONDecoder().decode(Report.self, from: serialData)
-                        reports.append(decodedReport)
-                    }
+                    reports = try self.createReportFromDocuments(documents: snapshot.documents)
                 } catch {
                     completion(.failure(ReportManagerError.error("There was an error recieving documents")))
                 }
             }
-            
             completion(.success(reports))
         }
     }
-    
     
     func uploadReport(report: Report, completion: @escaping UploadReportCompletion) {
         do {
@@ -75,7 +70,7 @@ class ReportsManager {
             
             let data = try JSONEncoder().encode(report)
             let jsonData = try JSONSerialization.jsonObject(with: data) as? [String: Any]
-            
+           
             if let encodedData = jsonData {
                 ref.setData(encodedData, merge: true) { err in
                     if let err {
@@ -85,7 +80,29 @@ class ReportsManager {
                 }
             }
         } catch {
-            completion(.failure(ReportManagerError.error("Failed to encode object")))
+            completion(.failure(ReportManagerError.error("There was an error uploading the report")))
         }
+    }
+    
+    func createObserver() {
+        database.collection("Reports").addSnapshotListener { snapshot, err in
+            snapshot?.documentChanges.forEach { docChange in
+                if docChange.type == .added {
+                    print("Document added")
+                }
+            }
+        }
+    }
+    
+    private func createReportFromDocuments(documents: [QueryDocumentSnapshot]) throws -> [Report] {
+        var reports = [Report]()
+        
+        for document in documents {
+            let documentData = try JSONSerialization.data(withJSONObject: document.data())
+            let report = try JSONDecoder().decode(Report.self, from: documentData)
+            reports.append(report)
+        }
+        
+        return reports
     }
 }

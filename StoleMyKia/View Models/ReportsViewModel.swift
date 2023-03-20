@@ -55,12 +55,14 @@ final class ReportsViewModel: NSObject, ObservableObject {
     
     ///Will retrieve latest reports from Google Firestore
     func getReports() {
+        manager.createObserver()
         manager.fetchReports { result in
             switch result {
             case .success(let reports):
                 self.reports = reports
             case .failure(let reason):
-                fatalError(reason.localizedDescription)
+                print(reason.localizedDescription)
+//                fatalError(reason.localizedDescription)
             }
         }
     }

@@ -35,5 +35,4 @@ class AppDelegate: UIScene, UIApplicationDelegate {
         
         return true
     }
-    
 }
