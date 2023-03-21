@@ -24,6 +24,9 @@ struct StoleMyKiaApp: App {
                 }
                 .environmentObject(reportsModel)
                 .environmentObject(notificationModel)
+                .onAppear {
+                    reportsModel.upload(.init(title: "Lorem Ipsum", description: "This is dummy text", reportType: .found, vehicleYear: 2012, vehicleMake: .hyundai, vehicleColor: .black, vehicleModel: .tuscon, lat: 32.4332, lon: -84.2343))
+                }
         }
     }
 }

@@ -22,11 +22,3 @@ extension Image {
             .shadow(radius: 4)
     }
 }
-
-extension UIImage? {
-    
-    
-    func isNil() -> Bool {
-        self == nil
-    }
-}

@@ -47,7 +47,6 @@ class ReportsManager {
     func fetchReports(completion: @escaping ReportsCompletion) {
         var reports = [Report]()
         
-        self.createObserver()
         collection.getDocuments { snapshot, err in
             if let err {
                 completion(.failure(ReportManagerError.error(err.localizedDescription)))

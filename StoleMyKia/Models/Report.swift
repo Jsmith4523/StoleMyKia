@@ -77,11 +77,8 @@ enum VehicleColor: String, CaseIterable, Codable {
     
 }
 
-enum VehicleMake: String, CaseIterable, Hashable, Codable, Identifiable {
+enum VehicleMake: String, CaseIterable, Codable {
     
-    var id: UUID {
-        UUID()
-    }
     case hyundai = "Hyundai"
     case kia = "Kia"
 }
@@ -101,11 +98,7 @@ enum VehicleMake: String, CaseIterable, Hashable, Codable, Identifiable {
 //2015-2021 Kia Soul
 //2015-2021 Kia Sportage
 
-enum VehicleModel: String, CaseIterable, Codable, Hashable, Comparable, Identifiable {
-    
-    var id: UUID {
-        UUID()
-    }
+enum VehicleModel: String, CaseIterable, Codable, Comparable {
     
     //MARK: - Hyundai Vehicles
     case accent   = "Accent"

@@ -67,14 +67,14 @@ struct NewReportView: View {
                         }
                     }
                     Picker("Make", selection: $vehicleMake) {
-                        ForEach(VehicleMake.allCases) {
+                        ForEach(VehicleMake.allCases, id: \.self) {
                             Text($0.rawValue)
                                 .tag($0)
                         }
                     }
                     .tag(vehicleMake)
                     Picker("Model", selection: $vehicleModel) {
-                        ForEach(VehicleModel.allCases.filter(self.vehicleMake, self.vehicleYear)) {
+                        ForEach(VehicleModel.allCases.filter(self.vehicleMake, self.vehicleYear), id: \.self) {
                             Text($0.rawValue)
                                 .tag($0)
                         }
