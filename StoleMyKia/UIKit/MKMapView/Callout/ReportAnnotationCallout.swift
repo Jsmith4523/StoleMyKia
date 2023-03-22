@@ -42,8 +42,10 @@ class ReportAnnotationCallOut: UIView {
     }
     
     func setupTitleView() {
-        titleView.text = report.reportType.rawValue
-        titleView.font = .systemFont(ofSize: 19, weight: .heavy)
+        if let reportType = report.reportType?.rawValue {
+            titleView.text = reportType
+            titleView.font = .systemFont(ofSize: 19, weight: .heavy)
+        }
         
         addSubview(titleView)
         
@@ -54,22 +56,37 @@ class ReportAnnotationCallOut: UIView {
     }
     
     func setupSubtitleView() {
-        subTitleView.text = "\(report.vehicleYear) \(report.vehicleMake.rawValue) \(report.vehicleModel.rawValue) (\(report.vehicleColor.rawValue))"
-        subTitleView.font = .systemFont(ofSize: 13)
-        subTitleView.textColor = .gray
-        subTitleView.textAlignment = .left
-
-        addSubview(subTitleView)
-
-        subTitleView.translatesAutoresizingMaskIntoConstraints = false
-        subTitleView.topAnchor.constraint(equalTo: titleView.bottomAnchor).isActive = true
-        subTitleView.leadingAnchor.constraint(equalTo: leadingAnchor).isActive = true
-        subTitleView.trailingAnchor.constraint(equalTo: trailingAnchor).isActive = true
-        subTitleView.bottomAnchor.constraint(equalTo: bottomAnchor).isActive = true
+        if let year = report.vehicleYear, let make = report.vehicleModel, let model = report.vehicleModel, let color = report.vehicleColor {
+            subTitleView.text = "\(year) \(make.rawValue) \(model.rawValue) (\(color.rawValue))"
+            subTitleView.font = .systemFont(ofSize: 13)
+            subTitleView.textColor = .gray
+            subTitleView.textAlignment = .left
+            
+            addSubview(subTitleView)
+            
+            subTitleView.translatesAutoresizingMaskIntoConstraints = false
+            subTitleView.topAnchor.constraint(equalTo: titleView.bottomAnchor).isActive = true
+            subTitleView.leadingAnchor.constraint(equalTo: leadingAnchor).isActive = true
+            subTitleView.trailingAnchor.constraint(equalTo: trailingAnchor).isActive = true
+        }
     }
     
     func setupInfoButton() {
-        
+        infoButton.titleLabel?.font = .systemFont(ofSize: 13, weight: .regular)
+        infoButton.setTitle("Details", for: .normal)
+        infoButton.setTitleColor(.white, for: .normal)
+        infoButton.clipsToBounds = true
+        infoButton.layer.cornerRadius = 5
+        infoButton.backgroundColor = .tintColor
+        infoButton.addTarget(self, action: #selector(isShowingReportInformationView), for: .touchUpInside)
+
+        addSubview(infoButton)
+
+        infoButton.translatesAutoresizingMaskIntoConstraints = false
+        infoButton.trailingAnchor.constraint(equalTo: trailingAnchor).isActive = true
+        infoButton.leadingAnchor.constraint(equalTo: leadingAnchor).isActive = true
+        infoButton.topAnchor.constraint(equalTo: subTitleView.bottomAnchor, constant: 7).isActive = true
+        infoButton.bottomAnchor.constraint(equalTo: bottomAnchor).isActive = true
     }
     
     @objc func isShowingReportInformationView() {

@@ -15,6 +15,9 @@
 		2437327E29BEF8B6008F4C4E /* NotificationsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2437327D29BEF8B6008F4C4E /* NotificationsView.swift */; };
 		2437328029BEF8FC008F4C4E /* NotificationViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2437327F29BEF8FC008F4C4E /* NotificationViewModel.swift */; };
 		2437328329BEFB2E008F4C4E /* NewReportView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2437328229BEFB2E008F4C4E /* NewReportView.swift */; };
+		2495A02029CAC3DE00457CE7 /* Date+EXT.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2495A01F29CAC3DE00457CE7 /* Date+EXT.swift */; };
+		2495A02229CAC5DF00457CE7 /* String+EXT.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2495A02129CAC5DF00457CE7 /* String+EXT.swift */; };
+		2495A02529CB9EC800457CE7 /* AboutAppView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2495A02429CB9EC800457CE7 /* AboutAppView.swift */; };
 		24A4CED829BF9E9B00B856BC /* SettingsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 24A4CED729BF9E9B00B856BC /* SettingsView.swift */; };
 		24A4CEDB29BF9F9C00B856BC /* NotificationSettingsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 24A4CEDA29BF9F9C00B856BC /* NotificationSettingsView.swift */; };
 		24A4CEDE29BFA2CE00B856BC /* UNAuth+EXT.swift in Sources */ = {isa = PBXBuildFile; fileRef = 24A4CEDD29BFA2CE00B856BC /* UNAuth+EXT.swift */; };
@@ -52,6 +55,9 @@
 		2437327D29BEF8B6008F4C4E /* NotificationsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NotificationsView.swift; sourceTree = "<group>"; };
 		2437327F29BEF8FC008F4C4E /* NotificationViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NotificationViewModel.swift; sourceTree = "<group>"; };
 		2437328229BEFB2E008F4C4E /* NewReportView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NewReportView.swift; sourceTree = "<group>"; };
+		2495A01F29CAC3DE00457CE7 /* Date+EXT.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Date+EXT.swift"; sourceTree = "<group>"; };
+		2495A02129CAC5DF00457CE7 /* String+EXT.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "String+EXT.swift"; sourceTree = "<group>"; };
+		2495A02429CB9EC800457CE7 /* AboutAppView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AboutAppView.swift; sourceTree = "<group>"; };
 		24A4CED729BF9E9B00B856BC /* SettingsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsView.swift; sourceTree = "<group>"; };
 		24A4CEDA29BF9F9C00B856BC /* NotificationSettingsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NotificationSettingsView.swift; sourceTree = "<group>"; };
 		24A4CEDD29BFA2CE00B856BC /* UNAuth+EXT.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UNAuth+EXT.swift"; sourceTree = "<group>"; };
@@ -137,6 +143,14 @@
 			path = Models;
 			sourceTree = "<group>";
 		};
+		2495A02329CB9EA200457CE7 /* About */ = {
+			isa = PBXGroup;
+			children = (
+				2495A02429CB9EC800457CE7 /* AboutAppView.swift */,
+			);
+			path = About;
+			sourceTree = "<group>";
+		};
 		24A4CED529BF9E7C00B856BC /* New Report */ = {
 			isa = PBXGroup;
 			children = (
@@ -151,6 +165,7 @@
 				24A4CED729BF9E9B00B856BC /* SettingsView.swift */,
 				24EAF11529C29E2200B4CBFE /* Map */,
 				24A4CED929BF9F9100B856BC /* Notifications */,
+				2495A02329CB9EA200457CE7 /* About */,
 			);
 			path = Settings;
 			sourceTree = "<group>";
@@ -174,6 +189,8 @@
 				24334CFA29C0E0130084B8EC /* UIImage+EXT.swift */,
 				24334D0529C1A0E10084B8EC /* View+EXT.swift */,
 				24A662FB29C6DD5100AD784F /* UNUserNC+EXT.swift */,
+				2495A01F29CAC3DE00457CE7 /* Date+EXT.swift */,
+				2495A02129CAC5DF00457CE7 /* String+EXT.swift */,
 			);
 			path = Extension;
 			sourceTree = "<group>";
@@ -456,6 +473,7 @@
 				24A5791629BC552C00495E6F /* Tab.swift in Sources */,
 				24A662FC29C6DD5100AD784F /* UNUserNC+EXT.swift in Sources */,
 				24A5792929BC567F00495E6F /* ReportAnnotation.swift in Sources */,
+				2495A02529CB9EC800457CE7 /* AboutAppView.swift in Sources */,
 				24A5792429BC559100495E6F /* MapView.swift in Sources */,
 				24A4CEDE29BFA2CE00B856BC /* UNAuth+EXT.swift in Sources */,
 				24334D0429C19E100084B8EC /* UIImagePicker.swift in Sources */,
@@ -473,12 +491,14 @@
 				24A5792C29BC56B000495E6F /* Report.swift in Sources */,
 				24A4CEE229BFAA8000B856BC /* NotificationRadiusView.swift in Sources */,
 				24A5793729BFD9C900495E6F /* RadiusMapCoordinator.swift in Sources */,
+				2495A02229CAC5DF00457CE7 /* String+EXT.swift in Sources */,
 				24A4CEE029BFA65100B856BC /* URL+EXT.swift in Sources */,
 				24A662FA29C592FF00AD784F /* ReportClusterAnnotation.swift in Sources */,
 				24334D0129C187800084B8EC /* Reports.xcdatamodeld in Sources */,
 				24334CFB29C0E0130084B8EC /* UIImage+EXT.swift in Sources */,
 				24334CFD29C1846C0084B8EC /* Image+EXT.swift in Sources */,
 				2437327E29BEF8B6008F4C4E /* NotificationsView.swift in Sources */,
+				2495A02029CAC3DE00457CE7 /* Date+EXT.swift in Sources */,
 				24A662F729C2F45B00AD784F /* ReportsManager.swift in Sources */,
 				24A4CED829BF9E9B00B856BC /* SettingsView.swift in Sources */,
 			);

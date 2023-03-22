@@ -23,12 +23,18 @@ struct NewReportView: View {
     @State private var licensePlate: String = ""
     @State private var vin: String = ""
     
+    @State private var doesNotHaveVehicleIdentification = false
+    
     @State private var vehicleColor: VehicleColor = .black
     
     @State private var isShowingPhotoPicker = false
     @State private var isShowingPhotoRemoveConfirmation = false
     
     @Environment (\.dismiss) var dismiss
+    
+    var isNotSatisfied: Bool {
+        (self.licensePlate.isEmpty && self.vin.isEmpty) && !doesNotHaveVehicleIdentification
+    }
     
     var body: some View {
         NavigationView {
@@ -61,7 +67,7 @@ struct NewReportView: View {
                 
                 Section {
                     Picker("Year", selection: $vehicleYear) {
-                        ForEach(Report.affectedVehicleYears, id: \.self) {
+                        ForEach(vehicleModel.year, id: \.self) {
                             Text(String($0))
                                 .tag($0)
                         }
@@ -90,17 +96,26 @@ struct NewReportView: View {
                 }
                 
                 Section {
-                    TextField("License Plate", text: $licensePlate)
-                    if (reportType == .stolen || reportType == .found) {
-                        TextField("VIN", text: $vin)
+                    //If the report type is stolen, the owner of the vehicle MUST include this information
+                    Toggle("Not avaliable", isOn: $doesNotHaveVehicleIdentification)
+                        .disabled(self.reportType == .stolen)
+                    if !doesNotHaveVehicleIdentification {
+                        TextField("License Plate", text: $licensePlate)
+                        if (reportType == .stolen || reportType == .found) {
+                            TextField("VIN", text: $vin)
+                        }
                     }
                 } header: {
                     Text("Vehicle Identification")
                 } footer: {
-                    if(reportType == .withnessed) {
-                        Text("Enter the license plate number if noted.")
+                    if doesNotHaveVehicleIdentification {
+                        Text("You do not have any information that could further identify the vehicle you're reporting\n\nNOTE: it might be more difficult to identify and locate the vehicle!")
                     } else {
-                        Text("Enter the license plate number or the vehicle identification number (VIN) of the vehicle. Only one of the fields is required.")
+                        if(reportType == .withnessed) {
+                            Text("Enter the license plate number if noted.\n\nInformation entered is encrypted and cannot be read.")
+                        } else {
+                            Text("Enter the license plate number or the vehicle identification number (VIN) of the vehicle. Only one of the fields is required.\n\nInformation entered is encrypted and cannot be read.")
+                        }
                     }
                 }
                 Section {
@@ -129,6 +144,7 @@ struct NewReportView: View {
                     } label: {
                         Text("Next")
                     }
+                    .disabled(isNotSatisfied)
                 }
             }
             .tint(.accentColor)
@@ -149,6 +165,17 @@ struct NewReportView: View {
                 if licensePlate.count > 8 {
                     self.licensePlate = ""
                 }
+            }
+            .onChange(of: reportType) { type in
+                if type == .withnessed {
+                    vin = ""
+                } else if type == .stolen {
+                    doesNotHaveVehicleIdentification = false
+                }
+            }
+            .onChange(of: doesNotHaveVehicleIdentification) { _ in
+                self.vin = ""
+                self.licensePlate = ""
             }
         }
         .interactiveDismissDisabled()

@@ -11,6 +11,7 @@ import FirebaseFirestore
 
 typealias ImageDataCompletion    = ((Result<UIImage, Error>)->Void)
 typealias ReportsCompletion      = ((Result<[Report], Error>)->Void)
+typealias DeleteReportCompletion = ((Result<Bool, Error>)->Void)
 typealias UploadReportCompletion = ((Result<Bool, Error>)->Void)
 
 class ReportsManager {
@@ -65,7 +66,7 @@ class ReportsManager {
     
     func uploadReport(report: Report, completion: @escaping UploadReportCompletion) {
         do {
-            let ref = collection.document("\(report.id.uuidString)")
+            let ref = collection.document("\(report.reportType?.rawValue ?? "")/\(report.id.uuidString)")
             
             let data = try JSONEncoder().encode(report)
             let jsonData = try JSONSerialization.jsonObject(with: data) as? [String: Any]
@@ -80,6 +81,16 @@ class ReportsManager {
             }
         } catch {
             completion(.failure(ReportManagerError.error("There was an error uploading the report")))
+        }
+    }
+    
+    func removeReport(report: Report, completion: @escaping DeleteReportCompletion) {
+        let ref = collection.document("\(report.id.uuidString)")
+        ref.delete { err in
+            if let err {
+                completion(.failure(ReportManagerError.error(err.localizedDescription)))
+                return
+            }
         }
     }
     

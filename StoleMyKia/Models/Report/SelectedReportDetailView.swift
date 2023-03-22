@@ -13,65 +13,39 @@ struct SelectedReportDetailView: View {
     
     @Environment (\.dismiss) var dismiss
     
+    @State private var testReport: Report? = .init(postDateTime: 1679504992, reportType: .stolen, vehicleYear: 2017, vehicleMake: .hyundai, vehicleColor: .red, vehicleModel: .accent, licensePlate: nil, vin: "", lat: 0, lon: 0)
+    
     var body: some View {
-        if let report = reportsModel.selectedReport {
-            ZStack(alignment: .top) {
-                ScrollView {
-                    VStack(spacing: 2) {
-                        Image("silvey")
-                            .resizable()
-                            .scaledToFill()
-                            .frame(height: 300)
-                            .clipped()
-                            .edgesIgnoringSafeArea(.top)
-                        HStack {
-                            VStack {
-                                VStack(alignment: .leading) {
-                                    Text(report.reportType.rawValue)
-                                        .font(.system(size: 25).weight(.heavy))
-                                    HStack {
-                                        Text("\(report.vehicleColor.rawValue) \(String(report.vehicleYear)) \(report.vehicleMake.rawValue) Elantra")
-                                            .font(.system(size: 15))
-                                            .foregroundColor(.gray)
-                                    }
-                                    Divider()
-                                    Spacer()
-                                    Text("\(report.description)")
-                                        .multilineTextAlignment(.leading)
-                                        .font(.system(size: 17))
-                                }
-                            }
-                            Spacer()
-                        }
-                        .padding()
-                        Spacer()
-                    }
+        NavigationView {
+            ScrollView {
+                ForEach(0...200, id: \.self) {
+                    Text("\($0)")
                 }
-                HStack {
+            }
+            .toolbar {
+                ToolbarItem(placement: .navigationBarLeading) {
                     Button {
                         dismiss()
                     } label: {
                         Image(systemName: "xmark")
-                            .floatingButtonStyle()
                     }
-                    Spacer()
+                }
+                ToolbarItem(placement: .navigationBarTrailing) {
                     Menu {
+                        Button {
+                            
+                        } label: {
+                            Label("Directions", systemImage: "map")
+                        }
                         Button {
                             
                         } label: {
                             Label("Bookmark", systemImage: "bookmark")
                         }
-                        Button {
-                            URL.getDirectionsToLocation(coords: report.coordinates)
-                        } label: {
-                            Label("Get Directions", systemImage: "map")
-                        }
                     } label: {
                         Image(systemName: "ellipsis")
-                            .floatingButtonStyle()
                     }
                 }
-                .padding()
             }
         }
     }

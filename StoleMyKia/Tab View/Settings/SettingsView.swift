@@ -9,6 +9,7 @@ import SwiftUI
 
 struct SettingsView: View {
     
+    @State private var isShowingTwitterSupport = false
     @State private var isShowingPrivacyPolicy = false
     
     @EnvironmentObject var notificationModel: NotificationViewModel
@@ -33,12 +34,22 @@ struct SettingsView: View {
                 }
                 Section {
                     Button {
+                        isShowingTwitterSupport.toggle()
+                    } label: {
+                       Label("Twitter Support", systemImage: "iphone.and.arrow.forward")
+                    }
+                    Button {
                         isShowingPrivacyPolicy.toggle()
                     } label: {
                         Label("Privacy Policy", systemImage: "hand.raised")
                     }
+                    NavigationLink {
+                        AboutAppView()
+                    } label: {
+                        Label("About this app", systemImage: "info.circle")
+                    }
                 } header: {
-                    Text("Privacy Policy")
+                    Text("Support")
                 }
             }
             .navigationTitle("Settings")
@@ -47,6 +58,7 @@ struct SettingsView: View {
         .environmentObject(notificationModel)
         .accentColor(.accentColor)
         .privacyPolicy(isPresented: $isShowingPrivacyPolicy)
+        .twitterSupport(isPresented: $isShowingTwitterSupport)
     }
 }
 

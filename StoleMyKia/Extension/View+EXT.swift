@@ -19,11 +19,16 @@ extension View {
     //TODO: Crete privacy policy
     func privacyPolicy(isPresented: Binding<Bool>) -> some View {
         return self
-            .sheet(isPresented: isPresented) { SafariView(url: URL(string: "https://www.google.com")!).ignoresSafeArea() }
+            .safari(isPresented: isPresented, url: URL(string: "https://www.google.com")!)
     }
     
     func safari(isPresented: Binding<Bool>, url: URL) -> some View {
         return self
             .sheet(isPresented: isPresented) { SafariView(url: url).ignoresSafeArea() }
+    }
+    
+    func twitterSupport(isPresented: Binding<Bool>) -> some View {
+        return self
+            .safari(isPresented: isPresented, url: URL.twitterSupportURL)
     }
 }

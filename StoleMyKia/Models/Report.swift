@@ -10,11 +10,11 @@ import UIKit
 import MapKit
 
 
-enum ReportType: String, CaseIterable, Codable {
+enum ReportType: String, CaseIterable, Hashable, Codable {
     
     case stolen      = "Stolen"
     case found       = "Found"
-    case withnessed  = "Withnessed"
+    case withnessed  = "Witnessed"
     
     var annotationImage: String {
         switch self {
@@ -205,9 +205,11 @@ enum VehicleModel: String, CaseIterable, Codable, Comparable {
         if (self.make == make && self.year.contains(year)) {
             return self
         } else if !(self.year.contains(year)) {
+            UINotificationFeedbackGenerator().notificationOccurred(.warning)
             return Self.allCases.filter(make, year).first!
         }
         else {
+            UINotificationFeedbackGenerator().notificationOccurred(.warning)
             return Self.allCases.filter(make, year).first!
         }
     }
@@ -216,13 +218,12 @@ enum VehicleModel: String, CaseIterable, Codable, Comparable {
 struct Report: Identifiable, Codable {
     var id = UUID()
     
-    let title: String
-    let description: String
-    let reportType: ReportType
-    let vehicleYear: Int
-    let vehicleMake: VehicleMake
-    let vehicleColor: VehicleColor
-    let vehicleModel: VehicleModel
+    let postDateTime: TimeInterval?
+    let reportType: ReportType?
+    let vehicleYear: Int?
+    let vehicleMake: VehicleMake?
+    let vehicleColor: VehicleColor?
+    let vehicleModel: VehicleModel?
     var licensePlate: String?
     var vin: String?
     var imageURL: String?

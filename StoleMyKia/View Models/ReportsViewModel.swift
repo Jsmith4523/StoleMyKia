@@ -64,6 +64,10 @@ final class ReportsViewModel: NSObject, ObservableObject {
             }
         }
     }
+    
+    func deleteReport(_ report: Report) {
+        
+    }
 }
 
 //MARK: - CLLocationManagerDelegate
@@ -129,8 +133,8 @@ extension ReportsViewModel: MKMapViewDelegate {
         
         if let annotation = annotation as? ReportAnnotation {
            let reportAnnotation = MKMarkerAnnotationView(annotation: annotation, reuseIdentifier: MKMapViewDefaultAnnotationViewReuseIdentifier)
-            reportAnnotation.glyphImage = UIImage(systemName: annotation.report.reportType.annotationImage)
-            reportAnnotation.markerTintColor = annotation.report.reportType.annotationColor
+            reportAnnotation.glyphImage = UIImage(systemName: annotation.report.reportType!.annotationImage)
+            reportAnnotation.markerTintColor = annotation.report.reportType?.annotationColor
             reportAnnotation.canShowCallout = true
             
             let calloutView = ReportAnnotationCallOut(report: annotation.report)

@@ -10,6 +10,9 @@ import UIKit
 import MapKit
 
 extension URL {
+    static var twitterSupportURL: URL {
+        URL(string: "https://twitter.com/StudentlyCo")!
+    }
     
     static func applicationSettings() -> String {
         UIApplication.openSettingsURLString

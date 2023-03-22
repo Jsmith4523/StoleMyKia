@@ -14,7 +14,7 @@ extension UNUserNotificationCenter {
     func notifyOfStolenVehicle(_ report: Report) {
         let content = UNMutableNotificationContent()
         content.title = "Stolen Vehicle"
-        content.body  = "A \(report.vehicleColor.rawValue) \(report.vehicleYear) \(report.vehicleMake.rawValue) \(report.vehicleModel.rawValue)"
+        //content.body  = "A \(report.vehicleColor.rawValue) \(report.vehicleYear) \(report.vehicleMake.rawValue) \(report.vehicleModel.rawValue)"
         content.sound = UNNotificationSound.default
 
         let trigger = UNTimeIntervalNotificationTrigger(timeInterval: 5, repeats: false)
