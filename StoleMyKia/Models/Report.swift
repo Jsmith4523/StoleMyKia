@@ -8,7 +8,7 @@
 import Foundation
 import UIKit
 import MapKit
-
+import CryptoKit
 
 enum ReportType: String, CaseIterable, Hashable, Codable {
     
@@ -224,8 +224,8 @@ struct Report: Identifiable, Codable {
     let vehicleMake: VehicleMake?
     let vehicleColor: VehicleColor?
     let vehicleModel: VehicleModel?
-    var licensePlate: String?
-    var vin: String?
+    var licensePlate: EncryptedData?
+    var vin: EncryptedData?
     var imageURL: String?
     let lat: Double
     let lon: Double
@@ -245,6 +245,14 @@ extension Report {
     ///The final year vehicles were affetced. Subject to change 🤷🏽‍♂️
     static var lastAffectedYear: Int {
         2021
+    }
+    
+    func verifyVin(input: String) -> Bool {
+       return false
+    }
+    
+    func verifyLicensePlate(input: String) -> Bool {
+        return false
     }
 }
 
