@@ -9,6 +9,13 @@ import Foundation
 import SwiftUI
 import UIKit
 
+extension UINavigationController {
+    
+    open override func viewWillLayoutSubviews() {
+        self.navigationBar.backItem?.backButtonDisplayMode = .minimal
+    }
+}
+
 extension View {
     
     func imagePicker(isPresented: Binding<Bool>, selectedImage: Binding<UIImage?>, sourceType: Binding<UIImagePickerController.SourceType>) -> some View {

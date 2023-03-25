@@ -12,7 +12,7 @@ import UIKit
 
 struct NewReportView: View {
     
-    @State private var vehicleImage: UIImage?
+    @State private var vehicleImage: UIImage? = UIImage(named: "silvey")!
     
     @State private var reportType: ReportType = .stolen
     @State private var reportDescription: String = ""
@@ -54,7 +54,7 @@ struct NewReportView: View {
                 }
                 Section {
                     Picker("Vehicle...", selection: $reportType) {
-                        ForEach(ReportType.allCases, id: \.rawValue) {
+                        ForEach(ReportType.reports, id: \.rawValue) {
                             Text($0.rawValue)
                                 .tag($0)
                         }
@@ -140,7 +140,7 @@ struct NewReportView: View {
                 }
                 ToolbarItem(placement: .navigationBarTrailing) {
                     NavigationLink {
-                        
+                        overview
                     } label: {
                         Text("Next")
                     }
@@ -188,10 +188,24 @@ struct NewReportView: View {
             Text("Remove Image?")
         }
     }
+    
+    
+    var overview: some View {
+        VStack {
+            VStack {
+                
+            }
+            Spacer()
+        }
+        .navigationTitle("Confirm")
+    }
 }
 
 struct NewReportView_Previews: PreviewProvider {
     static var previews: some View {
-        NewReportView()
+        NavigationView {
+            NewReportView().overview
+                .navigationBarTitleDisplayMode(.inline)
+        }
     }
 }

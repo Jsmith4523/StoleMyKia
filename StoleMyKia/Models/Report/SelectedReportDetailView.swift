@@ -13,8 +13,6 @@ struct SelectedReportDetailView: View {
     
     @Environment (\.dismiss) var dismiss
     
-    @State private var testReport: Report? = .init(postDateTime: 1679504992, reportType: .stolen, vehicleYear: 2017, vehicleMake: .hyundai, vehicleColor: .red, vehicleModel: .accent, licensePlate: nil, vin: "", lat: 0, lon: 0)
-    
     var body: some View {
         NavigationView {
             ScrollView {

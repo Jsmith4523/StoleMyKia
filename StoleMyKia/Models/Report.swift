@@ -15,6 +15,7 @@ enum ReportType: String, CaseIterable, Hashable, Codable {
     case stolen      = "Stolen"
     case found       = "Found"
     case withnessed  = "Witnessed"
+    case spotted     = "Spotted"
     
     var annotationImage: String {
         switch self {
@@ -24,6 +25,8 @@ enum ReportType: String, CaseIterable, Hashable, Codable {
             return "car.fill"
         case .withnessed:
             return "exclamationmark.triangle.fill"
+        case .spotted:
+            return "eye.fill"
         }
     }
     
@@ -35,6 +38,8 @@ enum ReportType: String, CaseIterable, Hashable, Codable {
             return "You've found a vehicle that was stolen."
         case .withnessed:
             return "You withnessed a vehicle being stolen."
+        case .spotted:
+            return ""
         }
     }
     
@@ -46,6 +51,8 @@ enum ReportType: String, CaseIterable, Hashable, Codable {
             return .tintColor
         case .withnessed:
             return .systemOrange
+        case .spotted:
+            return .green
         }
     }
     
@@ -58,7 +65,17 @@ enum ReportType: String, CaseIterable, Hashable, Codable {
             return "found"
         case .withnessed:
             return "witnessed"
+        case .spotted:
+            return "spotted"
         }
+    }
+    
+    static var reports: [ReportType] {
+        [.stolen, .withnessed, .found]
+    }
+    
+    static var update: [ReportType] {
+        [.found, .spotted]
     }
 }
 
@@ -224,9 +241,10 @@ struct Report: Identifiable, Codable {
     let vehicleMake: VehicleMake?
     let vehicleColor: VehicleColor?
     let vehicleModel: VehicleModel?
-    var licensePlate: EncryptedData?
-    var vin: EncryptedData?
-    var imageURL: String?
+    let licensePlate: EncryptedData?
+    let vin: EncryptedData?
+    let imageURL: String?
+    var isFound: Bool?
     let lat: Double
     let lon: Double
 }

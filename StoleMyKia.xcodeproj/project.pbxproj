@@ -40,6 +40,9 @@
 		24A662FC29C6DD5100AD784F /* UNUserNC+EXT.swift in Sources */ = {isa = PBXBuildFile; fileRef = 24A662FB29C6DD5100AD784F /* UNUserNC+EXT.swift */; };
 		24AAC49A29CC1A6400125196 /* AES+EXT.swift in Sources */ = {isa = PBXBuildFile; fileRef = 24AAC49929CC1A6400125196 /* AES+EXT.swift */; };
 		24AC77CE29C1110B00768158 /* SelectedReportDetailView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 24AC77CD29C1110B00768158 /* SelectedReportDetailView.swift */; };
+		24B897EC29CF5A3B0003BCC8 /* LoginViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 24B897EB29CF5A3B0003BCC8 /* LoginViewModel.swift */; };
+		24B897F129CF5CEA0003BCC8 /* UserLoginView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 24B897F029CF5CEA0003BCC8 /* UserLoginView.swift */; };
+		24B897F329CF63B40003BCC8 /* UserCreateAccountView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 24B897F229CF63B40003BCC8 /* UserCreateAccountView.swift */; };
 		24EAF11729C2A02900B4CBFE /* SFSafariView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 24EAF11629C2A02900B4CBFE /* SFSafariView.swift */; };
 		24EAF11929C2A5D300B4CBFE /* MapSettingsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 24EAF11829C2A5D300B4CBFE /* MapSettingsView.swift */; };
 		24EAF11B29C2C10200B4CBFE /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 24EAF11A29C2C10200B4CBFE /* GoogleService-Info.plist */; };
@@ -82,6 +85,9 @@
 		24A662FB29C6DD5100AD784F /* UNUserNC+EXT.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UNUserNC+EXT.swift"; sourceTree = "<group>"; };
 		24AAC49929CC1A6400125196 /* AES+EXT.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "AES+EXT.swift"; sourceTree = "<group>"; };
 		24AC77CD29C1110B00768158 /* SelectedReportDetailView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SelectedReportDetailView.swift; sourceTree = "<group>"; };
+		24B897EB29CF5A3B0003BCC8 /* LoginViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginViewModel.swift; sourceTree = "<group>"; };
+		24B897F029CF5CEA0003BCC8 /* UserLoginView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserLoginView.swift; sourceTree = "<group>"; };
+		24B897F229CF63B40003BCC8 /* UserCreateAccountView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserCreateAccountView.swift; sourceTree = "<group>"; };
 		24EAF11629C2A02900B4CBFE /* SFSafariView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SFSafariView.swift; sourceTree = "<group>"; };
 		24EAF11829C2A5D300B4CBFE /* MapSettingsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MapSettingsView.swift; sourceTree = "<group>"; };
 		24EAF11A29C2C10200B4CBFE /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
@@ -139,6 +145,7 @@
 		2437328129BEFB16008F4C4E /* Views */ = {
 			isa = PBXGroup;
 			children = (
+				24B897EE29CF5C990003BCC8 /* Auth */,
 				24AC77CC29C110F800768158 /* Report */,
 			);
 			name = Views;
@@ -293,6 +300,7 @@
 			children = (
 				24A5792E29BC5C8700495E6F /* ReportsViewModel.swift */,
 				2437327F29BEF8FC008F4C4E /* NotificationViewModel.swift */,
+				24B897EB29CF5A3B0003BCC8 /* LoginViewModel.swift */,
 			);
 			path = "View Models";
 			sourceTree = "<group>";
@@ -330,6 +338,15 @@
 				24AC77CD29C1110B00768158 /* SelectedReportDetailView.swift */,
 			);
 			path = Report;
+			sourceTree = "<group>";
+		};
+		24B897EE29CF5C990003BCC8 /* Auth */ = {
+			isa = PBXGroup;
+			children = (
+				24B897F029CF5CEA0003BCC8 /* UserLoginView.swift */,
+				24B897F229CF63B40003BCC8 /* UserCreateAccountView.swift */,
+			);
+			path = Auth;
 			sourceTree = "<group>";
 		};
 		24EAF11529C29E2200B4CBFE /* Map */ = {
@@ -482,6 +499,7 @@
 				24334D0429C19E100084B8EC /* UIImagePicker.swift in Sources */,
 				24EAF11929C2A5D300B4CBFE /* MapSettingsView.swift in Sources */,
 				24A4CEE429BFAC7100B856BC /* CLLocationManager+EXT.swift in Sources */,
+				24B897EC29CF5A3B0003BCC8 /* LoginViewModel.swift in Sources */,
 				24EAF11729C2A02900B4CBFE /* SFSafariView.swift in Sources */,
 				24A5792F29BC5C8700495E6F /* ReportsViewModel.swift in Sources */,
 				24334D0629C1A0E10084B8EC /* View+EXT.swift in Sources */,
@@ -501,8 +519,10 @@
 				24334CFB29C0E0130084B8EC /* UIImage+EXT.swift in Sources */,
 				24334CFD29C1846C0084B8EC /* Image+EXT.swift in Sources */,
 				2437327E29BEF8B6008F4C4E /* NotificationsView.swift in Sources */,
+				24B897F129CF5CEA0003BCC8 /* UserLoginView.swift in Sources */,
 				24AAC49A29CC1A6400125196 /* AES+EXT.swift in Sources */,
 				2495A02029CAC3DE00457CE7 /* Date+EXT.swift in Sources */,
+				24B897F329CF63B40003BCC8 /* UserCreateAccountView.swift in Sources */,
 				24A662F729C2F45B00AD784F /* ReportsManager.swift in Sources */,
 				24A4CED829BF9E9B00B856BC /* SettingsView.swift in Sources */,
 			);

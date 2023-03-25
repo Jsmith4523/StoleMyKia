@@ -38,18 +38,23 @@ import Firebase
 struct StoleMyKiaApp: App {
     
     @StateObject private var notificationModel = NotificationViewModel()
-    @StateObject private var reportsModel = ReportsViewModel()
+    @StateObject private var loginModel        = LoginViewModel()
+    @StateObject private var reportsModel      = ReportsViewModel()
     
     @UIApplicationDelegateAdaptor (AppDelegate.self) var appDelegate
     
     var body: some Scene {
         WindowGroup {
-            Tab()
-                .sheet(isPresented: $reportsModel.isShowingSelectedReportView) {
-                    SelectedReportDetailView()
-                }
-                .environmentObject(reportsModel)
-                .environmentObject(notificationModel)
+            if loginModel.isUserSignedIn {
+                Tab()
+                    .sheet(isPresented: $reportsModel.isShowingSelectedReportView) {
+                        SelectedReportDetailView()
+                    }
+                    .environmentObject(reportsModel)
+                    .environmentObject(notificationModel)
+            } else {
+                
+            }
         }
     }
 }
