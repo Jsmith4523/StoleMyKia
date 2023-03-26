@@ -45,15 +45,17 @@ struct StoleMyKiaApp: App {
     
     var body: some Scene {
         WindowGroup {
-            if loginModel.isUserSignedIn {
+            switch loginModel.isUserSignedIn {
+            case true:
                 Tab()
                     .sheet(isPresented: $reportsModel.isShowingSelectedReportView) {
                         SelectedReportDetailView()
                     }
                     .environmentObject(reportsModel)
                     .environmentObject(notificationModel)
-            } else {
-                
+                    .environmentObject(loginModel)
+            case false:
+                UserLoginView(loginModel: loginModel)
             }
         }
     }

@@ -9,26 +9,32 @@ import Foundation
 import FirebaseAuth
 
 final class LoginViewModel: ObservableObject {
-    
-    @Published var isUserSignedIn = false
         
+    @Published var isUserSignedIn = false
+            
     private let auth = Auth.auth()
     
     private var isSignedIn: Void {
         self.isUserSignedIn = !(auth.currentUser == nil)
     }
     
-    func signIn(email: String, password: String) {
+    func signIn(email: String, password: String, completion: @escaping (Bool?)->Void) {
         auth.signIn(withEmail: email, password: password) { result, err in
             guard result != nil, err == nil else {
+                completion(false)
                 return
             }
         }
     }
     
-    func signUp(email: String, password: String) {
+    func sendResetPasswordLink(to email: String) {
+        auth.sendPasswordReset(withEmail: email)
+    }
+    
+    func signUp(email: String, password: String, completion: @escaping (Bool?)->Void) {
         auth.createUser(withEmail: email, password: password) { result, err in
             guard result != nil, err == nil else {
+                completion(false)
                 return
             }
         }

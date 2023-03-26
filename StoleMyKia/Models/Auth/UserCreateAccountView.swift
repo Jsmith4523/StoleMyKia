@@ -8,13 +8,38 @@
 import SwiftUI
 
 struct UserCreateAccountView: View {
+    
+    @State private var email = ""
+    @State private var password = ""
+
+    @ObservedObject var loginModel: LoginViewModel
+    
+    @Environment (\.dismiss) var dismiss
+    
     var body: some View {
-        Text(/*@START_MENU_TOKEN@*/"Hello, World!"/*@END_MENU_TOKEN@*/)
+        ZStack {
+            Color(uiColor: .secondarySystemBackground).ignoresSafeArea()
+            VStack {
+                Text("Enter Your Information")
+            }
+        }
+        .toolbar {
+            ToolbarItem(placement: .navigationBarLeading) {
+                Button {
+                    dismiss()
+                } label: {
+                    Image(systemName: "xmark")
+                }
+            }
+        }
+        .navigationBarBackButtonHidden()
     }
 }
 
 struct UserCreateAccountView_Previews: PreviewProvider {
     static var previews: some View {
-        UserCreateAccountView()
+        NavigationView {
+            UserCreateAccountView(loginModel: LoginViewModel())
+        }
     }
 }

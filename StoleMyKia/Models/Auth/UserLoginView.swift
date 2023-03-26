@@ -17,34 +17,93 @@ struct UserLoginView: View {
     @State private var email = ""
     @State private var password = ""
     
+    @State private var alertError = false
+    
     @ObservedObject var loginModel: LoginViewModel
     
     @FocusState private var loginFocus: LoginFocus?
     
     var body: some View {
-        ZStack {
-            Color(uiColor: .secondarySystemBackground).ignoresSafeArea()
-            VStack(alignment: .leading) {
-                Spacer()
-                    .frame(height: 100)
-                Text("Welcome Back!")
-                    .font(.system(size: 35).bold())
-                    .padding(.horizontal)
-                Spacer()
-                    .frame(height: 100)
-                VStack(spacing: 20) {
-                    TextField("Email", text: $email)
-                        .loginTextFieldStyle()
-                        .focused($loginFocus, equals: .email)
-                    SecureField("Password", text: $password)
-                        .loginTextFieldStyle()
-                        .focused($loginFocus, equals: .password)
+        NavigationView {
+            ZStack {
+                Color(uiColor: .secondarySystemBackground).ignoresSafeArea()
+                VStack {
+                    Spacer()
+                        .frame(height: 75)
+                    Text("Welcome!")
+                        .font(.system(size: 35).bold())
+                    Spacer()
+                        .frame(height: 15)
+                    Text("Let's fight crime!")
+                        .font(.system(size: 16))
+                        .foregroundColor(.gray)
+                    Spacer()
+                        .frame(height: 70)
+                    VStack(spacing: 20) {
+                        VStack(spacing: 20) {
+                            TextField("Email", text: $email)
+                                .loginTextFieldStyle()
+                                .focused($loginFocus, equals: .email)
+                            SecureField("Password", text: $password)
+                                .loginTextFieldStyle()
+                                .focused($loginFocus, equals: .password)
+                        }
+                        HStack {
+                            NavigationLink {
+                                
+                            } label: {
+                                Text("Forgot Password?")
+                                    .font(.system(size: 14))
+                            }
+                            Divider()
+                            NavigationLink {
+                                UserCreateAccountView(loginModel: loginModel)
+                            } label: {
+                                Text("Create Account")
+                                    .font(.system(size: 14))
+                            }
+                        }
+                        .frame(height: 15)
+                    }
+                    .padding()
+                    Spacer()
+                    Button {
+                        beginLogin()
+                    } label: {
+                        Text("Login")
+                            .padding()
+                            .frame(width: 300)
+                            .background(Color.accentColor)
+                            .foregroundColor(.white)
+                            .cornerRadius(10)
+                    }
+                    Spacer()
                 }
-                .padding()
-                Spacer()
+                .autocorrectionDisabled()
+                .keyboardType(.alphabet)
             }
-            .autocorrectionDisabled()
-            .keyboardType(.default)
+            .alert("Unable to login", isPresented: $alertError) {
+                Button("Okay"){}
+            } message: {
+                Text("Make sure the information you're entering is correct and try again")
+            }
+        }
+    }
+    
+    private func beginLogin() {
+        guard !(email.isEmpty) else {
+            self.loginFocus = .email
+            return
+        }
+        guard !(password.isEmpty) else {
+            self.loginFocus = .password
+            return
+        }
+        loginModel.signIn(email: email, password: password) { result in
+            guard result == nil else {
+                self.alertError = true
+                return
+            }
         }
     }
 }
@@ -64,6 +123,8 @@ private extension View {
 
 struct UserLoginView_Previews: PreviewProvider {
     static var previews: some View {
-        UserLoginView(loginModel: LoginViewModel())
+        NavigationView {
+            UserLoginView(loginModel: LoginViewModel())
+        }
     }
 }
