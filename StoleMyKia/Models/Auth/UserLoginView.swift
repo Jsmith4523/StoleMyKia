@@ -30,10 +30,10 @@ struct UserLoginView: View {
                 VStack {
                     Spacer()
                         .frame(height: 75)
-                    Text("Welcome!")
+                    Text("Welcome")
                         .font(.system(size: 35).bold())
                     Spacer()
-                        .frame(height: 15)
+                        .frame(height: 10)
                     Text("Let's fight crime!")
                         .font(.system(size: 16))
                         .foregroundColor(.gray)
@@ -50,7 +50,7 @@ struct UserLoginView: View {
                         }
                         HStack {
                             NavigationLink {
-                                
+                                PasswordResetView(loginModel: loginModel)
                             } label: {
                                 Text("Forgot Password?")
                                     .font(.system(size: 14))

@@ -43,6 +43,7 @@
 		24B897EC29CF5A3B0003BCC8 /* LoginViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 24B897EB29CF5A3B0003BCC8 /* LoginViewModel.swift */; };
 		24B897F129CF5CEA0003BCC8 /* UserLoginView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 24B897F029CF5CEA0003BCC8 /* UserLoginView.swift */; };
 		24B897F329CF63B40003BCC8 /* UserCreateAccountView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 24B897F229CF63B40003BCC8 /* UserCreateAccountView.swift */; };
+		24B897F529D08A2B0003BCC8 /* PasswordResetView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 24B897F429D08A2B0003BCC8 /* PasswordResetView.swift */; };
 		24EAF11729C2A02900B4CBFE /* SFSafariView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 24EAF11629C2A02900B4CBFE /* SFSafariView.swift */; };
 		24EAF11929C2A5D300B4CBFE /* MapSettingsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 24EAF11829C2A5D300B4CBFE /* MapSettingsView.swift */; };
 		24EAF11B29C2C10200B4CBFE /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 24EAF11A29C2C10200B4CBFE /* GoogleService-Info.plist */; };
@@ -88,6 +89,7 @@
 		24B897EB29CF5A3B0003BCC8 /* LoginViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginViewModel.swift; sourceTree = "<group>"; };
 		24B897F029CF5CEA0003BCC8 /* UserLoginView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserLoginView.swift; sourceTree = "<group>"; };
 		24B897F229CF63B40003BCC8 /* UserCreateAccountView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserCreateAccountView.swift; sourceTree = "<group>"; };
+		24B897F429D08A2B0003BCC8 /* PasswordResetView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PasswordResetView.swift; sourceTree = "<group>"; };
 		24EAF11629C2A02900B4CBFE /* SFSafariView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SFSafariView.swift; sourceTree = "<group>"; };
 		24EAF11829C2A5D300B4CBFE /* MapSettingsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MapSettingsView.swift; sourceTree = "<group>"; };
 		24EAF11A29C2C10200B4CBFE /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
@@ -345,6 +347,7 @@
 			children = (
 				24B897F029CF5CEA0003BCC8 /* UserLoginView.swift */,
 				24B897F229CF63B40003BCC8 /* UserCreateAccountView.swift */,
+				24B897F429D08A2B0003BCC8 /* PasswordResetView.swift */,
 			);
 			path = Auth;
 			sourceTree = "<group>";
@@ -505,6 +508,7 @@
 				24334D0629C1A0E10084B8EC /* View+EXT.swift in Sources */,
 				24A5791429BC552C00495E6F /* StoleMyKiaApp.swift in Sources */,
 				2437328029BEF8FC008F4C4E /* NotificationViewModel.swift in Sources */,
+				24B897F529D08A2B0003BCC8 /* PasswordResetView.swift in Sources */,
 				24A4CEE729C04CBA00B856BC /* ReportAnnotationCallout.swift in Sources */,
 				24A5792629BC55DF00495E6F /* MapViewRep.swift in Sources */,
 				2437328329BEFB2E008F4C4E /* NewReportView.swift in Sources */,

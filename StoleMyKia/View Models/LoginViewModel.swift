@@ -28,7 +28,20 @@ final class LoginViewModel: ObservableObject {
     }
     
     func sendResetPasswordLink(to email: String) {
-        auth.sendPasswordReset(withEmail: email)
+        auth.sendPasswordReset(withEmail: email) { err in
+            guard err == nil else {
+                return
+            }
+        }
+    }
+    
+    func verifyResetPasscode(code: String, completion: @escaping (Bool?)->Void) {
+        auth.verifyPasswordResetCode(code) { _, err in
+            guard err == nil else {
+                completion(false)
+                return
+            }
+        }
     }
     
     func signUp(email: String, password: String, completion: @escaping (Bool?)->Void) {
