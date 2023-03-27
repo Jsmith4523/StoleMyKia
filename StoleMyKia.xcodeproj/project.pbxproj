@@ -173,12 +173,12 @@
 			path = Login;
 			sourceTree = "<group>";
 		};
-		2438305829D167BA003C3B8A /* Create Account */ = {
+		2438305829D167BA003C3B8A /* Create */ = {
 			isa = PBXGroup;
 			children = (
 				24B897F229CF63B40003BCC8 /* UserCreateAccountView.swift */,
 			);
-			path = "Create Account";
+			path = Create;
 			sourceTree = "<group>";
 		};
 		2495A02329CB9EA200457CE7 /* About */ = {
@@ -373,7 +373,7 @@
 			isa = PBXGroup;
 			children = (
 				2438305729D167B5003C3B8A /* Login */,
-				2438305829D167BA003C3B8A /* Create Account */,
+				2438305829D167BA003C3B8A /* Create */,
 				2438305429D162ED003C3B8A /* Password Reset */,
 			);
 			path = Auth;

@@ -52,6 +52,7 @@ final class LoginViewModel: ObservableObject {
                 completion(false)
                 return
             }
+            completion(true)
         }
     }
 }

@@ -30,7 +30,7 @@ struct UserLoginView: View {
                 Color(uiColor: .secondarySystemBackground).ignoresSafeArea()
                 VStack {
                     Spacer()
-                        .frame(height: 35)
+                        .frame(height: 75)
                     Text("Welcome")
                         .customTitleStyle()
                     Spacer()
