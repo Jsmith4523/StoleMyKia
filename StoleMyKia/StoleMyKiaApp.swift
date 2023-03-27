@@ -8,6 +8,42 @@
 import SwiftUI
 import Firebase
 
+@main
+struct StoleMyKiaApp: App {
+    
+    @StateObject private var notificationModel = NotificationViewModel()
+    @StateObject private var loginModel        = LoginViewModel()
+        
+    @UIApplicationDelegateAdaptor (AppDelegate.self) var appDelegate
+    
+    var body: some Scene {
+        WindowGroup {
+            ZStack {
+                switch loginModel.userIsSignedIn {
+                case true:
+                    Tab()
+                        .environmentObject(notificationModel)
+                        .environmentObject(loginModel)
+                case false:
+                    UserLoginView(loginModel: loginModel)
+                }
+            }
+        }
+    }
+}
+
+
+class AppDelegate: UIScene, UIApplicationDelegate {
+    func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey : Any]? = nil) -> Bool {
+        FirebaseApp.configure()
+        
+        UINavigationBar.appearance().barTintColor = .white
+        
+        return true
+    }
+}
+
+
 
 //MARK: DEVELOPER MESSAGE
 
@@ -33,44 +69,3 @@ import Firebase
  
     -- Jaylen Smith (Developer, March 22, 2023 at 12:41AM)
  */
-
-@main
-struct StoleMyKiaApp: App {
-    
-    @StateObject private var notificationModel = NotificationViewModel()
-    @StateObject private var loginModel        = LoginViewModel()
-    
-    @UIApplicationDelegateAdaptor (AppDelegate.self) var appDelegate
-    
-    var body: some Scene {
-        WindowGroup {
-            ZStack {
-                switch loginModel.isUserSignedIn {
-                case true:
-                    Tab()
-                        .environmentObject(notificationModel)
-                        .environmentObject(loginModel)
-                case false:
-                    UserLoginView(loginModel: loginModel)
-                }
-            }
-            .onAppear {
-                loginModel.isUserSignedIn = loginModel.isUserSignedIn
-            }
-            .onChange(of: loginModel.isSignedIn) { bool in
-                print("Is user signed in? \(bool)")
-            }
-        }
-    }
-}
-
-
-class AppDelegate: UIScene, UIApplicationDelegate {
-    func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey : Any]? = nil) -> Bool {
-        FirebaseApp.configure()
-        
-        UINavigationBar.appearance().barTintColor = .white
-        
-        return true
-    }
-}

@@ -8,16 +8,23 @@
 import Foundation
 import FirebaseAuth
 
+@MainActor
 final class LoginViewModel: ObservableObject {
         
-    ///Determi
-    @Published var isUserSignedIn = false
+    @Published var userIsSignedIn = false
             
     private let auth = Auth.auth()
     
-    ///Use published property 'isUserSignedIn' instead to watch for changes! This is a get-only property
-    var isSignedIn: Bool {
-        return !(auth.currentUser == nil)
+    init() {
+        Auth.auth().addStateDidChangeListener { auth, user in
+            if !(user == nil) {
+                print("User is signed in: uid \(user?.uid)")
+                self.userIsSignedIn = true
+            } else {
+                print("User is not signed in")
+                self.userIsSignedIn = false
+            }
+        }
     }
     
     func signIn(email: String, password: String, completion: @escaping ((Bool?)->Void)) {
@@ -72,6 +79,6 @@ final class LoginViewModel: ObservableObject {
     }
     
     func signOut() throws {
-        try auth.signOut()
+        try? auth.signOut()
     }
 }
