@@ -17,6 +17,7 @@ struct UserLoginView: View {
     @State private var email = ""
     @State private var password = ""
     
+    @State private var isLoading = false
     @State private var alertError = false
     
     @ObservedObject var loginModel: LoginViewModel
@@ -29,9 +30,9 @@ struct UserLoginView: View {
                 Color(uiColor: .secondarySystemBackground).ignoresSafeArea()
                 VStack {
                     Spacer()
-                        .frame(height: 75)
+                        .frame(height: 35)
                     Text("Welcome")
-                        .font(.system(size: 35).bold())
+                        .customTitleStyle()
                     Spacer()
                         .frame(height: 10)
                     Text("Let's fight crime!")
@@ -50,7 +51,7 @@ struct UserLoginView: View {
                         }
                         HStack {
                             NavigationLink {
-                                PasswordResetView(loginModel: loginModel)
+                                PasswordResetEmailView(loginModel: loginModel)
                             } label: {
                                 Text("Forgot Password?")
                                     .font(.system(size: 14))
@@ -67,15 +68,19 @@ struct UserLoginView: View {
                     }
                     .padding()
                     Spacer()
-                    Button {
-                        beginLogin()
-                    } label: {
-                        Text("Login")
-                            .padding()
-                            .frame(width: 300)
-                            .background(Color.accentColor)
-                            .foregroundColor(.white)
-                            .cornerRadius(10)
+                    if isLoading {
+                        ProgressView()
+                    } else {
+                        Button {
+                            beginLogin()
+                        } label: {
+                            Text("Login")
+                                .padding()
+                                .frame(width: 300)
+                                .background(Color.accentColor)
+                                .foregroundColor(.white)
+                                .cornerRadius(10)
+                        }
                     }
                     Spacer()
                 }
@@ -85,7 +90,7 @@ struct UserLoginView: View {
             .alert("Unable to login", isPresented: $alertError) {
                 Button("Okay"){}
             } message: {
-                Text("Make sure the information you're entering is correct and try again")
+                Text("Make sure the information you're entering is correct and try again.")
             }
         }
     }
@@ -99,25 +104,14 @@ struct UserLoginView: View {
             self.loginFocus = .password
             return
         }
+        isLoading = true
         loginModel.signIn(email: email, password: password) { result in
             guard result == nil else {
                 self.alertError = true
                 return
             }
         }
-    }
-}
-
-private extension View {
-    
-    func loginTextFieldStyle() -> some View {
-        return self
-            .padding()
-            .background(Color(uiColor: .systemBackground))
-            .overlay {
-                Rectangle()
-                    .stroke(Color.gray.opacity(0.4), lineWidth: 0.5)
-            }
+        isLoading = false
     }
 }
 

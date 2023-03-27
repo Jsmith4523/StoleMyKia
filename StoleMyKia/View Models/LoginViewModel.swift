@@ -18,7 +18,7 @@ final class LoginViewModel: ObservableObject {
         self.isUserSignedIn = !(auth.currentUser == nil)
     }
     
-    func signIn(email: String, password: String, completion: @escaping (Bool?)->Void) {
+    func signIn(email: String, password: String, completion: @escaping ((Bool?)->Void)) {
         auth.signIn(withEmail: email, password: password) { result, err in
             guard result != nil, err == nil else {
                 completion(false)
@@ -27,9 +27,10 @@ final class LoginViewModel: ObservableObject {
         }
     }
     
-    func sendResetPasswordLink(to email: String) {
+    func sendResetPasswordLink(to email: String, completion: @escaping ((Bool?)->Void)) {
         auth.sendPasswordReset(withEmail: email) { err in
             guard err == nil else {
+                completion(false)
                 return
             }
         }
@@ -41,6 +42,7 @@ final class LoginViewModel: ObservableObject {
                 completion(false)
                 return
             }
+            completion(true)
         }
     }
     

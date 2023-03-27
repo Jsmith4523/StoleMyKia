@@ -39,7 +39,6 @@ struct StoleMyKiaApp: App {
     
     @StateObject private var notificationModel = NotificationViewModel()
     @StateObject private var loginModel        = LoginViewModel()
-    @StateObject private var reportsModel      = ReportsViewModel()
     
     @UIApplicationDelegateAdaptor (AppDelegate.self) var appDelegate
     
@@ -48,10 +47,6 @@ struct StoleMyKiaApp: App {
             switch loginModel.isUserSignedIn {
             case true:
                 Tab()
-                    .sheet(isPresented: $reportsModel.isShowingSelectedReportView) {
-                        SelectedReportDetailView()
-                    }
-                    .environmentObject(reportsModel)
                     .environmentObject(notificationModel)
                     .environmentObject(loginModel)
             case false:

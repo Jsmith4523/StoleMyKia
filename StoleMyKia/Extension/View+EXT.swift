@@ -16,7 +16,33 @@ extension UINavigationController {
     }
 }
 
+extension Text {
+    
+    func customTitleStyle() -> some View {
+        return self
+            .font(.system(size: 32).bold())
+            .multilineTextAlignment(.center)
+    }
+    
+    func customSubtitleStyle() -> some View {
+        return self
+            .font(.system(size: 16))
+            .foregroundColor(.gray)
+            .multilineTextAlignment(.center)
+    }
+}
+
 extension View {
+    
+    func loginTextFieldStyle() -> some View {
+        return self
+            .padding()
+            .background(Color(uiColor: .systemBackground))
+            .overlay {
+                Rectangle()
+                    .stroke(Color.gray.opacity(0.4), lineWidth: 0.5)
+            }
+    }
     
     func imagePicker(isPresented: Binding<Bool>, selectedImage: Binding<UIImage?>, sourceType: Binding<UIImagePickerController.SourceType>) -> some View {
         return self

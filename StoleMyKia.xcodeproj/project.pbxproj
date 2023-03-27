@@ -15,6 +15,7 @@
 		2437327E29BEF8B6008F4C4E /* NotificationsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2437327D29BEF8B6008F4C4E /* NotificationsView.swift */; };
 		2437328029BEF8FC008F4C4E /* NotificationViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2437327F29BEF8FC008F4C4E /* NotificationViewModel.swift */; };
 		2437328329BEFB2E008F4C4E /* NewReportView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2437328229BEFB2E008F4C4E /* NewReportView.swift */; };
+		2438305629D16724003C3B8A /* PasswordResetCodeView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2438305529D16724003C3B8A /* PasswordResetCodeView.swift */; };
 		2495A02029CAC3DE00457CE7 /* Date+EXT.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2495A01F29CAC3DE00457CE7 /* Date+EXT.swift */; };
 		2495A02229CAC5DF00457CE7 /* String+EXT.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2495A02129CAC5DF00457CE7 /* String+EXT.swift */; };
 		2495A02529CB9EC800457CE7 /* AboutAppView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2495A02429CB9EC800457CE7 /* AboutAppView.swift */; };
@@ -43,7 +44,7 @@
 		24B897EC29CF5A3B0003BCC8 /* LoginViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 24B897EB29CF5A3B0003BCC8 /* LoginViewModel.swift */; };
 		24B897F129CF5CEA0003BCC8 /* UserLoginView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 24B897F029CF5CEA0003BCC8 /* UserLoginView.swift */; };
 		24B897F329CF63B40003BCC8 /* UserCreateAccountView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 24B897F229CF63B40003BCC8 /* UserCreateAccountView.swift */; };
-		24B897F529D08A2B0003BCC8 /* PasswordResetView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 24B897F429D08A2B0003BCC8 /* PasswordResetView.swift */; };
+		24B897F529D08A2B0003BCC8 /* PasswordResetEmailView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 24B897F429D08A2B0003BCC8 /* PasswordResetEmailView.swift */; };
 		24EAF11729C2A02900B4CBFE /* SFSafariView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 24EAF11629C2A02900B4CBFE /* SFSafariView.swift */; };
 		24EAF11929C2A5D300B4CBFE /* MapSettingsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 24EAF11829C2A5D300B4CBFE /* MapSettingsView.swift */; };
 		24EAF11B29C2C10200B4CBFE /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 24EAF11A29C2C10200B4CBFE /* GoogleService-Info.plist */; };
@@ -60,6 +61,7 @@
 		2437327D29BEF8B6008F4C4E /* NotificationsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NotificationsView.swift; sourceTree = "<group>"; };
 		2437327F29BEF8FC008F4C4E /* NotificationViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NotificationViewModel.swift; sourceTree = "<group>"; };
 		2437328229BEFB2E008F4C4E /* NewReportView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NewReportView.swift; sourceTree = "<group>"; };
+		2438305529D16724003C3B8A /* PasswordResetCodeView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PasswordResetCodeView.swift; sourceTree = "<group>"; };
 		2495A01F29CAC3DE00457CE7 /* Date+EXT.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Date+EXT.swift"; sourceTree = "<group>"; };
 		2495A02129CAC5DF00457CE7 /* String+EXT.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "String+EXT.swift"; sourceTree = "<group>"; };
 		2495A02429CB9EC800457CE7 /* AboutAppView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AboutAppView.swift; sourceTree = "<group>"; };
@@ -89,7 +91,7 @@
 		24B897EB29CF5A3B0003BCC8 /* LoginViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginViewModel.swift; sourceTree = "<group>"; };
 		24B897F029CF5CEA0003BCC8 /* UserLoginView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserLoginView.swift; sourceTree = "<group>"; };
 		24B897F229CF63B40003BCC8 /* UserCreateAccountView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserCreateAccountView.swift; sourceTree = "<group>"; };
-		24B897F429D08A2B0003BCC8 /* PasswordResetView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PasswordResetView.swift; sourceTree = "<group>"; };
+		24B897F429D08A2B0003BCC8 /* PasswordResetEmailView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PasswordResetEmailView.swift; sourceTree = "<group>"; };
 		24EAF11629C2A02900B4CBFE /* SFSafariView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SFSafariView.swift; sourceTree = "<group>"; };
 		24EAF11829C2A5D300B4CBFE /* MapSettingsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MapSettingsView.swift; sourceTree = "<group>"; };
 		24EAF11A29C2C10200B4CBFE /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
@@ -152,6 +154,31 @@
 			);
 			name = Views;
 			path = Models;
+			sourceTree = "<group>";
+		};
+		2438305429D162ED003C3B8A /* Password Reset */ = {
+			isa = PBXGroup;
+			children = (
+				24B897F429D08A2B0003BCC8 /* PasswordResetEmailView.swift */,
+				2438305529D16724003C3B8A /* PasswordResetCodeView.swift */,
+			);
+			path = "Password Reset";
+			sourceTree = "<group>";
+		};
+		2438305729D167B5003C3B8A /* Login */ = {
+			isa = PBXGroup;
+			children = (
+				24B897F029CF5CEA0003BCC8 /* UserLoginView.swift */,
+			);
+			path = Login;
+			sourceTree = "<group>";
+		};
+		2438305829D167BA003C3B8A /* Create Account */ = {
+			isa = PBXGroup;
+			children = (
+				24B897F229CF63B40003BCC8 /* UserCreateAccountView.swift */,
+			);
+			path = "Create Account";
 			sourceTree = "<group>";
 		};
 		2495A02329CB9EA200457CE7 /* About */ = {
@@ -345,9 +372,9 @@
 		24B897EE29CF5C990003BCC8 /* Auth */ = {
 			isa = PBXGroup;
 			children = (
-				24B897F029CF5CEA0003BCC8 /* UserLoginView.swift */,
-				24B897F229CF63B40003BCC8 /* UserCreateAccountView.swift */,
-				24B897F429D08A2B0003BCC8 /* PasswordResetView.swift */,
+				2438305729D167B5003C3B8A /* Login */,
+				2438305829D167BA003C3B8A /* Create Account */,
+				2438305429D162ED003C3B8A /* Password Reset */,
 			);
 			path = Auth;
 			sourceTree = "<group>";
@@ -498,6 +525,7 @@
 				24A5792929BC567F00495E6F /* ReportAnnotation.swift in Sources */,
 				2495A02529CB9EC800457CE7 /* AboutAppView.swift in Sources */,
 				24A5792429BC559100495E6F /* MapView.swift in Sources */,
+				2438305629D16724003C3B8A /* PasswordResetCodeView.swift in Sources */,
 				24A4CEDE29BFA2CE00B856BC /* UNAuth+EXT.swift in Sources */,
 				24334D0429C19E100084B8EC /* UIImagePicker.swift in Sources */,
 				24EAF11929C2A5D300B4CBFE /* MapSettingsView.swift in Sources */,
@@ -508,7 +536,7 @@
 				24334D0629C1A0E10084B8EC /* View+EXT.swift in Sources */,
 				24A5791429BC552C00495E6F /* StoleMyKiaApp.swift in Sources */,
 				2437328029BEF8FC008F4C4E /* NotificationViewModel.swift in Sources */,
-				24B897F529D08A2B0003BCC8 /* PasswordResetView.swift in Sources */,
+				24B897F529D08A2B0003BCC8 /* PasswordResetEmailView.swift in Sources */,
 				24A4CEE729C04CBA00B856BC /* ReportAnnotationCallout.swift in Sources */,
 				24A5792629BC55DF00495E6F /* MapViewRep.swift in Sources */,
 				2437328329BEFB2E008F4C4E /* NewReportView.swift in Sources */,
@@ -665,8 +693,7 @@
 				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchScreen_Generation = YES;
-				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
-				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPhone = "UIInterfaceOrientationPortrait UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
+				INFOPLIST_KEY_UISupportedInterfaceOrientations = UIInterfaceOrientationPortrait;
 				INFOPLIST_KEY_UIUserInterfaceStyle = Light;
 				IPHONEOS_DEPLOYMENT_TARGET = 15.0;
 				LD_RUNPATH_SEARCH_PATHS = (
@@ -698,8 +725,7 @@
 				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchScreen_Generation = YES;
-				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
-				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPhone = "UIInterfaceOrientationPortrait UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
+				INFOPLIST_KEY_UISupportedInterfaceOrientations = UIInterfaceOrientationPortrait;
 				INFOPLIST_KEY_UIUserInterfaceStyle = Light;
 				IPHONEOS_DEPLOYMENT_TARGET = 15.0;
 				LD_RUNPATH_SEARCH_PATHS = (

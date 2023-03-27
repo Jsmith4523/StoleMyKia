@@ -10,8 +10,8 @@ import SwiftUI
 struct Tab: View {
     
     @EnvironmentObject var notificationModel: NotificationViewModel
-    @EnvironmentObject var reportsModel: ReportsViewModel
-    
+    @StateObject private var reportsModel = ReportsViewModel()
+
     var body: some View {
         TabView {
             MapView()
@@ -22,14 +22,15 @@ struct Tab: View {
                 .tabItem {
                     Label("Notifications", systemImage: "bell")
                 }
-            //TODO: Setup Notifications
-               // .badge(5)
             SettingsView()
                 .tabItem {
                     Label("Settings", systemImage: "gear")
                 }
         }
         .accentColor(.accentColor)
+        .sheet(isPresented: $reportsModel.isShowingSelectedReportView) {
+            SelectedReportDetailView()
+        }
         .environmentObject(reportsModel)
         .environmentObject(notificationModel)
     }
@@ -38,7 +39,6 @@ struct Tab: View {
 struct ContentView_Previews: PreviewProvider {
     static var previews: some View {
         Tab()
-            .environmentObject(ReportsViewModel())
             .environmentObject(NotificationViewModel())
     }
 }

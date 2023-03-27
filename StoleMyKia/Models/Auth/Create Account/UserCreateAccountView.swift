@@ -20,7 +20,11 @@ struct UserCreateAccountView: View {
         ZStack {
             Color(uiColor: .secondarySystemBackground).ignoresSafeArea()
             VStack {
+                Spacer()
+                    .frame(height: 100)
                 Text("Enter Your Information")
+                    .customTitleStyle()
+                Spacer()
             }
         }
         .toolbar {
