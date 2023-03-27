@@ -14,7 +14,7 @@ struct PasswordResetEmailView: View {
     @State private var isLoading = false
     @State private var alertError = false
     
-    @State private var pushToPasscodeVerificationView = false
+    @State private var alertEmailSent = false
     
     @ObservedObject var loginModel: LoginViewModel
     
@@ -43,9 +43,6 @@ struct PasswordResetEmailView: View {
                     Spacer()
                 }
                 Spacer()
-                NavigationLink(isActive: $pushToPasscodeVerificationView) {
-                    PasswordResetCodeView(email: email, loginModel: loginModel)
-                } label: {}
             }
             .padding()
         }
@@ -76,6 +73,11 @@ struct PasswordResetEmailView: View {
         } message: {
             Text("You have either entered your email incorrectly or you do not have an active account.")
         }
+        .alert("Sent", isPresented: $alertEmailSent) {
+            Button("OK") {dismiss()}
+        } message: {
+            Text("An email has been sent to \(email) with instructions on how to reset your password.")
+        }
     }
     
     func sendPassResetCode() {
@@ -87,8 +89,8 @@ struct PasswordResetEmailView: View {
                 self.alertError.toggle()
                 return
             }
-            self.pushToPasscodeVerificationView.toggle()
         }
+        self.alertEmailSent.toggle()
     }
 }
 

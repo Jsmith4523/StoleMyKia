@@ -44,13 +44,21 @@ struct StoleMyKiaApp: App {
     
     var body: some Scene {
         WindowGroup {
-            switch loginModel.isUserSignedIn {
-            case true:
-                Tab()
-                    .environmentObject(notificationModel)
-                    .environmentObject(loginModel)
-            case false:
-                UserLoginView(loginModel: loginModel)
+            ZStack {
+                switch loginModel.isUserSignedIn {
+                case true:
+                    Tab()
+                        .environmentObject(notificationModel)
+                        .environmentObject(loginModel)
+                case false:
+                    UserLoginView(loginModel: loginModel)
+                }
+            }
+            .onAppear {
+                loginModel.isUserSignedIn = loginModel.isUserSignedIn
+            }
+            .onChange(of: loginModel.isSignedIn) { bool in
+                print("Is user signed in? \(bool)")
             }
         }
     }

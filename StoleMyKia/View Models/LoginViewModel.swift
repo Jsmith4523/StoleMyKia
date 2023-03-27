@@ -10,12 +10,14 @@ import FirebaseAuth
 
 final class LoginViewModel: ObservableObject {
         
+    ///Determi
     @Published var isUserSignedIn = false
             
     private let auth = Auth.auth()
     
-    private var isSignedIn: Void {
-        self.isUserSignedIn = !(auth.currentUser == nil)
+    ///Use published property 'isUserSignedIn' instead to watch for changes! This is a get-only property
+    var isSignedIn: Bool {
+        return !(auth.currentUser == nil)
     }
     
     func signIn(email: String, password: String, completion: @escaping ((Bool?)->Void)) {
@@ -36,7 +38,7 @@ final class LoginViewModel: ObservableObject {
         }
     }
     
-    func verifyResetPasscode(code: String, completion: @escaping (Bool?)->Void) {
+    func verifyResetPasscode(code: String, completion: @escaping ((Bool?)->Void)) {
         auth.verifyPasswordResetCode(code) { _, err in
             guard err == nil else {
                 completion(false)
@@ -46,7 +48,7 @@ final class LoginViewModel: ObservableObject {
         }
     }
     
-    func signUp(email: String, password: String, completion: @escaping (Bool?)->Void) {
+    func signUp(email: String, password: String, completion: @escaping ((Bool?)->Void)) {
         auth.createUser(withEmail: email, password: password) { result, err in
             guard result != nil, err == nil else {
                 completion(false)
@@ -54,5 +56,22 @@ final class LoginViewModel: ObservableObject {
             }
             completion(true)
         }
+    }
+    
+    ///WARNING: Deletes the signed in users account entirely!
+    func deleteAccount(completion: @escaping ((Bool?)->Void)) {
+        //TODO: Delete reports made by the user
+        auth.currentUser?.delete { err in
+            guard err == nil else {
+                print("❌ Error deleting user account: \(err!.localizedDescription)")
+                completion(false)
+                return
+            }
+            completion(true)
+        }
+    }
+    
+    func signOut() throws {
+        try auth.signOut()
     }
 }

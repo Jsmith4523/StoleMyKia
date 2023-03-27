@@ -9,8 +9,10 @@ import SwiftUI
 
 struct Tab: View {
     
-    @EnvironmentObject var notificationModel: NotificationViewModel
     @StateObject private var reportsModel = ReportsViewModel()
+    
+    @EnvironmentObject var notificationModel: NotificationViewModel
+    @EnvironmentObject var loginModel: LoginViewModel
 
     var body: some View {
         TabView {
@@ -22,9 +24,9 @@ struct Tab: View {
                 .tabItem {
                     Label("Notifications", systemImage: "bell")
                 }
-            SettingsView()
+            UserAccountView(loginModel: loginModel)
                 .tabItem {
-                    Label("Settings", systemImage: "gear")
+                    Label("Account", systemImage: "person")
                 }
         }
         .accentColor(.accentColor)
@@ -33,6 +35,7 @@ struct Tab: View {
         }
         .environmentObject(reportsModel)
         .environmentObject(notificationModel)
+        .environmentObject(loginModel)
     }
 }
 
@@ -40,5 +43,6 @@ struct ContentView_Previews: PreviewProvider {
     static var previews: some View {
         Tab()
             .environmentObject(NotificationViewModel())
+            .environmentObject(LoginViewModel())
     }
 }
