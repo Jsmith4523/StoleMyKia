@@ -77,7 +77,9 @@ final class ReportsViewModel: NSObject, ObservableObject {
     }
     
     func createDatabaseObserver() {
-        manager.createObserver()
+        manager.createObserver {
+            self.getReports()
+        }
     }
 }
 

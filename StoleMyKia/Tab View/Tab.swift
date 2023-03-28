@@ -13,10 +13,12 @@ struct Tab: View {
     
     @EnvironmentObject var notificationModel: NotificationViewModel
     @EnvironmentObject var loginModel: LoginViewModel
+    
+    private let imageCache = ImageCache()
 
     var body: some View {
         TabView {
-            MapView()
+            MapView(imageCache: imageCache)
                 .tabItem {
                     Label("Reports", systemImage: "car.2.fill")
                 }
@@ -31,7 +33,7 @@ struct Tab: View {
         }
         .accentColor(.accentColor)
         .sheet(isPresented: $reportsModel.isShowingSelectedReportView) {
-            SelectedReportDetailView()
+            SelectedReportDetailView(imageCache: imageCache)
         }
         .environmentObject(reportsModel)
         .environmentObject(notificationModel)

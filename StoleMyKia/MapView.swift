@@ -14,6 +14,8 @@ struct MapView: View {
         
     @EnvironmentObject var reportModel: ReportsViewModel
     
+    let imageCache: ImageCache
+    
     var body: some View {
         NavigationView {
             ZStack {
@@ -46,10 +48,10 @@ struct MapView: View {
         .environmentObject(reportModel)
     }
 }
-
-struct MapView_Previews: PreviewProvider {
-    static var previews: some View {
-        MapView()
-            .environmentObject(ReportsViewModel())
-    }
-}
+//
+//struct MapView_Previews: PreviewProvider {
+//    static var previews: some View {
+//        MapView()
+//            .environmentObject(ReportsViewModel())
+//    }
+//}

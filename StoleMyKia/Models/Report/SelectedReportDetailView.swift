@@ -9,7 +9,11 @@ import SwiftUI
 
 struct SelectedReportDetailView: View {
     
+    @State private var vehicleImage: UIImage?
+    
     @State private var report: Report? = Report(dt: 1679994594.5491061, reportType: .stolen, vehicleYear: 2017, vehicleMake: .hyundai, vehicleColor: .silver, vehicleModel: .elantra, licensePlate: nil, vin: nil, imageURL: "https://firebasestorage.googleapis.com:443/v0/b/stolemykia.appspot.com/o/CCE42EFF-0911-4DE4-95F7-7D5B544E87A3?alt=media&token=b2c42be7-88c4-4f16-9798-804429c455e6", lat: 0, lon: 0)
+    
+    let imageCache: ImageCache
     
     @EnvironmentObject var reportsModel: ReportsViewModel
     
@@ -20,9 +24,13 @@ struct SelectedReportDetailView: View {
             ScrollView {
                 if let report = reportsModel.selectedReport {
                     VStack {
-                        Image(uiImage: report.vehicleImage())
-                            .resizable()
-                            .scaledToFit()
+                        if let vehicleImage {
+                            Image(uiImage: vehicleImage)
+                                .resizable()
+                                .scaledToFill()
+                                .frame(height: 300)
+                                .clipped()
+                        }
                         VStack {
                             HStack {
                                 VStack(alignment: .leading) {
@@ -66,6 +74,20 @@ struct SelectedReportDetailView: View {
             }
             .accentColor(Color(uiColor: .label))
         }
+        .onAppear {
+            getVehicleImage()
+        }
+    }
+    
+    func getVehicleImage() {
+        if let report = reportsModel.selectedReport,
+            let urlString = report.imageURL,
+            let url = URL(string: urlString) {
+            
+            imageCache.getImage(url) { image in
+                self.vehicleImage = image
+            }
+        }
     }
 }
 
@@ -75,7 +97,7 @@ struct SelectedReportDetailView_Previews: PreviewProvider {
     @StateObject private static var reportsModel = ReportsViewModel()
     
     static var previews: some View {
-        SelectedReportDetailView()
+        SelectedReportDetailView(imageCache: ImageCache())
             .environmentObject(reportsModel)
     }
 }

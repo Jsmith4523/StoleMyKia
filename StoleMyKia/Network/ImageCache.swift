@@ -17,5 +17,14 @@ class ImageCache {
             completion(image)
             return
         }
+        
+        URLSession.shared.getData(url) { data in
+            guard let data, let image = UIImage(data: data) else {
+                completion(nil)
+                return
+            }
+            self.cache.setObject(image, forKey: url.absoluteString as AnyObject)
+            completion(image)
+        }
     }
 }

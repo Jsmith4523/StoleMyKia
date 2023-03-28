@@ -124,11 +124,11 @@ class ReportsManager {
         }
     }
     
-    func createObserver() {
+    func createObserver(completion: @escaping (()->Void)) {
         database.collection("Reports").addSnapshotListener { snapshot, err in
             snapshot?.documentChanges.forEach { docChange in
-                if docChange.type == .added {
-                    print("Document added")
+                if docChange.type == .removed {
+                    completion()
                 }
             }
         }
