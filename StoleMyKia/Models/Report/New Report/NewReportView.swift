@@ -12,7 +12,7 @@ import UIKit
 
 struct NewReportView: View {
     
-    @State private var vehicleImage: UIImage? = UIImage(named: "silvey")!
+    @State private var vehicleImage: UIImage?
     
     @State private var reportType: ReportType = .stolen
     @State private var reportDescription: String = ""
@@ -29,6 +29,8 @@ struct NewReportView: View {
     
     @State private var isShowingPhotoPicker = false
     @State private var isShowingPhotoRemoveConfirmation = false
+    
+    @EnvironmentObject var reportsModel: ReportsViewModel
     
     @Environment (\.dismiss) var dismiss
     
@@ -139,10 +141,8 @@ struct NewReportView: View {
                     }
                 }
                 ToolbarItem(placement: .navigationBarTrailing) {
-                    NavigationLink {
-                        overview
-                    } label: {
-                        Text("Next")
+                    Button("Post") {
+                        beginPostingReport()
                     }
                     .disabled(isNotSatisfied)
                 }
@@ -190,22 +190,26 @@ struct NewReportView: View {
     }
     
     
-    var overview: some View {
-        VStack {
-            VStack {
-                
-            }
-            Spacer()
-        }
-        .navigationTitle("Confirm")
+    func beginPostingReport() {
+        let report = Report(dt: Date.now.epoch,
+                            reportType: reportType,
+                            vehicleYear: vehicleYear,
+                            vehicleMake: vehicleMake,
+                            vehicleColor: vehicleColor,
+                            vehicleModel: vehicleModel,
+                            licensePlate: EncryptedData.createEncryption(input: licensePlate),
+                            vin: EncryptedData.createEncryption(input: vin),
+                            imageURL: nil,
+                            lat: 34.2334, lon: -75.4323)
+        reportsModel.upload(report, with: vehicleImage)
     }
 }
 
 struct NewReportView_Previews: PreviewProvider {
     static var previews: some View {
         NavigationView {
-            NewReportView().overview
-                .navigationBarTitleDisplayMode(.inline)
+            NewReportView()
+                .environmentObject(ReportsViewModel())
         }
     }
 }

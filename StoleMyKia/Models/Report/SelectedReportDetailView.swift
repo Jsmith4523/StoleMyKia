@@ -16,8 +16,10 @@ struct SelectedReportDetailView: View {
     var body: some View {
         NavigationView {
             ScrollView {
-                ForEach(0...200, id: \.self) {
-                    Text("\($0)")
+                if let report = reportsModel.selectedReport {
+                    VStack {
+                        Text(report.type)
+                    }
                 }
             }
             .toolbar {

@@ -20,7 +20,7 @@ class ReportsManager {
         case error(String)
     }
     
-    private let storage = Storage.storage()
+    private let storage = Storage.storage().reference()
     private let database = Firestore.firestore()
     
     private var collection: CollectionReference {
@@ -64,9 +64,24 @@ class ReportsManager {
         }
     }
     
-    func uploadReport(report: Report, completion: @escaping UploadReportCompletion) {
+    func uploadReport(report: Report, image: UIImage? = nil, completion: @escaping UploadReportCompletion) {
         do {
-            let ref = collection.document("\(report.reportType?.rawValue ?? "")/\(report.id.uuidString)")
+            let ref = collection.document("\(report.id.uuidString)")
+            
+            var report = report
+            
+            if !(image == nil) {
+                //Getting image url from Firebase storage...
+                uploadImage { result in
+                    switch result {
+                    case .success(let imageUrl):
+                        report.imageURL = imageUrl
+                    case .failure(let reason):
+                        completion(.failure(reason))
+                        break
+                    }
+                }
+            }
             
             let data = try JSONEncoder().encode(report)
             let jsonData = try JSONSerialization.jsonObject(with: data) as? [String: Any]
@@ -82,10 +97,37 @@ class ReportsManager {
         } catch {
             completion(.failure(ReportManagerError.error("There was an error uploading the report")))
         }
+        
+        func uploadImage(imageCompletion: @escaping ((Result<String, Error>)->Void)) {
+            if let image, let imageData = image.pngData() {
+                storage.child(report.id.uuidString).putData(imageData) { metadata, err in
+                    guard err == nil else {
+                        print("❌ Error uploading image \(err?.localizedDescription)")
+                        imageCompletion(.failure(ReportManagerError.error("Failed to upload image to storage")))
+                        return
+                    }
+                    self.storage.child(report.id.uuidString).downloadURL { url, err in
+                        if let url {
+                            imageCompletion(.success(url.absoluteString))
+                        }
+                    }
+                }
+            } else {
+                completion(.failure(ReportManagerError.error("Method called but there was an error uploading image...")))
+            }
+        }
     }
     
-    func removeReport(report: Report, completion: @escaping DeleteReportCompletion) {
+    func deleteReport(report: Report, completion: @escaping DeleteReportCompletion) {
         let ref = collection.document("\(report.id.uuidString)")
+        if let imageURL = report.imageURL {
+            storage.child(imageURL).delete { err in
+                guard err == nil else {
+                    completion(.failure(ReportManagerError.error("Unable to delete image from storage")))
+                    return
+                }
+            }
+        }
         ref.delete { err in
             if let err {
                 completion(.failure(ReportManagerError.error(err.localizedDescription)))

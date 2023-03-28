@@ -100,6 +100,7 @@ enum VehicleMake: String, CaseIterable, Codable {
     case kia = "Kia"
 }
 
+//MARK: Vehicles affected based from NTSB
 //2015-2021 Hyundai Accent (all body styles)
 //2015-2021 Hyundai Elantra (two-door and four-door)
 //2015-2021 Hyundai Kona
@@ -235,7 +236,7 @@ enum VehicleModel: String, CaseIterable, Codable, Comparable {
 struct Report: Identifiable, Codable {
     var id = UUID()
     
-    let postDateTime: TimeInterval?
+    let dt: TimeInterval?
     let reportType: ReportType?
     let vehicleYear: Int?
     let vehicleMake: VehicleMake?
@@ -243,7 +244,7 @@ struct Report: Identifiable, Codable {
     let vehicleModel: VehicleModel?
     let licensePlate: EncryptedData?
     let vin: EncryptedData?
-    let imageURL: String?
+    var imageURL: String?
     var isFound: Bool?
     let lat: Double
     let lon: Double
@@ -255,6 +256,27 @@ extension Report {
         CLLocationCoordinate2D(latitude: lat, longitude: lon)
     }
     
+    var type: String {
+        if let reportType {
+            return reportType.rawValue
+        }
+        return ""
+    }
+    
+    var vehicleDetails: String {
+        if let vehicleYear, let vehicleMake, let vehicleModel, let vehicleColor {
+            return "\(vehicleColor.rawValue) \(vehicleYear) \(vehicleMake.rawValue) \(vehicleModel.rawValue)"
+        }
+        return ""
+    }
+    
+    var postTime: String {
+        if let dt {
+            return "\(Date(timeIntervalSince1970: dt))"
+        }
+        return ""
+    }
+        
     ///Affected vehicle years of both Kia's and Hyundai's
     static var affectedVehicleYears: ClosedRange<Int> {
         return 2011...lastAffectedYear

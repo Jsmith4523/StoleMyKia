@@ -18,7 +18,6 @@ final class LoginViewModel: ObservableObject {
     init() {
         Auth.auth().addStateDidChangeListener { auth, user in
             if !(user == nil) {
-                print("User is signed in: uid \(user?.uid)")
                 self.userIsSignedIn = true
             } else {
                 print("User is not signed in")

@@ -16,14 +16,14 @@ struct EncryptedData: Codable {
     var iv: String?
 }
 
-extension AES {
+extension EncryptedData {
 
     static func decode(input: String) -> String? {
         
         return nil
     }
 
-    static func encode(input: String) -> EncryptedData? {
+    static func createEncryption(input: String) -> EncryptedData? {
         
         //This is all very much new code to me
         //I am doing the best of properly encrypting data
