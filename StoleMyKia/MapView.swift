@@ -23,7 +23,7 @@ struct MapView: View {
                 ToolbarItem(placement: .navigationBarLeading) {
                     if let status = reportModel.locationAuthorizationStatus, status.isAuthorized() {
                         Button {
-                            reportModel.goToUsersLocation()
+                            reportModel.goToUsersLocation(animate: true)
                         } label: {
                             Image(systemName: "location")
                         }

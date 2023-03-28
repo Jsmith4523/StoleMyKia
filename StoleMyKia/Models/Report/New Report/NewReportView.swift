@@ -30,6 +30,9 @@ struct NewReportView: View {
     @State private var isShowingPhotoPicker = false
     @State private var isShowingPhotoRemoveConfirmation = false
     
+    @State private var isUploading = false
+    @State private var alertErrorUploading = false
+    
     @EnvironmentObject var reportsModel: ReportsViewModel
     
     @Environment (\.dismiss) var dismiss
@@ -141,10 +144,14 @@ struct NewReportView: View {
                     }
                 }
                 ToolbarItem(placement: .navigationBarTrailing) {
-                    Button("Post") {
-                        beginPostingReport()
+                    if isUploading {
+                        ProgressView()
+                    } else {
+                        Button("Post") {
+                            beginPostingReport()
+                        }
+                        .disabled(isNotSatisfied)
                     }
-                    .disabled(isNotSatisfied)
                 }
             }
             .tint(.accentColor)
@@ -179,6 +186,7 @@ struct NewReportView: View {
             }
         }
         .interactiveDismissDisabled()
+        .disabled(isUploading)
         .imagePicker(isPresented: $isShowingPhotoPicker, selectedImage: $vehicleImage, sourceType: .constant(.photoLibrary))
         .confirmationDialog("", isPresented: $isShowingPhotoRemoveConfirmation) {
             Button("Remove", role: .destructive) {
@@ -187,10 +195,17 @@ struct NewReportView: View {
         } message: {
             Text("Remove Image?")
         }
+        .alert("Error uploading report", isPresented: $alertErrorUploading) {
+            Button("OK") {}
+        } message: {
+            Text("There was a problem uploading your report. Please try again later")
+        }
     }
     
     
     func beginPostingReport() {
+        isUploading = true
+        let generator = UINotificationFeedbackGenerator()
         let report = Report(dt: Date.now.epoch,
                             reportType: reportType,
                             vehicleYear: vehicleYear,
@@ -201,7 +216,17 @@ struct NewReportView: View {
                             vin: EncryptedData.createEncryption(input: vin),
                             imageURL: nil,
                             lat: 34.2334, lon: -75.4323)
-        reportsModel.upload(report, with: vehicleImage)
+        reportsModel.upload(report, with: vehicleImage) { status in
+            switch status {
+            case true:
+                generator.notificationOccurred(.success)
+                self.isUploading = false
+            case false:
+                generator.notificationOccurred(.error)
+                alertErrorUploading.toggle()
+                self.isUploading = false
+            }
+        }
     }
 }
 

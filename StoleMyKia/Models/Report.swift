@@ -81,6 +81,7 @@ enum ReportType: String, CaseIterable, Hashable, Codable {
 
 enum VehicleColor: String, CaseIterable, Codable {
     case red       = "Red"
+    case white     = "White"
     case green     = "Green"
     case blue      = "Blue"
     case orange    = "Orange"
@@ -95,7 +96,6 @@ enum VehicleColor: String, CaseIterable, Codable {
 }
 
 enum VehicleMake: String, CaseIterable, Codable {
-    
     case hyundai = "Hyundai"
     case kia = "Kia"
 }
@@ -275,6 +275,26 @@ extension Report {
             return "\(Date(timeIntervalSince1970: dt))"
         }
         return ""
+    }
+    
+    func vehicleImage() -> UIImage {
+        var image = UIImage()
+        
+        guard let imageURL, let url = URL(string: imageURL) else {
+            return image
+        }
+        
+        URLSession.shared.dataTask(with: url) { data, _, err in
+            guard let data, err == nil else {
+                return
+            }
+            guard let img = UIImage(data: data) else {
+                return
+            }
+            image = img
+        }.resume()
+        
+        return image
     }
         
     ///Affected vehicle years of both Kia's and Hyundai's

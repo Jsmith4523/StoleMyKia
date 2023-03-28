@@ -27,24 +27,6 @@ class ReportsManager {
         database.collection("Reports")
     }
     
-    func fetchPostImage(from url: URL?, completion: @escaping ImageDataCompletion) {
-        guard let url else{
-            completion(.failure(ReportManagerError.error("Image url invalid")))
-            return
-        }
-        let task = URLSession.shared.dataTask(with: url) { data, response, err in
-            guard let data, err == nil else {
-                completion(.failure(ReportManagerError.error("Failed to download image")))
-                return
-            }
-            
-            if let image = UIImage(data: data) {
-                completion(.success(image))
-            }
-        }
-        task.resume()
-    }
-    
     func fetchReports(completion: @escaping ReportsCompletion) {
         var reports = [Report]()
         
@@ -66,8 +48,6 @@ class ReportsManager {
     
     func uploadReport(report: Report, image: UIImage? = nil, completion: @escaping UploadReportCompletion) {
         do {
-            let ref = collection.document("\(report.id.uuidString)")
-            
             var report = report
             
             if !(image == nil) {
@@ -76,23 +56,14 @@ class ReportsManager {
                     switch result {
                     case .success(let imageUrl):
                         report.imageURL = imageUrl
+                        try? sendOffReport(report: report)
                     case .failure(let reason):
                         completion(.failure(reason))
                         break
                     }
                 }
-            }
-            
-            let data = try JSONEncoder().encode(report)
-            let jsonData = try JSONSerialization.jsonObject(with: data) as? [String: Any]
-           
-            if let encodedData = jsonData {
-                ref.setData(encodedData, merge: true) { err in
-                    if let err {
-                        completion(.failure(ReportManagerError.error(err.localizedDescription)))
-                        return
-                    }
-                }
+            } else {
+                try sendOffReport(report: report)
             }
         } catch {
             completion(.failure(ReportManagerError.error("There was an error uploading the report")))
@@ -100,9 +71,9 @@ class ReportsManager {
         
         func uploadImage(imageCompletion: @escaping ((Result<String, Error>)->Void)) {
             if let image, let imageData = image.pngData() {
-                storage.child(report.id.uuidString).putData(imageData) { metadata, err in
+                let imageRef = storage.child(report.id.uuidString)
+                imageRef.putData(imageData) { metadata, err in
                     guard err == nil else {
-                        print("❌ Error uploading image \(err?.localizedDescription)")
                         imageCompletion(.failure(ReportManagerError.error("Failed to upload image to storage")))
                         return
                     }
@@ -114,6 +85,23 @@ class ReportsManager {
                 }
             } else {
                 completion(.failure(ReportManagerError.error("Method called but there was an error uploading image...")))
+            }
+        }
+        
+        func sendOffReport(report: Report) throws {
+            let ref = collection.document("\(report.id.uuidString)")
+            
+            let data = try JSONEncoder().encode(report)
+            let jsonData = try JSONSerialization.jsonObject(with: data) as? [String: Any]
+           
+            if let encodedData = jsonData {
+                ref.setData(encodedData, merge: true) { err in
+                    if let err {
+                        completion(.failure(ReportManagerError.error(err.localizedDescription)))
+                        return
+                    }
+                }
+                completion(.success(true))
             }
         }
     }

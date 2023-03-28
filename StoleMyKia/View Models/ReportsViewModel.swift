@@ -44,14 +44,16 @@ final class ReportsViewModel: NSObject, ObservableObject {
     
     //TODO: Completion
     ///Upload only the report
-    func upload(_ report: Report, with image: UIImage? = nil) {
+    func upload(_ report: Report, with image: UIImage? = nil, completion: @escaping ((Bool)->Void)) {
         manager.uploadReport(report: report, image: image) { result in
             switch result {
             case .success(_):
+                completion(true)
                 return
             case .failure(let error):
+                completion(false)
                 print(error.localizedDescription)
-                //return
+                return
             }
         }
     }
@@ -69,7 +71,9 @@ final class ReportsViewModel: NSObject, ObservableObject {
     }
     
     func deleteReport(_ report: Report) {
-        
+        manager.deleteReport(report: report) { status in
+            
+        }
     }
     
     func createDatabaseObserver() {
@@ -104,9 +108,9 @@ extension ReportsViewModel: CLLocationManagerDelegate {
         }
     }
     
-    func goToUsersLocation() {
+    func goToUsersLocation(animate: Bool = false) {
         if let userLocation {
-            mapView.setRegion(MKCoordinateRegion(center: userLocation.coordinate, span: .init(latitudeDelta: 0.10, longitudeDelta: 0.10)), animated: true)
+            mapView.setRegion(MKCoordinateRegion(center: userLocation.coordinate, span: .init(latitudeDelta: 0.35, longitudeDelta: 0.35)), animated: animate)
         }
     }
 }
