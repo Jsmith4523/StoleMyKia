@@ -20,7 +20,7 @@ final class ReportsViewModel: NSObject, ObservableObject {
         }
     }
     
-    @Published var selectedReport: Report! = .init(dt: 1679941442.0646548, reportType: .stolen, vehicleYear: 2016, vehicleMake: .hyundai, vehicleColor: .red, vehicleModel: .elantra, licensePlate: nil, vin: nil, lat: 32.23432, lon: 32.45323)
+    @Published var selectedReport: Report!
     
     @Published var locationAuthorizationStatus: CLAuthorizationStatus!
 

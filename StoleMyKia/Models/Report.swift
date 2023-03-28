@@ -277,26 +277,6 @@ extension Report {
         return ""
     }
     
-    func vehicleImage() -> UIImage {
-        var image = UIImage()
-        
-        guard let imageURL, let url = URL(string: imageURL) else {
-            return image
-        }
-        
-        URLSession.shared.dataTask(with: url) { data, _, err in
-            guard let data, err == nil else {
-                return
-            }
-            guard let img = UIImage(data: data) else {
-                return
-            }
-            image = img
-        }.resume()
-        
-        return image
-    }
-        
     ///Affected vehicle years of both Kia's and Hyundai's
     static var affectedVehicleYears: ClosedRange<Int> {
         return 2011...lastAffectedYear

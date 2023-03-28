@@ -215,7 +215,7 @@ struct NewReportView: View {
                             licensePlate: EncryptedData.createEncryption(input: licensePlate),
                             vin: EncryptedData.createEncryption(input: vin),
                             imageURL: nil,
-                            lat: 34.2334, lon: -75.4323)
+                            lat: Double.random(in: 40.000...80.000), lon: Double.random(in: 40.000...80.000))
         reportsModel.upload(report, with: vehicleImage) { status in
             switch status {
             case true:

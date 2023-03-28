@@ -56,7 +56,7 @@ class ReportAnnotationCallOut: UIView {
     }
     
     func setupSubtitleView() {
-        if let year = report.vehicleYear, let make = report.vehicleModel, let model = report.vehicleModel, let color = report.vehicleColor {
+        if let year = report.vehicleYear, let make = report.vehicleMake, let model = report.vehicleModel, let color = report.vehicleColor {
             subTitleView.text = "\(year) \(make.rawValue) \(model.rawValue) (\(color.rawValue))"
             subTitleView.font = .systemFont(ofSize: 13)
             subTitleView.textColor = .gray

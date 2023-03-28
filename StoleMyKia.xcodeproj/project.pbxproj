@@ -17,6 +17,7 @@
 		2437328329BEFB2E008F4C4E /* NewReportView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2437328229BEFB2E008F4C4E /* NewReportView.swift */; };
 		2438305629D16724003C3B8A /* PasswordResetCodeView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2438305529D16724003C3B8A /* PasswordResetCodeView.swift */; };
 		244BF51729D178BF00951765 /* UserAccountView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 244BF51629D178BF00951765 /* UserAccountView.swift */; };
+		244BF51929D33F4E00951765 /* ImageCache.swift in Sources */ = {isa = PBXBuildFile; fileRef = 244BF51829D33F4E00951765 /* ImageCache.swift */; };
 		2495A02029CAC3DE00457CE7 /* Date+EXT.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2495A01F29CAC3DE00457CE7 /* Date+EXT.swift */; };
 		2495A02229CAC5DF00457CE7 /* String+EXT.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2495A02129CAC5DF00457CE7 /* String+EXT.swift */; };
 		2495A02529CB9EC800457CE7 /* AboutAppView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2495A02429CB9EC800457CE7 /* AboutAppView.swift */; };
@@ -64,6 +65,7 @@
 		2437328229BEFB2E008F4C4E /* NewReportView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NewReportView.swift; sourceTree = "<group>"; };
 		2438305529D16724003C3B8A /* PasswordResetCodeView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PasswordResetCodeView.swift; sourceTree = "<group>"; };
 		244BF51629D178BF00951765 /* UserAccountView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserAccountView.swift; sourceTree = "<group>"; };
+		244BF51829D33F4E00951765 /* ImageCache.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImageCache.swift; sourceTree = "<group>"; };
 		2495A01F29CAC3DE00457CE7 /* Date+EXT.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Date+EXT.swift"; sourceTree = "<group>"; };
 		2495A02129CAC5DF00457CE7 /* String+EXT.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "String+EXT.swift"; sourceTree = "<group>"; };
 		2495A02429CB9EC800457CE7 /* AboutAppView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AboutAppView.swift; sourceTree = "<group>"; };
@@ -358,6 +360,7 @@
 			isa = PBXGroup;
 			children = (
 				24A662F629C2F45B00AD784F /* ReportsManager.swift */,
+				244BF51829D33F4E00951765 /* ImageCache.swift */,
 			);
 			path = Network;
 			sourceTree = "<group>";
@@ -540,6 +543,7 @@
 				24A4CEDE29BFA2CE00B856BC /* UNAuth+EXT.swift in Sources */,
 				24334D0429C19E100084B8EC /* UIImagePicker.swift in Sources */,
 				24EAF11929C2A5D300B4CBFE /* MapSettingsView.swift in Sources */,
+				244BF51929D33F4E00951765 /* ImageCache.swift in Sources */,
 				24A4CEE429BFAC7100B856BC /* CLLocationManager+EXT.swift in Sources */,
 				24B897EC29CF5A3B0003BCC8 /* LoginViewModel.swift in Sources */,
 				24EAF11729C2A02900B4CBFE /* SFSafariView.swift in Sources */,
