@@ -87,6 +87,23 @@ final class ReportsViewModel: NSObject, ObservableObject {
         }
     }
     
+    ///Retrieves the latest reports that matches the uid
+    func getUsersReports(completion: @escaping (([Report]?)->Void)) {
+        guard let uid = firebaseUserDelegate?.uid else {
+            completion(nil)
+            return
+        }
+        manager.fetchUserReports(uid: uid) { status in
+            switch status {
+            case .success(let reports):
+                completion(reports)
+            case .failure(_):
+                //TODO: Error handle
+                completion(nil)
+            }
+        }
+    }
+    
     func deleteReport(_ report: Report, completion: @escaping ((Bool)->Void)) {
         manager.deleteReport(report: report) { status in
             switch status {

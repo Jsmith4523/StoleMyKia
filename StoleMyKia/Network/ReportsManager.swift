@@ -28,21 +28,37 @@ class ReportsManager {
     }
     
     func fetchReports(completion: @escaping ReportsCompletion) {
-        var reports = [Report]()
-        
         collection.getDocuments { snapshot, err in
-            if let err {
-                completion(.failure(ReportManagerError.error(err.localizedDescription)))
+            guard let snapshot, err == nil else {
+                completion(.failure(ReportManagerError.error("❌ Error retrieving reports: \(err?.localizedDescription ?? "There was an eror")")))
                 return
             }
-            if let snapshot {
-                do {
-                    reports = try self.createReportFromDocuments(documents: snapshot.documents)
-                } catch {
-                    completion(.failure(ReportManagerError.error("There was an error recieving documents")))
-                }
+            do {
+                let reports = try snapshot.createReports()
+                completion(.success(reports))
+            } catch {
+                completion(.failure(ReportManagerError.error("There was an error recieving documents")))
             }
-            completion(.success(reports))
+        }
+    }
+    
+    func fetchUserReports(uid: String?, completion: @escaping ((Result<[Report], Error>)->Void)) {
+        guard let uid else {
+            completion(.failure(ReportManagerError.error("❌ Error retrieving user reports: uid is nil")))
+            return
+        }
+        collection.whereField("uid", isEqualTo: uid).getDocuments { snapshot, err in
+            guard let snapshot, err == nil else {
+                completion(.failure(ReportManagerError.error("❌Error retrieving user reports: \(err?.localizedDescription ?? "There was an error")")))
+                return
+            }
+            
+            do {
+                let reports = try snapshot.createReports()
+                completion(.success(reports))
+            } catch {
+                completion(.failure(ReportManagerError.error("❌Error retrieving user reports: \(err?.localizedDescription ?? "There was an error")")))
+            }
         }
     }
     
@@ -134,11 +150,14 @@ class ReportsManager {
             }
         }
     }
+}
+
+private extension QuerySnapshot {
     
-    private func createReportFromDocuments(documents: [QueryDocumentSnapshot]) throws -> [Report] {
+    func createReports() throws -> [Report] {
         var reports = [Report]()
         
-        for document in documents {
+        for document in self.documents {
             let documentData = try JSONSerialization.data(withJSONObject: document.data())
             let report = try JSONDecoder().decode(Report.self, from: documentData)
             reports.append(report)
