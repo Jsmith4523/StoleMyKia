@@ -121,6 +121,7 @@ class ReportsManager {
                 completion(.failure(ReportManagerError.error(err.localizedDescription)))
                 return
             }
+            completion(.success(true))
         }
     }
     

@@ -30,3 +30,19 @@ extension ReportAnnotation {
         }
     }
 }
+
+extension [MKAnnotation] {
+    
+    ///If the parameter array of reports does not contain the report(s) from the map annotation, remove them
+    func doesNotInclude(_ arr: [Report]) -> [ReportAnnotation] {
+        var removeAnnotations = [ReportAnnotation]()
+        
+        for annotation in self where annotation is ReportAnnotation {
+            if let annotation = annotation as? ReportAnnotation, !(arr.contains(where: {$0.id == annotation.report.id})) {
+                removeAnnotations.append(annotation)
+            }
+        }
+        
+        return removeAnnotations
+    }
+}

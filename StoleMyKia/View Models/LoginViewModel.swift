@@ -11,6 +11,7 @@ import FirebaseAuth
 @MainActor
 final class LoginViewModel: ObservableObject {
         
+    @Published var showLoginProgressView = true
     @Published var userIsSignedIn = false
             
     private let auth = Auth.auth()
@@ -79,5 +80,12 @@ final class LoginViewModel: ObservableObject {
     
     func signOut() throws {
         try? auth.signOut()
+    }
+}
+
+//MARK: - FirebaseUserDelegate
+extension LoginViewModel: FirebaseUserDelegate {
+    var uid: String? {
+        auth.currentUser?.uid
     }
 }

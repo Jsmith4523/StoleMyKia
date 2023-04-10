@@ -33,6 +33,7 @@ struct NewReportView: View {
     @State private var isUploading = false
     @State private var alertErrorUploading = false
     
+    @EnvironmentObject var mapModel: MapViewModel
     @EnvironmentObject var reportsModel: ReportsViewModel
     
     @Environment (\.dismiss) var dismiss
@@ -214,13 +215,13 @@ struct NewReportView: View {
                             vehicleModel: vehicleModel,
                             licensePlate: EncryptedData.createEncryption(input: licensePlate),
                             vin: EncryptedData.createEncryption(input: vin),
-                            imageURL: nil,
-                            lat: Double.random(in: 40.000...80.000), lon: Double.random(in: 40.000...80.000))
+                            lat: mapModel.userLocation.coordinate.latitude, lon: mapModel.userLocation.coordinate.longitude)
         reportsModel.upload(report, with: vehicleImage) { status in
             switch status {
             case true:
                 generator.notificationOccurred(.success)
                 self.isUploading = false
+                dismiss()
             case false:
                 generator.notificationOccurred(.error)
                 alertErrorUploading.toggle()

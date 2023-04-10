@@ -15,6 +15,7 @@ import SwiftUI
 struct Report: Identifiable, Codable {
     var id = UUID()
     
+    var uid: String?
     let dt: TimeInterval?
     let reportType: ReportType
     let vehicleYear: Int?

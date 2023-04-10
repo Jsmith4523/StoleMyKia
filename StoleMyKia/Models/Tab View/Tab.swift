@@ -38,6 +38,9 @@ struct Tab: View {
         .environmentObject(reportsModel)
         .environmentObject(notificationModel)
         .environmentObject(loginModel)
+        .onAppear {
+            reportsModel.firebaseUserDelegate = loginModel
+        }
     }
 }
 

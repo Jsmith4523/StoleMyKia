@@ -9,6 +9,11 @@ import SwiftUI
 
 struct SelectedReportDetailView: View {
     
+    @State private var isDeleting = false
+    
+    @State private var alertErrorRemovingPost = false
+    @State private var alertOfRemovingPosting = false
+    
     @State private var vehicleImage: UIImage?
     
     let imageCache: ImageCache
@@ -82,16 +87,51 @@ struct SelectedReportDetailView: View {
                             Image(systemName: "xmark")
                         }
                     }
+                    ToolbarItem(placement: .navigationBarTrailing) {
+                        if report.uid == reportsModel.firebaseUserDelegate?.uid {
+                            Button {
+                                self.alertOfRemovingPosting.toggle()
+                            } label: {
+                                Image(systemName: "trash")
+                            }
+                        }
+                    }
+                }
+                .disabled(isDeleting)
+                .alert("Remove Report", isPresented: $alertOfRemovingPosting) {
+                    Button("Remove", role: .destructive) {
+                        removePost(report: report)
+                    }
+                } message: {
+                    Text("Are you sure you want to remove this post?")
+                }
+                .alert("Unable to remove post", isPresented: $alertErrorRemovingPost) {
+                    Button("OK") {}
+                } message: {
+                    Text("There was an error removing this report. Please try again later.")
                 }
             }
         }
     }
     
-    func getVehicleImage(_ urlString: String?) {
+    private func getVehicleImage(_ urlString: String?) {
         imageCache.getImage(urlString) { image in
             withAnimation {
                 self.vehicleImage = image
             }
+        }
+    }
+    
+    private func removePost(report: Report) {
+        isDeleting = true
+        reportsModel.deleteReport(report) { status in
+            guard status else {
+                isDeleting = false
+                alertErrorRemovingPost.toggle()
+                return
+            }
+            dismiss()
+            isDeleting = false
         }
     }
 }
