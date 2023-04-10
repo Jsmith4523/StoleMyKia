@@ -10,36 +10,36 @@ import SwiftUI
 import UIKit
 import MapKit
 
+protocol ReportsDelegate: AnyObject {
+    func reportsDelegate(didRecieveReports reports: [Report])
+}
+
+protocol SelectedReportDelegate: AnyObject {
+    func didSelectReport(_ report: Report)
+}
+
 final class ReportsViewModel: NSObject, ObservableObject {
     
+    @Published var isShowingNewReportView = false
     @Published var isShowingSelectedReportView = false
+    @Published var isShowingReportSearchView = false
+
+    @Published var selectedReport: Report!
     
     @Published var reports = [Report]() {
         didSet {
-            mapView.addAnnotations(ReportAnnotation.createAnnotaitons(for: reports))
+            delegate?.reportsDelegate(didRecieveReports: reports)
         }
     }
     
-    @Published var selectedReport: Report!
-    
-    @Published var locationAuthorizationStatus: CLAuthorizationStatus!
-
-    @Published var userLocation: CLLocation!
-    
-    //Raw value...
-    @AppStorage ("mapType") var mapType = 0
-    
-    let mapView = MKMapView()
-    let locationManager = CLLocationManager()
-    
     private var manager = ReportsManager()
+
+    weak var delegate: ReportsDelegate?
     
     override init() {
         super.init()
-        locationManager.delegate = self
         
         self.getReports()
-        self.createDatabaseObserver()
     }
     
     //TODO: Completion
@@ -75,102 +75,11 @@ final class ReportsViewModel: NSObject, ObservableObject {
             
         }
     }
-    
-    func createDatabaseObserver() {
-        manager.createObserver {
-            self.getReports()
-        }
-    }
 }
 
-//MARK: - CLLocationManagerDelegate
-extension ReportsViewModel: CLLocationManagerDelegate {
-    func locationManagerDidChangeAuthorization(_ manager: CLLocationManager) {
-        self.locationAuthorizationStatus = manager.authorizationStatus
-        
-        switch manager.authorizationStatus {
-        case .authorizedWhenInUse:
-            self.userLocation = locationManager.location
-            goToUsersLocation()
-        case .authorizedAlways:
-            self.userLocation = locationManager.location
-            goToUsersLocation()
-        default:
-            break
-        }
-    }
-    
-    func mapView(_ mapView: MKMapView, didUpdate userLocation: MKUserLocation) {
-        self.userLocation = userLocation.location
-    }
-    
-    func moveToCenter(for coordinates: CLLocationCoordinate2D?) {
-        if let coordinates {
-            mapView.setCenter(coordinates, animated: true)
-        }
-    }
-    
-    func goToUsersLocation(animate: Bool = false) {
-        if let userLocation {
-            mapView.setRegion(MKCoordinateRegion(center: userLocation.coordinate, span: .init(latitudeDelta: 0.35, longitudeDelta: 0.35)), animated: animate)
-        }
-    }
-}
-
-//MARK: - MKMapViewDelegate
-extension ReportsViewModel: MKMapViewDelegate {
-    
-    func mapView(_ mapView: MKMapView, didSelect view: MKAnnotationView) {
-        if let reportAnnotation = view.annotation as? ReportAnnotation {
-            self.selectedReport = reportAnnotation.report
-        }
-    }
-    
-    func mapViewDidFinishRenderingMap(_ mapView: MKMapView, fullyRendered: Bool) {
-        if !(self.locationAuthorizationStatus.isAuthorized()) {
-            locationManager.requestWhenInUseAuthorization()
-        }
-    }
-    
-    func mapView(_ mapView: MKMapView, didDeselect view: MKAnnotationView) {
-        self.selectedReport = nil
-    }
-    
-    func mapView(_ mapView: MKMapView, clusterAnnotationForMemberAnnotations memberAnnotations: [MKAnnotation]) -> MKClusterAnnotation {
-        //MARK: This may cause issues later down the road...
-        ReportClusterAnnotation(memberAnnotations: memberAnnotations)
-    }
-    
-    func mapView(_ mapView: MKMapView, viewFor annotation: MKAnnotation) -> MKAnnotationView? {
-        if annotation is MKUserLocation { return nil }
-        
-        if let annotation = annotation as? ReportAnnotation {
-           let reportAnnotation = MKMarkerAnnotationView(annotation: annotation, reuseIdentifier: MKMapViewDefaultAnnotationViewReuseIdentifier)
-            reportAnnotation.glyphImage = UIImage(systemName: annotation.report.reportType!.annotationImage)
-            reportAnnotation.markerTintColor = annotation.report.reportType?.annotationColor
-            reportAnnotation.canShowCallout = true
-            
-            let calloutView = ReportAnnotationCallOut(report: annotation.report)
-            calloutView.calloutDelegate = self
-            
-            reportAnnotation.detailCalloutAccessoryView = calloutView
-            
-            return reportAnnotation
-        }
-        
-        if let annotation = annotation as? ReportClusterAnnotation {
-            let clusterAnnotation = MKMarkerAnnotationView(annotation: annotation, reuseIdentifier: MKMapViewDefaultClusterAnnotationViewReuseIdentifier)
-            clusterAnnotation.glyphText = "\(annotation.memberAnnotations.count)"
-            return clusterAnnotation
-        }
-        
-        return nil
-    }
-}
-
-//MARK: - RACalloutDelegate
-extension ReportsViewModel: RACalloutDelegate {
-    func reportAnnotationWillPresentSheet() {
+extension ReportsViewModel: SelectedReportDelegate {
+    func didSelectReport(_ report: Report) {
         self.isShowingSelectedReportView.toggle()
+        self.selectedReport = report
     }
 }

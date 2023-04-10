@@ -10,6 +10,8 @@ import SwiftUI
 
 extension Image {
     
+    static let vehiclePlaceholder = Image("vehicle-placeholder")
+    
     func floatingButtonStyle() -> some View {
         return self
             .resizable()

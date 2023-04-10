@@ -29,17 +29,17 @@ struct MapSettingsView: View {
     
     var body: some View {
         List {
-            Section {
-                Picker(selection: $reportsModel.mapType) {
-                    ForEach (mapType.allCases, id: \.rawValue) {
-                        Text($0.rawValue)
-                            .tag($0.value)
-                    }
-                } label: {}
-                .pickerStyle(.inline)
-            } header: {
-                Text("Appearance")
-            }
+//            Section {
+//                Picker(selection: $reportsModel.mapType) {
+//                    ForEach (mapType.allCases, id: \.rawValue) {
+//                        Text($0.rawValue)
+//                            .tag($0.value)
+//                    }
+//                } label: {}
+//                .pickerStyle(.inline)
+//            } header: {
+//                Text("Appearance")
+//            }
         }
         .navigationBarTitleDisplayMode(.inline)
     }

@@ -47,7 +47,7 @@ struct NotificationSettingsView: View {
         }
         .navigationTitle("Notifications")
         .navigationBarTitleDisplayMode(.inline)
-        .disabled(!notificationModel.notificationsAreAllowed && !reportsModel.locationAuthorizationStatus.isAuthorized())
+//        .disabled(!notificationModel.notificationsAreAllowed && !reportsModel.locationAuthorizationStatus.isAuthorized())
         .tint(.accentColor)
         .sheet(isPresented: $isShowingNotificationRadiusView) {
             NotificationRadiusView()

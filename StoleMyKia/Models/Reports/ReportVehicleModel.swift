@@ -1,104 +1,12 @@
 //
-//  Report.swift
+//  ReportVehicleModel.swift
 //  StoleMyKia
 //
-//  Created by Jaylen Smith on 3/11/23.
+//  Created by Jaylen Smith on 4/9/23.
 //
 
 import Foundation
 import UIKit
-import MapKit
-import CryptoKit
-
-enum ReportType: String, CaseIterable, Hashable, Codable {
-    
-    case stolen      = "Stolen"
-    case found       = "Found"
-    case withnessed  = "Witnessed"
-    case spotted     = "Spotted"
-    
-    var annotationImage: String {
-        switch self {
-        case .stolen:
-            return "light.beacon.max.fill"
-        case .found:
-            return "car.fill"
-        case .withnessed:
-            return "exclamationmark.triangle.fill"
-        case .spotted:
-            return "eye.fill"
-        }
-    }
-    
-    var description: String {
-        switch self {
-        case .stolen:
-            return "Your vehicle was stolen and you are reporting it."
-        case .found:
-            return "You've found a vehicle that was stolen."
-        case .withnessed:
-            return "You withnessed a vehicle being stolen."
-        case .spotted:
-            return ""
-        }
-    }
-    
-    var annotationColor: UIColor {
-        switch self {
-        case .stolen:
-            return .red
-        case .found:
-            return .tintColor
-        case .withnessed:
-            return .systemOrange
-        case .spotted:
-            return .green
-        }
-    }
-    
-    ///The path a report will be saved to in Google Firebase
-    var path: String {
-        switch self {
-        case .stolen:
-            return "stolen"
-        case .found:
-            return "found"
-        case .withnessed:
-            return "witnessed"
-        case .spotted:
-            return "spotted"
-        }
-    }
-    
-    static var reports: [ReportType] {
-        [.stolen, .withnessed, .found]
-    }
-    
-    static var update: [ReportType] {
-        [.found, .spotted]
-    }
-}
-
-enum VehicleColor: String, CaseIterable, Codable {
-    case red       = "Red"
-    case white     = "White"
-    case green     = "Green"
-    case blue      = "Blue"
-    case orange    = "Orange"
-    case silver    = "Silver"
-    case black     = "Black"
-    case gold      = "Gold"
-    case gray      = "Gray"
-    case lightGray = "Light Gray"
-    case brown     = "Brown"
-    case violet    = "Violet"
-    
-}
-
-enum VehicleMake: String, CaseIterable, Codable {
-    case hyundai = "Hyundai"
-    case kia = "Kia"
-}
 
 //MARK: Vehicles affected based from NTSB
 //2015-2021 Hyundai Accent (all body styles)
@@ -137,7 +45,7 @@ enum VehicleModel: String, CaseIterable, Codable, Comparable {
     case sorento  = "Sorento"
     case seltos   = "Seltos"
     
-    ///Vehicle make (ex: Hyundai Elantra)
+    //Vehicle make (ex: Hyundai Elantra)
     var make: VehicleMake {
         switch self {
             
@@ -218,7 +126,7 @@ enum VehicleModel: String, CaseIterable, Codable, Comparable {
         lhs.rawValue > rhs.rawValue
     }
     
-    ///Will return a vehicle to the given arguments if the conditions do not match. 
+    ///Will return a vehicle to the given arguments if the conditions do not match.
     func matches(make: VehicleMake, year: Int) -> Self {
         if (self.make == make && self.year.contains(year)) {
             return self
@@ -233,68 +141,6 @@ enum VehicleModel: String, CaseIterable, Codable, Comparable {
     }
 }
 
-struct Report: Identifiable, Codable {
-    var id = UUID()
-    
-    let dt: TimeInterval?
-    let reportType: ReportType?
-    let vehicleYear: Int?
-    let vehicleMake: VehicleMake?
-    let vehicleColor: VehicleColor?
-    let vehicleModel: VehicleModel?
-    let licensePlate: EncryptedData?
-    let vin: EncryptedData?
-    var imageURL: String?
-    var isFound: Bool?
-    let lat: Double
-    let lon: Double
-}
-
-extension Report {
-    
-    var coordinates: CLLocationCoordinate2D {
-        CLLocationCoordinate2D(latitude: lat, longitude: lon)
-    }
-    
-    var type: String {
-        if let reportType {
-            return reportType.rawValue
-        }
-        return ""
-    }
-    
-    var vehicleDetails: String {
-        if let vehicleYear, let vehicleMake, let vehicleModel, let vehicleColor {
-            return "\(vehicleColor.rawValue) \(vehicleYear) \(vehicleMake.rawValue) \(vehicleModel.rawValue)"
-        }
-        return ""
-    }
-    
-    var postTime: String {
-        if let dt {
-            return "\(Date(timeIntervalSince1970: dt))"
-        }
-        return ""
-    }
-    
-    ///Affected vehicle years of both Kia's and Hyundai's
-    static var affectedVehicleYears: ClosedRange<Int> {
-        return 2011...lastAffectedYear
-    }
-    
-    ///The final year vehicles were affetced. Subject to change 🤷🏽‍♂️
-    static var lastAffectedYear: Int {
-        2021
-    }
-    
-    func verifyVin(input: String) -> Bool {
-       return false
-    }
-    
-    func verifyLicensePlate(input: String) -> Bool {
-        return false
-    }
-}
 
 extension [VehicleModel] {
     
@@ -310,3 +156,4 @@ extension [VehicleModel] {
         self.filter({$0.year.contains(year)})
     }
 }
+

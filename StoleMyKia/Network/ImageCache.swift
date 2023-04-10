@@ -12,9 +12,14 @@ class ImageCache {
     
     let cache = NSCache<AnyObject, AnyObject>()
     
-    func getImage(_ url: URL, completion: @escaping (UIImage?)->Void) {
-        if let image = cache.object(forKey: url.absoluteString as AnyObject) as? UIImage {
+    func getImage(_ urlString: String?, completion: @escaping (UIImage?)->Void) {
+        if let image = cache.object(forKey: urlString as AnyObject) as? UIImage {
             completion(image)
+            return
+        }
+        
+        guard let urlString, let url = URL(string: urlString) else {
+            completion(nil)
             return
         }
         

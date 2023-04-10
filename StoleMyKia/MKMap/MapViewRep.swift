@@ -12,7 +12,7 @@ import MapKit
 
 struct MapViewRep: UIViewRepresentable {
     
-    @EnvironmentObject var reportsModels: ReportsViewModel
+    @EnvironmentObject var coordinator: MapViewModel
     
     func makeUIView(context: Context) -> MKMapView {
         let mapView = context.coordinator.mapView
@@ -25,14 +25,10 @@ struct MapViewRep: UIViewRepresentable {
         return mapView
     }
     
-    func makeCoordinator() -> ReportsViewModel {
-        return reportsModels
+    func makeCoordinator() -> MapViewModel {
+        return self.coordinator
     }
     
-    func updateUIView(_ uiView: MKMapView, context: Context) {
-        uiView.mapType = .init(rawValue: UInt(context.coordinator.mapType)) ?? .standard
-    }
-    
-    typealias UIViewType = MKMapView
-    
+    func updateUIView(_ uiView: MKMapView, context: Context) {}
+        
 }

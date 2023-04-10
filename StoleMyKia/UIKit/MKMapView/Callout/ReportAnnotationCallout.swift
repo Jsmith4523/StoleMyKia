@@ -9,8 +9,8 @@ import Foundation
 import UIKit
 import SwiftUI
 
-protocol RACalloutDelegate: AnyObject {
-    func reportAnnotationWillPresentSheet()
+protocol AnnotationCalloutDelegate: AnyObject {
+    func annotationCallout(willPresentReport report: Report)
 }
 
 class ReportAnnotationCallOut: UIView {
@@ -22,7 +22,7 @@ class ReportAnnotationCallOut: UIView {
     
     var report: Report!
     
-    weak var calloutDelegate: RACalloutDelegate?
+    weak var calloutDelegate: AnnotationCalloutDelegate?
     
     init(report: Report) {
         super.init(frame: .zero)
@@ -42,10 +42,8 @@ class ReportAnnotationCallOut: UIView {
     }
     
     func setupTitleView() {
-        if let reportType = report.reportType?.rawValue {
-            titleView.text = reportType
-            titleView.font = .systemFont(ofSize: 19, weight: .heavy)
-        }
+        titleView.text = report.reportType.rawValue
+        titleView.font = .systemFont(ofSize: 19, weight: .heavy)
         
         addSubview(titleView)
         
@@ -90,6 +88,6 @@ class ReportAnnotationCallOut: UIView {
     }
     
     @objc func isShowingReportInformationView() {
-        calloutDelegate?.reportAnnotationWillPresentSheet()
+        calloutDelegate?.annotationCallout(willPresentReport: self.report)
     }
 }

@@ -18,6 +18,15 @@
 		2438305629D16724003C3B8A /* PasswordResetCodeView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2438305529D16724003C3B8A /* PasswordResetCodeView.swift */; };
 		244BF51729D178BF00951765 /* UserAccountView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 244BF51629D178BF00951765 /* UserAccountView.swift */; };
 		244BF51929D33F4E00951765 /* ImageCache.swift in Sources */ = {isa = PBXBuildFile; fileRef = 244BF51829D33F4E00951765 /* ImageCache.swift */; };
+		245B391029E28A64001DD213 /* MapViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 245B390F29E28A64001DD213 /* MapViewModel.swift */; };
+		245B391229E37BF9001DD213 /* ReportsListView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 245B391129E37BF9001DD213 /* ReportsListView.swift */; };
+		245B391529E38C7C001DD213 /* ListView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 245B391429E38C7C001DD213 /* ListView.swift */; };
+		245B391729E39159001DD213 /* Color+EXT.swift in Sources */ = {isa = PBXBuildFile; fileRef = 245B391629E39159001DD213 /* Color+EXT.swift */; };
+		245B391A29E39E09001DD213 /* ReportMap.swift in Sources */ = {isa = PBXBuildFile; fileRef = 245B391929E39E09001DD213 /* ReportMap.swift */; };
+		245B391D29E39E49001DD213 /* ReportVehicleMake.swift in Sources */ = {isa = PBXBuildFile; fileRef = 245B391C29E39E49001DD213 /* ReportVehicleMake.swift */; };
+		245B391F29E39E55001DD213 /* ReportVehicleModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 245B391E29E39E55001DD213 /* ReportVehicleModel.swift */; };
+		245B392129E39E90001DD213 /* ReportType.swift in Sources */ = {isa = PBXBuildFile; fileRef = 245B392029E39E90001DD213 /* ReportType.swift */; };
+		245B392329E39EC1001DD213 /* ReportVehicleColor.swift in Sources */ = {isa = PBXBuildFile; fileRef = 245B392229E39EC1001DD213 /* ReportVehicleColor.swift */; };
 		2495A02029CAC3DE00457CE7 /* Date+EXT.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2495A01F29CAC3DE00457CE7 /* Date+EXT.swift */; };
 		2495A02229CAC5DF00457CE7 /* String+EXT.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2495A02129CAC5DF00457CE7 /* String+EXT.swift */; };
 		2495A02529CB9EC800457CE7 /* AboutAppView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2495A02429CB9EC800457CE7 /* AboutAppView.swift */; };
@@ -66,6 +75,15 @@
 		2438305529D16724003C3B8A /* PasswordResetCodeView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PasswordResetCodeView.swift; sourceTree = "<group>"; };
 		244BF51629D178BF00951765 /* UserAccountView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserAccountView.swift; sourceTree = "<group>"; };
 		244BF51829D33F4E00951765 /* ImageCache.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImageCache.swift; sourceTree = "<group>"; };
+		245B390F29E28A64001DD213 /* MapViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MapViewModel.swift; sourceTree = "<group>"; };
+		245B391129E37BF9001DD213 /* ReportsListView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = ReportsListView.swift; path = "../New Group/ReportsListView.swift"; sourceTree = "<group>"; };
+		245B391429E38C7C001DD213 /* ListView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ListView.swift; sourceTree = "<group>"; };
+		245B391629E39159001DD213 /* Color+EXT.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Color+EXT.swift"; sourceTree = "<group>"; };
+		245B391929E39E09001DD213 /* ReportMap.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReportMap.swift; sourceTree = "<group>"; };
+		245B391C29E39E49001DD213 /* ReportVehicleMake.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReportVehicleMake.swift; sourceTree = "<group>"; };
+		245B391E29E39E55001DD213 /* ReportVehicleModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReportVehicleModel.swift; sourceTree = "<group>"; };
+		245B392029E39E90001DD213 /* ReportType.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReportType.swift; sourceTree = "<group>"; };
+		245B392229E39EC1001DD213 /* ReportVehicleColor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReportVehicleColor.swift; sourceTree = "<group>"; };
 		2495A01F29CAC3DE00457CE7 /* Date+EXT.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Date+EXT.swift"; sourceTree = "<group>"; };
 		2495A02129CAC5DF00457CE7 /* String+EXT.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "String+EXT.swift"; sourceTree = "<group>"; };
 		2495A02429CB9EC800457CE7 /* AboutAppView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AboutAppView.swift; sourceTree = "<group>"; };
@@ -194,6 +212,36 @@
 			path = User;
 			sourceTree = "<group>";
 		};
+		245B391329E38C6E001DD213 /* Report List */ = {
+			isa = PBXGroup;
+			children = (
+				245B391129E37BF9001DD213 /* ReportsListView.swift */,
+				245B391429E38C7C001DD213 /* ListView.swift */,
+			);
+			path = "Report List";
+			sourceTree = "<group>";
+		};
+		245B391B29E39E2C001DD213 /* Reports */ = {
+			isa = PBXGroup;
+			children = (
+				24A5792B29BC56B000495E6F /* Report.swift */,
+				245B392029E39E90001DD213 /* ReportType.swift */,
+				245B391C29E39E49001DD213 /* ReportVehicleMake.swift */,
+				245B391E29E39E55001DD213 /* ReportVehicleModel.swift */,
+				245B392229E39EC1001DD213 /* ReportVehicleColor.swift */,
+				245B391929E39E09001DD213 /* ReportMap.swift */,
+			);
+			path = Reports;
+			sourceTree = "<group>";
+		};
+		245B392429E39F89001DD213 /* Selected Report */ = {
+			isa = PBXGroup;
+			children = (
+				24AC77CD29C1110B00768158 /* SelectedReportDetailView.swift */,
+			);
+			path = "Selected Report";
+			sourceTree = "<group>";
+		};
 		2495A02329CB9EA200457CE7 /* About */ = {
 			isa = PBXGroup;
 			children = (
@@ -243,6 +291,7 @@
 				2495A01F29CAC3DE00457CE7 /* Date+EXT.swift */,
 				2495A02129CAC5DF00457CE7 /* String+EXT.swift */,
 				24AAC49929CC1A6400125196 /* AES+EXT.swift */,
+				245B391629E39159001DD213 /* Color+EXT.swift */,
 			);
 			path = Extension;
 			sourceTree = "<group>";
@@ -332,7 +381,7 @@
 		24A5792A29BC56A600495E6F /* Models */ = {
 			isa = PBXGroup;
 			children = (
-				24A5792B29BC56B000495E6F /* Report.swift */,
+				245B391B29E39E2C001DD213 /* Reports */,
 			);
 			path = Models;
 			sourceTree = "<group>";
@@ -343,6 +392,7 @@
 				24A5792E29BC5C8700495E6F /* ReportsViewModel.swift */,
 				2437327F29BEF8FC008F4C4E /* NotificationViewModel.swift */,
 				24B897EB29CF5A3B0003BCC8 /* LoginViewModel.swift */,
+				245B390F29E28A64001DD213 /* MapViewModel.swift */,
 			);
 			path = "View Models";
 			sourceTree = "<group>";
@@ -377,8 +427,9 @@
 		24AC77CC29C110F800768158 /* Report */ = {
 			isa = PBXGroup;
 			children = (
+				245B392429E39F89001DD213 /* Selected Report */,
 				24A4CED529BF9E7C00B856BC /* New Report */,
-				24AC77CD29C1110B00768158 /* SelectedReportDetailView.swift */,
+				245B391329E38C6E001DD213 /* Report List */,
 			);
 			path = Report;
 			sourceTree = "<group>";
@@ -533,30 +584,39 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				245B391D29E39E49001DD213 /* ReportVehicleMake.swift in Sources */,
 				24A4CEDB29BF9F9C00B856BC /* NotificationSettingsView.swift in Sources */,
 				24A5791629BC552C00495E6F /* Tab.swift in Sources */,
 				24A662FC29C6DD5100AD784F /* UNUserNC+EXT.swift in Sources */,
+				245B391029E28A64001DD213 /* MapViewModel.swift in Sources */,
 				24A5792929BC567F00495E6F /* ReportAnnotation.swift in Sources */,
 				2495A02529CB9EC800457CE7 /* AboutAppView.swift in Sources */,
 				24A5792429BC559100495E6F /* MapView.swift in Sources */,
+				245B391529E38C7C001DD213 /* ListView.swift in Sources */,
 				2438305629D16724003C3B8A /* PasswordResetCodeView.swift in Sources */,
 				24A4CEDE29BFA2CE00B856BC /* UNAuth+EXT.swift in Sources */,
 				24334D0429C19E100084B8EC /* UIImagePicker.swift in Sources */,
+				245B392329E39EC1001DD213 /* ReportVehicleColor.swift in Sources */,
 				24EAF11929C2A5D300B4CBFE /* MapSettingsView.swift in Sources */,
 				244BF51929D33F4E00951765 /* ImageCache.swift in Sources */,
 				24A4CEE429BFAC7100B856BC /* CLLocationManager+EXT.swift in Sources */,
 				24B897EC29CF5A3B0003BCC8 /* LoginViewModel.swift in Sources */,
 				24EAF11729C2A02900B4CBFE /* SFSafariView.swift in Sources */,
 				24A5792F29BC5C8700495E6F /* ReportsViewModel.swift in Sources */,
+				245B391A29E39E09001DD213 /* ReportMap.swift in Sources */,
 				24334D0629C1A0E10084B8EC /* View+EXT.swift in Sources */,
 				24A5791429BC552C00495E6F /* StoleMyKiaApp.swift in Sources */,
 				2437328029BEF8FC008F4C4E /* NotificationViewModel.swift in Sources */,
 				24B897F529D08A2B0003BCC8 /* PasswordResetEmailView.swift in Sources */,
+				245B391729E39159001DD213 /* Color+EXT.swift in Sources */,
 				24A4CEE729C04CBA00B856BC /* ReportAnnotationCallout.swift in Sources */,
+				245B392129E39E90001DD213 /* ReportType.swift in Sources */,
 				24A5792629BC55DF00495E6F /* MapViewRep.swift in Sources */,
+				245B391229E37BF9001DD213 /* ReportsListView.swift in Sources */,
 				2437328329BEFB2E008F4C4E /* NewReportView.swift in Sources */,
 				24AC77CE29C1110B00768158 /* SelectedReportDetailView.swift in Sources */,
 				24A5792C29BC56B000495E6F /* Report.swift in Sources */,
+				245B391F29E39E55001DD213 /* ReportVehicleModel.swift in Sources */,
 				24A4CEE229BFAA8000B856BC /* NotificationRadiusView.swift in Sources */,
 				24A5793729BFD9C900495E6F /* RadiusMapCoordinator.swift in Sources */,
 				2495A02229CAC5DF00457CE7 /* String+EXT.swift in Sources */,
