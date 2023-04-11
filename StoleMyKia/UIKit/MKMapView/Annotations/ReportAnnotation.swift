@@ -15,8 +15,8 @@ class ReportAnnotation: NSObject, MKAnnotation {
     var coordinate: CLLocationCoordinate2D
     var report: Report
     
-    init(coordinate: CLLocationCoordinate2D, report: Report) {
-        self.coordinate = coordinate
+    init(coordinate: CLLocationCoordinate2D!, report: Report) {
+        self.coordinate = coordinate ?? CLLocationCoordinate2D()
         self.report     = report
     }
 }
@@ -26,7 +26,7 @@ extension ReportAnnotation {
     ///Will generate and return an array of ReportAnnotation 
     static func createAnnotaitons(_ reports: [Report]) -> [ReportAnnotation] {
         return reports.compactMap { report in
-                .init(coordinate: report.coordinates, report: report)
+                .init(coordinate: report.location?.coordinates, report: report)
         }
     }
 }

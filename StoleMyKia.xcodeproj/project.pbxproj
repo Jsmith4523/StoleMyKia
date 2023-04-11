@@ -30,6 +30,7 @@
 		245B391F29E39E55001DD213 /* ReportVehicleModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 245B391E29E39E55001DD213 /* ReportVehicleModel.swift */; };
 		245B392129E39E90001DD213 /* ReportType.swift in Sources */ = {isa = PBXBuildFile; fileRef = 245B392029E39E90001DD213 /* ReportType.swift */; };
 		245B392329E39EC1001DD213 /* ReportVehicleColor.swift in Sources */ = {isa = PBXBuildFile; fileRef = 245B392229E39EC1001DD213 /* ReportVehicleColor.swift */; };
+		2488A57829E5CE3E00597885 /* NewReportSearchLocation.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2488A57729E5CE3E00597885 /* NewReportSearchLocation.swift */; };
 		2495A02029CAC3DE00457CE7 /* Date+EXT.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2495A01F29CAC3DE00457CE7 /* Date+EXT.swift */; };
 		2495A02229CAC5DF00457CE7 /* String+EXT.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2495A02129CAC5DF00457CE7 /* String+EXT.swift */; };
 		2495A02529CB9EC800457CE7 /* AboutAppView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2495A02429CB9EC800457CE7 /* AboutAppView.swift */; };
@@ -88,6 +89,7 @@
 		245B391E29E39E55001DD213 /* ReportVehicleModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReportVehicleModel.swift; sourceTree = "<group>"; };
 		245B392029E39E90001DD213 /* ReportType.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReportType.swift; sourceTree = "<group>"; };
 		245B392229E39EC1001DD213 /* ReportVehicleColor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReportVehicleColor.swift; sourceTree = "<group>"; };
+		2488A57729E5CE3E00597885 /* NewReportSearchLocation.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NewReportSearchLocation.swift; sourceTree = "<group>"; };
 		2495A01F29CAC3DE00457CE7 /* Date+EXT.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Date+EXT.swift"; sourceTree = "<group>"; };
 		2495A02129CAC5DF00457CE7 /* String+EXT.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "String+EXT.swift"; sourceTree = "<group>"; };
 		2495A02429CB9EC800457CE7 /* AboutAppView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AboutAppView.swift; sourceTree = "<group>"; };
@@ -257,6 +259,7 @@
 			isa = PBXGroup;
 			children = (
 				2437328229BEFB2E008F4C4E /* NewReportView.swift */,
+				2488A57729E5CE3E00597885 /* NewReportSearchLocation.swift */,
 			);
 			path = "New Report";
 			sourceTree = "<group>";
@@ -599,6 +602,7 @@
 				24EAF11729C2A02900B4CBFE /* SFSafariView.swift in Sources */,
 				24A5792F29BC5C8700495E6F /* ReportsViewModel.swift in Sources */,
 				245B391A29E39E09001DD213 /* ReportMap.swift in Sources */,
+				2488A57829E5CE3E00597885 /* NewReportSearchLocation.swift in Sources */,
 				24334D0629C1A0E10084B8EC /* View+EXT.swift in Sources */,
 				24A5791429BC552C00495E6F /* StoleMyKiaApp.swift in Sources */,
 				2437328029BEF8FC008F4C4E /* NotificationViewModel.swift in Sources */,

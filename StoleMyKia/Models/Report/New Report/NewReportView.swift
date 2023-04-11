@@ -14,6 +14,8 @@ struct NewReportView: View {
     
     @State private var vehicleImage: UIImage?
     
+    @State private var location: Location!
+    
     @State private var reportType: ReportType = .stolen
     @State private var reportDescription: String = ""
     
@@ -26,6 +28,10 @@ struct NewReportView: View {
     @State private var doesNotHaveVehicleIdentification = false
     
     @State private var vehicleColor: VehicleColor = .black
+    
+    @State private var canUseUserLocation = true
+    @State private var useCurrentLocation = true
+    @State private var isShowingLocationView = false
     
     @State private var isShowingPhotoPicker = false
     @State private var isShowingPhotoRemoveConfirmation = false
@@ -71,6 +77,37 @@ struct NewReportView: View {
                     Text(reportType.description)
                 }
                 
+                Section {
+                    Toggle("Current Location", isOn: $useCurrentLocation)
+                        .onChange(of: useCurrentLocation) { newValue in
+                            if newValue {
+                                if let userLocation = mapModel.locationManager.usersCurrentLocation {
+                                    location = Location(address: nil, name: nil, lat: userLocation.latitude, lon: userLocation.longitude)
+                                }
+                            } else {
+                                self.location = nil
+                            }
+                        }
+                        .disabled(canUseUserLocation)
+                        .onChange(of: mapModel.locationAuth.isAuthorized()) { status in
+                            if !(status) {
+                                useCurrentLocation = false
+                                canUseUserLocation = false
+                            } else {
+                                useCurrentLocation = true
+                                canUseUserLocation = true
+                            }
+                        }
+                    Button("Select Location") {
+                        isShowingLocationView.toggle()
+                    }
+                    .disabled(useCurrentLocation)
+                } header: {
+                    Text("Location")
+                } footer: {
+                    Text("Depending on your location services settings, your current location will be applied as the location of this incident")
+                }
+
                 Section {
                     Picker("Year", selection: $vehicleYear) {
                         ForEach(vehicleModel.year, id: \.self) {
@@ -189,6 +226,10 @@ struct NewReportView: View {
         .interactiveDismissDisabled()
         .disabled(isUploading)
         .imagePicker(isPresented: $isShowingPhotoPicker, selectedImage: $vehicleImage, sourceType: .constant(.photoLibrary))
+        .sheet(isPresented: $isShowingLocationView) {
+            NewReportSearchLocation(location: $location)
+                .environmentObject(mapModel)
+        }
         .confirmationDialog("", isPresented: $isShowingPhotoRemoveConfirmation) {
             Button("Remove", role: .destructive) {
                 vehicleImage = nil
@@ -215,7 +256,7 @@ struct NewReportView: View {
                             vehicleModel: vehicleModel,
                             licensePlate: EncryptedData.createEncryption(input: licensePlate),
                             vin: EncryptedData.createEncryption(input: vin),
-                            lat: mapModel.userLocation.coordinate.latitude, lon: mapModel.userLocation.coordinate.longitude)
+                            location: location)
         reportsModel.upload(report, with: vehicleImage) { status in
             switch status {
             case true:
@@ -233,9 +274,8 @@ struct NewReportView: View {
 
 struct NewReportView_Previews: PreviewProvider {
     static var previews: some View {
-        NavigationView {
-            NewReportView()
-                .environmentObject(ReportsViewModel())
-        }
+        NewReportView()
+            .environmentObject(ReportsViewModel())
+            .environmentObject(MapViewModel())
     }
 }

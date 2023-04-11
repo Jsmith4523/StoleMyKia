@@ -11,7 +11,6 @@ import MapKit
 import CryptoKit
 import SwiftUI
 
-
 struct Report: Identifiable, Codable {
     var id = UUID()
     
@@ -26,15 +25,19 @@ struct Report: Identifiable, Codable {
     let vin: EncryptedData?
     var imageURL: String?
     var isFound: Bool?
-    let lat: Double
-    let lon: Double
+    let location: Location?
+}
+
+extension Location {
+    var coordinates: CLLocationCoordinate2D? {
+        if let lat, let lon {
+            return CLLocationCoordinate2D(latitude: lat, longitude: lon)
+        }
+        return nil
+    }
 }
 
 extension Report {
-    
-    var coordinates: CLLocationCoordinate2D {
-        CLLocationCoordinate2D(latitude: lat, longitude: lon)
-    }
     
     var type: String {
         self.reportType.rawValue
