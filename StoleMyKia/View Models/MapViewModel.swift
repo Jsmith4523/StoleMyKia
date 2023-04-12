@@ -28,6 +28,7 @@ final class MapViewModel: NSObject, ObservableObject {
 extension MapViewModel: ReportsDelegate {
     func reportsDelegate(didRecieveReports reports: [Report]) {
         mapView.addAnnotations(ReportAnnotation.createAnnotaitons(reports))
+        mapView.addAnnotations(ReportAnnotation.createAnnotaitons(reports.updates()))
         mapView.removeAnnotations(mapView.annotations.doesNotInclude(reports))
     }
 }
@@ -77,8 +78,7 @@ extension MapViewModel: MKMapViewDelegate {
     }
     
     func mapView(_ mapView: MKMapView, clusterAnnotationForMemberAnnotations memberAnnotations: [MKAnnotation]) -> MKClusterAnnotation {
-        //MARK: This may cause issues later down the road...
-        ReportClusterAnnotation(memberAnnotations: memberAnnotations)
+        MKClusterAnnotation(memberAnnotations: memberAnnotations)
     }
     
     func mapView(_ mapView: MKMapView, viewFor annotation: MKAnnotation) -> MKAnnotationView? {
@@ -95,6 +95,8 @@ extension MapViewModel: MKMapViewDelegate {
             calloutView.calloutDelegate = self
             
             annotationView.canShowCallout = true
+            annotationView.animatesWhenAdded = true
+            annotationView.subtitleVisibility = .visible
             annotationView.detailCalloutAccessoryView = calloutView
             
             return annotationView

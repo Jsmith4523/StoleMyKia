@@ -26,6 +26,9 @@ struct Report: Identifiable, Codable {
     var imageURL: String?
     var isFound: Bool?
     let location: Location?
+    var updates: [Report]?
+    ///The parent or ancestor report if an update
+    var parentID: UUID?
 }
 
 extension Location {
@@ -48,6 +51,13 @@ extension Report {
             return "\(vehicleYear) \(vehicleMake.rawValue) \(vehicleModel.rawValue) (\(vehicleColor.rawValue))"
         }
         return ""
+    }
+    
+    var reportUpdates: [Report] {
+        if let updates {
+            return updates
+        }
+        return [Report]()
     }
     
     var postTime: String {
@@ -93,5 +103,13 @@ extension Report {
     
     func verifyLicensePlate(input: String) -> Bool {
         return false
+    }
+}
+
+extension [Report] {
+    
+    ///This method should be used for adding update annotation on the map
+    func updates() -> [Report] {
+        self.flatMap {$0.updates?.compactMap({$0}) ?? []}
     }
 }

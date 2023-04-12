@@ -12,28 +12,37 @@ import MapKit
 
 class ReportAnnotation: NSObject, MKAnnotation {
     
+    var subtitle: String?
     var coordinate: CLLocationCoordinate2D
     var report: Report
     
-    init(coordinate: CLLocationCoordinate2D!, report: Report) {
-        self.coordinate = coordinate ?? CLLocationCoordinate2D()
-        self.report     = report
+    init(coordinate: CLLocationCoordinate2D, report: Report) {
+        self.coordinate    = coordinate
+        self.report        = report
+        self.subtitle      = report.location?.name ?? report.location?.address ?? ""
     }
 }
 
 extension ReportAnnotation {
     
-    ///Will generate and return an array of ReportAnnotation 
+    ///Will generate and return an array of ReportAnnotation
     static func createAnnotaitons(_ reports: [Report]) -> [ReportAnnotation] {
-        return reports.compactMap { report in
-                .init(coordinate: report.location?.coordinates, report: report)
+        var annotations = [ReportAnnotation]()
+        
+        for report in reports {
+            if let location = report.location, let coordinates = location.coordinates {
+                annotations.append(ReportAnnotation(coordinate: coordinates,
+                                                    report: report))
+            }
         }
+        
+        return annotations
     }
 }
 
 extension [MKAnnotation] {
     
-    ///If the parameter array of reports does not contain the report(s) from the map annotation, remove them
+    ///If the parameter array of reports does not contain the report(s) from the map annotations, remove them
     func doesNotInclude(_ arr: [Report]) -> [ReportAnnotation] {
         var removeAnnotations = [ReportAnnotation]()
         

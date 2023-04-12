@@ -88,7 +88,7 @@ struct NewReportView: View {
                                 self.location = nil
                             }
                         }
-                        .disabled(canUseUserLocation)
+                        //.disabled(canUseUserLocation)
                         .onChange(of: mapModel.locationAuth.isAuthorized()) { status in
                             if !(status) {
                                 useCurrentLocation = false
@@ -101,7 +101,7 @@ struct NewReportView: View {
                     Button("Select Location") {
                         isShowingLocationView.toggle()
                     }
-                    .disabled(useCurrentLocation)
+                    //.disabled(useCurrentLocation)
                 } header: {
                     Text("Location")
                 } footer: {

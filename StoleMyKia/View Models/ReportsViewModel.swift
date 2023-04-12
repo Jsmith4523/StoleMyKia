@@ -79,7 +79,7 @@ final class ReportsViewModel: NSObject, ObservableObject {
         manager.fetchReports { result in
             switch result {
             case .success(let reports):
-                self.reports = reports
+                self.reports = reports.compactMap({$0})
             case .failure(let reason):
                 print(reason.localizedDescription)
             }

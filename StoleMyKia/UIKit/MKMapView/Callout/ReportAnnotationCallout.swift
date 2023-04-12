@@ -43,7 +43,7 @@ class ReportAnnotationCallOut: UIView {
     
     func setupTitleView() {
         titleView.text = report.reportType.rawValue
-        titleView.font = .systemFont(ofSize: 19, weight: .heavy)
+        titleView.font = .systemFont(ofSize: 22, weight: .heavy)
         
         addSubview(titleView)
         
