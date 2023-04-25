@@ -26,9 +26,9 @@ final class MapViewModel: NSObject, ObservableObject {
 
 //MARK: - ReportsDelegate
 extension MapViewModel: ReportsDelegate {
-    func reportsDelegate(didRecieveReports reports: [Report]) {
-        mapView.addAnnotations(ReportAnnotation.createAnnotaitons(reports))
-        mapView.addAnnotations(ReportAnnotation.createAnnotaitons(reports.updates()))
+    func reportsDelegate(didReceieveReports reports: [Report]) {
+        mapView.addAnnotations(ReportAnnotation.createAnnotations(reports))
+        mapView.addAnnotations(ReportAnnotation.createAnnotations(reports.updates()))
         mapView.removeAnnotations(mapView.annotations.doesNotInclude(reports))
     }
 }

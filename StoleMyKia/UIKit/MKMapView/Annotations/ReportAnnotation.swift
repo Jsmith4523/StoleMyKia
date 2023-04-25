@@ -26,7 +26,7 @@ class ReportAnnotation: NSObject, MKAnnotation {
 extension ReportAnnotation {
     
     ///Will generate and return an array of ReportAnnotation
-    static func createAnnotaitons(_ reports: [Report]) -> [ReportAnnotation] {
+    static func createAnnotations(_ reports: [Report]) -> [ReportAnnotation] {
         var annotations = [ReportAnnotation]()
         
         for report in reports {

@@ -11,7 +11,7 @@ import UIKit
 import MapKit
 
 protocol ReportsDelegate: AnyObject {
-    func reportsDelegate(didRecieveReports reports: [Report])
+    func reportsDelegate(didReceieveReports reports: [Report])
 }
 
 protocol SelectedReportDelegate: AnyObject {
@@ -34,7 +34,7 @@ final class ReportsViewModel: NSObject, ObservableObject {
     
     @Published var reports = [Report]() {
         didSet {
-            delegate?.reportsDelegate(didRecieveReports: reports)
+            delegate?.reportsDelegate(didReceieveReports: reports)
         }
     }
     

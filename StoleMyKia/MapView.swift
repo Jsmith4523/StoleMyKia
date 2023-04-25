@@ -18,10 +18,21 @@ struct MapView: View {
     let imageCache: ImageCache
     
     var body: some View {
-        ZStack(alignment: .bottomTrailing) {
-            MapViewRep()
-                .edgesIgnoringSafeArea(.top)
-            MapButtons()
+        ZStack {
+            ZStack(alignment: .bottomTrailing) {
+                MapViewRep()
+                    .edgesIgnoringSafeArea(.top)
+                MapButtons()
+            }
+            VStack {
+                HStack {
+                    Text("Reports")
+                        .font(.system(size: 35).weight(.heavy))
+                    Spacer()
+                }
+                Spacer()
+            }
+            .padding()
         }
         .sheet(isPresented: $reportModel.isShowingNewReportView) {
             NewReportView()
