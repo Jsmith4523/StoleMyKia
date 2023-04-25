@@ -32,9 +32,7 @@ struct Tab: View {
                 }
         }
         .accentColor(.accentColor)
-        .sheet(isPresented: $reportsModel.isShowingSelectedReportView) {
-            SelectedReportDetailView(imageCache: imageCache)
-        }
+        .reportDetailView(isPresented: $reportsModel.isShowingSelectedReportView, cache: imageCache, report: reportsModel.selectedReport)
         .environmentObject(reportsModel)
         .environmentObject(notificationModel)
         .environmentObject(loginModel)

@@ -65,10 +65,10 @@ extension View {
             .safari(isPresented: isPresented, url: URL.twitterSupportURL)
     }
     
-    func reportDetailView(isPresented: Binding<Bool>, cache: ImageCache, report: Report) -> some View {
+    func reportDetailView(isPresented: Binding<Bool>, cache: ImageCache, report: Report?) -> some View {
         return self
             .sheet(isPresented: isPresented) {
-                SelectedReportDetailView(imageCache: cache)
+                SelectedReportDetailView(report: report, imageCache: cache)
             }
     }
 }

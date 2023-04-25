@@ -33,6 +33,8 @@ struct ListView: View {
 
 fileprivate struct ReportListCellView: View {
     
+    @State private var isShowingReportDetailView = false
+    
     @State private var vehicleImage: UIImage?
     
     let report: Report
@@ -52,11 +54,6 @@ fileprivate struct ReportListCellView: View {
                     VStack(alignment: .leading) {
                         Text(report.vehicleDetails)
                         Text(report.postDate)
-                        Button("More Information") {
-                            
-                        }
-                        .font(.system(size: 16).bold())
-                        .foregroundColor(.accentColor)
                     }
                     .font(.system(size: 15))
                     .foregroundColor(.gray)
@@ -85,8 +82,9 @@ fileprivate struct ReportListCellView: View {
             getVehicleImage()
         }
         .onTapGesture {
-            reportsModel.didSelectReport(report)
+            self.isShowingReportDetailView.toggle()
         }
+        .reportDetailView(isPresented: $isShowingReportDetailView, cache: imageCache, report: report)
     }
     
     private func getVehicleImage() {

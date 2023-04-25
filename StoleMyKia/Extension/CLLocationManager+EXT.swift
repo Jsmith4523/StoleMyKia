@@ -10,7 +10,7 @@ import MapKit
 
 extension CLLocationManager {
     
-    ///Will retrieve the CLLocationCord2D of the users location If authroized.
+    ///Will retrieve the CLLocationCord2D of the users location If authorized.
     var usersCurrentLocation: CLLocationCoordinate2D? {
         self.location?.coordinate
     }

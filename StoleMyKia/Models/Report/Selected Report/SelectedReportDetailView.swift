@@ -16,15 +16,17 @@ struct SelectedReportDetailView: View {
     
     @State private var vehicleImage: UIImage?
     
-    let imageCache: ImageCache
+    let report: Report?
     
+    let imageCache: ImageCache
+        
     @EnvironmentObject var reportsModel: ReportsViewModel
     
     @Environment (\.dismiss) var dismiss
     
     var body: some View {
         NavigationView {
-            if let report = reportsModel.selectedReport {
+            if let report {
                 VStack(alignment: .leading) {
                     ZStack {
                         if !(report.imageURL == nil) {
@@ -44,29 +46,36 @@ struct SelectedReportDetailView: View {
                     .frame(height: 200)
                     .cornerRadius(15)
                     HStack {
-                        VStack(alignment: .leading) {
+                        VStack(alignment: .leading, spacing: 3) {
                             Text(report.type)
                                 .font(.system(size: 35).weight(.heavy))
-                            Text(report.vehicleDetails)
-                                .font(.system(size: 18))
-                                .foregroundColor(.gray)
+                            VStack(alignment: .leading, spacing: 6) {
+                                Label {
+                                    Text(report.vehicleDetails)
+                                } icon: {
+                                    Image(systemName: "car")
+                                }
+//                                Label {
+//                                    //Text(vin.vinFormat() ?? "Not avaliable")
+//                                } icon: {
+//                                    Image(systemName: "123.rectangle")
+//                                }
+
+                                if let location = report.location, let name = location.name {
+                                    Label {
+                                        Text(name)
+                                    } icon: {
+                                        Image(systemName: "mappin.and.ellipse")
+                                    }
+                                }
+                            }
+                            .font(.system(size: 18))
+                            .foregroundColor(.gray)
                         }
                         Spacer()
                     }
-                    HStack {
-                        Button {
-                            
-                        } label: {
-                            Image(systemName: "map")
-                                .reportButtons()
-                        }
-                        Button {
-                            
-                        } label: {
-                            Image(systemName: "eye")
-                                .reportButtons()
-                        }
-                    }
+                    Spacer()
+                        .frame(height: 15)
                     VStack {
                         Text(report.details)
                             .multilineTextAlignment(.leading)
@@ -143,16 +152,16 @@ fileprivate struct ReportMapView: View {
     var body: some View {
         ZStack(alignment: .topTrailing) {
             ReportMap(selectAnnotation: true, report: report)
-            Button {
-                
-            } label: {
-                Label("Get Directions", systemImage: "arrow.triangle.turn.up.right.circle")
-                    .padding(10)
-                    .font(.system(size: 14).weight(.semibold))
-                    .background(Color.accentColor)
-                    .cornerRadius(2)
-                    .foregroundColor(.white)
-            }
+//            Button {
+//
+//            } label: {
+//                Label("Get Directions", systemImage: "arrow.triangle.turn.up.right.circle")
+//                    .padding(10)
+//                    .font(.system(size: 14).weight(.semibold))
+//                    .background(Color.accentColor)
+//                    .cornerRadius(2)
+//                    .foregroundColor(.white)
+//            }
         }
     }
 }
@@ -177,7 +186,7 @@ struct SelectedReportDetailView_Previews: PreviewProvider {
     @StateObject private static var reportsModel = ReportsViewModel()
     
     static var previews: some View {
-        SelectedReportDetailView(imageCache: ImageCache())
+        SelectedReportDetailView(report: .init(dt: Date.now.epoch, reportType: .stolen, vehicleYear: 2015, vehicleMake: .hyundai, vehicleColor: .red, vehicleModel: .elantra, licensePlate: nil, vin: nil, location: .init(address: nil, name: "Apple Carnige", lat: nil, lon: nil)), imageCache: ImageCache())
             .environmentObject(reportsModel)
     }
 }
