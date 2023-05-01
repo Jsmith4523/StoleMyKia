@@ -26,6 +26,7 @@ final class ReportsViewModel: NSObject, ObservableObject {
     
     @Published var isFetchingReports = false
     
+    @Published var isShowingLicensePlateScannerView = false
     @Published var isShowingNewReportView = false
     @Published var isShowingSelectedReportView = false
     @Published var isShowingReportSearchView = false

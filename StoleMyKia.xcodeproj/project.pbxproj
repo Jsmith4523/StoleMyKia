@@ -35,6 +35,7 @@
 		2495A02029CAC3DE00457CE7 /* Date+EXT.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2495A01F29CAC3DE00457CE7 /* Date+EXT.swift */; };
 		2495A02229CAC5DF00457CE7 /* String+EXT.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2495A02129CAC5DF00457CE7 /* String+EXT.swift */; };
 		2495A02529CB9EC800457CE7 /* AboutAppView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2495A02429CB9EC800457CE7 /* AboutAppView.swift */; };
+		24A206692A00716300F5DC0C /* LicensePlateScannerView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 24A206682A00716300F5DC0C /* LicensePlateScannerView.swift */; };
 		24A4CED829BF9E9B00B856BC /* SettingsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 24A4CED729BF9E9B00B856BC /* SettingsView.swift */; };
 		24A4CEDB29BF9F9C00B856BC /* NotificationSettingsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 24A4CEDA29BF9F9C00B856BC /* NotificationSettingsView.swift */; };
 		24A4CEDE29BFA2CE00B856BC /* UNAuth+EXT.swift in Sources */ = {isa = PBXBuildFile; fileRef = 24A4CEDD29BFA2CE00B856BC /* UNAuth+EXT.swift */; };
@@ -71,7 +72,6 @@
 		24127C1C29E3E7B800C09FE5 /* MapViewRep.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MapViewRep.swift; sourceTree = "<group>"; };
 		24127C1E29E3F4AC00C09FE5 /* Launch Screen.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = "Launch Screen.storyboard"; sourceTree = "<group>"; };
 		2425EAF82A003CDE00CC886F /* NavigationController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NavigationController.swift; sourceTree = "<group>"; };
-		2425EAFC2A00436000CC886F /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist; path = Info.plist; sourceTree = "<group>"; };
 		24334CFA29C0E0130084B8EC /* UIImage+EXT.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIImage+EXT.swift"; sourceTree = "<group>"; };
 		24334CFC29C1846C0084B8EC /* Image+EXT.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Image+EXT.swift"; sourceTree = "<group>"; };
 		24334D0029C187800084B8EC /* Bookmark.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = Bookmark.xcdatamodel; sourceTree = "<group>"; };
@@ -96,6 +96,7 @@
 		2495A01F29CAC3DE00457CE7 /* Date+EXT.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Date+EXT.swift"; sourceTree = "<group>"; };
 		2495A02129CAC5DF00457CE7 /* String+EXT.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "String+EXT.swift"; sourceTree = "<group>"; };
 		2495A02429CB9EC800457CE7 /* AboutAppView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AboutAppView.swift; sourceTree = "<group>"; };
+		24A206682A00716300F5DC0C /* LicensePlateScannerView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LicensePlateScannerView.swift; sourceTree = "<group>"; };
 		24A4CED729BF9E9B00B856BC /* SettingsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsView.swift; sourceTree = "<group>"; };
 		24A4CEDA29BF9F9C00B856BC /* NotificationSettingsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NotificationSettingsView.swift; sourceTree = "<group>"; };
 		24A4CEDD29BFA2CE00B856BC /* UNAuth+EXT.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UNAuth+EXT.swift"; sourceTree = "<group>"; };
@@ -179,6 +180,7 @@
 		2437328129BEFB16008F4C4E /* Views */ = {
 			isa = PBXGroup;
 			children = (
+				24A206672A006F4C00F5DC0C /* License Plate */,
 				24A5792129BC556000495E6F /* Tab View */,
 				24B897EE29CF5C990003BCC8 /* Auth */,
 				24AC77CC29C110F800768158 /* Report */,
@@ -259,6 +261,14 @@
 			path = About;
 			sourceTree = "<group>";
 		};
+		24A206672A006F4C00F5DC0C /* License Plate */ = {
+			isa = PBXGroup;
+			children = (
+				24A206682A00716300F5DC0C /* LicensePlateScannerView.swift */,
+			);
+			path = "License Plate";
+			sourceTree = "<group>";
+		};
 		24A4CED529BF9E7C00B856BC /* New Report */ = {
 			isa = PBXGroup;
 			children = (
@@ -335,7 +345,6 @@
 		24A5791229BC552C00495E6F /* StoleMyKia */ = {
 			isa = PBXGroup;
 			children = (
-				2425EAFC2A00436000CC886F /* Info.plist */,
 				24A5791329BC552C00495E6F /* StoleMyKiaApp.swift */,
 				24A5791729BC552E00495E6F /* Assets.xcassets */,
 				24127C1E29E3F4AC00C09FE5 /* Launch Screen.storyboard */,
@@ -602,6 +611,7 @@
 				245B392329E39EC1001DD213 /* ReportVehicleColor.swift in Sources */,
 				24EAF11929C2A5D300B4CBFE /* MapSettingsView.swift in Sources */,
 				244BF51929D33F4E00951765 /* ImageCache.swift in Sources */,
+				24A206692A00716300F5DC0C /* LicensePlateScannerView.swift in Sources */,
 				24A4CEE429BFAC7100B856BC /* CLLocationManager+EXT.swift in Sources */,
 				24B897EC29CF5A3B0003BCC8 /* LoginViewModel.swift in Sources */,
 				24EAF11729C2A02900B4CBFE /* SFSafariView.swift in Sources */,

@@ -11,4 +11,5 @@ import SwiftUI
 extension Color {
     
     static let spottedGreen = Color("spotted-green")
+    static let brand = Color("brand")
 }

@@ -36,9 +36,7 @@ struct StoleMyKiaApp: App {
 class AppDelegate: UIScene, UIApplicationDelegate {
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey : Any]? = nil) -> Bool {
         FirebaseApp.configure()
-        
-        UINavigationBar.appearance().barTintColor = .white
-        
+                
         return true
     }
 }

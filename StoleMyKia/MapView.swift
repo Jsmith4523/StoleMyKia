@@ -8,7 +8,7 @@
 import SwiftUI
 import MapKit
 
-struct MapView: View {
+struct ReportsMapView: View {
     
     @State private var isShowingNewReportView = false
     
@@ -18,30 +18,68 @@ struct MapView: View {
     let imageCache: ImageCache
     
     var body: some View {
-        ZStack {
-            ZStack(alignment: .bottomTrailing) {
-                MapViewRep()
-                    .edgesIgnoringSafeArea(.top)
-                MapButtons()
-            }
-            VStack {
-                HStack {
-                    Text("Reports")
-                        .font(.system(size: 35).weight(.heavy))
-                    Spacer()
+        CustomNavView(title: "Reports",statusBarColor: .darkContent, backgroundColor: .brand) {
+            ZStack(alignment: .top) {
+                ZStack(alignment: .bottomTrailing) {
+                    MapViewRep()
+                        .edgesIgnoringSafeArea(.top)
+                    MapButtons()
                 }
-                Spacer()
             }
-            .padding()
+            .toolbar {
+                ToolbarItemGroup(placement: .navigationBarTrailing) {
+                    Button {
+                        reportModel.isShowingLicensePlateScannerView.toggle()
+                    } label: {
+                        Image(systemName: "camera")
+                            .foregroundColor(.white)
+                    }
+                }
+            }
         }
+        .edgesIgnoringSafeArea(.top)
         .sheet(isPresented: $reportModel.isShowingNewReportView) {
             NewReportView()
+        }
+        .fullScreenCover(isPresented: $reportModel.isShowingLicensePlateScannerView) {
+            LicensePlateScannerView()
         }
         .environmentObject(reportModel)
         .environmentObject(mapModel)
         .onAppear {
             reportModel.delegate = mapModel
             mapModel.delegate = reportModel
+        }
+    }
+}
+
+fileprivate struct MapHeader: View {
+    var body: some View {
+        ZStack(alignment: .top) {
+            LinearGradient(colors: [.black.opacity(0.65), .clear], startPoint: .top, endPoint: .bottom)
+                .ignoresSafeArea()
+                .frame(height: 100)
+            HStack {
+                Text("Reports")
+                    .font(.system(size: 35).weight(.heavy))
+                Spacer()
+                HStack {
+                    Button {
+                        
+                    } label: {
+                        Image(systemName: "text.justify")
+                            .resizable()
+                            .scaledToFit()
+                            .frame(width: 25, height: 25)
+                            .padding(11)
+                            .background(Color.accentColor)
+                            .clipShape(Circle())
+                    }
+
+                }
+            }
+            .padding()
+            .foregroundColor(.white)
         }
     }
 }
@@ -53,22 +91,24 @@ fileprivate struct MapButtons: View {
     
     var body: some View {
         HStack {
+            Button {
+                
+            } label: {
+                Image(systemName: "")
+            }
             Spacer()
             Button {
                 reportModel.isShowingNewReportView.toggle()
             } label: {
-               Label("New Report", systemImage: "")
+               Label("New Report", systemImage: "pencil")
                     .padding()
-                    .font(.system(size: <#T##CGFloat#>))
+                    .font(.system(size: 20).weight(.bold))
                     .foregroundColor(.white)
+                    .background(Color.accentColor)
+                    .cornerRadius(30)
+                    .shadow(radius: 4)
             }
-            Spacer()
-//            Button {
-//                reportModel.isShowingReportSearchView.toggle()
-//            } label: {
-//                Image(systemName: "newspaper")
-//                    .mapButton()
-//            }
+            
 //            if mapModel.locationAuth.isAuthorized() {
 //                Button {
 //                    mapModel.goToUsersLocation(animate: true)
@@ -79,7 +119,7 @@ fileprivate struct MapButtons: View {
 //            }
         }
         .padding(.horizontal, 8)
-        .padding(.bottom, 30)
+        .padding(.bottom, 45)
         .sheet(isPresented: $reportModel.isShowingReportSearchView) {
             ReportListView()
                 .environmentObject(reportModel)
@@ -102,7 +142,7 @@ private extension Image {
 
 struct Map_Previews: PreviewProvider {
     static var previews: some View {
-        MapView(imageCache: ImageCache())
+        ReportsMapView(imageCache: ImageCache())
             .environmentObject(ReportsViewModel())
             .environmentObject(MapViewModel())
     }

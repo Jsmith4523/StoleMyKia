@@ -14,17 +14,20 @@ struct CustomNavView<C: View>: UIViewControllerRepresentable {
     let view: ()->C
     let statusBarColor: UIStatusBarStyle
     let backgroundColor: UIColor
+    let title: String
     
-    init(statusBarColor: UIStatusBarStyle, backgroundColor: Color, view: @escaping ()->C) {
+    init(title: String = "", statusBarColor: UIStatusBarStyle, backgroundColor: Color, view: @escaping ()->C) {
         self.view            = view
         self.statusBarColor  = statusBarColor
         self.backgroundColor = UIColor(backgroundColor)
+        self.title           = title
     }
     
     func makeUIViewController(context: Context) -> UINavigationController {
         let navigationController = NavController(view: view,
                                                  statusBarColor: .lightContent,
-                                                 backgroundColor: backgroundColor)
+                                                 backgroundColor: backgroundColor,
+                                                 title: title)
         
         return navigationController
     }
@@ -37,9 +40,12 @@ struct CustomNavView<C: View>: UIViewControllerRepresentable {
         
         var statusBarColor: UIStatusBarStyle!
         
-        init(view: @escaping () -> C, statusBarColor: UIStatusBarStyle, backgroundColor: UIColor!) {
+        init(view: @escaping () -> C, statusBarColor: UIStatusBarStyle, backgroundColor: UIColor!, title: String) {
             super.init(rootViewController: UIHostingController(rootView: view()))
             self.statusBarColor = statusBarColor
+            
+            self.navigationBar.topItem?.title = title
+            self.navigationController?.navigationBar.barTintColor = .white
             
             let appearance                 = UINavigationBarAppearance()
             appearance.backgroundColor     = backgroundColor
@@ -57,5 +63,3 @@ struct CustomNavView<C: View>: UIViewControllerRepresentable {
         }
     }
 }
-
-

@@ -18,7 +18,7 @@ struct Tab: View {
 
     var body: some View {
         TabView {
-            MapView(imageCache: imageCache)
+            ReportsMapView(imageCache: imageCache)
                 .tabItem {
                     Label("Reports", systemImage: "car.2.fill")
                 }
@@ -31,7 +31,7 @@ struct Tab: View {
                     Label("Account", systemImage: "person")
                 }
         }
-        .accentColor(.accentColor)
+        //.accentColor(.accentColor)
         .reportDetailView(isPresented: $reportsModel.isShowingSelectedReportView, cache: imageCache, report: reportsModel.selectedReport)
         .environmentObject(reportsModel)
         .environmentObject(notificationModel)
