@@ -55,12 +55,12 @@ struct SelectedReportDetailView: View {
                                 } icon: {
                                     Image(systemName: "car")
                                 }
-//                                Label {
-//                                    //Text(vin.vinFormat() ?? "Not avaliable")
-//                                } icon: {
-//                                    Image(systemName: "123.rectangle")
-//                                }
-
+                                //                                Label {
+                                //                                    //Text(vin.vinFormat() ?? "Not avaliable")
+                                //                                } icon: {
+                                //                                    Image(systemName: "123.rectangle")
+                                //                                }
+                                
                                 if let location = report.location, let name = location.name, !(name.isEmpty) {
                                     Label {
                                         Text(name)

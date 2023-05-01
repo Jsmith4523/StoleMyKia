@@ -10,6 +10,7 @@
 		24127C1729E3E71F00C09FE5 /* MapView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 24127C1629E3E71F00C09FE5 /* MapView.swift */; };
 		24127C1D29E3E7B800C09FE5 /* MapViewRep.swift in Sources */ = {isa = PBXBuildFile; fileRef = 24127C1C29E3E7B800C09FE5 /* MapViewRep.swift */; };
 		24127C1F29E3F4AC00C09FE5 /* Launch Screen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 24127C1E29E3F4AC00C09FE5 /* Launch Screen.storyboard */; };
+		2425EAF92A003CDE00CC886F /* NavigationController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2425EAF82A003CDE00CC886F /* NavigationController.swift */; };
 		24334CFB29C0E0130084B8EC /* UIImage+EXT.swift in Sources */ = {isa = PBXBuildFile; fileRef = 24334CFA29C0E0130084B8EC /* UIImage+EXT.swift */; };
 		24334CFD29C1846C0084B8EC /* Image+EXT.swift in Sources */ = {isa = PBXBuildFile; fileRef = 24334CFC29C1846C0084B8EC /* Image+EXT.swift */; };
 		24334D0129C187800084B8EC /* Reports.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = 24334CFF29C187800084B8EC /* Reports.xcdatamodeld */; };
@@ -69,6 +70,8 @@
 		24127C1629E3E71F00C09FE5 /* MapView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = MapView.swift; path = StoleMyKia/MapView.swift; sourceTree = SOURCE_ROOT; };
 		24127C1C29E3E7B800C09FE5 /* MapViewRep.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MapViewRep.swift; sourceTree = "<group>"; };
 		24127C1E29E3F4AC00C09FE5 /* Launch Screen.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = "Launch Screen.storyboard"; sourceTree = "<group>"; };
+		2425EAF82A003CDE00CC886F /* NavigationController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NavigationController.swift; sourceTree = "<group>"; };
+		2425EAFC2A00436000CC886F /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist; path = Info.plist; sourceTree = "<group>"; };
 		24334CFA29C0E0130084B8EC /* UIImage+EXT.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIImage+EXT.swift"; sourceTree = "<group>"; };
 		24334CFC29C1846C0084B8EC /* Image+EXT.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Image+EXT.swift"; sourceTree = "<group>"; };
 		24334D0029C187800084B8EC /* Bookmark.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = Bookmark.xcdatamodel; sourceTree = "<group>"; };
@@ -157,6 +160,7 @@
 		24334D0229C19DF70084B8EC /* UIKit */ = {
 			isa = PBXGroup;
 			children = (
+				2425EAF82A003CDE00CC886F /* NavigationController.swift */,
 				24A662F829C592CA00AD784F /* MKMapView */,
 				24334D0329C19E100084B8EC /* UIImagePicker.swift */,
 				24EAF11629C2A02900B4CBFE /* SFSafariView.swift */,
@@ -331,6 +335,7 @@
 		24A5791229BC552C00495E6F /* StoleMyKia */ = {
 			isa = PBXGroup;
 			children = (
+				2425EAFC2A00436000CC886F /* Info.plist */,
 				24A5791329BC552C00495E6F /* StoleMyKiaApp.swift */,
 				24A5791729BC552E00495E6F /* Assets.xcassets */,
 				24127C1E29E3F4AC00C09FE5 /* Launch Screen.storyboard */,
@@ -617,6 +622,7 @@
 				24A5792C29BC56B000495E6F /* Report.swift in Sources */,
 				245B391F29E39E55001DD213 /* ReportVehicleModel.swift in Sources */,
 				24A4CEE229BFAA8000B856BC /* NotificationRadiusView.swift in Sources */,
+				2425EAF92A003CDE00CC886F /* NavigationController.swift in Sources */,
 				24A5793729BFD9C900495E6F /* RadiusMapCoordinator.swift in Sources */,
 				2495A02229CAC5DF00457CE7 /* String+EXT.swift in Sources */,
 				24A4CEE029BFA65100B856BC /* URL+EXT.swift in Sources */,
@@ -765,12 +771,12 @@
 				DEVELOPMENT_TEAM = H5L7QT5U7B;
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_FILE = StoleMyKia/Info.plist;
 				INFOPLIST_KEY_NSLocationWhenInUseUsageDescription = "Using your location, you'll be able to see reports nearests you.\\n\\n";
 				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchScreen_Generation = YES;
 				INFOPLIST_KEY_UILaunchStoryboardName = "Launch Screen.storyboard";
-				INFOPLIST_KEY_UIStatusBarHidden = YES;
 				INFOPLIST_KEY_UISupportedInterfaceOrientations = UIInterfaceOrientationPortrait;
 				INFOPLIST_KEY_UIUserInterfaceStyle = Light;
 				IPHONEOS_DEPLOYMENT_TARGET = 15.0;
@@ -799,12 +805,12 @@
 				DEVELOPMENT_TEAM = H5L7QT5U7B;
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_FILE = StoleMyKia/Info.plist;
 				INFOPLIST_KEY_NSLocationWhenInUseUsageDescription = "Using your location, you'll be able to see reports nearests you.\\n\\n";
 				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchScreen_Generation = YES;
 				INFOPLIST_KEY_UILaunchStoryboardName = "Launch Screen.storyboard";
-				INFOPLIST_KEY_UIStatusBarHidden = YES;
 				INFOPLIST_KEY_UISupportedInterfaceOrientations = UIInterfaceOrientationPortrait;
 				INFOPLIST_KEY_UIUserInterfaceStyle = Light;
 				IPHONEOS_DEPLOYMENT_TARGET = 15.0;

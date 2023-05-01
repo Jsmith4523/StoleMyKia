@@ -52,27 +52,31 @@ fileprivate struct MapButtons: View {
     @EnvironmentObject var reportModel: ReportsViewModel
     
     var body: some View {
-        VStack {
+        HStack {
+            Spacer()
             Button {
                 reportModel.isShowingNewReportView.toggle()
             } label: {
-                Image(systemName: "plus")
-                    .mapButton()
+               Label("New Report", systemImage: "")
+                    .padding()
+                    .font(.system(size: <#T##CGFloat#>))
+                    .foregroundColor(.white)
             }
-            Button {
-                reportModel.isShowingReportSearchView.toggle()
-            } label: {
-                Image(systemName: "newspaper")
-                    .mapButton()
-            }
-            if mapModel.locationAuth.isAuthorized() {
-                Button {
-                    mapModel.goToUsersLocation(animate: true)
-                } label: {
-                    Image(systemName: "location")
-                        .mapButton()
-                }
-            }
+            Spacer()
+//            Button {
+//                reportModel.isShowingReportSearchView.toggle()
+//            } label: {
+//                Image(systemName: "newspaper")
+//                    .mapButton()
+//            }
+//            if mapModel.locationAuth.isAuthorized() {
+//                Button {
+//                    mapModel.goToUsersLocation(animate: true)
+//                } label: {
+//                    Image(systemName: "location")
+//                        .mapButton()
+//                }
+//            }
         }
         .padding(.horizontal, 8)
         .padding(.bottom, 30)
