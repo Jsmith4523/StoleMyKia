@@ -122,22 +122,54 @@ class ReportsManager {
         }
     }
     
-    func deleteReport(report: Report, completion: @escaping DeleteReportCompletion) {
+    func delete(report: Report, completion: @escaping DeleteReportCompletion) {
         let ref = collection.document("\(report.id.uuidString)")
-        if let imageURL = report.imageURL {
-            storage.child(imageURL).delete { err in
+        
+        guard let imageUrl = report.imageURL else {
+            deleteReport { err in
                 guard err == nil else {
-                    completion(.failure(ReportManagerError.error("Unable to delete image from storage")))
+                    completion(.failure(err!))
                     return
                 }
+                completion(.success(true))
             }
+            return
         }
-        ref.delete { err in
-            if let err {
-                completion(.failure(ReportManagerError.error(err.localizedDescription)))
+        
+        deleteImage(for: imageUrl) { err in
+            guard err == nil else {
+                completion(.failure(err!))
                 return
             }
-            completion(.success(true))
+            deleteReport { err in
+                guard err == nil else {
+                    completion(.failure(err!))
+                    return
+                }
+                completion(.success(true))
+            }
+        }
+        
+        func deleteImage(for imageURL: String, completion: @escaping ((Error?)->Void)) {
+            storage.child(imageURL).delete { err in
+                guard err == nil else {
+                    print(err?.localizedDescription)
+                    completion(ReportManagerError.error("Unable to delete image from storage"))
+                    return
+                }
+                completion(nil)
+            }
+        }
+        
+        func deleteReport(completion: @escaping ((Error?)->Void)) {
+            ref.delete { err in
+                if let err {
+                    completion(ReportManagerError.error(err.localizedDescription))
+                    return
+                }
+                
+                completion(nil)
+            }
         }
     }
     

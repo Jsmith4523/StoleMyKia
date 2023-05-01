@@ -78,34 +78,13 @@ struct NewReportView: View {
                 }
                 
                 Section {
-                    Toggle("Current Location", isOn: $useCurrentLocation)
-                        .onChange(of: useCurrentLocation) { newValue in
-                            if newValue {
-                                if let userLocation = mapModel.locationManager.usersCurrentLocation {
-                                    location = Location(address: nil, name: nil, lat: userLocation.latitude, lon: userLocation.longitude)
-                                }
-                            } else {
-                                self.location = nil
-                            }
-                        }
-                        //.disabled(canUseUserLocation)
-                        .onChange(of: mapModel.locationAuth.isAuthorized()) { status in
-                            if !(status) {
-                                useCurrentLocation = false
-                                canUseUserLocation = false
-                            } else {
-                                useCurrentLocation = true
-                                canUseUserLocation = true
-                            }
-                        }
                     Button("Select Location") {
                         isShowingLocationView.toggle()
                     }
-                    //.disabled(useCurrentLocation)
                 } header: {
                     Text("Location")
                 } footer: {
-                    Text("Depending on your location services settings, your current location will be applied as the location of this incident")
+                    Text("Depending on your location services settings, your current location will be applied as the location of this report")
                 }
 
                 Section {
@@ -242,6 +221,20 @@ struct NewReportView: View {
         } message: {
             Text("There was a problem uploading your report. Please try again later")
         }
+        .onAppear {
+            setUserLocation()
+        }
+    }
+    
+    private func setUserLocation() {
+        guard mapModel.locationAuth.isAuthorized(), let userLocation = mapModel.userLocation else {
+            return
+        }
+        
+        let coords = userLocation.coordinate
+        let usersLocation = Location(address: "", name: "", lat: coords.latitude, lon: coords.longitude)
+        
+        self.location = usersLocation
     }
     
     

@@ -61,7 +61,7 @@ struct SelectedReportDetailView: View {
 //                                    Image(systemName: "123.rectangle")
 //                                }
 
-                                if let location = report.location, let name = location.name {
+                                if let location = report.location, let name = location.name, !(name.isEmpty) {
                                     Label {
                                         Text(name)
                                     } icon: {

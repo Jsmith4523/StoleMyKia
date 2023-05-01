@@ -79,7 +79,7 @@ final class ReportsViewModel: NSObject, ObservableObject {
         manager.fetchReports { result in
             switch result {
             case .success(let reports):
-                self.reports = reports.compactMap({$0})
+                self.reports = reports
             case .failure(let reason):
                 print(reason.localizedDescription)
             }
@@ -105,7 +105,7 @@ final class ReportsViewModel: NSObject, ObservableObject {
     }
     
     func deleteReport(_ report: Report, completion: @escaping ((Bool)->Void)) {
-        manager.deleteReport(report: report) { status in
+        manager.delete(report: report) { status in
             switch status {
             case .success(_):
                 completion(true)
