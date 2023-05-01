@@ -9,7 +9,7 @@ import SwiftUI
 
 struct LicensePlateScannerView: View {
     var body: some View {
-        CustomNavView(statusBarColor: .darkContent, backgroundColor: .black.opacity(0.5)) {
+        CustomNavView(title: "Plate Scanner", statusBarColor: .darkContent, backgroundColor: .black.opacity(0.5)) {
             Color.red
                 .ignoresSafeArea()
         }
