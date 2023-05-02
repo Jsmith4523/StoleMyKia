@@ -47,7 +47,7 @@ enum ReportType: String, CaseIterable, Hashable, Codable {
         case .stolen:
             return .red
         case .found:
-            return .tintColor
+            return UIColor(.brand)
         case .withnessed:
             return .systemBlue
         case .spotted:
