@@ -156,7 +156,9 @@ final class LicenseScannerCoordinator: NSObject, ObservableObject {
     
     ///Will retrieve any current reports that match the license plate string. If not, will retrieve reports from the database and return any that match
     func fetchReports() {
-        self.presentLicenseResultsView = true
+        DispatchQueue.main.asyncAfter(deadline: .now()+0.5) {
+            self.presentLicenseResultsView = true
+        }
         licensePlateDelegate?.getReportsWithLicense(licensePlate) { result in
             switch result {
             case .success(let reports):

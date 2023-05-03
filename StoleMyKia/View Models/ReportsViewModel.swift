@@ -119,7 +119,7 @@ extension ReportsViewModel: SelectedReportDelegate {
 //MARK: - LicenseScannerDelegate
 extension ReportsViewModel: LicenseScannerDelegate {
     func getReportsWithLicense(_ licenseString: String, completion: @escaping ((Result<[Report], LicenseScannerError>) -> Void)) {
-        print(self.reports.matchesLicensePlate(licenseString).count)
+        completion(.success(self.reports.matchesLicensePlate(licenseString)))
     }
 }
 

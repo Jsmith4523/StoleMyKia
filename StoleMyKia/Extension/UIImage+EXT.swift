@@ -35,10 +35,11 @@ extension UIImage {
         
         return newImage
     }
+    
+    static let vehiclePlaceholder = UIImage(named: "vehicle-placeholder")!
 }
 
 extension UIImage? {
-    
     
     func isNil() -> Bool {
         self == nil

@@ -17,7 +17,6 @@ struct LicensePlateScannerView: View {
     var body: some View {
         CustomNavView(title: "Plate Scanner", statusBarColor: .darkContent, backgroundColor: .brand) {
             ZStack {
-                Color.black.ignoresSafeArea()
                 LicenseCameraSession(coordinator: licenseModel)
                     .ignoresSafeArea()
             }
@@ -47,6 +46,9 @@ struct LicensePlateScannerView: View {
             DispatchQueue.main.asyncAfter(deadline: .now() + 2) {
                 licenseModel.fetchReports()
             }
+        }
+        .customSheetView(isPresented: $licenseModel.presentLicenseResultsView, detents: [.medium()], showsIndicator: true, cornerRadius: 30) {
+            LicensePlateResultsView(licenseModel: licenseModel)
         }
     }
 }

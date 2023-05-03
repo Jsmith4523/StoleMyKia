@@ -11,16 +11,22 @@ struct LicensePlateResultsView: View {
     
     @ObservedObject var licenseModel: LicenseScannerCoordinator
     
-    let imageCache: ImageCache
+    let imageCache = ImageCache()
     
     var body: some View {
-        VStack {
-            TabView {
-                ForEach(licenseModel.reports) { report in
-                    
+        NavigationView {
+            ScrollView {
+                VStack {
+                    ForEach(licenseModel.reports) { report in
+                        LicensePlateResultCellView(report: report, imageCache: imageCache)
+                        Divider()
+                    }
                 }
             }
             .tabViewStyle(.page(indexDisplayMode: .always))
+            .tint(.brand)
+            .navigationTitle("Results")
+            .navigationBarTitleDisplayMode(.inline)
         }
     }
 }
@@ -33,24 +39,25 @@ fileprivate struct LicensePlateResultCellView: View {
     let imageCache: ImageCache
     
     var body: some View {
-        HStack {
-            VStack(alignment: .leading) {
-                Text(report.reportType.rawValue)
-                    .font(.system(size: 25).weight(.heavy))
-                Text(report.vehicleDetails)
-                    .font(.system(size: 15))
-                    .foregroundColor(.gray)
-            }
-            .multilineTextAlignment(.leading)
-            Spacer()
-            if let vehicleImage {
-                Image(uiImage: vehicleImage)
+        VStack {
+            HStack(alignment: .top) {
+                VStack(alignment: .leading) {
+                    VStack(alignment: .leading) {
+                        Text(report.reportType.rawValue)
+                            .font(.system(size: 25).weight(.heavy))
+                        Label(report.vehicleDetails, systemImage: "car")
+                            .font(.system(size: 19))
+                            .foregroundColor(.gray)
+                    }
+                }
+                Spacer()
+                Image(uiImage: vehicleImage ?? .vehiclePlaceholder)
+                    .resizable()
+                    .scaledToFill()
+                    .frame(width: 85, height: 85)
+                    .cornerRadius(20)
             }
         }
-        .frame(height: 200)
-        .padding()
-        .background(.ultraThickMaterial)
-        .cornerRadius(35)
         .padding()
         .onAppear {
             getVehicleImage()
@@ -63,6 +70,9 @@ fileprivate struct LicensePlateResultCellView: View {
                 guard let image else {
                     return
                 }
+                withAnimation {
+                    self.vehicleImage = image
+                }
             }
         }
     }
@@ -70,6 +80,6 @@ fileprivate struct LicensePlateResultCellView: View {
 
 struct LicensePlateResultsView_Previews: PreviewProvider {
     static var previews: some View {
-        LicensePlateResultCellView(report: .init(dt: Date.now.epoch, reportType: .stolen, vehicleYear: 2017, vehicleMake: .hyundai, vehicleColor: .blue, vehicleModel: .elantra, licensePlate: nil, vin: nil, imageURL: "https://firebasestorage.googleapis.com/v0/b/stolemykia.appspot.com/o/83FE52C0-3A19-461F-BD61-AF4B97E4C5C8?alt=media&token=dd877c73-2f55-4062-8251-f920012173d8", location: .init(address: nil, name: nil, lat: nil, lon: nil)), imageCache: ImageCache())
+        LicensePlateResultCellView(report: .init(dt: Date.now.epoch, reportType: .stolen, vehicleYear: 2017, vehicleMake: .hyundai, vehicleColor: .blue, vehicleModel: .elantra, licensePlate: nil, vin: nil, imageURL: "https://bloximages.newyork1.vip.townnews.com/richmond.com/content/tncms/assets/v3/classifieds/4/f3/4f3f34e1-4e56-523f-9619-a4b3d5efc26f/5ca3b8b932072.image.jpg", location: .init(address: nil, name: nil, lat: nil, lon: nil)), imageCache: ImageCache())
     }
 }

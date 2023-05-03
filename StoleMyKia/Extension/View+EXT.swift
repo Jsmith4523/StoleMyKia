@@ -49,6 +49,13 @@ extension View {
             .sheet(isPresented: isPresented) { PhotoPicker(selectedImage: selectedImage, source: sourceType) }
     }
     
+    func customSheetView<Content: View>(isPresented: Binding<Bool>, detents: [UISheetPresentationController.Detent] = [.medium()], showsIndicator: Bool = false, cornerRadius: CGFloat = 15, @ViewBuilder child: @escaping ()->Content) -> some View {
+        return self
+            .background {
+                CustomSheetView(isPresented: isPresented, detents: detents, showsIndicator: showsIndicator, cornerRadius: cornerRadius, child: child)
+            }
+    }
+    
     //TODO: Crete privacy policy
     func privacyPolicy(isPresented: Binding<Bool>) -> some View {
         return self
