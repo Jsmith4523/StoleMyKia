@@ -10,6 +10,7 @@ import SwiftUI
 struct LicensePlateScannerView: View {
     
     @StateObject private var licenseModel = LicenseScannerCoordinator()
+    @EnvironmentObject var reportsModel: ReportsViewModel
     
     @Environment (\.dismiss) var dismiss
     
@@ -19,7 +20,6 @@ struct LicensePlateScannerView: View {
                 Color.black.ignoresSafeArea()
                 LicenseCameraSession(coordinator: licenseModel)
                     .ignoresSafeArea()
-
             }
             .toolbar {
                 ToolbarItem(placement: .navigationBarLeading) {
@@ -42,6 +42,11 @@ struct LicensePlateScannerView: View {
         .ignoresSafeArea()
         .onAppear {
             licenseModel.checkPermissions()
+            licenseModel.setLicensePlateDelegate(reportsModel)
+            
+            DispatchQueue.main.asyncAfter(deadline: .now() + 2) {
+                licenseModel.fetchReports()
+            }
         }
     }
 }
@@ -49,5 +54,6 @@ struct LicensePlateScannerView: View {
 struct LicensePlateScannerView_Previews: PreviewProvider {
     static var previews: some View {
         LicensePlateScannerView()
+            .environmentObject(ReportsViewModel())
     }
 }

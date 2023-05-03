@@ -102,7 +102,7 @@ extension Report {
     }
     
     func verifyLicensePlate(input: String) -> Bool {
-        return false
+        return true
     }
 }
 
@@ -110,6 +110,10 @@ extension [Report] {
     
     ///This method should be used for adding update annotation on the map
     func updates() -> [Report] {
-        self.flatMap {$0.updates?.compactMap({$0}) ?? []}
+        self.flatMap{$0.updates?.compactMap({$0}) ?? []}
+    }
+    
+    func matchesLicensePlate(_ licensePlateString: String) -> [Report] {
+        self.filter({$0.verifyLicensePlate(input: licensePlateString)})
     }
 }

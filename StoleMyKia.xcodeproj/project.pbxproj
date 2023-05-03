@@ -37,6 +37,7 @@
 		2495A02529CB9EC800457CE7 /* AboutAppView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2495A02429CB9EC800457CE7 /* AboutAppView.swift */; };
 		24A206692A00716300F5DC0C /* LicensePlateScannerView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 24A206682A00716300F5DC0C /* LicensePlateScannerView.swift */; };
 		24A2066B2A009CB900F5DC0C /* LicenseCameraSession.swift in Sources */ = {isa = PBXBuildFile; fileRef = 24A2066A2A009CB900F5DC0C /* LicenseCameraSession.swift */; };
+		24A2066D2A02296900F5DC0C /* LicensePlateResultsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 24A2066C2A02296900F5DC0C /* LicensePlateResultsView.swift */; };
 		24A4CED829BF9E9B00B856BC /* SettingsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 24A4CED729BF9E9B00B856BC /* SettingsView.swift */; };
 		24A4CEDB29BF9F9C00B856BC /* NotificationSettingsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 24A4CEDA29BF9F9C00B856BC /* NotificationSettingsView.swift */; };
 		24A4CEDE29BFA2CE00B856BC /* UNAuth+EXT.swift in Sources */ = {isa = PBXBuildFile; fileRef = 24A4CEDD29BFA2CE00B856BC /* UNAuth+EXT.swift */; };
@@ -99,6 +100,7 @@
 		2495A02429CB9EC800457CE7 /* AboutAppView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AboutAppView.swift; sourceTree = "<group>"; };
 		24A206682A00716300F5DC0C /* LicensePlateScannerView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LicensePlateScannerView.swift; sourceTree = "<group>"; };
 		24A2066A2A009CB900F5DC0C /* LicenseCameraSession.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LicenseCameraSession.swift; sourceTree = "<group>"; };
+		24A2066C2A02296900F5DC0C /* LicensePlateResultsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LicensePlateResultsView.swift; sourceTree = "<group>"; };
 		24A4CED729BF9E9B00B856BC /* SettingsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsView.swift; sourceTree = "<group>"; };
 		24A4CEDA29BF9F9C00B856BC /* NotificationSettingsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NotificationSettingsView.swift; sourceTree = "<group>"; };
 		24A4CEDD29BFA2CE00B856BC /* UNAuth+EXT.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UNAuth+EXT.swift"; sourceTree = "<group>"; };
@@ -268,6 +270,7 @@
 			children = (
 				24A2066A2A009CB900F5DC0C /* LicenseCameraSession.swift */,
 				24A206682A00716300F5DC0C /* LicensePlateScannerView.swift */,
+				24A2066C2A02296900F5DC0C /* LicensePlateResultsView.swift */,
 			);
 			path = "License Plate";
 			sourceTree = "<group>";
@@ -618,6 +621,7 @@
 				24A4CEE429BFAC7100B856BC /* CLLocationManager+EXT.swift in Sources */,
 				24B897EC29CF5A3B0003BCC8 /* LoginViewModel.swift in Sources */,
 				24EAF11729C2A02900B4CBFE /* SFSafariView.swift in Sources */,
+				24A2066D2A02296900F5DC0C /* LicensePlateResultsView.swift in Sources */,
 				24A5792F29BC5C8700495E6F /* ReportsViewModel.swift in Sources */,
 				245B391A29E39E09001DD213 /* ReportMap.swift in Sources */,
 				2488A57829E5CE3E00597885 /* NewReportSearchLocation.swift in Sources */,

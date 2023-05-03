@@ -34,11 +34,14 @@ struct LicenseCameraSession: UIViewRepresentable {
     
     func updateUIView(_ uiView: UIView, context: Context) {}
     
-    typealias UIViewType = UIView
 }
 
 
 final class LicenseScannerCoordinator: NSObject, ObservableObject {
+    
+    @Published private(set) var licensePlate = ""
+    
+    @Published var presentLicenseResultsView = false
         
     @Published var torchIsOn = false
     
@@ -46,7 +49,7 @@ final class LicenseScannerCoordinator: NSObject, ObservableObject {
     
     @Published var captureSession = AVCaptureSession()
     @Published private var device: AVCaptureDevice!
-    
+        
     private var zoomFactor: CGFloat = 1.0 {
         didSet {
             self.sendHapticFeedbackForZoomFactor()
@@ -55,6 +58,12 @@ final class LicenseScannerCoordinator: NSObject, ObservableObject {
     
     var authorization: AVAuthorizationStatus {
         AVCaptureDevice.authorizationStatus(for: .video)
+    }
+    
+    weak var licensePlateDelegate: LicenseScannerDelegate?
+    
+    func setLicensePlateDelegate(_ delegate: LicenseScannerDelegate) {
+        self.licensePlateDelegate = delegate
     }
     
     func checkPermissions() {
@@ -145,6 +154,20 @@ final class LicenseScannerCoordinator: NSObject, ObservableObject {
         }
     }
     
+    ///Will retrieve any current reports that match the license plate string. If not, will retrieve reports from the database and return any that match
+    func fetchReports() {
+        self.presentLicenseResultsView = true
+        licensePlateDelegate?.getReportsWithLicense(licensePlate) { result in
+            switch result {
+            case .success(let reports):
+                self.reports = reports
+            case .failure(let reason):
+                //TODO: Error out
+                break
+            }
+        }
+    }
+    
     @objc
     func updatePinchZoom(_ gesture: UIPinchGestureRecognizer) {
         guard let device else {
@@ -170,17 +193,20 @@ final class LicenseScannerCoordinator: NSObject, ObservableObject {
         
         gesture.scale = 1.0
     }
-    
-    func resetPinchZoom(_ gesture: UIPinchGestureRecognizer) {
-        gesture.scale = 1.0
-        UIImpactFeedbackGenerator(style: .medium)
-    }
 }
 
 //MARK: - AVCaptureVideoDataOutputSampleBufferDelegate
 extension LicenseScannerCoordinator: AVCaptureVideoDataOutputSampleBufferDelegate {
-    
     func captureOutput(_ output: AVCaptureOutput, didOutput sampleBuffer: CMSampleBuffer, from connection: AVCaptureConnection) {
         //TODO: Setup License Plate detection model
     }
+}
+
+enum LicenseScannerError: String, Error {
+    case noReports = "There are no active reports for that license plate."
+    case networkError = "There was an error finding reports that contain that license plate."
+}
+
+protocol LicenseScannerDelegate: AnyObject {
+    func getReportsWithLicense(_ licenseString: String, completion: @escaping ((Result<[Report], LicenseScannerError>)->Void))
 }

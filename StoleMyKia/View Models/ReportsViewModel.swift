@@ -10,17 +10,6 @@ import SwiftUI
 import UIKit
 import MapKit
 
-protocol ReportsDelegate: AnyObject {
-    func reportsDelegate(didReceieveReports reports: [Report])
-}
-
-protocol SelectedReportDelegate: AnyObject {
-    func didSelectReport(_ report: Report)
-}
-
-protocol FirebaseUserDelegate: AnyObject {
-    var uid: String? {get}
-}
 
 final class ReportsViewModel: NSObject, ObservableObject {
     
@@ -119,9 +108,32 @@ final class ReportsViewModel: NSObject, ObservableObject {
     }
 }
 
+//MARK: - SelectedReportDelegate
 extension ReportsViewModel: SelectedReportDelegate {
     func didSelectReport(_ report: Report) {
         self.isShowingSelectedReportView.toggle()
         self.selectedReport = report
     }
+}
+
+//MARK: - LicenseScannerDelegate
+extension ReportsViewModel: LicenseScannerDelegate {
+    func getReportsWithLicense(_ licenseString: String, completion: @escaping ((Result<[Report], LicenseScannerError>) -> Void)) {
+        print(self.reports.matchesLicensePlate(licenseString).count)
+    }
+}
+
+
+
+
+protocol ReportsDelegate: AnyObject {
+    func reportsDelegate(didReceieveReports reports: [Report])
+}
+
+protocol SelectedReportDelegate: AnyObject {
+    func didSelectReport(_ report: Report)
+}
+
+protocol FirebaseUserDelegate: AnyObject {
+    var uid: String? {get}
 }
