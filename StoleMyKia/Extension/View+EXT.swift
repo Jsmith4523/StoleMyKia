@@ -56,10 +56,11 @@ extension View {
             }
     }
     
-    func reportDetailSheet(isPresented: Binding<Bool>, report: Report, imageCache: ImageCache) -> some View {
+    func reportDetailSheet(isPresented: Binding<Bool>, report: Report, imageCache: ImageCache, reportsViewModel: ReportsViewModel) -> some View {
         return self
             .customSheetView(isPresented: isPresented, detents: [.large()], cornerRadius: 25) {
                 SelectedReportDetailView(report: report, imageCache: imageCache)
+                    .environmentObject(reportsViewModel)
             }
     }
     

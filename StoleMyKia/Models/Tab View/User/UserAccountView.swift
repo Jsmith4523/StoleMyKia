@@ -233,8 +233,9 @@ fileprivate struct UserReportsView: View {
             .onTapGesture {
                 self.isShowingReportDetailView.toggle()
             }
-            .reportDetailSheet(isPresented: $isShowingReportDetailView, report: report, imageCache: imageCache)
-            .environmentObject(reportsViewModel)
+            .sheet(isPresented: $isShowingReportDetailView) {
+                SelectedReportDetailView(report: report, imageCache: imageCache)
+            }
         }
     }
 }
