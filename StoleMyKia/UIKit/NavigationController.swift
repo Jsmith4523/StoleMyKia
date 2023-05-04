@@ -51,7 +51,10 @@ struct CustomNavView<C: View>: UIViewControllerRepresentable {
             appearance.backgroundColor     = backgroundColor
             appearance.titleTextAttributes = [.foregroundColor: UIColor.white]
             
-            self.navigationBar.scrollEdgeAppearance = appearance
+            self.navigationBar.scrollEdgeAppearance        = appearance
+            self.navigationBar.standardAppearance          = appearance
+            self.navigationBar.compactAppearance           = appearance
+            self.navigationBar.compactScrollEdgeAppearance = appearance
         }
         
         required init?(coder aDecoder: NSCoder) {

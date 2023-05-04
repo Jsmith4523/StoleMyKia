@@ -16,7 +16,7 @@ struct PasswordResetEmailView: View {
     
     @State private var alertEmailSent = false
     
-    @ObservedObject var loginModel: LoginViewModel
+    @ObservedObject var userModel: UserViewModel
     
     @Environment (\.dismiss) var dismiss
     
@@ -84,20 +84,13 @@ struct PasswordResetEmailView: View {
         guard !(email.isEmpty) else {
             return
         }
-        loginModel.sendResetPasswordLink(to: email) { status in
+        
+        userModel.sendResetPasswordLink(to: email) { status in
             guard let status, !(status == false) else {
                 self.alertError.toggle()
                 return
             }
         }
         self.alertEmailSent.toggle()
-    }
-}
-
-struct PasswordResetView_Previews: PreviewProvider {
-    static var previews: some View {
-        NavigationView {
-            PasswordResetEmailView(loginModel: LoginViewModel())
-        }
     }
 }

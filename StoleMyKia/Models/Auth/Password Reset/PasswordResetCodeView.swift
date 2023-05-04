@@ -13,7 +13,7 @@ struct PasswordResetCodeView: View {
     
     @State private var verificationCode = ""
     
-    @ObservedObject var loginModel: LoginViewModel
+    @ObservedObject var userModel: UserViewModel
     
     var body: some View {
         ZStack {
@@ -36,11 +36,5 @@ struct PasswordResetCodeView: View {
             }
             .padding()
         }
-    }
-}
-
-struct PasswordResetCodeView_Previews: PreviewProvider {
-    static var previews: some View {
-        PasswordResetCodeView(email: "johnny.applseed@icloud.com", loginModel: LoginViewModel())
     }
 }

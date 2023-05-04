@@ -24,7 +24,7 @@ struct UserCreateAccountView: View {
     @State private var alertError = false
     @State private var pushToWelcomeView = false
 
-    @ObservedObject var loginModel: LoginViewModel
+    @ObservedObject var userModel: UserViewModel
     
     @Environment (\.dismiss) var dismiss
     
@@ -108,7 +108,7 @@ struct UserCreateAccountView: View {
     
     func beginAccountCreation() {
         isLoading = true
-        loginModel.signUp(email: email, password: password) { status in
+        userModel.signUp(email: email, password: password) { status in
             guard let status, status == true else {
                 self.alertError.toggle()
                 isLoading = false
@@ -117,13 +117,5 @@ struct UserCreateAccountView: View {
             self.pushToWelcomeView.toggle()
         }
         isLoading = false
-    }
-}
-
-struct UserCreateAccountView_Previews: PreviewProvider {
-    static var previews: some View {
-        NavigationView {
-            UserCreateAccountView(loginModel: LoginViewModel())
-        }
     }
 }

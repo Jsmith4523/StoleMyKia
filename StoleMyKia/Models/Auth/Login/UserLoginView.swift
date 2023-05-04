@@ -20,7 +20,7 @@ struct UserLoginView: View {
     @State private var isLoading = false
     @State private var alertError = false
     
-    @ObservedObject var loginModel: LoginViewModel
+    @ObservedObject var userModel: UserViewModel
     
     @FocusState private var loginFocus: LoginFocus?
     
@@ -51,14 +51,14 @@ struct UserLoginView: View {
                         }
                         HStack {
                             NavigationLink {
-                                PasswordResetEmailView(loginModel: loginModel)
+                                PasswordResetEmailView(userModel: userModel)
                             } label: {
                                 Text("Forgot Password?")
                                     .font(.system(size: 14))
                             }
                             Divider()
                             NavigationLink {
-                                UserCreateAccountView(loginModel: loginModel)
+                                UserCreateAccountView(userModel: userModel)
                             } label: {
                                 Text("Create Account")
                                     .font(.system(size: 14))
@@ -105,7 +105,7 @@ struct UserLoginView: View {
             return
         }
         isLoading = true
-        loginModel.signIn(email: email, password: password) { result in
+        userModel.signIn(email: email, password: password) { result in
             guard result == nil else {
                 self.alertError = true
                 return
@@ -115,10 +115,4 @@ struct UserLoginView: View {
     }
 }
 
-struct UserLoginView_Previews: PreviewProvider {
-    static var previews: some View {
-        NavigationView {
-            UserLoginView(loginModel: LoginViewModel())
-        }
-    }
-}
+

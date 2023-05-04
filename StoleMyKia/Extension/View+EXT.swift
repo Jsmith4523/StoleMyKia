@@ -56,6 +56,13 @@ extension View {
             }
     }
     
+    func reportDetailSheet(isPresented: Binding<Bool>, report: Report, imageCache: ImageCache) -> some View {
+        return self
+            .customSheetView(isPresented: isPresented, detents: [.large()], cornerRadius: 25) {
+                SelectedReportDetailView(report: report, imageCache: imageCache)
+            }
+    }
+    
     //TODO: Crete privacy policy
     func privacyPolicy(isPresented: Binding<Bool>) -> some View {
         return self

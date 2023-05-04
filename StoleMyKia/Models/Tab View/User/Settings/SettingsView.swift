@@ -17,7 +17,7 @@ struct SettingsView: View {
     @State private var isShowingTwitterSupport = false
     @State private var isShowingPrivacyPolicy = false
     
-    @EnvironmentObject var loginModel: LoginViewModel
+    @EnvironmentObject var userModel: UserViewModel
     @EnvironmentObject var notificationModel: NotificationViewModel
     @EnvironmentObject var reportsModel: ReportsViewModel
     
@@ -112,7 +112,7 @@ struct SettingsView: View {
     }
     
     private func beginDeletingAccount() {
-        loginModel.deleteAccount { success in
+        userModel.deleteAccount { success in
             guard let success, success == true else {
                 alertErrorDeletingAccount.toggle()
                 return 
@@ -122,7 +122,7 @@ struct SettingsView: View {
     
     private func beginLoggingOut() {
         do {
-            try loginModel.signOut()
+            try userModel.signOut()
         } catch {
             print("❌ Error logging out: \(error.localizedDescription)")
             alertLogout.toggle()

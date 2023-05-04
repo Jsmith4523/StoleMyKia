@@ -12,20 +12,20 @@ import Firebase
 struct StoleMyKiaApp: App {
     
     @StateObject private var notificationModel = NotificationViewModel()
-    @StateObject private var loginModel        = LoginViewModel()
+    @StateObject private var userModel = UserViewModel()
         
     @UIApplicationDelegateAdaptor (AppDelegate.self) var appDelegate
     
     var body: some Scene {
         WindowGroup {
             ZStack {
-                switch loginModel.userIsSignedIn {
+                switch userModel.userIsSignedIn {
                 case true:
                     Tab()
                         .environmentObject(notificationModel)
-                        .environmentObject(loginModel)
+                        .environmentObject(userModel)
                 case false:
-                    UserLoginView(loginModel: loginModel)
+                    UserLoginView(userModel: userModel)
                 }
             }
         }

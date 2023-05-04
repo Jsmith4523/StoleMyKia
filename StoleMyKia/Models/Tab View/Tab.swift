@@ -12,7 +12,7 @@ struct Tab: View {
     @StateObject private var reportsModel = ReportsViewModel()
     
     @EnvironmentObject var notificationModel: NotificationViewModel
-    @EnvironmentObject var loginModel: LoginViewModel
+    @EnvironmentObject var userModel: UserViewModel
     
     private let imageCache = ImageCache()
 
@@ -26,7 +26,7 @@ struct Tab: View {
                 .tabItem {
                     Label("Notifications", systemImage: "bell")
                 }
-            UserAccountView(loginModel: loginModel)
+            UserAccountView(userModel: userModel)
                 .tabItem {
                     Label("Account", systemImage: "person")
                 }
@@ -35,9 +35,9 @@ struct Tab: View {
         .reportDetailView(isPresented: $reportsModel.isShowingSelectedReportView, cache: imageCache, report: reportsModel.selectedReport)
         .environmentObject(reportsModel)
         .environmentObject(notificationModel)
-        .environmentObject(loginModel)
+        .environmentObject(userModel)
         .onAppear {
-            reportsModel.firebaseUserDelegate = loginModel
+            reportsModel.firebaseUserDelegate = userModel
         }
     }
 }
@@ -46,6 +46,6 @@ struct ContentView_Previews: PreviewProvider {
     static var previews: some View {
         Tab()
             .environmentObject(NotificationViewModel())
-            .environmentObject(LoginViewModel())
+            .environmentObject(UserViewModel())
     }
 }

@@ -17,18 +17,25 @@ struct Report: Identifiable, Codable {
     var uid: String?
     let dt: TimeInterval?
     let reportType: ReportType
+    var status: ReportStatus = .open
     let vehicleYear: Int?
     let vehicleMake: VehicleMake?
     let vehicleColor: VehicleColor?
     let vehicleModel: VehicleModel?
     let licensePlate: EncryptedData?
     let vin: EncryptedData?
+    let distinguishable: String
     var imageURL: String?
     var isFound: Bool?
     let location: Location?
     var updates: [Report]?
     ///The parent or ancestor report if an update
     var parentID: UUID?
+    
+    enum ReportStatus: Codable {
+        case open
+        case closed
+    }
 }
 
 extension Location {
@@ -37,6 +44,33 @@ extension Location {
             return CLLocationCoordinate2D(latitude: lat, longitude: lon)
         }
         return nil
+    }
+}
+
+extension Report.ReportStatus {
+    var label: some View {
+        ZStack {
+            switch self {
+            case .open:
+                HStack {
+                    Circle()
+                        .frame(width: 10, height: 10)
+                        .foregroundColor(.green)
+                    Text("Open")
+                        .font(.system(size: 17))
+                        .foregroundColor(.gray)
+                }
+            case .closed:
+                HStack {
+                    Circle()
+                        .frame(width: 10, height: 10)
+                        .foregroundColor(.red)
+                    Text("Closed")
+                        .font(.system(size: 17))
+                        .foregroundColor(.gray)
+                }
+            }
+        }
     }
 }
 

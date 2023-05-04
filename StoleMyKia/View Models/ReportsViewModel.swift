@@ -77,19 +77,17 @@ final class ReportsViewModel: NSObject, ObservableObject {
         }
     }
     
-    ///Retrieves the latest reports that matches the uid
-    func getUsersReports(completion: @escaping (([Report]?)->Void)) {
+    private func fetchUserReports(completion: @escaping ((Result<[Report], Error>)->Void)) {
         guard let uid = firebaseUserDelegate?.uid else {
-            completion(nil)
+            completion(.failure(UserReportsError.error("UID is not avaliable")))
             return
         }
         manager.fetchUserReports(uid: uid) { status in
             switch status {
             case .success(let reports):
-                completion(reports)
+                completion(.success(reports))
             case .failure(_):
-                //TODO: Error handle
-                completion(nil)
+                completion(.failure(UserReportsError.error("Unable to retrieve user reports")))
             }
         }
     }
@@ -123,7 +121,19 @@ extension ReportsViewModel: LicenseScannerDelegate {
     }
 }
 
-
+//MARK: - UserReportsDelegate
+extension ReportsViewModel: UserReportsDelegate {
+    func getUserReports(completion: @escaping ((Result<[Report], Error>) -> Void)) {
+        self.fetchUserReports() { result in
+            switch result {
+            case .success(let reports):
+                completion(.success(reports))
+            case .failure(let error):
+                completion(.failure(error))
+            }
+        }
+    }
+}
 
 
 protocol ReportsDelegate: AnyObject {

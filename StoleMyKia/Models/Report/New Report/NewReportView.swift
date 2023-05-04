@@ -249,7 +249,7 @@ struct NewReportView: View {
                             vehicleModel: vehicleModel,
                             licensePlate: EncryptedData.createEncryption(input: licensePlate),
                             vin: EncryptedData.createEncryption(input: vin),
-                            location: location)
+                            distinguishable: "", location: location)
         reportsModel.upload(report, with: vehicleImage) { status in
             switch status {
             case true:

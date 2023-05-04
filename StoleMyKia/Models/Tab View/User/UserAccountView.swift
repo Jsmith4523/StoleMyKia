@@ -10,104 +10,239 @@ import MapKit
 
 struct UserAccountView: View {
     
-    @State private var userReports: [Report]?
+    private enum AccountViewSelection: CaseIterable {
+        case userReports
+        //case favorites
+        
+        var icon: String {
+            switch self {
+            case .userReports:
+                return "line.3.horizontal"
+//            case .favorites:
+//                return "bookmark.fill"
+            }
+        }
+    }
+    
+    @State private var viewSelection: AccountViewSelection = .userReports
     
     @State private var isShowingSettingsView = false
     
-    @ObservedObject var loginModel: LoginViewModel
+    @ObservedObject var userModel: UserViewModel
     
     @EnvironmentObject var notificationModel: NotificationViewModel
     @EnvironmentObject var reportsModel: ReportsViewModel
     
+    let imageCache = ImageCache()
+    
     var body: some View {
-        NavigationView {
-            VStack {
-                ScrollView {
-                    VStack {
-                        if let userReports {
-                            ForEach(userReports) { report in
-                                UserReportCellView(report: report)
-                            }
-                        }
+        CustomNavView(title: "My Account", statusBarColor: .darkContent, backgroundColor: .brand) {
+            VStack(spacing: 0) {
+                Spacer()
+                    .frame(height: 35)
+                userHeader
+                VStack(spacing: 0) {
+                    //tabViewSelection
+                    TabView(selection: $viewSelection) {
+                        UserReportsView(userModel: userModel, imageCache: imageCache)
+                            .tag(AccountViewSelection.userReports)
+//                        Color.brand.ignoresSafeArea()
+//                            .tag(AccountViewSelection.favorites)
                     }
+                    .tabViewStyle(.page(indexDisplayMode: .never))
                 }
-            }
-            .refreshable {
-                self.fetchUserReports()
             }
             .toolbar {
                 ToolbarItem(placement: .navigationBarTrailing) {
                     Button {
                         isShowingSettingsView.toggle()
                     } label: {
-                       Image(systemName: "gear")
+                        Image(systemName: "slider.horizontal.3")
+                            .foregroundColor(.white)
                     }
                 }
             }
-            .sheet(isPresented: $isShowingSettingsView) {
-                SettingsView()
-                    .interactiveDismissDisabled()
+            .refreshable {
+                
             }
-            .onAppear {
-                if userReports == nil {
-                    self.fetchUserReports()
+        }
+        .edgesIgnoringSafeArea(.top)
+        .onAppear {
+            userModel.userReportsDelegate = reportsModel
+        }
+        .sheet(isPresented: $isShowingSettingsView) {
+            SettingsView()
+                .environmentObject(userModel)
+                .environmentObject(notificationModel)
+                .environmentObject(reportsModel)
+        }
+    }
+    
+    var userHeader: some View {
+        VStack {
+            HStack(alignment: .top) {
+                Image.userPlaceholder
+                    .resizable()
+                    .scaledToFill()
+                    .frame(width: 75, height: 75)
+                    .clipShape(Circle())
+                VStack(alignment: .leading) {
+                    Text("Hello There!")
+                        .font(.system(size: 30).weight(.heavy))
+                    VStack(alignment: .leading) {
+                        if let displayName = userModel.getUserDisplayName() {
+                            Text("User \(displayName)")
+                        }
+                        if let date = userModel.getUserCreationDate() {
+                            Text("Member since \(date.date)")
+                        }
+                    }
+                    .font(.system(size: 17))
+                    .foregroundColor(.gray)
+                }
+                Spacer()
+            }
+            .padding()
+            Divider()
+        }
+    }
+    
+    var tabViewSelection: some View {
+        VStack {
+            HStack {
+                ForEach(AccountViewSelection.allCases, id: \.icon) { selection in
+                    Spacer()
+                    Image(systemName: selection.icon)
+                        .resizable()
+                        .scaledToFit()
+                        .frame(width: 21, height: 21)
+                        .foregroundColor(self.viewSelection == selection ? .brand : .gray)
+                        .padding()
+                        .onTapGesture {
+                            setTabViewSelection(selection)
+                        }
+                    Spacer()
                 }
             }
-            .environmentObject(notificationModel)
-            .environmentObject(loginModel)
-            .environmentObject(reportsModel)
+            .padding(.horizontal)
+            Divider()
+        }
+    }
+    
+    private func setTabViewSelection(_ selection: AccountViewSelection) {
+        UIImpactFeedbackGenerator().impactOccurred(intensity: 4)
+        withAnimation {
+            self.viewSelection = selection
+        }
+    }
+}
+
+fileprivate struct UserReportsView: View {
+        
+    @State private var isLoading = false
+    @State private var didFailToFetchReports = false
+    
+    @State private var userReports = [Report]()
+    
+    @ObservedObject var userModel: UserViewModel
+    
+    let imageCache: ImageCache
+    
+    var body: some View {
+        ZStack {
+            switch isLoading {
+            case true:
+                ProgressView()
+            case false:
+                list
+            }
+        }
+        .frame(maxHeight: .infinity)
+        .onAppear {
+            if userReports.isEmpty {
+                fetchUserReports()
+            }
+        }
+        .refreshable {
+            fetchUserReports()
+        }
+    }
+    
+    var list: some View {
+        ScrollView(showsIndicators: false) {
+            VStack {
+                ForEach(userReports) { report in
+                    UserReportCellView(report: report, imageCache: imageCache)
+                }
+                Spacer()
+            }
         }
     }
     
     private func fetchUserReports() {
-        reportsModel.getUsersReports { reports in
-            guard let reports else {
-                return
+        if userReports.isEmpty {
+            self.isLoading = true
+        }
+        
+        userModel.getUserReports { results in
+            switch results {
+            case .success(let reports):
+                self.userReports = reports
+                self.isLoading = false
+            case .failure(_):
+                break
             }
-            self.userReports = reports
         }
     }
-}
-
-fileprivate struct UserReportCellView: View {
     
-    @State private var vehicleImage: UIImage?
-    
-    let report: Report
-    
-    @EnvironmentObject var reports: ReportsViewModel
-    
-    var body: some View {
-        HStack {
-            VStack(alignment: .leading) {
-                HStack {
-                    VStack(alignment: .leading) {
-                        Text(report.type)
-                            .font(.system(size: 30).weight(.heavy))
-                        Text(report.vehicleDetails)
-                            .font(.system(size: 15))
-                            .foregroundColor(.gray)
+    fileprivate struct UserReportCellView: View {
+        
+        @State private var isShowingReportDetailView = false
+        
+        @State private var vehicleImage: UIImage?
+        
+        let report: Report
+        let imageCache: ImageCache
+        
+        @EnvironmentObject var reportsViewModel: ReportsViewModel
+        
+        var body: some View {
+            HStack {
+                VStack(alignment: .leading) {
+                    HStack {
+                        VStack(alignment: .leading) {
+                            Text(report.type)
+                                .font(.system(size: 30).weight(.heavy))
+                            Text(report.vehicleDetails)
+                                .font(.system(size: 15))
+                                .foregroundColor(.gray)
+                        }
+                        Spacer()
+                        report.status.label
+                    }
+                    .padding()
+                    ZStack {
+                        ReportMap(report: report)
+                            .frame(height: 175)
+                        
                     }
                     Spacer()
-                    Button {
-                        
-                    } label: {
-                        Image(systemName: "ellipsis")
-                            .resizable()
-                            .scaledToFit()
-                            .frame(width: 20, height: 20)
-                    }
+                        .frame(height: 20)
                 }
-                .padding()
-                ZStack {
-                    ReportMap(report: report)
-                        .frame(height: 175)
-                    
-                }
-                Spacer()
-                    .frame(height: 20)
             }
+            .onTapGesture {
+                self.isShowingReportDetailView.toggle()
+            }
+            .reportDetailSheet(isPresented: $isShowingReportDetailView, report: report, imageCache: imageCache)
+            .environmentObject(reportsViewModel)
         }
     }
 }
 
+struct UserAccView_Previews: PreviewProvider {
+    static var previews: some View {
+        UserAccountView(userModel: UserViewModel())
+            .environmentObject(NotificationViewModel())
+            .environmentObject(ReportsViewModel())
+    }
+}
