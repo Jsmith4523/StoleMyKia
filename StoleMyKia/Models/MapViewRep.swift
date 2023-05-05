@@ -18,7 +18,7 @@ struct MapViewRep: UIViewRepresentable {
         let mapView = context.coordinator.mapView
         
         mapView.showsCompass      = false
-        mapView.isRotateEnabled   = true
+        mapView.isRotateEnabled   = false
         mapView.isPitchEnabled    = true
         mapView.showsUserLocation = true
         mapView.showsScale        = true

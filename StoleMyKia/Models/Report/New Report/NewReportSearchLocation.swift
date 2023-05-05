@@ -207,7 +207,7 @@ fileprivate final class LocationSearchModel: ObservableObject {
 }
 
 ///Object relating to MKLocalSearch for a report
-struct Location: Codable, Identifiable {
+struct Location: Codable, Identifiable, Hashable {
     var id = UUID()
     let address: String?
     let name: String?

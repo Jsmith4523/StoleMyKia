@@ -7,7 +7,7 @@
 
 import Foundation
 
-enum VehicleColor: String, CaseIterable, Codable {
+enum VehicleColor: String, CaseIterable, Codable, Hashable {
     case red       = "Red"
     case white     = "White"
     case green     = "Green"

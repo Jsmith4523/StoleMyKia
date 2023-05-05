@@ -21,5 +21,51 @@ class ReportsClusterAnnotationView: MKAnnotationView {
     
     override func prepareForDisplay() {
         super.prepareForDisplay()
+        setupView()
+    }
+    
+    private func setupView() {
+        if let clusterAnnotation = annotation as? MKClusterAnnotation {
+            let circle = UIView()
+            circle.frame = CGRect(x: 0, y: 0, width: 40, height: 40)
+            circle.backgroundColor = .tintColor
+            circle.layer.cornerRadius = circle.frame.height / 2
+            circle.clipsToBounds = true
+            
+            let labelView = UILabel()
+            labelView.text = clusterAnnotation.countString
+            labelView.font = .systemFont(ofSize: 19.5, weight: .heavy)
+            labelView.textColor = .white
+            
+            addSubview(circle)
+            addSubview(labelView)
+            
+            circle.translatesAutoresizingMaskIntoConstraints = false
+            labelView.translatesAutoresizingMaskIntoConstraints = false
+            
+            NSLayoutConstraint.activate([
+                circle.centerYAnchor.constraint(equalTo: centerYAnchor),
+                circle.centerXAnchor.constraint(equalTo: centerXAnchor),
+                circle.widthAnchor.constraint(equalToConstant: CGFloat(40)),
+                circle.heightAnchor.constraint(equalToConstant: CGFloat(40)),
+                labelView.centerYAnchor.constraint(equalTo: circle.centerYAnchor),
+                labelView.centerXAnchor.constraint(equalTo: circle.centerXAnchor),
+            ])
+        }
+    }
+}
+
+
+extension MKClusterAnnotation {
+    
+    
+    var countString: String {
+        let count = self.memberAnnotations.count
+        
+        if count > 10 {
+            return "10+"
+        } else {
+            return "\(count)"
+        }
     }
 }

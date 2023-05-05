@@ -9,7 +9,7 @@ import Foundation
 import CommonCrypto
 import CryptoKit
 
-struct EncryptedData: Codable {
+struct EncryptedData: Codable, Hashable {
     
     var data: String?
     var key: String?

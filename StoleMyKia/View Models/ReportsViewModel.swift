@@ -69,7 +69,8 @@ final class ReportsViewModel: NSObject, ObservableObject {
         manager.fetchReports { result in
             switch result {
             case .success(let reports):
-                self.reports = reports
+                self.reports.including(with: reports)
+                print(self.reports.map({$0.id}))
             case .failure(let reason):
                 print(reason.localizedDescription)
             }
@@ -97,7 +98,7 @@ final class ReportsViewModel: NSObject, ObservableObject {
             switch status {
             case .success(_):
                 completion(true)
-                self.getReports()
+                self.delegate?.reportsDelegate(didDeleteReport: report)
             case .failure(let error):
                 completion(false)
                 print("❌ Error removing post: \(error.localizedDescription)")
@@ -138,6 +139,7 @@ extension ReportsViewModel: UserReportsDelegate {
 
 protocol ReportsDelegate: AnyObject {
     func reportsDelegate(didReceieveReports reports: [Report])
+    func reportsDelegate(didDeleteReport report: Report)
 }
 
 protocol SelectedReportDelegate: AnyObject {

@@ -181,12 +181,12 @@ private extension Image {
 }
 
 
-struct SelectedReportDetailView_Previews: PreviewProvider {
-    
-    @StateObject private static var reportsModel = ReportsViewModel()
-    
-    static var previews: some View {
-        SelectedReportDetailView(report: .init(dt: Date.now.epoch, reportType: .stolen, vehicleYear: 2015, vehicleMake: .hyundai, vehicleColor: .red, vehicleModel: .elantra, licensePlate: nil, vin: nil, distinguishable: "", location: .init(address: nil, name: "Apple Carnige", lat: nil, lon: nil)), imageCache: ImageCache())
-            .environmentObject(reportsModel)
-    }
-}
+//struct SelectedReportDetailView_Previews: PreviewProvider {
+//    
+//    @StateObject private static var reportsModel = ReportsViewModel()
+//    
+//    static var previews: some View {
+//        SelectedReportDetailView(report: .init(dt: Date.now.epoch, reportType: .stolen, vehicleYear: 2015, vehicleMake: .hyundai, vehicleColor: .red, vehicleModel: .elantra, licensePlate: nil, vin: nil, distinguishable: "", location: .init(address: nil, name: "Apple Carnige", lat: nil, lon: nil)), imageCache: ImageCache())
+//            .environmentObject(reportsModel)
+//    }
+//}

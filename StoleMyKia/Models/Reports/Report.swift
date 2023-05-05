@@ -11,7 +11,8 @@ import MapKit
 import CryptoKit
 import SwiftUI
 
-struct Report: Identifiable, Codable {
+struct Report: Identifiable, Codable, Hashable, Comparable {
+
     var id = UUID()
     
     var uid: String?
@@ -29,12 +30,28 @@ struct Report: Identifiable, Codable {
     var isFound: Bool?
     let location: Location?
     var updates: [Report]?
-    ///The parent or ancestor report if an update
-    var parentID: UUID?
     
-    enum ReportStatus: Codable {
+    enum ReportStatus: Codable, Hashable {
         case open
         case closed
+    }
+    
+    static func == (lhs: Report, rhs: Report) -> Bool {
+        return true
+    }
+    
+    static func < (lhs: Report, rhs: Report) -> Bool {
+        if let lhsTime = lhs.dt, let rhsTime = rhs.dt {
+            return lhsTime < rhsTime
+        }
+        return false
+    }
+    
+    static func > (lhs: Report, rhs: Report) -> Bool {
+        if let lhsTime = lhs.dt, let rhsTime = rhs.dt {
+            return lhsTime > rhsTime
+        }
+        return false
     }
 }
 
@@ -145,6 +162,13 @@ extension [Report] {
     ///This method should be used for adding update annotation on the map
     func updates() -> [Report] {
         self.flatMap{$0.updates?.compactMap({$0}) ?? []}
+    }
+    
+    mutating func including(with reports: [Report]) {
+        let currentIds = Set(self.map({$0.id}))
+        let filterReports = reports.filter {!currentIds.contains($0.id)}
+        
+        self.append(contentsOf: filterReports)
     }
     
     func matchesLicensePlate(_ licensePlateString: String) -> [Report] {

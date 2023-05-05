@@ -25,15 +25,15 @@ struct ReportMap: UIViewRepresentable {
                                                  span: .init(latitudeDelta: 0.010, longitudeDelta: 0.010)), animated: false)
         }
         
-        if let annotation = ReportAnnotation.createAnnotations([report]).first {
-            mapView.addAnnotation(annotation)
-            
-            DispatchQueue.main.asyncAfter(deadline: .now() + 1.25) {
-                if selectAnnotation {
-                    mapView.selectAnnotation(annotation, animated: true)
-                }
-            }
-        }
+//        if let annotation = ReportAnnotation.createAnnotations([report]).first {
+//            mapView.addAnnotation(annotation)
+//            
+//            DispatchQueue.main.asyncAfter(deadline: .now() + 1.25) {
+//                if selectAnnotation {
+//                    mapView.selectAnnotation(annotation, animated: true)
+//                }
+//            }
+//        }
         return mapView
     }
     

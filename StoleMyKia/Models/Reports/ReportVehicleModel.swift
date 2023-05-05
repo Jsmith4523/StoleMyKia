@@ -24,7 +24,7 @@ import UIKit
 //2015-2021 Kia Soul
 //2015-2021 Kia Sportage
 
-enum VehicleModel: String, CaseIterable, Codable, Comparable {
+enum VehicleModel: String, CaseIterable, Codable, Comparable, Hashable {
     
     //MARK: - Hyundai Vehicles
     case accent   = "Accent"

@@ -18,8 +18,8 @@ class ReportAnnotation: NSObject, MKAnnotation {
     var coordinate: CLLocationCoordinate2D
     var report: Report
     
-    init(coordinate: CLLocationCoordinate2D, report: Report) {
-        self.coordinate    = coordinate
+    init(report: Report) {
+        self.coordinate    = (report.location?.coordinates!)!
         self.report        = report
         self.subtitle      = report.location?.name ?? report.location?.address ?? ""
     }
@@ -52,7 +52,7 @@ class ReportAnnotationView: MKMarkerAnnotationView {
         
         guard let report else { return }
         
-        animatesWhenAdded = true
+        animatesWhenAdded  = true
         subtitleVisibility = .visible
         
         glyphImage      = UIImage(systemName: report.reportType.annotationImage)
@@ -67,23 +67,44 @@ class ReportAnnotationView: MKMarkerAnnotationView {
 }
 
 
-
-
-
-
-
-
-extension ReportAnnotation {
+extension MKMapView {
     
     ///Will generate and return an array of ReportAnnotation
-    static func createAnnotations(_ reports: [Report]) -> [ReportAnnotation] {
+    func createAnnotations(_ reports: [Report]) {
+        var reportIds = Set<UUID>()
         var annotations = [ReportAnnotation]()
         
-        for report in reports {
-            if let location = report.location, let coordinates = location.coordinates {
-                annotations.append(ReportAnnotation(coordinate: coordinates,
-                                                    report: report))
+        for annotation in self.annotations where annotation is ReportAnnotation {
+            if let annotation = annotation as? ReportAnnotation {
+                reportIds.insert(annotation.report.id)
+                annotations.append(annotation)
             }
+        }
+            
+        let newReportAnnotations = annotations.doesNotAlreadyContain(reportIds, with: reports)
+        self.addAnnotations(newReportAnnotations)
+    }
+}
+
+extension [ReportAnnotation] {
+    
+    func doesNotAlreadyContain(_ ids: Set<UUID>, with reports: [Report]) -> [ReportAnnotation] {
+        let reports = reports.filter { report in
+            !ids.contains(where: { $0 == report.id})
+        }
+            
+        return reports.createAnnotations()
+    }
+}
+
+extension [Report] {
+    
+    
+    func createAnnotations() -> [ReportAnnotation] {
+        var annotations = [ReportAnnotation]()
+        
+        for report in self {
+            annotations.append(ReportAnnotation(report: report))
         }
         
         return annotations
@@ -95,6 +116,7 @@ extension [MKAnnotation] {
     ///If the parameter array of reports does not contain the report(s) from the map annotations, remove them
     func doesNotInclude(_ arr: [Report]) -> [ReportAnnotation] {
         var removeAnnotations = [ReportAnnotation]()
+        
         
         for annotation in self where annotation is ReportAnnotation {
             if let annotation = annotation as? ReportAnnotation, !(arr.contains(where: {$0.id == annotation.report.id})) {

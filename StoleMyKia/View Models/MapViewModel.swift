@@ -36,10 +36,12 @@ final class MapViewModel: NSObject, ObservableObject {
 
 //MARK: - ReportsDelegate
 extension MapViewModel: ReportsDelegate {
+    func reportsDelegate(didDeleteReport report: Report) {
+        
+    }
+    
     func reportsDelegate(didReceieveReports reports: [Report]) {
-        mapView.addAnnotations(ReportAnnotation.createAnnotations(reports))
-        mapView.addAnnotations(ReportAnnotation.createAnnotations(reports.updates()))
-        mapView.removeAnnotations(mapView.annotations.doesNotInclude(reports))
+        mapView.createAnnotations(reports)
     }
 }
 

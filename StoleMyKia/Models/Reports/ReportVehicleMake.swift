@@ -7,7 +7,7 @@
 
 import Foundation
 
-enum VehicleMake: String, CaseIterable, Codable {
+enum VehicleMake: String, CaseIterable, Codable, Hashable {
     case hyundai = "Hyundai"
     case kia = "Kia"
 }

@@ -199,7 +199,8 @@ private extension QuerySnapshot {
         
         for document in self.documents {
             let documentData = try JSONSerialization.data(withJSONObject: document.data())
-            let report = try JSONDecoder().decode(Report.self, from: documentData)
+            var report = try JSONDecoder().decode(Report.self, from: documentData)
+            report.id = UUID(uuidString: report.id.uuidString)!
             reports.append(report)
         }
         

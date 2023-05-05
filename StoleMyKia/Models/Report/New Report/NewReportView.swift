@@ -241,7 +241,8 @@ struct NewReportView: View {
     func beginPostingReport() {
         isUploading = true
         let generator = UINotificationFeedbackGenerator()
-        let report = Report(dt: Date.now.epoch,
+        let report = Report(id: UUID(),
+                            dt: Date.now.epoch,
                             reportType: reportType,
                             vehicleYear: vehicleYear,
                             vehicleMake: vehicleMake,
