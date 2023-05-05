@@ -44,11 +44,14 @@ final class LicenseScannerCoordinator: NSObject, ObservableObject {
     @Published var presentLicenseResultsView = false
         
     @Published var torchIsOn = false
+    @Published var alertTorchUsage = false
     
     @Published var reports = [Report]()
     
     @Published var captureSession = AVCaptureSession()
     @Published private var device: AVCaptureDevice!
+     
+    @AppStorage ("userDidLearnAboutFlash") var userDidLearnAboutFlash = false
         
     private var zoomFactor: CGFloat = 1.0 {
         didSet {
@@ -87,12 +90,39 @@ final class LicenseScannerCoordinator: NSObject, ObservableObject {
         }
     }
     
+    func suspendSession() {
+        DispatchQueue.global(qos: .background).async {
+            self.captureSession.stopRunning()
+        }
+    }
+    
+    func startSession() {
+        DispatchQueue.global(qos: .background).async {
+            self.captureSession.startRunning()
+        }
+    }
+    
     private func sendHapticFeedbackForZoomFactor() {
         if zoomFactor == 1.0 {
             UIImpactFeedbackGenerator().impactOccurred(intensity: 3.0)
         } else if zoomFactor == 120.0 {
             UIImpactFeedbackGenerator().impactOccurred(intensity: 7.0)
         }
+    }
+    
+    func warnOfTorchUse() {
+        if !(userDidLearnAboutFlash) && !torchIsOn {
+            UINotificationFeedbackGenerator().notificationOccurred(.warning)
+            self.alertTorchUsage.toggle()
+        } else {
+            toggleTorch()
+        }
+    }
+    
+    func toggleTorchWithLearning() {
+        //The users has understood the severity of using flash
+        self.userDidLearnAboutFlash = true
+        self.toggleTorch()
     }
     
     func toggleTorch() {

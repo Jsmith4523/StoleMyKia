@@ -8,7 +8,7 @@
 import SwiftUI
 
 struct LicensePlateScannerView: View {
-    
+        
     @StateObject private var licenseModel = LicenseScannerCoordinator()
     @EnvironmentObject var reportsModel: ReportsViewModel
     
@@ -17,8 +17,12 @@ struct LicensePlateScannerView: View {
     var body: some View {
         CustomNavView(title: "Plate Scanner", statusBarColor: .darkContent, backgroundColor: .brand) {
             ZStack {
-                LicenseCameraSession(coordinator: licenseModel)
-                    .ignoresSafeArea()
+                Color.black.ignoresSafeArea()
+                ZStack(alignment: .bottomTrailing) {
+                    LicenseCameraSession(coordinator: licenseModel)
+                        .ignoresSafeArea()
+                    ScannerControls
+                }
             }
             .toolbar {
                 ToolbarItem(placement: .navigationBarLeading) {
@@ -28,11 +32,11 @@ struct LicensePlateScannerView: View {
                         Image(systemName: "xmark")
                     }
                 }
-                ToolbarItem(placement: .navigationBarTrailing) {
+                ToolbarItemGroup(placement: .navigationBarTrailing) {
                     Button {
-                        licenseModel.toggleTorch()
+                        
                     } label: {
-                        Image(systemName: licenseModel.torchIsOn ? "sun.max.fill" : "sun.min.fill")
+                        Image(systemName: "waveform.and.mic")
                     }
                 }
             }
@@ -47,9 +51,45 @@ struct LicensePlateScannerView: View {
                 licenseModel.fetchReports()
             }
         }
-        .customSheetView(isPresented: $licenseModel.presentLicenseResultsView, detents: [.medium()], showsIndicator: true, cornerRadius: 30) {
-            LicensePlateResultsView(licenseModel: licenseModel)
+        .alert("Warning, your are activating your flash!", isPresented: $licenseModel.alertTorchUsage, actions: {
+            Button("Activate", role: .destructive) {
+                licenseModel.toggleTorch()
+            }
+            Button("Always activate", role: .destructive) {
+                licenseModel.toggleTorchWithLearning()
+            }
+        }, message: {
+            Text("We want to ensure the safety of everyone. For your safety, please do not direct your flash that would be in view for the thief. If the camera is unable to detect the license plate, please search it manually.")
+        })
+//        .customSheetView(isPresented: $licenseModel.presentLicenseResultsView, detents: [.medium(), .large()], showsIndicator: true, cornerRadius: 30) {
+//            LicensePlateResultsView(licenseModel: licenseModel)
+//                .onAppear {
+//                    licenseModel.startSession()
+//                }
+//                .onDisappear {
+//                    licenseModel.startSession()
+//                }
+//        }
+    }
+    
+    var ScannerControls: some View {
+        HStack {
+            Button {
+                licenseModel.warnOfTorchUse()
+            } label: {
+                Image(systemName: "flashlight.on.fill")
+                    .resizable()
+                    .scaledToFit()
+                    .frame(width: 35, height: 35)
+                    .padding()
+                    .foregroundColor(.black)
+                    .background(Color.white)
+                    .clipShape(Circle())
+                    .shadow(radius: 2)
+                    .rotationEffect(.degrees(-30))
+            }
         }
+        .padding()
     }
 }
 

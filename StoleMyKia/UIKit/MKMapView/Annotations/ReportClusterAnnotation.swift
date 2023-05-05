@@ -9,15 +9,17 @@ import Foundation
 import UIKit
 import MapKit
 
-class ReportClusterAnnotation: MKClusterAnnotation {
+class ReportsClusterAnnotationView: MKAnnotationView {
     
-    var reports: [Report]!
+    override init(annotation: MKAnnotation?, reuseIdentifier: String?) {
+        super.init(annotation: annotation, reuseIdentifier: reuseIdentifier)
+    }
     
-    override init(memberAnnotations: [MKAnnotation]) {
-        super.init(memberAnnotations: memberAnnotations)
-        
-        if let reports = memberAnnotations as? [Report] {
-            self.reports = reports
-        }
+    required init?(coder aDecoder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
+    }
+    
+    override func prepareForDisplay() {
+        super.prepareForDisplay()
     }
 }

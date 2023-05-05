@@ -18,10 +18,11 @@ struct MapViewRep: UIViewRepresentable {
         let mapView = context.coordinator.mapView
         
         mapView.showsCompass      = false
+        mapView.isRotateEnabled   = true
+        mapView.isPitchEnabled    = true
         mapView.showsUserLocation = true
-        mapView.isRotateEnabled   = false
-        mapView.delegate = context.coordinator
-                
+        mapView.showsScale        = true
+                        
         return mapView
     }
     
@@ -30,6 +31,5 @@ struct MapViewRep: UIViewRepresentable {
     }
     
     func updateUIView(_ uiView: MKMapView, context: Context) {}
-        
 }
 

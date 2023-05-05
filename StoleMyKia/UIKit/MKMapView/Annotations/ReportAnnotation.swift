@@ -12,6 +12,8 @@ import MapKit
 
 class ReportAnnotation: NSObject, MKAnnotation {
     
+    static var reusableID = "reportAnnotation"
+    
     var subtitle: String?
     var coordinate: CLLocationCoordinate2D
     var report: Report
@@ -22,6 +24,54 @@ class ReportAnnotation: NSObject, MKAnnotation {
         self.subtitle      = report.location?.name ?? report.location?.address ?? ""
     }
 }
+
+
+class ReportAnnotationView: MKMarkerAnnotationView {
+    
+    var report: Report!
+    
+    weak var calloutDelegate: AnnotationCalloutDelegate?
+    
+    init(annotation: MKAnnotation?, reuseIdentifier: String?, report: Report) {
+        super.init(annotation: annotation, reuseIdentifier: reuseIdentifier)
+        self.report = report
+        
+        clusteringIdentifier = ReportAnnotation.reusableID
+    }
+    
+    required init?(coder aDecoder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
+    }
+    
+    func setCalloutDelegate(_ delegate: AnnotationCalloutDelegate) {
+        self.calloutDelegate = delegate
+    }
+    
+    override func prepareForDisplay() {
+        super.prepareForDisplay()
+        
+        guard let report else { return }
+        
+        animatesWhenAdded = true
+        subtitleVisibility = .visible
+        
+        glyphImage      = UIImage(systemName: report.reportType.annotationImage)
+        markerTintColor = report.reportType.annotationColor
+        
+        let calloutView = ReportAnnotationCallOut(report: report)
+        calloutView.calloutDelegate = self.calloutDelegate
+        
+        canShowCallout = true
+        detailCalloutAccessoryView = calloutView
+    }
+}
+
+
+
+
+
+
+
 
 extension ReportAnnotation {
     

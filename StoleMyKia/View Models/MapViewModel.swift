@@ -15,13 +15,23 @@ final class MapViewModel: NSObject, ObservableObject {
     
     override init() {
         super.init()
+        
+        setupViewClasses()
+        
         locationManager.delegate = self
-    }       
+        mapView.delegate = self
+    }
     
     let mapView = MKMapView()
     let locationManager = CLLocationManager()
     
     weak var delegate: SelectedReportDelegate?
+    
+    
+    private func setupViewClasses() {
+        mapView.register(ReportsClusterAnnotationView.self, forAnnotationViewWithReuseIdentifier: MKMapViewDefaultClusterAnnotationViewReuseIdentifier)
+        mapView.register(ReportAnnotationView.self, forAnnotationViewWithReuseIdentifier: MKMapViewDefaultAnnotationViewReuseIdentifier)
+    }
 }
 
 //MARK: - ReportsDelegate
@@ -77,32 +87,17 @@ extension MapViewModel: MKMapViewDelegate {
         }
     }
     
-    func mapView(_ mapView: MKMapView, clusterAnnotationForMemberAnnotations memberAnnotations: [MKAnnotation]) -> MKClusterAnnotation {
-        MKClusterAnnotation(memberAnnotations: memberAnnotations)
-    }
-    
     func mapView(_ mapView: MKMapView, viewFor annotation: MKAnnotation) -> MKAnnotationView? {
         if annotation is MKUserLocation { return nil }
         
-        if let annotation = annotation as? ReportAnnotation {
-            let annotationView = MKMarkerAnnotationView(annotation: annotation, reuseIdentifier: MKMapViewDefaultAnnotationViewReuseIdentifier)
-            annotationView.glyphImage = UIImage(systemName: annotation.report.reportType.annotationImage)
-            annotationView.markerTintColor = annotation.report.reportType.annotationColor
-            
-            //Setting up Callout View
-            
-            let calloutView = ReportAnnotationCallOut(report: annotation.report)
-            calloutView.calloutDelegate = self
-            
-            annotationView.canShowCallout = true
-            annotationView.animatesWhenAdded = true
-            annotationView.subtitleVisibility = .visible
-            annotationView.detailCalloutAccessoryView = calloutView
-            
-            return annotationView
-        }
+        guard let reportAnnotation = annotation as? ReportAnnotation else { return nil}
         
-        return nil
+        let annotationView = ReportAnnotationView(annotation: reportAnnotation,
+                                                  reuseIdentifier: reportAnnotation.report.type,
+                                                  report: reportAnnotation.report)
+        annotationView.setCalloutDelegate(self)
+        
+        return annotationView
     }
 }
 
