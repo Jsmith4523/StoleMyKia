@@ -19,6 +19,8 @@ struct SelectedReportDetailView: View {
     let report: Report?
     
     let imageCache: ImageCache
+    
+    var completion: (() -> Void)?
         
     @EnvironmentObject var reportsModel: ReportsViewModel
     
@@ -140,6 +142,11 @@ struct SelectedReportDetailView: View {
                 return
             }
             dismiss()
+            
+            if let completion {
+                completion()
+            }
+            
             isDeleting = false
         }
     }
@@ -151,17 +158,7 @@ fileprivate struct ReportMapView: View {
     
     var body: some View {
         ZStack(alignment: .topTrailing) {
-            ReportMap(selectAnnotation: true, report: report)
-//            Button {
-//
-//            } label: {
-//                Label("Get Directions", systemImage: "arrow.triangle.turn.up.right.circle")
-//                    .padding(10)
-//                    .font(.system(size: 14).weight(.semibold))
-//                    .background(Color.accentColor)
-//                    .cornerRadius(2)
-//                    .foregroundColor(.white)
-//            }
+            ReportDetailViewMap(selectAnnotation: true, report: report)
         }
     }
 }

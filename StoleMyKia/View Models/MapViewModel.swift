@@ -15,11 +15,11 @@ final class MapViewModel: NSObject, ObservableObject {
     
     override init() {
         super.init()
-        
-        setupViewClasses()
-        
+                
         locationManager.delegate = self
         mapView.delegate = self
+        
+        locationManager.requestWhenInUseAuthorization()
     }
     
     let mapView = MKMapView()
@@ -27,17 +27,12 @@ final class MapViewModel: NSObject, ObservableObject {
     
     weak var delegate: SelectedReportDelegate?
     
-    
-    private func setupViewClasses() {
-        mapView.register(ReportsClusterAnnotationView.self, forAnnotationViewWithReuseIdentifier: MKMapViewDefaultClusterAnnotationViewReuseIdentifier)
-        mapView.register(ReportAnnotationView.self, forAnnotationViewWithReuseIdentifier: MKMapViewDefaultAnnotationViewReuseIdentifier)
-    }
 }
 
 //MARK: - ReportsDelegate
 extension MapViewModel: ReportsDelegate {
     func reportsDelegate(didDeleteReport report: Report) {
-        
+        mapView.removeAnnotation(report)
     }
     
     func reportsDelegate(didReceieveReports reports: [Report]) {
@@ -63,6 +58,18 @@ extension MapViewModel: CLLocationManagerDelegate {
         }
     }
     
+    func mapView(_ mapView: MKMapView, didSelect view: MKAnnotationView) {
+        if let clusterView = view as? ReportsClusterAnnotationView {
+            clusterView.determinePreview(mapView)
+        }
+    }
+    
+    func mapView(_ mapView: MKMapView, didSelect annotation: MKAnnotation) {
+        if let userAnnotation = annotation as? MKUserLocation {
+            mapView.deselectAnnotation(userAnnotation, animated: false)
+        }
+    }
+    
     func mapView(_ mapView: MKMapView, didUpdate userLocation: MKUserLocation) {
         self.userLocation = userLocation.location
     }
@@ -83,20 +90,14 @@ extension MapViewModel: CLLocationManagerDelegate {
 //MARK: - MKMapViewDelegate
 extension MapViewModel: MKMapViewDelegate {
     
-    func mapViewDidFinishRenderingMap(_ mapView: MKMapView, fullyRendered: Bool) {
-        if !(self.locationAuth.isAuthorized()) {
-            locationManager.requestWhenInUseAuthorization()
-        }
-    }
-    
     func mapView(_ mapView: MKMapView, viewFor annotation: MKAnnotation) -> MKAnnotationView? {
         if annotation is MKUserLocation { return nil }
         
-        guard let reportAnnotation = annotation as? ReportAnnotation else { return nil}
+        guard let annotation = annotation as? ReportAnnotation else { return nil}
         
-        let annotationView = ReportAnnotationView(annotation: reportAnnotation,
-                                                  reuseIdentifier: reportAnnotation.report.type,
-                                                  report: reportAnnotation.report)
+        let annotationView = ReportAnnotationView(annotation: annotation,
+                                                  reuseIdentifier: annotation.report.type,
+                                                  report: annotation.report)
         annotationView.setCalloutDelegate(self)
         
         return annotationView

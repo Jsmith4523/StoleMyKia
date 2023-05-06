@@ -22,6 +22,9 @@ struct MapViewRep: UIViewRepresentable {
         mapView.isPitchEnabled    = true
         mapView.showsUserLocation = true
         mapView.showsScale        = true
+        
+        mapView.register(ReportsClusterAnnotationView.self, forAnnotationViewWithReuseIdentifier: MKMapViewDefaultClusterAnnotationViewReuseIdentifier)
+        mapView.register(ReportAnnotationView.self, forAnnotationViewWithReuseIdentifier: MKMapViewDefaultAnnotationViewReuseIdentifier)
                         
         return mapView
     }

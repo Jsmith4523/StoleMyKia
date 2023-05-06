@@ -164,6 +164,12 @@ extension [Report] {
         self.flatMap{$0.updates?.compactMap({$0}) ?? []}
     }
     
+    mutating func removeReport(_ deletedReport: Report) {
+        self.removeAll { report in
+            deletedReport.id == report.id
+        }
+    }
+    
     mutating func including(with reports: [Report]) {
         let currentIds = Set(self.map({$0.id}))
         let filterReports = reports.filter {!currentIds.contains($0.id)}

@@ -84,6 +84,14 @@ extension MKMapView {
         let newReportAnnotations = annotations.doesNotAlreadyContain(reportIds, with: reports)
         self.addAnnotations(newReportAnnotations)
     }
+    
+    func removeAnnotation(_ report: Report) {
+        for annotation in self.annotations where annotation is ReportAnnotation {
+            if let annotation = annotation as? ReportAnnotation, (annotation.report.id == report.id) {
+                removeAnnotation(annotation)
+            }
+        }
+    }
 }
 
 extension [ReportAnnotation] {

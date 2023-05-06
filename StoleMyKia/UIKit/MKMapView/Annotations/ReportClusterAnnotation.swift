@@ -37,6 +37,8 @@ class ReportsClusterAnnotationView: MKAnnotationView {
             labelView.font = .systemFont(ofSize: 19.5, weight: .heavy)
             labelView.textColor = .white
             
+            canShowCallout = true
+            
             addSubview(circle)
             addSubview(labelView)
             
@@ -51,6 +53,14 @@ class ReportsClusterAnnotationView: MKAnnotationView {
                 labelView.centerYAnchor.constraint(equalTo: circle.centerYAnchor),
                 labelView.centerXAnchor.constraint(equalTo: circle.centerXAnchor),
             ])
+        }
+    }
+    
+    func determinePreview(_ mapView: MKMapView) {
+        if let annotation = annotation as? MKClusterAnnotation {
+            
+            let count = annotation.memberAnnotations.count
+            //TODO: Setup VisibleMapRect
         }
     }
 }

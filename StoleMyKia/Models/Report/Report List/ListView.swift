@@ -59,22 +59,7 @@ fileprivate struct ReportListCellView: View {
                     .foregroundColor(.gray)
                 }
                 Spacer()
-                ZStack {
-                    if !(report.imageURL == nil) {
-                        if let vehicleImage {
-                            Image(uiImage: vehicleImage)
-                                .resizable()
-                                .scaledToFill()
-                            
-                        } else {
-                            ProgressView()
-                        }
-                    } else {
-                        ReportMap(report: report)
-                    }
-                }
-                .frame(width: 75, height: 75)
-                .cornerRadius(10)
+                imageMap
             }
         }
         .padding()
@@ -85,6 +70,25 @@ fileprivate struct ReportListCellView: View {
             self.isShowingReportDetailView.toggle()
         }
         .reportDetailView(isPresented: $isShowingReportDetailView, cache: imageCache, report: report)
+    }
+    
+    var imageMap: some View {
+        ZStack {
+            if !(report.imageURL == nil) {
+                if let vehicleImage {
+                    Image(uiImage: vehicleImage)
+                        .resizable()
+                        .scaledToFill()
+                    
+                } else {
+                    ProgressView()
+                }
+            } else {
+                ReportDetailViewMap(report: report)
+            }
+        }
+        .frame(width: 75, height: 75)
+        .cornerRadius(10)
     }
     
     private func getVehicleImage() {

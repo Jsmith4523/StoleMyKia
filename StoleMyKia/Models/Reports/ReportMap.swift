@@ -9,7 +9,7 @@ import Foundation
 import MapKit
 import SwiftUI
 
-struct ReportMap: UIViewRepresentable {
+struct ReportDetailViewMap: UIViewRepresentable {
     
     var selectAnnotation = false
     let report: Report
@@ -25,15 +25,16 @@ struct ReportMap: UIViewRepresentable {
                                                  span: .init(latitudeDelta: 0.010, longitudeDelta: 0.010)), animated: false)
         }
         
-//        if let annotation = ReportAnnotation.createAnnotations([report]).first {
-//            mapView.addAnnotation(annotation)
-//            
-//            DispatchQueue.main.asyncAfter(deadline: .now() + 1.25) {
-//                if selectAnnotation {
-//                    mapView.selectAnnotation(annotation, animated: true)
-//                }
-//            }
-//        }
+        mapView.createAnnotations([report])
+        
+        if let annotation = mapView.annotations.first as? ReportAnnotation {
+            DispatchQueue.main.asyncAfter(deadline: .now() + 1.25) {
+                if selectAnnotation {
+                    mapView.selectAnnotation(annotation, animated: true)
+                }
+            }
+        }
+        
         return mapView
     }
     

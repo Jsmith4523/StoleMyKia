@@ -40,10 +40,15 @@ final class ReportsViewModel: NSObject, ObservableObject {
     }
     
      func upload(_ report: Report, with image: UIImage? = nil, completion: @escaping ((Bool)->Void)) {
+         //Check uid before uploading a report...
+         guard let uid = firebaseUserDelegate?.uid else {
+             completion(false)
+             return
+         }
+         
         var report = report
-        report.uid = self.firebaseUserDelegate?.uid
+        report.uid = uid
         
-         //Before uploading, check if the uid has been set
         guard !(report.uid == nil) else {
             completion(false)
             return
@@ -70,7 +75,6 @@ final class ReportsViewModel: NSObject, ObservableObject {
             switch result {
             case .success(let reports):
                 self.reports.including(with: reports)
-                print(self.reports.map({$0.id}))
             case .failure(let reason):
                 print(reason.localizedDescription)
             }
@@ -98,11 +102,17 @@ final class ReportsViewModel: NSObject, ObservableObject {
             switch status {
             case .success(_):
                 completion(true)
-                self.delegate?.reportsDelegate(didDeleteReport: report)
+                removeReportAndAnnotation(report)
             case .failure(let error):
                 completion(false)
                 print("❌ Error removing post: \(error.localizedDescription)")
             }
+        }
+        
+        func removeReportAndAnnotation(_ report: Report) {
+            self.delegate?.reportsDelegate(didDeleteReport: report)
+            self.reports.removeReport(report)
+            self.getReports()
         }
     }
 }

@@ -46,8 +46,7 @@ struct UserAccountView: View {
                     TabView(selection: $viewSelection) {
                         UserReportsView(userModel: userModel, imageCache: imageCache)
                             .tag(AccountViewSelection.userReports)
-//                        Color.brand.ignoresSafeArea()
-//                            .tag(AccountViewSelection.favorites)
+
                     }
                     .tabViewStyle(.page(indexDisplayMode: .never))
                 }
@@ -137,108 +136,6 @@ struct UserAccountView: View {
     }
 }
 
-fileprivate struct UserReportsView: View {
-        
-    @State private var isLoading = false
-    @State private var didFailToFetchReports = false
-    
-    @State private var userReports = [Report]()
-    
-    @ObservedObject var userModel: UserViewModel
-    
-    let imageCache: ImageCache
-    
-    var body: some View {
-        ZStack {
-            switch isLoading {
-            case true:
-                ProgressView()
-            case false:
-                list
-            }
-        }
-        .frame(maxHeight: .infinity)
-        .onAppear {
-            if userReports.isEmpty {
-                fetchUserReports()
-            }
-        }
-        .refreshable {
-            fetchUserReports()
-        }
-    }
-    
-    var list: some View {
-        ScrollView(showsIndicators: false) {
-            VStack {
-                ForEach(userReports) { report in
-                    UserReportCellView(report: report, imageCache: imageCache)
-                }
-                Spacer()
-            }
-        }
-    }
-    
-    private func fetchUserReports() {
-        if userReports.isEmpty {
-            self.isLoading = true
-        }
-        
-        userModel.getUserReports { results in
-            switch results {
-            case .success(let reports):
-                self.userReports = reports
-                self.isLoading = false
-            case .failure(_):
-                break
-            }
-        }
-    }
-    
-    fileprivate struct UserReportCellView: View {
-        
-        @State private var isShowingReportDetailView = false
-        
-        @State private var vehicleImage: UIImage?
-        
-        let report: Report
-        let imageCache: ImageCache
-        
-        @EnvironmentObject var reportsViewModel: ReportsViewModel
-        
-        var body: some View {
-            HStack {
-                VStack(alignment: .leading) {
-                    HStack {
-                        VStack(alignment: .leading) {
-                            Text(report.type)
-                                .font(.system(size: 30).weight(.heavy))
-                            Text(report.vehicleDetails)
-                                .font(.system(size: 15))
-                                .foregroundColor(.gray)
-                        }
-                        Spacer()
-                        report.status.label
-                    }
-                    .padding()
-                    ZStack {
-                        ReportMap(report: report)
-                            .frame(height: 175)
-                        
-                    }
-                    Spacer()
-                        .frame(height: 20)
-                }
-            }
-            .onTapGesture {
-                self.isShowingReportDetailView.toggle()
-            }
-            .sheet(isPresented: $isShowingReportDetailView) {
-                SelectedReportDetailView(report: report, imageCache: imageCache)
-            }
-        }
-    }
-}
 
 struct UserAccView_Previews: PreviewProvider {
     static var previews: some View {
