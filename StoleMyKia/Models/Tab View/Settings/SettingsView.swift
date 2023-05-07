@@ -9,6 +9,8 @@ import SwiftUI
 
 struct SettingsView: View {
     
+    @State private var isDeletingAccount = false
+    
     @State private var alertLogout = false
     @State private var alertDeletingAccount = false
     @State private var alertErrorLoggingOut = false
@@ -78,6 +80,8 @@ struct SettingsView: View {
                     }
                 }
             }
+            .interactiveDismissDisabled(isDeletingAccount)
+            .disabled(isDeletingAccount)
         }
         .alert("Log out", isPresented: $alertLogout) {
             Button("Yes"){
@@ -112,8 +116,9 @@ struct SettingsView: View {
     }
     
     private func beginDeletingAccount() {
+        isDeletingAccount = true
         userModel.deleteAccount { success in
-            guard let success, success == true else {
+            guard let success, success else {
                 alertErrorDeletingAccount.toggle()
                 return 
             }

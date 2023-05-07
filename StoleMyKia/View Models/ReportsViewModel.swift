@@ -99,6 +99,17 @@ final class ReportsViewModel: NSObject, ObservableObject {
         }
     }
     
+    private func deleteUserReports(completion: @escaping ((Bool)->Void)) {
+        guard let uid = firebaseUserDelegate?.uid else {
+            completion(false)
+            return
+        }
+        
+        manager.deleteUserReports(uid: uid) { status in
+            completion(status)
+        }
+    }
+    
     func deleteReport(_ report: Report, completion: @escaping ((Bool)->Void)) {
         manager.delete(report: report) { status in
             switch status {
@@ -143,6 +154,12 @@ extension ReportsViewModel: UserReportsDelegate {
             case .failure(let error):
                 completion(.failure(error))
             }
+        }
+    }
+    
+    func deleteAll(completion: @escaping ((Bool) -> Void)) {
+        self.deleteUserReports { status in
+            completion(status)
         }
     }
 }

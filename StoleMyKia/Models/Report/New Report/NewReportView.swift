@@ -40,7 +40,7 @@ struct NewReportView: View {
     @State private var imagePickerSourceType: UIImagePickerController.SourceType = .photoLibrary
     @State private var isShowingPhotoRemoveConfirmation = false
     
-    @State private var
+   // @State private var
     
     @State private var isUploading = false
     @State private var alertErrorUploading = false
@@ -232,9 +232,9 @@ struct NewReportView: View {
             NewReportSearchLocation(location: $location)
                 .environmentObject(mapModel)
         }
-        .sheet(item: $imagePickerSourceType) { source in
-            PhotoPicker(selectedImage: $vehicleImage, source: source)
-        }
+//        .sheet(item: $imagePickerSourceType) { source in
+//            PhotoPicker(selectedImage: $vehicleImage, source: source)
+//        }
         .confirmationDialog("", isPresented: $isShowingPhotoRemoveConfirmation) {
             Button("Remove", role: .destructive) {
                 vehicleImage = nil

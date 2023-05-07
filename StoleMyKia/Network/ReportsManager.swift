@@ -190,6 +190,42 @@ class ReportsManager {
             }
         }
     }
+    
+    func deleteUserReports(uid: String?, completion: @escaping ((Bool)->Void)) {
+        guard let uid else {
+            completion(false)
+            return
+        }
+        
+        collection.whereField("uid", isEqualTo: uid).getDocuments { snapshot, err in
+            guard let snapshot, err == nil else {
+                completion(false)
+                return
+            }
+            
+            guard !snapshot.documents.isEmpty else{
+                completion(true)
+                return
+            }
+            
+            do {
+                let userReports = try snapshot.createReports()
+                
+                for report in userReports {
+                    self.delete(report: report) { status in
+                        switch status {
+                        case .success(_):
+                            break
+                        case .failure(_):
+                            completion(false)
+                        }
+                    }
+                }
+            } catch {
+                completion(false)
+            }
+        }
+    }
 }
 
 private extension QuerySnapshot {

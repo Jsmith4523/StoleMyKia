@@ -83,12 +83,18 @@ final class UserViewModel: ObservableObject {
     ///WARNING: Deletes the signed in users account entirely!
     func deleteAccount(completion: @escaping ((Bool?)->Void)) {
         //TODO: Delete reports made by the user
-        auth.currentUser?.delete { err in
-            guard err == nil else {
+        userReportsDelegate?.deleteAll { success in
+            guard success else {
                 completion(false)
                 return
             }
-            completion(true)
+            self.auth.currentUser?.delete { err in
+                guard err == nil else {
+                    completion(false)
+                    return
+                }
+                completion(true)
+            }
         }
     }
     
@@ -179,5 +185,9 @@ enum UserReportsError: Error {
 
 protocol UserReportsDelegate: AnyObject {
     
+    ///Fetch reports made by the currently signed in user
     func getUserReports(completion: @escaping ((Result<[Report], Error>)->Void))
+    
+    ///Deletes all user reports
+    func deleteAll(completion: @escaping ((Bool)->Void))
 }
