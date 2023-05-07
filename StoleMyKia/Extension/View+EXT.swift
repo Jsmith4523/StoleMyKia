@@ -44,7 +44,7 @@ extension View {
             }
     }
     
-    func imagePicker(isPresented: Binding<Bool>, selectedImage: Binding<UIImage?>, sourceType: Binding<UIImagePickerController.SourceType>) -> some View {
+    func imagePicker(isPresented: Binding<Bool>, selectedImage: Binding<UIImage?>, sourceType: UIImagePickerController.SourceType) -> some View {
         return self
             .sheet(isPresented: isPresented) { PhotoPicker(selectedImage: selectedImage, source: sourceType) }
     }

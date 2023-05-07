@@ -12,7 +12,7 @@ import UIKit
 struct PhotoPicker: UIViewControllerRepresentable {
     
     @Binding var selectedImage: UIImage?
-    @Binding var source: UIImagePickerController.SourceType
+    var source: UIImagePickerController.SourceType
     
     func makeUIViewController(context: Context) -> UIImagePickerController {
         let imagePicker           = UIImagePickerController()
@@ -35,9 +35,9 @@ struct PhotoPicker: UIViewControllerRepresentable {
     
     typealias UIViewControllerType = UIImagePickerController
     
-    final class PhotoPickerCoordinator: NSObject, UIImagePickerControllerDelegate, UINavigationControllerDelegate {
+    final class PhotoPickerCoordinator: NSObject, UIImagePickerControllerDelegate, UINavigationControllerDelegate, ObservableObject {
         
-        var image: UIImage?
+        @Published var image: UIImage?
         
         func imagePickerController(_ picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [UIImagePickerController.InfoKey : Any]) {
             if let image = info[.editedImage] as? UIImage {
@@ -50,5 +50,13 @@ struct PhotoPicker: UIViewControllerRepresentable {
         func imagePickerControllerDidCancel(_ picker: UIImagePickerController) {
             picker.dismiss(animated: true)
         }
+    }
+}
+
+
+extension UIImagePickerController.SourceType: Identifiable {
+    
+    public var id: Int {
+        self.rawValue
     }
 }

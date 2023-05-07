@@ -18,11 +18,11 @@ struct NotificationSettingsView: View {
         VStack {
             Form {
                 Section {
-                    Group {
-                        Toggle("Vehicle Stolen", isOn: $notificationModel.notifyOfTheft)
-                        Toggle("Theft Witnessed", isOn: $notificationModel.notifyOfWitness)
-                        Toggle("Vehicle found", isOn: $notificationModel.notifyOfFound)
-                    }
+//                    Group {
+//                        Toggle("Vehicle Stolen", isOn: $notificationModel.notifyOfTheft)
+//                        Toggle("Theft Witnessed", isOn: $notificationModel.notifyOfWitness)
+//                        Toggle("Vehicle found", isOn: $notificationModel.notifyOfFound)
+//                    }
                 } header: {
                     Text("Active Alerts")
                 } footer: {
@@ -51,7 +51,6 @@ struct NotificationSettingsView: View {
         .tint(.accentColor)
         .sheet(isPresented: $isShowingNotificationRadiusView) {
             NotificationRadiusView()
-                .accentColor(.accentColor)
         }
         .environmentObject(notificationModel)
     }

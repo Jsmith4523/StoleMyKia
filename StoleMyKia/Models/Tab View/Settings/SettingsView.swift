@@ -32,11 +32,11 @@ struct SettingsView: View {
                     } label: {
                         Label("Notifications", systemImage: "app.badge")
                     }
-                    NavigationLink {
-                        MapSettingsView()
-                    } label: {
-                        Label("Map", systemImage: "map")
-                    }
+//                    NavigationLink {
+//                        MapSettingsView()
+//                    } label: {
+//                        Label("Map", systemImage: "map")
+//                    }
                 }
                 Section("Support") {
                     Button {

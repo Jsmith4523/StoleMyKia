@@ -7,6 +7,7 @@
 
 import Foundation
 import FirebaseAuth
+import Firebase
 
 @MainActor
 final class UserViewModel: ObservableObject {
@@ -15,22 +16,14 @@ final class UserViewModel: ObservableObject {
     @Published var userIsSignedIn = false
     
     @Published private(set) var currentUser: User!
+    @Published private(set) var firebaseUser: FirebaseUser!
             
     private let auth = Auth.auth()
     
     weak var userReportsDelegate: UserReportsDelegate?
     
     init() {
-        Auth.auth().addStateDidChangeListener { auth, user in
-            if !(user == nil) {
-                self.userIsSignedIn = true
-                self.currentUser = user
-            } else {
-                print("User is not signed in")
-                self.userIsSignedIn = false
-                self.currentUser = nil
-            }
-        }
+        setupUserListener()
     }
     
     func getUserCreationDate() -> Date? {
@@ -92,7 +85,6 @@ final class UserViewModel: ObservableObject {
         //TODO: Delete reports made by the user
         auth.currentUser?.delete { err in
             guard err == nil else {
-                print("❌ Error deleting user account: \(err!.localizedDescription)")
                 completion(false)
                 return
             }
@@ -106,7 +98,7 @@ final class UserViewModel: ObservableObject {
     
     
     func getUserReports(completion: @escaping ((Result<[Report], Error>)->Void)) {
-        guard let uid else {
+        guard uid != nil else {
             completion(.failure(UserReportsError.error("The current user is no longer signed in.")))
             return
         }
@@ -119,10 +111,63 @@ final class UserViewModel: ObservableObject {
             }
         }
     }
+    
+    private func setupUserListener() {
+        Auth.auth().addStateDidChangeListener { auth, user in
+            if !(user == nil) {
+                self.userIsSignedIn = true
+                self.currentUser = user
+            } else {
+                self.userIsSignedIn = false
+                self.currentUser = nil
+                self.firebaseUser = nil
+            }
+        }
+    }
 }
 
 //MARK: - FirebaseUserDelegate
 extension UserViewModel: FirebaseUserDelegate {
+    func save(completion: @escaping ((Bool) -> Void)) {
+        
+    }
+    
+    var notifyOfTheft: Bool {
+        get {
+            firebaseUser.notificationSettings.notifyOfTheft
+        }
+        set {
+            firebaseUser.notificationSettings.notifyOfTheft = newValue
+        }
+    }
+    
+    var notifyOfWitness: Bool {
+        get {
+            firebaseUser.notificationSettings.notifyOfWitness
+        }
+        set {
+            firebaseUser.notificationSettings.notifyOfTheft = newValue
+        }
+    }
+    
+    var notifyOfFound: Bool {
+        get {
+            firebaseUser.notificationSettings.notifyOfFound
+        }
+        set {
+            firebaseUser.notificationSettings.notifyOfFound = newValue
+        }
+    }
+    
+    var notificationRadius: Double {
+        get {
+            firebaseUser.notificationSettings.notificationRadius
+        }
+        set {
+            firebaseUser.notificationSettings.notificationRadius = newValue
+        }
+    }
+    
     var uid: String? {
         auth.currentUser?.uid
     }

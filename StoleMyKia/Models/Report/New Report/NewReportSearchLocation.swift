@@ -45,9 +45,12 @@ struct NewReportSearchLocation: View {
             .navigationTitle("Search")
             .navigationBarTitleDisplayMode(.inline)
             .toolbar {
-                ToolbarItem(placement: .navigationBarTrailing) {
-                    Button("Close") {
+                ToolbarItem(placement: .navigationBarLeading) {
+                    Button {
                         dismiss()
+                    } label: {
+                        Text("Cancel")
+                            .bold()
                     }
                 }
             }
@@ -177,25 +180,37 @@ fileprivate final class LocationSearchModel: ObservableObject {
     
     @Published var request = ""
     @Published var locations = [Location]()
-    
-    func fetchLocations() {
-        let searchRequest = MKLocalSearch.Request()
         
-        guard !(request.isEmpty) else {
+    func fetchLocations() {
+        let request = MKLocalSearch.Request()
+        
+        //The thefts are only target within the United States (for now)
+        let usaRegion = MKCoordinateRegion(center: CLLocationCoordinate2D(latitude: 37.0902, longitude: -95.7129),
+                                           span: MKCoordinateSpan(latitudeDelta: 5000000, longitudeDelta: 5000000))
+        
+        guard !(self.request.isEmpty) else {
             UINotificationFeedbackGenerator().notificationOccurred(.warning)
             return
         }
         
-        searchRequest.naturalLanguageQuery = self.request
+        request.naturalLanguageQuery = self.request
+        request.region = usaRegion
         
-        let search = MKLocalSearch(request: searchRequest)
+        let search = MKLocalSearch(request: request)
         search.start { response, err in
             guard let response, err == nil else {
-                UINotificationFeedbackGenerator().notificationOccurred(.error)
-                self.alertSearchingForLocation.toggle()
+                self.didNotFindLocations()
                 return
             }
-            self.locations = response.mapItems.compactMap {
+            
+            let locations = response.mapItems.withinSpan(region: usaRegion)
+            
+            guard !(locations.isEmpty) else {
+                self.didNotFindLocations()
+                return
+            }
+            
+            self.locations = locations.compactMap {
                 return .init(address: $0.placemark.title,
                              name: $0.name,
                              lat: $0.placemark.coordinate.latitude,
@@ -204,20 +219,33 @@ fileprivate final class LocationSearchModel: ObservableObject {
             }
         }
     }
+    
+    private func didNotFindLocations() {
+        UINotificationFeedbackGenerator().notificationOccurred(.error)
+        self.alertSearchingForLocation.toggle()
+    }
 }
 
-///Object relating to MKLocalSearch for a report
-struct Location: Codable, Identifiable, Hashable {
-    var id = UUID()
-    let address: String?
-    let name: String?
-    let lat: Double?
-    let lon: Double?
+extension [MKMapItem] {
+    
+    ///Will return locations that are in a specific region span.
+    ///For example, only show locations that are in the United States region.
+    func withinSpan(region: MKCoordinateRegion) -> [MKMapItem] {
+        
+        let location: CLLocation = CLLocation(latitude: region.center.latitude,
+                                              longitude: region.center.longitude)
+        
+        return self.filter { mapItem in
+            mapItem.location.distance(from: location) <= region.span.latitudeDelta
+        }
+    }
 }
 
-struct NewReportSearchLocation_Previews: PreviewProvider {
-    static var previews: some View {
-        NewReportSearchLocation(location: .constant(.init(address: "", name: "", lat: 0, lon: 0)))
-            .environmentObject(MapViewModel())
+
+extension MKMapItem {
+    
+    var location: CLLocation {
+        CLLocation(latitude: self.placemark.coordinate.latitude,
+                   longitude: self.placemark.coordinate.longitude)
     }
 }

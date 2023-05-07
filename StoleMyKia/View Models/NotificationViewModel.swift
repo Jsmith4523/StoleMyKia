@@ -12,11 +12,16 @@ import SwiftUI
 
 final class NotificationViewModel: NSObject, ObservableObject {
     
-    @AppStorage("notifyOfTheft") var notifyOfTheft = true
-    @AppStorage("notifyOfWitness") var notifyOfWitness = true
-    @AppStorage("notifyOfFound") var notifyOfFound = true
+    @Published var notifyTheft = true
+    @Published var notifyWitness = true
+    @Published var notifyFound = true
+    @Published var radius = 25000.0
     
-    @AppStorage("notificationRadius") var notificationRadius = 25000.0
+    weak var firebaseUserDelegate: FirebaseUserDelegate?
+    
+    func setDelegate(_ delegate: FirebaseUserDelegate) {
+        self.firebaseUserDelegate = delegate
+    }
     
     var notificationsAreAllowed: Bool {
         var isAllowed = false
@@ -59,18 +64,4 @@ final class NotificationViewModel: NSObject, ObservableObject {
 extension NotificationViewModel: UNUserNotificationCenterDelegate {
     
     
-}
-
-//MARK: - NotificationRadiusDelegate
-extension NotificationViewModel: NotificationRadiusDelegate {
-    var currentRadius: CLLocationDistance? {
-        get {
-            notificationRadius
-        }
-        set {
-            if let newValue {
-                self.notificationRadius = newValue
-            }
-        }
-    }
 }

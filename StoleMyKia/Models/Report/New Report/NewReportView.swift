@@ -12,7 +12,11 @@ import UIKit
 
 struct NewReportView: View {
     
-    @State private var vehicleImage: UIImage?
+    @State private var vehicleImage: UIImage? {
+        didSet {
+            print("Image set")
+        }
+    }
     
     @State private var location: Location!
     
@@ -33,11 +37,14 @@ struct NewReportView: View {
     @State private var useCurrentLocation = true
     @State private var isShowingLocationView = false
     
-    @State private var isShowingPhotoPicker = false
+    @State private var imagePickerSourceType: UIImagePickerController.SourceType = .photoLibrary
     @State private var isShowingPhotoRemoveConfirmation = false
+    
+    @State private var
     
     @State private var isUploading = false
     @State private var alertErrorUploading = false
+    @State private var alertSelectLocation = false
     
     @EnvironmentObject var mapModel: MapViewModel
     @EnvironmentObject var reportsModel: ReportsViewModel
@@ -45,7 +52,7 @@ struct NewReportView: View {
     @Environment (\.dismiss) var dismiss
     
     var isNotSatisfied: Bool {
-        (self.licensePlate.isEmpty && self.vin.isEmpty) && !doesNotHaveVehicleIdentification
+        (self.licensePlate.isEmpty) && !doesNotHaveVehicleIdentification
     }
     
     var body: some View {
@@ -78,13 +85,31 @@ struct NewReportView: View {
                 }
                 
                 Section {
+                    Button("Upload Photo") {
+                        imagePickerSourceType = .photoLibrary
+                    }
+                    Button("Take Photo") {
+                        imagePickerSourceType = .camera
+                    }
+                } header: {
+                    Text("Photo")
+                } footer: {
+                    Text("Include a photo you have of the vehicle. Try not to include a photo of the license plate or other personal info found on the vehicle.")
+                }
+                .disabled(!vehicleImage.isNil())
+                
+                Section {
                     Button("Select Location") {
                         isShowingLocationView.toggle()
                     }
                 } header: {
-                    Text("Location")
+                    Text("Report Location")
                 } footer: {
-                    Text("Depending on your location services settings, your current location will be applied as the location of this report")
+                    if mapModel.locationAuth.isAuthorized() {
+                        Text("Your location is automatically applied to this report. However, you can change it.")
+                    } else {
+                        Text("Select the location of this report.")
+                    }
                 }
 
                 Section {
@@ -123,9 +148,9 @@ struct NewReportView: View {
                         .disabled(self.reportType == .stolen)
                     if !doesNotHaveVehicleIdentification {
                         TextField("License Plate", text: $licensePlate)
-                        if (reportType == .stolen || reportType == .found) {
-                            TextField("VIN", text: $vin)
-                        }
+//                        if (reportType == .stolen || reportType == .found) {
+//                            TextField("VIN", text: $vin)
+//                        }
                     }
                 } header: {
                     Text("Vehicle Identification")
@@ -136,18 +161,9 @@ struct NewReportView: View {
                         if(reportType == .withnessed) {
                             Text("Enter the license plate number if noted.\n\nInformation entered is encrypted and cannot be read.")
                         } else {
-                            Text("Enter the license plate number or the vehicle identification number (VIN) of the vehicle. Only one of the fields is required.\n\nInformation entered is encrypted and cannot be read.")
+                            Text("Enter the license plate number of the vehicle.\n\nInformation entered is encrypted and cannot be read.")
                         }
                     }
-                }
-                Section {
-                    Button("Upload Photo") {
-                        isShowingPhotoPicker.toggle()
-                    }.disabled(!vehicleImage.isNil())
-                } header: {
-                    Text("Photo")
-                } footer: {
-                    Text("Include a photo you have of the vehicle. Do not include a photo of a license plate or other personal info found on the vehicle.")
                 }
             }
             .navigationTitle("New Report")
@@ -157,15 +173,19 @@ struct NewReportView: View {
                     Button {
                         dismiss()
                     } label: {
-                        Image(systemName: "xmark")
+                        Text("Cancel")
+                            .bold()
                     }
                 }
                 ToolbarItem(placement: .navigationBarTrailing) {
                     if isUploading {
                         ProgressView()
                     } else {
-                        Button("Post") {
-                            beginPostingReport()
+                        Button {
+                            upload()
+                        } label: {
+                            Text("Upload")
+                                .bold()
                         }
                         .disabled(isNotSatisfied)
                     }
@@ -201,13 +221,19 @@ struct NewReportView: View {
                 self.vin = ""
                 self.licensePlate = ""
             }
+            .onChange(of: mapModel.locationAuth.isAuthorized()) { _ in
+                self.location = nil
+            }
         }
         .interactiveDismissDisabled()
         .disabled(isUploading)
-        .imagePicker(isPresented: $isShowingPhotoPicker, selectedImage: $vehicleImage, sourceType: .constant(.photoLibrary))
+        
         .sheet(isPresented: $isShowingLocationView) {
             NewReportSearchLocation(location: $location)
                 .environmentObject(mapModel)
+        }
+        .sheet(item: $imagePickerSourceType) { source in
+            PhotoPicker(selectedImage: $vehicleImage, source: source)
         }
         .confirmationDialog("", isPresented: $isShowingPhotoRemoveConfirmation) {
             Button("Remove", role: .destructive) {
@@ -221,47 +247,51 @@ struct NewReportView: View {
         } message: {
             Text("There was a problem uploading your report. Please try again later")
         }
-        .onAppear {
-            setUserLocation()
+        .alert("Location not selected", isPresented: $alertSelectLocation) {
+            Button("OK") { isShowingLocationView.toggle()}
+        } message: {
+            Text("Please select a location")
         }
     }
     
-    private func setUserLocation() {
+    //Retrieving the users locations...
+    private func usersLocation() -> Location? {
         guard mapModel.locationAuth.isAuthorized(), let userLocation = mapModel.userLocation else {
-            return
+            return nil
         }
         
         let coords = userLocation.coordinate
         let usersLocation = Location(address: "", name: "", lat: coords.latitude, lon: coords.longitude)
         
-        self.location = usersLocation
+        return usersLocation
     }
     
     
-    func beginPostingReport() {
+    private func upload() {
         isUploading = true
-        let generator = UINotificationFeedbackGenerator()
-        let report = Report(id: UUID(),
-                            dt: Date.now.epoch,
-                            reportType: reportType,
-                            vehicleYear: vehicleYear,
-                            vehicleMake: vehicleMake,
-                            vehicleColor: vehicleColor,
-                            vehicleModel: vehicleModel,
-                            licensePlate: EncryptedData.createEncryption(input: licensePlate),
-                            vin: EncryptedData.createEncryption(input: vin),
-                            distinguishable: "", location: location)
-        reportsModel.upload(report, with: vehicleImage) { status in
-            switch status {
-            case true:
-                generator.notificationOccurred(.success)
-                self.isUploading = false
-                dismiss()
-            case false:
-                generator.notificationOccurred(.error)
-                alertErrorUploading.toggle()
-                self.isUploading = false
+        
+        if location.isNil() {
+            if let userLocation = usersLocation() {
+                self.location = userLocation
             }
+        }
+           
+        guard let location else {
+            alertSelectLocation.toggle()
+            isUploading = false
+            return
+        }
+        
+        let vehicle = Vehicle(vehicleYear: vehicleYear, vehicleMake: vehicleMake, vehicleColor: vehicleColor, vehicleModel: vehicleModel)
+        let report = Report(dt: Date.now.epoch, reportType: reportType, vehicle: vehicle, licensePlate: nil, vin: nil, distinguishable: "", location: location)
+        
+        reportsModel.upload(report) { success in
+            guard success else {
+                self.alertErrorUploading.toggle()
+                self.isUploading = false
+                return
+            }
+            dismiss()
         }
     }
 }

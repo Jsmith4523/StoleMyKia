@@ -10,23 +10,20 @@ import MapKit
 import SwiftUI
 import UIKit
 
-protocol NotificationRadiusDelegate: AnyObject {
-    var currentRadius: CLLocationDistance? {get set}
-}
 
 final class RadiusMapCoordinator: NSObject, ObservableObject {
     
     @Published var alertSetupError = false
     
-    @Published private var userLocation: CLLocationCoordinate2D!
+    @Published private var userLocation: CLLocationCoordinate2D! {
+        didSet {
+            updateRadiusCircle(center: userLocation, radius: radiusSize)
+        }
+    }
     
     @Published var radiusSize: Double = 25000.0 {
         didSet {
-            if let userLocation {
-                self.radiusCircle = MKCircle(center: userLocation, radius: radiusSize)
-                mapView.setVisibleMapRect(radiusCircle.boundingMapRect, edgePadding: self.circlePadding, animated: true)
-                notificationDelegate?.currentRadius = radiusSize
-            }
+            updateRadiusCircle(center: userLocation, radius: radiusSize, saveChanges: true)
         }
     }
         
@@ -37,28 +34,54 @@ final class RadiusMapCoordinator: NSObject, ObservableObject {
     
     private let locationManager = CLLocationManager()
     
-    weak var notificationDelegate: NotificationRadiusDelegate?
+    weak var firebaseUserDelegate: FirebaseUserDelegate?
+    
+    override init() {
+        super.init()
+        
+        locationManager.delegate = self
+        locationManager.startUpdatingLocation()
+    }
     
     ///Once passed, this will immediately setup the map
-    func setNotificationDelegate(_ delegate: NotificationRadiusDelegate) {
-        self.notificationDelegate = delegate
-        setupMap()
+    func setDelegate(_ delegate: FirebaseUserDelegate) {
+        self.firebaseUserDelegate = delegate
     }
     
     func setupMap() {
-        if let userLocation = locationManager.usersCurrentLocation, let radius = notificationDelegate?.currentRadius{
-            
+        guard let userLocation = locationManager.usersCurrentLocation, let radius = firebaseUserDelegate?.notificationRadius else {
+            alertSetupError.toggle()
+            return
+        }
+        
+        createRadiusCircle()
+        
+        func createRadiusCircle() {
             self.userLocation = userLocation
             mapView.region = MKCoordinateRegion(center: userLocation, span: .init(latitudeDelta: 0.5, longitudeDelta: 0.5))
             
             radiusCircle = MKCircle(center: userLocation, radius: radius)
             radiusSize = radius
-        } else {
+        }
+    }
+    
+    private func updateRadiusCircle(center: CLLocationCoordinate2D?, radius: Double, saveChanges: Bool = false) {
+        guard let center else {
             alertSetupError.toggle()
+            return
+        }
+        
+        self.radiusCircle = MKCircle(center: center, radius: radiusSize)
+        mapView.setVisibleMapRect(radiusCircle.boundingMapRect, edgePadding: self.circlePadding, animated: true)
+        
+        if saveChanges {
+            firebaseUserDelegate?.notificationRadius = radiusSize
         }
     }
 }
 
+
+//MARK: - MKMapViewDelegate
 extension RadiusMapCoordinator: MKMapViewDelegate {
     
     
@@ -68,7 +91,7 @@ extension RadiusMapCoordinator: MKMapViewDelegate {
             let boundCircle = MKCircleRenderer(overlay: overlay)
             boundCircle.strokeColor = UIColor.tintColor
             boundCircle.lineWidth = CGFloat(0.90)
-            boundCircle.fillColor = UIColor.tintColor.withAlphaComponent(0.18)
+            boundCircle.fillColor = UIColor(.brand).withAlphaComponent(0.18)
             
             return boundCircle
         }
@@ -76,3 +99,12 @@ extension RadiusMapCoordinator: MKMapViewDelegate {
         return MKOverlayRenderer(overlay: overlay)
     }
 }
+
+extension RadiusMapCoordinator: CLLocationManagerDelegate {
+    
+    func locationManager(_ manager: CLLocationManager, didUpdateLocations locations: [CLLocation]) {
+        self.userLocation = manager.usersCurrentLocation
+    }
+}
+
+

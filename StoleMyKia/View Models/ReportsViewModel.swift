@@ -57,10 +57,12 @@ final class ReportsViewModel: NSObject, ObservableObject {
         manager.uploadReport(report: report, image: image) { result in
             switch result {
             case .success(_):
+                UINotificationFeedbackGenerator().notificationOccurred(.success)
                 completion(true)
                 self.getReports()
                 return
             case .failure(let error):
+                UINotificationFeedbackGenerator().notificationOccurred(.error)
                 completion(false)
                 print(error.localizedDescription)
                 return
@@ -103,9 +105,8 @@ final class ReportsViewModel: NSObject, ObservableObject {
             case .success(_):
                 completion(true)
                 removeReportAndAnnotation(report)
-            case .failure(let error):
+            case .failure(_):
                 completion(false)
-                print("❌ Error removing post: \(error.localizedDescription)")
             }
         }
         
@@ -158,4 +159,11 @@ protocol SelectedReportDelegate: AnyObject {
 
 protocol FirebaseUserDelegate: AnyObject {
     var uid: String? {get}
+    var notifyOfTheft: Bool {get set}
+    var notifyOfWitness: Bool {get set}
+    var notifyOfFound: Bool {get set}
+    var notificationRadius: Double {get set}
+    
+    
+    func save(completion: @escaping ((Bool)->Void))
 }

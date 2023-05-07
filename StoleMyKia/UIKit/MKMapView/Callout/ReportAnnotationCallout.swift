@@ -54,19 +54,23 @@ class ReportAnnotationCallOut: UIView {
     }
     
     func setupSubtitleView() {
-        if let year = report.vehicleYear, let make = report.vehicleMake, let model = report.vehicleModel, let color = report.vehicleColor {
-            subTitleView.text = "\(year) \(make.rawValue) \(model.rawValue) (\(color.rawValue))"
-            subTitleView.font = .systemFont(ofSize: 13)
-            subTitleView.textColor = .gray
-            subTitleView.textAlignment = .left
-            
-            addSubview(subTitleView)
-            
-            subTitleView.translatesAutoresizingMaskIntoConstraints = false
-            subTitleView.topAnchor.constraint(equalTo: titleView.bottomAnchor).isActive = true
-            subTitleView.leadingAnchor.constraint(equalTo: leadingAnchor).isActive = true
-            subTitleView.trailingAnchor.constraint(equalTo: trailingAnchor).isActive = true
-        }
+        
+        let vehicleYear = report.vehicle.vehicleYear
+        let vehicleMake = report.vehicle.vehicleMake
+        let vehicleModel = report.vehicle.vehicleModel
+        let vehicleColor = report.vehicle.vehicleColor
+        
+        subTitleView.text = report.vehicleDetails
+        subTitleView.font = .systemFont(ofSize: 13)
+        subTitleView.textColor = .gray
+        subTitleView.textAlignment = .left
+        
+        addSubview(subTitleView)
+        
+        subTitleView.translatesAutoresizingMaskIntoConstraints = false
+        subTitleView.topAnchor.constraint(equalTo: titleView.bottomAnchor).isActive = true
+        subTitleView.leadingAnchor.constraint(equalTo: leadingAnchor).isActive = true
+        subTitleView.trailingAnchor.constraint(equalTo: trailingAnchor).isActive = true
     }
     
     func setupInfoButton() {

@@ -39,10 +39,10 @@ struct NotificationRadiusView: View {
                     dismiss()
                 }
             }
-            .accentColor(.accentColor)
+            .accentColor(.brand)
         }
         .onAppear {
-            radiusMapCoordinator.setNotificationDelegate(notificationModel)
+            //radiusMapCoordinator.setDelegate(notificationModel)
         }
         .alert("There was an error", isPresented: $radiusMapCoordinator.alertSetupError) {
             Button("OK") { dismiss ()}

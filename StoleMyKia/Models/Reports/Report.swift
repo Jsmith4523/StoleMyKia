@@ -11,7 +11,7 @@ import MapKit
 import CryptoKit
 import SwiftUI
 
-struct Report: Identifiable, Codable, Hashable, Comparable {
+struct Report: Identifiable, Codable, Comparable {
 
     var id = UUID()
     
@@ -19,10 +19,7 @@ struct Report: Identifiable, Codable, Hashable, Comparable {
     let dt: TimeInterval?
     let reportType: ReportType
     var status: ReportStatus = .open
-    let vehicleYear: Int?
-    let vehicleMake: VehicleMake?
-    let vehicleColor: VehicleColor?
-    let vehicleModel: VehicleModel?
+    let vehicle: Vehicle
     let licensePlate: EncryptedData?
     let vin: EncryptedData?
     let distinguishable: String
@@ -98,10 +95,13 @@ extension Report {
     }
     
     var vehicleDetails: String {
-        if let vehicleYear, let vehicleMake, let vehicleModel, let vehicleColor {
-            return "\(vehicleYear) \(vehicleMake.rawValue) \(vehicleModel.rawValue) (\(vehicleColor.rawValue))"
-        }
-        return ""
+        
+        let vehicleYear = self.vehicle.vehicleYear
+        let vehicleMake = self.vehicle.vehicleMake
+        let vehicleModel = self.vehicle.vehicleModel
+        let vehicleColor = self.vehicle.vehicleColor
+        
+        return "\(vehicleYear) \(vehicleMake.rawValue) \(vehicleModel.rawValue) (\(vehicleColor.rawValue))"
     }
     
     var reportUpdates: [Report] {
