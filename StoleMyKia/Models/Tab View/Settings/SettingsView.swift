@@ -71,7 +71,7 @@ struct SettingsView: View {
                     }
                 }
             }
-            .navigationTitle("Settings")
+            .navigationTitle(isLoggingOut ? "Logging out..." : "Settings")
             .navigationBarTitleDisplayMode(.inline)
             .toolbar {
                 ToolbarItem(placement: .navigationBarLeading) {
@@ -80,8 +80,8 @@ struct SettingsView: View {
                     }
                 }
             }
-            .interactiveDismissDisabled(isDeletingAccount)
-            .disabled(isDeletingAccount)
+            .interactiveDismissDisabled(isLoggingOut)
+            .disabled(isLoggingOut)
         }
         .alert("Log out", isPresented: $alertLogout) {
             Button("Yes"){
