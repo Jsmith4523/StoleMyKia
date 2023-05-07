@@ -211,16 +211,14 @@ class ReportsManager {
             do {
                 let userReports = try snapshot.createReports()
                 
-                for report in userReports {
-                    self.delete(report: report) { status in
-                        switch status {
-                        case .success(_):
-                            break
-                        case .failure(_):
-                            completion(false)
-                        }
-                    }
-                }
+                completion(true)
+                
+                //TODO: reupload if failed
+//                for report in userReports {
+//                    self.delete(report: report) { status in
+//                        
+//                    }
+//                }
             } catch {
                 completion(false)
             }

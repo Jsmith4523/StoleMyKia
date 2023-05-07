@@ -9,7 +9,7 @@ import SwiftUI
 
 struct SettingsView: View {
     
-    @State private var isDeletingAccount = false
+    @State private var isLoggingOut = false
     
     @State private var alertLogout = false
     @State private var alertDeletingAccount = false
@@ -116,9 +116,10 @@ struct SettingsView: View {
     }
     
     private func beginDeletingAccount() {
-        isDeletingAccount = true
+        isLoggingOut = true
         userModel.deleteAccount { success in
             guard let success, success else {
+                isLoggingOut = false
                 alertErrorDeletingAccount.toggle()
                 return 
             }
@@ -126,11 +127,14 @@ struct SettingsView: View {
     }
     
     private func beginLoggingOut() {
-        do {
-            try userModel.signOut()
-        } catch {
-            print("❌ Error logging out: \(error.localizedDescription)")
-            alertLogout.toggle()
+        isLoggingOut = true
+        userModel.signOut { succes in
+            guard succes else {
+                alertLogout.toggle()
+                isLoggingOut = false
+                return
+            }
+            dismiss()
         }
     }
 }

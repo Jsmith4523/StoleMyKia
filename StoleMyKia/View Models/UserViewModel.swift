@@ -98,8 +98,13 @@ final class UserViewModel: ObservableObject {
         }
     }
     
-    func signOut() throws {
-        try? auth.signOut()
+    func signOut(completion: @escaping ((Bool)->Void)) {
+        do {
+            try auth.signOut()
+            completion(true)
+        } catch {
+            completion(false)
+        }
     }
     
     
