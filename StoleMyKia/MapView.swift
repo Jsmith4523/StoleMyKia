@@ -91,11 +91,11 @@ fileprivate struct MapButtons: View {
     
     var body: some View {
         HStack {
-            Button {
-                
-            } label: {
-                Image(systemName: "")
-            }
+//            Button {
+//                
+//            } label: {
+//                Image(systemName: "")
+//            }
             Spacer()
             Button {
                 reportModel.isShowingNewReportView.toggle()

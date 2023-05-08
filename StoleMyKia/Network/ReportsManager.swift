@@ -134,7 +134,7 @@ class ReportsManager {
     func delete(report: Report, completion: @escaping DeleteReportCompletion) {
         let ref = collection.document("\(report.id.uuidString)")
         
-        guard let imageUrl = report.imageURL else {
+        guard !(report.imageURL == nil) else {
             deleteReport { err in
                 guard err == nil else {
                     completion(.failure(err!))
@@ -203,28 +203,9 @@ class ReportsManager {
                 return
             }
             
-            guard !snapshot.documents.isEmpty else{
-                completion(true)
-                return
-            }
-            
             do {
                 let userReports = try snapshot.createReports()
-                                
-                //TODO: reupload if failed
-                for report in userReports {
-                    self.delete(report: report) { status in
-                        switch status {
-                        case .success(_):
-                            print("Did delete report")
-                        case .failure(_):
-                            completion(false)
-                            break
-                        }
-                    }
-                }
-                
-                completion(true)
+                        
             } catch {
                 completion(false)
             }

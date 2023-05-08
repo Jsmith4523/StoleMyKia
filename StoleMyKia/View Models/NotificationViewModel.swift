@@ -7,6 +7,7 @@
 
 import Foundation
 import NotificationCenter
+import Firebase
 import MapKit
 import SwiftUI
 
@@ -62,6 +63,11 @@ final class NotificationViewModel: NSObject, ObservableObject {
 
 //MARK: - UNUserNotificationCenterDelegate
 extension NotificationViewModel: UNUserNotificationCenterDelegate {
+    
+    
+}
+
+extension NotificationViewModel: MessagingDelegate {
     
     
 }

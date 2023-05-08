@@ -113,6 +113,7 @@
 		24A2068F2A0826BE00F5DC0C /* UserAccountManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserAccountManager.swift; sourceTree = "<group>"; };
 		24A206912A08270300F5DC0C /* Vehicle.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Vehicle.swift; sourceTree = "<group>"; };
 		24A206942A08334400F5DC0C /* Location.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Location.swift; sourceTree = "<group>"; };
+		24A206962A08D29E00F5DC0C /* StoleMyKia.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = StoleMyKia.entitlements; sourceTree = "<group>"; };
 		24A4CED729BF9E9B00B856BC /* SettingsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsView.swift; sourceTree = "<group>"; };
 		24A4CEDA29BF9F9C00B856BC /* NotificationSettingsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NotificationSettingsView.swift; sourceTree = "<group>"; };
 		24A4CEDD29BFA2CE00B856BC /* UNAuth+EXT.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UNAuth+EXT.swift"; sourceTree = "<group>"; };
@@ -372,6 +373,7 @@
 		24A5791229BC552C00495E6F /* StoleMyKia */ = {
 			isa = PBXGroup;
 			children = (
+				24A206962A08D29E00F5DC0C /* StoleMyKia.entitlements */,
 				24A5791329BC552C00495E6F /* StoleMyKiaApp.swift */,
 				24A5791729BC552E00495E6F /* Assets.xcassets */,
 				24127C1E29E3F4AC00C09FE5 /* Launch Screen.storyboard */,
@@ -815,6 +817,7 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				CODE_SIGN_ENTITLEMENTS = StoleMyKia/StoleMyKia.entitlements;
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_ASSET_PATHS = "\"StoleMyKia/Preview Content\"";
@@ -850,6 +853,7 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				CODE_SIGN_ENTITLEMENTS = StoleMyKia/StoleMyKia.entitlements;
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_ASSET_PATHS = "\"StoleMyKia/Preview Content\"";

@@ -7,6 +7,8 @@
 
 import SwiftUI
 import Firebase
+import UserNotifications
+import FirebaseMessaging
 
 @main
 struct StoleMyKiaApp: App {
@@ -36,11 +38,43 @@ struct StoleMyKiaApp: App {
 class AppDelegate: UIScene, UIApplicationDelegate {
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey : Any]? = nil) -> Bool {
         FirebaseApp.configure()
+        
+        Messaging.messaging().delegate = self
+        
+        UNUserNotificationCenter.current().requestAuthorization(options: [.alert, .badge, .sound]) { succes, err in
+            guard succes, err == nil else  {
+                return
+            }
+        }
+        
+        application.registerForRemoteNotifications()
                 
         return true
     }
+    
+    func application(_ application: UIApplication, didRegisterForRemoteNotificationsWithDeviceToken deviceToken: Data) {
+        Messaging.messaging().apnsToken = deviceToken
+    }
 }
 
+//MARK: - MessagingDelegate
+extension AppDelegate: MessagingDelegate {
+    func messaging(_ messaging: Messaging, didReceiveRegistrationToken fcmToken: String?) {
+        messaging.token { token, err in
+            guard let token, err == nil else {
+                return
+            }
+        }
+    }
+}
+
+//MARK: UNUserNotificationCenterDelegate
+extension AppDelegate: UNUserNotificationCenterDelegate {
+    
+    func userNotificationCenter(_ center: UNUserNotificationCenter, didReceive response: UNNotificationResponse) async {
+        print("Notification recieved")
+    }
+}
 
 
 //MARK: DEVELOPER MESSAGE
