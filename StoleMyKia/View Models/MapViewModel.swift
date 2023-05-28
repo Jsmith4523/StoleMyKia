@@ -25,7 +25,7 @@ final class MapViewModel: NSObject, ObservableObject {
     let mapView = MKMapView()
     let locationManager = CLLocationManager()
     
-    weak var delegate: SelectedReportDelegate?
+    weak var annotationDelegate: SelectedReportAnnotationDelegate?
     
 }
 
@@ -58,15 +58,13 @@ extension MapViewModel: CLLocationManagerDelegate {
         }
     }
     
-    func mapView(_ mapView: MKMapView, didSelect view: MKAnnotationView) {
-        if let clusterView = view as? ReportsClusterAnnotationView {
-            clusterView.determinePreview(mapView)
-        }
-    }
     
     func mapView(_ mapView: MKMapView, didSelect annotation: MKAnnotation) {
-        if let userAnnotation = annotation as? MKUserLocation {
-            mapView.deselectAnnotation(userAnnotation, animated: false)
+        switch annotation {
+        case let reportsClusterAnnotation as ReportClusterAnnotation:
+            annotationDelegate?.didSelectCluster(reportsClusterAnnotation.reportAnnotations.map({$0.report}))
+        default:
+            return
         }
     }
     
@@ -78,6 +76,10 @@ extension MapViewModel: CLLocationManagerDelegate {
         if let coordinates {
             mapView.setCenter(coordinates, animated: true)
         }
+    }
+    
+    func mapView(_ mapView: MKMapView, clusterAnnotationForMemberAnnotations memberAnnotations: [MKAnnotation]) -> MKClusterAnnotation {
+        ReportClusterAnnotation(memberAnnotations: memberAnnotations)
     }
     
     func goToUsersLocation(animate: Bool = false) {
@@ -107,6 +109,6 @@ extension MapViewModel: MKMapViewDelegate {
 //MARK: - AnnotationCalloutDelegate
 extension MapViewModel: AnnotationCalloutDelegate {
     func annotationCallout(willPresentReport report: Report) {
-        self.delegate?.didSelectReport(report)
+        self.annotationDelegate?.didSelectReport(report)
     }
 }

@@ -10,6 +10,28 @@ import SwiftUI
 import UIKit
 import MapKit
 
+enum ReportDetailMode: Identifiable {
+    case single(Report)
+    case multiple([Report])
+    
+    var detent: Set<PresentationDetent> {
+        switch self {
+        case .single(_):
+            return [.large]
+        case .multiple(_):
+            return [.height(475), .large]
+        }
+    }
+    
+    var id: String {
+        switch self {
+        case .single(_):
+            return ""
+        case .multiple(let reports):
+            return "\(reports.count) Reports"
+        }
+    }
+}
 
 final class ReportsViewModel: NSObject, ObservableObject {
     
@@ -17,10 +39,9 @@ final class ReportsViewModel: NSObject, ObservableObject {
     
     @Published var isShowingLicensePlateScannerView = false
     @Published var isShowingNewReportView = false
-    @Published var isShowingSelectedReportView = false
     @Published var isShowingReportSearchView = false
 
-    @Published var selectedReport: Report!
+    @Published var reportDetailMode: ReportDetailMode?
     
     @Published var reports = [Report]() {
         didSet {
@@ -129,11 +150,14 @@ final class ReportsViewModel: NSObject, ObservableObject {
     }
 }
 
-//MARK: - SelectedReportDelegate
-extension ReportsViewModel: SelectedReportDelegate {
+//MARK: - SelectedReportAnnotationDelegate
+extension ReportsViewModel: SelectedReportAnnotationDelegate {
     func didSelectReport(_ report: Report) {
-        self.isShowingSelectedReportView.toggle()
-        self.selectedReport = report
+        self.reportDetailMode = .single(report)
+    }
+    
+    func didSelectCluster(_ reports: [Report]) {
+        self.reportDetailMode = .multiple(reports)
     }
 }
 
@@ -162,25 +186,4 @@ extension ReportsViewModel: UserReportsDelegate {
             completion(status)
         }
     }
-}
-
-
-protocol ReportsDelegate: AnyObject {
-    func reportsDelegate(didReceieveReports reports: [Report])
-    func reportsDelegate(didDeleteReport report: Report)
-}
-
-protocol SelectedReportDelegate: AnyObject {
-    func didSelectReport(_ report: Report)
-}
-
-protocol FirebaseUserDelegate: AnyObject {
-    var uid: String? {get}
-    var notifyOfTheft: Bool {get set}
-    var notifyOfWitness: Bool {get set}
-    var notifyOfFound: Bool {get set}
-    var notificationRadius: Double {get set}
-    
-    
-    func save(completion: @escaping ((Bool)->Void))
 }

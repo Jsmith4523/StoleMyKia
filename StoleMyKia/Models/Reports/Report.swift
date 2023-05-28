@@ -94,6 +94,14 @@ extension Report {
         self.reportType.rawValue
     }
     
+    var hasVehicleImage: Bool {
+        guard let imageURL else {
+            return false
+        }
+        
+        return true
+    }
+    
     var vehicleDetails: String {
         
         let vehicleYear = self.vehicle.vehicleYear
@@ -145,7 +153,7 @@ extension Report {
     
     ///The final year vehicles were affetced. Subject to change 🤷🏽‍♂️
     static var lastAffectedYear: Int {
-        2021
+        2022
     }
     
     func verifyVin(input: String) -> Bool {

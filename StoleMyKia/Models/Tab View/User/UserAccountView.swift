@@ -33,7 +33,6 @@ struct UserAccountView: View {
     @EnvironmentObject var notificationModel: NotificationViewModel
     @EnvironmentObject var reportsModel: ReportsViewModel
     
-    let imageCache = ImageCache()
     
     var body: some View {
         CustomNavView(title: "My Account", statusBarColor: .darkContent, backgroundColor: .brand) {
@@ -44,7 +43,7 @@ struct UserAccountView: View {
                 VStack(spacing: 0) {
                     //tabViewSelection
                     TabView(selection: $viewSelection) {
-                        UserReportsView(userModel: userModel, imageCache: imageCache)
+                        UserReportsView(userModel: userModel)
                             .tag(AccountViewSelection.userReports)
 
                     }

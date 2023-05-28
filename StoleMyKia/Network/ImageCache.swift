@@ -10,7 +10,9 @@ import UIKit
 
 class ImageCache {
     
-    let cache = NSCache<AnyObject, AnyObject>()
+    static let shared = ImageCache()
+    
+    private let cache = NSCache<AnyObject, AnyObject>()
     
     func getImage(_ urlString: String?, completion: @escaping (UIImage?)->Void) {
         if let image = cache.object(forKey: urlString as AnyObject) as? UIImage {

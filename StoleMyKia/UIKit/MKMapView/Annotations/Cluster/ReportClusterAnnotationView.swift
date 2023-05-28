@@ -1,13 +1,14 @@
 //
-//  ReportClusterAnnotation.swift
+//  ReportClusterAnnotationView.swift
 //  StoleMyKia
 //
-//  Created by Jaylen Smith on 3/18/23.
+//  Created by Jaylen Smith on 5/28/23.
 //
 
 import Foundation
-import UIKit
 import MapKit
+import SwiftUI
+import UIKit
 
 class ReportsClusterAnnotationView: MKAnnotationView {
     
@@ -28,7 +29,7 @@ class ReportsClusterAnnotationView: MKAnnotationView {
         if let clusterAnnotation = annotation as? MKClusterAnnotation {
             let circle = UIView()
             circle.frame = CGRect(x: 0, y: 0, width: 40, height: 40)
-            circle.backgroundColor = .tintColor
+            circle.backgroundColor = UIColor(Color.brand)
             circle.layer.cornerRadius = circle.frame.height / 2
             circle.clipsToBounds = true
             
@@ -57,25 +58,6 @@ class ReportsClusterAnnotationView: MKAnnotationView {
     }
     
     func determinePreview(_ mapView: MKMapView) {
-        if let annotation = annotation as? MKClusterAnnotation {
-            
-            let count = annotation.memberAnnotations.count
-            //TODO: Setup VisibleMapRect
-        }
-    }
-}
-
-
-extension MKClusterAnnotation {
-    
-    
-    var countString: String {
-        let count = self.memberAnnotations.count
         
-        if count > 10 {
-            return "10+"
-        } else {
-            return "\(count)"
-        }
     }
 }

@@ -13,13 +13,17 @@ struct ReportListView: View {
     
     @EnvironmentObject var reportsModel: ReportsViewModel
     
-    private let imageCache = ImageCache()
-    
     var body: some View {
         NavigationView {
-            ListView(reports: $reportsModel.reports, imageCache: imageCache)
-                .navigationTitle("Reports")
-                .navigationBarTitleDisplayMode(.inline)
+            ScrollView {
+                VStack {
+                    ForEach(reportsModel.reports) {
+                        ReportCellView(report: $0)
+                    }
+                }
+            }
+            .navigationTitle("Reports")
+            .navigationBarTitleDisplayMode(.inline)
         }
         .environmentObject(reportsModel)
     }

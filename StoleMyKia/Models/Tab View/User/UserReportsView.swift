@@ -16,9 +16,7 @@ struct UserReportsView: View {
     @State private var userReports = [Report]()
     
     @ObservedObject var userModel: UserViewModel
-    
-    let imageCache: ImageCache
-    
+        
     var body: some View {
         ZStack {
             switch isLoading {
@@ -43,7 +41,7 @@ struct UserReportsView: View {
         ScrollView(showsIndicators: false) {
             VStack {
                 ForEach(userReports) { report in
-                    UserReportCellView(report: report, imageCache: imageCache) {
+                    UserReportCellView(report: report) {
                         fetchUserReports()
                     }
                 }
@@ -75,7 +73,6 @@ struct UserReportsView: View {
         @State private var vehicleImage: UIImage?
         
         let report: Report
-        let imageCache: ImageCache
         
         var completion: (()->Void)?
         
@@ -105,7 +102,7 @@ struct UserReportsView: View {
                 self.isShowingReportDetailView.toggle()
             }
             .sheet(isPresented: $isShowingReportDetailView) {
-                SelectedReportDetailView(report: report, imageCache: imageCache) {
+                SelectedReportDetailView(report: report) {
                     fetchUserReports()
                 }
             }
@@ -131,7 +128,7 @@ struct UserReportsView: View {
         
         private func getVehicleImage() {
             if let imageUrl = report.imageURL {
-                imageCache.getImage(imageUrl) { image in
+                ImageCache.shared.getImage(imageUrl) { image in
                     guard let image else {
                         return
                     }

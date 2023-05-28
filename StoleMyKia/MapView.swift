@@ -14,9 +14,7 @@ struct ReportsMapView: View {
     
     @StateObject private var mapModel = MapViewModel()
     @EnvironmentObject var reportModel: ReportsViewModel
-    
-    let imageCache: ImageCache
-    
+     
     var body: some View {
         CustomNavView(title: "Reports",statusBarColor: .darkContent, backgroundColor: .brand) {
             ZStack(alignment: .top) {
@@ -48,7 +46,7 @@ struct ReportsMapView: View {
         .environmentObject(mapModel)
         .onAppear {
             reportModel.delegate = mapModel
-            mapModel.delegate = reportModel
+            mapModel.annotationDelegate = reportModel
         }
     }
 }
@@ -142,7 +140,7 @@ private extension Image {
 
 struct Map_Previews: PreviewProvider {
     static var previews: some View {
-        ReportsMapView(imageCache: ImageCache())
+        ReportsMapView()
             .environmentObject(ReportsViewModel())
             .environmentObject(MapViewModel())
     }

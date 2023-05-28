@@ -17,9 +17,7 @@ struct SelectedReportDetailView: View {
     @State private var vehicleImage: UIImage?
     
     let report: Report?
-    
-    let imageCache: ImageCache
-    
+       
     var completion: (() -> Void)?
         
     @EnvironmentObject var reportsModel: ReportsViewModel
@@ -126,7 +124,7 @@ struct SelectedReportDetailView: View {
     }
     
     private func getVehicleImage(_ urlString: String?) {
-        imageCache.getImage(urlString) { image in
+        ImageCache.shared.getImage(urlString) { image in
             withAnimation {
                 self.vehicleImage = image
             }

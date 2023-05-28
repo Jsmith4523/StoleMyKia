@@ -56,14 +56,6 @@ extension View {
             }
     }
     
-    func reportDetailSheet(isPresented: Binding<Bool>, report: Report, imageCache: ImageCache, reportsViewModel: ReportsViewModel) -> some View {
-        return self
-            .customSheetView(isPresented: isPresented, detents: [.large()], cornerRadius: 25) {
-                SelectedReportDetailView(report: report, imageCache: imageCache)
-                    .environmentObject(reportsViewModel)
-            }
-    }
-    
     //TODO: Crete privacy policy
     func privacyPolicy(isPresented: Binding<Bool>) -> some View {
         return self
@@ -78,12 +70,5 @@ extension View {
     func twitterSupport(isPresented: Binding<Bool>) -> some View {
         return self
             .safari(isPresented: isPresented, url: URL.twitterSupportURL)
-    }
-    
-    func reportDetailView(isPresented: Binding<Bool>, cache: ImageCache, report: Report?) -> some View {
-        return self
-            .sheet(isPresented: isPresented) {
-                SelectedReportDetailView(report: report, imageCache: cache)
-            }
     }
 }
