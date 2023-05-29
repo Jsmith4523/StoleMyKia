@@ -26,7 +26,7 @@ struct Tab: View {
                 }
             UserAccountView(userModel: userModel)
                 .tabItem {
-                    Label("Account", systemImage: "person")
+                    Label("My Stuff", systemImage: "archivebox")
                 }
         }
         .sheet(item: $reportsModel.reportDetailMode) { mode in
