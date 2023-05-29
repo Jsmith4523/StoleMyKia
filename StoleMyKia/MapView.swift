@@ -18,19 +18,30 @@ struct ReportsMapView: View {
     var body: some View {
         CustomNavView(title: "Reports",statusBarColor: .darkContent, backgroundColor: .brand) {
             ZStack(alignment: .top) {
-                ZStack(alignment: .bottomTrailing) {
-                    MapViewRep()
-                        .edgesIgnoringSafeArea(.top)
-                    MapButtons()
+                MapViewRepresentable()
+                VStack {
+                    UpperMapViewButtons()
+                    Spacer()
+                    LowerMapViewButtons()
                 }
             }
             .toolbar {
-                ToolbarItemGroup(placement: .navigationBarTrailing) {
+                ToolbarItem(placement: .navigationBarLeading) {
                     Button {
                         reportModel.isShowingLicensePlateScannerView.toggle()
                     } label: {
-                        Image(systemName: "camera")
+                        Image(systemName: "viewfinder")
                             .foregroundColor(.white)
+                            .font(.system(size: 19).weight(.heavy))
+                    }
+                }
+                ToolbarItem(placement: .navigationBarTrailing) {
+                    Button {
+                        
+                    } label: {
+                        Image(systemName: "list.dash")
+                            .foregroundColor(.white)
+                            .font(.system(size: 19).weight(.heavy))
                     }
                 }
             }
@@ -51,90 +62,73 @@ struct ReportsMapView: View {
     }
 }
 
-fileprivate struct MapHeader: View {
-    var body: some View {
-        ZStack(alignment: .top) {
-            LinearGradient(colors: [.black.opacity(0.65), .clear], startPoint: .top, endPoint: .bottom)
-                .ignoresSafeArea()
-                .frame(height: 100)
-            HStack {
-                Text("Reports")
-                    .font(.system(size: 35).weight(.heavy))
-                Spacer()
-                HStack {
-                    Button {
-                        
-                    } label: {
-                        Image(systemName: "text.justify")
-                            .resizable()
-                            .scaledToFit()
-                            .frame(width: 25, height: 25)
-                            .padding(11)
-                            .background(Color.accentColor)
-                            .clipShape(Circle())
-                    }
-
-                }
-            }
-            .padding()
-            .foregroundColor(.white)
-        }
-    }
-}
-
-fileprivate struct MapButtons: View {
+fileprivate struct UpperMapViewButtons: View {
     
     @EnvironmentObject var mapModel: MapViewModel
     @EnvironmentObject var reportModel: ReportsViewModel
     
     var body: some View {
         HStack {
-//            Button {
-//                
-//            } label: {
-//                Image(systemName: "")
-//            }
             Spacer()
-            Button {
-                reportModel.isShowingNewReportView.toggle()
-            } label: {
-               Label("New Report", systemImage: "pencil")
-                    .padding()
-                    .font(.system(size: 20).weight(.bold))
-                    .foregroundColor(.white)
-                    .background(Color.accentColor)
-                    .cornerRadius(30)
-                    .shadow(radius: 4)
+            VStack {
+                if mapModel.regionDidChange {
+                    Button {
+                        withAnimation(.linear) {
+                            mapModel.regionDidChange = false
+                        }
+                    } label: {
+                        Label("Search here", systemImage: "map")
+                            .padding(10)
+                            .font(.system(size: 15).weight(.heavy))
+                            .background(Color(uiColor: .secondarySystemBackground))
+                            .clipShape(Capsule())
+                            .shadow(radius: 3)
+                    }
+                }
+                Button {
+                    mapModel.centerToUsersLocation(animate: true)
+                } label: {
+                    Image(systemName: "location")
+                        .padding(10)
+                        .font(.system(size: 16).weight(.bold))
+                        .background(Color(uiColor: .secondarySystemBackground))
+                        .clipShape(Circle())
+                        .shadow(radius: 3)
+                }
             }
-            
-//            if mapModel.locationAuth.isAuthorized() {
-//                Button {
-//                    mapModel.goToUsersLocation(animate: true)
-//                } label: {
-//                    Image(systemName: "location")
-//                        .mapButton()
-//                }
-//            }
+            Spacer()
         }
-        .padding(.horizontal, 8)
-        .padding(.bottom, 45)
-        .sheet(isPresented: $reportModel.isShowingReportSearchView) {
-            ReportListView()
-                .environmentObject(reportModel)
+        .padding()
+        .alert("Your location settings have denied locating to your current location. To change the settings, go to Settings>StoleMyKia>Location", isPresented: $mapModel.alertLocationSettingsDisabled) {
+            Button("OK") {}
+            Button("Change Settings"){
+                URL.openApplicationSettings()
+            }
         }
     }
 }
 
-private extension Image {
-    func mapButton() -> some View {
-        return self
-            .resizable()
-            .scaledToFit()
-            .frame(width: 22, height: 22)
-            .padding()
-            .background(Color.white)
-            .clipShape(Circle())
-            .shadow(radius: 2)
+
+fileprivate struct LowerMapViewButtons: View {
+    
+    @EnvironmentObject var mapModel: MapViewModel
+    @EnvironmentObject var reportModel: ReportsViewModel
+    
+    var body: some View {
+        HStack {
+            Spacer()
+            Image(systemName: "note.text.badge.plus")
+                .resizable()
+                .scaledToFit()
+                .frame(width: 25, height: 25)
+                .padding()
+                .foregroundColor(.brand)
+                .background(Color(uiColor: .secondarySystemBackground))
+                .clipShape(Circle())
+                .shadow(radius: 2)
+                .padding()
+        }
+        .padding(.bottom)
     }
 }
 

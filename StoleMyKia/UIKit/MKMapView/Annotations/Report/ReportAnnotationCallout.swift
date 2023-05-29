@@ -9,10 +9,6 @@ import Foundation
 import UIKit
 import SwiftUI
 
-protocol AnnotationCalloutDelegate: AnyObject {
-    func annotationCallout(willPresentReport report: Report)
-}
-
 class ReportAnnotationCallOut: UIView {
     
     private let titleView       = UILabel(frame: .zero)
@@ -20,13 +16,17 @@ class ReportAnnotationCallOut: UIView {
     private let colorTitleView  = UILabel(frame: .zero)
     private let infoButton      = UIButton(frame: .zero)
     
-    var report: Report!
+    var annotation: ReportAnnotation
+    
+    private var report: Report {
+        annotation.report
+    }
     
     weak var calloutDelegate: AnnotationCalloutDelegate?
     
-    init(report: Report) {
+    init(annotation: ReportAnnotation) {
+        self.annotation = annotation
         super.init(frame: .zero)
-        self.report = report
         setup()
     }
     
@@ -36,6 +36,7 @@ class ReportAnnotationCallOut: UIView {
     
     func setup() {
         translatesAutoresizingMaskIntoConstraints = false
+        
         setupTitleView()
         setupSubtitleView()
         setupInfoButton()
@@ -55,11 +56,6 @@ class ReportAnnotationCallOut: UIView {
     
     func setupSubtitleView() {
         
-        let vehicleYear = report.vehicle.vehicleYear
-        let vehicleMake = report.vehicle.vehicleMake
-        let vehicleModel = report.vehicle.vehicleModel
-        let vehicleColor = report.vehicle.vehicleColor
-        
         subTitleView.text = report.vehicleDetails
         subTitleView.font = .systemFont(ofSize: 13)
         subTitleView.textColor = .gray
@@ -74,12 +70,12 @@ class ReportAnnotationCallOut: UIView {
     }
     
     func setupInfoButton() {
-        infoButton.titleLabel?.font = .systemFont(ofSize: 13, weight: .regular)
-        infoButton.setTitle("Details", for: .normal)
+        infoButton.titleLabel?.font = .systemFont(ofSize: 13, weight: .bold)
+        infoButton.setTitle("More Info", for: .normal)
         infoButton.setTitleColor(.white, for: .normal)
         infoButton.clipsToBounds = true
         infoButton.layer.cornerRadius = 5
-        infoButton.backgroundColor = .tintColor
+        infoButton.backgroundColor = UIColor(Color.brand)
         infoButton.addTarget(self, action: #selector(isShowingReportInformationView), for: .touchUpInside)
 
         addSubview(infoButton)
@@ -88,10 +84,11 @@ class ReportAnnotationCallOut: UIView {
         infoButton.trailingAnchor.constraint(equalTo: trailingAnchor).isActive = true
         infoButton.leadingAnchor.constraint(equalTo: leadingAnchor).isActive = true
         infoButton.topAnchor.constraint(equalTo: subTitleView.bottomAnchor, constant: 7).isActive = true
+        infoButton.widthAnchor.constraint(greaterThanOrEqualToConstant: 150).isActive = true
         infoButton.bottomAnchor.constraint(equalTo: bottomAnchor).isActive = true
     }
     
     @objc func isShowingReportInformationView() {
-        calloutDelegate?.annotationCallout(willPresentReport: self.report)
+        calloutDelegate?.annotationCallout(annotation: annotation)
     }
 }

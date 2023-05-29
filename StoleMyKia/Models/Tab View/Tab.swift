@@ -18,7 +18,7 @@ struct Tab: View {
         TabView {
             ReportsMapView()
                 .tabItem {
-                    Label("Reports", systemImage: "car.2.fill")
+                    Label("Map", systemImage: "map")
                 }
             NotificationsView()
                 .tabItem {

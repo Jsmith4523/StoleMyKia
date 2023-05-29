@@ -14,8 +14,11 @@ extension URL {
         URL(string: "https://twitter.com/StudentlyCo")!
     }
     
-    static func applicationSettings() -> String {
-        UIApplication.openSettingsURLString
+    static func openApplicationSettings() {
+        guard let applicationUrl = URL(string: UIApplication.openSettingsURLString) else {
+            return
+        }
+        UIApplication.shared.open(applicationUrl)
     }
     
     static func getDirectionsToLocation(coords: CLLocationCoordinate2D) {

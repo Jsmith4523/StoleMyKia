@@ -6,25 +6,39 @@
 //
 
 import SwiftUI
-import MapKit
 
-struct UserAccountView: View {
+private enum UserAccountViewSelection: String, CaseIterable, Identifiable {
     
-    private enum AccountViewSelection: CaseIterable {
-        case userReports
-        //case favorites
-        
-        var icon: String {
-            switch self {
-            case .userReports:
-                return "line.3.horizontal"
-//            case .favorites:
-//                return "bookmark.fill"
-            }
+    case userReports = "My Reports"
+    case updates     = "Updates"
+    case bookmark    = "Boomarked"
+    
+    var id: Int {
+        switch self {
+        case .userReports:
+            return 0
+        case .updates:
+            return 1
+        case .bookmark:
+            return 2
         }
     }
     
-    @State private var viewSelection: AccountViewSelection = .userReports
+    var indicator: Image {
+        switch self {
+        case .userReports:
+            return Image(systemName: "list.dash")
+        case .updates:
+            return Image(systemName: "arrow.uturn.backward")
+        case .bookmark:
+            return Image(systemName: "bookmark")
+        }
+    }
+}
+
+struct UserAccountView: View {
+    
+    @State private var userAccountTabViewSelection: UserAccountViewSelection = .userReports
     
     @State private var isShowingSettingsView = false
     
@@ -33,19 +47,37 @@ struct UserAccountView: View {
     @EnvironmentObject var notificationModel: NotificationViewModel
     @EnvironmentObject var reportsModel: ReportsViewModel
     
-    
     var body: some View {
-        CustomNavView(title: "My Account", statusBarColor: .darkContent, backgroundColor: .brand) {
+        NavigationView {
             VStack(spacing: 0) {
-                Spacer()
-                    .frame(height: 35)
-                userHeader
-                VStack(spacing: 0) {
-                    //tabViewSelection
-                    TabView(selection: $viewSelection) {
+                VStack {
+                    Divider()
+                    HStack {
+                        Spacer()
+                        ForEach(UserAccountViewSelection.allCases) { selection in
+                            selection.indicator
+                                .resizable()
+                                .scaledToFit()
+                                .frame(width: 23, height: 23)
+                                .foregroundColor(userAccountTabViewSelection == selection ? .brand : .gray)
+                                .onTapGesture {
+                                    changeSelection(selection)
+                                }
+                            Spacer()
+                        }
+                    }
+                    .frame(height: 10)
+                    .padding()
+                    Divider()
+                }
+                VStack {
+                    TabView(selection: $userAccountTabViewSelection) {
                         UserReportsView(userModel: userModel)
-                            .tag(AccountViewSelection.userReports)
-
+                            .tag(UserAccountViewSelection.userReports)
+                        Color.red
+                            .tag(UserAccountViewSelection.updates)
+                        Color.blue
+                            .tag(UserAccountViewSelection.bookmark)
                     }
                     .tabViewStyle(.page(indexDisplayMode: .never))
                 }
@@ -56,81 +88,51 @@ struct UserAccountView: View {
                         isShowingSettingsView.toggle()
                     } label: {
                         Image(systemName: "slider.horizontal.3")
-                            .foregroundColor(.white)
+                            .foregroundColor(.brand)
                     }
                 }
             }
-            .refreshable {
-                
+            .onChange(of: userAccountTabViewSelection) { _ in
+                UIImpactFeedbackGenerator(style: .rigid).impactOccurred()
             }
-        }
-        .edgesIgnoringSafeArea(.top)
-        .onAppear {
-            userModel.userReportsDelegate = reportsModel
-        }
-        .sheet(isPresented: $isShowingSettingsView) {
-            SettingsView()
-                .environmentObject(userModel)
-                .environmentObject(notificationModel)
-                .environmentObject(reportsModel)
-        }
-    }
-    
-    var userHeader: some View {
-        VStack {
-            HStack(alignment: .top) {
-                Image.userPlaceholder
-                    .resizable()
-                    .scaledToFill()
-                    .frame(width: 75, height: 75)
-                    .clipShape(Circle())
-                VStack(alignment: .leading) {
-                    Text("Hello There!")
-                        .font(.system(size: 30).weight(.heavy))
-                    VStack(alignment: .leading) {
-                        if let displayName = userModel.getUserDisplayName() {
-                            Text("User \(displayName)")
-                        }
-                        if let date = userModel.getUserCreationDate() {
-                            Text("Member since \(date.date)")
-                        }
-                    }
-                    .font(.system(size: 17))
-                    .foregroundColor(.gray)
-                }
-                Spacer()
+            .navigationTitle(userAccountTabViewSelection.rawValue)
+            .navigationBarTitleDisplayMode(.inline)
+            .environmentObject(reportsModel)
+            .sheet(isPresented: $isShowingSettingsView) {
+                SettingsView()
+                    .environmentObject(userModel)
+                    .environmentObject(notificationModel)
+                    .environmentObject(reportsModel)
             }
-            .padding()
-            Divider()
         }
     }
     
     var tabViewSelection: some View {
         VStack {
+            Divider()
             HStack {
-                ForEach(AccountViewSelection.allCases, id: \.icon) { selection in
-                    Spacer()
-                    Image(systemName: selection.icon)
+                Spacer()
+                ForEach(UserAccountViewSelection.allCases) { selection in
+                    selection.indicator
                         .resizable()
                         .scaledToFit()
-                        .frame(width: 21, height: 21)
-                        .foregroundColor(self.viewSelection == selection ? .brand : .gray)
-                        .padding()
+                        .frame(width: 23, height: 23)
+                        .foregroundColor(userAccountTabViewSelection == selection ? .brand : .gray)
                         .onTapGesture {
-                            setTabViewSelection(selection)
+                            changeSelection(selection)
                         }
                     Spacer()
                 }
             }
-            .padding(.horizontal)
+            .frame(height: 10)
+            .padding()
             Divider()
         }
     }
     
-    private func setTabViewSelection(_ selection: AccountViewSelection) {
-        UIImpactFeedbackGenerator().impactOccurred(intensity: 4)
+    private func changeSelection(_ selection: UserAccountViewSelection) {
         withAnimation {
-            self.viewSelection = selection
+            self.userAccountTabViewSelection = selection
         }
     }
 }

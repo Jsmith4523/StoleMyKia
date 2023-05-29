@@ -24,7 +24,6 @@ struct Report: Identifiable, Codable, Comparable {
     let vin: EncryptedData?
     let distinguishable: String
     var imageURL: String?
-    var isFound: Bool?
     let location: Location?
     var updates: [Report]?
     

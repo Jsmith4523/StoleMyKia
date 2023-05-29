@@ -25,16 +25,18 @@ class ReportAnnotation: NSObject, MKAnnotation {
     }
 }
 
-
 class ReportAnnotationView: MKMarkerAnnotationView {
     
-    var report: Report!
+    private var reportAnnotation: ReportAnnotation
+    private var report: Report
     
     weak var calloutDelegate: AnnotationCalloutDelegate?
     
-    init(annotation: MKAnnotation?, reuseIdentifier: String?, report: Report) {
+    init(annotation: ReportAnnotation, reuseIdentifier: String?) {
+        self.report           = annotation.report
+        self.reportAnnotation = annotation
+            
         super.init(annotation: annotation, reuseIdentifier: reuseIdentifier)
-        self.report = report
         
         clusteringIdentifier = ReportAnnotation.reusableID
     }
@@ -49,16 +51,14 @@ class ReportAnnotationView: MKMarkerAnnotationView {
     
     override func prepareForDisplay() {
         super.prepareForDisplay()
-        
-        guard let report else { return }
-        
+                
         animatesWhenAdded  = true
         subtitleVisibility = .visible
         
         glyphImage      = UIImage(systemName: report.reportType.annotationImage)
         markerTintColor = report.reportType.annotationColor
         
-        let calloutView = ReportAnnotationCallOut(report: report)
+        let calloutView = ReportAnnotationCallOut(annotation: reportAnnotation)
         calloutView.calloutDelegate = self.calloutDelegate
         
         canShowCallout = true

@@ -8,12 +8,16 @@
 import Foundation
 import UIKit
 
-enum ReportType: String, CaseIterable, Hashable, Codable {
+enum ReportType: String, CaseIterable, Hashable, Identifiable, Codable {
     
     case stolen      = "Stolen"
     case found       = "Found"
     case withnessed  = "Witnessed"
     case spotted     = "Spotted"
+    
+    var id: String {
+        return self.rawValue
+    }
     
     var annotationImage: String {
         switch self {

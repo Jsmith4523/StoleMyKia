@@ -10,7 +10,7 @@ import UIKit
 import SwiftUI
 import MapKit
 
-struct MapViewRep: UIViewRepresentable {
+struct MapViewRepresentable: UIViewRepresentable {
     
     @EnvironmentObject var coordinator: MapViewModel
     
@@ -22,6 +22,7 @@ struct MapViewRep: UIViewRepresentable {
         mapView.isPitchEnabled    = true
         mapView.showsUserLocation = true
         mapView.showsScale        = true
+        mapView.tintColor         = .systemBlue
         
         mapView.register(ReportsClusterAnnotationView.self, forAnnotationViewWithReuseIdentifier: MKMapViewDefaultClusterAnnotationViewReuseIdentifier)
         mapView.register(ReportAnnotationView.self, forAnnotationViewWithReuseIdentifier: MKMapViewDefaultAnnotationViewReuseIdentifier)

@@ -26,7 +26,7 @@ class ReportsClusterAnnotationView: MKAnnotationView {
     }
     
     private func setupView() {
-        if let clusterAnnotation = annotation as? MKClusterAnnotation {
+        if let clusterAnnotation = annotation as? ReportClusterAnnotation {
             let circle = UIView()
             circle.frame = CGRect(x: 0, y: 0, width: 40, height: 40)
             circle.backgroundColor = UIColor(Color.brand)
@@ -35,7 +35,7 @@ class ReportsClusterAnnotationView: MKAnnotationView {
             
             let labelView = UILabel()
             labelView.text = clusterAnnotation.countString
-            labelView.font = .systemFont(ofSize: 19.5, weight: .heavy)
+            labelView.font = .systemFont(ofSize: 17, weight: .heavy)
             labelView.textColor = .white
             
             canShowCallout = true
@@ -55,9 +55,5 @@ class ReportsClusterAnnotationView: MKAnnotationView {
                 labelView.centerXAnchor.constraint(equalTo: circle.centerXAnchor),
             ])
         }
-    }
-    
-    func determinePreview(_ mapView: MKMapView) {
-        
     }
 }

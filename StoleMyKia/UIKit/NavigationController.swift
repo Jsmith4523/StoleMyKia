@@ -16,7 +16,7 @@ struct CustomNavView<C: View>: UIViewControllerRepresentable {
     let backgroundColor: UIColor
     let title: String
     
-    init(title: String = "", statusBarColor: UIStatusBarStyle, backgroundColor: Color, @ViewBuilder view: @escaping ()->C) {
+    init(title: String = "", statusBarColor: UIStatusBarStyle = .default, backgroundColor: Color = Color(uiColor: .systemBackground), @ViewBuilder view: @escaping ()->C) {
         self.view            = view
         self.statusBarColor  = statusBarColor
         self.backgroundColor = UIColor(backgroundColor)

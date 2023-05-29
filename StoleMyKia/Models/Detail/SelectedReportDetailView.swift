@@ -16,109 +16,93 @@ struct SelectedReportDetailView: View {
     
     @State private var vehicleImage: UIImage?
     
-    let report: Report?
-       
+    let report: Report
+    
     var completion: (() -> Void)?
-        
+    
     @EnvironmentObject var reportsModel: ReportsViewModel
     
     @Environment (\.dismiss) var dismiss
     
     var body: some View {
         NavigationView {
-            if let report {
-                VStack(alignment: .leading) {
-                    ZStack {
-                        if !(report.imageURL == nil) {
-                            if let vehicleImage {
-                                Image(uiImage: vehicleImage)
-                                    .resizable()
-                                    .scaledToFill()
-                            } else {
-                                Image.vehiclePlaceholder
-                                    .resizable()
-                                    .scaledToFill()
+            VStack(alignment: .leading) {
+                ZStack {
+                    ReportMapView(report: report)
+                }
+                .frame(height: 200)
+                .cornerRadius(15)
+                HStack {
+                    VStack(alignment: .leading, spacing: 3) {
+                        Text(report.type)
+                            .font(.system(size: 35).weight(.heavy))
+                        VStack(alignment: .leading, spacing: 6) {
+                            Label {
+                                Text(report.vehicleDetails)
+                            } icon: {
+                                Image(systemName: "car")
                             }
-                        } else {
-                            ReportMapView(report: report)
-                        }
-                    }
-                    .frame(height: 200)
-                    .cornerRadius(15)
-                    HStack {
-                        VStack(alignment: .leading, spacing: 3) {
-                            Text(report.type)
-                                .font(.system(size: 35).weight(.heavy))
-                            VStack(alignment: .leading, spacing: 6) {
+
+                            if let location = report.location, let name = location.name, !(name.isEmpty) {
                                 Label {
-                                    Text(report.vehicleDetails)
+                                    Text(name)
                                 } icon: {
-                                    Image(systemName: "car")
-                                }
-                                //                                Label {
-                                //                                    //Text(vin.vinFormat() ?? "Not avaliable")
-                                //                                } icon: {
-                                //                                    Image(systemName: "123.rectangle")
-                                //                                }
-                                
-                                if let location = report.location, let name = location.name, !(name.isEmpty) {
-                                    Label {
-                                        Text(name)
-                                    } icon: {
-                                        Image(systemName: "mappin.and.ellipse")
-                                    }
+                                    Image(systemName: "mappin.and.ellipse")
                                 }
                             }
-                            .font(.system(size: 18))
-                            .foregroundColor(.gray)
                         }
-                        Spacer()
-                    }
-                    Spacer()
-                        .frame(height: 15)
-                    VStack {
-                        Text(report.details)
-                            .multilineTextAlignment(.leading)
-                            .font(.system(size: 18.5))
-                            .foregroundColor(.gray)
+                        .font(.system(size: 18))
+                        .foregroundColor(.gray)
                     }
                     Spacer()
                 }
-                .padding(.horizontal)
-                .onAppear {
-                    getVehicleImage(report.imageURL)
+                Spacer()
+                    .frame(height: 15)
+                VStack {
+                    Text(report.details)
+                        .multilineTextAlignment(.leading)
+                        .font(.system(size: 18.5))
+                        .foregroundColor(.gray)
                 }
-                .toolbar {
-                    ToolbarItem(placement: .navigationBarLeading) {
+                Spacer()
+            }
+            .padding(.horizontal)
+            .onAppear {
+                getVehicleImage(report.imageURL)
+            }
+            .toolbar {
+                ToolbarItem(placement: .navigationBarLeading) {
+                    Button {
+                        dismiss()
+                    } label: {
+                        Image(systemName: "xmark")
+                    }
+                }
+                ToolbarItem(placement: .navigationBarTrailing) {
+                    if report.uid == reportsModel.firebaseUserDelegate?.uid {
                         Button {
-                            dismiss()
+                            self.alertOfRemovingPosting.toggle()
                         } label: {
-                            Image(systemName: "xmark")
-                        }
-                    }
-                    ToolbarItem(placement: .navigationBarTrailing) {
-                        if report.uid == reportsModel.firebaseUserDelegate?.uid {
-                            Button {
-                                self.alertOfRemovingPosting.toggle()
-                            } label: {
-                                Image(systemName: "trash")
-                            }
+                            Image(systemName: "trash")
                         }
                     }
                 }
-                .disabled(isDeleting)
-                .alert("Remove Report", isPresented: $alertOfRemovingPosting) {
-                    Button("Remove", role: .destructive) {
-                        removePost(report: report)
-                    }
-                } message: {
-                    Text("Are you sure you want to remove this post?")
+            }
+            .disabled(isDeleting)
+            .alert("Remove Report", isPresented: $alertOfRemovingPosting) {
+                Button("Remove", role: .destructive) {
+                    removePost(report: report)
                 }
-                .alert("Unable to remove post", isPresented: $alertErrorRemovingPost) {
-                    Button("OK") {}
-                } message: {
-                    Text("There was an error removing this report. Please try again later.")
-                }
+            } message: {
+                Text("Are you sure you want to remove this post?")
+            }
+            .alert("Unable to remove post", isPresented: $alertErrorRemovingPost) {
+                Button("OK") {}
+            } message: {
+                Text("There was an error removing this report. Please try again later.")
+            }
+            .onDisappear {
+                reportsModel.reportDetailMode = nil
             }
         }
     }
@@ -174,14 +158,3 @@ private extension Image {
             .clipShape(Circle())
     }
 }
-
-
-//struct SelectedReportDetailView_Previews: PreviewProvider {
-//    
-//    @StateObject private static var reportsModel = ReportsViewModel()
-//    
-//    static var previews: some View {
-//        SelectedReportDetailView(report: .init(dt: Date.now.epoch, reportType: .stolen, vehicleYear: 2015, vehicleMake: .hyundai, vehicleColor: .red, vehicleModel: .elantra, licensePlate: nil, vin: nil, distinguishable: "", location: .init(address: nil, name: "Apple Carnige", lat: nil, lon: nil)), imageCache: ImageCache())
-//            .environmentObject(reportsModel)
-//    }
-//}

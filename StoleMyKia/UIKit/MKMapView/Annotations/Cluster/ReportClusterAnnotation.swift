@@ -22,14 +22,14 @@ final class ReportClusterAnnotation: MKClusterAnnotation {
 }
 
 
-extension MKClusterAnnotation {
+extension ReportClusterAnnotation {
     
     
     var countString: String {
         let count = self.memberAnnotations.count
         
-        if count > 10 {
-            return "10+"
+        if count > 99 {
+            return "99+"
         } else {
             return "\(count)"
         }

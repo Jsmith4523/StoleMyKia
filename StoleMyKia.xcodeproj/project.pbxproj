@@ -18,6 +18,9 @@
 		2426A6202A23475A00E78647 /* ReportClusterAnnotationView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2426A61F2A23475A00E78647 /* ReportClusterAnnotationView.swift */; };
 		2426A6252A234D4700E78647 /* ClusterReportsDetailView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2426A6242A234D4700E78647 /* ClusterReportsDetailView.swift */; };
 		2426A6282A234E6700E78647 /* ReportCellView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2426A6272A234E6700E78647 /* ReportCellView.swift */; };
+		2426A62A2A243F0E00E78647 /* AnnotationCalloutDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2426A6292A243F0E00E78647 /* AnnotationCalloutDelegate.swift */; };
+		2426A6302A244D9D00E78647 /* NoUserReportsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2426A62F2A244D9D00E78647 /* NoUserReportsView.swift */; };
+		2426A6322A24505500E78647 /* UserReportsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2426A6312A24505500E78647 /* UserReportsView.swift */; };
 		24334CFB29C0E0130084B8EC /* UIImage+EXT.swift in Sources */ = {isa = PBXBuildFile; fileRef = 24334CFA29C0E0130084B8EC /* UIImage+EXT.swift */; };
 		24334CFD29C1846C0084B8EC /* Image+EXT.swift in Sources */ = {isa = PBXBuildFile; fileRef = 24334CFC29C1846C0084B8EC /* Image+EXT.swift */; };
 		24334D0129C187800084B8EC /* Reports.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = 24334CFF29C187800084B8EC /* Reports.xcdatamodeld */; };
@@ -45,7 +48,6 @@
 		24A206692A00716300F5DC0C /* LicensePlateScannerView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 24A206682A00716300F5DC0C /* LicensePlateScannerView.swift */; };
 		24A2066B2A009CB900F5DC0C /* LicenseCameraSession.swift in Sources */ = {isa = PBXBuildFile; fileRef = 24A2066A2A009CB900F5DC0C /* LicenseCameraSession.swift */; };
 		24A2066D2A02296900F5DC0C /* LicensePlateResultsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 24A2066C2A02296900F5DC0C /* LicensePlateResultsView.swift */; };
-		24A2066F2A05DBC900F5DC0C /* UserReportsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 24A2066E2A05DBC900F5DC0C /* UserReportsView.swift */; };
 		24A2068E2A07A18B00F5DC0C /* User.swift in Sources */ = {isa = PBXBuildFile; fileRef = 24A2068D2A07A18B00F5DC0C /* User.swift */; };
 		24A206902A0826BE00F5DC0C /* UserAccountManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 24A2068F2A0826BE00F5DC0C /* UserAccountManager.swift */; };
 		24A206922A08270300F5DC0C /* Vehicle.swift in Sources */ = {isa = PBXBuildFile; fileRef = 24A206912A08270300F5DC0C /* Vehicle.swift */; };
@@ -93,6 +95,9 @@
 		2426A61F2A23475A00E78647 /* ReportClusterAnnotationView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReportClusterAnnotationView.swift; sourceTree = "<group>"; };
 		2426A6242A234D4700E78647 /* ClusterReportsDetailView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ClusterReportsDetailView.swift; sourceTree = "<group>"; };
 		2426A6272A234E6700E78647 /* ReportCellView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReportCellView.swift; sourceTree = "<group>"; };
+		2426A6292A243F0E00E78647 /* AnnotationCalloutDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AnnotationCalloutDelegate.swift; sourceTree = "<group>"; };
+		2426A62F2A244D9D00E78647 /* NoUserReportsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NoUserReportsView.swift; sourceTree = "<group>"; };
+		2426A6312A24505500E78647 /* UserReportsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserReportsView.swift; sourceTree = "<group>"; };
 		24334CFA29C0E0130084B8EC /* UIImage+EXT.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIImage+EXT.swift"; sourceTree = "<group>"; };
 		24334CFC29C1846C0084B8EC /* Image+EXT.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Image+EXT.swift"; sourceTree = "<group>"; };
 		24334D0029C187800084B8EC /* Bookmark.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = Bookmark.xcdatamodel; sourceTree = "<group>"; };
@@ -120,7 +125,6 @@
 		24A206682A00716300F5DC0C /* LicensePlateScannerView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LicensePlateScannerView.swift; sourceTree = "<group>"; };
 		24A2066A2A009CB900F5DC0C /* LicenseCameraSession.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LicenseCameraSession.swift; sourceTree = "<group>"; };
 		24A2066C2A02296900F5DC0C /* LicensePlateResultsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LicensePlateResultsView.swift; sourceTree = "<group>"; };
-		24A2066E2A05DBC900F5DC0C /* UserReportsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserReportsView.swift; sourceTree = "<group>"; };
 		24A2068D2A07A18B00F5DC0C /* User.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = User.swift; sourceTree = "<group>"; };
 		24A2068F2A0826BE00F5DC0C /* UserAccountManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserAccountManager.swift; sourceTree = "<group>"; };
 		24A206912A08270300F5DC0C /* Vehicle.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Vehicle.swift; sourceTree = "<group>"; };
@@ -202,6 +206,7 @@
 				2426A6182A2345EF00E78647 /* FirebaseUserDelegate.swift */,
 				2426A61A2A23461300E78647 /* ReportsDelegate.swift */,
 				2426A61C2A23463F00E78647 /* UserReportsDelegate.swift */,
+				2426A6292A243F0E00E78647 /* AnnotationCalloutDelegate.swift */,
 			);
 			path = Protocols;
 			sourceTree = "<group>";
@@ -239,6 +244,15 @@
 				2426A6272A234E6700E78647 /* ReportCellView.swift */,
 			);
 			path = Cells;
+			sourceTree = "<group>";
+		};
+		2426A62E2A244D8A00E78647 /* User Reports */ = {
+			isa = PBXGroup;
+			children = (
+				2426A62F2A244D9D00E78647 /* NoUserReportsView.swift */,
+				2426A6312A24505500E78647 /* UserReportsView.swift */,
+			);
+			path = "User Reports";
 			sourceTree = "<group>";
 		};
 		24334CFE29C187620084B8EC /* CoreData */ = {
@@ -312,8 +326,9 @@
 		244BF51529D1786C00951765 /* User */ = {
 			isa = PBXGroup;
 			children = (
+				2426A62E2A244D8A00E78647 /* User Reports */,
+				24A4CED629BF9E8D00B856BC /* Settings */,
 				244BF51629D178BF00951765 /* UserAccountView.swift */,
-				24A2066E2A05DBC900F5DC0C /* UserReportsView.swift */,
 			);
 			path = User;
 			sourceTree = "<group>";
@@ -465,7 +480,6 @@
 				24A5792229BC557100495E6F /* Map */,
 				2437327C29BEF873008F4C4E /* Notifications */,
 				244BF51529D1786C00951765 /* User */,
-				24A4CED629BF9E8D00B856BC /* Settings */,
 			);
 			path = "Tab View";
 			sourceTree = "<group>";
@@ -726,11 +740,14 @@
 				245B392129E39E90001DD213 /* ReportType.swift in Sources */,
 				24127C1D29E3E7B800C09FE5 /* MapViewRep.swift in Sources */,
 				2426A6192A2345EF00E78647 /* FirebaseUserDelegate.swift in Sources */,
+				2426A6322A24505500E78647 /* UserReportsView.swift in Sources */,
 				245B391229E37BF9001DD213 /* ReportsListView.swift in Sources */,
 				2437328329BEFB2E008F4C4E /* NewReportView.swift in Sources */,
 				24AC77CE29C1110B00768158 /* SelectedReportDetailView.swift in Sources */,
 				24A5792C29BC56B000495E6F /* Report.swift in Sources */,
 				245B391F29E39E55001DD213 /* VehicleModel.swift in Sources */,
+				2426A6302A244D9D00E78647 /* NoUserReportsView.swift in Sources */,
+				2426A62A2A243F0E00E78647 /* AnnotationCalloutDelegate.swift in Sources */,
 				24A206922A08270300F5DC0C /* Vehicle.swift in Sources */,
 				24A4CEE229BFAA8000B856BC /* NotificationRadiusView.swift in Sources */,
 				2425EAF92A003CDE00CC886F /* NavigationController.swift in Sources */,
@@ -738,7 +755,6 @@
 				2495A02229CAC5DF00457CE7 /* String+EXT.swift in Sources */,
 				248278D72A03054C00C1E99D /* UISheetPC.swift in Sources */,
 				24A4CEE029BFA65100B856BC /* URL+EXT.swift in Sources */,
-				24A2066F2A05DBC900F5DC0C /* UserReportsView.swift in Sources */,
 				24127C1729E3E71F00C09FE5 /* MapView.swift in Sources */,
 				24A662FA29C592FF00AD784F /* ReportClusterAnnotation.swift in Sources */,
 				24334D0129C187800084B8EC /* Reports.xcdatamodeld in Sources */,
