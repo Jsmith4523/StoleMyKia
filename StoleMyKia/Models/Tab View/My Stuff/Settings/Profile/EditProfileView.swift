@@ -47,7 +47,7 @@ struct EditProfileView: View {
             }
         }
         .navigationTitle("Edit Profile")
-        .navigationBarTitleDisplayMode(.inline)
+        .navigationBarTitleDisplayMode(.inline  )
         .toolbar {
             ToolbarItem(placement: .navigationBarTrailing) {
                 Button("Save") {

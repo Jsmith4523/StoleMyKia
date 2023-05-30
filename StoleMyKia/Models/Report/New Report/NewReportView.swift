@@ -281,7 +281,12 @@ struct NewReportView: View {
         }
         
         let vehicle = Vehicle(vehicleYear: vehicleYear, vehicleMake: vehicleMake, vehicleColor: vehicleColor, vehicleModel: vehicleModel)
-        let report = Report(dt: Date.now.epoch, reportType: reportType, vehicle: vehicle, licensePlate: nil, vin: nil, distinguishable: "", location: location)
+        let report = Report(dt: Date.now.epoch,
+                            reportType: reportType,
+                            vehicle: vehicle,
+                            distinguishable: "",
+                            location: location)
+        
         
         reportsModel.upload(report) { success in
             guard success else {

@@ -9,6 +9,7 @@ import SwiftUI
 import Firebase
 import UserNotifications
 import FirebaseMessaging
+import CryptoKit
 
 @main
 struct StoleMyKiaApp: App {
@@ -16,6 +17,15 @@ struct StoleMyKiaApp: App {
     @StateObject private var userModel = UserViewModel()
         
     @UIApplicationDelegateAdaptor (AppDelegate.self) var appDelegate
+    
+    init() {
+        let elantra = EncryptedData.createEncryption(input: "1EP1757")
+        print(elantra)
+        
+        if let elantra, let string = elantra.data {
+            print(EncryptedData.decode(input: string))
+        }
+    }
     
     var body: some Scene {
         WindowGroup {

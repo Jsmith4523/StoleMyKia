@@ -10,15 +10,17 @@ import CommonCrypto
 import CryptoKit
 
 struct EncryptedData: Codable, Hashable {
-    
-    var data: String?
-    var key: String?
-    var iv: String?
+    let data: String
+    let key: String
+    let iv: String
 }
 
 extension EncryptedData {
 
-    static func decode(input: String) -> String? {
+    func decode() -> String? {
+        let buffSize = self.data.count + kCCBlockSizeAES128
+        
+        let buffer = Data(count: buffSize)
         
         return nil
     }
@@ -28,9 +30,9 @@ extension EncryptedData {
         //This is all very much new code to me
         //I am doing the best of properly encrypting data
         
-        let key   = UUID().uuidString.data(using: .utf8)!
+        let key   = Data(count: kCCKeySizeAES128)
         let input = input
-        let iv    = Data(count: 16) //TODO: Generate randomly each time the method is called
+        let iv    = Data(count: kCCBlockSizeAES128) //TODO: Generate randomly each time the method is called
         
         guard let data = input.data(using: .utf8) else {
             return nil
@@ -59,6 +61,7 @@ extension EncryptedData {
         }
         
         guard status == kCCSuccess else {
+            print("Encryption failed: \(status)")
             return nil
         }
         

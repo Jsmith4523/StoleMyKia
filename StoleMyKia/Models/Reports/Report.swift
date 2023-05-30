@@ -19,8 +19,7 @@ struct Report: Identifiable, Codable, Comparable {
     let dt: TimeInterval?
     let reportType: ReportType
     let vehicle: Vehicle
-    let licensePlate: EncryptedData?
-    let vin: EncryptedData?
+    var licensePlate: EncryptedData?
     let distinguishable: String
     var imageURL: String?
     let location: Location?
@@ -47,12 +46,25 @@ struct Report: Identifiable, Codable, Comparable {
 
 extension Report {
     
+    mutating func setLicensePlate(_ license: String) {
+        self.licensePlate = EncryptedData.createEncryption(input: license)
+    }
+    
+    //TODO: Decrypt the object licensePLate
+    var licensePlateString: String? {
+        guard let licensePlate else {
+            return nil
+        }
+        
+        return ""
+    }
+    
     var type: String {
         self.reportType.rawValue
     }
     
     var hasVehicleImage: Bool {
-        guard let imageURL else {
+        guard !(imageURL == nil) else {
             return false
         }
         

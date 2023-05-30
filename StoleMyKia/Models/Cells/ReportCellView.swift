@@ -68,8 +68,3 @@ struct ReportCellView: View {
     }
 }
 
-struct MyPreviewProvider5_Previews: PreviewProvider {
-    static var previews: some View {
-        ReportCellView(report: .init(dt: Date.now.epoch, reportType: .stolen, vehicle: .init(vehicleYear: 2018, vehicleMake: .hyundai, vehicleColor: .black, vehicleModel: .accent), licensePlate: nil, vin: nil, distinguishable: "", imageURL: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTYjGL2jsm1_eumGUUiCbXnvtA6wtKk0a48XpL89sLHLg&s", location: .none))
-    }
-}
