@@ -9,25 +9,35 @@ import SwiftUI
 
 struct Tab: View {
     
-    @StateObject private var reportsModel = ReportsViewModel()
+    @State private var selection: TabSelection = .map
     
-    @EnvironmentObject var notificationModel: NotificationViewModel
-    @EnvironmentObject var userModel: UserViewModel
+    @StateObject private var reportsModel = ReportsViewModel()
+    @StateObject private var notificationModel = NotificationViewModel()
+    @StateObject private var userModel = UserViewModel()
+    
+    enum TabSelection {
+        case map, notification, myStuff
+    }
+    
     
     var body: some View {
-        TabView {
+        TabView(selection: $selection) {
             ReportsMapView()
                 .tabItem {
                     Label("Map", systemImage: "map")
                 }
+                .tag(TabSelection.map)
             NotificationsView()
                 .tabItem {
                     Label("Notifications", systemImage: "bell")
                 }
-            UserAccountView(userModel: userModel)
+                .tag(TabSelection.notification)
+            MyStuffView(userModel: userModel)
                 .tabItem {
                     Label("My Stuff", systemImage: "archivebox")
                 }
+                .tag(TabSelection.myStuff)
+
         }
         .sheet(item: $reportsModel.reportDetailMode) { mode in
             switch mode {

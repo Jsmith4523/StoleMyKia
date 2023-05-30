@@ -9,8 +9,8 @@ import SwiftUI
 
 struct NoUserReportsView: View {
     var body: some View {
-        VStack(spacing: 10) {
-            Image(systemName: "book")
+        VStack(spacing: 20) {
+            UserAccountViewSelection.userReports.indicator
                 .resizable()
                 .scaledToFit()
                 .frame(width: 45, height: 45)

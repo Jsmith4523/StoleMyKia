@@ -205,7 +205,17 @@ class ReportsManager {
             
             do {
                 let userReports = try snapshot.createReports()
-                        
+                userReports.forEach { report in
+                    self.delete(report: report) { status in
+                        switch status {
+                        case .success(_):
+                            break
+                        case .failure(_):
+                            completion(false)
+                        }
+                    }
+                }
+                completion(true)
             } catch {
                 completion(false)
             }

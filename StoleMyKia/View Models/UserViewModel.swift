@@ -90,6 +90,7 @@ final class UserViewModel: ObservableObject {
             }
             self.auth.currentUser?.delete { err in
                 guard err == nil else {
+                    print(err?.localizedDescription ?? "There was an error")
                     completion(false)
                     return
                 }
@@ -111,6 +112,7 @@ final class UserViewModel: ObservableObject {
     func getUserReports(completion: @escaping ((Result<[Report], Error>)->Void)) {
         guard uid != nil else {
             completion(.failure(UserReportsError.error("The current user is no longer signed in.")))
+            signOut { _ in }
             return
         }
         userReportsDelegate?.getUserReports() { status in

@@ -148,6 +148,10 @@ final class ReportsViewModel: NSObject, ObservableObject {
             self.getReports()
         }
     }
+    
+    deinit {
+        print("I'm dead")
+    }
 }
 
 //MARK: - SelectedReportAnnotationDelegate

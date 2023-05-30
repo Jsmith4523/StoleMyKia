@@ -127,14 +127,16 @@ struct SettingsView: View {
     }
     
     private func beginLoggingOut() {
-        isLoggingOut = true
-        userModel.signOut { succes in
-            guard succes else {
-                alertLogout.toggle()
-                isLoggingOut = false
-                return
+        dismiss()
+        DispatchQueue.main.asyncAfter(deadline: .now() + 0.5) {
+            self.userModel.signOut { succes in
+                guard succes else {
+                    alertLogout.toggle()
+                    isLoggingOut = false
+                    return
+                }
+                dismiss()
             }
-            dismiss()
         }
     }
 }

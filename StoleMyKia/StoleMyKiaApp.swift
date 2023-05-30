@@ -13,7 +13,6 @@ import FirebaseMessaging
 @main
 struct StoleMyKiaApp: App {
     
-    @StateObject private var notificationModel = NotificationViewModel()
     @StateObject private var userModel = UserViewModel()
         
     @UIApplicationDelegateAdaptor (AppDelegate.self) var appDelegate
@@ -24,8 +23,6 @@ struct StoleMyKiaApp: App {
                 switch userModel.userIsSignedIn {
                 case true:
                     Tab()
-                        .environmentObject(notificationModel)
-                        .environmentObject(userModel)
                 case false:
                     UserLoginView(userModel: userModel)
                 }

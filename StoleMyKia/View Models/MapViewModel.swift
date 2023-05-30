@@ -16,8 +16,13 @@ final class MapViewModel: NSObject, ObservableObject {
     
     @Published private var mapViewDidFinishLoading = false
     
-    @Published var locationAuth: CLAuthorizationStatus!
-    @Published var userLocation: CLLocation!
+    var locationAuth: CLAuthorizationStatus! {
+        locationManager.authorizationStatus
+    }
+
+    var userLocation: CLLocation! {
+        locationManager.location
+    }
     
     override init() {
         super.init()
@@ -49,15 +54,11 @@ extension MapViewModel: ReportsDelegate {
 
 //MARK: - CLLocationManagerDelegate
 extension MapViewModel: CLLocationManagerDelegate {
-    func locationManagerDidChangeAuthorization(_ manager: CLLocationManager) {
-        self.locationAuth = manager.authorizationStatus
-        
+    func locationManagerDidChangeAuthorization(_ manager: CLLocationManager) {        
         switch manager.authorizationStatus {
         case .authorizedWhenInUse:
-            self.userLocation = locationManager.location
             centerToUsersLocation()
         case .authorizedAlways:
-            self.userLocation = locationManager.location
             centerToUsersLocation()
         default:
             break
@@ -113,10 +114,6 @@ extension MapViewModel: MKMapViewDelegate {
         default:
             return
         }
-    }
-    
-    func mapView(_ mapView: MKMapView, didUpdate userLocation: MKUserLocation) {
-        self.userLocation = userLocation.location
     }
     
     func moveToCenter(for coordinates: CLLocationCoordinate2D?) {

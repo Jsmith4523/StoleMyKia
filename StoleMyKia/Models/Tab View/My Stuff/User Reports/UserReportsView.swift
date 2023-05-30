@@ -9,9 +9,7 @@ import Foundation
 import SwiftUI
 
 struct UserReportsView: View {
-    
-    @State private var refreshing = false
-    
+        
     @State private var userReports = [Report]()
     
     @State private var selectedUserReport: Report?
@@ -23,36 +21,6 @@ struct UserReportsView: View {
     var body: some View {
         ScrollView {
             VStack(spacing: 13) {
-                GeometryReader { geo in
-                    ZStack {
-                        HStack {
-                            Spacer()
-                            Image(systemName: "arrow.counterclockwise")
-                                .resizable()
-                                .scaledToFit()
-                                .frame(width: geo.frame(in: .global).minY < 0 ? 0 :  geo.frame(in: .global).minY > 250 ? 25 : (geo.frame(in: .global).minY / 10), height: geo.frame(in: .global).minY < 0 ? 0 :  geo.frame(in: .global).minY > 250 ? 25 : (geo.frame(in: .global).minY / 10))
-                                .padding()
-                                .background(refreshing ? Color.brand : Color(uiColor: .secondarySystemBackground))
-                                .clipShape(Circle())
-                                .bold()
-                                .foregroundColor(refreshing ? .white : .brand)
-                                .padding()
-                            Spacer()
-                        }
-                    }
-                    .onChange(of: geo.frame(in: .global).minY) { newValue in
-                        if newValue > 250 {
-                            if !refreshing {
-                                UIImpactFeedbackGenerator(style: .heavy).impactOccurred()
-                            }
-                            
-                            withAnimation {
-                                refreshing = true
-                            }
-                        }
-                    }
-                }
-                .frame(height: 50)
                 ZStack {
                     switch userReports.isEmpty {
                     case true:
@@ -79,7 +47,6 @@ struct UserReportsView: View {
                 Divider()
             }
         }
-        //.background(Color.white)
         .sheet(item: $selectedUserReport) { report in
             SelectedReportDetailView(report: report) {
                 getUserReports()

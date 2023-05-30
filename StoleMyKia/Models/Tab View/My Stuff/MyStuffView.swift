@@ -7,7 +7,7 @@
 
 import SwiftUI
 
-private enum UserAccountViewSelection: String, CaseIterable, Identifiable {
+enum UserAccountViewSelection: String, CaseIterable, Identifiable {
     
     case userReports = "My Reports"
     case updates     = "Updates"
@@ -36,7 +36,7 @@ private enum UserAccountViewSelection: String, CaseIterable, Identifiable {
     }
 }
 
-struct UserAccountView: View {
+struct MyStuffView: View {
     
     @State private var userAccountTabViewSelection: UserAccountViewSelection = .userReports
     
@@ -50,33 +50,14 @@ struct UserAccountView: View {
     var body: some View {
         NavigationView {
             VStack(spacing: 0) {
-                VStack {
-                    Divider()
-                    HStack {
-                        Spacer()
-                        ForEach(UserAccountViewSelection.allCases) { selection in
-                            selection.indicator
-                                .resizable()
-                                .scaledToFit()
-                                .frame(width: 23, height: 23)
-                                .foregroundColor(userAccountTabViewSelection == selection ? .brand : .gray)
-                                .onTapGesture {
-                                    changeSelection(selection)
-                                }
-                            Spacer()
-                        }
-                    }
-                    .frame(height: 10)
-                    .padding()
-                    Divider()
-                }
+                tabViewSelectionRow
                 VStack {
                     TabView(selection: $userAccountTabViewSelection) {
                         UserReportsView(userModel: userModel)
                             .tag(UserAccountViewSelection.userReports)
-                        Color.red
+                        UserUpdatesView()
                             .tag(UserAccountViewSelection.updates)
-                        Color.blue
+                        UserBookmarkedReportsView()
                             .tag(UserAccountViewSelection.bookmark)
                     }
                     .tabViewStyle(.page(indexDisplayMode: .never))
@@ -98,6 +79,7 @@ struct UserAccountView: View {
             .navigationTitle(userAccountTabViewSelection.rawValue)
             .navigationBarTitleDisplayMode(.inline)
             .environmentObject(reportsModel)
+            .environmentObject(userModel)
             .sheet(isPresented: $isShowingSettingsView) {
                 SettingsView()
                     .environmentObject(userModel)
@@ -107,7 +89,7 @@ struct UserAccountView: View {
         }
     }
     
-    var tabViewSelection: some View {
+    var tabViewSelectionRow: some View {
         VStack {
             Divider()
             HStack {
@@ -140,7 +122,7 @@ struct UserAccountView: View {
 
 struct UserAccView_Previews: PreviewProvider {
     static var previews: some View {
-        UserAccountView(userModel: UserViewModel())
+        MyStuffView(userModel: UserViewModel())
             .environmentObject(NotificationViewModel())
             .environmentObject(ReportsViewModel())
     }
