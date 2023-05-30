@@ -10,6 +10,7 @@ import UIKit
 
 enum ReportType: String, CaseIterable, Hashable, Identifiable, Codable {
     
+    case carjacked   = "Car Jacking"
     case stolen      = "Stolen"
     case found       = "Found"
     case withnessed  = "Witnessed"
@@ -22,13 +23,15 @@ enum ReportType: String, CaseIterable, Hashable, Identifiable, Codable {
     var annotationImage: String {
         switch self {
         case .stolen:
-            return "light.beacon.max.fill"
+            return "car.2.fill"
         case .found:
-            return "car.fill"
+            return "checkmark.shield"
         case .withnessed:
             return "eye.trianglebadge.exclamationmark.fill"
         case .spotted:
             return "eye.fill"
+        case .carjacked:
+            return "light.beacon.max.fill"
         }
     }
     
@@ -43,6 +46,8 @@ enum ReportType: String, CaseIterable, Hashable, Identifiable, Codable {
             return "You withnessed a vehicle being stolen."
         case .spotted:
             return ""
+        case .carjacked:
+            return "Your vehicle was stolen by force."
         }
     }
     
@@ -56,6 +61,8 @@ enum ReportType: String, CaseIterable, Hashable, Identifiable, Codable {
             return .systemBlue
         case .spotted:
             return UIColor(.spottedGreen)
+        case .carjacked:
+            return .red
         }
     }
     
@@ -70,11 +77,28 @@ enum ReportType: String, CaseIterable, Hashable, Identifiable, Codable {
             return "witnessed"
         case .spotted:
             return "spotted"
+        case .carjacked:
+            return "carjacked"
+        }
+    }
+    
+    var requiresLicensePlateInformation: Bool {
+        switch self {
+        case .carjacked:
+            return false
+        case .stolen:
+            return true
+        case .found:
+            return false
+        case .withnessed:
+            return false
+        case .spotted:
+            return true
         }
     }
     
     static var reports: [ReportType] {
-        [.stolen, .withnessed, .found]
+        [.stolen, .withnessed, .found, .carjacked]
     }
     
     static var update: [ReportType] {

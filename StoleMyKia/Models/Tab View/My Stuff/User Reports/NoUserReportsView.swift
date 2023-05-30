@@ -10,6 +10,8 @@ import SwiftUI
 struct NoUserReportsView: View {
     var body: some View {
         VStack(spacing: 20) {
+            Spacer()
+                .frame(height: 100)
             UserAccountViewSelection.userReports.indicator
                 .resizable()
                 .scaledToFit()
@@ -20,6 +22,7 @@ struct NoUserReportsView: View {
             Text("When comes the time, any reports you've made will show here.")
                 .font(.system(size: 16))
                 .foregroundColor(.gray)
+            Spacer()
         }
         .padding()
         .multilineTextAlignment(.center)

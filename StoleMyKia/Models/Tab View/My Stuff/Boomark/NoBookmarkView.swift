@@ -10,6 +10,8 @@ import SwiftUI
 struct NoBookmarkView: View {
     var body: some View {
         VStack(spacing: 20) {
+            Spacer()
+                .frame(height: 100)
             UserAccountViewSelection.bookmark.indicator
                 .resizable()
                 .scaledToFit()
@@ -20,6 +22,7 @@ struct NoBookmarkView: View {
             Text("Reports you've bookmarked will show here.")
                 .font(.system(size: 16))
                 .foregroundColor(.gray)
+            Spacer()
         }
         .padding()
         .multilineTextAlignment(.center)

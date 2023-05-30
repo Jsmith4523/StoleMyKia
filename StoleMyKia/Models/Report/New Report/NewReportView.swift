@@ -72,7 +72,7 @@ struct NewReportView: View {
                     }
                 }
                 Section {
-                    Picker("Vehicle...", selection: $reportType) {
+                    Picker("Reporting...", selection: $reportType) {
                         ForEach(ReportType.reports, id: \.rawValue) {
                             Text($0.rawValue)
                                 .tag($0)
@@ -143,9 +143,8 @@ struct NewReportView: View {
                 }
                 
                 Section {
-                    //If the report type is stolen, the owner of the vehicle MUST include this information
                     Toggle("Not avaliable", isOn: $doesNotHaveVehicleIdentification)
-                        .disabled(self.reportType == .stolen)
+                        .disabled(self.reportType.requiresLicensePlateInformation)
                     if !doesNotHaveVehicleIdentification {
                         TextField("License Plate", text: $licensePlate)
 //                        if (reportType == .stolen || reportType == .found) {
@@ -156,7 +155,7 @@ struct NewReportView: View {
                     Text("Vehicle Identification")
                 } footer: {
                     if doesNotHaveVehicleIdentification {
-                        Text("You do not have any information that could further identify the vehicle you're reporting\n\nNOTE: it might be more difficult to identify and locate the vehicle!")
+                        Text("You do not have any information that could further identify the vehicle you're reporting\n\nNOTE: it might be more difficult to identify the vehicle")
                     } else {
                         if(reportType == .withnessed) {
                             Text("Enter the license plate number if noted.\n\nInformation entered is encrypted and cannot be read.")
@@ -192,7 +191,6 @@ struct NewReportView: View {
                 }
             }
             .tint(.accentColor)
-            
             //Remedying the picker warning xcode throws when chaging either a vehicle make or year...
             .onChange(of: vehicleMake) { _ in
                 self.vehicleModel = vehicleModel.matches(make: self.vehicleMake, year: self.vehicleYear)

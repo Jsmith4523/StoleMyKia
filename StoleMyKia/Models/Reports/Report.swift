@@ -18,19 +18,13 @@ struct Report: Identifiable, Codable, Comparable {
     var uid: String?
     let dt: TimeInterval?
     let reportType: ReportType
-    var status: ReportStatus = .open
     let vehicle: Vehicle
     let licensePlate: EncryptedData?
     let vin: EncryptedData?
     let distinguishable: String
     var imageURL: String?
     let location: Location?
-    var updates: [Report]?
-    
-    enum ReportStatus: Codable, Hashable {
-        case open
-        case closed
-    }
+    var updates: [UUID] = []
     
     static func == (lhs: Report, rhs: Report) -> Bool {
         return true
@@ -48,42 +42,6 @@ struct Report: Identifiable, Codable, Comparable {
             return lhsTime > rhsTime
         }
         return false
-    }
-}
-
-extension Location {
-    var coordinates: CLLocationCoordinate2D? {
-        if let lat, let lon {
-            return CLLocationCoordinate2D(latitude: lat, longitude: lon)
-        }
-        return nil
-    }
-}
-
-extension Report.ReportStatus {
-    var label: some View {
-        ZStack {
-            switch self {
-            case .open:
-                HStack {
-                    Circle()
-                        .frame(width: 10, height: 10)
-                        .foregroundColor(.green)
-                    Text("Open")
-                        .font(.system(size: 17))
-                        .foregroundColor(.gray)
-                }
-            case .closed:
-                HStack {
-                    Circle()
-                        .frame(width: 10, height: 10)
-                        .foregroundColor(.red)
-                    Text("Closed")
-                        .font(.system(size: 17))
-                        .foregroundColor(.gray)
-                }
-            }
-        }
     }
 }
 
@@ -111,13 +69,6 @@ extension Report {
         return "\(vehicleYear) \(vehicleMake.rawValue) \(vehicleModel.rawValue) (\(vehicleColor.rawValue))"
     }
     
-    var reportUpdates: [Report] {
-        if let updates {
-            return updates
-        }
-        return [Report]()
-    }
-    
     var postTime: String {
         if let dt {
             return "\(Date(timeIntervalSince1970: dt).formatted(.dateTime.hour().minute()))"
@@ -142,6 +93,8 @@ extension Report {
             return "Someone has spotted this \(self.vehicleDetails) on \(self.postDate) at \(self.postTime). If you happen to have seen this vehicle, please contact local authorities and update this report."
         case .withnessed:
             return "Someone witnessed a \(self.vehicleDetails) being stolen at this location on \(self.postDate) at \(self.postTime). If you happen to have seen this vehicle, please contact local authorities and update this report."
+        case .carjacked:
+            return "Someone was carjacked of their \(self.vehicleDetails) at this location on \(self.postDate). This vehicle is a high risk. If you happen to have seen this vehicle, do not approach. Please contact local authorities and update this report."
         }
     }
     
@@ -166,10 +119,6 @@ extension Report {
 
 extension [Report] {
     
-    ///This method should be used for adding update annotation on the map
-    func updates() -> [Report] {
-        self.flatMap{$0.updates?.compactMap({$0}) ?? []}
-    }
     
     mutating func removeReport(_ deletedReport: Report) {
         self.removeAll { report in

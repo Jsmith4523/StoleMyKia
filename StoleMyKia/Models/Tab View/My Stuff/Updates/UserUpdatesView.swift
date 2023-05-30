@@ -12,11 +12,15 @@ struct UserUpdatesView: View {
     @State private var updatedReports = [Report]()
     
     var body: some View {
-        switch updatedReports.isEmpty {
-        case true:
-            NoUpdatesView()
-        case false:
-            list
+        ScrollView {
+            VStack {
+                switch updatedReports.isEmpty {
+                case true:
+                    NoUpdatesView()
+                case false:
+                    list
+                }
+            }
         }
     }
     

@@ -84,6 +84,7 @@
 		24F94F542A25A6AD00CB14AF /* UserUpdatesView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 24F94F532A25A6AD00CB14AF /* UserUpdatesView.swift */; };
 		24F94F562A25A7E000CB14AF /* UserBookmarkedReportsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 24F94F552A25A7E000CB14AF /* UserBookmarkedReportsView.swift */; };
 		24F94F592A25A9F300CB14AF /* StretchRefreshButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 24F94F582A25A9F300CB14AF /* StretchRefreshButton.swift */; };
+		24F94F5C2A25C75800CB14AF /* EditProfileView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 24F94F5B2A25C75800CB14AF /* EditProfileView.swift */; };
 		9A8DEA661C19F27F74C6B340 /* Pods_StoleMyKia.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 197A31A21B533A0B83DC4715 /* Pods_StoleMyKia.framework */; };
 /* End PBXBuildFile section */
 
@@ -168,6 +169,7 @@
 		24F94F532A25A6AD00CB14AF /* UserUpdatesView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserUpdatesView.swift; sourceTree = "<group>"; };
 		24F94F552A25A7E000CB14AF /* UserBookmarkedReportsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserBookmarkedReportsView.swift; sourceTree = "<group>"; };
 		24F94F582A25A9F300CB14AF /* StretchRefreshButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StretchRefreshButton.swift; sourceTree = "<group>"; };
+		24F94F5B2A25C75800CB14AF /* EditProfileView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EditProfileView.swift; sourceTree = "<group>"; };
 		562368835F2B675102514EA4 /* Pods-StoleMyKia.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-StoleMyKia.release.xcconfig"; path = "Target Support Files/Pods-StoleMyKia/Pods-StoleMyKia.release.xcconfig"; sourceTree = "<group>"; };
 		CB1F3C6B9B65B1A9366554C7 /* Pods-StoleMyKia.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-StoleMyKia.debug.xcconfig"; path = "Target Support Files/Pods-StoleMyKia/Pods-StoleMyKia.debug.xcconfig"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -406,6 +408,7 @@
 			isa = PBXGroup;
 			children = (
 				24A4CED729BF9E9B00B856BC /* SettingsView.swift */,
+				24F94F5A2A25C74D00CB14AF /* Profile */,
 				24EAF11529C29E2200B4CBFE /* Map */,
 				24A4CED929BF9F9100B856BC /* Notifications */,
 				2495A02329CB9EA200457CE7 /* About */,
@@ -609,6 +612,14 @@
 			path = Misc;
 			sourceTree = "<group>";
 		};
+		24F94F5A2A25C74D00CB14AF /* Profile */ = {
+			isa = PBXGroup;
+			children = (
+				24F94F5B2A25C75800CB14AF /* EditProfileView.swift */,
+			);
+			path = Profile;
+			sourceTree = "<group>";
+		};
 		6038246990B0B9DAE005F8EA /* Pods */ = {
 			isa = PBXGroup;
 			children = (
@@ -804,6 +815,7 @@
 				24F94F562A25A7E000CB14AF /* UserBookmarkedReportsView.swift in Sources */,
 				24A2066B2A009CB900F5DC0C /* LicenseCameraSession.swift in Sources */,
 				24334CFD29C1846C0084B8EC /* Image+EXT.swift in Sources */,
+				24F94F5C2A25C75800CB14AF /* EditProfileView.swift in Sources */,
 				2437327E29BEF8B6008F4C4E /* NotificationsView.swift in Sources */,
 				24B897F129CF5CEA0003BCC8 /* UserLoginView.swift in Sources */,
 				24AAC49A29CC1A6400125196 /* AES+EXT.swift in Sources */,

@@ -34,9 +34,9 @@ final class UserViewModel: ObservableObject {
         return date
     }
     
-    func getUserDisplayName() -> String? {
-        guard let name = currentUser.displayName else {
-            return nil
+    func getUserDisplayName() -> String {
+        guard let user = currentUser, let name = user.displayName else {
+            return "N/A"
         }
         
         return name

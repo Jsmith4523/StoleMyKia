@@ -14,11 +14,15 @@ struct UserBookmarkedReportsView: View {
     @State private var selectedBookmarkReport: Report?
     
     var body: some View {
-        switch boomarkedReports.isEmpty {
-        case true:
-            NoBookmarkView()
-        case false:
-            list
+        ScrollView {
+            VStack {
+                switch boomarkedReports.isEmpty {
+                case true:
+                    NoBookmarkView()
+                case false:
+                    list
+                }
+            }
         }
     }
     

@@ -29,7 +29,7 @@ enum UserAccountViewSelection: String, CaseIterable, Identifiable {
         case .userReports:
             return Image(systemName: "list.dash")
         case .updates:
-            return Image(systemName: "arrow.uturn.backward")
+            return Image(systemName: "arrowshape.bounce.right")
         case .bookmark:
             return Image(systemName: "bookmark")
         }
@@ -50,6 +50,7 @@ struct MyStuffView: View {
     var body: some View {
         NavigationView {
             VStack(spacing: 0) {
+                profileHeader
                 tabViewSelectionRow
                 VStack {
                     TabView(selection: $userAccountTabViewSelection) {
@@ -76,8 +77,6 @@ struct MyStuffView: View {
             .onChange(of: userAccountTabViewSelection) { _ in
                 UIImpactFeedbackGenerator(style: .rigid).impactOccurred()
             }
-            .navigationTitle(userAccountTabViewSelection.rawValue)
-            .navigationBarTitleDisplayMode(.inline)
             .environmentObject(reportsModel)
             .environmentObject(userModel)
             .sheet(isPresented: $isShowingSettingsView) {
@@ -87,6 +86,18 @@ struct MyStuffView: View {
                     .environmentObject(reportsModel)
             }
         }
+    }
+    
+    var profileHeader: some View {
+        HStack(alignment: .top) {
+            VStack(alignment: .leading) {
+                Text("Hi There")
+                    .font(.system(size: 20).weight(.heavy))
+                Text(userModel.getUserDisplayName())
+            }
+            Spacer()
+        }
+        .padding()
     }
     
     var tabViewSelectionRow: some View {

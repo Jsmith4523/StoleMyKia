@@ -10,6 +10,8 @@ import SwiftUI
 struct NoUpdatesView: View {
     var body: some View {
         VStack(spacing: 20) {
+            Spacer()
+                .frame(height: 100)
             UserAccountViewSelection.updates.indicator
                 .resizable()
                 .scaledToFit()
@@ -20,6 +22,7 @@ struct NoUpdatesView: View {
             Text("Any updates you make to a report will show here. This includes updates to reports you have made.")
                 .font(.system(size: 16))
                 .foregroundColor(.gray)
+            Spacer()
         }
         .padding()
         .multilineTextAlignment(.center)
