@@ -18,15 +18,6 @@ struct StoleMyKiaApp: App {
         
     @UIApplicationDelegateAdaptor (AppDelegate.self) var appDelegate
     
-    init() {
-        let elantra = EncryptedData.createEncryption(input: "1EP1757")
-        print(elantra)
-        
-        if let elantra, let string = elantra.data {
-            print(EncryptedData.decode(input: string))
-        }
-    }
-    
     var body: some Scene {
         WindowGroup {
             ZStack {

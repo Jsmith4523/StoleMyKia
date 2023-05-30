@@ -27,7 +27,7 @@ enum ReportType: String, CaseIterable, Hashable, Identifiable, Codable {
         case .found:
             return "checkmark.shield"
         case .withnessed:
-            return "eye.trianglebadge.exclamationmark.fill"
+            return "person.crop.circle.badge.exclamationmark.fill"
         case .spotted:
             return "eye.fill"
         case .carjacked:
@@ -45,7 +45,7 @@ enum ReportType: String, CaseIterable, Hashable, Identifiable, Codable {
         case .withnessed:
             return "You withnessed a vehicle being stolen."
         case .spotted:
-            return ""
+            return "eyeglasses"
         case .carjacked:
             return "Your vehicle was stolen by force."
         }
@@ -85,7 +85,7 @@ enum ReportType: String, CaseIterable, Hashable, Identifiable, Codable {
     var requiresLicensePlateInformation: Bool {
         switch self {
         case .carjacked:
-            return false
+            return true
         case .stolen:
             return true
         case .found:
@@ -93,12 +93,12 @@ enum ReportType: String, CaseIterable, Hashable, Identifiable, Codable {
         case .withnessed:
             return false
         case .spotted:
-            return true
+            return false
         }
     }
     
     static var reports: [ReportType] {
-        [.stolen, .withnessed, .found, .carjacked]
+        [.carjacked, .stolen, .withnessed, .found]
     }
     
     static var update: [ReportType] {

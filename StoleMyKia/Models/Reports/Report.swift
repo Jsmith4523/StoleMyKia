@@ -8,7 +8,6 @@
 import Foundation
 import UIKit
 import MapKit
-import CryptoKit
 import SwiftUI
 
 struct Report: Identifiable, Codable, Comparable {
@@ -46,17 +45,20 @@ struct Report: Identifiable, Codable, Comparable {
 
 extension Report {
     
-    mutating func setLicensePlate(_ license: String) {
-        self.licensePlate = EncryptedData.createEncryption(input: license)
-    }
-    
-    //TODO: Decrypt the object licensePLate
-    var licensePlateString: String? {
-        guard let licensePlate else {
-            return nil
+    mutating func setLicensePlate(_ license: String) throws {
+        guard !(license.isEmpty) else {
+            self.licensePlate = nil
+            return
         }
         
-        return ""
+        self.licensePlate = try EncryptedData.createEncryption(input: license)
+    }
+    
+    var licensePlateString: String? {
+        guard let licensePlate, let licenseString = licensePlate.decode() else {
+            return nil
+        }
+        return licenseString
     }
     
     var type: String {
@@ -72,13 +74,7 @@ extension Report {
     }
     
     var vehicleDetails: String {
-        
-        let vehicleYear = self.vehicle.vehicleYear
-        let vehicleMake = self.vehicle.vehicleMake
-        let vehicleModel = self.vehicle.vehicleModel
-        let vehicleColor = self.vehicle.vehicleColor
-        
-        return "\(vehicleYear) \(vehicleMake.rawValue) \(vehicleModel.rawValue) (\(vehicleColor.rawValue))"
+        self.vehicle.details
     }
     
     var postTime: String {
@@ -120,12 +116,12 @@ extension Report {
         2022
     }
     
-    func verifyVin(input: String) -> Bool {
-       return false
-    }
-    
-    func verifyLicensePlate(input: String) -> Bool {
-        return true
+    func verifyLicensePlate(_ inputLicense: String) -> Bool {
+        guard let licensePlateString else {
+            return false
+        }
+        
+        return inputLicense == licensePlateString
     }
 }
 
@@ -146,6 +142,6 @@ extension [Report] {
     }
     
     func matchesLicensePlate(_ licensePlateString: String) -> [Report] {
-        self.filter({$0.verifyLicensePlate(input: licensePlateString)})
+        self.filter({$0.verifyLicensePlate(licensePlateString)})
     }
 }

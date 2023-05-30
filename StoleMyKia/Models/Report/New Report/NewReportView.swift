@@ -23,25 +23,21 @@ struct NewReportView: View {
     @State private var reportType: ReportType = .stolen
     @State private var reportDescription: String = ""
     
+    @State private var vehicleYear: Int = 2011
     @State private var vehicleMake: VehicleMake = .hyundai
     @State private var vehicleModel: VehicleModel = .accent
-    @State private var vehicleYear: Int = 2011
+    @State private var vehicleColor: VehicleColor = .black
     @State private var licensePlate: String = ""
-    @State private var vin: String = ""
     
     @State private var doesNotHaveVehicleIdentification = false
-    
-    @State private var vehicleColor: VehicleColor = .black
-    
+        
     @State private var canUseUserLocation = true
     @State private var useCurrentLocation = true
     @State private var isShowingLocationView = false
     
     @State private var imagePickerSourceType: UIImagePickerController.SourceType = .photoLibrary
     @State private var isShowingPhotoRemoveConfirmation = false
-    
-   // @State private var
-    
+        
     @State private var isUploading = false
     @State private var alertErrorUploading = false
     @State private var alertSelectLocation = false
@@ -105,11 +101,7 @@ struct NewReportView: View {
                 } header: {
                     Text("Report Location")
                 } footer: {
-                    if mapModel.locationAuth.isAuthorized() {
-                        Text("Your location is automatically applied to this report. However, you can change it.")
-                    } else {
-                        Text("Select the location of this report.")
-                    }
+                    Text("Depending on your location services settings, your current location has been applied to this report.")
                 }
 
                 Section {
@@ -147,9 +139,6 @@ struct NewReportView: View {
                         .disabled(self.reportType.requiresLicensePlateInformation)
                     if !doesNotHaveVehicleIdentification {
                         TextField("License Plate", text: $licensePlate)
-//                        if (reportType == .stolen || reportType == .found) {
-//                            TextField("VIN", text: $vin)
-//                        }
                     }
                 } header: {
                     Text("Vehicle Identification")
@@ -157,15 +146,11 @@ struct NewReportView: View {
                     if doesNotHaveVehicleIdentification {
                         Text("You do not have any information that could further identify the vehicle you're reporting\n\nNOTE: it might be more difficult to identify the vehicle")
                     } else {
-                        if(reportType == .withnessed) {
-                            Text("Enter the license plate number if noted.\n\nInformation entered is encrypted and cannot be read.")
-                        } else {
-                            Text("Enter the license plate number of the vehicle.\n\nInformation entered is encrypted and cannot be read.")
-                        }
+                        Text("Enter the license plate number if noted.\n\nInformation entered is encrypted and cannot be read.")
                     }
                 }
             }
-            .navigationTitle("New Report")
+            .navigationTitle("Create Report")
             .navigationBarTitleDisplayMode(.inline)
             .toolbar {
                 ToolbarItem(placement: .navigationBarLeading) {
@@ -198,26 +183,18 @@ struct NewReportView: View {
             .onChange(of: vehicleYear) { _ in
                 self.vehicleModel = vehicleModel.matches(make: self.vehicleMake, year: self.vehicleYear)
             }
-            .onChange(of: vin) { _ in
-                if vin.count > 17 {
-                    self.vin = ""
-                }
-            }
             .onChange(of: licensePlate) { _ in
                 if licensePlate.count > 8 {
                     self.licensePlate = ""
                 }
             }
-            .onChange(of: reportType) { type in
-                if type == .withnessed {
-                    vin = ""
-                } else if type == .stolen {
-                    doesNotHaveVehicleIdentification = false
-                }
-            }
             .onChange(of: doesNotHaveVehicleIdentification) { _ in
-                self.vin = ""
                 self.licensePlate = ""
+            }
+            .onChange(of: reportType) { type in
+                if type.requiresLicensePlateInformation {
+                    self.doesNotHaveVehicleIdentification = false
+                }
             }
             .onChange(of: mapModel.locationAuth.isAuthorized()) { _ in
                 self.location = nil
@@ -230,9 +207,6 @@ struct NewReportView: View {
             NewReportSearchLocation(location: $location)
                 .environmentObject(mapModel)
         }
-//        .sheet(item: $imagePickerSourceType) { source in
-//            PhotoPicker(selectedImage: $vehicleImage, source: source)
-//        }
         .confirmationDialog("", isPresented: $isShowingPhotoRemoveConfirmation) {
             Button("Remove", role: .destructive) {
                 vehicleImage = nil
@@ -281,12 +255,17 @@ struct NewReportView: View {
         }
         
         let vehicle = Vehicle(vehicleYear: vehicleYear, vehicleMake: vehicleMake, vehicleColor: vehicleColor, vehicleModel: vehicleModel)
-        let report = Report(dt: Date.now.epoch,
+        var report = Report(dt: Date.now.epoch,
                             reportType: reportType,
                             vehicle: vehicle,
                             distinguishable: "",
                             location: location)
         
+        do {
+            try report.setLicensePlate(licensePlate)
+        } catch {
+            alertErrorUploading.toggle()
+        }
         
         reportsModel.upload(report) { success in
             guard success else {

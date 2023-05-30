@@ -11,31 +11,48 @@ import CryptoKit
 
 struct EncryptedData: Codable, Hashable {
     let data: String
-    let key: String
-    let iv: String
+    let key: Data
+    let iv: Data
+}
+
+enum EDEcryptionStatus: Error {
+    case invalidData
+    case encryptFailure(Int)
+    case decryptError(Int)
+    
+    var reason: String {
+        switch self {
+        case .encryptFailure(let int):
+            return "Encryption failed with error code \(int)"
+        case .decryptError(let int):
+            return "Decryption failed with error code \(int)"
+        case .invalidData:
+            return "Input data is invalid"
+        }
+    }
 }
 
 extension EncryptedData {
 
     func decode() -> String? {
         let buffSize = self.data.count + kCCBlockSizeAES128
-        
+                
         let buffer = Data(count: buffSize)
         
         return nil
     }
 
-    static func createEncryption(input: String) -> EncryptedData? {
+    static func createEncryption(input: String) throws -> EncryptedData? {
         
-        //This is all very much new code to me
-        //I am doing the best of properly encrypting data
+        let key   = SymmetricKey(size: .bits256)
+        let iv    = SymmetricKey(size: .bits256)
         
-        let key   = Data(count: kCCKeySizeAES128)
-        let input = input
-        let iv    = Data(count: kCCBlockSizeAES128) //TODO: Generate randomly each time the method is called
+        let input   = input
+        let keyData = key.withUnsafeBytes { Data($0)}
+        let ivData  = iv.withUnsafeBytes { Data($0)}
         
         guard let data = input.data(using: .utf8) else {
-            return nil
+            throw EDEcryptionStatus.invalidData
         }
         
         let bufferSize = data.count + kCCBlockSizeAES128
@@ -49,7 +66,7 @@ extension EncryptedData {
                             UInt32(kCCAlgorithmAES128),
                             UInt32(kCCOptionPKCS7Padding),
                             kBytes.baseAddress,
-                            key.count,
+                            keyData.count,
                             ivBytes.baseAddress,
                             dBytes.baseAddress,
                             data.count,
@@ -61,14 +78,13 @@ extension EncryptedData {
         }
         
         guard status == kCCSuccess else {
-            print("Encryption failed: \(status)")
-            return nil
+            throw EDEcryptionStatus.encryptFailure(Int(status))
         }
         
         let encryptedData = Data(bytes: buffer, count: encryptSize)
         let b64EncodeData = encryptedData.base64EncodedString()
                 
-        let encrytedData = EncryptedData(data: b64EncodeData, key: key.base64EncodedString(), iv: iv.base64EncodedString())
+        let encrytedData = EncryptedData(data: b64EncodeData, key: keyData, iv: ivData)
         
         return encrytedData
     }

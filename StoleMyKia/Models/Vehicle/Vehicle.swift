@@ -14,3 +14,11 @@ struct Vehicle: Codable {
     let vehicleColor: VehicleColor
     let vehicleModel: VehicleModel
 }
+
+extension Vehicle {
+    
+    
+    var details: String {
+        "\(vehicleYear) \(vehicleMake) \(vehicleModel) (\(vehicleColor))"
+    }
+}

@@ -38,8 +38,6 @@ final class ReportsViewModel: NSObject, ObservableObject {
     @Published var isFetchingReports = false
     
     @Published var isShowingLicensePlateScannerView = false
-    @Published var isShowingNewReportView = false
-    @Published var isShowingReportSearchView = false
 
     @Published var reportDetailMode: ReportDetailMode?
     

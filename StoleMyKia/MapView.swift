@@ -9,9 +9,7 @@ import SwiftUI
 import MapKit
 
 struct ReportsMapView: View {
-    
-    @State private var isShowingNewReportView = false
-    
+        
     @StateObject private var mapModel = MapViewModel()
     @EnvironmentObject var reportModel: ReportsViewModel
      
@@ -47,9 +45,6 @@ struct ReportsMapView: View {
             }
         }
         .edgesIgnoringSafeArea(.top)
-        .sheet(isPresented: $reportModel.isShowingNewReportView) {
-            NewReportView()
-        }
         .fullScreenCover(isPresented: $reportModel.isShowingLicensePlateScannerView) {
             LicensePlateScannerView()
         }
@@ -111,24 +106,34 @@ fileprivate struct UpperMapViewButtons: View {
 
 fileprivate struct LowerMapViewButtons: View {
     
+    @State private var isShowingNewReportView = false
+    
     @EnvironmentObject var mapModel: MapViewModel
     @EnvironmentObject var reportModel: ReportsViewModel
     
     var body: some View {
         HStack {
             Spacer()
-            Image(systemName: "note.text.badge.plus")
-                .resizable()
-                .scaledToFit()
-                .frame(width: 25, height: 25)
-                .padding()
-                .foregroundColor(.brand)
-                .background(Color(uiColor: .secondarySystemBackground))
-                .clipShape(Circle())
-                .shadow(radius: 2)
-                .padding()
+            Button {
+                UIImpactFeedbackGenerator(style: .heavy).impactOccurred()
+                isShowingNewReportView.toggle()
+            } label: {
+                Image(systemName: "highlighter")
+                    .resizable()
+                    .scaledToFit()
+                    .frame(width: 25, height: 25)
+                    .padding()
+                    .foregroundColor(.brand)
+                    .background(Color(uiColor: .secondarySystemBackground))
+                    .clipShape(Circle())
+                    .shadow(radius: 2)
+                    .padding()
+            }
         }
         .padding(.bottom)
+        .sheet(isPresented: $isShowingNewReportView) {
+            NewReportView()
+        }
     }
 }
 
