@@ -114,7 +114,6 @@ struct UserCreateAccountView: View {
                 isLoading = false
                 return
             }
-            self.pushToWelcomeView.toggle()
         }
         isLoading = false
     }

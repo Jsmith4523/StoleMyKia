@@ -26,63 +26,53 @@ struct SettingsView: View {
     @Environment (\.dismiss) var dismiss
     
     var body: some View {
-        NavigationView {
-            List {
-                Section("Settings") {
-                    NavigationLink {
-                        NotificationSettingsView()
-                    } label: {
-                        Label("Notifications", systemImage: "app.badge")
-                    }
-//                    NavigationLink {
-//                        MapSettingsView()
-//                    } label: {
-//                        Label("Map", systemImage: "map")
-//                    }
+        List {
+            Section("Settings") {
+                NavigationLink {
+                    NotificationSettingsView()
+                } label: {
+                    Label("Notifications", systemImage: "app.badge")
                 }
-                Section("Support") {
-                    Button {
-                        isShowingTwitterSupport.toggle()
-                    } label: {
-                       Label("Twitter Support", systemImage: "iphone.and.arrow.forward")
-                    }
-                    Button {
-                        isShowingPrivacyPolicy.toggle()
-                    } label: {
-                        Label("Privacy Policy", systemImage: "hand.raised")
-                    }
-                    NavigationLink {
-                        AboutAppView()
-                    } label: {
-                        Label("About this app", systemImage: "info.circle")
-                    }
+                //                    NavigationLink {
+                //                        MapSettingsView()
+                //                    } label: {
+                //                        Label("Map", systemImage: "map")
+                //                    }
+            }
+            Section("Support") {
+                Button {
+                    isShowingTwitterSupport.toggle()
+                } label: {
+                    Label("Twitter Support", systemImage: "iphone.and.arrow.forward")
                 }
-                Section("Account") {
-                    Button {
-                        alertLogout.toggle()
-                    } label: {
-                        Label("Log out", systemImage: "door.left.hand.open")
-                    }
-                    Button {
-                        alertDeletingAccount.toggle()
-                    } label: {
-                        Label("Delete Account", systemImage: "trash")
-                            .foregroundColor(.red)
-                    }
+                Button {
+                    isShowingPrivacyPolicy.toggle()
+                } label: {
+                    Label("Privacy Policy", systemImage: "hand.raised")
+                }
+                NavigationLink {
+                    AboutAppView()
+                } label: {
+                    Label("About this app", systemImage: "info.circle")
                 }
             }
-            .navigationTitle(isLoggingOut ? "Logging out..." : "Settings")
-            .navigationBarTitleDisplayMode(.inline)
-            .toolbar {
-                ToolbarItem(placement: .navigationBarLeading) {
-                    Button("Close") {
-                        dismiss()
-                    }
+            Section("Account") {
+                Button {
+                    alertLogout.toggle()
+                } label: {
+                    Label("Log out", systemImage: "door.left.hand.open")
+                }
+                Button {
+                    alertDeletingAccount.toggle()
+                } label: {
+                    Label("Delete Account", systemImage: "trash")
+                        .foregroundColor(.red)
                 }
             }
-            .interactiveDismissDisabled(isLoggingOut)
-            .disabled(isLoggingOut)
         }
+        .navigationTitle(isLoggingOut ? "Logging out..." : "Settings")
+        .navigationBarTitleDisplayMode(.inline)
+        .disabled(isLoggingOut)
         .alert("Log out", isPresented: $alertLogout) {
             Button("Yes"){
                 beginLoggingOut()
@@ -127,15 +117,11 @@ struct SettingsView: View {
     }
     
     private func beginLoggingOut() {
-        dismiss()
-        DispatchQueue.main.asyncAfter(deadline: .now() + 0.5) {
-            self.userModel.signOut { succes in
-                guard succes else {
-                    alertLogout.toggle()
-                    isLoggingOut = false
-                    return
-                }
-                dismiss()
+        self.userModel.signOut { succes in
+            guard succes else {
+                alertLogout.toggle()
+                isLoggingOut = false
+                return
             }
         }
     }

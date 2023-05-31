@@ -11,7 +11,7 @@ import Foundation
 struct FirebaseUser: Codable {
     
     let uid: String
-    var notificationSettings: NotificationSettings
+    var notificationSettings: NotificationSettings = NotificationSettings()
     var vehicle: Vehicle?
     var updates: [UUID]?
     var bookmarks: [UUID]?

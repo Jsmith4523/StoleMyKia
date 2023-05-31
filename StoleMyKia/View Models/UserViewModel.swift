@@ -18,6 +18,8 @@ final class UserViewModel: ObservableObject {
     @Published private(set) var currentUser: User!
     @Published private(set) var firebaseUser: FirebaseUser!
     
+    @Published private(set) var alertErrorLoggingIn = false
+    
     private let accountManager = UserAccountManager()
             
     private let auth = Auth.auth()
@@ -96,7 +98,7 @@ final class UserViewModel: ObservableObject {
             return
         }
         
-        accountManager.getUserData(currentUser.uid) { result in
+        self.accountManager.getUserData(currentUser.uid) { result in
             switch result {
             case .success(let user):
                 self.firebaseUser = user
@@ -140,11 +142,19 @@ final class UserViewModel: ObservableObject {
     
     func signUp(email: String, password: String, completion: @escaping ((Bool?)->Void)) {
         auth.createUser(withEmail: email, password: password) { result, err in
-            guard result != nil, err == nil else {
+            guard let result, err == nil else {
                 completion(false)
                 return
             }
-            completion(true)
+            
+            self.accountManager.createUserData(with: result.user.uid) { result in
+                switch result {
+                case .success(_):
+                    completion(true)
+                case .failure(let failure):
+                    print(failure.localizedDescription)
+                }
+            }
         }
     }
     
@@ -225,15 +235,32 @@ final class UserViewModel: ObservableObject {
     
     private func setupUserListener() {
         Auth.auth().addStateDidChangeListener { auth, user in
-            if !(user == nil) {
-                self.userIsSignedIn = true
-                self.currentUser = user
-                self.getUserData()
-            } else {
-                self.userIsSignedIn = false
-                self.currentUser = nil
-                self.firebaseUser = nil
+            guard let user else {
+                prepareToSignOut()
+                return
             }
+            
+            self.accountManager.userDataIsSaved(uid: user.uid) { success in
+                guard success else {
+                    prepareToSignOut()
+                    return
+                }
+                
+                pepareForSignIn(user: user)
+            }
+        }
+        
+        func prepareToSignOut() {
+            try? self.auth.signOut()
+            self.userIsSignedIn = false
+            self.currentUser = nil
+            self.firebaseUser = nil
+        }
+        
+        func pepareForSignIn(user: User) {
+            self.userIsSignedIn = true
+            self.currentUser = user
+            self.getUserData()
         }
     }
 }
@@ -241,11 +268,19 @@ final class UserViewModel: ObservableObject {
 //MARK: - FirebaseUserDelegate
 extension UserViewModel: FirebaseUserDelegate {
     var updates: [UUID]? {
-        self.firebaseUser.updates
+        guard let firebaseUser else {
+            return nil
+        }
+        
+        return firebaseUser.updates
     }
     
     var bookmarks: [UUID]? {
-        self.firebaseUser.bookmarks
+        guard let firebaseUser else {
+            return nil
+        }
+       
+        return firebaseUser.bookmarks
     }
     
     func save(completion: @escaping ((Bool) -> Void)) {

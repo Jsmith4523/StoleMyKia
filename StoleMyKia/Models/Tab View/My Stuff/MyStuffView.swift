@@ -66,8 +66,11 @@ struct MyStuffView: View {
             }
             .toolbar {
                 ToolbarItem(placement: .navigationBarTrailing) {
-                    Button {
-                        isShowingSettingsView.toggle()
+                    NavigationLink {
+                        SettingsView()
+                            .environmentObject(userModel)
+                            .environmentObject(notificationModel)
+                            .environmentObject(reportsModel)
                     } label: {
                         Image(systemName: "slider.horizontal.3")
                             .foregroundColor(.brand)
@@ -82,12 +85,6 @@ struct MyStuffView: View {
             }
             .environmentObject(reportsModel)
             .environmentObject(userModel)
-            .sheet(isPresented: $isShowingSettingsView) {
-                SettingsView()
-                    .environmentObject(userModel)
-                    .environmentObject(notificationModel)
-                    .environmentObject(reportsModel)
-            }
         }
     }
     
