@@ -8,7 +8,7 @@
 import Foundation
 import UIKit
 
-//MARK: Vehicles affected based from NTSB
+//MARK: Vehicles affected from NTSB
 //2015-2021 Hyundai Accent (all body styles)
 //2015-2021 Hyundai Elantra (two-door and four-door)
 //2015-2021 Hyundai Kona

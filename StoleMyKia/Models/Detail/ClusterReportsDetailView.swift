@@ -67,10 +67,12 @@ struct MultipleReportsView: View {
         ScrollView {
             VStack {
                 ForEach(filteredReports) { report in
-                    ReportCellView(report: report)
-                        .onTapGesture {
-                            reportsModel.reportDetailMode = .single(report)
-                        }
+                    ReportCellView(report: report) {
+                        dismiss()
+                    }
+                    .onTapGesture {
+                        reportsModel.reportDetailMode = .single(report)
+                    }
                     Divider()
                 }
             }

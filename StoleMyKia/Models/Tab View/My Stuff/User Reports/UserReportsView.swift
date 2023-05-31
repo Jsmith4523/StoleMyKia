@@ -40,10 +40,12 @@ struct UserReportsView: View {
     var list: some View {
         VStack {
             ForEach(userReports) { report in
-                ReportCellView(report: report)
-                    .onTapGesture {
-                        self.selectedUserReport = report
-                    }
+                ReportCellView(report: report) {
+                    getUserReports()
+                }
+                .onTapGesture {
+                    self.selectedUserReport = report
+                }
                 Divider()
             }
         }

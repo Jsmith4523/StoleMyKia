@@ -12,11 +12,7 @@ import UIKit
 
 struct NewReportView: View {
     
-    @State private var vehicleImage: UIImage? {
-        didSet {
-            print("Image set")
-        }
-    }
+    @State private var vehicleImage: UIImage?
     
     @State private var location: Location!
     
@@ -35,7 +31,12 @@ struct NewReportView: View {
     @State private var useCurrentLocation = true
     @State private var isShowingLocationView = false
     
-    @State private var imagePickerSourceType: UIImagePickerController.SourceType = .photoLibrary
+    @State private var isShowingImagePicker = false
+    @State private var imagePickerSourceType: UIImagePickerController.SourceType = .photoLibrary {
+        didSet {
+            isShowingImagePicker.toggle()
+        }
+    }
     @State private var isShowingPhotoRemoveConfirmation = false
         
     @State private var isUploading = false
@@ -207,6 +208,9 @@ struct NewReportView: View {
             NewReportSearchLocation(location: $location)
                 .environmentObject(mapModel)
         }
+        .sheet(isPresented: $isShowingImagePicker) {
+            PhotoPicker(selectedImage: $vehicleImage, source: imagePickerSourceType)
+        }
         .confirmationDialog("", isPresented: $isShowingPhotoRemoveConfirmation) {
             Button("Remove", role: .destructive) {
                 vehicleImage = nil
@@ -267,7 +271,7 @@ struct NewReportView: View {
             alertErrorUploading.toggle()
         }
         
-        reportsModel.upload(report) { success in
+        reportsModel.upload(report, with: vehicleImage) { success in
             guard success else {
                 self.alertErrorUploading.toggle()
                 self.isUploading = false

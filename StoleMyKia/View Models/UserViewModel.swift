@@ -13,10 +13,16 @@ import Firebase
 final class UserViewModel: ObservableObject {
         
     @Published var showLoginProgressView = true
-    @Published var userIsSignedIn = false
+    @Published private(set) var userIsSignedIn = false
     
     @Published private(set) var currentUser: User!
-    @Published private(set) var firebaseUser: FirebaseUser!
+    @Published private(set) var firebaseUser: FirebaseUser! {
+        didSet {
+            print(firebaseUser)
+        }
+    }
+    
+    private let accountManager = UserAccountManager()
             
     private let auth = Auth.auth()
     
@@ -32,6 +38,72 @@ final class UserViewModel: ObservableObject {
         }
         
         return date
+    }
+    
+    func containsBookmarkReport(id: UUID) -> Bool {
+        guard let firebaseUser, firebaseUser.hasBookmark(id) else {
+            return false
+        }
+        
+        return true
+    }
+    
+    func bookmarkReport(id: UUID, completion: @escaping (Bool) -> Void) {
+        guard let firebaseUser else {
+            completion(false)
+            return
+        }
+        
+        var user = firebaseUser
+        user.addReportToBookmark(id)
+        
+        saveChanges(user: user) { status in
+            completion(status)
+        }
+    }
+    
+    func removeBookmark(id: UUID, completion: @escaping (Bool) -> Void) {
+        guard let firebaseUser else {
+            completion(false)
+            return
+        }
+        
+        var user = firebaseUser
+        user.removeReportFromBookmark(id)
+        
+        saveChanges(user: user) { status in
+            completion(status)
+        }
+    }
+    
+    private func saveChanges(user: FirebaseUser, completion: @escaping (Bool) -> Void) {
+        var oldFirebaseUser = self.firebaseUser
+        
+        accountManager.saveAccountChanges(user: user) { status in
+            //Setting the previous value of the user if false...
+            guard status else {
+                self.firebaseUser = oldFirebaseUser
+                return
+            }
+            
+            self.getUserData()
+            completion(status)
+        }
+    }
+    
+    private func getUserData() {
+        guard let currentUser else {
+            return
+        }
+        
+        accountManager.getUserData(currentUser.uid) { result in
+            switch result {
+            case .success(let user):
+                self.firebaseUser = user
+            case .failure(let error):
+                print(error.localizedDescription)
+            }
+        }
     }
     
     func getUserDisplayName() -> String {
@@ -82,7 +154,11 @@ final class UserViewModel: ObservableObject {
     
     ///WARNING: Deletes the signed in users account entirely!
     func deleteAccount(completion: @escaping ((Bool?)->Void)) {
-        //TODO: Delete reports made by the user
+        guard let firebaseUser else {
+            completion(false)
+            return
+        }
+        
         userReportsDelegate?.deleteAll { success in
             guard success else {
                 completion(false)
@@ -94,7 +170,13 @@ final class UserViewModel: ObservableObject {
                     completion(false)
                     return
                 }
-                completion(true)
+                self.accountManager.deleteUser(user: firebaseUser) { success in
+                    guard success else {
+                        completion(false)
+                        return
+                    }
+                    completion(true)
+                }
             }
         }
     }
@@ -130,6 +212,7 @@ final class UserViewModel: ObservableObject {
             if !(user == nil) {
                 self.userIsSignedIn = true
                 self.currentUser = user
+                self.getUserData()
             } else {
                 self.userIsSignedIn = false
                 self.currentUser = nil

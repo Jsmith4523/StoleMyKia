@@ -29,7 +29,7 @@ enum UserAccountViewSelection: String, CaseIterable, Identifiable {
         case .userReports:
             return Image(systemName: "list.dash")
         case .updates:
-            return Image(systemName: "arrowshape.bounce.right")
+            return Image(systemName: "arrow.up.arrow.down")
         case .bookmark:
             return Image(systemName: "bookmark")
         }

@@ -14,6 +14,8 @@ struct PhotoPicker: UIViewControllerRepresentable {
     @Binding var selectedImage: UIImage?
     var source: UIImagePickerController.SourceType
     
+    @StateObject private var photoPickerCoordinator = PhotoPickerCoordinator()
+    
     func makeUIViewController(context: Context) -> UIImagePickerController {
         let imagePicker           = UIImagePickerController()
         imagePicker.sourceType    = source
@@ -24,7 +26,7 @@ struct PhotoPicker: UIViewControllerRepresentable {
     }
     
     func makeCoordinator() -> PhotoPickerCoordinator {
-        PhotoPickerCoordinator()
+        photoPickerCoordinator
     }
     
     func updateUIViewController(_ uiViewController: UIImagePickerController, context: Context) {

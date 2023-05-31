@@ -19,6 +19,6 @@ extension Vehicle {
     
     
     var details: String {
-        "\(vehicleYear) \(vehicleMake) \(vehicleModel) (\(vehicleColor))"
+        "\(vehicleYear) \(vehicleMake.rawValue) \(vehicleModel.rawValue) (\(vehicleColor.rawValue))"
     }
 }
