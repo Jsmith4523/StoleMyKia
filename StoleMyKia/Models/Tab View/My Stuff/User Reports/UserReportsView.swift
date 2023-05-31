@@ -11,11 +11,11 @@ import SwiftUI
 struct UserReportsView: View {
         
     @State private var userReports = [Report]()
-    
     @State private var selectedUserReport: Report?
     
+    @State private var alertErrorFetchingUserReports = false
+    
     @ObservedObject var userModel: UserViewModel
-    @EnvironmentObject var notificationModel: NotificationViewModel
     @EnvironmentObject var reportsModel: ReportsViewModel
     
     var body: some View {
@@ -32,7 +32,6 @@ struct UserReportsView: View {
             }
         }
         .onAppear {
-            userModel.userReportsDelegate = reportsModel
             getUserReports()
         }
     }
@@ -62,8 +61,8 @@ struct UserReportsView: View {
             switch status {
             case .success(let reports):
                 self.userReports = reports
-            case .failure(let reason):
-                print(reason.localizedDescription)
+            case .failure(_):
+                alertErrorFetchingUserReports.toggle()
             }
         }
     }

@@ -44,6 +44,7 @@ enum VehicleModel: String, CaseIterable, Codable, Comparable, Hashable {
     case sportage = "Sportage"
     case sorento  = "Sorento"
     case seltos   = "Seltos"
+    case k5       = "K5"
     
     //Vehicle make (ex: Hyundai Elantra)
     var make: VehicleMake {
@@ -79,6 +80,8 @@ enum VehicleModel: String, CaseIterable, Codable, Comparable, Hashable {
             return .kia
         case .seltos:
             return .kia
+        case .k5:
+            return .kia
         }
     }
     
@@ -106,7 +109,7 @@ enum VehicleModel: String, CaseIterable, Codable, Comparable, Hashable {
         case .rio:
             return 2011...Report.lastAffectedYear
         case .optima:
-            return 2011...Report.lastAffectedYear
+            return 2011...2021
         case .soul:
             return 2011...Report.lastAffectedYear
         case .sportage:
@@ -115,6 +118,8 @@ enum VehicleModel: String, CaseIterable, Codable, Comparable, Hashable {
             return 2011...Report.lastAffectedYear
         case .seltos:
             return 2019...Report.lastAffectedYear
+        case .k5:
+            return 2021...Report.lastAffectedYear
         }
     }
     

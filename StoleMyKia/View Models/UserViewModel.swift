@@ -16,20 +16,20 @@ final class UserViewModel: ObservableObject {
     @Published private(set) var userIsSignedIn = false
     
     @Published private(set) var currentUser: User!
-    @Published private(set) var firebaseUser: FirebaseUser! {
-        didSet {
-            print(firebaseUser)
-        }
-    }
+    @Published private(set) var firebaseUser: FirebaseUser!
     
     private let accountManager = UserAccountManager()
             
     private let auth = Auth.auth()
     
-    weak var userReportsDelegate: UserReportsDelegate?
+    private weak var userReportsDelegate: UserReportsDelegate?
     
     init() {
         setupUserListener()
+    }
+    
+    func setUserReportsDelegate(_ delegate: UserReportsDelegate) {
+        self.userReportsDelegate = delegate
     }
     
     func getUserCreationDate() -> Date? {
@@ -77,7 +77,7 @@ final class UserViewModel: ObservableObject {
     }
     
     private func saveChanges(user: FirebaseUser, completion: @escaping (Bool) -> Void) {
-        var oldFirebaseUser = self.firebaseUser
+        let oldFirebaseUser = self.firebaseUser
         
         accountManager.saveAccountChanges(user: user) { status in
             //Setting the previous value of the user if false...
@@ -107,11 +107,7 @@ final class UserViewModel: ObservableObject {
     }
     
     func getUserDisplayName() -> String {
-        guard let user = currentUser, let name = user.displayName else {
-            return "N/A"
-        }
-        
-        return name
+        return ""
     }
     
     func signIn(email: String, password: String, completion: @escaping ((Bool?)->Void)) {
@@ -191,18 +187,38 @@ final class UserViewModel: ObservableObject {
     }
     
     
-    func getUserReports(completion: @escaping ((Result<[Report], Error>)->Void)) {
-        guard uid != nil else {
-            completion(.failure(UserReportsError.error("The current user is no longer signed in.")))
-            signOut { _ in }
-            return
-        }
+    func getUserReports(completion: @escaping (Result<[Report], URReportsError>) -> Void) {
         userReportsDelegate?.getUserReports() { status in
             switch status {
             case .success(let reports):
                 completion(.success(reports))
-            case .failure(let err):
-                completion(.failure(err))
+            case .failure(let error):
+                completion(.failure(error))
+            }
+        }
+    }
+    
+    
+    func getUserBookmarks(completion: @escaping (Result<[Report], URReportsError>) -> Void) {
+        userReportsDelegate?.getUserBookmarks(removalCompletion: { uuid in
+            self.removeBookmark(id: uuid) { _ in }
+        }, completion: { status in
+            switch status {
+            case .success(let reports):
+                completion(.success(reports))
+            case .failure(let error):
+                completion(.failure(error))
+            }
+        })
+    }
+    
+    func getUserUpdates(completion: @escaping (Result<[Report], URReportsError>) -> Void) {
+        userReportsDelegate?.getUserUpdates { status in
+            switch status {
+            case .success(let reports):
+                completion(.success(reports))
+            case .failure(let error):
+                completion(.failure(error))
             }
         }
     }
@@ -224,6 +240,14 @@ final class UserViewModel: ObservableObject {
 
 //MARK: - FirebaseUserDelegate
 extension UserViewModel: FirebaseUserDelegate {
+    var updates: [UUID]? {
+        self.firebaseUser.updates
+    }
+    
+    var bookmarks: [UUID]? {
+        self.firebaseUser.bookmarks
+    }
+    
     func save(completion: @escaping ((Bool) -> Void)) {
         
     }
@@ -267,9 +291,5 @@ extension UserViewModel: FirebaseUserDelegate {
     var uid: String? {
         auth.currentUser?.uid
     }
-}
-
-enum UserReportsError: Error {
-    case error(String)
 }
 

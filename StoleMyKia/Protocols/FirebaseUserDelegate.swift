@@ -9,6 +9,8 @@ import Foundation
 
 protocol FirebaseUserDelegate: AnyObject {
     var uid: String? {get}
+    var updates: [UUID]? {get}
+    var bookmarks: [UUID]? {get}
     var notifyOfTheft: Bool {get set}
     var notifyOfWitness: Bool {get set}
     var notifyOfFound: Bool {get set}

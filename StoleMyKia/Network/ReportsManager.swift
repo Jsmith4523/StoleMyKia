@@ -14,9 +14,13 @@ typealias ReportsCompletion      = ((Result<[Report], Error>)->Void)
 typealias DeleteReportCompletion = ((Result<Bool, Error>)->Void)
 typealias UploadReportCompletion = ((Result<Bool, Error>)->Void)
 
+typealias RemovalCompletion     = (UUID) -> ()
+
 class ReportsManager {
     
-    enum ReportManagerError: Error {
+    //TODO: Refactor code
+    
+    enum RMError: Error {
         case error(String)
     }
     
@@ -34,26 +38,26 @@ class ReportsManager {
     func fetchReports(completion: @escaping ReportsCompletion) {
         collection.getDocuments { snapshot, err in
             guard let snapshot, err == nil else {
-                completion(.failure(ReportManagerError.error("❌ Error retrieving reports: \(err?.localizedDescription ?? "There was an eror")")))
+                completion(.failure(RMError.error(err?.localizedDescription ?? "Snapshot error recieving reports")))
                 return
             }
             do {
                 let reports = try snapshot.createReports()
                 completion(.success(reports))
             } catch {
-                completion(.failure(ReportManagerError.error("There was an error recieving documents")))
+                completion(.failure(RMError.error("There was an error recieving documents")))
             }
         }
     }
     
     func fetchUserReports(uid: String?, completion: @escaping ((Result<[Report], Error>)->Void)) {
         guard let uid else {
-            completion(.failure(ReportManagerError.error("❌ Error retrieving user reports: uid is nil")))
+            completion(.failure(RMError.error("user uid not provided")))
             return
         }
         collection.whereField("uid", isEqualTo: uid).getDocuments { snapshot, err in
             guard let snapshot, err == nil else {
-                completion(.failure(ReportManagerError.error("❌Error retrieving user reports: \(err?.localizedDescription ?? "There was an error")")))
+                completion(.failure(RMError.error(err?.localizedDescription ?? "Snapshot error with user reports")))
                 return
             }
             
@@ -61,9 +65,56 @@ class ReportsManager {
                 let reports = try snapshot.createReports()
                 completion(.success(reports))
             } catch {
-                completion(.failure(ReportManagerError.error("❌Error retrieving user reports: \(err?.localizedDescription ?? "There was an error")")))
+                completion(.failure(RMError.error(error.localizedDescription)))
             }
         }
+    }
+    
+    func fetchUserBookmarkReports(_ uuids: [UUID], removalCompletion: @escaping RemovalCompletion, completion: @escaping (Result<[Report], Error>) -> Void) {
+        var reports = [Report]()
+        
+        for documentID in uuids {
+            self.collection.document(documentID.uuidString).getDocument { snapshot, err in
+                guard let snapshot else {
+                    completion(.failure(RMError.error(err?.localizedDescription ?? "There was an error getting user bookmarks")))
+                    return
+                }
+                
+                guard err == nil else {
+                    completion(.failure(RMError.error(err?.localizedDescription ?? "There was an error getting user bookmarks")))
+                    return
+                }
+                
+                if !(snapshot.exists) {
+                    removalCompletion(documentID)
+                }
+                
+                guard let report = snapshot.createReport() else {
+                    return
+                }
+                
+                reports.append(report)
+                completion(.success(reports))
+            }
+        }
+    }
+    
+    func fetchUserUpdates(_ uuids: [UUID], completion: @escaping (Result<[Report], Error>) -> Void) {
+        var reports = [Report?]()
+                
+        for documentID in uuids.map{$0.uuidString} {
+            self.collection.document(documentID).getDocument { snapshot, err in
+                print(snapshot?.exists)
+                
+                guard let snapshot, err == nil else {
+                    completion(.failure(RMError.error(err?.localizedDescription ?? "There was an error getting user updates")))
+                    return
+                }
+                reports.append(snapshot.createReport())
+            }
+        }
+        
+        completion(.success(reports.compactMap{$0}))
     }
     
     func uploadReport(report: Report, image: UIImage? = nil, completion: @escaping UploadReportCompletion) {
@@ -86,23 +137,23 @@ class ReportsManager {
                 }
             }
         } catch {
-            completion(.failure(ReportManagerError.error("There was an error uploading the report")))
+            completion(.failure(RMError.error("There was an error uploading the report")))
         }
         
         func uploadImage(imageCompletion: @escaping ((Result<String, Error>)->Void)) {
             guard let image, let imageData = image.pngData() else {
-                completion(.failure(ReportManagerError.error("Method called but there was an error uploading image...")))
+                completion(.failure(RMError.error("Method called but there was an error uploading image...")))
                 return
             }
             
             storageReference.child(report.id.uuidString).putData(imageData) { metadata, err in
                 guard err == nil else {
-                    imageCompletion(.failure(ReportManagerError.error("Failed to upload image to storage")))
+                    imageCompletion(.failure(RMError.error("Failed to upload image to storage")))
                     return
                 }
                 self.storageReference.child(report.id.uuidString).downloadURL { url, err in
                     guard let url, err == nil else {
-                        imageCompletion(.failure(ReportManagerError.error("Image failed to download URL")))
+                        imageCompletion(.failure(RMError.error("Image failed to download URL")))
                         return
                     }
                     imageCompletion(.success(url.absoluteString))
@@ -117,12 +168,12 @@ class ReportsManager {
             let jsonData = try JSONSerialization.jsonObject(with: data) as? [String: Any]
             
             guard let jsonData else {
-                throw ReportManagerError.error("JSON Data not available")
+                throw RMError.error("JSON Data not available")
             }
             
             ref.setData(jsonData, merge: true) { err in
                 if let err {
-                    completion(.failure(ReportManagerError.error(err.localizedDescription)))
+                    completion(.failure(RMError.error(err.localizedDescription)))
                     return
                 }
                 
@@ -162,7 +213,7 @@ class ReportsManager {
         func deleteImage(id: String, completion: @escaping ((Error?)->Void)) {
             storageReference.child(id).delete { err in
                 guard err == nil else {
-                    completion(ReportManagerError.error("Unable to delete image from storage"))
+                    completion(RMError.error("Unable to delete image from storage"))
                     return
                 }
                 completion(nil)
@@ -172,7 +223,7 @@ class ReportsManager {
         func deleteReport(completion: @escaping ((Error?)->Void)) {
             ref.delete { err in
                 if let err {
-                    completion(ReportManagerError.error(err.localizedDescription))
+                    completion(RMError.error(err.localizedDescription))
                     return
                 }
                 
@@ -236,5 +287,25 @@ private extension QuerySnapshot {
         }
         
         return reports
+    }
+}
+
+private extension DocumentSnapshot {
+    
+    func createReport() -> Report? {
+        guard let data = self.data() else {
+            return nil
+        }
+        
+        do {
+            let serializedData = try JSONSerialization.data(withJSONObject: data)
+            let report = try JSONDecoder().decode(Report.self, from: serializedData)
+            
+            return report
+        } catch {
+            return nil
+        }
+        
+        return nil
     }
 }

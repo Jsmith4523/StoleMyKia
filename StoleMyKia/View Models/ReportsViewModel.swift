@@ -103,32 +103,6 @@ final class ReportsViewModel: NSObject, ObservableObject {
         }
     }
     
-    private func fetchUserReports(completion: @escaping ((Result<[Report], Error>)->Void)) {
-        guard let uid = firebaseUserDelegate?.uid else {
-            completion(.failure(UserReportsError.error("UID is not avaliable")))
-            return
-        }
-        manager.fetchUserReports(uid: uid) { status in
-            switch status {
-            case .success(let reports):
-                completion(.success(reports))
-            case .failure(_):
-                completion(.failure(UserReportsError.error("Unable to retrieve user reports")))
-            }
-        }
-    }
-    
-    private func deleteUserReports(completion: @escaping ((Bool)->Void)) {
-        guard let uid = firebaseUserDelegate?.uid else {
-            completion(false)
-            return
-        }
-        
-        manager.deleteUserReports(uid: uid) { status in
-            completion(status)
-        }
-    }
-    
     func deleteReport(_ report: Report, completion: @escaping ((Bool)->Void)) {
         manager.delete(report: report) { status in
             switch status {
@@ -145,10 +119,6 @@ final class ReportsViewModel: NSObject, ObservableObject {
             self.reports.removeReport(report)
             self.getReports()
         }
-    }
-    
-    deinit {
-        print("I'm dead")
     }
 }
 
@@ -172,19 +142,65 @@ extension ReportsViewModel: LicenseScannerDelegate {
 
 //MARK: - UserReportsDelegate
 extension ReportsViewModel: UserReportsDelegate {
-    func getUserReports(completion: @escaping ((Result<[Report], Error>) -> Void)) {
-        self.fetchUserReports() { result in
+
+    func getUserUpdates(completion: @escaping (Result<[Report], URReportsError>) -> Void) {
+        guard let uuids = firebaseUserDelegate?.updates else {
+            completion(.success([]))
+            return
+        }
+        
+        self.manager.fetchUserUpdates(uuids) { result in
             switch result {
             case .success(let reports):
                 completion(.success(reports))
             case .failure(let error):
-                completion(.failure(error))
+                completion(.failure(.error(error.localizedDescription)))
+            }
+        }
+    }
+    
+    func getUserBookmarks(removalCompletion: @escaping RemovalCompletion, completion: @escaping (Result<[Report], URReportsError>) -> Void) {
+        guard let uuids = firebaseUserDelegate?.bookmarks else {
+            completion(.success([]))
+            return
+        }
+        
+        self.manager.fetchUserBookmarkReports(uuids, removalCompletion: { uuid in
+            removalCompletion(uuid)
+        }){ result in
+            switch result {
+            case .success(let reports):
+                print(reports.count)
+                completion(.success(reports))
+            case .failure(let error):
+                completion(.failure(.error(error.localizedDescription)))
+            }
+        }
+    }
+    
+    func getUserReports(completion: @escaping ((Result<[Report], URReportsError>) -> Void)) {
+        guard let uid = firebaseUserDelegate?.uid else {
+            completion(.failure(.userReportsError))
+            return
+        }
+        
+        self.manager.fetchUserReports(uid: uid) { result in
+            switch result {
+            case .success(let reports):
+                completion(.success(reports))
+            case .failure(let error):
+                completion(.failure(.error(error.localizedDescription)))
             }
         }
     }
     
     func deleteAll(completion: @escaping ((Bool) -> Void)) {
-        self.deleteUserReports { status in
+        guard let uid = firebaseUserDelegate?.uid else {
+            completion(false)
+            return
+        }
+        
+        self.manager.deleteUserReports(uid: uid) { status in
             completion(status)
         }
     }

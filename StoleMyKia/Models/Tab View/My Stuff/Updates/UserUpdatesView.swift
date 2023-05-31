@@ -9,12 +9,17 @@ import SwiftUI
 
 struct UserUpdatesView: View {
     
-    @State private var updatedReports = [Report]()
+    @State private var alertErrorFetching = false
+    
+    @State private var updateReports = [Report]()
+    
+    @ObservedObject var userModel: UserViewModel
+    @EnvironmentObject var reportsModel: ReportsViewModel
     
     var body: some View {
         ScrollView {
             VStack {
-                switch updatedReports.isEmpty {
+                switch updateReports.isEmpty {
                 case true:
                     NoUpdatesView()
                 case false:
@@ -22,10 +27,14 @@ struct UserUpdatesView: View {
                 }
             }
         }
+        .onAppear {
+            userModel.setUserReportsDelegate(reportsModel)
+            getUserUpdates()
+        }
     }
     
     var list: some View {
-        ForEach(updatedReports) { report in
+        ForEach(updateReports) { report in
             NavigationLink {
                 
             } label: {
@@ -33,10 +42,22 @@ struct UserUpdatesView: View {
             }
         }
     }
+    
+    private func getUserUpdates() {
+        userModel.getUserUpdates { status in
+            switch status {
+            case .success(let reports):
+                self.updateReports = reports
+            case .failure(let error):
+                alertErrorFetching.toggle()
+                print(error.description)
+            }
+        }
+    }
 }
 
 struct UserUpdatesView_Previews: PreviewProvider {
     static var previews: some View {
-        UserUpdatesView()
+        UserUpdatesView(userModel: UserViewModel())
     }
 }

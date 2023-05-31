@@ -10,8 +10,12 @@ import SwiftUI
 struct UserBookmarkedReportsView: View {
     
     @State private var boomarkedReports = [Report]()
-    
     @State private var selectedBookmarkReport: Report?
+    
+    @State private var alertErrorFetchingBookmarks = false
+    
+    @ObservedObject var userModel: UserViewModel
+    @EnvironmentObject var reportsModel: ReportsViewModel
     
     var body: some View {
         ScrollView {
@@ -23,6 +27,10 @@ struct UserBookmarkedReportsView: View {
                     list
                 }
             }
+        }
+        .onAppear {
+            userModel.setUserReportsDelegate(reportsModel)
+            getBookmarkReports()
         }
     }
     
@@ -37,13 +45,23 @@ struct UserBookmarkedReportsView: View {
         }
     }
     
-    func getBookmarkReports() {
-        
+    private func getBookmarkReports() {
+        userModel.getUserBookmarks { status in
+            switch status {
+            case .success(let reports):
+                self.boomarkedReports = reports
+                print(reports.count)
+            case .failure(let error):
+                print(error)
+                self.alertErrorFetchingBookmarks.toggle()
+            }
+        }
     }
 }
 
 struct UserBookmarkedReportsView_Previews: PreviewProvider {
     static var previews: some View {
-        UserBookmarkedReportsView()
+        UserBookmarkedReportsView(userModel: UserViewModel())
+            .environmentObject(ReportsViewModel())
     }
 }

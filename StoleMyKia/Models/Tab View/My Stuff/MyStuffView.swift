@@ -56,9 +56,9 @@ struct MyStuffView: View {
                     TabView(selection: $userAccountTabViewSelection) {
                         UserReportsView(userModel: userModel)
                             .tag(UserAccountViewSelection.userReports)
-                        UserUpdatesView()
+                        UserUpdatesView(userModel: userModel)
                             .tag(UserAccountViewSelection.updates)
-                        UserBookmarkedReportsView()
+                        UserBookmarkedReportsView(userModel: userModel)
                             .tag(UserAccountViewSelection.bookmark)
                     }
                     .tabViewStyle(.page(indexDisplayMode: .never))
@@ -76,6 +76,9 @@ struct MyStuffView: View {
             }
             .onChange(of: userAccountTabViewSelection) { _ in
                 UIImpactFeedbackGenerator(style: .rigid).impactOccurred()
+            }
+            .onAppear {
+                userModel.setUserReportsDelegate(reportsModel)
             }
             .environmentObject(reportsModel)
             .environmentObject(userModel)
