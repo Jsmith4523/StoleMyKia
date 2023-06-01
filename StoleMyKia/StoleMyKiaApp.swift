@@ -21,12 +21,13 @@ struct StoleMyKiaApp: App {
     var body: some Scene {
         WindowGroup {
             ZStack {
-                switch userModel.userIsSignedIn {
-                case true:
-                    Tab()
-                case false:
+                if userModel.userIsSignedIn {
+                    Tab(userModel: userModel)
+                } else {
                     UserLoginView(userModel: userModel)
                 }
+            }.onChange(of: userModel.userIsSignedIn) { newValue in
+                print(newValue)
             }
         }
     }

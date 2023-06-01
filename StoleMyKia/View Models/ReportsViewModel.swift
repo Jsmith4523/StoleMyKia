@@ -34,7 +34,7 @@ enum ReportDetailMode: Identifiable {
 }
 
 final class ReportsViewModel: NSObject, ObservableObject {
-    
+        
     @Published var isFetchingReports = false
     
     @Published var isShowingLicensePlateScannerView = false
@@ -54,8 +54,9 @@ final class ReportsViewModel: NSObject, ObservableObject {
     
     override init() {
         super.init()
-        
         self.getReports()
+        
+        print("Alive: ReportsViewModel")
     }
     
      func upload(_ report: Report, with image: UIImage? = nil, completion: @escaping ((Bool)->Void)) {
@@ -73,12 +74,12 @@ final class ReportsViewModel: NSObject, ObservableObject {
             return
         }
         
-        manager.uploadReport(report: report, image: image) { result in
+        manager.uploadReport(report: report, image: image) { [weak self] result in
             switch result {
             case .success(_):
                 UINotificationFeedbackGenerator().notificationOccurred(.success)
                 completion(true)
-                self.getReports()
+                self?.getReports()
                 return
             case .failure(let error):
                 UINotificationFeedbackGenerator().notificationOccurred(.error)
@@ -92,14 +93,14 @@ final class ReportsViewModel: NSObject, ObservableObject {
     ///Will retrieve latest reports from Google Firestore
     func getReports() {
         isFetchingReports = true
-        manager.fetchReports { result in
+        manager.fetchReports { [weak self] result in
             switch result {
             case .success(let reports):
-                self.reports.including(with: reports)
+                self?.reports.including(with: reports)
             case .failure(let reason):
                 print(reason.localizedDescription)
             }
-            self.isFetchingReports = false
+            self?.isFetchingReports = false
         }
     }
     
@@ -119,6 +120,10 @@ final class ReportsViewModel: NSObject, ObservableObject {
             self.reports.removeReport(report)
             self.getReports()
         }
+    }
+    
+    deinit {
+        print("Dead: ReportsViewModel")
     }
 }
 

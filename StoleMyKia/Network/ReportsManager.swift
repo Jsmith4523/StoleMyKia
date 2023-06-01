@@ -146,12 +146,13 @@ class ReportsManager {
                 return
             }
             
-            storageReference.child(report.id.uuidString).putData(imageData) { metadata, err in
+            storageReference.child(report.id.uuidString).putData(imageData) { [weak self] metadata, err in
                 guard err == nil else {
                     imageCompletion(.failure(RMError.error("Failed to upload image to storage")))
                     return
                 }
-                self.storageReference.child(report.id.uuidString).downloadURL { url, err in
+                
+                self?.storageReference.child(report.id.uuidString).downloadURL { url, err in
                     guard let url, err == nil else {
                         imageCompletion(.failure(RMError.error("Image failed to download URL")))
                         return
@@ -211,7 +212,7 @@ class ReportsManager {
         }
         
         func deleteImage(id: String, completion: @escaping ((Error?)->Void)) {
-            storageReference.child(id).delete { err in
+            self.storageReference.child(id).delete { err in
                 guard err == nil else {
                     completion(RMError.error("Unable to delete image from storage"))
                     return
@@ -248,7 +249,7 @@ class ReportsManager {
             return
         }
         
-        collection.whereField("uid", isEqualTo: uid).getDocuments { snapshot, err in
+        collection.whereField("uid", isEqualTo: uid).getDocuments { [weak self] snapshot, err in
             guard let snapshot, err == nil else {
                 completion(false)
                 return
@@ -257,7 +258,7 @@ class ReportsManager {
             do {
                 let userReports = try snapshot.createReports()
                 userReports.forEach { report in
-                    self.delete(report: report) { status in
+                    self?.delete(report: report) { status in
                         switch status {
                         case .success(_):
                             break

@@ -27,7 +27,7 @@ final class NotificationViewModel: NSObject, ObservableObject {
     var notificationsAreAllowed: Bool {
         var isAllowed = false
         
-        notificationCenter.getNotificationSettings { status in
+        notificationCenter.getNotificationSettings { [weak self] status in
             switch status.authorizationStatus {
             case .authorized:
                 isAllowed = true
@@ -36,7 +36,7 @@ final class NotificationViewModel: NSObject, ObservableObject {
             case .ephemeral:
                 isAllowed = true
             default:
-                self.requestNotificationPermission()
+                self?.requestNotificationPermission()
                 isAllowed = false
             }
         }
@@ -58,6 +58,10 @@ final class NotificationViewModel: NSObject, ObservableObject {
                 fatalError(err.localizedDescription)
             }
         }
+    }
+    
+    deinit {
+        print("Dead: NotificationViewmodel")
     }
 }
 

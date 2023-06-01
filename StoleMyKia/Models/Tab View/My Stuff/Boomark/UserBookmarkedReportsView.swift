@@ -14,7 +14,7 @@ struct UserBookmarkedReportsView: View {
     
     @State private var alertErrorFetchingBookmarks = false
     
-    @ObservedObject var userModel: UserViewModel
+    @EnvironmentObject var userModel: UserViewModel
     @EnvironmentObject var reportsModel: ReportsViewModel
     
     var body: some View {
@@ -29,7 +29,6 @@ struct UserBookmarkedReportsView: View {
             }
         }
         .onAppear {
-            userModel.setUserReportsDelegate(reportsModel)
             getBookmarkReports()
         }
     }
@@ -56,12 +55,5 @@ struct UserBookmarkedReportsView: View {
                 self.alertErrorFetchingBookmarks.toggle()
             }
         }
-    }
-}
-
-struct UserBookmarkedReportsView_Previews: PreviewProvider {
-    static var previews: some View {
-        UserBookmarkedReportsView(userModel: UserViewModel())
-            .environmentObject(ReportsViewModel())
     }
 }

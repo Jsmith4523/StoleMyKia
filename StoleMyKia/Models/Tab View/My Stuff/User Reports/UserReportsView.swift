@@ -15,7 +15,7 @@ struct UserReportsView: View {
     
     @State private var alertErrorFetchingUserReports = false
     
-    @ObservedObject var userModel: UserViewModel
+    @EnvironmentObject var userModel: UserViewModel
     @EnvironmentObject var reportsModel: ReportsViewModel
     
     var body: some View {

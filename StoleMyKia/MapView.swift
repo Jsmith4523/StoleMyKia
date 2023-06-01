@@ -10,11 +10,12 @@ import MapKit
 
 struct ReportsMapView: View {
         
-    @StateObject private var mapModel = MapViewModel()
+    @ObservedObject var mapModel: MapViewModel
+    @EnvironmentObject var userModel: UserViewModel
     @EnvironmentObject var reportModel: ReportsViewModel
      
     var body: some View {
-        CustomNavView(title: "Reports",statusBarColor: .darkContent, backgroundColor: .brand) {
+        CustomNavView(title: "Reports", statusBarColor: .lightContent, backgroundColor: .brand) {
             ZStack(alignment: .top) {
                 MapViewRepresentable()
                 VStack {
@@ -23,6 +24,8 @@ struct ReportsMapView: View {
                     LowerMapViewButtons()
                 }
             }
+            .navigationTitle("Reports")
+            .navigationBarTitleDisplayMode(.inline)
             .toolbar {
                 ToolbarItem(placement: .navigationBarLeading) {
                     Button {
@@ -30,7 +33,7 @@ struct ReportsMapView: View {
                     } label: {
                         Image(systemName: "viewfinder")
                             .foregroundColor(.white)
-                            .font(.system(size: 19).weight(.heavy))
+                            .font(.system(size: 15).weight(.bold))
                     }
                 }
                 ToolbarItem(placement: .navigationBarTrailing) {
@@ -39,7 +42,7 @@ struct ReportsMapView: View {
                     } label: {
                         Image(systemName: "list.dash")
                             .foregroundColor(.white)
-                            .font(.system(size: 19).weight(.heavy))
+                            .font(.system(size: 15).weight(.bold))
                     }
                 }
             }
@@ -139,7 +142,7 @@ fileprivate struct LowerMapViewButtons: View {
 
 struct Map_Previews: PreviewProvider {
     static var previews: some View {
-        ReportsMapView()
+        ReportsMapView(mapModel: MapViewModel())
             .environmentObject(ReportsViewModel())
             .environmentObject(MapViewModel())
     }

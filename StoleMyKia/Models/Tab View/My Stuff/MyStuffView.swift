@@ -42,8 +42,7 @@ struct MyStuffView: View {
     
     @State private var isShowingSettingsView = false
     
-    @ObservedObject var userModel: UserViewModel
-    
+    @EnvironmentObject var userModel: UserViewModel
     @EnvironmentObject var notificationModel: NotificationViewModel
     @EnvironmentObject var reportsModel: ReportsViewModel
     
@@ -54,16 +53,20 @@ struct MyStuffView: View {
                 tabViewSelectionRow
                 VStack {
                     TabView(selection: $userAccountTabViewSelection) {
-                        UserReportsView(userModel: userModel)
+                        UserReportsView()
                             .tag(UserAccountViewSelection.userReports)
-                        UserUpdatesView(userModel: userModel)
+                        UserUpdatesView()
                             .tag(UserAccountViewSelection.updates)
-                        UserBookmarkedReportsView(userModel: userModel)
+                        UserBookmarkedReportsView()
                             .tag(UserAccountViewSelection.bookmark)
                     }
                     .tabViewStyle(.page(indexDisplayMode: .never))
                 }
             }
+            .navigationTitle("title")
+            .navigationBarTitleDisplayMode(.inline)
+            .environmentObject(reportsModel)
+            .environmentObject(userModel)
             .toolbar {
                 ToolbarItem(placement: .navigationBarTrailing) {
                     NavigationLink {
@@ -83,8 +86,6 @@ struct MyStuffView: View {
             .onAppear {
                 userModel.setUserReportsDelegate(reportsModel)
             }
-            .environmentObject(reportsModel)
-            .environmentObject(userModel)
         }
     }
     
@@ -127,14 +128,5 @@ struct MyStuffView: View {
         withAnimation {
             self.userAccountTabViewSelection = selection
         }
-    }
-}
-
-
-struct UserAccView_Previews: PreviewProvider {
-    static var previews: some View {
-        MyStuffView(userModel: UserViewModel())
-            .environmentObject(NotificationViewModel())
-            .environmentObject(ReportsViewModel())
     }
 }

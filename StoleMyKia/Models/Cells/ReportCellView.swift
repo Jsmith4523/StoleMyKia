@@ -137,7 +137,7 @@ struct ReportCellView: View {
     }
     
     private func isCurrentUsersReport() -> Bool {
-        guard let currentUser = userModel.currentUser, let reportUid = report.uid, currentUser.uid == reportUid else {
+        guard let currentUser = userModel.currentUser(), let reportUid = report.uid, currentUser.uid == reportUid else {
             return false
         }
         

@@ -9,15 +9,14 @@ import Foundation
 import FirebaseAuth
 import Firebase
 
-@MainActor
+
 final class UserViewModel: ObservableObject {
         
     @Published var showLoginProgressView = true
-    @Published private(set) var userIsSignedIn = false
+    @Published var userIsSignedIn = false
     
-    @Published private(set) var currentUser: User!
+    //@Published private(set) var currentUser: User!
     @Published private(set) var firebaseUser: FirebaseUser!
-    
     @Published private(set) var alertErrorLoggingIn = false
     
     private let accountManager = UserAccountManager()
@@ -34,12 +33,8 @@ final class UserViewModel: ObservableObject {
         self.userReportsDelegate = delegate
     }
     
-    func getUserCreationDate() -> Date? {
-        guard let date = currentUser.metadata.creationDate else {
-            return nil
-        }
-        
-        return date
+    func currentUser() -> User! {
+        auth.currentUser
     }
     
     func containsBookmarkReport(id: UUID) -> Bool {
@@ -81,27 +76,27 @@ final class UserViewModel: ObservableObject {
     private func saveChanges(user: FirebaseUser, completion: @escaping (Bool) -> Void) {
         let oldFirebaseUser = self.firebaseUser
         
-        accountManager.saveAccountChanges(user: user) { status in
+        accountManager.saveAccountChanges(user: user) { [weak self] status in
             //Setting the previous value of the user if false...
             guard status else {
-                self.firebaseUser = oldFirebaseUser
+                self?.firebaseUser = oldFirebaseUser
                 return
             }
             
-            self.getUserData()
+            self?.getUserData()
             completion(status)
         }
     }
     
     private func getUserData() {
-        guard let currentUser else {
+        guard let currentUser = auth.currentUser else {
             return
         }
         
-        self.accountManager.getUserData(currentUser.uid) { result in
+        self.accountManager.getUserData(currentUser.uid) { [weak self] result in
             switch result {
             case .success(let user):
-                self.firebaseUser = user
+                self?.firebaseUser = user
             case .failure(let error):
                 print(error.localizedDescription)
             }
@@ -141,15 +136,16 @@ final class UserViewModel: ObservableObject {
     }
     
     func signUp(email: String, password: String, completion: @escaping ((Bool?)->Void)) {
-        auth.createUser(withEmail: email, password: password) { result, err in
+        auth.createUser(withEmail: email, password: password) { [weak self] result, err in
             guard let result, err == nil else {
                 completion(false)
                 return
             }
             
-            self.accountManager.createUserData(with: result.user.uid) { result in
+            self?.accountManager.createUserData(with: result.user.uid) { result in
                 switch result {
                 case .success(_):
+                    self?.setupUserListener()
                     completion(true)
                 case .failure(let failure):
                     print(failure.localizedDescription)
@@ -165,18 +161,20 @@ final class UserViewModel: ObservableObject {
             return
         }
         
-        userReportsDelegate?.deleteAll { success in
+        userReportsDelegate?.deleteAll { [weak self] success in
             guard success else {
                 completion(false)
                 return
             }
-            self.auth.currentUser?.delete { err in
+            
+            self?.auth.currentUser?.delete { [weak self] err in
                 guard err == nil else {
                     print(err?.localizedDescription ?? "There was an error")
                     completion(false)
                     return
                 }
-                self.accountManager.deleteUser(user: firebaseUser) { success in
+                
+                self?.accountManager.deleteUser(user: firebaseUser) { success in
                     guard success else {
                         completion(false)
                         return
@@ -210,8 +208,8 @@ final class UserViewModel: ObservableObject {
     
     
     func getUserBookmarks(completion: @escaping (Result<[Report], URReportsError>) -> Void) {
-        userReportsDelegate?.getUserBookmarks(removalCompletion: { uuid in
-            self.removeBookmark(id: uuid) { _ in }
+        userReportsDelegate?.getUserBookmarks(removalCompletion: { [weak self] uuid in
+            self?.removeBookmark(id: uuid) { _ in }
         }, completion: { status in
             switch status {
             case .success(let reports):
@@ -234,34 +232,40 @@ final class UserViewModel: ObservableObject {
     }
     
     private func setupUserListener() {
-        Auth.auth().addStateDidChangeListener { auth, user in
-            guard let user else {
-                prepareToSignOut()
-                return
-            }
-            
-            self.accountManager.userDataIsSaved(uid: user.uid) { success in
-                guard success else {
-                    prepareToSignOut()
-                    return
+        print("Fired")
+        Auth.auth().addStateDidChangeListener { [weak self] auth, user in
+            if let user {
+                self?.accountManager.userDataIsSaved(uid: user.uid) { [weak self] success in
+                    if success {
+                        print("User is signed in")
+                        self?.getUserData()
+                        self?.userIsSignedIn = true
+                    } else {
+                        self?.firebaseUser = nil
+                        self?.userIsSignedIn = false
+                    }
                 }
-                
-                pepareForSignIn(user: user)
+            } else {
+                self?.firebaseUser = nil
+                self?.userIsSignedIn = false
             }
         }
         
         func prepareToSignOut() {
-            try? self.auth.signOut()
-            self.userIsSignedIn = false
-            self.currentUser = nil
+            //FIXME:
+            //try? self.auth.signOut()
             self.firebaseUser = nil
+            self.userIsSignedIn = false
         }
         
         func pepareForSignIn(user: User) {
             self.userIsSignedIn = true
-            self.currentUser = user
             self.getUserData()
         }
+    }
+    
+    deinit {
+        print("Dead: UserViewModel")
     }
 }
 

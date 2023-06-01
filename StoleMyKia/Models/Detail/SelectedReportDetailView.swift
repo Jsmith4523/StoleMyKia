@@ -125,7 +125,7 @@ struct SelectedReportDetailView: View {
             }
             dismiss()
             
-            if let completion {
+            if let completion = completion {
                 completion()
             }
             

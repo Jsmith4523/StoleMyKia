@@ -15,7 +15,7 @@ final class MapViewModel: NSObject, ObservableObject {
     @Published var alertLocationSettingsDisabled = false
     
     @Published private var mapViewDidFinishLoading = false
-    
+        
     var locationAuth: CLAuthorizationStatus! {
         locationManager.authorizationStatus
     }
@@ -28,16 +28,17 @@ final class MapViewModel: NSObject, ObservableObject {
         super.init()
                 
         locationManager.delegate = self
-        mapView.delegate = self
-        
         locationManager.requestWhenInUseAuthorization()
     }
     
-    let mapView = MKMapView()
+    var mapView = MKMapView()
     let locationManager = CLLocationManager()
     
     weak var annotationDelegate: SelectedReportAnnotationDelegate?
     
+    deinit {
+        print("Dead: MapViewModel")
+    }
 }
 
 //MARK: - ReportsDelegate
@@ -92,16 +93,16 @@ extension MapViewModel: MKMapViewDelegate {
     func mapViewDidFinishLoadingMap(_ mapView: MKMapView) {
         self.mapViewDidFinishLoading = true
     }
-    
-    func mapView(_ mapView: MKMapView, regionDidChangeAnimated animated: Bool) {
-        guard mapView.selectedAnnotations.isEmpty, mapViewDidFinishLoading else {
-            return
-        }
-        
-        withAnimation {
-            regionDidChange = true
-        }
-    }
+//    
+//    func mapView(_ mapView: MKMapView, regionDidChangeAnimated animated: Bool) {
+//        guard mapView.selectedAnnotations.isEmpty, mapViewDidFinishLoading else {
+//            return
+//        }
+//        
+//        withAnimation {
+//            regionDidChange = true
+//        }
+//    }
    
     func mapView(_ mapView: MKMapView, didSelect annotation: MKAnnotation) {
         switch annotation {

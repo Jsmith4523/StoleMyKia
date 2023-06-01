@@ -8,37 +8,29 @@
 import SwiftUI
 
 struct Tab: View {
-    
-    @State private var selection: TabSelection = .map
-    
+            
     @StateObject private var reportsModel = ReportsViewModel()
     @StateObject private var notificationModel = NotificationViewModel()
-    @StateObject private var userModel = UserViewModel()
+    @StateObject private var mapViewModel = MapViewModel()
     
-    enum TabSelection {
-        case map, notification, myStuff
-    }
-    
+    @ObservedObject var userModel: UserViewModel
     
     var body: some View {
-        TabView(selection: $selection) {
-            ReportsMapView()
+        TabView {
+            ReportsMapView(mapModel: mapViewModel)
                 .tabItem {
                     Label("Map", systemImage: "map")
                 }
-                .tag(TabSelection.map)
             NotificationsView()
+                .badge(100)
                 .tabItem {
                     Label("Notifications", systemImage: "bell")
                 }
-                .tag(TabSelection.notification)
-            MyStuffView(userModel: userModel)
+            MyStuffView()
                 .tabItem {
                     Label("My Stuff", systemImage: "archivebox")
                 }
-                .tag(TabSelection.myStuff)
-
-        }
+       }
         .sheet(item: $reportsModel.reportDetailMode) { mode in
             switch mode {
             case .multiple(let reports):
@@ -47,18 +39,18 @@ struct Tab: View {
                 SelectedReportDetailView(report: report)
             }
         }
-        .environmentObject(reportsModel)
-        .environmentObject(notificationModel)
-        .environmentObject(userModel)
         .onAppear {
             reportsModel.firebaseUserDelegate = userModel
         }
+        .environmentObject(reportsModel)
+        .environmentObject(notificationModel)
+        .environmentObject(userModel)
     }
 }
 
 struct ContentView_Previews: PreviewProvider {
     static var previews: some View {
-        Tab()
+        Tab(userModel: UserViewModel())
             .environmentObject(NotificationViewModel())
             .environmentObject(UserViewModel())
     }

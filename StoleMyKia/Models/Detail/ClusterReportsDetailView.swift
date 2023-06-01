@@ -13,11 +13,7 @@ struct MultipleReportsView: View {
         
     let reports: [Report]
     
-    @State private var reportTypeFilter: ReportType? {
-        didSet {
-            print(reportTypeFilter?.rawValue)
-        }
-    }
+    @State private var reportTypeFilter: ReportType?
     
     @EnvironmentObject var reportsModel: ReportsViewModel
     @EnvironmentObject var mapModel: MapViewModel

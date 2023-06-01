@@ -13,7 +13,7 @@ struct UserUpdatesView: View {
     
     @State private var updateReports = [Report]()
     
-    @ObservedObject var userModel: UserViewModel
+    @EnvironmentObject var userModel: UserViewModel
     @EnvironmentObject var reportsModel: ReportsViewModel
     
     var body: some View {
@@ -28,7 +28,6 @@ struct UserUpdatesView: View {
             }
         }
         .onAppear {
-            userModel.setUserReportsDelegate(reportsModel)
             getUserUpdates()
         }
     }
@@ -53,11 +52,5 @@ struct UserUpdatesView: View {
                 print(error.description)
             }
         }
-    }
-}
-
-struct UserUpdatesView_Previews: PreviewProvider {
-    static var previews: some View {
-        UserUpdatesView(userModel: UserViewModel())
     }
 }
