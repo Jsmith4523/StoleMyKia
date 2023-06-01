@@ -9,7 +9,6 @@ import SwiftUI
 import Firebase
 import UserNotifications
 import FirebaseMessaging
-import CryptoKit
 
 @main
 struct StoleMyKiaApp: App {
