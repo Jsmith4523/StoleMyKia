@@ -15,31 +15,25 @@ struct Report: Identifiable, Codable, Comparable {
     var id = UUID()
     
     var uid: String?
-    let dt: TimeInterval?
+    let dt: TimeInterval
     let reportType: ReportType
     let vehicle: Vehicle
     var licensePlate: EncryptedData?
     let distinguishable: String
     var imageURL: String?
     let location: Location?
-    var updates: [UUID] = []
+    var updates: [UUID]?
     
     static func == (lhs: Report, rhs: Report) -> Bool {
         return true
     }
     
     static func < (lhs: Report, rhs: Report) -> Bool {
-        if let lhsTime = lhs.dt, let rhsTime = rhs.dt {
-            return lhsTime < rhsTime
-        }
-        return false
+        lhs.dt < rhs.dt
     }
     
     static func > (lhs: Report, rhs: Report) -> Bool {
-        if let lhsTime = lhs.dt, let rhsTime = rhs.dt {
-            return lhsTime > rhsTime
-        }
-        return false
+        lhs.dt > rhs.dt
     }
 }
 
@@ -78,17 +72,11 @@ extension Report {
     }
     
     var postTime: String {
-        if let dt {
-            return "\(Date(timeIntervalSince1970: dt).formatted(.dateTime.hour().minute()))"
-        }
-        return ""
+        Date(timeIntervalSince1970: dt).formatted(.dateTime.hour().minute())
     }
     
     var postDate: String {
-        if let dt {
-            return "\(Date(timeIntervalSince1970: dt).formatted(.dateTime.month().day().year()))"
-        }
-        return ""
+        Date(timeIntervalSince1970: dt).formatted(.dateTime.month().day().year())
     }
     
     var details: String {
@@ -106,12 +94,12 @@ extension Report {
         }
     }
     
-    ///Affected vehicle years of both Kia's and Hyundai's. This is set for most vehicles.
+    ///The standard year range for most Hyundai and Kia vehicles affected
     static var affectedVehicleYears: ClosedRange<Int> {
         return 2011...lastAffectedYear
     }
     
-    ///The final year vehicles were affetced. Subject to change 🤷🏽‍♂️
+    ///This is the final year both Hyundai and Kia vehicles are affected by the anti-theft vulnerability. Subject to change
     static var lastAffectedYear: Int {
         2022
     }

@@ -71,19 +71,13 @@ struct SelectedReportDetailView: View {
                 getVehicleImage(report.imageURL)
             }
             .toolbar {
-                ToolbarItem(placement: .navigationBarLeading) {
-                    Button {
-                        dismiss()
-                    } label: {
-                        Image(systemName: "xmark")
-                    }
-                }
                 ToolbarItem(placement: .navigationBarTrailing) {
                     if report.uid == reportsModel.firebaseUserDelegate?.uid {
                         Button {
                             self.alertOfRemovingPosting.toggle()
                         } label: {
                             Image(systemName: "trash")
+                                .bold()
                         }
                     }
                 }

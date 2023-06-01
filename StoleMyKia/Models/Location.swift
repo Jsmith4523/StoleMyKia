@@ -18,6 +18,7 @@ struct Location: Codable, Identifiable, Hashable {
 }
 
 extension Location {
+    
     var coordinates: CLLocationCoordinate2D? {
         if let lat, let lon {
             return CLLocationCoordinate2D(latitude: lat, longitude: lon)

@@ -180,6 +180,12 @@ fileprivate final class LocationSearchModel: ObservableObject {
     
     @Published var request = ""
     @Published var locations = [Location]()
+    
+    private let locationManager = CLLocationManager()
+    
+    var locationIsAuthorized: Bool {
+        locationManager.authorizationStatus
+    }
         
     func fetchLocations() {
         let request = MKLocalSearch.Request()
