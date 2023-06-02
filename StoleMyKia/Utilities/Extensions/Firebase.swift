@@ -84,7 +84,9 @@ extension DocumentReference {
                 return
             }
             
-            guard snapshot.exists, !(errorIfNotFound) else {
+            print(snapshot.documentID)
+                        
+            guard snapshot.exists, errorIfNotFound else {
                 completion(.failure(.snapshotError("Snapshot no longer exist")))
                 return
             }
@@ -188,7 +190,7 @@ extension CollectionReference {
                     return
                 }
                 
-                self.addDocument(data: data) { err in
+                self.document(report.id.uuidString).setData(data) { err in
                     guard err == nil else {
                         completion(.failure(.uploadError))
                         return

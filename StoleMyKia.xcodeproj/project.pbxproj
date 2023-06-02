@@ -8,7 +8,7 @@
 
 /* Begin PBXBuildFile section */
 		24127C1729E3E71F00C09FE5 /* MapView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 24127C1629E3E71F00C09FE5 /* MapView.swift */; };
-		24127C1D29E3E7B800C09FE5 /* MapViewRep.swift in Sources */ = {isa = PBXBuildFile; fileRef = 24127C1C29E3E7B800C09FE5 /* MapViewRep.swift */; };
+		24127C1D29E3E7B800C09FE5 /* MKMapViewRepresentable.swift in Sources */ = {isa = PBXBuildFile; fileRef = 24127C1C29E3E7B800C09FE5 /* MKMapViewRepresentable.swift */; };
 		24127C1F29E3F4AC00C09FE5 /* Launch Screen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 24127C1E29E3F4AC00C09FE5 /* Launch Screen.storyboard */; };
 		2420E2422A20906F00B31275 /* LearnView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2420E2412A20906F00B31275 /* LearnView.swift */; };
 		2425EAF92A003CDE00CC886F /* NavigationController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2425EAF82A003CDE00CC886F /* NavigationController.swift */; };
@@ -35,7 +35,6 @@
 		2448C3AA2A2A710F00A72D9F /* FirebaseStorage.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2448C3A92A2A710F00A72D9F /* FirebaseStorage.swift */; };
 		244BF51729D178BF00951765 /* MyStuffView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 244BF51629D178BF00951765 /* MyStuffView.swift */; };
 		244BF51929D33F4E00951765 /* ImageCache.swift in Sources */ = {isa = PBXBuildFile; fileRef = 244BF51829D33F4E00951765 /* ImageCache.swift */; };
-		245B391029E28A64001DD213 /* MapViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 245B390F29E28A64001DD213 /* MapViewModel.swift */; };
 		245B391729E39159001DD213 /* Color+EXT.swift in Sources */ = {isa = PBXBuildFile; fileRef = 245B391629E39159001DD213 /* Color+EXT.swift */; };
 		245B391A29E39E09001DD213 /* ReportMap.swift in Sources */ = {isa = PBXBuildFile; fileRef = 245B391929E39E09001DD213 /* ReportMap.swift */; };
 		245B391D29E39E49001DD213 /* VehicleMake.swift in Sources */ = {isa = PBXBuildFile; fileRef = 245B391C29E39E49001DD213 /* VehicleMake.swift */; };
@@ -88,7 +87,6 @@
 		24F94F562A25A7E000CB14AF /* UserBookmarkedReportsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 24F94F552A25A7E000CB14AF /* UserBookmarkedReportsView.swift */; };
 		24F94F592A25A9F300CB14AF /* StretchRefreshButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 24F94F582A25A9F300CB14AF /* StretchRefreshButton.swift */; };
 		24F94F5C2A25C75800CB14AF /* EditProfileView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 24F94F5B2A25C75800CB14AF /* EditProfileView.swift */; };
-		24F94F5E2A27CB9400CB14AF /* MKReportsMapView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 24F94F5D2A27CB9400CB14AF /* MKReportsMapView.swift */; };
 		24FA56B52A291CAC0074149B /* NoNotificationsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 24FA56B42A291CAC0074149B /* NoNotificationsView.swift */; };
 		24FA56B82A2924460074149B /* VehicleImageView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 24FA56B72A2924460074149B /* VehicleImageView.swift */; };
 		24FA56BA2A29284D0074149B /* UIActivityVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 24FA56B92A29284D0074149B /* UIActivityVC.swift */; };
@@ -98,7 +96,7 @@
 /* Begin PBXFileReference section */
 		197A31A21B533A0B83DC4715 /* Pods_StoleMyKia.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_StoleMyKia.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		24127C1629E3E71F00C09FE5 /* MapView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = MapView.swift; path = StoleMyKia/MapView.swift; sourceTree = SOURCE_ROOT; };
-		24127C1C29E3E7B800C09FE5 /* MapViewRep.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MapViewRep.swift; sourceTree = "<group>"; };
+		24127C1C29E3E7B800C09FE5 /* MKMapViewRepresentable.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MKMapViewRepresentable.swift; sourceTree = "<group>"; };
 		24127C1E29E3F4AC00C09FE5 /* Launch Screen.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = "Launch Screen.storyboard"; sourceTree = "<group>"; };
 		2420E2412A20906F00B31275 /* LearnView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LearnView.swift; sourceTree = "<group>"; };
 		2425EAF82A003CDE00CC886F /* NavigationController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NavigationController.swift; sourceTree = "<group>"; };
@@ -125,7 +123,6 @@
 		2448C3A92A2A710F00A72D9F /* FirebaseStorage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FirebaseStorage.swift; sourceTree = "<group>"; };
 		244BF51629D178BF00951765 /* MyStuffView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MyStuffView.swift; sourceTree = "<group>"; };
 		244BF51829D33F4E00951765 /* ImageCache.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImageCache.swift; sourceTree = "<group>"; };
-		245B390F29E28A64001DD213 /* MapViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MapViewModel.swift; sourceTree = "<group>"; };
 		245B391629E39159001DD213 /* Color+EXT.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Color+EXT.swift"; sourceTree = "<group>"; };
 		245B391929E39E09001DD213 /* ReportMap.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReportMap.swift; sourceTree = "<group>"; };
 		245B391C29E39E49001DD213 /* VehicleMake.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VehicleMake.swift; sourceTree = "<group>"; };
@@ -180,7 +177,6 @@
 		24F94F552A25A7E000CB14AF /* UserBookmarkedReportsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserBookmarkedReportsView.swift; sourceTree = "<group>"; };
 		24F94F582A25A9F300CB14AF /* StretchRefreshButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StretchRefreshButton.swift; sourceTree = "<group>"; };
 		24F94F5B2A25C75800CB14AF /* EditProfileView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EditProfileView.swift; sourceTree = "<group>"; };
-		24F94F5D2A27CB9400CB14AF /* MKReportsMapView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MKReportsMapView.swift; sourceTree = "<group>"; };
 		24FA56B42A291CAC0074149B /* NoNotificationsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NoNotificationsView.swift; sourceTree = "<group>"; };
 		24FA56B72A2924460074149B /* VehicleImageView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VehicleImageView.swift; sourceTree = "<group>"; };
 		24FA56B92A29284D0074149B /* UIActivityVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UIActivityVC.swift; sourceTree = "<group>"; };
@@ -530,7 +526,7 @@
 			isa = PBXGroup;
 			children = (
 				24127C1629E3E71F00C09FE5 /* MapView.swift */,
-				24127C1C29E3E7B800C09FE5 /* MapViewRep.swift */,
+				24127C1C29E3E7B800C09FE5 /* MKMapViewRepresentable.swift */,
 			);
 			name = Map;
 			path = ..;
@@ -553,7 +549,6 @@
 				24A5792E29BC5C8700495E6F /* ReportsViewModel.swift */,
 				2437327F29BEF8FC008F4C4E /* NotificationViewModel.swift */,
 				24B897EB29CF5A3B0003BCC8 /* UserViewModel.swift */,
-				245B390F29E28A64001DD213 /* MapViewModel.swift */,
 			);
 			path = "View Models";
 			sourceTree = "<group>";
@@ -580,7 +575,6 @@
 		24A662F829C592CA00AD784F /* MKMapView */ = {
 			isa = PBXGroup;
 			children = (
-				24F94F5D2A27CB9400CB14AF /* MKReportsMapView.swift */,
 				241D2FFE29BFF88D00E78792 /* Annotations */,
 			);
 			path = MKMapView;
@@ -798,7 +792,6 @@
 				24A206902A0826BE00F5DC0C /* UserAccountManager.swift in Sources */,
 				24FA56B82A2924460074149B /* VehicleImageView.swift in Sources */,
 				24F94F592A25A9F300CB14AF /* StretchRefreshButton.swift in Sources */,
-				245B391029E28A64001DD213 /* MapViewModel.swift in Sources */,
 				24A5792929BC567F00495E6F /* ReportAnnotation.swift in Sources */,
 				2495A02529CB9EC800457CE7 /* AboutAppView.swift in Sources */,
 				2426A61B2A23461300E78647 /* ReportsDelegate.swift in Sources */,
@@ -815,7 +808,6 @@
 				24B897EC29CF5A3B0003BCC8 /* UserViewModel.swift in Sources */,
 				24EAF11729C2A02900B4CBFE /* SFSafariView.swift in Sources */,
 				24A2066D2A02296900F5DC0C /* LicensePlateResultsView.swift in Sources */,
-				24F94F5E2A27CB9400CB14AF /* MKReportsMapView.swift in Sources */,
 				24A5792F29BC5C8700495E6F /* ReportsViewModel.swift in Sources */,
 				245B391A29E39E09001DD213 /* ReportMap.swift in Sources */,
 				24A206952A08334400F5DC0C /* Location.swift in Sources */,
@@ -830,7 +822,7 @@
 				245B391729E39159001DD213 /* Color+EXT.swift in Sources */,
 				24A4CEE729C04CBA00B856BC /* ReportAnnotationCallout.swift in Sources */,
 				245B392129E39E90001DD213 /* ReportType.swift in Sources */,
-				24127C1D29E3E7B800C09FE5 /* MapViewRep.swift in Sources */,
+				24127C1D29E3E7B800C09FE5 /* MKMapViewRepresentable.swift in Sources */,
 				2426A6192A2345EF00E78647 /* FirebaseUserDelegate.swift in Sources */,
 				2426A6322A24505500E78647 /* UserReportsView.swift in Sources */,
 				2437328329BEFB2E008F4C4E /* NewReportView.swift in Sources */,

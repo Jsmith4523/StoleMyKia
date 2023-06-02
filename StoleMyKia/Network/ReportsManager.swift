@@ -23,7 +23,7 @@ class ReportsManager {
     private let database = Firestore.firestore()
     
     private var collection: CollectionReference {
-        database.collection("Reports")
+        database.collection("Reports/")
     }
     
     ///Fetches reports in the database
@@ -108,7 +108,7 @@ class ReportsManager {
     }
     
     func delete(report: Report, completion: @escaping DeleteReportCompletion) {
-        collection.document(report.id.uuidString).beginDelection { result in
+        collection.document("\(report.id)").beginDelection { result in
             switch result {
             case .success(let success):
                 completion(.success(success))

@@ -12,7 +12,7 @@ protocol ReportsDelegate: AnyObject {
     func reportsDelegate(didDeleteReport report: Report)
 }
 
-protocol SelectedReportAnnotationDelegate: AnyObject {
+protocol ReportAnnotationDelegate: AnyObject {
     func didSelectReport(_ report: Report)
     func didSelectCluster(_ reports: [Report])
 }

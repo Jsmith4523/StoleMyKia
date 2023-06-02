@@ -43,7 +43,6 @@ struct NewReportView: View {
     @State private var alertErrorUploading = false
     @State private var alertSelectLocation = false
     
-    @EnvironmentObject var mapModel: MapViewModel
     @EnvironmentObject var reportsModel: ReportsViewModel
     
     @Environment (\.dismiss) var dismiss
@@ -197,9 +196,6 @@ struct NewReportView: View {
                     self.doesNotHaveVehicleIdentification = false
                 }
             }
-            .onChange(of: mapModel.locationAuth.isAuthorized()) { _ in
-                self.location = nil
-            }
         }
         .interactiveDismissDisabled()
         .disabled(isUploading)
@@ -231,14 +227,16 @@ struct NewReportView: View {
     
     //Retrieving the users locations...
     private func usersLocation() -> Location? {
-        guard mapModel.locationAuth.isAuthorized(), let userLocation = mapModel.userLocation else {
-            return nil
-        }
-        
-        let coords = userLocation.coordinate
-        let usersLocation = Location(address: "", name: "", lat: coords.latitude, lon: coords.longitude)
-        
-        return usersLocation
+//        guard mapModel.locationAuth.isAuthorized(), let userLocation = mapModel.userLocation else {
+//            return nil
+//        }
+//
+//        let coords = userLocation.coordinate
+//        let usersLocation = Location(address: "", name: "", lat: coords.latitude, lon: coords.longitude)
+//
+//        return usersLocation
+        //TODO: Get the users location
+        return nil
     }
     
     
@@ -285,6 +283,5 @@ struct NewReportView_Previews: PreviewProvider {
     static var previews: some View {
         NewReportView()
             .environmentObject(ReportsViewModel())
-            .environmentObject(MapViewModel())
     }
 }

@@ -11,14 +11,12 @@ struct Tab: View {
             
     @StateObject private var reportsModel = ReportsViewModel()
     @StateObject private var notificationModel = NotificationViewModel()
-    @StateObject private var mapViewModel = MapViewModel()
     
     @ObservedObject var userModel: UserViewModel
     
     var body: some View {
         TabView {
             ReportsMapView()
-                .environmentObject(mapViewModel)
                 .tabItem {
                     Label("Map", systemImage: "map")
                 }

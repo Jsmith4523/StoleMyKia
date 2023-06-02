@@ -11,6 +11,7 @@ import UIKit
 import MapKit
 
 enum ReportDetailMode: Identifiable {
+    
     case single(Report)
     case multiple([Report])
     
@@ -64,8 +65,6 @@ final class ReportsViewModel: NSObject, ObservableObject {
     override init() {
         super.init()
         self.getReports()
-        
-        print("Alive: ReportsViewModel")
     }
     
      func upload(_ report: Report, with image: UIImage? = nil, completion: @escaping ((Bool)->Void)) {
@@ -137,7 +136,7 @@ final class ReportsViewModel: NSObject, ObservableObject {
 }
 
 //MARK: - SelectedReportAnnotationDelegate
-extension ReportsViewModel: SelectedReportAnnotationDelegate {
+extension ReportsViewModel: ReportAnnotationDelegate {
     func didSelectReport(_ report: Report) {
         self.reportDetailMode = .single(report)
     }

@@ -10,7 +10,7 @@ import FirebaseStorage
 
 extension Storage {
     
-    var vehicleImagesReference: StorageReference {
+    private var vehicleImagesReference: StorageReference {
         self.reference(withPath: "/vehicles")
     }
     
@@ -45,7 +45,7 @@ extension Storage {
             return
         }
         
-        let imageReference = Storage.storage().vehicleImagesReference
+        let imageReference = Storage.storage().vehicleImagesReference.child(path.uuidString)
         
         imageReference.putData(imageData) { meta, err in
             guard err == nil else {
@@ -63,4 +63,8 @@ extension Storage {
             }
         }
     }
+}
+
+extension StorageReference {
+    
 }

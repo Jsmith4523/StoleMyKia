@@ -10,14 +10,13 @@ import MapKit
 
 struct ReportsMapView: View {
         
-    @EnvironmentObject var mapModel: MapViewModel
     @EnvironmentObject var userModel: UserViewModel
     @EnvironmentObject var reportModel: ReportsViewModel
      
     var body: some View {
         CustomNavView(title: "Reports", statusBarColor: .lightContent, backgroundColor: .brand) {
             ZStack(alignment: .top) {
-                MapViewRepresentable()
+                MKMapViewRepresentable()
                 VStack {
                     UpperMapViewButtons()
                     Spacer()
@@ -50,39 +49,33 @@ struct ReportsMapView: View {
             LicensePlateScannerView()
         }
         .environmentObject(reportModel)
-        .environmentObject(mapModel)
-        .onAppear {
-            reportModel.delegate = mapModel
-            mapModel.annotationDelegate = reportModel
-        }
     }
 }
 
 fileprivate struct UpperMapViewButtons: View {
     
-    @EnvironmentObject var mapModel: MapViewModel
     @EnvironmentObject var reportModel: ReportsViewModel
     
     var body: some View {
         HStack {
             Spacer()
             VStack {
-                if mapModel.regionDidChange {
-                    Button {
-                        withAnimation(.linear) {
-                            mapModel.regionDidChange = false
-                        }
-                    } label: {
-                        Label("Search here", systemImage: "map")
-                            .padding(10)
-                            .font(.system(size: 15).weight(.heavy))
-                            .background(Color(uiColor: .secondarySystemBackground))
-                            .clipShape(Capsule())
-                            .shadow(radius: 3)
-                    }
-                }
+//                if mapModel.regionDidChange {
+//                    Button {
+//                        withAnimation(.linear) {
+//                            //mapModel.regionDidChange = false
+//                        }
+//                    } label: {
+//                        Label("Search here", systemImage: "map")
+//                            .padding(10)
+//                            .font(.system(size: 15).weight(.heavy))
+//                            .background(Color(uiColor: .secondarySystemBackground))
+//                            .clipShape(Capsule())
+//                            .shadow(radius: 3)
+//                    }
+//                }
                 Button {
-                    mapModel.centerToUsersLocation(animate: true)
+                    //mapModel.centerToUsersLocation(animate: true)
                 } label: {
                     Image(systemName: "location")
                         .padding(10)
@@ -95,12 +88,12 @@ fileprivate struct UpperMapViewButtons: View {
             Spacer()
         }
         .padding()
-        .alert("Your location settings have denied locating to your current location. To change the settings, go to Settings>StoleMyKia>Location", isPresented: $mapModel.alertLocationSettingsDisabled) {
-            Button("OK") {}
-            Button("Change Settings"){
-                URL.openApplicationSettings()
-            }
-        }
+//        .alert("Your location settings have denied locating to your current location. To change the settings, go to Settings>StoleMyKia>Location", isPresented: $mapModel.alertLocationSettingsDisabled) {
+//            Button("OK") {}
+//            Button("Change Settings"){
+//                URL.openApplicationSettings()
+//            }
+//        }
     }
 }
 
@@ -109,7 +102,6 @@ fileprivate struct LowerMapViewButtons: View {
     
     @State private var isShowingNewReportView = false
     
-    @EnvironmentObject var mapModel: MapViewModel
     @EnvironmentObject var reportModel: ReportsViewModel
     
     var body: some View {
@@ -142,6 +134,5 @@ struct Map_Previews: PreviewProvider {
     static var previews: some View {
         ReportsMapView()
             .environmentObject(ReportsViewModel())
-            .environmentObject(MapViewModel())
     }
 }

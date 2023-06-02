@@ -16,7 +16,6 @@ struct MultipleReportsView: View {
     @State private var reportTypeFilter: ReportType?
     
     @EnvironmentObject var reportsModel: ReportsViewModel
-    @EnvironmentObject var mapModel: MapViewModel
     
     @Environment (\.dismiss) var dismiss
     
@@ -99,6 +98,5 @@ struct ClusterDetail_Previews: PreviewProvider {
     static var previews: some View {
         MultipleReportsView(reports: []).noReportsView
             .environmentObject(ReportsViewModel())
-            .environmentObject(MapViewModel())
     }
 }
