@@ -26,53 +26,55 @@ struct SettingsView: View {
     @Environment (\.dismiss) var dismiss
     
     var body: some View {
-        List {
-            Section("Settings") {
-                NavigationLink {
-                    NotificationSettingsView()
-                } label: {
-                    Label("Notifications", systemImage: "app.badge")
+        NavigationView {
+            List {
+                Section("Settings") {
+                    NavigationLink {
+                        NotificationSettingsView()
+                    } label: {
+                        Label("Notifications", systemImage: "app.badge")
+                    }
+                    //                    NavigationLink {
+                    //                        MapSettingsView()
+                    //                    } label: {
+                    //                        Label("Map", systemImage: "map")
+                    //                    }
                 }
-                //                    NavigationLink {
-                //                        MapSettingsView()
-                //                    } label: {
-                //                        Label("Map", systemImage: "map")
-                //                    }
+                Section("Support") {
+                    Button {
+                        isShowingTwitterSupport.toggle()
+                    } label: {
+                        Label("Twitter Support", systemImage: "iphone.and.arrow.forward")
+                    }
+                    Button {
+                        isShowingPrivacyPolicy.toggle()
+                    } label: {
+                        Label("Privacy Policy", systemImage: "hand.raised")
+                    }
+                    NavigationLink {
+                        AboutAppView()
+                    } label: {
+                        Label("About this app", systemImage: "info.circle")
+                    }
+                }
+                Section("Account") {
+                    Button {
+                        alertLogout.toggle()
+                    } label: {
+                        Label("Log out", systemImage: "door.left.hand.open")
+                    }
+                    Button {
+                        alertDeletingAccount.toggle()
+                    } label: {
+                        Label("Delete Account", systemImage: "trash")
+                            .foregroundColor(.red)
+                    }
+                }
             }
-            Section("Support") {
-                Button {
-                    isShowingTwitterSupport.toggle()
-                } label: {
-                    Label("Twitter Support", systemImage: "iphone.and.arrow.forward")
-                }
-                Button {
-                    isShowingPrivacyPolicy.toggle()
-                } label: {
-                    Label("Privacy Policy", systemImage: "hand.raised")
-                }
-                NavigationLink {
-                    AboutAppView()
-                } label: {
-                    Label("About this app", systemImage: "info.circle")
-                }
-            }
-            Section("Account") {
-                Button {
-                    alertLogout.toggle()
-                } label: {
-                    Label("Log out", systemImage: "door.left.hand.open")
-                }
-                Button {
-                    alertDeletingAccount.toggle()
-                } label: {
-                    Label("Delete Account", systemImage: "trash")
-                        .foregroundColor(.red)
-                }
-            }
+            .navigationBarTitle("Settings")
+            .navigationBarTitleDisplayMode(.inline)
+            .disabled(isLoggingOut)
         }
-        .navigationTitle(isLoggingOut ? "Logging out..." : "Settings")
-        .navigationBarTitleDisplayMode(.inline)
-        .disabled(isLoggingOut)
         .alert("Log out", isPresented: $alertLogout) {
             Button("Yes"){
                 beginLoggingOut()

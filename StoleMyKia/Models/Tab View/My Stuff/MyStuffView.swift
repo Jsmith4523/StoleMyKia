@@ -65,15 +65,10 @@ struct MyStuffView: View {
             }
             .navigationTitle("title")
             .navigationBarTitleDisplayMode(.inline)
-            .environmentObject(reportsModel)
-            .environmentObject(userModel)
             .toolbar {
                 ToolbarItem(placement: .navigationBarTrailing) {
-                    NavigationLink {
-                        SettingsView()
-                            .environmentObject(userModel)
-                            .environmentObject(notificationModel)
-                            .environmentObject(reportsModel)
+                    Button {
+                        isShowingSettingsView.toggle()
                     } label: {
                         Image(systemName: "slider.horizontal.3")
                             .foregroundColor(.brand)
@@ -87,6 +82,12 @@ struct MyStuffView: View {
                 userModel.setUserReportsDelegate(reportsModel)
             }
         }
+        .sheet(isPresented: $isShowingSettingsView) {
+            SettingsView()
+                .environmentObject(notificationModel)
+        }
+        .environmentObject(reportsModel)
+        .environmentObject(userModel)
     }
     
     var profileHeader: some View {
