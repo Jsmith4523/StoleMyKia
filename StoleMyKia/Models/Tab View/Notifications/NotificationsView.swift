@@ -8,12 +8,15 @@
 import SwiftUI
 
 struct NotificationsView: View {
+    
+    @EnvironmentObject var notificationModel: NotificationViewModel
+    
     var body: some View {
         NavigationView {
             VStack {
-                
+                NoNotificationsView()
             }
-            .navigationTitle("Notification")
+            .navigationTitle("Notifications")
             .navigationBarTitleDisplayMode(.inline)
         }
     }
@@ -22,5 +25,6 @@ struct NotificationsView: View {
 struct NotificationsView_Previews: PreviewProvider {
     static var previews: some View {
         NotificationsView()
+            .environmentObject(NotificationViewModel())
     }
 }

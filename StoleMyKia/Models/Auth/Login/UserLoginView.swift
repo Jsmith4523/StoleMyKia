@@ -43,11 +43,11 @@ struct UserLoginView: View {
                     VStack(spacing: 20) {
                         VStack(spacing: 20) {
                             TextField("Email", text: $email)
-                                .loginTextFieldStyle()
-                                .focused($loginFocus, equals: .email)
+//                                .loginTextFieldStyle()
+//                                .focused($loginFocus, equals: .email)
                             SecureField("Password", text: $password)
-                                .loginTextFieldStyle()
-                                .focused($loginFocus, equals: .password)
+//                                .loginTextFieldStyle()
+//                                .focused($loginFocus, equals: .password)
                         }
                         HStack {
                             NavigationLink {
@@ -84,8 +84,8 @@ struct UserLoginView: View {
                     }
                     Spacer()
                 }
-                .autocorrectionDisabled()
-                .keyboardType(.alphabet)
+//                .autocorrectionDisabled()
+//                .keyboardType(.alphabet)
             }
             .alert("Unable to login", isPresented: $alertError) {
                 Button("Okay"){}
@@ -96,6 +96,7 @@ struct UserLoginView: View {
     }
     
     private func beginLogin() {
+        
         guard !(email.isEmpty) else {
             self.loginFocus = .email
             return
@@ -105,13 +106,18 @@ struct UserLoginView: View {
             return
         }
         isLoading = true
-        userModel.signIn(email: email, password: password) { result in
-            guard result == nil else {
-                self.alertError = true
-                return
+        
+        self.loginFocus = nil
+        
+        DispatchQueue.main.asyncAfter(deadline: .now() + 0.75) {
+            userModel.signIn(email: email, password: password) { result in
+                guard result == nil else {
+                    self.alertError = true
+                    return
+                }
             }
+            isLoading = false
         }
-        isLoading = false
     }
 }
 

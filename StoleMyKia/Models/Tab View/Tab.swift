@@ -17,7 +17,8 @@ struct Tab: View {
     
     var body: some View {
         TabView {
-            ReportsMapView(mapModel: mapViewModel)
+            ReportsMapView()
+                .environmentObject(mapViewModel)
                 .tabItem {
                     Label("Map", systemImage: "map")
                 }
@@ -25,6 +26,10 @@ struct Tab: View {
                 .badge(100)
                 .tabItem {
                     Label("Notifications", systemImage: "bell")
+                }
+            ResourcesView()
+                .tabItem {
+                    Label("Resources", systemImage: "books.vertical")
                 }
             MyStuffView()
                 .tabItem {
@@ -35,8 +40,10 @@ struct Tab: View {
             switch mode {
             case .multiple(let reports):
                 MultipleReportsView(reports: reports)
+                    .presentationDragIndicator(.visible)
             case .single(let report):
                 SelectedReportDetailView(report: report)
+                    .presentationDragIndicator(.visible)
             }
         }
         .onAppear {

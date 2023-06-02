@@ -13,7 +13,9 @@ import Firebase
 final class UserViewModel: ObservableObject {
         
     @Published var showLoginProgressView = true
-    @Published var userIsSignedIn = false
+    
+    @Published private(set) var isSignedIn = false
+    
     
     //@Published private(set) var currentUser: User!
     @Published private(set) var firebaseUser: FirebaseUser!
@@ -26,7 +28,15 @@ final class UserViewModel: ObservableObject {
     private weak var userReportsDelegate: UserReportsDelegate?
     
     init() {
-        setupUserListener()
+        auth.addStateDidChangeListener { [weak self] _, user in
+            if (user == nil) {
+                self?.isSignedIn = false
+                self?.firebaseUser = nil
+            } else {
+                self?.isSignedIn = true
+                self?.getUserData()
+            }
+        }
     }
     
     func setUserReportsDelegate(_ delegate: UserReportsDelegate) {
@@ -51,11 +61,17 @@ final class UserViewModel: ObservableObject {
             return
         }
         
-        var user = firebaseUser
-        user.addReportToBookmark(id)
-        
-        saveChanges(user: user) { status in
-            completion(status)
+        userReportsDelegate?.reportDoesExist(uuid: id) { [weak self] status in
+            guard status == true else {
+                completion(false)
+                return
+            }
+            var user = firebaseUser
+            user.addReportToBookmark(id)
+            
+            self?.saveChanges(user: user) { status in
+                completion(status)
+            }
         }
     }
     
@@ -65,11 +81,13 @@ final class UserViewModel: ObservableObject {
             return
         }
         
-        var user = firebaseUser
-        user.removeReportFromBookmark(id)
-        
-        saveChanges(user: user) { status in
-            completion(status)
+        userReportsDelegate?.reportDoesExist(uuid: id) { [weak self] status in
+            var user = firebaseUser
+            user.removeReportFromBookmark(id)
+            
+            self?.saveChanges(user: user) { status in
+                completion(status)
+            }
         }
     }
     
@@ -145,7 +163,6 @@ final class UserViewModel: ObservableObject {
             self?.accountManager.createUserData(with: result.user.uid) { result in
                 switch result {
                 case .success(_):
-                    self?.setupUserListener()
                     completion(true)
                 case .failure(let failure):
                     print(failure.localizedDescription)
@@ -228,39 +245,6 @@ final class UserViewModel: ObservableObject {
             case .failure(let error):
                 completion(.failure(error))
             }
-        }
-    }
-    
-    private func setupUserListener() {
-        print("Fired")
-        Auth.auth().addStateDidChangeListener { [weak self] auth, user in
-            if let user {
-                self?.accountManager.userDataIsSaved(uid: user.uid) { [weak self] success in
-                    if success {
-                        print("User is signed in")
-                        self?.getUserData()
-                        self?.userIsSignedIn = true
-                    } else {
-                        self?.firebaseUser = nil
-                        self?.userIsSignedIn = false
-                    }
-                }
-            } else {
-                self?.firebaseUser = nil
-                self?.userIsSignedIn = false
-            }
-        }
-        
-        func prepareToSignOut() {
-            //FIXME:
-            //try? self.auth.signOut()
-            self.firebaseUser = nil
-            self.userIsSignedIn = false
-        }
-        
-        func pepareForSignIn(user: User) {
-            self.userIsSignedIn = true
-            self.getUserData()
         }
     }
     

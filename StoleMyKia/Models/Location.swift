@@ -11,19 +11,20 @@ import MapKit
 ///Object relating to MKLocalSearch for a report
 struct Location: Codable, Identifiable, Hashable {
     var id = UUID()
-    let address: String?
-    let name: String?
-    let lat: Double?
-    let lon: Double?
+    var address: String? = nil
+    var name: String? =  nil
+    let lat: Double
+    let lon: Double
 }
 
 extension Location {
     
-    var coordinates: CLLocationCoordinate2D? {
-        if let lat, let lon {
-            return CLLocationCoordinate2D(latitude: lat, longitude: lon)
-        }
-        return nil
+    var coordinates: CLLocationCoordinate2D {
+        CLLocationCoordinate2D(latitude: lat, longitude: lon)
+    }
+    
+    var region: MKCoordinateRegion {
+        MKCoordinateRegion(center: self.coordinates, latitudinalMeters: 100, longitudinalMeters: 100)
     }
 }
 

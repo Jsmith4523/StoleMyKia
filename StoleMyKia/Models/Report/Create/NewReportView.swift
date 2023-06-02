@@ -151,7 +151,7 @@ struct NewReportView: View {
                     }
                 }
             }
-            .navigationTitle("Create Report")
+            .navigationTitle("New Report")
             .navigationBarTitleDisplayMode(.inline)
             .toolbar {
                 ToolbarItem(placement: .navigationBarLeading) {
@@ -205,8 +205,7 @@ struct NewReportView: View {
         .disabled(isUploading)
         
         .sheet(isPresented: $isShowingLocationView) {
-            NewReportSearchLocation(location: $location)
-                .environmentObject(mapModel)
+            LocationSearchView(location: $location)
         }
         .sheet(isPresented: $isShowingImagePicker) {
             PhotoPicker(selectedImage: $vehicleImage, source: imagePickerSourceType)

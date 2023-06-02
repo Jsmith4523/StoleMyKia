@@ -23,6 +23,15 @@ enum ReportDetailMode: Identifiable {
         }
     }
     
+    var draggerIndicatorMode: Visibility {
+        switch self {
+        case .single(_):
+            return .visible
+        case .multiple(_):
+            return .visible
+        }
+    }
+    
     var id: String {
         switch self {
         case .single(_):
@@ -147,7 +156,13 @@ extension ReportsViewModel: LicenseScannerDelegate {
 
 //MARK: - UserReportsDelegate
 extension ReportsViewModel: UserReportsDelegate {
-
+    
+    func reportDoesExist(uuid: UUID, completion: @escaping (Bool) -> Void) {
+        self.manager.reportDoesExist(uuid: uuid) { result in
+            completion(result)
+        }
+    }
+    
     func getUserUpdates(completion: @escaping (Result<[Report], URReportsError>) -> Void) {
         guard let uuids = firebaseUserDelegate?.updates else {
             completion(.success([]))

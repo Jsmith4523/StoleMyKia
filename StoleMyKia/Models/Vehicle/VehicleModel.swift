@@ -46,7 +46,7 @@ enum VehicleModel: String, CaseIterable, Codable, Comparable, Hashable {
     case seltos   = "Seltos"
     case k5       = "K5"
     
-    //Vehicle make (ex: Hyundai Elantra)
+    ///Manufacturer
     var make: VehicleMake {
         switch self {
             
@@ -85,42 +85,47 @@ enum VehicleModel: String, CaseIterable, Codable, Comparable, Hashable {
         }
     }
     
-    ///The current affected year range of a vehicle. This many change in the future because Hyundai!!!
+    ///The current affected year range of a vehicle
     var year: ClosedRange<Int> {
         switch self {
         case .accent:
-            return 2011...Report.lastAffectedYear
+            return 2011...VehicleModel.lastAffectedYear
         case .elantra:
-            return 2011...Report.lastAffectedYear
+            return 2011...VehicleModel.lastAffectedYear
         case .kona:
-            return 2018...Report.lastAffectedYear
+            return 2018...VehicleModel.lastAffectedYear
         case .santaFe:
-            return 2011...Report.lastAffectedYear
+            return 2011...VehicleModel.lastAffectedYear
         case .tuscon:
-            return 2011...Report.lastAffectedYear
+            return 2011...VehicleModel.lastAffectedYear
         case .veloster:
-            return 2011...Report.lastAffectedYear
+            return 2011...VehicleModel.lastAffectedYear
         case .sonata:
-            return 2011...Report.lastAffectedYear
+            return 2011...VehicleModel.lastAffectedYear
         case .venue:
-            return 2019...Report.lastAffectedYear
+            return 2019...VehicleModel.lastAffectedYear
         case .forte:
-            return 2011...Report.lastAffectedYear
+            return 2011...VehicleModel.lastAffectedYear
         case .rio:
-            return 2011...Report.lastAffectedYear
+            return 2011...VehicleModel.lastAffectedYear
         case .optima:
             return 2011...2021
         case .soul:
-            return 2011...Report.lastAffectedYear
+            return 2011...VehicleModel.lastAffectedYear
         case .sportage:
-            return 2011...Report.lastAffectedYear
+            return 2011...VehicleModel.lastAffectedYear
         case .sorento:
-            return 2011...Report.lastAffectedYear
+            return 2011...VehicleModel.lastAffectedYear
         case .seltos:
-            return 2019...Report.lastAffectedYear
+            return 2019...VehicleModel.lastAffectedYear
         case .k5:
-            return 2021...Report.lastAffectedYear
+            return 2021...VehicleModel.lastAffectedYear
         }
+    }
+    
+    ///This is the final year both Hyundai and Kia vehicles are affected by the anti-theft vulnerability. Subject to change
+    static var lastAffectedYear: Int {
+        2022
     }
     
     static func < (lhs: VehicleModel, rhs: VehicleModel) -> Bool {

@@ -16,6 +16,13 @@ extension CLLocationManager {
     }
 }
 
+extension CLAuthorizationStatus {
+    
+    var isAuthorized: Bool {
+        self == .authorizedAlways || self == .authorizedWhenInUse
+    }
+}
+
 extension CLAuthorizationStatus? {
     
     func isAuthorized() -> Bool {

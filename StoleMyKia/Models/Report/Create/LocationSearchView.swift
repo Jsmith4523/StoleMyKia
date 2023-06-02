@@ -8,14 +8,13 @@
 import SwiftUI
 import MapKit
 
-struct NewReportSearchLocation: View {
+struct LocationSearchView: View {
     
     @State private var alertErrorUsingUsersLocation = false
     
     @Binding var location: Location?
     
     @StateObject private var locationSearchModel = LocationSearchModel()
-    @EnvironmentObject var mapModel: MapViewModel
     
     @Environment (\.dismiss) var dismiss
     
@@ -54,7 +53,7 @@ struct NewReportSearchLocation: View {
                     }
                 }
             }
-            .alert("Unable to user your location", isPresented: $alertErrorUsingUsersLocation) {
+            .alert("Unable to use your location", isPresented: $alertErrorUsingUsersLocation) {
                 Button("OK") {}
             } message: {
                 Text("An error occured when attempting to use your location.")
@@ -69,7 +68,7 @@ struct NewReportSearchLocation: View {
     
     var useMyLocationButton: some View {
         ZStack {
-            if mapModel.locationAuth.isAuthorized() {
+            if locationSearchModel.locationIsAuthorized {
                 Button {
                     useUsersLocation()
                 } label: {
@@ -152,14 +151,13 @@ struct NewReportSearchLocation: View {
     }
     
     private func useUsersLocation() {
-        guard let location = mapModel.userLocation else {
+        guard let usersLocation = locationSearchModel.usersLocation else {
             UINotificationFeedbackGenerator().notificationOccurred(.error)
             self.alertErrorUsingUsersLocation.toggle()
             return
         }
         
-        let coords = location.coordinate
-        
+        let coords = usersLocation.coordinate
         let userLocation = Location(address: "", name: "", lat: coords.latitude, lon: coords.longitude)
         
         setLocation(userLocation)
@@ -184,7 +182,11 @@ fileprivate final class LocationSearchModel: ObservableObject {
     private let locationManager = CLLocationManager()
     
     var locationIsAuthorized: Bool {
-        locationManager.authorizationStatus
+        locationManager.authorizationStatus.isAuthorized
+    }
+    
+    var usersLocation: CLLocation? {
+        locationManager.location
     }
         
     func fetchLocations() {

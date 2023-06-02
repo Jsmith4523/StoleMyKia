@@ -20,9 +20,8 @@ struct ReportDetailViewMap: UIViewRepresentable {
         mapView.showsUserLocation = false
         mapView.isUserInteractionEnabled = false
         
-        if let location = report.location, let coordinates = location.coordinates {
-            mapView.setRegion(MKCoordinateRegion(center: coordinates,
-                                                 span: .init(latitudeDelta: 0.010, longitudeDelta: 0.010)), animated: false)
+        if let location = report.location {
+            mapView.setRegion(location.region, animated: false)
         }
         
         mapView.createAnnotations([report])

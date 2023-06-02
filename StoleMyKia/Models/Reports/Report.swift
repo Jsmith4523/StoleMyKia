@@ -35,6 +35,10 @@ struct Report: Identifiable, Codable, Comparable {
     static func > (lhs: Report, rhs: Report) -> Bool {
         lhs.dt > rhs.dt
     }
+    
+    func encodeForUploading() throws -> Any? {
+        try JSONSerialization.createJsonFromObject(self)
+    }
 }
 
 extension Report {
@@ -92,16 +96,6 @@ extension Report {
         case .carjacked:
             return "Someone was carjacked of their \(self.vehicleDetails) at this location on \(self.postDate). This vehicle is a high risk. If you happen to have seen this vehicle, do not approach. Please contact local authorities and update this report."
         }
-    }
-    
-    ///The standard year range for most Hyundai and Kia vehicles affected
-    static var affectedVehicleYears: ClosedRange<Int> {
-        return 2011...lastAffectedYear
-    }
-    
-    ///This is the final year both Hyundai and Kia vehicles are affected by the anti-theft vulnerability. Subject to change
-    static var lastAffectedYear: Int {
-        2022
     }
     
     func verifyLicensePlate(_ inputLicense: String) -> Bool {

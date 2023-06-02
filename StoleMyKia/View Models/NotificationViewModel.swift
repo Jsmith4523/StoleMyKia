@@ -48,7 +48,7 @@ final class NotificationViewModel: NSObject, ObservableObject {
     
     override init() {
         super.init()
-        notificationCenter.delegate = self
+        //notificationCenter.delegate = self
         requestNotificationPermission()
     }
     

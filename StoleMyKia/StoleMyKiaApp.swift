@@ -17,16 +17,19 @@ struct StoleMyKiaApp: App {
         
     @UIApplicationDelegateAdaptor (AppDelegate.self) var appDelegate
     
+    init() {
+        UIPageControl.appearance().currentPageIndicatorTintColor = UIColor(Color.brand)
+        UIPageControl.appearance().pageIndicatorTintColor = .gray
+    }
+    
     var body: some Scene {
         WindowGroup {
             ZStack {
-                if userModel.userIsSignedIn {
+                if userModel.isSignedIn {
                     Tab(userModel: userModel)
                 } else {
                     UserLoginView(userModel: userModel)
                 }
-            }.onChange(of: userModel.userIsSignedIn) { newValue in
-                print(newValue)
             }
         }
     }

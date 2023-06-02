@@ -15,6 +15,8 @@ struct ReportCellView: View {
     @State private var alertDeleteReport = false
     @State private var alertGenericError = false
     
+    @State private var isLoadingBookmark = false
+    
     let report: Report
     
     @EnvironmentObject var userModel: UserViewModel
@@ -59,18 +61,22 @@ struct ReportCellView: View {
                         .scaledToFill()
                         .frame(width: 100, height: 100)
                         .cornerRadius(10)
-                        .shadow(color: .brand, radius: 0.5)
                 }
             }
             HStack(spacing: 15) {
-                Image(systemName: isBookmarked() ? "bookmark.fill" : "bookmark")
-                    .resizable()
-                    .scaledToFit()
-                    .frame(width: 25, height: 25)
-                    .foregroundColor(isBookmarked() ? .brand : .gray)
-                    .onTapGesture {
-                        checkBookmark()
-                    }
+                if !isLoadingBookmark {
+                    Image(systemName: isBookmarked() ? "bookmark.fill" : "bookmark")
+                        .resizable()
+                        .scaledToFit()
+                        .frame(width: 25, height: 25)
+                        .foregroundColor(isBookmarked() ? .brand : .gray)
+                        .onTapGesture {
+                            checkBookmark()
+                        }
+                } else {
+                    ProgressView()
+                        .frame(width: 25, height: 25)
+                }
                 if isCurrentUsersReport() {
                     Image(systemName: "trash")
                         .resizable()
@@ -112,13 +118,12 @@ struct ReportCellView: View {
         userModel.containsBookmarkReport(id: self.report.id)
     }
     
-    private func saveBookmark() {
-        userModel.bookmarkReport(id: report.id) { success in
-            guard success else {
-                alertGenericError.toggle()
-                return
-            }
+    private func isCurrentUsersReport() -> Bool {
+        guard let currentUser = userModel.currentUser(), let reportUid = report.uid, currentUser.uid == reportUid else {
+            return false
         }
+        
+        return true
     }
     
     private func deleteReport() {
@@ -136,25 +141,31 @@ struct ReportCellView: View {
         }
     }
     
-    private func isCurrentUsersReport() -> Bool {
-        guard let currentUser = userModel.currentUser(), let reportUid = report.uid, currentUser.uid == reportUid else {
-            return false
+    private func saveBookmark() {
+        userModel.bookmarkReport(id: report.id) { success in
+            guard success else {
+                alertGenericError.toggle()
+                self.isLoadingBookmark = false
+                return
+            }
+            self.isLoadingBookmark = false
         }
-        
-        return true
     }
     
     private func removeBookmark() {
         userModel.removeBookmark(id: report.id) { success in
             guard success else {
-                alertGenericError.toggle()
+                self.alertGenericError.toggle()
+                self.isLoadingBookmark = false
                 return
             }
+            self.isLoadingBookmark = false
         }
     }
     
     private func checkBookmark() {
         UIImpactFeedbackGenerator(style: .medium).impactOccurred()
+        isLoadingBookmark = true
         
         switch isBookmarked() {
         case true:
@@ -168,7 +179,7 @@ struct ReportCellView: View {
 
 struct MyPreviewProvider23_Previews: PreviewProvider {
     static var previews: some View {
-        ReportCellView(report: .init(dt: Date.now.epoch, reportType: .carjacked, vehicle: .init(vehicleYear: 2017, vehicleMake: .hyundai, vehicleColor: .gray, vehicleModel: .elantra), distinguishable: "", location: .init(address: nil, name: nil, lat: nil, lon: nil)))
+        ReportCellView(report: .init(dt: Date.now.epoch, reportType: .carjacked, vehicle: .init(vehicleYear: 2017, vehicleMake: .hyundai, vehicleColor: .gray, vehicleModel: .elantra), distinguishable: "", location: .init(address: nil, name: nil, lat: 0, lon: 0)))
             .environmentObject(UserViewModel())
     }
 }

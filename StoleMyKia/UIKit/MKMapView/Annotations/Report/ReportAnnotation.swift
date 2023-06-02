@@ -19,7 +19,7 @@ class ReportAnnotation: NSObject, MKAnnotation {
     var report: Report
     
     init(report: Report) {
-        self.coordinate    = (report.location?.coordinates!)!
+        self.coordinate    = report.location!.coordinates
         self.report        = report
         self.subtitle      = report.location?.name ?? report.location?.address ?? ""
     }

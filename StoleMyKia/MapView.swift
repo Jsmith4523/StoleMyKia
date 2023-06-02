@@ -10,7 +10,7 @@ import MapKit
 
 struct ReportsMapView: View {
         
-    @ObservedObject var mapModel: MapViewModel
+    @EnvironmentObject var mapModel: MapViewModel
     @EnvironmentObject var userModel: UserViewModel
     @EnvironmentObject var reportModel: ReportsViewModel
      
@@ -24,8 +24,6 @@ struct ReportsMapView: View {
                     LowerMapViewButtons()
                 }
             }
-            .navigationTitle("Reports")
-            .navigationBarTitleDisplayMode(.inline)
             .toolbar {
                 ToolbarItem(placement: .navigationBarLeading) {
                     Button {
@@ -142,7 +140,7 @@ fileprivate struct LowerMapViewButtons: View {
 
 struct Map_Previews: PreviewProvider {
     static var previews: some View {
-        ReportsMapView(mapModel: MapViewModel())
+        ReportsMapView()
             .environmentObject(ReportsViewModel())
             .environmentObject(MapViewModel())
     }

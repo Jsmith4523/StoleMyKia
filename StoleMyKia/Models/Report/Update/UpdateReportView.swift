@@ -11,10 +11,14 @@ struct UpdateReportView: View {
     
     let report: Report
     
+    @State private var isShowingLocationSearchView = false
+    
     @State private var vehicleImage: UIImage?
     @State private var updateReportType: ReportType = .found
     
     @State private var location: Location?
+    
+    @Environment (\.dismiss) var dismiss
         
     var body: some View {
         NavigationView {
@@ -59,7 +63,7 @@ struct UpdateReportView: View {
             .toolbar {
                 ToolbarItem(placement: .navigationBarLeading) {
                     Button("Cancel") {
-                        
+                        dismiss()
                     }
                     .bold()
                 }
@@ -70,6 +74,9 @@ struct UpdateReportView: View {
                     .bold()
                     .disabled(true)
                 }
+            }
+            .sheet(isPresented: $isShowingLocationSearchView) {
+                LocationSearchView(location: $location)
             }
         }
     }

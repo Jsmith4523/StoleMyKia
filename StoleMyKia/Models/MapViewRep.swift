@@ -45,9 +45,9 @@ struct MapViewRepresentable: UIViewRepresentable {
     }
     
     func updateUIView(_ uiView: MKMapView, context: Context) {
-        if !(userModel.userIsSignedIn) {
-            MapViewRepresentable.dismantleUIView(uiView, coordinator: context.coordinator)
-        }
+//        if !(userModel.userIsSignedIn) {
+//            MapViewRepresentable.dismantleUIView(uiView, coordinator: context.coordinator)
+//        }
     }
 }
 

@@ -34,5 +34,7 @@ protocol UserReportsDelegate: AnyObject {
     func getUserUpdates(completion: @escaping (Result<[Report], URReportsError>) -> Void)
     func getUserBookmarks(removalCompletion: @escaping RemovalCompletion, completion: @escaping (Result<[Report], URReportsError>) -> Void)
     
+    func reportDoesExist(uuid: UUID, completion: @escaping (Bool)->Void)
+    
     func deleteAll(completion: @escaping ((Bool)->Void))
 }

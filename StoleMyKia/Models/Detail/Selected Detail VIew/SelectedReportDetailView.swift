@@ -11,6 +11,8 @@ struct SelectedReportDetailView: View {
     
     @State private var isDeleting = false
     
+    @State private var isShowingVehicleImageView = false
+    
     @State private var alertErrorRemovingPost = false
     @State private var alertOfRemovingPosting = false
     
@@ -26,49 +28,68 @@ struct SelectedReportDetailView: View {
     
     var body: some View {
         NavigationView {
-            VStack(alignment: .leading) {
+            VStack(spacing: 0) {
                 ZStack {
-                    ReportMapView(report: report)
+                    TabView {
+                        if report.hasVehicleImage {
+                            Image(uiImage: vehicleImage ?? .vehiclePlaceholder)
+                                .resizable()
+                                .scaledToFill()
+                                .frame(width: UIScreen.main.bounds.width - 30, height: 225)
+                                .cornerRadius(20)
+                                .onTapGesture {
+                                    isShowingVehicleImageView.toggle()
+                                }
+                        }
+                        ReportMapView(report: report)
+                            .frame(width: UIScreen.main.bounds.width - 30, height: 225)
+                            .cornerRadius(20)
+                    }
+                    .tabViewStyle(.page(indexDisplayMode: .always))
                 }
-                .frame(height: 200)
-                .cornerRadius(15)
-                HStack {
-                    VStack(alignment: .leading, spacing: 3) {
-                        Text(report.type)
-                            .font(.system(size: 35).weight(.heavy))
-                        VStack(alignment: .leading, spacing: 6) {
-                            Label {
-                                Text(report.vehicleDetails)
-                            } icon: {
-                                Image(systemName: "car")
-                            }
-
-                            if let location = report.location, let name = location.name, !(name.isEmpty) {
+                .frame(height: 295)
+                VStack(alignment: .leading) {
+                    HStack {
+                        VStack(alignment: .leading, spacing: 3) {
+                            Text(report.type)
+                                .font(.system(size: 35).weight(.heavy))
+                            VStack(alignment: .leading, spacing: 6) {
                                 Label {
-                                    Text(name)
+                                    Text(report.vehicleDetails)
                                 } icon: {
-                                    Image(systemName: "mappin.and.ellipse")
+                                    Image(systemName: "car")
+                                }
+
+                                if let location = report.location, let name = location.name, !(name.isEmpty) {
+                                    Label {
+                                        Text(name)
+                                    } icon: {
+                                        Image(systemName: "mappin.and.ellipse")
+                                    }
                                 }
                             }
+                            .font(.system(size: 18))
+                            .foregroundColor(.gray)
                         }
-                        .font(.system(size: 18))
-                        .foregroundColor(.gray)
+                        Spacer()
+                    }
+                    Spacer()
+                        .frame(height: 15)
+                    VStack {
+                        Text(report.details)
+                            .multilineTextAlignment(.leading)
+                            .font(.system(size: 18.5))
+                            .foregroundColor(.gray)
                     }
                     Spacer()
                 }
-                Spacer()
-                    .frame(height: 15)
-                VStack {
-                    Text(report.details)
-                        .multilineTextAlignment(.leading)
-                        .font(.system(size: 18.5))
-                        .foregroundColor(.gray)
-                }
-                Spacer()
+                .padding(.horizontal)
             }
-            .padding(.horizontal)
             .onAppear {
                 getVehicleImage(report.imageURL)
+            }
+            .fullScreenCover(isPresented: $isShowingVehicleImageView) {
+                VehicleImageView(vehicleImage: vehicleImage)
             }
             .toolbar {
                 ToolbarItem(placement: .navigationBarTrailing) {
@@ -77,6 +98,13 @@ struct SelectedReportDetailView: View {
                             self.alertOfRemovingPosting.toggle()
                         } label: {
                             Image(systemName: "trash")
+                                .bold()
+                        }
+                    } else {
+                        Button {
+                            
+                        } label: {
+                            Image(systemName: "flag")
                                 .bold()
                         }
                     }
