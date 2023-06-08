@@ -31,6 +31,7 @@ struct FeedView: View {
     @State private var isPresented = false
     
     @State private var detailSelection: FeedDetailPicker = .feed
+    @State private var drawerMode: Mode = .interactive
     
     @StateObject private var reportsModel = ReportsViewModel()
     @StateObject private var notificationModel = NotificationViewModel()
@@ -39,16 +40,16 @@ struct FeedView: View {
     
     var body: some View {
         NavigationView {
-            //TabView {
-                ZStack(alignment: .bottom) {
-                    ZStack(alignment: .top) {
-                        MKMapViewRepresentable()
-                            .tag(FeedDetailPicker.map)
-                            .ignoresSafeArea()
-                        MapNavigationBar()
+            ZStack(alignment: .bottom) {
+                ZStack(alignment: .top) {
+                    MKMapViewRepresentable()
+                        .tag(FeedDetailPicker.map)
+                        .ignoresSafeArea()
+                    MapNavigationBar()
+                    InteractiveDrawer(mode: $reportsModel.mapSheetMode) {
+                        MapSheetView()
                     }
-                    MapTabBar()
-                //}
+                }
             }
         }
         .environmentObject(userModel)

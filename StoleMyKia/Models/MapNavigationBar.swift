@@ -46,7 +46,7 @@ struct MapNavigationBar: View {
                         .fontWeight(.medium)
                         .shadow(radius: 0.5)
                 }
-                .frame(width: 375, height: 65)
+                .frame(width: UIScreen.main.bounds.width-20, height: 65)
                 ScrollView(.horizontal, showsIndicators: false) {
                     HStack {
                         Spacer()

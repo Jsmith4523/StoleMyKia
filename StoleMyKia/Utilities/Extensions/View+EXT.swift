@@ -56,6 +56,12 @@ extension View {
             }
     }
     
+//    func drawer<C: View>(_ mode: Binding<Mode>, content: @escaping () -> C) -> some View {
+//        InteractiveDrawer(mode: mode) {
+//            content()
+//        }
+//    }
+    
     //TODO: Crete privacy policy
     func privacyPolicy(isPresented: Binding<Bool>) -> some View {
         return self

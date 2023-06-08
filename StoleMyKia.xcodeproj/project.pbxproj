@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		240F222E2A3211810078F97E /* Drawer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 240F222D2A3211810078F97E /* Drawer.swift */; };
 		24127C1D29E3E7B800C09FE5 /* MKMapViewRepresentable.swift in Sources */ = {isa = PBXBuildFile; fileRef = 24127C1C29E3E7B800C09FE5 /* MKMapViewRepresentable.swift */; };
 		24127C1F29E3F4AC00C09FE5 /* Launch Screen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 24127C1E29E3F4AC00C09FE5 /* Launch Screen.storyboard */; };
 		24131BA72A31867300D786DF /* FeedView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 24131BA62A31867300D786DF /* FeedView.swift */; };
@@ -98,6 +99,7 @@
 
 /* Begin PBXFileReference section */
 		197A31A21B533A0B83DC4715 /* Pods_StoleMyKia.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_StoleMyKia.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		240F222D2A3211810078F97E /* Drawer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Drawer.swift; sourceTree = "<group>"; };
 		24127C1C29E3E7B800C09FE5 /* MKMapViewRepresentable.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MKMapViewRepresentable.swift; sourceTree = "<group>"; };
 		24127C1E29E3F4AC00C09FE5 /* Launch Screen.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = "Launch Screen.storyboard"; sourceTree = "<group>"; };
 		24131BA62A31867300D786DF /* FeedView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FeedView.swift; sourceTree = "<group>"; };
@@ -202,6 +204,14 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		240F222C2A3211720078F97E /* Drawer */ = {
+			isa = PBXGroup;
+			children = (
+				240F222D2A3211810078F97E /* Drawer.swift */,
+			);
+			path = Drawer;
+			sourceTree = "<group>";
+		};
 		24131BA52A31865B00D786DF /* Feed */ = {
 			isa = PBXGroup;
 			children = (
@@ -230,6 +240,7 @@
 		2426A6162A2345CB00E78647 /* Utilities */ = {
 			isa = PBXGroup;
 			children = (
+				240F222C2A3211720078F97E /* Drawer */,
 				24334CFE29C187620084B8EC /* CoreData */,
 				24A4CEDC29BFA2C100B856BC /* Extensions */,
 			);
@@ -830,6 +841,7 @@
 				24B897EC29CF5A3B0003BCC8 /* UserViewModel.swift in Sources */,
 				24EAF11729C2A02900B4CBFE /* SFSafariView.swift in Sources */,
 				24A2066D2A02296900F5DC0C /* LicensePlateResultsView.swift in Sources */,
+				240F222E2A3211810078F97E /* Drawer.swift in Sources */,
 				24A5792F29BC5C8700495E6F /* ReportsViewModel.swift in Sources */,
 				245B391A29E39E09001DD213 /* ReportMap.swift in Sources */,
 				24A206952A08334400F5DC0C /* Location.swift in Sources */,

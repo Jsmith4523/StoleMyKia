@@ -5,6 +5,7 @@
 //  Created by Jaylen Smith on 4/10/23.
 //
 
+import Combine
 import Foundation
 import UIKit
 import SwiftUI
@@ -13,14 +14,15 @@ import MapKit
 class MKMapViewController: UIViewController {
     
     private let mapView = MKMapView()
+    private var cancellable = Set<AnyCancellable>()
     
     weak private var annotationCalloutDelegate: AnnotationCalloutDelegate?
     weak private var reportAnnotationDelegate: ReportAnnotationDelegate?
     
-    private var reportsViewModel: ReportsViewModel
+    private var viewModel: ReportsViewModel
     
     init(viewModel: ReportsViewModel) {
-        self.reportsViewModel = viewModel
+        self.viewModel = viewModel
         self.reportAnnotationDelegate = viewModel
                 
         super.init(nibName: nil, bundle: .main)
@@ -45,6 +47,21 @@ class MKMapViewController: UIViewController {
         mapView.register(ReportsClusterAnnotationView.self, forAnnotationViewWithReuseIdentifier: MKMapViewDefaultClusterAnnotationViewReuseIdentifier)
         mapView.register(ReportAnnotationView.self, forAnnotationViewWithReuseIdentifier: MKMapViewDefaultAnnotationViewReuseIdentifier)
         
+        updateLegalAndAppleMapsLogo()
+    }
+    
+//    private func beginMonitoringSheetSize() {
+//        viewModel.$mapSheetMode
+//            .sink { [weak self] newMode in
+//                self?.updateLegalAndAppleMapsLogo(newMode)
+//            }
+//            .store(in: &cancellable)
+//    }
+    
+    
+    private func updateLegalAndAppleMapsLogo() {
+        mapView.layoutMargins.bottom = Mode.interactive.layoutSize.mapsAndLegalOffset
+        //mapView.layoutMargins.top = mode.layoutSize.mapTopMarginOffset
     }
 }
 

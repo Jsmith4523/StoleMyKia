@@ -50,6 +50,7 @@ final class ReportsViewModel: NSObject, ObservableObject {
     @Published var isShowingLicensePlateScannerView = false
 
     @Published var reportDetailMode: ReportDetailMode?
+    @Published var mapSheetMode: Mode = .interactive
     
     @Published var reports = [Report]() {
         didSet {
