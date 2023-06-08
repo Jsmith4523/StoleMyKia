@@ -7,10 +7,12 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		24127C1729E3E71F00C09FE5 /* MapView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 24127C1629E3E71F00C09FE5 /* MapView.swift */; };
 		24127C1D29E3E7B800C09FE5 /* MKMapViewRepresentable.swift in Sources */ = {isa = PBXBuildFile; fileRef = 24127C1C29E3E7B800C09FE5 /* MKMapViewRepresentable.swift */; };
 		24127C1F29E3F4AC00C09FE5 /* Launch Screen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 24127C1E29E3F4AC00C09FE5 /* Launch Screen.storyboard */; };
 		24131BA72A31867300D786DF /* FeedView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 24131BA62A31867300D786DF /* FeedView.swift */; };
+		24131BAA2A31A3BD00D786DF /* PartialSheet in Frameworks */ = {isa = PBXBuildFile; productRef = 24131BA92A31A3BD00D786DF /* PartialSheet */; };
+		24131BAC2A31A6E800D786DF /* MapNavigationBar.swift in Sources */ = {isa = PBXBuildFile; fileRef = 24131BAB2A31A6E800D786DF /* MapNavigationBar.swift */; };
+		24131BAE2A31B95E00D786DF /* MapTabBar.swift in Sources */ = {isa = PBXBuildFile; fileRef = 24131BAD2A31B95E00D786DF /* MapTabBar.swift */; };
 		2420E2422A20906F00B31275 /* LearnView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2420E2412A20906F00B31275 /* LearnView.swift */; };
 		2425EAF92A003CDE00CC886F /* NavigationController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2425EAF82A003CDE00CC886F /* NavigationController.swift */; };
 		2426A6192A2345EF00E78647 /* FirebaseUserDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2426A6182A2345EF00E78647 /* FirebaseUserDelegate.swift */; };
@@ -96,10 +98,11 @@
 
 /* Begin PBXFileReference section */
 		197A31A21B533A0B83DC4715 /* Pods_StoleMyKia.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_StoleMyKia.framework; sourceTree = BUILT_PRODUCTS_DIR; };
-		24127C1629E3E71F00C09FE5 /* MapView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = MapView.swift; path = StoleMyKia/MapView.swift; sourceTree = SOURCE_ROOT; };
 		24127C1C29E3E7B800C09FE5 /* MKMapViewRepresentable.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MKMapViewRepresentable.swift; sourceTree = "<group>"; };
 		24127C1E29E3F4AC00C09FE5 /* Launch Screen.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = "Launch Screen.storyboard"; sourceTree = "<group>"; };
 		24131BA62A31867300D786DF /* FeedView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FeedView.swift; sourceTree = "<group>"; };
+		24131BAB2A31A6E800D786DF /* MapNavigationBar.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MapNavigationBar.swift; sourceTree = "<group>"; };
+		24131BAD2A31B95E00D786DF /* MapTabBar.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MapTabBar.swift; sourceTree = "<group>"; };
 		2420E2412A20906F00B31275 /* LearnView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LearnView.swift; sourceTree = "<group>"; };
 		2425EAF82A003CDE00CC886F /* NavigationController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NavigationController.swift; sourceTree = "<group>"; };
 		2426A6182A2345EF00E78647 /* FirebaseUserDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FirebaseUserDelegate.swift; sourceTree = "<group>"; };
@@ -191,6 +194,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				24131BAA2A31A3BD00D786DF /* PartialSheet in Frameworks */,
 				9A8DEA661C19F27F74C6B340 /* Pods_StoleMyKia.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -536,8 +540,9 @@
 		24A5792229BC557100495E6F /* Map */ = {
 			isa = PBXGroup;
 			children = (
-				24127C1629E3E71F00C09FE5 /* MapView.swift */,
 				24127C1C29E3E7B800C09FE5 /* MKMapViewRepresentable.swift */,
+				24131BAB2A31A6E800D786DF /* MapNavigationBar.swift */,
+				24131BAD2A31B95E00D786DF /* MapTabBar.swift */,
 			);
 			name = Map;
 			path = ..;
@@ -697,6 +702,9 @@
 			dependencies = (
 			);
 			name = StoleMyKia;
+			packageProductDependencies = (
+				24131BA92A31A3BD00D786DF /* PartialSheet */,
+			);
 			productName = StoleMyKia;
 			productReference = 24A5791029BC552C00495E6F /* StoleMyKia.app */;
 			productType = "com.apple.product-type.application";
@@ -725,6 +733,9 @@
 				Base,
 			);
 			mainGroup = 24A5790729BC552C00495E6F;
+			packageReferences = (
+				24131BA82A31A3BD00D786DF /* XCRemoteSwiftPackageReference "PartialSheet" */,
+			);
 			productRefGroup = 24A5791129BC552C00495E6F /* Products */;
 			projectDirPath = "";
 			projectRoot = "";
@@ -847,12 +858,13 @@
 				24A206922A08270300F5DC0C /* Vehicle.swift in Sources */,
 				24A4CEE229BFAA8000B856BC /* NotificationRadiusView.swift in Sources */,
 				2448C3AA2A2A710F00A72D9F /* FirebaseStorage.swift in Sources */,
+				24131BAC2A31A6E800D786DF /* MapNavigationBar.swift in Sources */,
 				2425EAF92A003CDE00CC886F /* NavigationController.swift in Sources */,
 				24A5793729BFD9C900495E6F /* RadiusMapCoordinator.swift in Sources */,
 				2495A02229CAC5DF00457CE7 /* String+EXT.swift in Sources */,
 				248278D72A03054C00C1E99D /* UISheetPC.swift in Sources */,
 				24A4CEE029BFA65100B856BC /* URL+EXT.swift in Sources */,
-				24127C1729E3E71F00C09FE5 /* MapView.swift in Sources */,
+				24131BAE2A31B95E00D786DF /* MapTabBar.swift in Sources */,
 				24A2E3082A286935009572F3 /* UpdateReportView.swift in Sources */,
 				24A662FA29C592FF00AD784F /* ReportClusterAnnotation.swift in Sources */,
 				24334D0129C187800084B8EC /* Reports.xcdatamodeld in Sources */,
@@ -1011,6 +1023,7 @@
 				INFOPLIST_FILE = StoleMyKia/Info.plist;
 				INFOPLIST_KEY_LSApplicationCategoryType = "public.app-category.utilities";
 				INFOPLIST_KEY_NSCameraUsageDescription = "Your device's camera will be used to detect license plates. It'll also be used to capture images of vehicles.";
+				INFOPLIST_KEY_NSFileProviderDomainUsageDescription = StoleMyKia;
 				INFOPLIST_KEY_NSLocationWhenInUseUsageDescription = "Your location is used to show local reports. Location is used when creating a new report.";
 				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
@@ -1048,6 +1061,7 @@
 				INFOPLIST_FILE = StoleMyKia/Info.plist;
 				INFOPLIST_KEY_LSApplicationCategoryType = "public.app-category.utilities";
 				INFOPLIST_KEY_NSCameraUsageDescription = "Your device's camera will be used to detect license plates. It'll also be used to capture images of vehicles.";
+				INFOPLIST_KEY_NSFileProviderDomainUsageDescription = StoleMyKia;
 				INFOPLIST_KEY_NSLocationWhenInUseUsageDescription = "Your location is used to show local reports. Location is used when creating a new report.";
 				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
@@ -1091,6 +1105,25 @@
 			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
+
+/* Begin XCRemoteSwiftPackageReference section */
+		24131BA82A31A3BD00D786DF /* XCRemoteSwiftPackageReference "PartialSheet" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/Jsmith4523/PartialSheet.git";
+			requirement = {
+				branch = master;
+				kind = branch;
+			};
+		};
+/* End XCRemoteSwiftPackageReference section */
+
+/* Begin XCSwiftPackageProductDependency section */
+		24131BA92A31A3BD00D786DF /* PartialSheet */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 24131BA82A31A3BD00D786DF /* XCRemoteSwiftPackageReference "PartialSheet" */;
+			productName = PartialSheet;
+		};
+/* End XCSwiftPackageProductDependency section */
 
 /* Begin XCVersionGroup section */
 		24334CFF29C187800084B8EC /* Reports.xcdatamodeld */ = {

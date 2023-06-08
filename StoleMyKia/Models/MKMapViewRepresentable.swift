@@ -12,7 +12,7 @@ import MapKit
 
 class MKMapViewController: UIViewController {
     
-    private let mapView = MKMapView(frame: UIScreen.main.bounds)
+    private let mapView = MKMapView()
     
     weak private var annotationCalloutDelegate: AnnotationCalloutDelegate?
     weak private var reportAnnotationDelegate: ReportAnnotationDelegate?
@@ -22,8 +22,9 @@ class MKMapViewController: UIViewController {
     init(viewModel: ReportsViewModel) {
         self.reportsViewModel = viewModel
         self.reportAnnotationDelegate = viewModel
-        
+                
         super.init(nibName: nil, bundle: .main)
+                
         viewModel.delegate = self
     }
     
@@ -31,12 +32,19 @@ class MKMapViewController: UIViewController {
         fatalError("init(coder:) has not been implemented")
     }
     
+    override var preferredStatusBarStyle: UIStatusBarStyle {
+        return .lightContent
+    }
+    
     override func viewDidLoad() {
+        view.addSubview(mapView)
+        
+        mapView.frame = view.frame
+        
         mapView.delegate = self
         mapView.register(ReportsClusterAnnotationView.self, forAnnotationViewWithReuseIdentifier: MKMapViewDefaultClusterAnnotationViewReuseIdentifier)
         mapView.register(ReportAnnotationView.self, forAnnotationViewWithReuseIdentifier: MKMapViewDefaultAnnotationViewReuseIdentifier)
         
-        view.addSubview(mapView)
     }
 }
 

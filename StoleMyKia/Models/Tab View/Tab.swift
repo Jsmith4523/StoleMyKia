@@ -15,7 +15,7 @@ struct Tab: View {
     @ObservedObject var userModel: UserViewModel
     
     var body: some View {
-        FeedView(reportModel: reportsModel)
+        FeedView()
             .environmentObject(userModel)
     }
 }

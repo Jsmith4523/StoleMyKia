@@ -7,6 +7,7 @@
 
 import SwiftUI
 import Firebase
+import PartialSheet
 import UserNotifications
 import FirebaseMessaging
 
@@ -27,6 +28,7 @@ struct StoleMyKiaApp: App {
             ZStack {
                 if userModel.isSignedIn {
                     Tab(userModel: userModel)
+                        .attachPartialSheetToRoot()
                 } else {
                     UserLoginView(userModel: userModel)
                 }
