@@ -10,6 +10,7 @@
 		24127C1729E3E71F00C09FE5 /* MapView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 24127C1629E3E71F00C09FE5 /* MapView.swift */; };
 		24127C1D29E3E7B800C09FE5 /* MKMapViewRepresentable.swift in Sources */ = {isa = PBXBuildFile; fileRef = 24127C1C29E3E7B800C09FE5 /* MKMapViewRepresentable.swift */; };
 		24127C1F29E3F4AC00C09FE5 /* Launch Screen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 24127C1E29E3F4AC00C09FE5 /* Launch Screen.storyboard */; };
+		24131BA72A31867300D786DF /* FeedView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 24131BA62A31867300D786DF /* FeedView.swift */; };
 		2420E2422A20906F00B31275 /* LearnView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2420E2412A20906F00B31275 /* LearnView.swift */; };
 		2425EAF92A003CDE00CC886F /* NavigationController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2425EAF82A003CDE00CC886F /* NavigationController.swift */; };
 		2426A6192A2345EF00E78647 /* FirebaseUserDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2426A6182A2345EF00E78647 /* FirebaseUserDelegate.swift */; };
@@ -98,6 +99,7 @@
 		24127C1629E3E71F00C09FE5 /* MapView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = MapView.swift; path = StoleMyKia/MapView.swift; sourceTree = SOURCE_ROOT; };
 		24127C1C29E3E7B800C09FE5 /* MKMapViewRepresentable.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MKMapViewRepresentable.swift; sourceTree = "<group>"; };
 		24127C1E29E3F4AC00C09FE5 /* Launch Screen.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = "Launch Screen.storyboard"; sourceTree = "<group>"; };
+		24131BA62A31867300D786DF /* FeedView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FeedView.swift; sourceTree = "<group>"; };
 		2420E2412A20906F00B31275 /* LearnView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LearnView.swift; sourceTree = "<group>"; };
 		2425EAF82A003CDE00CC886F /* NavigationController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NavigationController.swift; sourceTree = "<group>"; };
 		2426A6182A2345EF00E78647 /* FirebaseUserDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FirebaseUserDelegate.swift; sourceTree = "<group>"; };
@@ -196,6 +198,14 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		24131BA52A31865B00D786DF /* Feed */ = {
+			isa = PBXGroup;
+			children = (
+				24131BA62A31867300D786DF /* FeedView.swift */,
+			);
+			path = Feed;
+			sourceTree = "<group>";
+		};
 		241D2FFE29BFF88D00E78792 /* Annotations */ = {
 			isa = PBXGroup;
 			children = (
@@ -314,6 +324,7 @@
 				2426A6262A234E4E00E78647 /* Cells */,
 				2426A6222A234D0E00E78647 /* Detail */,
 				24A206672A006F4C00F5DC0C /* License Plate */,
+				24131BA52A31865B00D786DF /* Feed */,
 				24A5792129BC556000495E6F /* Tab View */,
 				24B897EE29CF5C990003BCC8 /* Auth */,
 				24AC77CC29C110F800768158 /* Report */,
@@ -824,6 +835,7 @@
 				245B392129E39E90001DD213 /* ReportType.swift in Sources */,
 				24127C1D29E3E7B800C09FE5 /* MKMapViewRepresentable.swift in Sources */,
 				2426A6192A2345EF00E78647 /* FirebaseUserDelegate.swift in Sources */,
+				24131BA72A31867300D786DF /* FeedView.swift in Sources */,
 				2426A6322A24505500E78647 /* UserReportsView.swift in Sources */,
 				2437328329BEFB2E008F4C4E /* NewReportView.swift in Sources */,
 				24AC77CE29C1110B00768158 /* SelectedReportDetailView.swift in Sources */,
