@@ -18,4 +18,7 @@ protocol FirebaseUserDelegate: AnyObject {
     
     
     func save(completion: @escaping ((Bool)->Void))
+    
+    ///Adds an notification to the user database reference
+    func addRemoteNotification(_ notification: FirebaseUserNotification)
 }

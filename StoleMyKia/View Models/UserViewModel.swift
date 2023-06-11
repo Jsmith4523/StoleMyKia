@@ -16,8 +16,6 @@ final class UserViewModel: ObservableObject {
     
     @Published private(set) var isSignedIn = false
     
-    
-    //@Published private(set) var currentUser: User!
     @Published private(set) var firebaseUser: FirebaseUser!
     @Published private(set) var alertErrorLoggingIn = false
     
@@ -28,15 +26,15 @@ final class UserViewModel: ObservableObject {
     private weak var userReportsDelegate: UserReportsDelegate?
     
     init() {
-        auth.addStateDidChangeListener { [weak self] _, user in
-            if (user == nil) {
-                self?.isSignedIn = false
-                self?.firebaseUser = nil
-            } else {
-                self?.isSignedIn = true
-                self?.getUserData()
-            }
-        }
+//        auth.addStateDidChangeListener { [weak self] _, user in
+//            DispatchQueue.main.async {
+//                guard user.isSignedIn else {
+//                    self?.isSignedIn = false
+//                    return
+//                }
+//                self?.isSignedIn = true
+//            }
+//        }
     }
     
     func setUserReportsDelegate(_ delegate: UserReportsDelegate) {
@@ -126,10 +124,14 @@ final class UserViewModel: ObservableObject {
     }
     
     func signIn(email: String, password: String, completion: @escaping ((Bool?)->Void)) {
-        auth.signIn(withEmail: email, password: password) { result, err in
+        auth.signIn(withEmail: email, password: password) { [weak self] result, err in
             guard result != nil, err == nil else {
                 completion(false)
                 return
+            }
+            
+            DispatchQueue.main.async {
+                self?.isSignedIn = true
             }
         }
     }
@@ -155,19 +157,22 @@ final class UserViewModel: ObservableObject {
     
     func signUp(email: String, password: String, completion: @escaping ((Bool?)->Void)) {
         auth.createUser(withEmail: email, password: password) { [weak self] result, err in
-            guard let result, err == nil else {
+            guard err == nil else {
                 completion(false)
                 return
             }
             
-            self?.accountManager.createUserData(with: result.user.uid) { result in
-                switch result {
-                case .success(_):
-                    completion(true)
-                case .failure(let failure):
-                    print(failure.localizedDescription)
-                }
+            DispatchQueue.main.async {
+                self?.isSignedIn = true
             }
+//            self?.accountManager.createUserData(with: result.user.uid) { result in
+//                switch result {
+//                case .success(_):
+//                    completion(true)
+//                case .failure(let failure):
+//                    print(failure.localizedDescription)
+//                }
+//            }
         }
     }
     
@@ -205,6 +210,9 @@ final class UserViewModel: ObservableObject {
     func signOut(completion: @escaping ((Bool)->Void)) {
         do {
             try auth.signOut()
+            DispatchQueue.main.async {
+                self.isSignedIn = false
+            }
             completion(true)
         } catch {
             completion(false)
@@ -255,6 +263,10 @@ final class UserViewModel: ObservableObject {
 
 //MARK: - FirebaseUserDelegate
 extension UserViewModel: FirebaseUserDelegate {
+    func addRemoteNotification(_ notification: FirebaseUserNotification) {
+        
+    }
+    
     var updates: [UUID]? {
         guard let firebaseUser else {
             return nil

@@ -9,7 +9,7 @@ import Foundation
 import UIKit
 import SwiftUI
 
-struct CustomNavView<C: View>: UIViewControllerRepresentable {
+struct NavigationController<C: View>: UIViewControllerRepresentable {
     
     let view: ()->C
     let statusBarColor: UIStatusBarStyle

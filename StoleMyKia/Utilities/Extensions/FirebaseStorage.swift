@@ -33,7 +33,7 @@ extension Storage {
     }
     
     ///Uploads the vehicles image to storage associated with the report UUID.
-    static func setVehicleImage(to path: UUID, _ image: UIImage?, completion: @escaping (Result<String?, RMError>) -> Void) {
+    static func setVehicleImage(to path: String, _ image: UIImage?, completion: @escaping (Result<String?, RMError>) -> Void) {
         
         guard let image else {
             completion(.success(nil))
@@ -45,7 +45,7 @@ extension Storage {
             return
         }
         
-        let imageReference = Storage.storage().vehicleImagesReference.child(path.uuidString)
+        let imageReference = Storage.storage().vehicleImagesReference.child(path)
         
         imageReference.putData(imageData) { meta, err in
             guard err == nil else {

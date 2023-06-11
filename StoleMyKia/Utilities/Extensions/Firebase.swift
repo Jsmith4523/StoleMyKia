@@ -42,6 +42,14 @@ extension QuerySnapshot {
     }
 }
 
+extension DatabaseReference {
+    
+    ///The static reference path to the notification reference
+    static var notificationsReference: DatabaseReference {
+        Database.database().reference(withPath: "/Notifications")
+    }
+}
+
 extension DocumentSnapshot {
     
     ///Creates a single object
@@ -128,7 +136,6 @@ extension DocumentReference {
             }
         }
         
-        
         func delete(_ imageURL: String?) {
             Storage.deleteVehicleImage(imageURL) { [weak self] result in
                 switch result {
@@ -173,7 +180,7 @@ extension CollectionReference {
     func uploadReport(_ report: Report, with image: UIImage?, completion: @escaping (Result<Bool, RMError>)->Void) {
         var report = report
         
-        Storage.setVehicleImage(to: report.id, image) { result in
+        Storage.setVehicleImage(to: report.path, image) { result in
             switch result {
             case .success(let imageUrl):
                 report.imageURL = imageUrl

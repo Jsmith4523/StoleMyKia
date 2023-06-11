@@ -18,27 +18,23 @@ enum UAAccountError: Error {
 }
 
 class UserAccountManager {
-    
-    private let db = Database.database()
-    
+        
     private var reference: DatabaseReference {
-        db.reference(withPath: "/users/")
+        Database.database().reference(withPath: "Users/")
     }
     
     func saveAccountChanges(user: FirebaseUser, completion: @escaping (Bool) -> Void) {
-        do {
-            let decodedData = try JSONEncoder().encode(user)
-            let serializedUser = try JSONSerialization.jsonObject(with: decodedData)
-            
-            self.reference.child(user.uid).setValue(serializedUser) { err, ref in
-                guard err == nil else {
-                    print("❌ \(err?.localizedDescription ?? "There was an error saving account changes")")
-                    return
-                }
-                completion(true)
-            }
-        } catch {
+        guard let userData = try? JSONSerialization.createJsonFromObject(user) else {
             completion(false)
+            return
+        }
+        
+        self.reference.child(user.uid).setValue(userData) { err, ref in
+            guard (err == nil) else {
+                completion(false)
+                return
+            }
+            completion(true)
         }
     }
     
@@ -59,13 +55,11 @@ class UserAccountManager {
                 return
             }
             
-            do {
-                let jsonData = try JSONSerialization.data(withJSONObject: value)
-                let user = try JSONDecoder().decode(FirebaseUser.self, from: jsonData)
-                completion(.success(user))
-            } catch {
+            guard let user = try? JSONSerialization.createObjectWithData(FirebaseUser.self, jsonObject: value) else {
                 completion(.failure(UAAccountError.decodingError))
+                return
             }
+            completion(.success(user))
         }
     }
     
@@ -80,33 +74,105 @@ class UserAccountManager {
         }
     }
     
+    ///Creates new user data and sets up their notification reference
     func createUserData(with uid: String, completion: @escaping (Result<Bool, UAAccountError>) -> Void) {
-        do {
-            let firebaseUser = FirebaseUser(uid: uid)
-            let encodedUser = try JSONEncoder().encode(firebaseUser)
-            let serializedUseer = try JSONSerialization.jsonObject(with: encodedUser)
+        let user = FirebaseUser(uid: uid)
+        
+        guard let userData = try? JSONSerialization.createJsonFromObject(user) else {
+            completion(.failure(.encodingError))
+            return
+        }
+        
+        //Initially setting the value to nil for setup...
+//        DatabaseReference.notificationsReference.child(uid).setV { [weak self] err, reference in
+//            guard err == nil else {
+//                completion(.failure(.createNewUserError))
+//                return
+//            }
+//            
+//            self?.reference.child(uid).setValue(userData) { err, ref in
+//                guard err == nil else {
+//                    completion(.failure(.createNewUserError))
+//                    return
+//                }
+//                completion(.success(true))
+//            }
+//        }
+    }
+    
+    ///Saves a recieved FCM notification to the users notification reference
+    func saveNotification(_ notification: FirebaseUserNotification) {
+        guard let currentUser = Auth.auth().currentUser else {
+            return
+        }
+        
+        guard let notificationData = try? JSONSerialization.createJsonFromObject(notification) else {
+            print("Unable to create notification data")
+            return
+        }
+        
+        DatabaseReference.notificationsReference.child(currentUser.uid).setValue(notificationData)
+    }
+    
+    func didSelectNotification(_ notificationId: UUID) {
+        guard let currentUser = Auth.auth().currentUser else {
+            return
+        }
+        
+        DatabaseReference.notificationsReference.child(currentUser.uid).getData { err, snapshot in
+            guard let snapshot, let firebaseNotification = try? JSONSerialization.createObjectWithData(FirebaseUserNotification.self, jsonObject: snapshot.value) else {
+                return
+            }
             
-            self.reference.child(uid).setValue(serializedUseer) { err, ref in
-                guard err == nil else {
-                    completion(.failure(.createNewUserError))
+            var notifcation = firebaseNotification
+            notifcation.didRead = true
+            
+            guard let value = try? JSONSerialization.createJsonFromObject(notifcation) else {
+                return
+            }
+            
+            DatabaseReference.notificationsReference.setValue(value) { err, ref in
+                guard (err == nil) else {
                     return
                 }
                 
-                completion(.success(true))
+                UIApplication.shared.applicationIconBadgeNumber -= 1
             }
-        } catch {
-            completion(.failure(.createNewUserError))
         }
     }
     
+    func removeNotification(_ notification: FirebaseUserNotification, completion: @escaping (Result<Bool, UAAccountError>) -> Void) {
+        guard let currentUser = Auth.auth().currentUser else {
+            completion(.failure(.error("There was an error with your account. Please log out and try again")))
+            return
+        }
+        
+        UIApplication.shared.applicationIconBadgeNumber -= 1
+        
+        DatabaseReference.notificationsReference.child(currentUser.uid).removeValue { err, snapshot in
+            guard (err == nil) else {
+                completion(.failure(.error("We were unable to remove your notification at this time. Try again later")))
+                return
+            }
+            completion(.success(true))
+        }
+    }
+    
+    ///Deletes the user data and their notifications. This is a permanent!
     func deleteUser(user: FirebaseUser, completion: @escaping (Bool) -> Void) {
-        self.reference.child(user.uid).removeValue { err, ref in
+        DatabaseReference.notificationsReference.child(user.uid).removeValue { [weak self] err, ref in
             guard (err == nil) else {
                 completion(false)
                 return
             }
             
-            completion(true)
+            self?.reference.child(user.uid).removeValue { err, ref in
+                guard (err == nil) else {
+                    completion(false)
+                    return
+                }
+                completion(true)
+            }
         }
     }
 }

@@ -24,7 +24,31 @@ extension Location {
     }
     
     var region: MKCoordinateRegion {
-        MKCoordinateRegion(center: self.coordinates, latitudinalMeters: 100, longitudinalMeters: 100)
+        MKCoordinateRegion(center: self.coordinates, span: .init(latitudeDelta: 0.002, longitudeDelta: 0.002))
+    }
+    
+    var hasAddress: Bool {
+        guard let address else {
+            return false
+        }
+        
+        guard !(address.isEmpty) else {
+            return false
+        }
+        
+        return true
+    }
+    
+    var hasName: Bool {
+        guard let name else {
+            return false
+        }
+        
+        guard !(name.isEmpty) else {
+            return false
+        }
+        
+        return true
     }
 }
 

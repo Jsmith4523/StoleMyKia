@@ -65,7 +65,7 @@ final class ReportsViewModel: NSObject, ObservableObject {
     
     override init() {
         super.init()
-        self.getReports()
+        //self.getReports()
     }
     
      func upload(_ report: Report, with image: UIImage? = nil, completion: @escaping ((Bool)->Void)) {

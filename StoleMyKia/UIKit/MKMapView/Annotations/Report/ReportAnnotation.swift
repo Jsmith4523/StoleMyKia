@@ -14,14 +14,23 @@ class ReportAnnotation: NSObject, MKAnnotation {
     
     static var reusableID = "reportAnnotation"
     
+    var title: String?
     var subtitle: String?
     var coordinate: CLLocationCoordinate2D
     var report: Report
     
     init(report: Report) {
-        self.coordinate    = report.location!.coordinates
+        self.coordinate    = report.location.coordinates
         self.report        = report
-        self.subtitle      = report.location?.name ?? report.location?.address ?? ""
+        self.title         = report.location.name ?? report.location.address ?? report.reportType.rawValue
+        self.subtitle      = report.dt.full
+    }
+}
+
+extension ReportAnnotation {
+    
+    var region: MKCoordinateRegion {
+        MKCoordinateRegion(center: self.coordinate, span: .init(latitudeDelta: 10, longitudeDelta: 10))
     }
 }
 
@@ -32,13 +41,13 @@ class ReportAnnotationView: MKMarkerAnnotationView {
     
     weak var calloutDelegate: AnnotationCalloutDelegate?
     
-    init(annotation: ReportAnnotation, reuseIdentifier: String?) {
+    init(annotation: ReportAnnotation) {
         self.report           = annotation.report
         self.reportAnnotation = annotation
-            
-        super.init(annotation: annotation, reuseIdentifier: reuseIdentifier)
+        super.init(annotation: annotation, reuseIdentifier: ReportAnnotation.reusableID)
         
         clusteringIdentifier = ReportAnnotation.reusableID
+        setupView()
     }
     
     required init?(coder aDecoder: NSCoder) {
@@ -51,18 +60,13 @@ class ReportAnnotationView: MKMarkerAnnotationView {
     
     override func prepareForDisplay() {
         super.prepareForDisplay()
-                
-        animatesWhenAdded  = true
+    }
+    
+    private func setupView() {
         subtitleVisibility = .visible
         
         glyphImage      = UIImage(systemName: report.reportType.annotationImage)
         markerTintColor = report.reportType.annotationColor
-        
-        let calloutView = ReportAnnotationCallOut(annotation: reportAnnotation)
-        calloutView.calloutDelegate = self.calloutDelegate
-        
-        canShowCallout = true
-        detailCalloutAccessoryView = calloutView
     }
 }
 

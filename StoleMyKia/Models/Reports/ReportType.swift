@@ -16,6 +16,7 @@ enum ReportType: String, CaseIterable, Hashable, Identifiable, Codable {
     case withnessed  = "Witnessed"
     case spotted     = "Spotted"
     
+    ///Raw value
     var id: String {
         return self.rawValue
     }
@@ -35,7 +36,7 @@ enum ReportType: String, CaseIterable, Hashable, Identifiable, Codable {
         }
     }
     
-    ///Use when creating a new report
+    ///The description of a new report type
     var description: String {
         switch self {
         case .stolen:
@@ -51,6 +52,7 @@ enum ReportType: String, CaseIterable, Hashable, Identifiable, Codable {
         }
     }
     
+    ///The map annotation color (or just associated color with this report type)
     var annotationColor: UIColor {
         switch self {
         case .stolen:
@@ -66,22 +68,7 @@ enum ReportType: String, CaseIterable, Hashable, Identifiable, Codable {
         }
     }
     
-    ///The path a report will be saved to in Google Firebase
-    var path: String {
-        switch self {
-        case .stolen:
-            return "stolen"
-        case .found:
-            return "found"
-        case .withnessed:
-            return "witnessed"
-        case .spotted:
-            return "spotted"
-        case .carjacked:
-            return "carjacked"
-        }
-    }
-    
+    ///When a user is creating a report type that may require additonal information such as the vehicle license plate.
     var requiresLicensePlateInformation: Bool {
         switch self {
         case .carjacked:
@@ -97,10 +84,30 @@ enum ReportType: String, CaseIterable, Hashable, Identifiable, Codable {
         }
     }
     
+    func generateNotificationBody(for vehicle: Vehicle) -> String {
+        let notificationDetails = vehicle.vehicleNotificationDetails
+        
+        switch self {
+            
+        case .carjacked:
+            return "A \(notificationDetails) has been carjacked. Do not approach the vehicle and call local authorities immediately once spotted."
+        case .stolen:
+            return "A \(notificationDetails) has been stolen."
+        case .found:
+            return "A \(notificationDetails) has been found."
+        case .withnessed:
+            return "Someone withness this \(notificationDetails) being stolen."
+        case .spotted:
+            return "A \(notificationDetails) has been spotted by someone"
+        }
+    }
+    
+    ///Enums avaliable when creating a NEW report.
     static var reports: [ReportType] {
         [.carjacked, .stolen, .withnessed, .found]
     }
     
+    ///Enums avaliable when updating a report
     static var update: [ReportType] {
         [.found, .spotted]
     }

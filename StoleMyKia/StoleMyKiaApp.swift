@@ -18,20 +18,15 @@ struct StoleMyKiaApp: App {
         
     @UIApplicationDelegateAdaptor (AppDelegate.self) var appDelegate
     
-    init() {
-        UIPageControl.appearance().currentPageIndicatorTintColor = UIColor(Color.brand)
-        UIPageControl.appearance().pageIndicatorTintColor = .gray
-    }
-    
     var body: some Scene {
         WindowGroup {
             ZStack {
-                if userModel.isSignedIn {
-                    Tab(userModel: userModel)
-                        .attachPartialSheetToRoot()
-                } else {
-                    UserLoginView(userModel: userModel)
-                }
+                ApplicationTabView()
+                    .environmentObject(userModel)
+            }
+            .onAppear {
+                //Handling incoming notifications
+                appDelegate.firebaseUserDelegate(userModel)
             }
         }
     }
@@ -39,6 +34,13 @@ struct StoleMyKiaApp: App {
 
 
 class AppDelegate: UIScene, UIApplicationDelegate {
+    
+    weak private var firebaseUserDelegate: FirebaseUserDelegate?
+    
+    func firebaseUserDelegate(_ delegate: FirebaseUserDelegate) {
+        self.firebaseUserDelegate = delegate
+    }
+    
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey : Any]? = nil) -> Bool {
         FirebaseApp.configure()
         
@@ -58,49 +60,34 @@ class AppDelegate: UIScene, UIApplicationDelegate {
     func application(_ application: UIApplication, didRegisterForRemoteNotificationsWithDeviceToken deviceToken: Data) {
         Messaging.messaging().apnsToken = deviceToken
     }
+    
+    func application(_ application: UIApplication, didReceiveRemoteNotification userInfo: [AnyHashable : Any], fetchCompletionHandler completionHandler: @escaping (UIBackgroundFetchResult) -> Void) {
+        guard let userDelegate = firebaseUserDelegate, let uid = userDelegate.uid else {
+            return
+        }
+        
+        //TODO: Notification Key and make sure backend object matches.
+        guard let userInfo = userInfo as? FirebaseUserNotification else {
+            //Handle notification error
+            return
+        }
+        
+        userDelegate.addRemoteNotification(userInfo)
+        
+        
+        //Couple things need to done: convert the userInfo, find the radius, compare it to the currently logged in user notification radius,
+        //Send it off to firebase if not greater than
+        
+    }
 }
 
 //MARK: - MessagingDelegate
 extension AppDelegate: MessagingDelegate {
     func messaging(_ messaging: Messaging, didReceiveRegistrationToken fcmToken: String?) {
         messaging.token { token, err in
-            guard let token, err == nil else {
+            guard !(token == nil), err == nil else {
                 return
             }
         }
     }
 }
-
-//MARK: UNUserNotificationCenterDelegate
-extension AppDelegate: UNUserNotificationCenterDelegate {
-    
-    func userNotificationCenter(_ center: UNUserNotificationCenter, didReceive response: UNNotificationResponse) async {
-        print("Notification recieved")
-    }
-}
-
-
-//MARK: DEVELOPER MESSAGE
-
-/*
-    This application is dedicated to my 2017 Hyundai Elantra SE that I named "Silvey"
- 
-    I'm exhausted of this 'Kia Boyz' group stealing peoples cars and trashing them later on. For my car which I wanted to keep forever,
-    I am annoyed by what happened to it and cops not holding these thieves up to a proper ass whoopings and punishment.
-    From the video I took of me approaching the thieves stealing my car and making the dumbass decision to share it with the world, I am also annoyed by social media for making fun of my pain you can hear in the video.
-    Calling me words such as a p-word, that I deserved to have my car stolen for the way I acted and I should've fought and/or shoot the people who were taking my car, these people I despise of as they have nothing better to do but bring down a person who just had their car stolen and now more financial stress from their parent having a medical accident in their vehicle and totaling it a month before having my vehicle stolen. A big "Thank you" and "Fuck you" to those instagram users, and the DMV Media site for not removing the video as I requested it. Your words fueled me during the creation of this application. I guess you all serve some purpose of my life you fucking assholes.
-    I hope if you all see this one day have a fucking stroke from trying to read basic SwiftUI syntax and eat shit from seeing the amount of files that are in this project for y'all's ungrateful and stealing content asses.
- 
-    I have a fucking Nissan Altima now.
- 
-    Only people who served little purpose in life find a car stealing TikTok challenging amusing.
- 
-    This application, while may not do it's job possibly, is my give back to people who take pride in being roll model citizens.
-    This application is not a replacement for atutal authority and law; yet more of a missing-child-on-a-milk-carton type application.
-    But the child isn't Asian, it's KDM.
-    My car I once loved is gone. Yeah it may just be metal and glass, but I absolutely loved that car.
-    Hoping one day I can find it in the future and fix it up. It may honestly become junkyard parts TBH.
-    So here's my solution to the problem. RIP Silvey. Thanks...
- 
-    -- Jaylen Smith (Developer, March 22, 2023 at 12:41AM)
- */

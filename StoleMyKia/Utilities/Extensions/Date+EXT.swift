@@ -25,3 +25,19 @@ extension Date {
         self.formatted(.dateTime.hour().minute())
     }
 }
+
+extension TimeInterval {
+    
+    
+    var time: String {
+        Date(timeIntervalSince1970: self).time
+    }
+    
+    var date: String {
+        Date(timeIntervalSince1970: self).date
+    }
+    
+    var full: String {
+        Date(timeIntervalSince1970: self).formatted(date: .abbreviated, time: .shortened)
+    }
+}
