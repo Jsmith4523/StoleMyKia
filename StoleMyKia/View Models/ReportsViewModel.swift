@@ -10,48 +10,11 @@ import SwiftUI
 import UIKit
 import MapKit
 
-enum ReportDetailMode: Identifiable {
-    
-    case single(Report)
-    case multiple([Report])
-    
-    var detent: Set<PresentationDetent> {
-        switch self {
-        case .single(_):
-            return [.large]
-        case .multiple(_):
-            return [.height(475), .large]
-        }
-    }
-    
-    var draggerIndicatorMode: Visibility {
-        switch self {
-        case .single(_):
-            return .visible
-        case .multiple(_):
-            return .visible
-        }
-    }
-    
-    var id: String {
-        switch self {
-        case .single(_):
-            return ""
-        case .multiple(let reports):
-            return "\(reports.count) Reports"
-        }
-    }
-}
-
 final class ReportsViewModel: NSObject, ObservableObject {
         
     @Published var isFetchingReports = false
-    
     @Published var isShowingLicensePlateScannerView = false
 
-    @Published var reportDetailMode: ReportDetailMode?
-    @Published var mapSheetMode: Mode = .interactive
-    
     @Published var reports = [Report]() {
         didSet {
             delegate?.reportsDelegate(didReceieveReports: reports)
@@ -70,18 +33,18 @@ final class ReportsViewModel: NSObject, ObservableObject {
     
      func upload(_ report: Report, with image: UIImage? = nil, completion: @escaping ((Bool)->Void)) {
          //Check uid before uploading a report...
-         guard let uid = firebaseUserDelegate?.uid else {
-             completion(false)
-             return
-         }
-         
-        var report = report
-        report.uid = uid
-        
-        guard !(report.uid == nil) else {
-            completion(false)
-            return
-        }
+//         guard let uid = firebaseUserDelegate?.uid else {
+//             completion(false)
+//             return
+//         }
+//
+//        var report = report
+//        report.uid = uid
+//
+//        guard !(report.uid == nil) else {
+//            completion(false)
+//            return
+//        }
         
         manager.uploadReport(report: report, image: image) { [weak self] result in
             switch result {
@@ -105,7 +68,7 @@ final class ReportsViewModel: NSObject, ObservableObject {
         manager.fetchReports { [weak self] result in
             switch result {
             case .success(let reports):
-                self?.reports.including(with: reports)
+                self?.reports = reports
             case .failure(let reason):
                 print(reason.localizedDescription)
             }
@@ -131,19 +94,53 @@ final class ReportsViewModel: NSObject, ObservableObject {
         }
     }
     
+    func getReportDetails(_ uuid: UUID, completion: @escaping (Result<Report, FetchReportError>) -> Void) {
+        manager.fetchReport(uuid) { result in
+            switch result {
+            case .success(let report):
+                completion(.success(report))
+            case .failure(let error):
+                completion(.failure(error))
+            }
+        }
+    }
+    
     deinit {
         print("Dead: ReportsViewModel")
+    }
+}
+
+enum FetchReportError: String, Error {
+    case unavaliable = "This report is unavaliable at the moment."
+    case deleted = "This report was deleted."
+    
+    var title: String {
+        switch self {
+        case .unavaliable:
+            return "Unavaliable!"
+        case .deleted:
+            return "Deleted!"
+        }
+    }
+    
+    var image: String {
+        switch self {
+        case .unavaliable:
+            return "doc"
+        case .deleted:
+            return "trash"
+        }
     }
 }
 
 //MARK: - SelectedReportAnnotationDelegate
 extension ReportsViewModel: ReportAnnotationDelegate {
     func didSelectReport(_ report: Report) {
-        self.reportDetailMode = .single(report)
+        
     }
     
     func didSelectCluster(_ reports: [Report]) {
-        self.reportDetailMode = .multiple(reports)
+        
     }
 }
 

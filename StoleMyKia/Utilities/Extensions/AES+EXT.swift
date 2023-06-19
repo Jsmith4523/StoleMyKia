@@ -42,7 +42,12 @@ extension EncryptedData {
         return nil
     }
 
-    static func createEncryption(input: String) throws -> EncryptedData? {
+    static func createEncryption(input: String) throws -> Data? {
+        
+        //If the string is passed through as empty, go ahead and return nil
+        guard !(input.isEmpty) else {
+            return nil
+        }
         
         let key   = SymmetricKey(size: .bits256)
         let iv    = SymmetricKey(size: .bits256)
@@ -86,6 +91,12 @@ extension EncryptedData {
                 
         let encrytedData = EncryptedData(data: b64EncodeData, key: keyData, iv: ivData)
         
-        return encrytedData
+        guard let jsonObject = try? JSONSerialization.createJsonFromObject(encrytedData) else {
+            fatalError("Unable to create json object from string!!")
+        }
+        
+        let jsonData = try JSONSerialization.data(withJSONObject: jsonObject)
+        
+        return jsonData
     }
 }

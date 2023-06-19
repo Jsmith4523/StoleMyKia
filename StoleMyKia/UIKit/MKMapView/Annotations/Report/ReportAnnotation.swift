@@ -23,7 +23,6 @@ class ReportAnnotation: NSObject, MKAnnotation {
         self.coordinate    = report.location.coordinates
         self.report        = report
         self.title         = report.location.name ?? report.location.address ?? report.reportType.rawValue
-        self.subtitle      = report.dt.full
     }
 }
 

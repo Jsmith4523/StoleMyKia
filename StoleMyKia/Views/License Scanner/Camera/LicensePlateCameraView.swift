@@ -8,13 +8,24 @@
 import SwiftUI
 
 struct LicensePlateCameraView: View {
+    
+    @EnvironmentObject var reportsVM: ReportsViewModel
+    @EnvironmentObject var scannerCoordinator: LicensePlateScannerCoordinator
+    
     var body: some View {
-        Text(/*@START_MENU_TOKEN@*/"Hello, World!"/*@END_MENU_TOKEN@*/)
+        VStack {
+            LicenseCameraViewRepresentable(scannerCoordinator: scannerCoordinator)
+        }
+        .onAppear {
+            scannerCoordinator.setDelegate(reportsVM)
+        }
     }
 }
 
 struct LicensePlateCameraView_Previews: PreviewProvider {
     static var previews: some View {
         LicensePlateCameraView()
+            .environmentObject(LicensePlateScannerCoordinator())
+            .environmentObject(ReportsViewModel())
     }
 }

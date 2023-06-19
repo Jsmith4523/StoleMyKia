@@ -9,7 +9,7 @@ import SwiftUI
 
 struct FeedListFilterView: View {
     
-    @Binding var filterSelection: ReportType
+    @Binding var filterSelection: ReportType?
     
     var body: some View {
         HStack {
@@ -23,20 +23,20 @@ struct FeedListFilterView: View {
                 }
             }
         }
-        .background(.white)
+        .background(Color(uiColor: .systemBackground))
     }
 }
 
 fileprivate struct FilterCellView: View {
     
-    @Binding var selection: ReportType
+    @Binding var selection: ReportType?
     
     let type: ReportType
     
     var body: some View {
         Text(type.rawValue)
             .font(.system(size: 17).weight(.bold))
-            .foregroundColor(type == selection ? .white : .black)
+            .foregroundColor(type == selection ? .white : Color(uiColor: .label))
             .padding(10)
             .background(selection == type ? Color(uiColor: type.annotationColor) : .clear)
             .clipShape(Capsule())
@@ -54,14 +54,13 @@ fileprivate struct FilterCellView: View {
     
     func select() {
         UIImpactFeedbackGenerator().impactOccurred(intensity: 5)
-        withAnimation {
-            selection = type
-        }
+        selection = type
     }
 }
 
 struct FeedListFilterView_Previews: PreviewProvider {
     static var previews: some View {
         FeedListFilterView(filterSelection: .constant(.stolen))
+            .preferredColorScheme(.dark)
     }
 }

@@ -7,25 +7,67 @@
 
 import SwiftUI
 
+enum ApplicationTabViewSelection {
+    
+    case feed, notification, user
+    
+    var title: String {
+        switch self {
+        case .feed:
+            return "Feed"
+        case .notification:
+            return "Notifications"
+        case .user:
+            return "Account"
+        }
+    }
+    
+    var symbol: String {
+        switch self {
+        case .feed:
+            return "tray.2"
+        case .notification:
+            return "bell"
+        case .user:
+            return "person.crop.circle"
+        }
+    }
+    
+    var tabItemLabel: some View {
+        switch self {
+        case .feed:
+            return Label(self.title, systemImage: self.symbol)
+        case .notification:
+            return Label(self.title, systemImage: self.symbol)
+        case .user:
+            return Label(self.title, systemImage: self.symbol)
+        }
+    }
+}
+
 struct ApplicationTabView: View {
+    
+    @State private var selection: ApplicationTabViewSelection = .feed
     
     @StateObject private var reportsVM = ReportsViewModel()
     @EnvironmentObject var userModel: UserViewModel
         
     var body: some View {
-        TabView {
+        TabView(selection: $selection) {
             FeedView()
+                .tag(ApplicationTabViewSelection.feed)
                 .tabItem {
-                    Label("Feed", systemImage: "square.stack.3d.down.right")
+                    ApplicationTabViewSelection.feed.tabItemLabel
                 }
             NotificationView()
-                .badge(94)
+                .tag(ApplicationTabViewSelection.notification)
                 .tabItem {
-                    Label("Notifications", systemImage: "bell")
+                    ApplicationTabViewSelection.notification.tabItemLabel
                 }
             UserView()
+                .tag(ApplicationTabViewSelection.user)
                 .tabItem {
-                    Label("Account", systemImage: "person.crop.circle")
+                    ApplicationTabViewSelection.user.tabItemLabel
                 }
         }
         .environmentObject(reportsVM)
@@ -39,6 +81,5 @@ struct ApplicationTabView_Previews: PreviewProvider {
         ApplicationTabView()
             .environmentObject(ReportsViewModel())
             .environmentObject(UserViewModel())
-            .preferredColorScheme(.dark)
     }
 }

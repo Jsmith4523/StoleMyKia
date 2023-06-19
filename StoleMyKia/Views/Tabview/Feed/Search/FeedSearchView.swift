@@ -8,13 +8,30 @@
 import SwiftUI
 
 struct FeedSearchView: View {
+    
+    @Binding var reports: [Report]
+    @State private var searchField = ""
+    
+    @EnvironmentObject var reportsVM: ReportsViewModel
+    
     var body: some View {
-        Text(/*@START_MENU_TOKEN@*/"Hello, World!"/*@END_MENU_TOKEN@*/)
+        VStack {
+            FeedSearchResultsView(reports: $reports, searchField: $searchField)
+        }
+        .navigationTitle("Search")
+        .navigationBarTitleDisplayMode(.inline)
+    }
+    
+    private func getReportsWithFilter() {
+        
     }
 }
 
 struct FeedSearchView_Previews: PreviewProvider {
     static var previews: some View {
-        FeedSearchView()
+        NavigationView {
+            FeedSearchView(reports: .constant(.testReports()))
+                .environmentObject(ReportsViewModel())
+        }
     }
 }

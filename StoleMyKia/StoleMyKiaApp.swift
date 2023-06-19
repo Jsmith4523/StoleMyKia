@@ -15,6 +15,10 @@ import FirebaseMessaging
 struct StoleMyKiaApp: App {
     
     @StateObject private var userModel = UserViewModel()
+    
+    init() {
+        
+    }
         
     @UIApplicationDelegateAdaptor (AppDelegate.self) var appDelegate
     
@@ -26,8 +30,19 @@ struct StoleMyKiaApp: App {
             }
             .onAppear {
                 //Handling incoming notifications
-                appDelegate.firebaseUserDelegate(userModel)
+                //appDelegate.firebaseUserDelegate(userModel)
             }
+        }
+    }
+}
+
+extension UIWindow {
+    
+    open override func didAddSubview(_ subview: UIView) {
+        if !(backgroundColor == nil) {
+            backgroundColor = UIColor(Color.brand)
+        } else {
+            backgroundColor = .clear
         }
     }
 }
@@ -42,6 +57,10 @@ class AppDelegate: UIScene, UIApplicationDelegate {
     }
     
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey : Any]? = nil) -> Bool {
+        
+        UITabBar.appearance().barTintColor = .systemBackground
+        UINavigationBar.appearance().barTintColor = .systemBackground
+        
         FirebaseApp.configure()
         
         Messaging.messaging().delegate = self
@@ -53,7 +72,7 @@ class AppDelegate: UIScene, UIApplicationDelegate {
         }
         
         application.registerForRemoteNotifications()
-                
+        
         return true
     }
     
@@ -70,14 +89,15 @@ class AppDelegate: UIScene, UIApplicationDelegate {
         guard let userInfo = userInfo as? FirebaseUserNotification else {
             //Handle notification error
             return
+            
+            
+            //userDelegate.addRemoteNotification(userInfo)
+            
+            
+            //Couple things need to done: convert the userInfo, find the radius, compare it to the currently logged in user notification radius,
+            //Send it off to firebase if not greater than
+            
         }
-        
-        userDelegate.addRemoteNotification(userInfo)
-        
-        
-        //Couple things need to done: convert the userInfo, find the radius, compare it to the currently logged in user notification radius,
-        //Send it off to firebase if not greater than
-        
     }
 }
 

@@ -7,14 +7,71 @@
 
 import SwiftUI
 
+enum UserTabViewSelection: CaseIterable, Identifiable {
+    
+    case reports, bookmarks
+    
+    var id: String {
+        self.title
+    }
+    
+    var title: String {
+        switch self {
+        case .reports:
+            return "My Reports"
+        case .bookmarks:
+            return "My Bookmarks"
+        }
+    }
+    
+    var symbol: String {
+        switch self {
+        case .reports:
+            return "tray"
+        case .bookmarks:
+            return "bookmark.fill"
+        }
+    }
+}
+
 struct UserViewTabSelectionView: View {
+    
+    @Binding var selection: UserTabViewSelection
+    
     var body: some View {
-        Text(/*@START_MENU_TOKEN@*/"Hello, World!"/*@END_MENU_TOKEN@*/)
+        VStack {
+            HStack {
+                Spacer()
+                ForEach(UserTabViewSelection.allCases) { selection in
+                    Image(systemName: selection.symbol)
+                        .resizable()
+                        .scaledToFit()
+                        .frame(width: 25, height: 25)
+                        .foregroundColor(self.selection == selection ? Color(uiColor: .label) : .gray)
+                        .onTapGesture {
+                            changeSelection(to: selection)
+                        }
+                    Spacer()
+                }
+            }
+            .padding()
+            Divider()
+        }
+        .onChange(of: selection) { _ in
+            UIImpactFeedbackGenerator().impactOccurred(intensity: 5)
+        }
+    }
+    
+    
+    private func changeSelection(to selection: UserTabViewSelection) {
+        withAnimation {
+            self.selection = selection
+        }
     }
 }
 
 struct UserViewTabSelectionView_Previews: PreviewProvider {
     static var previews: some View {
-        UserViewTabSelectionView()
+        UserViewTabSelectionView(selection: .constant(.reports))
     }
 }

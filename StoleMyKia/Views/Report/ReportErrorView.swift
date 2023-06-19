@@ -8,13 +8,33 @@
 import SwiftUI
 
 struct ReportErrorView: View {
+    
+    let fetchErrorReason: FetchReportError
+    
+    var refreshCompletion: (()->Void)? = nil
+    
     var body: some View {
-        Text(/*@START_MENU_TOKEN@*/"Hello, World!"/*@END_MENU_TOKEN@*/)
+        VStack {
+            Spacer()
+            VStack(spacing: 25) {
+                Image(systemName: fetchErrorReason.image)
+                    .resizable()
+                    .scaledToFit()
+                    .frame(width: 55, height: 55)
+                Text(fetchErrorReason.title)
+                    .font(.system(size: 25).weight(.bold))
+                Text(fetchErrorReason.rawValue)
+                    .font(.system(size: 20))
+                    .foregroundColor(.gray)
+            }
+            .multilineTextAlignment(.center)
+            Spacer()
+        }
     }
 }
 
 struct ReportErrorView_Previews: PreviewProvider {
     static var previews: some View {
-        ReportErrorView()
+        ReportErrorView(fetchErrorReason: .unavaliable)
     }
 }

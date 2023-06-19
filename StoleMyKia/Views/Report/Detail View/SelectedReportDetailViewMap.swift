@@ -27,26 +27,30 @@ struct SelectedReportDetailViewMap: UIViewRepresentable {
         mapView.addAnnotation(annotation)
         mapView.setRegion(report.location.region, animated: true)
         mapView.selectAnnotation(annotation, animated: false)
-        mapView.register(ReportAnnotationView.self, forAnnotationViewWithReuseIdentifier: ReportAnnotation.reusableID)
+        mapView.register(ReportTimelineAnnotationView.self, forAnnotationViewWithReuseIdentifier: ReportAnnotation.reusableID)
         
         return mapView
     }
     
     func updateUIView(_ uiView: MKMapView, context: Context) {}
     
-    func makeCoordinator() -> Coordinator {
-        Coordinator()
+    func makeCoordinator() -> SelectedReportDetailViewMapCoordinator {
+       SelectedReportDetailViewMapCoordinator()
     }
     
     typealias UIViewType = MKMapView
     
-    final class Coordinator: NSObject, MKMapViewDelegate {
+    final class SelectedReportDetailViewMapCoordinator: NSObject, MKMapViewDelegate {
         func mapView(_ mapView: MKMapView, viewFor annotation: MKAnnotation) -> MKAnnotationView? {
             if let annotation = annotation as? ReportAnnotation {
-                return ReportAnnotationView(annotation: annotation)
+                return ReportTimelineAnnotationView(annotation: annotation)
             }
             
             return nil
+        }
+        
+        deinit {
+            print("Dead: SelectedReportDetailViewMapCoordinator")
         }
     }
 }

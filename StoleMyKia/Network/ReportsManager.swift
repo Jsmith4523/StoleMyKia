@@ -22,13 +22,9 @@ class ReportsManager {
     
     private let database = Firestore.firestore()
     
-    private var collection: CollectionReference {
-        database.collection("Reports/")
-    }
-    
     ///Fetches reports in the database
     func fetchReports(completion: @escaping ReportsCompletion) {
-        collection.getAllDocuments { result in
+        database.collection("Reports/").getAllDocuments { result in
             switch result {
             case .success(let reports):
                 completion(.success(reports))
@@ -44,77 +40,103 @@ class ReportsManager {
             completion(.failure(RMError.error("user uid not provided")))
             return
         }
-        collection.whereField("uid", isEqualTo: uid).getQueryDocuments { result in
-            switch result {
-            case .success(let reports):
-                completion(.success(reports))
-            case .failure(let error):
-                completion(.failure(error))
-            }
-        }
+//        database.collection("Reports/").whereField("uid", isEqualTo: uid).getQueryDocuments { result in
+//            switch result {
+//            case .success(let reports):
+//                completion(.success(reports))
+//            case .failure(let error):
+//                completion(.failure(error))
+//            }
+//        }
     }
     
     ///Fetches the current logged in user bookmarked reports.
     func fetchUserBookmarkReports(_ uuids: [UUID], removalCompletion: @escaping RemovalCompletion, completion: @escaping (Result<[Report], Error>) -> Void) {
-        
+
         var reports = [Report?]()
-        
+
         for documentID in uuids {
-            self.collection.document(documentID.uuidString).getDocumentMatchingReference(Report.self) { result in
-                switch result {
-                case .success(let report):
-                    reports.append(report)
-                    completion(.success(reports.compactMap{$0}))
-                case .failure(let error):
-                    completion(.failure(error))
-                }
-            }
+//            database.collection("Reports/").document(documentID.uuidString).getDocumentMatchingReference(Report.self) { result in
+//                switch result {
+//                case .success(let report):
+//                    reports.append(report)
+//                    completion(.success(reports.compactMap{$0}))
+//                case .failure(let error):
+//                    completion(.failure(error))
+//                }
+//            }
         }
     }
     
     ///Fetches the current logged in users updates.
     func fetchUserUpdates(_ uuids: [UUID], completion: @escaping (Result<[Report], Error>) -> Void) {
         var reports = [Report?]()
-        
+
         for documentID in uuids.map({$0.uuidString}) {
             //TODO: Condition base on report type
-            self.collection.document(documentID).getDocumentMatchingReference(Report.self) { result in
-                switch result {
-                case .success(let report):
-                    reports.append(report)
-                    completion(.success(reports.compactMap{$0}))
-                case .failure(let error):
-                    completion(.failure(error))
-                }
-            }
+//            database.collection("Reports/").document(documentID).getDocumentMatchingReference(Report.self) { result in
+//                switch result {
+//                case .success(let report):
+//                    reports.append(report)
+//                    completion(.success(reports.compactMap{$0}))
+//                case .failure(let error):
+//                    completion(.failure(error))
+//                }
+//            }
         }
     }
     
     func reportDoesExist(uuid: UUID, completion: @escaping (Bool) -> Void) {
-        self.collection.document(uuid.uuidString).doesExist { result in
-            completion(result)
-        }
+//        database.collection("Reports/").document(uuid.uuidString).doesExist { result in
+//            completion(result)
+//        }
     }
     
     func uploadReport(report: Report, image: UIImage? = nil, completion: @escaping UploadReportCompletion) {
-        collection.uploadReport(report, with: image) { result in
-            switch result {
-            case .success(_):
-                completion(.success(true))
-            case .failure(let error):
-                completion(.failure(error))
-            }
-        }
+//        database.collection("Reports/").uploadReport(report, with: image) { result in
+//            switch result {
+//            case .success(_):
+//                completion(.success(true))
+//            case .failure(let error):
+//                completion(.failure(error))
+//            }
+//        }
     }
     
     func delete(report: Report, completion: @escaping DeleteReportCompletion) {
-        collection.document("\(report.id)").beginDelection { result in
-            switch result {
-            case .success(let success):
-                completion(.success(success))
-            case .failure(let error):
-                completion(.failure(error))
+//        database.collection("Reports/").document("\(report.id)").beginDelection { result in
+//            switch result {
+//            case .success(let success):
+//                completion(.success(success))
+//            case .failure(let error):
+//                completion(.failure(error))
+//            }
+//        }
+    }
+    
+    ///Fetch single report by uuid
+    func fetchReport(_ uuid: UUID, completion: @escaping (Result<Report, FetchReportError>) -> Void) {
+        database.collection("Reports/").whereField("id", isEqualTo: uuid.uuidString).getDocuments { snapshot, err in
+            guard let snapshot, err == nil else {
+                completion(.failure(.unavaliable))
+                return
             }
+
+            guard let document = snapshot.documents.first else {
+                completion(.failure(.unavaliable))
+                return
+            }
+
+            guard document.exists else {
+                completion(.failure(.deleted))
+                return
+            }
+
+            guard let report = try? JSONSerialization.createObjectWithData(Report.self, jsonObject: document.data()) else {
+                completion(.failure(.unavaliable))
+                return
+            }
+            completion(.success(report))
         }
     }
     
@@ -124,15 +146,15 @@ class ReportsManager {
             return
         }
         
-        collection.whereField("uid", isEqualTo: uid).deleteAll { result in
-            switch result {
-            case .success(_):
-                completion(true)
-            case .failure(let error):
-                completion(false)
-                print(error.localizedDescription)
-            }
-        }
+//        database.collection("Reports/").whereField("uid", isEqualTo: uid).deleteAll { result in
+//            switch result {
+//            case .success(_):
+//                completion(true)
+//            case .failure(let error):
+//                completion(false)
+//                print(error.localizedDescription)
+//            }
+//        }
     }
 }
 

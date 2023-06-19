@@ -7,6 +7,12 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		240306442A3699540086B795 /* FeedSearchView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 240306432A3699540086B795 /* FeedSearchView.swift */; };
+		240306482A369B870086B795 /* FeedSearchResultsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 240306472A369B870086B795 /* FeedSearchResultsView.swift */; };
+		24065F582A3C227A0070BC9B /* UserViewTabSelectionView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 24065F572A3C227A0070BC9B /* UserViewTabSelectionView.swift */; };
+		24065F5A2A3C25120070BC9B /* UserReportsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 24065F592A3C25120070BC9B /* UserReportsView.swift */; };
+		24065F5C2A3C25400070BC9B /* UserBookmarksView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 24065F5B2A3C25400070BC9B /* UserBookmarksView.swift */; };
+		24065F5E2A3D0E960070BC9B /* SettingsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 24065F5D2A3D0E960070BC9B /* SettingsView.swift */; };
 		240F222E2A3211810078F97E /* Drawer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 240F222D2A3211810078F97E /* Drawer.swift */; };
 		240F22422A33F0020078F97E /* README.rtf in Resources */ = {isa = PBXBuildFile; fileRef = 240F22412A33F0020078F97E /* README.rtf */; };
 		240F22452A33F10A0078F97E /* FirebaseUserNotification.swift in Sources */ = {isa = PBXBuildFile; fileRef = 240F22442A33F10A0078F97E /* FirebaseUserNotification.swift */; };
@@ -21,12 +27,11 @@
 		240F225E2A351DB40078F97E /* NoReportsAvaliableView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 240F225D2A351DB40078F97E /* NoReportsAvaliableView.swift */; };
 		240F22602A351DE00078F97E /* FeedView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 240F225F2A351DE00078F97E /* FeedView.swift */; };
 		240F22622A3522330078F97E /* NotificationView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 240F22612A3522330078F97E /* NotificationView.swift */; };
-		240F22642A3522990078F97E /* UserVew.swift in Sources */ = {isa = PBXBuildFile; fileRef = 240F22632A3522990078F97E /* UserVew.swift */; };
+		240F22642A3522990078F97E /* UserView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 240F22632A3522990078F97E /* UserView.swift */; };
 		240F22662A35327C0078F97E /* FeedListFilterView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 240F22652A35327C0078F97E /* FeedListFilterView.swift */; };
 		240F22692A3536CE0078F97E /* SelectedReportDetailView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 240F22682A3536CE0078F97E /* SelectedReportDetailView.swift */; };
 		240F226C2A3539A20078F97E /* TimelineMapViewRepresentable.swift in Sources */ = {isa = PBXBuildFile; fileRef = 240F226B2A3539A20078F97E /* TimelineMapViewRepresentable.swift */; };
 		24127C1F29E3F4AC00C09FE5 /* Launch Screen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 24127C1E29E3F4AC00C09FE5 /* Launch Screen.storyboard */; };
-		24131BAA2A31A3BD00D786DF /* PartialSheet in Frameworks */ = {isa = PBXBuildFile; productRef = 24131BA92A31A3BD00D786DF /* PartialSheet */; };
 		2425EAF92A003CDE00CC886F /* NavigationController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2425EAF82A003CDE00CC886F /* NavigationController.swift */; };
 		2426A6192A2345EF00E78647 /* FirebaseUserDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2426A6182A2345EF00E78647 /* FirebaseUserDelegate.swift */; };
 		2426A61B2A23461300E78647 /* ReportsDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2426A61A2A23461300E78647 /* ReportsDelegate.swift */; };
@@ -50,6 +55,19 @@
 		245B392129E39E90001DD213 /* ReportType.swift in Sources */ = {isa = PBXBuildFile; fileRef = 245B392029E39E90001DD213 /* ReportType.swift */; };
 		245B392329E39EC1001DD213 /* VehicleColor.swift in Sources */ = {isa = PBXBuildFile; fileRef = 245B392229E39EC1001DD213 /* VehicleColor.swift */; };
 		248278D72A03054C00C1E99D /* UISheetPC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 248278D62A03054C00C1E99D /* UISheetPC.swift */; };
+		248636AC2A3BCBE90092E184 /* PartialSheet in Frameworks */ = {isa = PBXBuildFile; productRef = 248636AB2A3BCBE90092E184 /* PartialSheet */; };
+		2492549F2A37B0FE0037C43C /* ReportErrorView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2492549E2A37B0FE0037C43C /* ReportErrorView.swift */; };
+		249254A42A37C9F70037C43C /* SignInView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 249254A32A37C9F70037C43C /* SignInView.swift */; };
+		249254A62A37CA590037C43C /* UIHostingController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 249254A52A37CA590037C43C /* UIHostingController.swift */; };
+		249254A82A37D8720037C43C /* PhoneNumberReasonView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 249254A72A37D8720037C43C /* PhoneNumberReasonView.swift */; };
+		249254AD2A3840EB0037C43C /* LicensePlateScannerView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 249254AC2A3840EB0037C43C /* LicensePlateScannerView.swift */; };
+		249254AF2A3841100037C43C /* LicenseScannerPermissionDeniedView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 249254AE2A3841100037C43C /* LicenseScannerPermissionDeniedView.swift */; };
+		249254B12A38446E0037C43C /* LicenseCameraViewRepresentable.swift in Sources */ = {isa = PBXBuildFile; fileRef = 249254B02A38446E0037C43C /* LicenseCameraViewRepresentable.swift */; };
+		249254B42A384A730037C43C /* LicenseScannerRequestPermissionView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 249254B32A384A730037C43C /* LicenseScannerRequestPermissionView.swift */; };
+		249254B72A384E8D0037C43C /* LicensePlateCameraView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 249254B62A384E8D0037C43C /* LicensePlateCameraView.swift */; };
+		249254B92A3851560037C43C /* LicensePlateCameraReportsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 249254B82A3851560037C43C /* LicensePlateCameraReportsView.swift */; };
+		249254BD2A3926120037C43C /* ParkingMapViewRepresentable.swift in Sources */ = {isa = PBXBuildFile; fileRef = 249254BC2A3926120037C43C /* ParkingMapViewRepresentable.swift */; };
+		249254BF2A39279C0037C43C /* ParkingMapView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 249254BE2A39279C0037C43C /* ParkingMapView.swift */; };
 		2495A02029CAC3DE00457CE7 /* Date+EXT.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2495A01F29CAC3DE00457CE7 /* Date+EXT.swift */; };
 		2495A02229CAC5DF00457CE7 /* String+EXT.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2495A02129CAC5DF00457CE7 /* String+EXT.swift */; };
 		24A2068E2A07A18B00F5DC0C /* User.swift in Sources */ = {isa = PBXBuildFile; fileRef = 24A2068D2A07A18B00F5DC0C /* User.swift */; };
@@ -69,6 +87,7 @@
 		24A662F729C2F45B00AD784F /* ReportsManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 24A662F629C2F45B00AD784F /* ReportsManager.swift */; };
 		24A662FA29C592FF00AD784F /* ReportClusterAnnotation.swift in Sources */ = {isa = PBXBuildFile; fileRef = 24A662F929C592FF00AD784F /* ReportClusterAnnotation.swift */; };
 		24A662FC29C6DD5100AD784F /* UNUserNC+EXT.swift in Sources */ = {isa = PBXBuildFile; fileRef = 24A662FB29C6DD5100AD784F /* UNUserNC+EXT.swift */; };
+		24A7E69D2A36AA47009A4C90 /* FeedVehicleFilterView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 24A7E69C2A36AA47009A4C90 /* FeedVehicleFilterView.swift */; };
 		24AAC49A29CC1A6400125196 /* AES+EXT.swift in Sources */ = {isa = PBXBuildFile; fileRef = 24AAC49929CC1A6400125196 /* AES+EXT.swift */; };
 		24B0719F2A3631FB000C6B75 /* TimelineMapView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 24B0719E2A3631FB000C6B75 /* TimelineMapView.swift */; };
 		24B071A12A363E30000C6B75 /* ReportTimelimeAnnotationView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 24B071A02A363E30000C6B75 /* ReportTimelimeAnnotationView.swift */; };
@@ -81,6 +100,12 @@
 
 /* Begin PBXFileReference section */
 		197A31A21B533A0B83DC4715 /* Pods_StoleMyKia.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_StoleMyKia.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		240306432A3699540086B795 /* FeedSearchView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FeedSearchView.swift; sourceTree = "<group>"; };
+		240306472A369B870086B795 /* FeedSearchResultsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FeedSearchResultsView.swift; sourceTree = "<group>"; };
+		24065F572A3C227A0070BC9B /* UserViewTabSelectionView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserViewTabSelectionView.swift; sourceTree = "<group>"; };
+		24065F592A3C25120070BC9B /* UserReportsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserReportsView.swift; sourceTree = "<group>"; };
+		24065F5B2A3C25400070BC9B /* UserBookmarksView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserBookmarksView.swift; sourceTree = "<group>"; };
+		24065F5D2A3D0E960070BC9B /* SettingsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsView.swift; sourceTree = "<group>"; };
 		240F222D2A3211810078F97E /* Drawer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Drawer.swift; sourceTree = "<group>"; };
 		240F22412A33F0020078F97E /* README.rtf */ = {isa = PBXFileReference; lastKnownFileType = text.rtf; path = README.rtf; sourceTree = "<group>"; };
 		240F22442A33F10A0078F97E /* FirebaseUserNotification.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FirebaseUserNotification.swift; sourceTree = "<group>"; };
@@ -95,7 +120,7 @@
 		240F225D2A351DB40078F97E /* NoReportsAvaliableView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NoReportsAvaliableView.swift; sourceTree = "<group>"; };
 		240F225F2A351DE00078F97E /* FeedView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FeedView.swift; sourceTree = "<group>"; };
 		240F22612A3522330078F97E /* NotificationView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NotificationView.swift; sourceTree = "<group>"; };
-		240F22632A3522990078F97E /* UserVew.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserVew.swift; sourceTree = "<group>"; };
+		240F22632A3522990078F97E /* UserView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserView.swift; sourceTree = "<group>"; };
 		240F22652A35327C0078F97E /* FeedListFilterView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FeedListFilterView.swift; sourceTree = "<group>"; };
 		240F22682A3536CE0078F97E /* SelectedReportDetailView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SelectedReportDetailView.swift; sourceTree = "<group>"; };
 		240F226B2A3539A20078F97E /* TimelineMapViewRepresentable.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TimelineMapViewRepresentable.swift; sourceTree = "<group>"; };
@@ -123,6 +148,18 @@
 		245B392029E39E90001DD213 /* ReportType.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReportType.swift; sourceTree = "<group>"; };
 		245B392229E39EC1001DD213 /* VehicleColor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VehicleColor.swift; sourceTree = "<group>"; };
 		248278D62A03054C00C1E99D /* UISheetPC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UISheetPC.swift; sourceTree = "<group>"; };
+		2492549E2A37B0FE0037C43C /* ReportErrorView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReportErrorView.swift; sourceTree = "<group>"; };
+		249254A32A37C9F70037C43C /* SignInView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SignInView.swift; sourceTree = "<group>"; };
+		249254A52A37CA590037C43C /* UIHostingController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UIHostingController.swift; sourceTree = "<group>"; };
+		249254A72A37D8720037C43C /* PhoneNumberReasonView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PhoneNumberReasonView.swift; sourceTree = "<group>"; };
+		249254AC2A3840EB0037C43C /* LicensePlateScannerView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LicensePlateScannerView.swift; sourceTree = "<group>"; };
+		249254AE2A3841100037C43C /* LicenseScannerPermissionDeniedView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LicenseScannerPermissionDeniedView.swift; sourceTree = "<group>"; };
+		249254B02A38446E0037C43C /* LicenseCameraViewRepresentable.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LicenseCameraViewRepresentable.swift; sourceTree = "<group>"; };
+		249254B32A384A730037C43C /* LicenseScannerRequestPermissionView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LicenseScannerRequestPermissionView.swift; sourceTree = "<group>"; };
+		249254B62A384E8D0037C43C /* LicensePlateCameraView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LicensePlateCameraView.swift; sourceTree = "<group>"; };
+		249254B82A3851560037C43C /* LicensePlateCameraReportsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LicensePlateCameraReportsView.swift; sourceTree = "<group>"; };
+		249254BC2A3926120037C43C /* ParkingMapViewRepresentable.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ParkingMapViewRepresentable.swift; sourceTree = "<group>"; };
+		249254BE2A39279C0037C43C /* ParkingMapView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ParkingMapView.swift; sourceTree = "<group>"; };
 		2495A01F29CAC3DE00457CE7 /* Date+EXT.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Date+EXT.swift"; sourceTree = "<group>"; };
 		2495A02129CAC5DF00457CE7 /* String+EXT.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "String+EXT.swift"; sourceTree = "<group>"; };
 		24A2068D2A07A18B00F5DC0C /* User.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = User.swift; sourceTree = "<group>"; };
@@ -144,6 +181,7 @@
 		24A662F629C2F45B00AD784F /* ReportsManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReportsManager.swift; sourceTree = "<group>"; };
 		24A662F929C592FF00AD784F /* ReportClusterAnnotation.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReportClusterAnnotation.swift; sourceTree = "<group>"; };
 		24A662FB29C6DD5100AD784F /* UNUserNC+EXT.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UNUserNC+EXT.swift"; sourceTree = "<group>"; };
+		24A7E69C2A36AA47009A4C90 /* FeedVehicleFilterView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FeedVehicleFilterView.swift; sourceTree = "<group>"; };
 		24AAC49929CC1A6400125196 /* AES+EXT.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "AES+EXT.swift"; sourceTree = "<group>"; };
 		24B0719E2A3631FB000C6B75 /* TimelineMapView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TimelineMapView.swift; sourceTree = "<group>"; };
 		24B071A02A363E30000C6B75 /* ReportTimelimeAnnotationView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReportTimelimeAnnotationView.swift; sourceTree = "<group>"; };
@@ -160,7 +198,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				24131BAA2A31A3BD00D786DF /* PartialSheet in Frameworks */,
+				248636AC2A3BCBE90092E184 /* PartialSheet in Frameworks */,
 				9A8DEA661C19F27F74C6B340 /* Pods_StoleMyKia.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -168,6 +206,41 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		240306422A3699400086B795 /* Search */ = {
+			isa = PBXGroup;
+			children = (
+				240306432A3699540086B795 /* FeedSearchView.swift */,
+				240306472A369B870086B795 /* FeedSearchResultsView.swift */,
+				24A7E69C2A36AA47009A4C90 /* FeedVehicleFilterView.swift */,
+				240F22652A35327C0078F97E /* FeedListFilterView.swift */,
+			);
+			path = Search;
+			sourceTree = "<group>";
+		};
+		24065F542A3C224D0070BC9B /* Reports */ = {
+			isa = PBXGroup;
+			children = (
+				24065F592A3C25120070BC9B /* UserReportsView.swift */,
+			);
+			path = Reports;
+			sourceTree = "<group>";
+		};
+		24065F552A3C22560070BC9B /* Bookmarks */ = {
+			isa = PBXGroup;
+			children = (
+				24065F5B2A3C25400070BC9B /* UserBookmarksView.swift */,
+			);
+			path = Bookmarks;
+			sourceTree = "<group>";
+		};
+		24065F562A3C225D0070BC9B /* Settings */ = {
+			isa = PBXGroup;
+			children = (
+				24065F5D2A3D0E960070BC9B /* SettingsView.swift */,
+			);
+			path = Settings;
+			sourceTree = "<group>";
+		};
 		240F222C2A3211720078F97E /* Drawer */ = {
 			isa = PBXGroup;
 			children = (
@@ -187,6 +260,9 @@
 		240F224A2A350B9B0078F97E /* Views */ = {
 			isa = PBXGroup;
 			children = (
+				249254A02A37C9D70037C43C /* Auth */,
+				249254AB2A3840DB0037C43C /* License Scanner */,
+				249254BB2A3925E20037C43C /* Parking Map */,
 				240F22672A3536B90078F97E /* Report */,
 				240F224B2A350BAA0078F97E /* Tabview */,
 			);
@@ -209,6 +285,7 @@
 			children = (
 				240F225F2A351DE00078F97E /* FeedView.swift */,
 				240F225D2A351DB40078F97E /* NoReportsAvaliableView.swift */,
+				240306422A3699400086B795 /* Search */,
 				240F225B2A351D7E0078F97E /* List */,
 			);
 			path = Feed;
@@ -225,7 +302,11 @@
 		240F22502A350C350078F97E /* User */ = {
 			isa = PBXGroup;
 			children = (
-				240F22632A3522990078F97E /* UserVew.swift */,
+				240F22632A3522990078F97E /* UserView.swift */,
+				24065F572A3C227A0070BC9B /* UserViewTabSelectionView.swift */,
+				24065F542A3C224D0070BC9B /* Reports */,
+				24065F552A3C22560070BC9B /* Bookmarks */,
+				24065F562A3C225D0070BC9B /* Settings */,
 			);
 			path = User;
 			sourceTree = "<group>";
@@ -234,8 +315,6 @@
 			isa = PBXGroup;
 			children = (
 				240F22572A3510B40078F97E /* FeedListView.swift */,
-				240F22592A3510E20078F97E /* ReportCellView.swift */,
-				240F22652A35327C0078F97E /* FeedListFilterView.swift */,
 			);
 			path = List;
 			sourceTree = "<group>";
@@ -243,6 +322,8 @@
 		240F22672A3536B90078F97E /* Report */ = {
 			isa = PBXGroup;
 			children = (
+				240F22592A3510E20078F97E /* ReportCellView.swift */,
+				2492549E2A37B0FE0037C43C /* ReportErrorView.swift */,
 				240F22552A350D280078F97E /* UpdateReportView.swift */,
 				240F22532A350D210078F97E /* LocationSearchView.swift */,
 				240F22512A350D080078F97E /* NewReportView.swift */,
@@ -328,6 +409,7 @@
 				24EAF11629C2A02900B4CBFE /* SFSafariView.swift */,
 				248278D62A03054C00C1E99D /* UISheetPC.swift */,
 				24FA56B92A29284D0074149B /* UIActivityVC.swift */,
+				249254A52A37CA590037C43C /* UIHostingController.swift */,
 			);
 			path = UIKit;
 			sourceTree = "<group>";
@@ -339,6 +421,77 @@
 				245B392029E39E90001DD213 /* ReportType.swift */,
 			);
 			path = Reports;
+			sourceTree = "<group>";
+		};
+		249254A02A37C9D70037C43C /* Auth */ = {
+			isa = PBXGroup;
+			children = (
+				249254A22A37C9E90037C43C /* NewAccount */,
+				249254A12A37C9E20037C43C /* SignIn */,
+			);
+			path = Auth;
+			sourceTree = "<group>";
+		};
+		249254A12A37C9E20037C43C /* SignIn */ = {
+			isa = PBXGroup;
+			children = (
+				249254A32A37C9F70037C43C /* SignInView.swift */,
+				249254A72A37D8720037C43C /* PhoneNumberReasonView.swift */,
+			);
+			path = SignIn;
+			sourceTree = "<group>";
+		};
+		249254A22A37C9E90037C43C /* NewAccount */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = NewAccount;
+			sourceTree = "<group>";
+		};
+		249254AB2A3840DB0037C43C /* License Scanner */ = {
+			isa = PBXGroup;
+			children = (
+				249254AC2A3840EB0037C43C /* LicensePlateScannerView.swift */,
+				249254BA2A3851A10037C43C /* Reports */,
+				249254B22A3845930037C43C /* Permission */,
+				249254B52A384E620037C43C /* Camera */,
+			);
+			path = "License Scanner";
+			sourceTree = "<group>";
+		};
+		249254B22A3845930037C43C /* Permission */ = {
+			isa = PBXGroup;
+			children = (
+				249254AE2A3841100037C43C /* LicenseScannerPermissionDeniedView.swift */,
+				249254B32A384A730037C43C /* LicenseScannerRequestPermissionView.swift */,
+			);
+			path = Permission;
+			sourceTree = "<group>";
+		};
+		249254B52A384E620037C43C /* Camera */ = {
+			isa = PBXGroup;
+			children = (
+				249254B62A384E8D0037C43C /* LicensePlateCameraView.swift */,
+				249254B02A38446E0037C43C /* LicenseCameraViewRepresentable.swift */,
+			);
+			path = Camera;
+			sourceTree = "<group>";
+		};
+		249254BA2A3851A10037C43C /* Reports */ = {
+			isa = PBXGroup;
+			children = (
+				249254B82A3851560037C43C /* LicensePlateCameraReportsView.swift */,
+			);
+			path = Reports;
+			sourceTree = "<group>";
+		};
+		249254BB2A3925E20037C43C /* Parking Map */ = {
+			isa = PBXGroup;
+			children = (
+				249254BC2A3926120037C43C /* ParkingMapViewRepresentable.swift */,
+				249254BE2A39279C0037C43C /* ParkingMapView.swift */,
+			);
+			path = "Parking Map";
 			sourceTree = "<group>";
 		};
 		24A206932A08310300F5DC0C /* Vehicle */ = {
@@ -506,7 +659,7 @@
 			);
 			name = StoleMyKia;
 			packageProductDependencies = (
-				24131BA92A31A3BD00D786DF /* PartialSheet */,
+				248636AB2A3BCBE90092E184 /* PartialSheet */,
 			);
 			productName = StoleMyKia;
 			productReference = 24A5791029BC552C00495E6F /* StoleMyKia.app */;
@@ -537,7 +690,7 @@
 			);
 			mainGroup = 24A5790729BC552C00495E6F;
 			packageReferences = (
-				24131BA82A31A3BD00D786DF /* XCRemoteSwiftPackageReference "PartialSheet" */,
+				248636AA2A3BCBE90092E184 /* XCRemoteSwiftPackageReference "PartialSheet" */,
 			);
 			productRefGroup = 24A5791129BC552C00495E6F /* Products */;
 			projectDirPath = "";
@@ -614,23 +767,31 @@
 				240F22582A3510B40078F97E /* FeedListView.swift in Sources */,
 				245B391D29E39E49001DD213 /* VehicleMake.swift in Sources */,
 				24A662FC29C6DD5100AD784F /* UNUserNC+EXT.swift in Sources */,
+				24065F582A3C227A0070BC9B /* UserViewTabSelectionView.swift in Sources */,
+				24065F5E2A3D0E960070BC9B /* SettingsView.swift in Sources */,
 				24B071A12A363E30000C6B75 /* ReportTimelimeAnnotationView.swift in Sources */,
 				240F225E2A351DB40078F97E /* NoReportsAvaliableView.swift in Sources */,
 				24A206902A0826BE00F5DC0C /* UserAccountManager.swift in Sources */,
 				24A5792929BC567F00495E6F /* ReportAnnotation.swift in Sources */,
+				24065F5A2A3C25120070BC9B /* UserReportsView.swift in Sources */,
 				2426A61B2A23461300E78647 /* ReportsDelegate.swift in Sources */,
 				2426A6202A23475A00E78647 /* ReportClusterAnnotationView.swift in Sources */,
 				240F22662A35327C0078F97E /* FeedListFilterView.swift in Sources */,
+				249254AD2A3840EB0037C43C /* LicensePlateScannerView.swift in Sources */,
 				240F22472A34FEF70078F97E /* FirebaseAuth.swift in Sources */,
 				240F22562A350D280078F97E /* UpdateReportView.swift in Sources */,
 				240F22522A350D080078F97E /* NewReportView.swift in Sources */,
 				24A4CEDE29BFA2CE00B856BC /* UNAuth+EXT.swift in Sources */,
+				249254A42A37C9F70037C43C /* SignInView.swift in Sources */,
 				24334D0429C19E100084B8EC /* UIImagePicker.swift in Sources */,
 				245B392329E39EC1001DD213 /* VehicleColor.swift in Sources */,
 				244BF51929D33F4E00951765 /* ImageCache.swift in Sources */,
 				24A4CEE429BFAC7100B856BC /* CLLocationManager+EXT.swift in Sources */,
 				24B0719F2A3631FB000C6B75 /* TimelineMapView.swift in Sources */,
+				24065F5C2A3C25400070BC9B /* UserBookmarksView.swift in Sources */,
+				240306442A3699540086B795 /* FeedSearchView.swift in Sources */,
 				240F22622A3522330078F97E /* NotificationView.swift in Sources */,
+				249254B72A384E8D0037C43C /* LicensePlateCameraView.swift in Sources */,
 				24B897EC29CF5A3B0003BCC8 /* UserViewModel.swift in Sources */,
 				24EAF11729C2A02900B4CBFE /* SFSafariView.swift in Sources */,
 				240F222E2A3211810078F97E /* Drawer.swift in Sources */,
@@ -638,25 +799,33 @@
 				245B391A29E39E09001DD213 /* SelectedReportDetailViewMap.swift in Sources */,
 				24A206952A08334400F5DC0C /* Location.swift in Sources */,
 				240F22452A33F10A0078F97E /* FirebaseUserNotification.swift in Sources */,
+				240306482A369B870086B795 /* FeedSearchResultsView.swift in Sources */,
 				24334D0629C1A0E10084B8EC /* View+EXT.swift in Sources */,
 				24A5791429BC552C00495E6F /* StoleMyKiaApp.swift in Sources */,
 				240F224D2A350BBA0078F97E /* ApplicationTabView.swift in Sources */,
 				2437328029BEF8FC008F4C4E /* NotificationViewModel.swift in Sources */,
 				2426A61D2A23463F00E78647 /* UserReportsDelegate.swift in Sources */,
+				249254B42A384A730037C43C /* LicenseScannerRequestPermissionView.swift in Sources */,
 				240F22542A350D210078F97E /* LocationSearchView.swift in Sources */,
 				240F22692A3536CE0078F97E /* SelectedReportDetailView.swift in Sources */,
+				249254BF2A39279C0037C43C /* ParkingMapView.swift in Sources */,
 				240F225A2A3510E20078F97E /* ReportCellView.swift in Sources */,
 				2448C3A82A2A49BE00A72D9F /* Firebase.swift in Sources */,
 				245B391729E39159001DD213 /* Color+EXT.swift in Sources */,
 				24A4CEE729C04CBA00B856BC /* ReportAnnotationCallout.swift in Sources */,
+				249254BD2A3926120037C43C /* ParkingMapViewRepresentable.swift in Sources */,
 				245B392129E39E90001DD213 /* ReportType.swift in Sources */,
 				2426A6192A2345EF00E78647 /* FirebaseUserDelegate.swift in Sources */,
-				240F22642A3522990078F97E /* UserVew.swift in Sources */,
+				249254A62A37CA590037C43C /* UIHostingController.swift in Sources */,
+				240F22642A3522990078F97E /* UserView.swift in Sources */,
 				24A5792C29BC56B000495E6F /* Report.swift in Sources */,
+				249254B92A3851560037C43C /* LicensePlateCameraReportsView.swift in Sources */,
 				245B391F29E39E55001DD213 /* VehicleModel.swift in Sources */,
 				2426A62A2A243F0E00E78647 /* AnnotationCalloutDelegate.swift in Sources */,
+				249254A82A37D8720037C43C /* PhoneNumberReasonView.swift in Sources */,
 				240F22492A350AD30078F97E /* LicenseScannerDelegate.swift in Sources */,
 				24A206922A08270300F5DC0C /* Vehicle.swift in Sources */,
+				2492549F2A37B0FE0037C43C /* ReportErrorView.swift in Sources */,
 				2448C3AA2A2A710F00A72D9F /* FirebaseStorage.swift in Sources */,
 				2425EAF92A003CDE00CC886F /* NavigationController.swift in Sources */,
 				2495A02229CAC5DF00457CE7 /* String+EXT.swift in Sources */,
@@ -666,10 +835,13 @@
 				24334D0129C187800084B8EC /* Reports.xcdatamodeld in Sources */,
 				24334CFB29C0E0130084B8EC /* UIImage+EXT.swift in Sources */,
 				24334CFD29C1846C0084B8EC /* Image+EXT.swift in Sources */,
+				249254B12A38446E0037C43C /* LicenseCameraViewRepresentable.swift in Sources */,
 				24AAC49A29CC1A6400125196 /* AES+EXT.swift in Sources */,
 				24FA56BA2A29284D0074149B /* UIActivityVC.swift in Sources */,
 				2495A02029CAC3DE00457CE7 /* Date+EXT.swift in Sources */,
 				24A662F729C2F45B00AD784F /* ReportsManager.swift in Sources */,
+				24A7E69D2A36AA47009A4C90 /* FeedVehicleFilterView.swift in Sources */,
+				249254AF2A3841100037C43C /* LicenseScannerPermissionDeniedView.swift in Sources */,
 				2448C3A52A2A3B1800A72D9F /* JSONSerial+EXT.swift in Sources */,
 				240F226C2A3539A20078F97E /* TimelineMapViewRepresentable.swift in Sources */,
 				24A2068E2A07A18B00F5DC0C /* User.swift in Sources */,
@@ -811,7 +983,7 @@
 				INFOPLIST_KEY_LSApplicationCategoryType = "public.app-category.utilities";
 				INFOPLIST_KEY_NSCameraUsageDescription = "Your device's camera will be used to detect license plates. It'll also be used to capture images of vehicles.";
 				INFOPLIST_KEY_NSFileProviderDomainUsageDescription = StoleMyKia;
-				INFOPLIST_KEY_NSLocationWhenInUseUsageDescription = "Your location is used to show local reports. Location is used when creating a new report.";
+				INFOPLIST_KEY_NSLocationAlwaysAndWhenInUseUsageDescription = "When creating a report or update, your location is automatically applied to the report. Your location is also used for 'Parking Map' to identify unsafe areas around you";
 				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchScreen_Generation = YES;
@@ -849,7 +1021,7 @@
 				INFOPLIST_KEY_LSApplicationCategoryType = "public.app-category.utilities";
 				INFOPLIST_KEY_NSCameraUsageDescription = "Your device's camera will be used to detect license plates. It'll also be used to capture images of vehicles.";
 				INFOPLIST_KEY_NSFileProviderDomainUsageDescription = StoleMyKia;
-				INFOPLIST_KEY_NSLocationWhenInUseUsageDescription = "Your location is used to show local reports. Location is used when creating a new report.";
+				INFOPLIST_KEY_NSLocationAlwaysAndWhenInUseUsageDescription = "When creating a report or update, your location is automatically applied to the report. Your location is also used for 'Parking Map' to identify unsafe areas around you";
 				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchScreen_Generation = YES;
@@ -893,7 +1065,7 @@
 /* End XCConfigurationList section */
 
 /* Begin XCRemoteSwiftPackageReference section */
-		24131BA82A31A3BD00D786DF /* XCRemoteSwiftPackageReference "PartialSheet" */ = {
+		248636AA2A3BCBE90092E184 /* XCRemoteSwiftPackageReference "PartialSheet" */ = {
 			isa = XCRemoteSwiftPackageReference;
 			repositoryURL = "https://github.com/Jsmith4523/PartialSheet.git";
 			requirement = {
@@ -904,9 +1076,9 @@
 /* End XCRemoteSwiftPackageReference section */
 
 /* Begin XCSwiftPackageProductDependency section */
-		24131BA92A31A3BD00D786DF /* PartialSheet */ = {
+		248636AB2A3BCBE90092E184 /* PartialSheet */ = {
 			isa = XCSwiftPackageProductDependency;
-			package = 24131BA82A31A3BD00D786DF /* XCRemoteSwiftPackageReference "PartialSheet" */;
+			package = 248636AA2A3BCBE90092E184 /* XCRemoteSwiftPackageReference "PartialSheet" */;
 			productName = PartialSheet;
 		};
 /* End XCSwiftPackageProductDependency section */

@@ -47,6 +47,9 @@ struct ReportCellView: View {
                             .foregroundColor(Color(uiColor: .label))
                             .lineLimit(2)
                         HStack {
+                            if !(report.vehicle.licensePlateString.isEmpty) {
+                                Label(report.vehicle.licensePlateString, systemImage: "light.panel")
+                            }
                             if let name = report.location.name {
                                 Label(name, systemImage: "mappin.and.ellipse")
                                     .foregroundColor(Color(uiColor: .label))

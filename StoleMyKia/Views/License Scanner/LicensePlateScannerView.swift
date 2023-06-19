@@ -7,14 +7,33 @@
 
 import SwiftUI
 
-struct LicenseScannerView: View {
+struct LicensePlateScannerView: View {
+    
+    @EnvironmentObject var reportsVM: ReportsViewModel
+    @StateObject private var scannerCoordinator = LicensePlateScannerCoordinator()
+    
     var body: some View {
-        Text(/*@START_MENU_TOKEN@*/"Hello, World!"/*@END_MENU_TOKEN@*/)
+        NavigationView {
+            ZStack {
+                switch scannerCoordinator.permissionAccess {
+                case .authorized:
+                    LicensePlateCameraView()
+                case .denied:
+                    LicenseScannerPermissionDeniedView()
+                case .pending:
+                    LicenseScannerRequestPermissionView()
+                }
+            }
+        }
+        .environmentObject(scannerCoordinator)
+        .environmentObject(reportsVM)
     }
 }
 
 struct LicenseScannerView_Previews: PreviewProvider {
     static var previews: some View {
-        LicenseScannerView()
+        LicensePlateScannerView()
+            .environmentObject(LicensePlateScannerCoordinator())
+            .environmentObject(ReportsViewModel())
     }
 }

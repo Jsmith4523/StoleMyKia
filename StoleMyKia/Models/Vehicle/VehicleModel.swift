@@ -42,6 +42,7 @@ enum VehicleModel: String, CaseIterable, Codable, Comparable, Hashable {
     case optima   = "Optima"
     case soul     = "Soul"
     case sportage = "Sportage"
+    case sedona   = "Sedona"
     case sorento  = "Sorento"
     case seltos   = "Seltos"
     case k5       = "K5"
@@ -82,10 +83,12 @@ enum VehicleModel: String, CaseIterable, Codable, Comparable, Hashable {
             return .kia
         case .k5:
             return .kia
+        case .sedona:
+            return .kia
         }
     }
     
-    ///The current affected year range of a vehicle
+    ///The current affected theft year range of a vehicle
     var year: ClosedRange<Int> {
         switch self {
         case .accent:
@@ -120,12 +123,19 @@ enum VehicleModel: String, CaseIterable, Codable, Comparable, Hashable {
             return 2019...VehicleModel.lastAffectedYear
         case .k5:
             return 2021...VehicleModel.lastAffectedYear
+        case .sedona:
+            return 2015...VehicleModel.lastAffectedYear
         }
     }
     
     ///This is the final year both Hyundai and Kia vehicles are affected by the anti-theft vulnerability. Subject to change
     static var lastAffectedYear: Int {
         2022
+    }
+    
+    ///This is the affect year ranges of most Kia and Hyundai models
+    static var affectedYearRange: ClosedRange<Int> {
+        2011...lastAffectedYear
     }
     
     static func < (lhs: VehicleModel, rhs: VehicleModel) -> Bool {

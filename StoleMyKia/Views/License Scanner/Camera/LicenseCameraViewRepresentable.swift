@@ -11,7 +11,7 @@ import AVKit
 import CoreML
 import SwiftUI
 
-struct LicensePlateCameraView: UIViewRepresentable {
+struct LicenseCameraViewRepresentable: UIViewRepresentable {
     
     @ObservedObject var scannerCoordinator: LicensePlateScannerCoordinator
     
@@ -46,19 +46,7 @@ final class LicensePlateScannerCoordinator: NSObject, ObservableObject {
     ///Device camera permission access. Used to switch between multiple views if needed
     @Published private(set) var permissionAccess: CameraPermissionAccess = .pending
     
-    weak private var licensePlateScannerDelegate: LicenseScannerDelegate?
-    
-    func setDelegate(_ delegate: LicenseScannerDelegate) {
-        self.licensePlateScannerDelegate = delegate
-    }
-    
-    func askForPermission() {
-        AVCaptureDevice.requestAccess(for: .video) { [weak self] success in
-            self?.checkPermissions()
-        }
-    }
-    
-    private func checkPermissions() {
+    override init() {
         switch AVCaptureDevice.authorizationStatus(for: .video) {
         case .authorized:
             self.permissionAccess = .authorized
@@ -71,6 +59,16 @@ final class LicensePlateScannerCoordinator: NSObject, ObservableObject {
         default:
             self.permissionAccess = .denied
         }
+    }
+    
+    weak private var licensePlateScannerDelegate: LicenseScannerDelegate?
+    
+    func setDelegate(_ delegate: LicenseScannerDelegate) {
+        self.licensePlateScannerDelegate = delegate
+    }
+    
+    func askForPermission() {
+        AVCaptureDevice.requestAccess(for: .video) { _ in }
     }
     
     func setupCamera() {
@@ -104,6 +102,16 @@ final class LicensePlateScannerCoordinator: NSObject, ObservableObject {
                 self?.errorReason = error
             }
         }
+    }
+    
+    ///Resumes the current camera session through the background thread
+    func resumeCameraSession() {
+        
+    }
+    
+    ///Suspends the current camera session through the background thread
+    func suspendCameraSession() {
+        
     }
     
     deinit {

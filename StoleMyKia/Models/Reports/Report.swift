@@ -14,14 +14,22 @@ struct Report: Identifiable, Codable, Comparable {
 
     var id = UUID()
     
+    ///The logged in Firebase Auth users uid
     var uid: String?
+    ///The time of this report in epoch
     let dt: TimeInterval
+    ///The type of report
     let reportType: ReportType
+    ///The vehicle with this report (ex: 2017 Hyundai Elantra (Gray))
     var vehicle: Vehicle
+    ///The uniqueness of the vehicle
     let distinguishable: String
+    ///Firebase Storage url
     var imageURL: String?
+    ///The location of this report
     let location: Location
-    var updates: [UUID]?
+    ///The parent report uuid if this report is an update
+    var parentId: UUID?
     
     static func == (lhs: Report, rhs: Report) -> Bool {
         return true
@@ -75,6 +83,10 @@ extension Report {
         self.reportType.rawValue
     }
     
+    var hasParent: Bool {
+        !(self.parentId == nil)
+    }
+    
     var hasVehicleImage: Bool {
         guard !(imageURL == nil) else {
             return false
@@ -111,17 +123,35 @@ extension Report {
     }
     
     func verifyLicensePlate(_ inputLicense: String) -> Bool {
-        guard let licensePlateString = vehicle.licensePlate?.decode() else {
+        guard !(inputLicense.isEmpty), !(vehicle.licensePlateString.isEmpty) else {
             return false
         }
         
-        return inputLicense == licensePlateString
+        return (inputLicense == vehicle.licensePlateString || vehicle.licensePlateString.contains(inputLicense))
+    }
+    
+    func verifyDescription(_ input: String) -> Bool {
+        guard !(input.isEmpty), !(details.isEmpty) else {
+            return false
+        }
+        
+        return (input == details || details.contains(input))
     }
     
     func vehicleImage(completion: @escaping (UIImage?)->Void) {
         ImageCache.shared.getImage(self.imageURL) { image in
             completion(image)
         }
+    }
+    
+    func matches(year: Int?,
+                 type: ReportType?,
+                 make: VehicleMake?,
+                 model: VehicleModel?,
+                 color: VehicleColor?,
+                 input: String
+    ) -> Bool {
+        (self.vehicle.vehicleYear == year || self.reportType == reportType || self.vehicle.vehicleMake == make || self.vehicle.vehicleModel == model || self.verifyLicensePlate(input) || self.verifyDescription(input))
     }
 }
 
@@ -147,11 +177,11 @@ extension [Report] {
     
     static func testReports() -> [Report] {
         
-        return [Report(dt: Date.now.epoch, reportType: .stolen, vehicle: .init(vehicleYear: 2011, vehicleMake: .hyundai, vehicleColor: .gold, vehicleModel: .elantra), distinguishable: "", location: .init(address: "1105 South Drive, Oxon Hill, Maryland",name: "92NY",lat: 0, lon: 0)),
-                Report(dt: Date.now.epoch, reportType: .withnessed, vehicle: .init(vehicleYear: 2011, vehicleMake: .hyundai, vehicleColor: .gold, vehicleModel: .elantra), distinguishable: "", location: .init(address: "1105 South Drive, Oxon Hill, Maryland",name: "92NY",lat: 0, lon: 0)),
-                Report(dt: Date.now.epoch, reportType: .found, vehicle: .init(vehicleYear: 2011, vehicleMake: .hyundai, vehicleColor: .gold, vehicleModel: .elantra), distinguishable: "", imageURL: "https://static01.nyt.com/images/2011/07/10/automobiles/WHEE/WHEE-articleLarge.jpg?quality=75&auto=webp&disable=upscale", location: .init(address: "1105 South Drive, Oxon Hill, Maryland",name: "92NY",lat: 0, lon: 0)),
-                Report(dt: Date.now.epoch, reportType: .carjacked, vehicle: .init(vehicleYear: 2011, vehicleMake: .hyundai, vehicleColor: .gold, vehicleModel: .elantra), distinguishable: "", location: .init(address: "1105 South Drive, Oxon Hill, Maryland",name: "92NY",lat: 0, lon: 0)),
-                Report(dt: Date.now.epoch, reportType: .spotted, vehicle: .init(vehicleYear: 2011, vehicleMake: .hyundai, vehicleColor: .gold, vehicleModel: .elantra), distinguishable: "", imageURL: "https://automanager.blob.core.windows.net/wmphotos/012928/b98b458d9854eb4db5b9d4d637b5cbf5/b21f0c7166_800.jpg", location: .init(address: "1105 South Drive, Oxon Hill, Maryland",name: "92NY",lat: 0, lon: 0))
+        return [Report(uid: "123", dt: Date.now.epoch, reportType: .stolen, vehicle: .init(vehicleYear: 2011, vehicleMake: .hyundai, vehicleColor: .gold, vehicleModel: .elantra), distinguishable: "", location: .init(address: "1105 South Drive, Oxon Hill, Maryland",name: "92NY",lat: 40.78245, lon: -73.95608)),
+                Report(uid: "123", dt: Date.now.epoch, reportType: .withnessed, vehicle: .init(vehicleYear: 2011, vehicleMake: .hyundai, vehicleColor: .gold, vehicleModel: .elantra), distinguishable: "", location: .init(address: "1105 South Drive, Oxon Hill, Maryland",name: "92NY",lat: 45.4432, lon: -54.432)),
+                Report(uid: "123", dt: Date.now.epoch, reportType: .found, vehicle: .init(vehicleYear: 2011, vehicleMake: .hyundai, vehicleColor: .gold, vehicleModel: .elantra), distinguishable: "", imageURL: "https://static01.nyt.com/images/2011/07/10/automobiles/WHEE/WHEE-articleLarge.jpg?quality=75&auto=webp&disable=upscale", location: .init(address: "1105 South Drive, Oxon Hill, Maryland",name: "92NY",lat: 45.4432, lon: -54.432)),
+                Report(uid: "123", dt: Date.now.epoch, reportType: .carjacked, vehicle: .init(vehicleYear: 2011, vehicleMake: .hyundai, vehicleColor: .gold, vehicleModel: .elantra), distinguishable: "", location: .init(address: "1105 South Drive, Oxon Hill, Maryland",name: "92NY",lat: 45.4432, lon: -54.432)),
+                Report(uid: "123", dt: Date.now.epoch, reportType: .spotted, vehicle: .init(vehicleYear: 2011, vehicleMake: .hyundai, vehicleColor: .gold, vehicleModel: .elantra), distinguishable: "", imageURL: "https://automanager.blob.core.windows.net/wmphotos/012928/b98b458d9854eb4db5b9d4d637b5cbf5/b21f0c7166_800.jpg", location: .init(address: "1105 South Drive, Oxon Hill, Maryland",name: "92NY",lat: 45.4432, lon: -54.432))
         ]
     }
 }

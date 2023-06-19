@@ -13,8 +13,8 @@ struct Vehicle: Codable {
     let vehicleMake: VehicleMake
     let vehicleColor: VehicleColor
     let vehicleModel: VehicleModel
-    var licensePlate: EncryptedData?
-    var vin: EncryptedData?
+    var licensePlate: Data?
+    var vin: Data?
 }
 
 extension Vehicle {
@@ -29,12 +29,43 @@ extension Vehicle {
         "\(vehicleColor) \(vehicleYear) \(vehicleMake.rawValue) \(vehicleModel.rawValue) (\(licensePlateString))"
     }
     
+    private var licenseEncryptedData: EncryptedData? {
+        do {
+            guard let licensePlate else {
+                return nil
+            }
+            return try JSONDecoder().decode(EncryptedData.self, from: licensePlate)
+        } catch {
+            return nil
+        }
+    }
+    
+    private var vinEncryptedData: EncryptedData? {
+        do {
+            guard let vin else {
+                return nil
+            }
+            return try JSONDecoder().decode(EncryptedData.self, from: vin)
+        } catch {
+            return nil
+        }
+    }
+    
     ///The decoded and unwrapped vehicle license plate string. Returns an empty string if not applicable
     ///Note that if a report was not provided a vehicle with either a vin or license plate string, it cannot be updated.
     var licensePlateString: String {
-        guard let licensePlate = licensePlate, let licenseString = licensePlate.decode() else {
+        guard let licensePlateData = licenseEncryptedData, let licensePlateString = licensePlateData.decode() else {
+            return "1EP1757"
+        }
+        return licensePlateString.uppercased()
+    }
+    
+    
+    var vinString: String {
+        guard let vinData = vinEncryptedData, let vinString = vinData.decode() else {
             return ""
         }
-        return "License no. \(licenseString)"
+        
+        return vinString.uppercased()
     }
 }

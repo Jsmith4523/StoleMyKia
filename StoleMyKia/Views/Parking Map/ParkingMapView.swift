@@ -8,8 +8,33 @@
 import SwiftUI
 
 struct ParkingMapView: View {
+    
+    @StateObject private var coordinator = ParkingMapViewCoordinator()
+    
     var body: some View {
-        Text(/*@START_MENU_TOKEN@*/"Hello, World!"/*@END_MENU_TOKEN@*/)
+        ZStack(alignment: .bottom) {
+            ZStack(alignment: .top) {
+                ParkingMapViewRepresentable(coordinator: coordinator)
+                    .ignoresSafeArea()
+                headerButtons
+            }
+        }
+    }
+    
+    private var headerButtons: some View {
+        HStack {
+            Button {
+                
+            } label: {
+                Image(systemName: "xmark")
+                    .resizable()
+                    .scaledToFit()
+                    .frame(width: 35, height: 35)
+                    .foregroundColor(.white)
+            }
+            Spacer()
+        }
+        .padding()
     }
 }
 

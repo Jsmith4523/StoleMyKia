@@ -11,16 +11,18 @@ struct NoReportsAvaliableView: View {
     var body: some View {
         VStack(spacing: 30) {
             Spacer()
-                .frame(height: 175)
-            Image(systemName: "square.stack.3d.down.right")
+                .frame(height: 150)
+            Image(systemName: ApplicationTabViewSelection.feed.symbol)
                 .resizable()
                 .scaledToFit()
-                .frame(width: 75, height: 75)
-                .foregroundColor(.brand)
-            Text("Nothing to report at the moment")
-                .font(.title.weight(.bold))
-            Text("That's a good thing!")
-                .font(.title2)
+                .frame(width: 65, height: 65)
+            VStack(spacing: 8) {
+                Text("Nothing to report at the moment..")
+                    .font(.system(size: 22).bold())
+                Text("Some would say that's a good thing.")
+                    .font(.body)
+                    .foregroundColor(.gray)
+            }
             Spacer()
         }
         .multilineTextAlignment(.center)

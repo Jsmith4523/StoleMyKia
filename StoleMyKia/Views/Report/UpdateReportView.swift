@@ -82,8 +82,8 @@ struct UpdateReportView: View {
     }
 }
 
-struct UpdateReportView_Previews: PreviewProvider {
-    static var previews: some View {
-        UpdateReportView(report: .init(dt: Date.now.epoch, reportType: .spotted, vehicle: .init(vehicleYear: 2017, vehicleMake: .hyundai, vehicleColor: .black, vehicleModel: .elantra), distinguishable: "", location: .init(lat: 0, lon: 0)))
-    }
-}
+//struct UpdateReportView_Previews: PreviewProvider {
+//    static var previews: some View {
+//        UpdateReportView(report: .init(dt: Date.now.epoch, reportType: .spotted, vehicle: .init(vehicleYear: 2017, vehicleMake: .hyundai, vehicleColor: .black, vehicleModel: .elantra), distinguishable: "", location: .init(lat: 0, lon: 0)))
+//    }
+//}

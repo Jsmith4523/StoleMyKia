@@ -20,7 +20,7 @@ struct FeedListView: View {
             VStack(spacing: 25) {
                 ForEach(reports) { report in
                     NavigationLink {
-                        SelectedReportDetailView(report: report)
+                        SelectedReportDetailView(reportID: report.id)
                     } label: {
                         ReportCellView(report: report)
                     }
