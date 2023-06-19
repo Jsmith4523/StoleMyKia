@@ -25,7 +25,7 @@ enum ApplicationTabViewSelection {
     var symbol: String {
         switch self {
         case .feed:
-            return "tray.2"
+            return "tray"
         case .notification:
             return "bell"
         case .user:

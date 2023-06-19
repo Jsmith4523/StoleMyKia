@@ -260,7 +260,7 @@ struct NewReportView: View {
                             reportType: reportType,
                             vehicle: vehicle,
                             distinguishable: "",
-                            location: location)
+                            location: location, role: .original)
         
         do {
             try report.setLicensePlate(licensePlate)

@@ -48,8 +48,10 @@ struct UserView: View {
                     }
                 }
             }
-            .customSheetView(isPresented: $isShowingSettingsView, detents: [.large()], showsIndicator: true, cornerRadius: 30) {
+            .customSheetView(isPresented: $isShowingSettingsView, detents: [.large()]) {
                 SettingsView()
+                    .environmentObject(userModel)
+                    .environmentObject(reportsModel)
             }
             .environmentObject(userModel)
             .environmentObject(reportsModel)

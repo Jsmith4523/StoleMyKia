@@ -29,7 +29,7 @@ enum UserTabViewSelection: CaseIterable, Identifiable {
         case .reports:
             return "tray"
         case .bookmarks:
-            return "bookmark.fill"
+            return "bookmark"
         }
     }
 }

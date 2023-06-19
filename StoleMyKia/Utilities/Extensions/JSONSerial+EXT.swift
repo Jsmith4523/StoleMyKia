@@ -10,7 +10,6 @@ import FirebaseFirestore
 
 extension JSONSerialization {
     
-    
     static func createObjectWithData<T: Codable>(_ object: T.Type, jsonObject: Any?) throws -> T? {
         guard let jsonObject else {
             return nil
@@ -26,7 +25,7 @@ extension JSONSerialization {
             throw error
         }
     }
-    
+        
     static func objectsFromSnapshot<O, T: Codable>(_ objects: [O], to target: [T.Type]) throws -> [T] {
         if let objects = objects as? [QueryDocumentSnapshot] {
             return try objects.compactMap {

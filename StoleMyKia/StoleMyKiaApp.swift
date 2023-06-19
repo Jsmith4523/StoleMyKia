@@ -36,16 +36,16 @@ struct StoleMyKiaApp: App {
     }
 }
 
-extension UIWindow {
-    
-    open override func didAddSubview(_ subview: UIView) {
-        if !(backgroundColor == nil) {
-            backgroundColor = UIColor(Color.brand)
-        } else {
-            backgroundColor = .clear
-        }
-    }
-}
+//extension UIWindow {
+//    
+//    open override func didAddSubview(_ subview: UIView) {
+//        if !(backgroundColor == nil) {
+//            backgroundColor = UIColor(Color.brand)
+//        } else {
+//            backgroundColor = .clear
+//        }
+//    }
+//}
 
 
 class AppDelegate: UIScene, UIApplicationDelegate {

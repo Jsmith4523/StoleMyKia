@@ -10,19 +10,24 @@ import Foundation
 
 struct FirebaseUser: Codable {
     
+    ///The firebase users uid
     let uid: String
+    ///The users notification settings
     var notificationSettings: NotificationSettings = NotificationSettings()
-    var vehicle: Vehicle?
-    var updates: [UUID]?
+    ///The users bookmarked reports by uuid
     var bookmarks: [UUID]?
+    ///The users vehicle
+    var vehicle: Vehicle?
 }
 
 struct NotificationSettings: Codable {
     
-    var notifyOfTheft: Bool   = true
-    var notifyOfWitness: Bool = true
-    var notifyOfFound:Bool    = true
-    var notificationRadius    = 25000.0
+    var notifyOfCarjacking: Bool = true
+    var notifyOfTheft: Bool      = true
+    var notifyOfWitness: Bool    = true
+    var notifyOfFound: Bool      = true
+    var notifyOfSpotted: Bool    = true
+    var notificationRadius       = 25000.0
 }
 
 extension FirebaseUser {

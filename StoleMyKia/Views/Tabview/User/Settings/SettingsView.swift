@@ -14,10 +14,10 @@ struct SettingsView: View {
     
     var body: some View {
         NavigationView {
-            List {
+            Form {
                 Section("Account") {
                     NavigationLink {
-                        
+                        UserAccountSettings()
                     } label: {
                         Label("My Account", systemImage: ApplicationTabViewSelection.user.symbol)
                     }
@@ -25,7 +25,7 @@ struct SettingsView: View {
                 
                 Section("Notifications") {
                     NavigationLink {
-                        
+                        UserNotificationSettings()
                     } label: {
                         Label("Notifications", systemImage: ApplicationTabViewSelection.notification.symbol)
                     }
@@ -51,7 +51,7 @@ struct SettingsView: View {
                         Label("About", systemImage: "app")
                     }
                     Button {
-                        
+                        URL.openApplicationSettings()
                     } label: {
                         Label("Open Application Settings", systemImage: "gearshape")
                     }
@@ -59,14 +59,17 @@ struct SettingsView: View {
             }
             .navigationTitle("Settings")
             .navigationBarTitleDisplayMode(.inline)
-            .presentationDragIndicator(.visible)
         }
         .tint(Color(uiColor: .label))
+        .environmentObject(userModel)
+        .environmentObject(reportsModel)
     }
 }
 
 struct SettingsView_Previews: PreviewProvider {
     static var previews: some View {
         SettingsView()
+            .environmentObject(UserViewModel())
+            .environmentObject(ReportsViewModel())
     }
 }

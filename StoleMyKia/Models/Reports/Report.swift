@@ -28,6 +28,8 @@ struct Report: Identifiable, Codable, Comparable {
     var imageURL: String?
     ///The location of this report
     let location: Location
+    ///The role of this report
+    var role: ReportRole
     ///The parent report uuid if this report is an update
     var parentId: UUID?
     
@@ -177,11 +179,11 @@ extension [Report] {
     
     static func testReports() -> [Report] {
         
-        return [Report(uid: "123", dt: Date.now.epoch, reportType: .stolen, vehicle: .init(vehicleYear: 2011, vehicleMake: .hyundai, vehicleColor: .gold, vehicleModel: .elantra), distinguishable: "", location: .init(address: "1105 South Drive, Oxon Hill, Maryland",name: "92NY",lat: 40.78245, lon: -73.95608)),
-                Report(uid: "123", dt: Date.now.epoch, reportType: .withnessed, vehicle: .init(vehicleYear: 2011, vehicleMake: .hyundai, vehicleColor: .gold, vehicleModel: .elantra), distinguishable: "", location: .init(address: "1105 South Drive, Oxon Hill, Maryland",name: "92NY",lat: 45.4432, lon: -54.432)),
-                Report(uid: "123", dt: Date.now.epoch, reportType: .found, vehicle: .init(vehicleYear: 2011, vehicleMake: .hyundai, vehicleColor: .gold, vehicleModel: .elantra), distinguishable: "", imageURL: "https://static01.nyt.com/images/2011/07/10/automobiles/WHEE/WHEE-articleLarge.jpg?quality=75&auto=webp&disable=upscale", location: .init(address: "1105 South Drive, Oxon Hill, Maryland",name: "92NY",lat: 45.4432, lon: -54.432)),
-                Report(uid: "123", dt: Date.now.epoch, reportType: .carjacked, vehicle: .init(vehicleYear: 2011, vehicleMake: .hyundai, vehicleColor: .gold, vehicleModel: .elantra), distinguishable: "", location: .init(address: "1105 South Drive, Oxon Hill, Maryland",name: "92NY",lat: 45.4432, lon: -54.432)),
-                Report(uid: "123", dt: Date.now.epoch, reportType: .spotted, vehicle: .init(vehicleYear: 2011, vehicleMake: .hyundai, vehicleColor: .gold, vehicleModel: .elantra), distinguishable: "", imageURL: "https://automanager.blob.core.windows.net/wmphotos/012928/b98b458d9854eb4db5b9d4d637b5cbf5/b21f0c7166_800.jpg", location: .init(address: "1105 South Drive, Oxon Hill, Maryland",name: "92NY",lat: 45.4432, lon: -54.432))
+        return [Report(uid: "123", dt: Date.now.epoch, reportType: .stolen, vehicle: .init(vehicleYear: 2011, vehicleMake: .hyundai, vehicleColor: .gold, vehicleModel: .elantra), distinguishable: "", location: .init(address: "1105 South Drive, Oxon Hill, Maryland",name: "92NY",lat: 40.78245, lon: -73.95608), role: .original),
+                Report(uid: "123", dt: Date.now.epoch, reportType: .withnessed, vehicle: .init(vehicleYear: 2011, vehicleMake: .hyundai, vehicleColor: .gold, vehicleModel: .elantra), distinguishable: "", location: .init(address: "1105 South Drive, Oxon Hill, Maryland",name: "92NY",lat: 45.4432, lon: -54.432), role: .update),
+                Report(uid: "123", dt: Date.now.epoch, reportType: .found, vehicle: .init(vehicleYear: 2011, vehicleMake: .hyundai, vehicleColor: .gold, vehicleModel: .elantra), distinguishable: "", imageURL: "https://static01.nyt.com/images/2011/07/10/automobiles/WHEE/WHEE-articleLarge.jpg?quality=75&auto=webp&disable=upscale", location: .init(address: "1105 South Drive, Oxon Hill, Maryland",name: "92NY",lat: 45.4432, lon: -54.432), role: .original),
+                Report(uid: "123", dt: Date.now.epoch, reportType: .carjacked, vehicle: .init(vehicleYear: 2011, vehicleMake: .hyundai, vehicleColor: .gold, vehicleModel: .elantra), distinguishable: "", location: .init(address: "1105 South Drive, Oxon Hill, Maryland",name: "92NY",lat: 45.4432, lon: -54.432), role: .original),
+                Report(uid: "123", dt: Date.now.epoch, reportType: .spotted, vehicle: .init(vehicleYear: 2011, vehicleMake: .hyundai, vehicleColor: .gold, vehicleModel: .elantra), distinguishable: "", imageURL: "https://automanager.blob.core.windows.net/wmphotos/012928/b98b458d9854eb4db5b9d4d637b5cbf5/b21f0c7166_800.jpg", location: .init(address: "1105 South Drive, Oxon Hill, Maryland",name: "92NY",lat: 45.4432, lon: -54.432), role: .update)
         ]
     }
 }

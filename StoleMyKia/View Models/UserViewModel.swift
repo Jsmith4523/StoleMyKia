@@ -45,6 +45,42 @@ final class UserViewModel: ObservableObject {
         auth.currentUser
     }
     
+    func accountCreationDate() -> String {
+        guard let currentUser = auth.currentUser else {
+            return ""
+        }
+        
+        guard let creationDate = currentUser.metadata.creationDate else {
+            return ""
+        }
+        
+        return creationDate.date
+    }
+    
+    func accountPhoneNumber() -> String {
+        guard let currentUser = auth.currentUser else {
+            return ""
+        }
+        
+        guard let phoneNumber = currentUser.phoneNumber else {
+            return ""
+        }
+        
+        return phoneNumber
+    }
+    
+    func userPersonalVehicle() -> String {
+        guard let firebaseUser else {
+            return "Not Set"
+        }
+        
+        guard let vehicle = firebaseUser.vehicle else {
+            return "Not Set"
+        }
+        
+        return vehicle.details
+    }
+    
     func containsBookmarkReport(id: UUID) -> Bool {
         guard let firebaseUser, firebaseUser.hasBookmark(id) else {
             return false
@@ -261,70 +297,17 @@ final class UserViewModel: ObservableObject {
     }
 }
 
-//MARK: - FirebaseUserDelegate
-extension UserViewModel: FirebaseUserDelegate {
-    func addRemoteNotification(_ notification: FirebaseUserNotification) {
-        
-    }
-    
-    var updates: [UUID]? {
+//MARK: - FirebaseUserNotificationRadiusDelegate
+extension UserViewModel: FirebaseUserNotificationRadiusDelegate {
+    var usersRadius: Double? {
         guard let firebaseUser else {
             return nil
         }
         
-        return firebaseUser.updates
+        return firebaseUser.notificationSettings.notificationRadius
     }
     
-    var bookmarks: [UUID]? {
-        guard let firebaseUser else {
-            return nil
-        }
-       
-        return firebaseUser.bookmarks
-    }
-    
-    func save(completion: @escaping ((Bool) -> Void)) {
+    func setNewRadius(_ radius: Double, completion: @escaping (Bool) -> Void) {
         
-    }
-    
-    var notifyOfTheft: Bool {
-        get {
-            firebaseUser.notificationSettings.notifyOfTheft
-        }
-        set {
-            firebaseUser.notificationSettings.notifyOfTheft = newValue
-        }
-    }
-    
-    var notifyOfWitness: Bool {
-        get {
-            firebaseUser.notificationSettings.notifyOfWitness
-        }
-        set {
-            firebaseUser.notificationSettings.notifyOfTheft = newValue
-        }
-    }
-    
-    var notifyOfFound: Bool {
-        get {
-            firebaseUser.notificationSettings.notifyOfFound
-        }
-        set {
-            firebaseUser.notificationSettings.notifyOfFound = newValue
-        }
-    }
-    
-    var notificationRadius: Double {
-        get {
-            firebaseUser.notificationSettings.notificationRadius
-        }
-        set {
-            firebaseUser.notificationSettings.notificationRadius = newValue
-        }
-    }
-    
-    var uid: String? {
-        auth.currentUser?.uid
     }
 }
-

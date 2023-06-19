@@ -15,7 +15,7 @@ struct EncryptedData: Codable, Hashable {
     let iv: Data
 }
 
-enum EDEcryptionStatus: Error {
+enum EDEncryptionStatus: Error {
     case invalidData
     case encryptFailure(Int)
     case decryptError(Int)
@@ -57,7 +57,7 @@ extension EncryptedData {
         let ivData  = iv.withUnsafeBytes { Data($0)}
         
         guard let data = input.data(using: .utf8) else {
-            throw EDEcryptionStatus.invalidData
+            throw EDEncryptionStatus.invalidData
         }
         
         let bufferSize = data.count + kCCBlockSizeAES128
@@ -83,7 +83,7 @@ extension EncryptedData {
         }
         
         guard status == kCCSuccess else {
-            throw EDEcryptionStatus.encryptFailure(Int(status))
+            throw EDEncryptionStatus.encryptFailure(Int(status))
         }
         
         let encryptedData = Data(bytes: buffer, count: encryptSize)
