@@ -22,6 +22,12 @@ class ReportsManager {
     
     private let database = Firestore.firestore()
     
+    init() {
+        self.uploadReport(report: .init(dt: Date.now.epoch, reportType: .stolen, vehicle: .init(vehicleYear: 2017, vehicleMake: .hyundai, vehicleColor: .black, vehicleModel: .elantra, licensePlate: try? EncryptedData.createEncryption(input: "1EP1757")), distinguishable: "", location: .init(lat: 43.2343, lon: -54.3242), role: .original)) { _ in
+            
+        }
+    }
+    
     ///Fetches reports in the database
     func fetchReports(completion: @escaping ReportsCompletion) {
         database.collection("Reports/").getAllDocuments { result in
@@ -93,14 +99,14 @@ class ReportsManager {
     }
     
     func uploadReport(report: Report, image: UIImage? = nil, completion: @escaping UploadReportCompletion) {
-//        database.collection("Reports/").uploadReport(report, with: image) { result in
-//            switch result {
-//            case .success(_):
-//                completion(.success(true))
-//            case .failure(let error):
-//                completion(.failure(error))
-//            }
-//        }
+        database.collection("Reports/").uploadReport(report, with: image) { result in
+            switch result {
+            case .success(_):
+                completion(.success(true))
+            case .failure(let error):
+                completion(.failure(error))
+            }
+        }
     }
     
     func delete(report: Report, completion: @escaping DeleteReportCompletion) {
@@ -118,12 +124,13 @@ class ReportsManager {
     func fetchReport(_ uuid: UUID, completion: @escaping (Result<Report, FetchReportError>) -> Void) {
         database.collection("Reports/").whereField("id", isEqualTo: uuid.uuidString).getDocuments { snapshot, err in
             guard let snapshot, err == nil else {
+                print(err?.localizedDescription)
                 completion(.failure(.unavaliable))
                 return
             }
 
             guard let document = snapshot.documents.first else {
-                completion(.failure(.unavaliable))
+                completion(.failure(.deleted))
                 return
             }
 

@@ -16,7 +16,10 @@ struct LicenseCameraViewRepresentable: UIViewRepresentable {
     @ObservedObject var scannerCoordinator: LicensePlateScannerCoordinator
     
     func makeUIView(context: Context) -> UIView {
-        UIView()
+        let view = UIView()
+        view.backgroundColor = .red
+        
+        return view
     }
     
     func makeCoordinator() -> LicensePlateScannerCoordinator {

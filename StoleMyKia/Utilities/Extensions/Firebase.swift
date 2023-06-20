@@ -180,17 +180,38 @@ extension CollectionReference {
     func uploadReport(_ report: Report, with image: UIImage?, completion: @escaping (Result<Bool, RMError>)->Void) {
         var report = report
         
-        Storage.setVehicleImage(to: report.path, image) { result in
-            switch result {
-            case .success(let imageUrl):
-                report.imageURL = imageUrl
-                upload()
-            case .failure(let error):
-                completion(.failure(error))
+        
+        
+        //if !(report.vehicle.licensePlate == nil) {
+            getAllDocuments([Report.self]) { status in
+                switch status {
+                case .success(let reports):
+                    guard let parent = reports.filter({$0.role == .original}).filter({$0.vehicle.licensePlateString == report.vehicle.licensePlateString}).first else {
+                        return
+                    }
+                    print(parent.id)
+                    report.role = .update(parent.id)
+                    uploadImage()
+                case .failure(_):
+                    uploadImage()
+                    break
+                }
+            }
+        //}
+        
+        func uploadImage() {
+            Storage.setVehicleImage(to: report.path, image) { result in
+                switch result {
+                case .success(let imageUrl):
+                    report.imageURL = imageUrl
+                    uploadReport()
+                case .failure(let error):
+                    completion(.failure(error))
+                }
             }
         }
         
-        func upload() {
+        func uploadReport() {
             do {
                 guard let data = try report.encodeForUploading() as? [String: Any] else {
                     completion(.failure(.encodingError))

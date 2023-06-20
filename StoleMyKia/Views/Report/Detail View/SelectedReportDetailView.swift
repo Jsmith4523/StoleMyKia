@@ -40,7 +40,7 @@ struct SelectedReportDetailView: View {
                                     SelectedReportDetailViewMap(report: report)
                                 }
                                 //Child reports that have a parent do not need to utilize the timeline map view; as that child report cannot contain any updates of itself
-                                .disabled(report.hasParent)
+                                //.disabled(report.hasParent)
                             }
                         }
                         .frame(height: 250)

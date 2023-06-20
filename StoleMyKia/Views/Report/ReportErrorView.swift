@@ -21,15 +21,18 @@ struct ReportErrorView: View {
                     .resizable()
                     .scaledToFit()
                     .frame(width: 55, height: 55)
-                Text(fetchErrorReason.title)
-                    .font(.system(size: 25).weight(.bold))
-                Text(fetchErrorReason.rawValue)
-                    .font(.system(size: 20))
-                    .foregroundColor(.gray)
+                VStack(spacing: 10) {
+                    Text(fetchErrorReason.title)
+                        .font(.system(size: 25).weight(.bold))
+                    Text(fetchErrorReason.rawValue)
+                        .font(.system(size: 18))
+                        .foregroundColor(.gray)
+                }
             }
             .multilineTextAlignment(.center)
             Spacer()
         }
+        .padding()
     }
 }
 
