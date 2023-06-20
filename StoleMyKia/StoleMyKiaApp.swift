@@ -28,6 +28,7 @@ struct StoleMyKiaApp: App {
                 ApplicationTabView()
                     .environmentObject(userModel)
             }
+            .accentColor(Color(uiColor: .label))
             .onAppear {
                 //Handling incoming notifications
                 //appDelegate.firebaseUserDelegate(userModel)

@@ -47,18 +47,8 @@ final class LicensePlateScannerCoordinator: NSObject, ObservableObject {
     @Published private(set) var permissionAccess: CameraPermissionAccess = .pending
     
     override init() {
-        switch AVCaptureDevice.authorizationStatus(for: .video) {
-        case .authorized:
-            self.permissionAccess = .authorized
-        case .denied:
-            self.permissionAccess = .denied
-        case .restricted:
-            self.permissionAccess = .pending
-        case .notDetermined:
-            self.permissionAccess = .pending
-        default:
-            self.permissionAccess = .denied
-        }
+        super.init()
+        self.checkPermissions()
     }
     
     weak private var licensePlateScannerDelegate: LicenseScannerDelegate?
@@ -67,8 +57,28 @@ final class LicensePlateScannerCoordinator: NSObject, ObservableObject {
         self.licensePlateScannerDelegate = delegate
     }
     
+    private func checkPermissions() {
+        DispatchQueue.main.async {
+            switch AVCaptureDevice.authorizationStatus(for: .video) {
+            case .authorized:
+                self.permissionAccess = .authorized
+            case .denied:
+                self.permissionAccess = .denied
+            case .restricted:
+                self.permissionAccess = .pending
+            case .notDetermined:
+                self.permissionAccess = .pending
+            default:
+                self.permissionAccess = .denied
+            }
+        }
+    }
+    
     func askForPermission() {
-        AVCaptureDevice.requestAccess(for: .video) { _ in }
+        AVCaptureDevice.requestAccess(for: .video) { [weak self] _ in
+            //Recheck the current permissions...
+            self?.checkPermissions()
+        }
     }
     
     func setupCamera() {

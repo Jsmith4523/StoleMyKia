@@ -19,6 +19,9 @@ struct LicensePlateCameraView: View {
         .onAppear {
             scannerCoordinator.setDelegate(reportsVM)
         }
+        .toolbar {
+            
+        }
     }
 }
 

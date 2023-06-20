@@ -43,14 +43,15 @@ struct UserViewTabSelectionView: View {
             HStack {
                 Spacer()
                 ForEach(UserTabViewSelection.allCases) { selection in
-                    Image(systemName: selection.symbol)
-                        .resizable()
-                        .scaledToFit()
-                        .frame(width: 25, height: 25)
-                        .foregroundColor(self.selection == selection ? Color(uiColor: .label) : .gray)
-                        .onTapGesture {
-                            changeSelection(to: selection)
-                        }
+                    Button {
+                        self.changeSelection(to: selection)
+                    } label: {
+                        Image(systemName: selection.symbol)
+                            .resizable()
+                            .scaledToFit()
+                            .frame(width: 30, height: 30)
+                            .foregroundColor(self.selection == selection ? Color(uiColor: .label) : .gray)
+                    }
                     Spacer()
                 }
             }

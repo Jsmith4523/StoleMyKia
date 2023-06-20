@@ -24,19 +24,27 @@ struct LicenseScannerRequestPermissionView: View {
                             .frame(width: 50, height: 50)
                         Text("Allow access to camera?")
                             .font(.title.bold())
-                        Text("The license plate scanner requires full your device's camera to accurately scan license plates.")
+                        Text("The license plate scanner requires full access to your device's camera in order to accurately scan license plates.")
                     }
                     .foregroundColor(.white)
-                    Button {
-                        scannerCoordinator.askForPermission()
-                    } label: {
-                        Text("Continue")
-                            .buttonStyle()
+                    VStack(spacing: 10) {
+                        Button {
+                            scannerCoordinator.askForPermission()
+                        } label: {
+                            Text("Continue")
+                                .buttonStyle()
+                        }
+                        Button {
+                            reportsVM.isShowingLicensePlateScannerView = false
+                        } label: {
+                            Text("Close")
+                                .buttonStyle()
+                        }
                     }
                 }
                 .multilineTextAlignment(.center)
+                .padding()
             }
-            .padding()
         }
         .ignoresSafeArea()
     }

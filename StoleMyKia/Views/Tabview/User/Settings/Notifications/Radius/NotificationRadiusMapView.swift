@@ -68,7 +68,7 @@ final class NotificationRadiusMapViewCoordinator: NSObject, ObservableObject {
         }
         
         //If true, the user cannot update their notification radius.
-        //If false, the can update their radius.
+        //If false, the  can update their radius.
         return radius == firebaseUserRadiusDelegate.usersRadius
     }
     

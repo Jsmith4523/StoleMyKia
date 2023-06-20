@@ -32,11 +32,11 @@ struct LicenseScannerPermissionDeniedView: View {
                         Button {
                             URL.openApplicationSettings()
                         } label: {
-                            Text("System Settings")
+                            Text("Open Settings")
                                 .buttonStyle()
                         }
                         Button {
-                            dismiss()
+                            reportsModel.isShowingLicensePlateScannerView = false
                         } label: {
                             Text("Close")
                                 .buttonStyle()
