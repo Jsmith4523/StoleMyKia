@@ -10,8 +10,9 @@ import Foundation
 
 enum ReportRole: Identifiable, Codable, Equatable {
     
+    ///This is a original report
     case original
-    //Parent report UUID
+    ///This is an update report. The enum holds the UUID value of the original report it updates
     case update(UUID)
     
     var title: String {

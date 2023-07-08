@@ -54,8 +54,15 @@ struct LicensePlateCameraView: View {
                         .frame(height: UIScreen.main.bounds.height/1.5)
                         .cornerRadius(30)
                     VStack {
-                        Slider(value: $value)
-                            .tint(.white)
+                        HStack {
+                            Image(systemName: "minus")
+                            Slider(value: $value)
+                                .padding(.horizontal, 7)
+                                .tint(.white)
+                            Image(systemName: "plus")
+                        }
+                        .foregroundColor(.white)
+                        .font(.system(size: 22).bold())
                         Spacer()
                     }
                     .padding()
@@ -67,9 +74,6 @@ struct LicensePlateCameraView: View {
         .ignoresSafeArea()
         .onAppear {
             scannerCoordinator.setDelegate(reportsVM)
-        }
-        .toolbar {
-            
         }
     }
 }

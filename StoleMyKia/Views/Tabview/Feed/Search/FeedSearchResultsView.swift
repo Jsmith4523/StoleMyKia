@@ -48,15 +48,6 @@ struct FeedSearchResultsView: View {
             }
         }
         .environmentObject(reportsVM)
-        .toolbar {
-            ToolbarItem(placement: .navigationBarTrailing) {
-                Button {
-                    isShowingFilterView.toggle()
-                } label: {
-                    Image(systemName: "line.3.horizontal.decrease.circle")
-                }
-            }
-        }
         .sheet(isPresented: $isShowingFilterView) {
             FeedVehicleFilterView(vehicleYear: $vehicleYear, vehicleMake: $vehicleMake, vehicleModel: $vehicleModel)
             .presentationDragIndicator(.visible)

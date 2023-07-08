@@ -22,12 +22,6 @@ class ReportsManager {
     
     private let database = Firestore.firestore()
     
-    init() {
-        self.uploadReport(report: .init(dt: Date.now.epoch, reportType: .stolen, vehicle: .init(vehicleYear: 2017, vehicleMake: .hyundai, vehicleColor: .black, vehicleModel: .elantra, licensePlate: try? EncryptedData.createEncryption(input: "1EP1757")), distinguishable: "", location: .init(lat: 43.2343, lon: -54.3242), role: .original)) { _ in
-            
-        }
-    }
-    
     ///Fetches reports in the database
     func fetchReports(completion: @escaping ReportsCompletion) {
         database.collection("Reports/").getAllDocuments { result in

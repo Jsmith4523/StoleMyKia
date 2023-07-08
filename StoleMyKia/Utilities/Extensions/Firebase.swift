@@ -180,8 +180,6 @@ extension CollectionReference {
     func uploadReport(_ report: Report, with image: UIImage?, completion: @escaping (Result<Bool, RMError>)->Void) {
         var report = report
         
-        
-        
         //if !(report.vehicle.licensePlate == nil) {
             getAllDocuments([Report.self]) { status in
                 switch status {

@@ -53,15 +53,16 @@ struct LocationSearchView: View {
                     }
                 }
             }
+            .tint(Color(uiColor: .label))
             .alert("Unable to use your location", isPresented: $alertErrorUsingUsersLocation) {
                 Button("OK") {}
             } message: {
                 Text("An error occured when attempting to use your location.")
             }
-            .alert("Nothing found!", isPresented: $locationSearchModel.alertSearchingForLocation) {
+            .alert("Error!", isPresented: $locationSearchModel.alertSearchingForLocation) {
                 Button("OK"){}
             } message: {
-                Text("No locations where found by that name...")
+                Text(locationSearchModel.locationSearchError.rawValue)
             }
         }
     }
@@ -110,7 +111,7 @@ struct LocationSearchView: View {
                 .frame(width: 40, height: 40)
             Text("Search")
                 .font(.system(size: 35).bold())
-            Text("Start by entering a address, landmark, or other identifiable information.")
+            Text("Search for nearby locations.")
                 .font(.system(size: 15))
                 .foregroundColor(.gray)
             Spacer()
@@ -135,6 +136,9 @@ struct LocationSearchView: View {
                     Text(location.address ?? "")
                         .font(.system(size: 15))
                         .foregroundColor(.gray)
+                    Text(location.distanceFromUser)
+                        .font(.system(size: 13.75))
+                        .foregroundColor(.gray)
                 }
                 Spacer()
                 if let selectedLocation,
@@ -143,10 +147,13 @@ struct LocationSearchView: View {
                         .resizable()
                         .scaledToFit()
                         .frame(width: 25, height: 25)
-                        .foregroundColor(.accentColor)
+                        .foregroundColor(.blue)
                 }
             }
             .padding()
+            .onAppear {
+                
+            }
         }
     }
     
@@ -174,7 +181,15 @@ struct LocationSearchView: View {
 
 fileprivate final class LocationSearchModel: ObservableObject {
     
+    enum LocationSearchError: String {
+        case userLocationNotFound = "We were unable to detect your current location. Please try again later."
+        case locationAuthChanged = "We detected a change in your location services settings. Re-enable them and try again!"
+        case locationNotFound = "There are no locations nearby that match that request!"
+        case genericError = "We ran into an error completing that request."
+    }
+    
     @Published var alertSearchingForLocation = false
+    @Published var locationSearchError: LocationSearchError = .genericError
     
     @Published var request = ""
     @Published var locations = [Location]()
@@ -190,6 +205,20 @@ fileprivate final class LocationSearchModel: ObservableObject {
     }
         
     func fetchLocations() {
+        guard locationIsAuthorized else {
+            UINotificationFeedbackGenerator().notificationOccurred(.error)
+            locationSearchError = .locationAuthChanged
+            alertSearchingForLocation.toggle()
+            return
+        }
+        
+        guard let usersLocation else {
+            UINotificationFeedbackGenerator().notificationOccurred(.error)
+            locationSearchError = .userLocationNotFound
+            alertSearchingForLocation.toggle()
+            return
+        }
+        
         let request = MKLocalSearch.Request()
         
         //The thefts are only target within the United States (for now)
@@ -205,20 +234,20 @@ fileprivate final class LocationSearchModel: ObservableObject {
         request.region = usaRegion
         
         let search = MKLocalSearch(request: request)
-        search.start { response, err in
+        search.start { [weak self] response, err in
             guard let response, err == nil else {
-                self.didNotFindLocations()
+                self?.didNotFindLocations()
                 return
             }
             
-            let locations = response.mapItems.withinSpan(region: usaRegion)
+            let locations = response.mapItems.withinSpan(region: usaRegion).filter({$0.location.calculateDistanceInMiles(to: usersLocation) <= Location.nearbyLocationDistance})
             
             guard !(locations.isEmpty) else {
-                self.didNotFindLocations()
+                self?.didNotFindLocations()
                 return
             }
             
-            self.locations = locations.compactMap {
+            self?.locations = locations.compactMap {
                 return .init(address: $0.placemark.title,
                              name: $0.name,
                              lat: $0.placemark.coordinate.latitude,
@@ -230,6 +259,7 @@ fileprivate final class LocationSearchModel: ObservableObject {
     
     private func didNotFindLocations() {
         UINotificationFeedbackGenerator().notificationOccurred(.error)
+        self.locationSearchError = .locationNotFound
         self.alertSearchingForLocation.toggle()
     }
 }

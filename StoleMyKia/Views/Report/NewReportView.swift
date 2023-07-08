@@ -17,7 +17,7 @@ struct NewReportView: View {
     @State private var location: Location!
     
     @State private var reportType: ReportType = .stolen
-    @State private var reportDescription: String = ""
+    @State private var vehicleDescription: String = ""
     
     @State private var vehicleYear: Int = 2011
     @State private var vehicleMake: VehicleMake = .hyundai
@@ -48,7 +48,8 @@ struct NewReportView: View {
     @Environment (\.dismiss) var dismiss
     
     var isNotSatisfied: Bool {
-        (self.licensePlate.isEmpty) && !doesNotHaveVehicleIdentification
+        guard (licensePlate.range(of: ".*[^A-Za-z0-9].*", options: .regularExpression) == nil) else { return true}
+        return (self.licensePlate.isEmpty) && !doesNotHaveVehicleIdentification
     }
     
     var body: some View {
@@ -81,7 +82,7 @@ struct NewReportView: View {
                 }
                 
                 Section {
-                    Button("Upload Photo") {
+                    Button("Select Photo") {
                         imagePickerSourceType = .photoLibrary
                     }
                     Button("Take Photo") {
@@ -90,7 +91,7 @@ struct NewReportView: View {
                 } header: {
                     Text("Photo")
                 } footer: {
-                    Text("Include a photo you have of the vehicle. Try not to include a photo of the license plate or other personal info found on the vehicle.")
+                    Text("Include an image you have of the vehicle that would properly distinguish it from others.")
                 }
                 .disabled(!vehicleImage.isNil())
                 
@@ -137,21 +138,25 @@ struct NewReportView: View {
                 Section {
                     Toggle("Not avaliable", isOn: $doesNotHaveVehicleIdentification)
                         .disabled(self.reportType.requiresLicensePlateInformation)
+                        .tint(.brand)
                     if !doesNotHaveVehicleIdentification {
                         TextField("License Plate", text: $licensePlate)
+                            .keyboardType(.alphabet)
+                            .submitLabel(.done)
                     }
                 } header: {
                     Text("Vehicle Identification")
                 } footer: {
                     if doesNotHaveVehicleIdentification {
-                        Text("You do not have any information that could further identify the vehicle you're reporting\n\nNOTE: it might be more difficult to identify the vehicle")
+                        Text("You do not have any information that could further identify the vehicle you're reporting\n\nNOTE: it might be more difficult to identify the vehicle. We suggest at least providing a description of the vehicle")
                     } else {
-                        Text("Enter the license plate number if noted.\n\nInformation entered is encrypted and cannot be read.")
+                        Text("Please enter the vehicle's full license plate. Do not inlucde any spaces or special characters. Maximum characters allowed is 8.")
                     }
                 }
             }
             .navigationTitle("New Report")
             .navigationBarTitleDisplayMode(.inline)
+            .autocorrectionDisabled()
             .toolbar {
                 ToolbarItem(placement: .navigationBarLeading) {
                     Button {
@@ -175,7 +180,6 @@ struct NewReportView: View {
                     }
                 }
             }
-            .tint(.accentColor)
             //Remedying the picker warning xcode throws when chaging either a vehicle make or year...
             .onChange(of: vehicleMake) { _ in
                 self.vehicleModel = vehicleModel.matches(make: self.vehicleMake, year: self.vehicleYear)
@@ -198,6 +202,7 @@ struct NewReportView: View {
             }
         }
         .interactiveDismissDisabled()
+        .tint(Color(uiColor: .label))
         .disabled(isUploading)
         
         .sheet(isPresented: $isShowingLocationView) {
@@ -255,11 +260,11 @@ struct NewReportView: View {
             return
         }
         
-        let vehicle = Vehicle(vehicleYear: vehicleYear, vehicleMake: vehicleMake, vehicleColor: vehicleColor, vehicleModel: vehicleModel)
+        let vehicle = Vehicle(vehicleYear: vehicleYear, vehicleMake: vehicleMake, vehicleModel: vehicleModel, vehicleColor: vehicleColor)
         var report = Report(dt: Date.now.epoch,
                             reportType: reportType,
                             vehicle: vehicle,
-                            distinguishable: "",
+                            distinguishableDetails: "",
                             location: location, role: .original)
         
         do {
@@ -283,5 +288,6 @@ struct NewReportView_Previews: PreviewProvider {
     static var previews: some View {
         NewReportView()
             .environmentObject(ReportsViewModel())
+            .tint(Color(uiColor: .label))
     }
 }

@@ -23,13 +23,14 @@ class ReportAnnotation: NSObject, MKAnnotation {
         self.coordinate    = report.location.coordinates
         self.report        = report
         self.title         = report.location.name ?? report.location.address ?? report.reportType.rawValue
+        self.subtitle      = report.dt.full
     }
 }
 
 extension ReportAnnotation {
     
     var region: MKCoordinateRegion {
-        MKCoordinateRegion(center: self.coordinate, span: .init(latitudeDelta: 10, longitudeDelta: 10))
+        MKCoordinateRegion(center: self.coordinate, span: .init(latitudeDelta: 0.007, longitudeDelta: 0.007))
     }
 }
 

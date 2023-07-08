@@ -41,32 +41,16 @@ struct FeedView: View {
                 self.reports = reports
             }
             .toolbar {
-                ToolbarItem(placement: .principal) {
-                    ///Hides navigation title
-                    Text("")
-                }
-                ToolbarItem(placement: .navigationBarLeading) {
-                    Text(ApplicationTabViewSelection.feed.title)
-                        .font(.system(size: 24).weight(.heavy))
-                }
-                ToolbarItemGroup(placement: .navigationBarTrailing) {
+                ToolbarItem(placement: .navigationBarTrailing) {
                     NavigationLink {
                         FeedSearchView(reports: $reports)
                     } label: {
                         Image(systemName: "magnifyingglass")
-                            .bold()
                     }
-//                    Button {
-//                        reportsVM.isShowingLicensePlateScannerView.toggle()
-//                    } label: {
-//                        Image(systemName: "map")
-//                            .bold()
-//                    }
                     Button {
-                        reportsVM.isShowingLicensePlateScannerView.toggle()
+                        
                     } label: {
-                        Image(systemName: "camera")
-                            .bold()
+                        Image(systemName: "plus")
                     }
                 }
             }
@@ -74,9 +58,6 @@ struct FeedView: View {
         .sheet(isPresented: $isShowingNewReportView) {
             NewReportView()
                 .tint(.brand)
-        }
-        .fullScreenCover(isPresented: $reportsVM.isShowingLicensePlateScannerView) {
-            LicensePlateScannerView()
         }
         .environmentObject(reportsVM)
     }

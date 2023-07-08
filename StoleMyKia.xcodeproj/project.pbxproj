@@ -78,7 +78,7 @@
 		24A206952A08334400F5DC0C /* Location.swift in Sources */ = {isa = PBXBuildFile; fileRef = 24A206942A08334400F5DC0C /* Location.swift */; };
 		24A4CEDE29BFA2CE00B856BC /* UNAuth+EXT.swift in Sources */ = {isa = PBXBuildFile; fileRef = 24A4CEDD29BFA2CE00B856BC /* UNAuth+EXT.swift */; };
 		24A4CEE029BFA65100B856BC /* URL+EXT.swift in Sources */ = {isa = PBXBuildFile; fileRef = 24A4CEDF29BFA65100B856BC /* URL+EXT.swift */; };
-		24A4CEE429BFAC7100B856BC /* CLLocationManager+EXT.swift in Sources */ = {isa = PBXBuildFile; fileRef = 24A4CEE329BFAC7100B856BC /* CLLocationManager+EXT.swift */; };
+		24A4CEE429BFAC7100B856BC /* CLLocation+EXT.swift in Sources */ = {isa = PBXBuildFile; fileRef = 24A4CEE329BFAC7100B856BC /* CLLocation+EXT.swift */; };
 		24A4CEE729C04CBA00B856BC /* ReportAnnotationCallout.swift in Sources */ = {isa = PBXBuildFile; fileRef = 24A4CEE629C04CBA00B856BC /* ReportAnnotationCallout.swift */; };
 		24A5791429BC552C00495E6F /* StoleMyKiaApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 24A5791329BC552C00495E6F /* StoleMyKiaApp.swift */; };
 		24A5791829BC552E00495E6F /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 24A5791729BC552E00495E6F /* Assets.xcassets */; };
@@ -99,6 +99,8 @@
 		24C6983A2A402ECD003A1DE6 /* ReportRole.swift in Sources */ = {isa = PBXBuildFile; fileRef = 24C698392A402ECD003A1DE6 /* ReportRole.swift */; };
 		24EAF11729C2A02900B4CBFE /* SFSafariView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 24EAF11629C2A02900B4CBFE /* SFSafariView.swift */; };
 		24EAF11B29C2C10200B4CBFE /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 24EAF11A29C2C10200B4CBFE /* GoogleService-Info.plist */; };
+		24EE41122A59E0A800AF2A11 /* SMKLicensePlateDetector.mlmodel in Sources */ = {isa = PBXBuildFile; fileRef = 24EE41112A59E0A800AF2A11 /* SMKLicensePlateDetector.mlmodel */; };
+		24EE41142A59E0FD00AF2A11 /* LicensePlateTextScanner.swift in Sources */ = {isa = PBXBuildFile; fileRef = 24EE41132A59E0FD00AF2A11 /* LicensePlateTextScanner.swift */; };
 		24FA56BA2A29284D0074149B /* UIActivityVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 24FA56B92A29284D0074149B /* UIActivityVC.swift */; };
 		9A8DEA661C19F27F74C6B340 /* Pods_StoleMyKia.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 197A31A21B533A0B83DC4715 /* Pods_StoleMyKia.framework */; };
 /* End PBXBuildFile section */
@@ -176,7 +178,7 @@
 		24A206962A08D29E00F5DC0C /* StoleMyKia.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = StoleMyKia.entitlements; sourceTree = "<group>"; };
 		24A4CEDD29BFA2CE00B856BC /* UNAuth+EXT.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UNAuth+EXT.swift"; sourceTree = "<group>"; };
 		24A4CEDF29BFA65100B856BC /* URL+EXT.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "URL+EXT.swift"; sourceTree = "<group>"; };
-		24A4CEE329BFAC7100B856BC /* CLLocationManager+EXT.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "CLLocationManager+EXT.swift"; sourceTree = "<group>"; };
+		24A4CEE329BFAC7100B856BC /* CLLocation+EXT.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "CLLocation+EXT.swift"; sourceTree = "<group>"; };
 		24A4CEE629C04CBA00B856BC /* ReportAnnotationCallout.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReportAnnotationCallout.swift; sourceTree = "<group>"; };
 		24A5791029BC552C00495E6F /* StoleMyKia.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = StoleMyKia.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		24A5791329BC552C00495E6F /* StoleMyKiaApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StoleMyKiaApp.swift; sourceTree = "<group>"; };
@@ -198,6 +200,8 @@
 		24C698392A402ECD003A1DE6 /* ReportRole.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReportRole.swift; sourceTree = "<group>"; };
 		24EAF11629C2A02900B4CBFE /* SFSafariView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SFSafariView.swift; sourceTree = "<group>"; };
 		24EAF11A29C2C10200B4CBFE /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
+		24EE41112A59E0A800AF2A11 /* SMKLicensePlateDetector.mlmodel */ = {isa = PBXFileReference; lastKnownFileType = file.mlmodel; path = SMKLicensePlateDetector.mlmodel; sourceTree = "<group>"; };
+		24EE41132A59E0FD00AF2A11 /* LicensePlateTextScanner.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LicensePlateTextScanner.swift; sourceTree = "<group>"; };
 		24FA56B92A29284D0074149B /* UIActivityVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UIActivityVC.swift; sourceTree = "<group>"; };
 		562368835F2B675102514EA4 /* Pods-StoleMyKia.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-StoleMyKia.release.xcconfig"; path = "Target Support Files/Pods-StoleMyKia/Pods-StoleMyKia.release.xcconfig"; sourceTree = "<group>"; };
 		CB1F3C6B9B65B1A9366554C7 /* Pods-StoleMyKia.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-StoleMyKia.debug.xcconfig"; path = "Target Support Files/Pods-StoleMyKia/Pods-StoleMyKia.debug.xcconfig"; sourceTree = "<group>"; };
@@ -272,11 +276,11 @@
 		240F224A2A350B9B0078F97E /* Views */ = {
 			isa = PBXGroup;
 			children = (
-				249254A02A37C9D70037C43C /* Auth */,
 				249254AB2A3840DB0037C43C /* License Scanner */,
+				240F224B2A350BAA0078F97E /* Tabview */,
+				249254A02A37C9D70037C43C /* Auth */,
 				249254BB2A3925E20037C43C /* Parking Map */,
 				240F22672A3536B90078F97E /* Report */,
-				240F224B2A350BAA0078F97E /* Tabview */,
 			);
 			path = Views;
 			sourceTree = "<group>";
@@ -366,6 +370,7 @@
 		2426A6162A2345CB00E78647 /* Utilities */ = {
 			isa = PBXGroup;
 			children = (
+				24EE41102A59E01F00AF2A11 /* CoreML */,
 				240F222C2A3211720078F97E /* Drawer */,
 				24334CFE29C187620084B8EC /* CoreData */,
 				24A4CEDC29BFA2C100B856BC /* Extensions */,
@@ -524,7 +529,7 @@
 				24A4CEDD29BFA2CE00B856BC /* UNAuth+EXT.swift */,
 				24A4CEDF29BFA65100B856BC /* URL+EXT.swift */,
 				24334CFC29C1846C0084B8EC /* Image+EXT.swift */,
-				24A4CEE329BFAC7100B856BC /* CLLocationManager+EXT.swift */,
+				24A4CEE329BFAC7100B856BC /* CLLocation+EXT.swift */,
 				24334CFA29C0E0130084B8EC /* UIImage+EXT.swift */,
 				24334D0529C1A0E10084B8EC /* View+EXT.swift */,
 				24A662FB29C6DD5100AD784F /* UNUserNC+EXT.swift */,
@@ -660,6 +665,15 @@
 				2492A2FA2A40352C0022C99D /* NotificationRadiusMapView.swift */,
 			);
 			path = Radius;
+			sourceTree = "<group>";
+		};
+		24EE41102A59E01F00AF2A11 /* CoreML */ = {
+			isa = PBXGroup;
+			children = (
+				24EE41112A59E0A800AF2A11 /* SMKLicensePlateDetector.mlmodel */,
+				24EE41132A59E0FD00AF2A11 /* LicensePlateTextScanner.swift */,
+			);
+			path = CoreML;
 			sourceTree = "<group>";
 		};
 		6038246990B0B9DAE005F8EA /* Pods */ = {
@@ -814,6 +828,7 @@
 				24A5792929BC567F00495E6F /* ReportAnnotation.swift in Sources */,
 				24065F5A2A3C25120070BC9B /* UserReportsView.swift in Sources */,
 				2426A61B2A23461300E78647 /* ReportsDelegate.swift in Sources */,
+				24EE41142A59E0FD00AF2A11 /* LicensePlateTextScanner.swift in Sources */,
 				24C698382A4025D5003A1DE6 /* UserNotificationSettings.swift in Sources */,
 				2426A6202A23475A00E78647 /* ReportClusterAnnotationView.swift in Sources */,
 				240F22662A35327C0078F97E /* FeedListFilterView.swift in Sources */,
@@ -827,7 +842,7 @@
 				24334D0429C19E100084B8EC /* UIImagePicker.swift in Sources */,
 				245B392329E39EC1001DD213 /* VehicleColor.swift in Sources */,
 				244BF51929D33F4E00951765 /* ImageCache.swift in Sources */,
-				24A4CEE429BFAC7100B856BC /* CLLocationManager+EXT.swift in Sources */,
+				24A4CEE429BFAC7100B856BC /* CLLocation+EXT.swift in Sources */,
 				24B0719F2A3631FB000C6B75 /* TimelineMapView.swift in Sources */,
 				24065F5C2A3C25400070BC9B /* UserBookmarksView.swift in Sources */,
 				240306442A3699540086B795 /* FeedSearchView.swift in Sources */,
@@ -870,6 +885,7 @@
 				2492549F2A37B0FE0037C43C /* ReportErrorView.swift in Sources */,
 				24C6983A2A402ECD003A1DE6 /* ReportRole.swift in Sources */,
 				2448C3AA2A2A710F00A72D9F /* FirebaseStorage.swift in Sources */,
+				24EE41122A59E0A800AF2A11 /* SMKLicensePlateDetector.mlmodel in Sources */,
 				2425EAF92A003CDE00CC886F /* NavigationController.swift in Sources */,
 				2495A02229CAC5DF00457CE7 /* String+EXT.swift in Sources */,
 				248278D72A03054C00C1E99D /* UISheetPC.swift in Sources */,
@@ -1027,7 +1043,8 @@
 				INFOPLIST_KEY_LSApplicationCategoryType = "public.app-category.utilities";
 				INFOPLIST_KEY_NSCameraUsageDescription = "Your device's camera will be used to detect license plates. It'll also be used to capture images of vehicles.";
 				INFOPLIST_KEY_NSFileProviderDomainUsageDescription = StoleMyKia;
-				INFOPLIST_KEY_NSLocationAlwaysAndWhenInUseUsageDescription = "When creating a report or update, your location is automatically applied to the report. Your location is also used for 'Parking Map' to identify unsafe areas around you";
+				INFOPLIST_KEY_NSLocationAlwaysAndWhenInUseUsageDescription = "Your location is automatically applied to a report you make when authorized. Your location is also used to cater reports closests to your location.";
+				INFOPLIST_KEY_NSLocationWhenInUseUsageDescription = "Your location is automatically applied to a report you make when authorized. Your location is also used to cater reports closests to your location.";
 				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchScreen_Generation = YES;
@@ -1065,7 +1082,8 @@
 				INFOPLIST_KEY_LSApplicationCategoryType = "public.app-category.utilities";
 				INFOPLIST_KEY_NSCameraUsageDescription = "Your device's camera will be used to detect license plates. It'll also be used to capture images of vehicles.";
 				INFOPLIST_KEY_NSFileProviderDomainUsageDescription = StoleMyKia;
-				INFOPLIST_KEY_NSLocationAlwaysAndWhenInUseUsageDescription = "When creating a report or update, your location is automatically applied to the report. Your location is also used for 'Parking Map' to identify unsafe areas around you";
+				INFOPLIST_KEY_NSLocationAlwaysAndWhenInUseUsageDescription = "Your location is automatically applied to a report you make when authorized. Your location is also used to cater reports closests to your location.";
+				INFOPLIST_KEY_NSLocationWhenInUseUsageDescription = "Your location is automatically applied to a report you make when authorized. Your location is also used to cater reports closests to your location.";
 				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchScreen_Generation = YES;

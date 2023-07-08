@@ -101,11 +101,3 @@ struct ReportCellView: View {
         }
     }
 }
-
-struct ReportCellVIew_Previews: PreviewProvider {
-    static var previews: some View {
-        ReportCellView(report: .init(dt: Date.now.epoch, reportType: .found, vehicle: .init(vehicleYear: 2011, vehicleMake: .hyundai, vehicleColor: .orange, vehicleModel: .elantra), distinguishable: "", imageURL: "https://automanager.blob.core.windows.net/wmphotos/012928/b98b458d9854eb4db5b9d4d637b5cbf5/b21f0c7166_800.jpg", location: .init(address: "1105 South Drive, Oxon Hill, Maryland",name: "92NY",lat: 0, lon: 0), role: .original))
-            .environmentObject(ReportsViewModel())
-            .environmentObject(UserViewModel())
-    }
-}

@@ -17,8 +17,39 @@ struct Location: Codable, Identifiable, Hashable {
     let lon: Double
 }
 
-extension Location {
+extension Location: Comparable {
     
+    ///Filtering distance of locations when the users is search for nearby locations.
+    ///The distance is 1/2 mile from the users current location to prevent potential trolling (I'm looking at you, Kia Boys).
+    static var nearbyLocationDistance: Double {
+        0.5
+    }
+    
+    private static func userLocation() -> CLLocation? {
+        guard let userLocation = CLLocationManager.shared.location else { return nil}
+        return userLocation
+    }
+    
+    static func > (lhs: Location, rhs: Location) -> Bool {
+        guard let userLocation = userLocation() else { return false}
+        return calculateDistanceInMiles(from: lhs.location, to: userLocation) > calculateDistanceInMiles(from: rhs.location, to: userLocation)
+    }
+    
+    static func < (lhs: Location, rhs: Location) -> Bool {
+        guard let userLocation = userLocation() else { return false}
+        return calculateDistanceInMiles(from: lhs.location, to: userLocation) < calculateDistanceInMiles(from: rhs.location, to: userLocation)
+    }
+    
+    ///Location distance from the user in miles.
+    var distanceFromUser: String {
+        guard let userLocation = Self.userLocation() else { return "NA"}
+        return userLocation.calculateDistanceInMilesString(to: self.location)
+    }
+        
+    private var location: CLLocation {
+        CLLocation(latitude: lat, longitude: lon)
+    }
+
     var coordinates: CLLocationCoordinate2D {
         CLLocationCoordinate2D(latitude: lat, longitude: lon)
     }
@@ -56,5 +87,14 @@ extension Location? {
     
     func isNil() -> Bool {
         self == nil
+    }
+}
+
+extension Location {
+    
+    static func calculateDistanceInMiles(from location: CLLocation, to destinationLocation: CLLocation) -> CLLocationDistance {
+        let meters = location.distance(from: destinationLocation)
+        let miles = meters * 0.000621371 // Convert meters to miles
+        return miles
     }
 }

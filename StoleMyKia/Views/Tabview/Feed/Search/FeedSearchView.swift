@@ -20,6 +20,23 @@ struct FeedSearchView: View {
         }
         .navigationTitle("Search")
         .navigationBarTitleDisplayMode(.inline)
+        .toolbar {
+            ToolbarItemGroup(placement: .navigationBarTrailing) {
+                Button {
+                    
+                } label: {
+                    Image(systemName: "mic")
+                }
+                Button {
+                    reportsVM.isShowingLicensePlateScannerView.toggle()
+                } label: {
+                    Image(systemName: "camera")
+                }
+            }
+        }
+        .fullScreenCover(isPresented: $reportsVM.isShowingLicensePlateScannerView) {
+            LicensePlateScannerView()
+        }
     }
     
     private func getReportsWithFilter() {

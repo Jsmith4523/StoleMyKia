@@ -11,8 +11,8 @@ import Foundation
 struct Vehicle: Codable {
     let vehicleYear: Int
     let vehicleMake: VehicleMake
-    let vehicleColor: VehicleColor
     let vehicleModel: VehicleModel
+    let vehicleColor: VehicleColor
     var licensePlate: Data?
     var vin: Data?
 }

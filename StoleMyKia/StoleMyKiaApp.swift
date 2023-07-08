@@ -10,6 +10,7 @@ import Firebase
 import PartialSheet
 import UserNotifications
 import FirebaseMessaging
+import MapKit
 
 @main
 struct StoleMyKiaApp: App {
@@ -32,6 +33,7 @@ struct StoleMyKiaApp: App {
             .onAppear {
                 //Handling incoming notifications
                 //appDelegate.firebaseUserDelegate(userModel)
+                CLLocationManager().requestAlwaysAuthorization()
             }
         }
     }
