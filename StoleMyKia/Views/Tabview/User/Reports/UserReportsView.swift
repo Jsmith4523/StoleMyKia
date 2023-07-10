@@ -39,11 +39,11 @@ struct UserReportsView: View {
     private var list: some View {
         VStack {
             ForEach(reports) { report in
-                NavigationLink {
-                    SelectedReportDetailView(reportID: report.id)
-                } label: {
-                    ReportCellView(report: report)
-                }
+//                NavigationLink {
+//                    SelectedReportDetailView(reportID: report.id)
+//                } label: {
+//                    ReportCellView(report: report)
+//                }
             }
         }
     }
@@ -70,14 +70,7 @@ struct UserReportsView: View {
     
     
     private func getUserReports() {
-        userModel.getUserUpdates { result in
-            switch result {
-            case .success(let reports):
-                self.reports = reports
-            case .failure(_):
-                self.alertErrorGettingReports.toggle()
-            }
-        }
+        
     }
 }
 

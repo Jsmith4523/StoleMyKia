@@ -10,7 +10,7 @@ import SwiftUI
 struct FeedView: View {
     
     @State private var isShowingNewReportView = false
-    @State private var reports = [Report]()
+    @State private var reports = [Report].testReports()
     
     @EnvironmentObject var userModel: UserViewModel
     @EnvironmentObject var reportsVM: ReportsViewModel
@@ -31,15 +31,6 @@ struct FeedView: View {
             .environmentObject(reportsVM)
             .navigationTitle(ApplicationTabViewSelection.feed.title)
             .navigationBarTitleDisplayMode(.inline)
-            .refreshable {
-                reportsVM.getReports()
-            }
-            .onAppear {
-                reportsVM.getReports()
-            }
-            .onReceive(reportsVM.$reports) { reports in
-                self.reports = reports
-            }
             .toolbar {
                 ToolbarItem(placement: .navigationBarTrailing) {
                     NavigationLink {

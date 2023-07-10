@@ -14,8 +14,8 @@ class ImageCache {
     
     private var cache = NSCache<AnyObject, AnyObject>()
     
-    init() {
-        print("Cache is alive")
+    private init() {
+        
     }
     
     func getImage(_ urlString: String?, completion: @escaping (UIImage?)->Void) {

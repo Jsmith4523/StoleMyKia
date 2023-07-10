@@ -104,17 +104,17 @@ final class LicensePlateScannerCoordinator: NSObject, ObservableObject {
     
     func fetchReportsThatMatchLicenseString() {
         self.isFetchingReports = true
-        
-        licensePlateScannerDelegate?.getReportsWithLicense(self.licensePlateString) { [weak self] result in
-            switch result {
-            case .success(let reports):
-                self?.reports = reports
-                self?.isFetchingReports = false
-            case .failure(let error):
-                self?.alertErrorFetchingReports = true
-                self?.errorReason = error
-            }
-        }
+//        
+//        licensePlateScannerDelegate?.getReportsWithLicense(self.licensePlateString) { [weak self] result in
+//            switch result {
+//            case .success(let reports):
+//                self?.reports = reports
+//                self?.isFetchingReports = false
+//            case .failure(let error):
+//                self?.alertErrorFetchingReports = true
+//                self?.errorReason = error
+//            }
+//        }
     }
     
     ///Resumes the current camera session through the background thread

@@ -35,7 +35,6 @@
 		2425EAF92A003CDE00CC886F /* NavigationController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2425EAF82A003CDE00CC886F /* NavigationController.swift */; };
 		2426A6192A2345EF00E78647 /* FirebaseUserDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2426A6182A2345EF00E78647 /* FirebaseUserDelegate.swift */; };
 		2426A61B2A23461300E78647 /* ReportsDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2426A61A2A23461300E78647 /* ReportsDelegate.swift */; };
-		2426A61D2A23463F00E78647 /* UserReportsDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2426A61C2A23463F00E78647 /* UserReportsDelegate.swift */; };
 		2426A6202A23475A00E78647 /* ReportClusterAnnotationView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2426A61F2A23475A00E78647 /* ReportClusterAnnotationView.swift */; };
 		2426A62A2A243F0E00E78647 /* AnnotationCalloutDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2426A6292A243F0E00E78647 /* AnnotationCalloutDelegate.swift */; };
 		24334CFB29C0E0130084B8EC /* UIImage+EXT.swift in Sources */ = {isa = PBXBuildFile; fileRef = 24334CFA29C0E0130084B8EC /* UIImage+EXT.swift */; };
@@ -45,8 +44,6 @@
 		24334D0629C1A0E10084B8EC /* View+EXT.swift in Sources */ = {isa = PBXBuildFile; fileRef = 24334D0529C1A0E10084B8EC /* View+EXT.swift */; };
 		2437328029BEF8FC008F4C4E /* NotificationViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2437327F29BEF8FC008F4C4E /* NotificationViewModel.swift */; };
 		2448C3A52A2A3B1800A72D9F /* JSONSerial+EXT.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2448C3A42A2A3B1800A72D9F /* JSONSerial+EXT.swift */; };
-		2448C3A82A2A49BE00A72D9F /* Firebase.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2448C3A72A2A49BE00A72D9F /* Firebase.swift */; };
-		2448C3AA2A2A710F00A72D9F /* FirebaseStorage.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2448C3A92A2A710F00A72D9F /* FirebaseStorage.swift */; };
 		244BF51929D33F4E00951765 /* ImageCache.swift in Sources */ = {isa = PBXBuildFile; fileRef = 244BF51829D33F4E00951765 /* ImageCache.swift */; };
 		245B391729E39159001DD213 /* Color+EXT.swift in Sources */ = {isa = PBXBuildFile; fileRef = 245B391629E39159001DD213 /* Color+EXT.swift */; };
 		245B391A29E39E09001DD213 /* SelectedReportDetailViewMap.swift in Sources */ = {isa = PBXBuildFile; fileRef = 245B391929E39E09001DD213 /* SelectedReportDetailViewMap.swift */; };
@@ -101,6 +98,8 @@
 		24EAF11B29C2C10200B4CBFE /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 24EAF11A29C2C10200B4CBFE /* GoogleService-Info.plist */; };
 		24EE41122A59E0A800AF2A11 /* SMKLicensePlateDetector.mlmodel in Sources */ = {isa = PBXBuildFile; fileRef = 24EE41112A59E0A800AF2A11 /* SMKLicensePlateDetector.mlmodel */; };
 		24EE41142A59E0FD00AF2A11 /* LicensePlateTextScanner.swift in Sources */ = {isa = PBXBuildFile; fileRef = 24EE41132A59E0FD00AF2A11 /* LicensePlateTextScanner.swift */; };
+		24EE41162A5A84FB00AF2A11 /* StorageManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 24EE41152A5A84FB00AF2A11 /* StorageManager.swift */; };
+		24EE41182A5BB42D00AF2A11 /* QuerySnapshot.swift in Sources */ = {isa = PBXBuildFile; fileRef = 24EE41172A5BB42D00AF2A11 /* QuerySnapshot.swift */; };
 		24FA56BA2A29284D0074149B /* UIActivityVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 24FA56B92A29284D0074149B /* UIActivityVC.swift */; };
 		9A8DEA661C19F27F74C6B340 /* Pods_StoleMyKia.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 197A31A21B533A0B83DC4715 /* Pods_StoleMyKia.framework */; };
 /* End PBXBuildFile section */
@@ -135,7 +134,6 @@
 		2425EAF82A003CDE00CC886F /* NavigationController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NavigationController.swift; sourceTree = "<group>"; };
 		2426A6182A2345EF00E78647 /* FirebaseUserDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FirebaseUserDelegate.swift; sourceTree = "<group>"; };
 		2426A61A2A23461300E78647 /* ReportsDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReportsDelegate.swift; sourceTree = "<group>"; };
-		2426A61C2A23463F00E78647 /* UserReportsDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserReportsDelegate.swift; sourceTree = "<group>"; };
 		2426A61F2A23475A00E78647 /* ReportClusterAnnotationView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReportClusterAnnotationView.swift; sourceTree = "<group>"; };
 		2426A6292A243F0E00E78647 /* AnnotationCalloutDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AnnotationCalloutDelegate.swift; sourceTree = "<group>"; };
 		24334CFA29C0E0130084B8EC /* UIImage+EXT.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIImage+EXT.swift"; sourceTree = "<group>"; };
@@ -145,8 +143,6 @@
 		24334D0529C1A0E10084B8EC /* View+EXT.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "View+EXT.swift"; sourceTree = "<group>"; };
 		2437327F29BEF8FC008F4C4E /* NotificationViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NotificationViewModel.swift; sourceTree = "<group>"; };
 		2448C3A42A2A3B1800A72D9F /* JSONSerial+EXT.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "JSONSerial+EXT.swift"; sourceTree = "<group>"; };
-		2448C3A72A2A49BE00A72D9F /* Firebase.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Firebase.swift; sourceTree = "<group>"; };
-		2448C3A92A2A710F00A72D9F /* FirebaseStorage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FirebaseStorage.swift; sourceTree = "<group>"; };
 		244BF51829D33F4E00951765 /* ImageCache.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImageCache.swift; sourceTree = "<group>"; };
 		245B391629E39159001DD213 /* Color+EXT.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Color+EXT.swift"; sourceTree = "<group>"; };
 		245B391929E39E09001DD213 /* SelectedReportDetailViewMap.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SelectedReportDetailViewMap.swift; sourceTree = "<group>"; };
@@ -202,6 +198,8 @@
 		24EAF11A29C2C10200B4CBFE /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
 		24EE41112A59E0A800AF2A11 /* SMKLicensePlateDetector.mlmodel */ = {isa = PBXFileReference; lastKnownFileType = file.mlmodel; path = SMKLicensePlateDetector.mlmodel; sourceTree = "<group>"; };
 		24EE41132A59E0FD00AF2A11 /* LicensePlateTextScanner.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LicensePlateTextScanner.swift; sourceTree = "<group>"; };
+		24EE41152A5A84FB00AF2A11 /* StorageManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StorageManager.swift; sourceTree = "<group>"; };
+		24EE41172A5BB42D00AF2A11 /* QuerySnapshot.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = QuerySnapshot.swift; sourceTree = "<group>"; };
 		24FA56B92A29284D0074149B /* UIActivityVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UIActivityVC.swift; sourceTree = "<group>"; };
 		562368835F2B675102514EA4 /* Pods-StoleMyKia.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-StoleMyKia.release.xcconfig"; path = "Target Support Files/Pods-StoleMyKia/Pods-StoleMyKia.release.xcconfig"; sourceTree = "<group>"; };
 		CB1F3C6B9B65B1A9366554C7 /* Pods-StoleMyKia.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-StoleMyKia.debug.xcconfig"; path = "Target Support Files/Pods-StoleMyKia/Pods-StoleMyKia.debug.xcconfig"; sourceTree = "<group>"; };
@@ -383,7 +381,6 @@
 			children = (
 				2426A6182A2345EF00E78647 /* FirebaseUserDelegate.swift */,
 				2426A61A2A23461300E78647 /* ReportsDelegate.swift */,
-				2426A61C2A23463F00E78647 /* UserReportsDelegate.swift */,
 				2426A6292A243F0E00E78647 /* AnnotationCalloutDelegate.swift */,
 				240F22482A350AD30078F97E /* LicenseScannerDelegate.swift */,
 			);
@@ -538,9 +535,8 @@
 				24AAC49929CC1A6400125196 /* AES+EXT.swift */,
 				245B391629E39159001DD213 /* Color+EXT.swift */,
 				2448C3A42A2A3B1800A72D9F /* JSONSerial+EXT.swift */,
-				2448C3A72A2A49BE00A72D9F /* Firebase.swift */,
 				240F22462A34FEF70078F97E /* FirebaseAuth.swift */,
-				2448C3A92A2A710F00A72D9F /* FirebaseStorage.swift */,
+				24EE41172A5BB42D00AF2A11 /* QuerySnapshot.swift */,
 			);
 			path = Extensions;
 			sourceTree = "<group>";
@@ -618,6 +614,7 @@
 			isa = PBXGroup;
 			children = (
 				24A662F629C2F45B00AD784F /* ReportsManager.swift */,
+				24EE41152A5A84FB00AF2A11 /* StorageManager.swift */,
 				24A2068F2A0826BE00F5DC0C /* UserAccountManager.swift */,
 				244BF51829D33F4E00951765 /* ImageCache.swift */,
 			);
@@ -836,6 +833,7 @@
 				240F22472A34FEF70078F97E /* FirebaseAuth.swift in Sources */,
 				240F22562A350D280078F97E /* UpdateReportView.swift in Sources */,
 				240F22522A350D080078F97E /* NewReportView.swift in Sources */,
+				24EE41182A5BB42D00AF2A11 /* QuerySnapshot.swift in Sources */,
 				24A4CEDE29BFA2CE00B856BC /* UNAuth+EXT.swift in Sources */,
 				249254A42A37C9F70037C43C /* SignInView.swift in Sources */,
 				24C698362A401B0C003A1DE6 /* UserAccountSettings.swift in Sources */,
@@ -861,13 +859,12 @@
 				24A5791429BC552C00495E6F /* StoleMyKiaApp.swift in Sources */,
 				240F224D2A350BBA0078F97E /* ApplicationTabView.swift in Sources */,
 				2437328029BEF8FC008F4C4E /* NotificationViewModel.swift in Sources */,
-				2426A61D2A23463F00E78647 /* UserReportsDelegate.swift in Sources */,
 				249254B42A384A730037C43C /* LicenseScannerRequestPermissionView.swift in Sources */,
 				240F22542A350D210078F97E /* LocationSearchView.swift in Sources */,
 				240F22692A3536CE0078F97E /* SelectedReportDetailView.swift in Sources */,
 				249254BF2A39279C0037C43C /* ParkingMapView.swift in Sources */,
 				240F225A2A3510E20078F97E /* ReportCellView.swift in Sources */,
-				2448C3A82A2A49BE00A72D9F /* Firebase.swift in Sources */,
+				24EE41162A5A84FB00AF2A11 /* StorageManager.swift in Sources */,
 				245B391729E39159001DD213 /* Color+EXT.swift in Sources */,
 				24A4CEE729C04CBA00B856BC /* ReportAnnotationCallout.swift in Sources */,
 				249254BD2A3926120037C43C /* ParkingMapViewRepresentable.swift in Sources */,
@@ -884,7 +881,6 @@
 				24A206922A08270300F5DC0C /* Vehicle.swift in Sources */,
 				2492549F2A37B0FE0037C43C /* ReportErrorView.swift in Sources */,
 				24C6983A2A402ECD003A1DE6 /* ReportRole.swift in Sources */,
-				2448C3AA2A2A710F00A72D9F /* FirebaseStorage.swift in Sources */,
 				24EE41122A59E0A800AF2A11 /* SMKLicensePlateDetector.mlmodel in Sources */,
 				2425EAF92A003CDE00CC886F /* NavigationController.swift in Sources */,
 				2495A02229CAC5DF00457CE7 /* String+EXT.swift in Sources */,
@@ -1058,9 +1054,12 @@
 				MARKETING_VERSION = 1.0;
 				PRODUCT_BUNDLE_IDENTIFIER = JaylenKSmith.StoleMyKia;
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				SUPPORTED_PLATFORMS = "iphoneos iphonesimulator";
+				SUPPORTS_MACCATALYST = NO;
+				SUPPORTS_MAC_DESIGNED_FOR_IPHONE_IPAD = NO;
 				SWIFT_EMIT_LOC_STRINGS = YES;
 				SWIFT_VERSION = 5.0;
-				TARGETED_DEVICE_FAMILY = "1,2";
+				TARGETED_DEVICE_FAMILY = 1;
 			};
 			name = Debug;
 		};
@@ -1097,9 +1096,12 @@
 				MARKETING_VERSION = 1.0;
 				PRODUCT_BUNDLE_IDENTIFIER = JaylenKSmith.StoleMyKia;
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				SUPPORTED_PLATFORMS = "iphoneos iphonesimulator";
+				SUPPORTS_MACCATALYST = NO;
+				SUPPORTS_MAC_DESIGNED_FOR_IPHONE_IPAD = NO;
 				SWIFT_EMIT_LOC_STRINGS = YES;
 				SWIFT_VERSION = 5.0;
-				TARGETED_DEVICE_FAMILY = "1,2";
+				TARGETED_DEVICE_FAMILY = 1;
 			};
 			name = Release;
 		};

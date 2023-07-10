@@ -22,7 +22,7 @@ struct TimelineMapViewRepresentabe: UIViewRepresentable {
         timelineMapCoordinator.mapView = mapView
         mapView.delegate = context.coordinator
         mapView.showsUserLocation = true
-        //mapView.isUserInteractionEnabled = false
+        mapView.mapType = MapViewType.standard.mapType
         
         // Registering annotation view class
         let annotation = ReportAnnotation(report: report)
@@ -73,6 +73,8 @@ final class TimelineMapViewCoordinator: NSObject, MKMapViewDelegate, ObservableO
     func mapView(_ mapView: MKMapView, viewFor annotation: MKAnnotation) -> MKAnnotationView? {
         if annotation is MKUserLocation { return nil }
         
+        print("Selected")
+        
         if let annotation = annotation as? ReportAnnotation {
             let annotationView = ReportTimelineAnnotationView(annotation: annotation)
             annotationView.canShowCallout = true
@@ -85,7 +87,7 @@ final class TimelineMapViewCoordinator: NSObject, MKMapViewDelegate, ObservableO
     func mapView(_ mapView: MKMapView, rendererFor overlay: MKOverlay) -> MKOverlayRenderer {
         if let polyline = overlay as? MKPolyline {
             let lineRenderer = MKPolylineRenderer(polyline: polyline)
-            lineRenderer.strokeColor = .label
+            lineRenderer.strokeColor = .systemTeal
             lineRenderer.lineWidth = 3.5
             lineRenderer.lineDashPhase = 0.5
             return lineRenderer

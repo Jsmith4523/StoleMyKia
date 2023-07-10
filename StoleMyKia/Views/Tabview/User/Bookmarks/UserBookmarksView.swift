@@ -38,14 +38,7 @@ struct UserBookmarksView: View {
     }
     
     private func getUserBookmarks() {
-        userModel.getUserReports { result in
-            switch result {
-            case .success(let reports):
-                self.reports = reports
-            case .failure(_):
-                self.alertErrorGettingBookmarks.toggle()
-            }
-        }
+        
     }
     
     private var list: some View {
@@ -53,11 +46,11 @@ struct UserBookmarksView: View {
             Color(uiColor: .secondarySystemBackground)
             VStack(spacing: 20) {
                 ForEach(reports) { report in
-                    NavigationLink {
-                        SelectedReportDetailView(reportID: report.id)
-                    } label: {
-                        ReportCellView(report: report)
-                    }
+//                    NavigationLink {
+//                        SelectedReportDetailView(reportID: report.id)
+//                    } label: {
+//                        ReportCellView(report: report)
+//                    }
                 }
             }
         }

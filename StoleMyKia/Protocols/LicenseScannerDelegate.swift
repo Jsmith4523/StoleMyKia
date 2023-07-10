@@ -13,5 +13,12 @@ enum LicenseScannerError: String, Error {
 }
 
 protocol LicenseScannerDelegate: AnyObject {
-    func getReportsWithLicense(_ licenseString: String, completion: @escaping ((Result<[Report], LicenseScannerError>)->Void))
+    ///Fetches reports that contain license plate information.
+    ///- Parameters:
+    ///   - licenseString: The string value of a license plate text from VisionKit
+    ///
+    /// - Returns: Reports that exactly matches the license string.
+    ///
+    /// - Throws: Error if reports could not be fetched 
+    func fetchReportsWithLicense(_ licenseString: String) async throws -> [Report]
 }

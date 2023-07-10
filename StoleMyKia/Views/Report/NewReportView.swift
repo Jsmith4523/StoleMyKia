@@ -273,14 +273,14 @@ struct NewReportView: View {
             alertErrorUploading.toggle()
         }
         
-        reportsModel.upload(report, with: vehicleImage) { success in
-            guard success else {
-                self.alertErrorUploading.toggle()
-                self.isUploading = false
-                return
-            }
-            dismiss()
-        }
+//        reportsModel.upload(report, with: vehicleImage) { success in
+//            guard success else {
+//                self.alertErrorUploading.toggle()
+//                self.isUploading = false
+//                return
+//            }
+//            dismiss()
+//        }
     }
 }
 

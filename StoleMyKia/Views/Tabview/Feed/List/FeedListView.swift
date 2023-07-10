@@ -9,26 +9,33 @@ import SwiftUI
 
 struct FeedListView: View {
     
-    @EnvironmentObject var reportsVM: ReportsViewModel
-    @EnvironmentObject var userModel: UserViewModel
+    @State private var selectedReport: Report?
     
     @Binding var reports: [Report]
     
+    @EnvironmentObject var reportsVM: ReportsViewModel
+    @EnvironmentObject var userModel: UserViewModel
+        
     var body: some View {
         ZStack {
             Color(uiColor: .opaqueSeparator).opacity(0.16).ignoresSafeArea()
             VStack(spacing: 25) {
                 ForEach(reports) { report in
-                    NavigationLink {
-                        SelectedReportDetailView(reportID: report.id)
-                    } label: {
-                        ReportCellView(report: report)
-                    }
+                    ReportCellView(report: report)
+                        .onTapGesture {
+                            self.selectedReport = report
+                        }
                 }
             }
         }
         .environmentObject(reportsVM)
         .environmentObject(userModel)
+        .sheet(item: $selectedReport) { report in
+            SelectedReportDetailView(report: report)
+                .presentationDragIndicator(.visible)
+                .environmentObject(reportsVM)
+                .environmentObject(userModel)
+        }
     }
 }
 

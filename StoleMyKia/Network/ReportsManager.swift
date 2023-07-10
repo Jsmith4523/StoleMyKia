@@ -8,154 +8,139 @@
 import Foundation
 import FirebaseStorage
 import FirebaseFirestore
+import CoreLocation
 
-typealias ImageDataCompletion    = ((Result<UIImage, Error>)->Void)
-typealias ReportsCompletion      = ((Result<[Report], Error>)->Void)
-typealias DeleteReportCompletion = ((Result<Bool, Error>)->Void)
-typealias UploadReportCompletion = ((Result<Bool, Error>)->Void)
+enum ReportManagerError: Error {
+    case imageUrlError
+    case doesNotExist
+    case dataError
+    case codableError
+    case locationServicesDenied
+    case error(String)
+}
 
-typealias RemovalCompletion     = (UUID) -> ()
-
-class ReportsManager {
+enum ReportNotation {
+    case licensePlate(String)
+    case vin(String)
     
-    //TODO: Refactor code
-    
-    private let database = Firestore.firestore()
-    
-    ///Fetches reports in the database
-    func fetchReports(completion: @escaping ReportsCompletion) {
-        database.collection("Reports/").getAllDocuments { result in
-            switch result {
-            case .success(let reports):
-                completion(.success(reports))
-            case .failure(let error):
-                completion(.failure(error))
-            }
+    var notationValue: String {
+        switch self {
+        case .licensePlate(_):
+            return "vehicle.licensePlate"
+        case .vin(_):
+            return "vehicle.vin"
         }
     }
+}
+
+class ReportManager {
     
-    ///Fetches reports matching the uid.
-    func fetchUserReports(uid: String?, completion: @escaping ReportsCompletion) {
-        guard let uid else {
-            completion(.failure(RMError.error("user uid not provided")))
-            return
+    ///Shared instance.
+    static let manager = ReportManager()
+        
+    private static let db = Firestore.firestore()
+    
+    private static var collection: CollectionReference {
+        db.collection("Reports")
+    }
+    
+    private init() {}
+    
+    /// Retrieves the latest reports from Firestore Database.
+    ///
+    /// - Returns: An array of reports.
+    ///
+    /// - Throws: Error if the user location settings are not enabled or documents could not be retrieved.
+    func fetch() async throws -> [Report] {
+        guard CLLocationManager.shared.authorizationStatus.isAuthorized else {
+            throw ReportManagerError.locationServicesDenied
         }
-//        database.collection("Reports/").whereField("uid", isEqualTo: uid).getQueryDocuments { result in
-//            switch result {
-//            case .success(let reports):
-//                completion(.success(reports))
-//            case .failure(let error):
-//                completion(.failure(error))
-//            }
-//        }
+                
+        let documents = try await Self.collection.getDocuments()
+        let reports = documents.reportsFromSnapshot()
+        
+        return reports
     }
     
-    ///Fetches the current logged in user bookmarked reports.
-    func fetchUserBookmarkReports(_ uuids: [UUID], removalCompletion: @escaping RemovalCompletion, completion: @escaping (Result<[Report], Error>) -> Void) {
-
-        var reports = [Report?]()
-
-        for documentID in uuids {
-//            database.collection("Reports/").document(documentID.uuidString).getDocumentMatchingReference(Report.self) { result in
-//                switch result {
-//                case .success(let report):
-//                    reports.append(report)
-//                    completion(.success(reports.compactMap{$0}))
-//                case .failure(let error):
-//                    completion(.failure(error))
-//                }
-//            }
-        }
-    }
-    
-    ///Fetches the current logged in users updates.
-    func fetchUserUpdates(_ uuids: [UUID], completion: @escaping (Result<[Report], Error>) -> Void) {
-        var reports = [Report?]()
-
-        for documentID in uuids.map({$0.uuidString}) {
-            //TODO: Condition base on report type
-//            database.collection("Reports/").document(documentID).getDocumentMatchingReference(Report.self) { result in
-//                switch result {
-//                case .success(let report):
-//                    reports.append(report)
-//                    completion(.success(reports.compactMap{$0}))
-//                case .failure(let error):
-//                    completion(.failure(error))
-//                }
-//            }
-        }
-    }
-    
-    func reportDoesExist(uuid: UUID, completion: @escaping (Bool) -> Void) {
-//        database.collection("Reports/").document(uuid.uuidString).doesExist { result in
-//            completion(result)
-//        }
-    }
-    
-    func uploadReport(report: Report, image: UIImage? = nil, completion: @escaping UploadReportCompletion) {
-        database.collection("Reports/").uploadReport(report, with: image) { result in
-            switch result {
-            case .success(_):
-                completion(.success(true))
-            case .failure(let error):
-                completion(.failure(error))
-            }
-        }
-    }
-    
-    func delete(report: Report, completion: @escaping DeleteReportCompletion) {
-//        database.collection("Reports/").document("\(report.id)").beginDelection { result in
-//            switch result {
-//            case .success(let success):
-//                completion(.success(success))
-//            case .failure(let error):
-//                completion(.failure(error))
-//            }
-//        }
-    }
-    
-    ///Fetch single report by uuid
-    func fetchReport(_ uuid: UUID, completion: @escaping (Result<Report, FetchReportError>) -> Void) {
-        database.collection("Reports/").whereField("id", isEqualTo: uuid.uuidString).getDocuments { snapshot, err in
-            guard let snapshot, err == nil else {
-                print(err?.localizedDescription)
-                completion(.failure(.unavaliable))
-                return
-            }
-
-            guard let document = snapshot.documents.first else {
-                completion(.failure(.deleted))
-                return
-            }
-
-            guard document.exists else {
-                completion(.failure(.deleted))
-                return
-            }
-
-            guard let report = try? JSONSerialization.createObjectWithData(Report.self, jsonObject: document.data()) else {
-                completion(.failure(.unavaliable))
-                return
-            }
-            completion(.success(report))
-        }
-    }
-    
-    func deleteUserReports(uid: String?, completion: @escaping ((Bool)->Void)) {
-        guard let uid else {
-            completion(false)
-            return
+    ///Retrieves a single report from Firestore Database.
+    ///
+    ///- Parameters:
+    /// - id: The UUID value of a report.
+    ///
+    /// - Returns: Report that matches the UUID value.
+    ///
+    /// - Throws: Error if reports could not be retrieved or no longer exist.
+    static func fetchSingleReport(_ id: UUID) async throws -> Report {
+        
+        let document = try await collection.document(id.uuidString).getDocument()
+        
+        guard document.exists else {
+            throw ReportManagerError.doesNotExist
         }
         
-//        database.collection("Reports/").whereField("uid", isEqualTo: uid).deleteAll { result in
-//            switch result {
-//            case .success(_):
-//                completion(true)
-//            case .failure(let error):
-//                completion(false)
-//                print(error.localizedDescription)
-//            }
-//        }
+        guard let data = document.data() else {
+            throw ReportManagerError.dataError
+        }
+        
+        guard let report = JSONSerialization.objectFromData(Report.self, jsonObject: data ) else {
+            throw ReportManagerError.codableError
+        }
+        
+        return report
+    }
+    
+    ///Retrieves reports from Firestore Database with a matching dot notation
+    ///
+    ///- Parameters:
+    /// - notation: A notation type
+    ///
+    /// - Returns: Report(s) that matches notation.
+    ///
+    /// - Throws: Error if reports could not be retrieved.
+    func fetchReportsWithNotation(_ notation: ReportNotation) async throws -> [Report] {
+        //Retrieving documents that match the query...
+        let documents = try await Self.collection.getDocuments()
+        
+        return documents.reportsFromSnapshot()
+    }
+    
+    /// Uploads a report to Firestore Database. Also uploads the associated vehicle image (if included) to Firebase Storage.
+    ///
+    /// - Parameters:
+    ///   - report: The report object to be encoded and uploaded to Firestore.
+    ///
+    ///   - image: The optional image of a vehicle associated with a report and uploaded to Firebase Storage. nill by default.
+    ///
+    ///   - Throws: Error if either the report or its image could not be uploaded.
+    func upload(_ report: Report, image: UIImage? = nil) async throws {
+        var report = report
+        
+        //Saving the vehicle image to Firebase Storage...
+        let imageUrl = try await StorageManager.shared.saveVehicleImage(image, to: report.vehicleImagePath)
+        //Retrieving the image url...
+        report.imageURL = imageUrl?.absoluteString ?? nil
+        
+        //Then encoding the report...
+        guard let jsonData = try JSONSerialization.createJsonFromObject(report) as? [String: Any] else {
+            throw ReportManagerError.codableError
+        }
+        
+        //Now upload!
+        try await Self.collection.document(report.id.uuidString).setData(jsonData)
+    }
+    
+    
+    /// Deletes a report and associated vehicle image from Firestore Database and Firebase Storage.
+    /// - Parameters:
+    ///   - id: The UUID value of a report.
+    ///
+    ///   - path: The absolute file path of the vehicle image in Storage.
+    ///
+    ///   - Throws: Error if either the report or it's vehicle image could not be deleted
+    func delete(_ id: UUID, path: String) async throws {
+        try await StorageManager.shared.deleteVehicleImage(path: path)
+        
+        try await Self.collection.document(id.uuidString).delete()
     }
 }
 

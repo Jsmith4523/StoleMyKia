@@ -28,6 +28,8 @@ struct NotificationSettings: Codable {
     var notifyOfFound: Bool      = true
     var notifyOfSpotted: Bool    = true
     var notificationRadius       = 25000.0
+    var lattitude: Double?
+    var longtitude: Double?
 }
 
 extension FirebaseUser {

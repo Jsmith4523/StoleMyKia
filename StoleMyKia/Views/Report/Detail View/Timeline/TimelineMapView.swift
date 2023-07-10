@@ -19,7 +19,7 @@ enum MapViewType: String, CaseIterable, Identifiable {
     var mapType: MKMapType {
         switch self {
         case .standard:
-            return .standard
+            return .mutedStandard
         case .birdsEye:
             return .hybrid
         }
@@ -77,5 +77,6 @@ struct TimelineMapView_Previews: PreviewProvider {
     static var previews: some View {
         TimelineMapView(report: [Report].testReports().first!)
             .environmentObject(ReportsViewModel())
+            .preferredColorScheme(.dark)
     }
 }

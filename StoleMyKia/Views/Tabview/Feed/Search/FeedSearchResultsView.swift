@@ -79,11 +79,11 @@ struct FeedSearchResultsView: View {
             Color(uiColor: .opaqueSeparator).opacity(0.2)
             VStack(spacing: 22) {
                 ForEach(filteredReports) { report in
-                    NavigationLink {
-                        SelectedReportDetailView(reportID: report.id)
-                    } label: {
-                        ReportCellView(report: report)
-                    }
+//                    NavigationLink {
+//                        SelectedReportDetailView(reportID: report.id)
+//                    } label: {
+//                        ReportCellView(report: report)
+//                    }
                 }
             }
         }

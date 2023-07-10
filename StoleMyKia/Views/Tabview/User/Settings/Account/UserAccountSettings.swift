@@ -14,9 +14,9 @@ struct UserAccountSettings: View {
     var body: some View {
         Form {
             Section {
-                LabeledContent("Member Since", value: userModel.getUserDisplayName())
-                LabeledContent("Phone Number", value: userModel.accountPhoneNumber())
-                LabeledContent("My Vehicle", value: userModel.userPersonalVehicle())
+//                LabeledContent("Member Since", value: userModel.getUserDisplayName())
+//                LabeledContent("Phone Number", value: userModel.accountPhoneNumber())
+//                LabeledContent("My Vehicle", value: userModel.userPersonalVehicle())
             } header: {
                 Text("Details")
             } footer: {
