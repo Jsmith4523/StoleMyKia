@@ -19,6 +19,7 @@ struct SelectedReportDetailMapView: UIViewRepresentable {
     func makeUIView(context: Context) -> MKMapView {
         let mapView = MKMapView()
         mapView.delegate = context.coordinator
+        mapView.mapType = MapViewType.standard.mapType
         mapView.showsUserLocation = true
         mapView.isUserInteractionEnabled = false
         
@@ -26,7 +27,6 @@ struct SelectedReportDetailMapView: UIViewRepresentable {
    
         mapView.addAnnotation(annotation)
         mapView.setRegion(report.location.region, animated: true)
-        mapView.selectAnnotation(annotation, animated: false)
         mapView.register(ReportTimelineAnnotationView.self, forAnnotationViewWithReuseIdentifier: ReportAnnotation.reusableID)
         
         return mapView
@@ -43,7 +43,11 @@ struct SelectedReportDetailMapView: UIViewRepresentable {
     final class SelectedReportDetailViewMapCoordinator: NSObject, MKMapViewDelegate {
         func mapView(_ mapView: MKMapView, viewFor annotation: MKAnnotation) -> MKAnnotationView? {
             if let annotation = annotation as? ReportAnnotation {
-                return ReportTimelineAnnotationView(annotation: annotation)
+                let annotationView = ReportTimelineAnnotationView(annotation: annotation)
+                annotationView.subtitleVisibility = .hidden
+                annotationView.titleVisibility = .hidden
+                
+                return annotationView
             }
             
             return nil

@@ -53,13 +53,6 @@ struct TimelineMapView: View {
                         Image(systemName: "xmark")
                     }
                 }
-                ToolbarItem(placement: .navigationBarTrailing) {
-                    Button {
-                        presentMapOptions.toggle()
-                    } label: {
-                        Image(systemName: "map")
-                    }
-                }
             }
             .confirmationDialog("", isPresented: $presentMapOptions) {
                 ForEach(MapViewType.allCases) { mapType in

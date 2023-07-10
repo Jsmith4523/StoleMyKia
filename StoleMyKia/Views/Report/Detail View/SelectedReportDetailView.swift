@@ -12,6 +12,9 @@ struct SelectedReportDetailView: View {
     
     let report: Report
     
+    @State private var isShowingTimelineMapView = false
+    @State private var isShowingUpdateReportView = false
+    
     @State private var vehicleImage: UIImage?
     
     @EnvironmentObject var reportsVM: ReportsViewModel
@@ -41,8 +44,22 @@ struct SelectedReportDetailView: View {
                                             .foregroundColor(.gray)
                                     }
                                     VStack(alignment: .leading, spacing: 10) {
-                                        Text(report.vehicleDetails)
-                                            .font(.system(size: 25).weight(.bold))
+                                        VStack(alignment: .leading, spacing: 7) {
+                                            Text(report.vehicleDetails)
+                                                .font(.system(size: 25).weight(.bold))
+                                            VStack(alignment: .leading) {
+                                                Text(report.vehicle.licensePlateString)
+                                                    .font(.system(size: 20).weight(.heavy))
+                                                if report.location.hasName {
+                                                    VStack(alignment: .leading) {
+                                                        Text(report.location.name ?? "")
+                                                        Text(report.location.address ?? "")
+                                                    }
+                                                }
+                                            }
+                                            .font(.system(size: 17))
+                                            .foregroundColor(.gray)
+                                        }
                                         Text(report.distinguishableDetails)
                                             .font(.system(size: 16))
                                             .lineSpacing(2)
@@ -51,6 +68,9 @@ struct SelectedReportDetailView: View {
                                 SelectedReportDetailMapView(report: report)
                                     .frame(height: 175)
                                     .cornerRadius(20)
+                                    .onTapGesture {
+                                        self.isShowingTimelineMapView.toggle()
+                                    }
                             }
                             .padding()
                         }
@@ -59,6 +79,13 @@ struct SelectedReportDetailView: View {
                 }
             }
             .toolbar {
+                ToolbarItem(placement: .navigationBarLeading) {
+                    Button {
+                        
+                    } label: {
+                        Image(systemName: "arrow.triangle.swap")
+                    }
+                }
                 ToolbarItemGroup(placement: .navigationBarTrailing) {
                     Button {
                         
@@ -68,7 +95,7 @@ struct SelectedReportDetailView: View {
                 }
             }
             .tint(Color(uiColor: .label))
-            .sheet(isPresented: .constant(true)) {
+            .sheet(isPresented: $isShowingTimelineMapView) {
                 TimelineMapView(report: report)
                     .presentationDragIndicator(.visible)
                     .environmentObject(reportsVM)
@@ -95,5 +122,6 @@ struct SelectedReportDetailView: View {
 struct SelectedReportDetailView_Previews: PreviewProvider {
     static var previews: some View {
         SelectedReportDetailView(report: [Report].testReports().first!)
+            .environmentObject(ReportsViewModel())
     }
 }
