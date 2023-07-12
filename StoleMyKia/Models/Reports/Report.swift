@@ -29,8 +29,7 @@ struct Report: Identifiable, Codable, Comparable {
     ///The location of this report
     let location: Location
     ///The role of this report
-    var role: ReportRole
-    ///The parent report uuid if this report is an update
+    private(set) var role: ReportRole!
     
     static func == (lhs: Report, rhs: Report) -> Bool {
         return true
@@ -74,6 +73,23 @@ struct Report: Identifiable, Codable, Comparable {
 }
 
 extension Report {
+    
+    /// Set this report.role as 'original'
+    /// - Returns: self
+    func setAsOriginal() -> Self {
+        var report = self
+        report.role = .original(report.id)
+        return report
+    }
+    
+    /// Set this report as 'update'
+    /// - Parameter parentId: The parent report UUID.
+    /// - Returns: self
+    func setAsUpdate(_ parentId: UUID) -> Self {
+        var report = self
+        report.role = .update(parentId)
+        return report
+    }
     
     mutating func setLicensePlate(_ license: String) throws {
         guard !(license.isEmpty) else {
@@ -168,7 +184,7 @@ extension [Report] {
     
     static func testReports() -> [Report] {
         return [
-            .init(dt: Date.now.epoch, reportType: .stolen, vehicle: .init(vehicleYear: 2017, vehicleMake: .hyundai, vehicleModel: .elantra, vehicleColor: .red), distinguishableDetails: "We regret to inform you that your 2017 Hyundai Elantra, with the license plate number ABC1234, has been reported stolen. This silver-colored vehicle has a distinct mark on the rear bumper, resembling a small scratch on the left corner. Please contact the local authorities immediately and provide them with the above details for further investigation. Your cooperation is highly appreciated in the recovery of your vehicle. Stay vigilant and let's work together to retrieve your stolen Hyundai Elantra", imageURL: "https://wtop.com/wp-content/uploads/2016/07/elantra3-1672x1254.jpg", location: .init(address: "801 K St, NW DC", name: "Apple Carniege Library", lat: 40.72781, lon: -74.00743), role: .original)
+            .init(dt: Date.now.epoch, reportType: .stolen, vehicle: .init(vehicleYear: 2017, vehicleMake: .hyundai, vehicleModel: .elantra, vehicleColor: .red), distinguishableDetails: "We regret to inform you that your 2017 Hyundai Elantra, with the license plate number ABC1234, has been reported stolen. This silver-colored vehicle has a distinct mark on the rear bumper, resembling a small scratch on the left corner. Please contact the local authorities immediately and provide them with the above details for further investigation. Your cooperation is highly appreciated in the recovery of your vehicle. Stay vigilant and let's work together to retrieve your stolen Hyundai Elantra", imageURL: "https://wtop.com/wp-content/uploads/2016/07/elantra3-1672x1254.jpg", location: .init(address: "801 K St, NW DC", name: "Apple Carniege Library", lat: 40.72781, lon: -74.00743)).setAsUpdate(UUID())
         ]
     }
 }

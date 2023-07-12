@@ -32,6 +32,7 @@
 		240F22692A3536CE0078F97E /* SelectedReportDetailView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 240F22682A3536CE0078F97E /* SelectedReportDetailView.swift */; };
 		240F226C2A3539A20078F97E /* TimelineMapViewRepresentable.swift in Sources */ = {isa = PBXBuildFile; fileRef = 240F226B2A3539A20078F97E /* TimelineMapViewRepresentable.swift */; };
 		24127C1F29E3F4AC00C09FE5 /* Launch Screen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 24127C1E29E3F4AC00C09FE5 /* Launch Screen.storyboard */; };
+		2421201F2A5E4552009E86AB /* TimelineAnnotationViewCallout.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2421201E2A5E4552009E86AB /* TimelineAnnotationViewCallout.swift */; };
 		2425EAF92A003CDE00CC886F /* NavigationController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2425EAF82A003CDE00CC886F /* NavigationController.swift */; };
 		2426A6192A2345EF00E78647 /* FirebaseUserDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2426A6182A2345EF00E78647 /* FirebaseUserDelegate.swift */; };
 		2426A61B2A23461300E78647 /* ReportsDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2426A61A2A23461300E78647 /* ReportsDelegate.swift */; };
@@ -131,6 +132,7 @@
 		240F22682A3536CE0078F97E /* SelectedReportDetailView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SelectedReportDetailView.swift; sourceTree = "<group>"; };
 		240F226B2A3539A20078F97E /* TimelineMapViewRepresentable.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TimelineMapViewRepresentable.swift; sourceTree = "<group>"; };
 		24127C1E29E3F4AC00C09FE5 /* Launch Screen.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = "Launch Screen.storyboard"; sourceTree = "<group>"; };
+		2421201E2A5E4552009E86AB /* TimelineAnnotationViewCallout.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TimelineAnnotationViewCallout.swift; sourceTree = "<group>"; };
 		2425EAF82A003CDE00CC886F /* NavigationController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NavigationController.swift; sourceTree = "<group>"; };
 		2426A6182A2345EF00E78647 /* FirebaseUserDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FirebaseUserDelegate.swift; sourceTree = "<group>"; };
 		2426A61A2A23461300E78647 /* ReportsDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReportsDelegate.swift; sourceTree = "<group>"; };
@@ -634,6 +636,7 @@
 			children = (
 				24B0719E2A3631FB000C6B75 /* TimelineMapView.swift */,
 				240F226B2A3539A20078F97E /* TimelineMapViewRepresentable.swift */,
+				2421201E2A5E4552009E86AB /* TimelineAnnotationViewCallout.swift */,
 			);
 			path = Timeline;
 			sourceTree = "<group>";
@@ -856,6 +859,7 @@
 				240F22452A33F10A0078F97E /* FirebaseUserNotification.swift in Sources */,
 				240306482A369B870086B795 /* FeedSearchResultsView.swift in Sources */,
 				24334D0629C1A0E10084B8EC /* View+EXT.swift in Sources */,
+				2421201F2A5E4552009E86AB /* TimelineAnnotationViewCallout.swift in Sources */,
 				24A5791429BC552C00495E6F /* StoleMyKiaApp.swift in Sources */,
 				240F224D2A350BBA0078F97E /* ApplicationTabView.swift in Sources */,
 				2437328029BEF8FC008F4C4E /* NotificationViewModel.swift in Sources */,

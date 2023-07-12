@@ -10,7 +10,14 @@ import MapKit
 
 struct SelectedReportDetailView: View {
     
+    ///Determines how the TimelineMapView will present itself when selected by the user
+    enum TimelineMapViewMode {
+        case dismissWhenSelected
+        case presentWhenSelected
+    }
+    
     let report: Report
+    var timelineMapViewMode: TimelineMapViewMode = .presentWhenSelected
     
     @State private var isShowingTimelineMapView = false
     @State private var isShowingUpdateReportView = false
@@ -28,7 +35,9 @@ struct SelectedReportDetailView: View {
                 VStack {
                     VStack(spacing: 20) {
                         VStack(alignment: .leading) {
-                            vehicleImageView
+                            if report.hasVehicleImage {
+                                vehicleImageView
+                            }
                             VStack(spacing: 30) {
                                 VStack(alignment: .leading) {
                                     HStack {
@@ -69,7 +78,7 @@ struct SelectedReportDetailView: View {
                                     .frame(height: 175)
                                     .cornerRadius(20)
                                     .onTapGesture {
-                                        self.isShowingTimelineMapView.toggle()
+                                        presentTimelineMapView()
                                     }
                             }
                             .padding()
@@ -79,14 +88,12 @@ struct SelectedReportDetailView: View {
                 }
             }
             .toolbar {
-                ToolbarItem(placement: .navigationBarLeading) {
+                ToolbarItemGroup(placement: .navigationBarTrailing) {
                     Button {
                         
                     } label: {
                         Image(systemName: "arrow.triangle.swap")
                     }
-                }
-                ToolbarItemGroup(placement: .navigationBarTrailing) {
                     Button {
                         
                     } label: {
@@ -103,6 +110,17 @@ struct SelectedReportDetailView: View {
         }
         .onAppear {
             getVehicleImage()
+        }
+    }
+    
+    private func presentTimelineMapView() {
+        //Prevents allocating a new MKMapView in cases if this detail view
+        //Is presented within the TimelineMapView
+        switch timelineMapViewMode {
+        case .dismissWhenSelected:
+            dismiss()
+        case .presentWhenSelected:
+            self.isShowingTimelineMapView.toggle()
         }
     }
     

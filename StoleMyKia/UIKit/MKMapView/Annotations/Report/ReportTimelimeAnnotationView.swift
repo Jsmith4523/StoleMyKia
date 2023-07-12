@@ -16,6 +16,7 @@ class ReportTimelineAnnotationView: MKMarkerAnnotationView {
     init(annotation: ReportAnnotation) {
         self.report = annotation.report
         super.init(annotation: annotation, reuseIdentifier: ReportAnnotation.reusableID)
+        self.canShowCallout = false
         setupView()
     }
     

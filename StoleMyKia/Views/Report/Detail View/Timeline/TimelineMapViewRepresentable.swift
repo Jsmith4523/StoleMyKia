@@ -12,9 +12,6 @@ import SwiftUI
 ///This map is used to show the original report and updates over time
 struct TimelineMapViewRepresentabe: UIViewRepresentable {
     
-    ///The report to display
-    let report: Report
-    
     @ObservedObject var timelineMapCoordinator: TimelineMapViewCoordinator
 
     func makeUIView(context: Context) -> MKMapView {
@@ -22,12 +19,13 @@ struct TimelineMapViewRepresentabe: UIViewRepresentable {
         timelineMapCoordinator.mapView = mapView
         mapView.delegate = context.coordinator
         mapView.showsUserLocation = true
-        mapView.mapType = MapViewType.standard.mapType
+        mapView.isPitchEnabled = false
+        mapView.mapType = .mutedStandard
+        mapView.tintColor = .systemBlue
         
-        // Registering annotation view class
-        let annotation = ReportAnnotation(report: report)
-        mapView.addAnnotation(annotation)
-        mapView.setRegion(annotation.region, animated: false)
+        //Disabling user interaction until report updates are fetched and visible within the map
+        mapView.isUserInteractionEnabled = false
+        
         mapView.register(ReportTimelineAnnotationView.self, forAnnotationViewWithReuseIdentifier: ReportAnnotation.reusableID)
     
         return mapView
@@ -42,43 +40,119 @@ struct TimelineMapViewRepresentabe: UIViewRepresentable {
 
 final class TimelineMapViewCoordinator: NSObject, MKMapViewDelegate, ObservableObject {
     
-    @Published var mapViewType: MapViewType = .standard {
+    enum TimelineAlertMode: String {
+        case error = "There was an error with that request. Please try again later."
+        case originalReportNoLongerExist = "Sorry, the original report is no longer avaliable."
+        case noLongerExist = "Sorry, this report no longer unavaliable."
+        case noUpdates = "Not updates have been made yet."
+    }
+        
+    @Published private var reports = [Report]() {
         didSet {
-            mapView?.mapType = mapViewType.mapType
+           setupMapForUpdateReports()
         }
+    }
+    
+    @Published var showAlert = false
+    @Published var alertReportError: TimelineAlertMode? {
+        didSet {
+            self.showAlert = true
+        }
+    }
+    
+    @Published var selectedUpdateReport: Report?
+    
+    ///The UUID of the selected report
+    private var reportId: UUID!
+    private var isOriginalReport: Bool!
+    
+    var mapView: MKMapView?
+    weak private var timelineMapViewDelegate: TimelineMapViewDelegate?
+        
+    func setDelegate(_ delegate: TimelineMapViewDelegate) {
+        self.timelineMapViewDelegate = delegate
     }
     
     override init() {
         super.init()
-        testSetup()
     }
     
-    var mapView: MKMapView?
-    
-    func testSetup() {
-        DispatchQueue.main.asyncAfter(deadline: .now() + 1) {
-            if let mapView = self.mapView {
-                mapView.addAnnotation(ReportAnnotation(report: .init(dt: Date.now.epoch, reportType: .located, vehicle: .init(vehicleYear: 2017, vehicleMake: .hyundai, vehicleModel: .elantra, vehicleColor: .red), distinguishableDetails: "", location: .init(lat: 40.74763, lon: -74.00445), role: .original)))
-                mapView.addAnnotation(ReportAnnotation(report: .init(dt: Date.now.epoch, reportType: .found, vehicle: .init(vehicleYear: 2017, vehicleMake: .hyundai, vehicleModel: .elantra, vehicleColor: .red), distinguishableDetails: "", location: .init(lat: 40.79072, lon: -74.07032), role: .original)))
-                
-                let coordinates = mapView.annotations.map { $0.coordinate }
-                
-                let polyline = MKPolyline(coordinates: coordinates, count: coordinates.count)
-                polyline.title = "Here"
-                mapView.addOverlay(polyline)
+    /// Fetch reports that are updates to this report or its parent.
+    /// - Parameter role: The role of the report.
+    func getUpdates(report: Report) async {
+        do {
+            self.reportId = report.id
+            self.isOriginalReport = report.role.hasParent
+            
+            var reports = [Report?]()
+            
+            //Fetching the original report
+            let originalReport = try await ReportManager.manager.fetchSingleReport(report.role.associatedValue)
+            reports.append(originalReport)
+            
+            //Then fetching the updates to the original report
+            guard let updateReports = try await timelineMapViewDelegate?.getTimelineUpdates(role: report.role) else {
+                return
             }
+            
+            guard !(updateReports.isEmpty) else {
+                DispatchQueue.main.async {
+                    self.alertReportError = .noUpdates
+                }
+                return
+            }
+            
+            reports.append(contentsOf: updateReports)
+            
+            //Some reports may be nil on arrival...
+            self.reports = reports.compactMap({$0})
+        }
+        catch ReportManagerError.doesNotExist {
+            DispatchQueue.main.async {
+                self.alertReportError = self.isOriginalReport ? .noLongerExist : .originalReportNoLongerExist
+            }
+        }
+        catch {
+            DispatchQueue.main.async {
+                self.alertReportError = .error
+            }
+        }
+    }
+    
+    ///Setups the map for fetched reports
+    private func setupMapForUpdateReports() {
+        for report in reports.sorted(by: >) {
+            mapView?.addAnnotation(ReportAnnotation(report: report))
+        }
+        
+        let coordinates = reports.map { $0.location.coordinates }
+        let polyline = MKPolyline(coordinates: coordinates, count: coordinates.count)
+        mapView?.addOverlay(polyline)
+        mapView?.setVisibleMapRect(polyline.boundingMapRect, edgePadding: .init(top: 25, left: 75, bottom: 45, right: 75), animated: true)
+        
+        mapView?.isUserInteractionEnabled = true
+    }
+    
+    private func testDummy() {
+        DispatchQueue.main.asyncAfter(deadline: .now() + 1.25) {
+            let dummyReports: [Report] = [
+                Report(id: self.reportId, dt: Date.now.epoch, reportType: .stolen, vehicle: .init(vehicleYear: 2017, vehicleMake: .hyundai, vehicleModel: .elantra, vehicleColor: .red), distinguishableDetails: "", location: .init(lat: 40.79072, lon: -74.07032)).setAsOriginal(),
+                Report(dt: Date.now.addingTimeInterval(7200*2.75).epoch, reportType: .withnessed, vehicle: .init(vehicleYear: 2017, vehicleMake: .hyundai, vehicleModel: .elantra, vehicleColor: .red), distinguishableDetails: "", location: .init(lat: 38.80712, lon: -76.94845)).setAsUpdate(UUID()),
+                Report(dt: Date.now.addingTimeInterval(7200*2).epoch, reportType: .located, vehicle: .init(vehicleYear: 2017, vehicleMake: .hyundai, vehicleModel: .elantra, vehicleColor: .red), distinguishableDetails: "", location: .init(lat: 40.70742, lon: -73.99858)).setAsUpdate(UUID()),
+                Report(dt: Date.now.addingTimeInterval(7200*4).epoch, reportType: .found, vehicle: .init(vehicleYear: 2017, vehicleMake: .hyundai, vehicleModel: .elantra, vehicleColor: .red), distinguishableDetails: "", location: .init(lat: 40.78363, lon: -73.97146)).setAsUpdate(UUID())
+            ].sorted(by: >)
+            self.reports = dummyReports
         }
     }
     
     func mapView(_ mapView: MKMapView, viewFor annotation: MKAnnotation) -> MKAnnotationView? {
         if annotation is MKUserLocation { return nil }
-        
-        print("Selected")
-        
+            
         if let annotation = annotation as? ReportAnnotation {
             let annotationView = ReportTimelineAnnotationView(annotation: annotation)
+            annotationView.leftCalloutAccessoryView = nil
             annotationView.canShowCallout = true
-            annotationView.detailCalloutAccessoryView = UIView()
+            annotationView.detailCalloutAccessoryView = TimelineAnnotationViewCallout(report: annotation.report, timelineMapViewCoordinator: self, selectedReportId: reportId)
             return annotationView
         }
         return nil
@@ -97,11 +171,6 @@ final class TimelineMapViewCoordinator: NSObject, MKMapViewDelegate, ObservableO
     }
 }
 
-
-
-
-
-
 protocol TimelineMapViewDelegate: AnyObject {
-    func getTimelineUpdates(for uuid: UUID, completion: @escaping (Result<[Report], Error>) -> Void)
+    func getTimelineUpdates(role: ReportRole) async throws -> [Report]
 }

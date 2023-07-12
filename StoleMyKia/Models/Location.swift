@@ -9,7 +9,7 @@ import Foundation
 import MapKit
 
 ///Object relating to MKLocalSearch for a report
-struct Location: Codable, Identifiable, Hashable {
+struct Location: Codable, Identifiable, Hashable, Comparable {
     var id = UUID()
     var address: String? = nil
     var name: String? =  nil
@@ -17,7 +17,7 @@ struct Location: Codable, Identifiable, Hashable {
     let lon: Double
 }
 
-extension Location: Comparable {
+extension Location {
     
     ///Filtering distance of locations when the users is search for nearby locations.
     ///The distance is 1/2 mile from the users current location to prevent potential trolling (I'm looking at you, Kia Boys).

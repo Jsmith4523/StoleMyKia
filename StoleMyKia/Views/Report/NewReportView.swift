@@ -48,7 +48,8 @@ struct NewReportView: View {
     @Environment (\.dismiss) var dismiss
     
     var isNotSatisfied: Bool {
-        guard (licensePlate.range(of: ".*[^A-Za-z0-9].*", options: .regularExpression) == nil) else { return true}
+        guard (licensePlate.range(of: ".*[^A-Za-z0-9].*", options: .regularExpression) == nil) else { return true
+        }
         return (self.licensePlate.isEmpty) && !doesNotHaveVehicleIdentification
     }
     
@@ -246,41 +247,7 @@ struct NewReportView: View {
     
     
     private func upload() {
-        isUploading = true
-        
-        if location.isNil() {
-            if let userLocation = usersLocation() {
-                self.location = userLocation
-            }
-        }
-           
-        guard let location else {
-            alertSelectLocation.toggle()
-            isUploading = false
-            return
-        }
-        
-        let vehicle = Vehicle(vehicleYear: vehicleYear, vehicleMake: vehicleMake, vehicleModel: vehicleModel, vehicleColor: vehicleColor)
-        var report = Report(dt: Date.now.epoch,
-                            reportType: reportType,
-                            vehicle: vehicle,
-                            distinguishableDetails: "",
-                            location: location, role: .original)
-        
-        do {
-            try report.setLicensePlate(licensePlate)
-        } catch {
-            alertErrorUploading.toggle()
-        }
-        
-//        reportsModel.upload(report, with: vehicleImage) { success in
-//            guard success else {
-//                self.alertErrorUploading.toggle()
-//                self.isUploading = false
-//                return
-//            }
-//            dismiss()
-//        }
+       
     }
 }
 

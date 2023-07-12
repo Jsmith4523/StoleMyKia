@@ -1,0 +1,123 @@
+//
+//  TimelineAnnotationViewCallout.swift
+//  StoleMyKia
+//
+//  Created by Jaylen Smith on 7/11/23.
+//
+
+import UIKit
+
+class TimelineAnnotationViewCallout: UIView {
+    
+    private var reportTypeLabel: UILabel = {
+        let label = UILabel()
+        label.font = .systemFont(ofSize: 17, weight: .bold)
+        return label
+    }()
+    
+    private var reportDateTimeLabel: UILabel = {
+        let label = UILabel()
+        label.font = .systemFont(ofSize: 13)
+        return label
+    }()
+    
+    private var reportRoleLabel: UILabel = {
+        let label = UILabel()
+        label.font = .systemFont(ofSize: 13)
+        return label
+    }()
+    
+    private var detailButton: UIButton = {
+        let button = UIButton()
+        button.tintColor = .systemBlue
+        button.setImage(UIImage(systemName: "info.circle"), for: .normal)
+        return button
+    }()
+    
+    private var isSelectedReport: Bool
+    private var report: Report
+    private var timelineMapViewCoordinator: TimelineMapViewCoordinator
+    
+    init(report: Report, timelineMapViewCoordinator: TimelineMapViewCoordinator, selectedReportId: UUID) {
+        self.report                     = report
+        self.isSelectedReport           = report.id == selectedReportId
+        self.timelineMapViewCoordinator = timelineMapViewCoordinator
+        super.init(frame: .zero)
+        setupViews()
+    }
+    
+    required init?(coder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
+    }
+    
+    private func setupViews() {
+        reportTypeLabel.text = report.reportType.rawValue
+        reportDateTimeLabel.text = report.dt.full
+        reportRoleLabel.text = "Type: \(report.role.title)"
+        
+        detailButton.addTarget(self, action: #selector(presentReportDetailView), for: .touchUpInside)
+        
+        addSubview(reportTypeLabel)
+        addSubview(reportDateTimeLabel)
+        addSubview(reportRoleLabel)
+        
+        setupConstraints()
+    }
+    
+    private func setupConstraints() {
+        reportTypeLabel.translatesAutoresizingMaskIntoConstraints     = false
+        reportDateTimeLabel.translatesAutoresizingMaskIntoConstraints = false
+        reportRoleLabel.translatesAutoresizingMaskIntoConstraints     = false
+        
+        if !isSelectedReport {
+            setupWithButton()
+        } else {
+            setupWithoutButton()
+        }
+        
+        func setupWithoutButton() {
+            NSLayoutConstraint.activate([
+                reportTypeLabel.leadingAnchor.constraint(equalTo: leadingAnchor),
+                reportTypeLabel.topAnchor.constraint(equalTo: topAnchor),
+                reportTypeLabel.trailingAnchor.constraint(equalTo: trailingAnchor),
+                
+                reportDateTimeLabel.leadingAnchor.constraint(equalTo: leadingAnchor),
+                reportDateTimeLabel.topAnchor.constraint(equalTo: reportTypeLabel.bottomAnchor, constant: 3),
+                reportDateTimeLabel.trailingAnchor.constraint(equalTo: trailingAnchor),
+                
+                
+                reportRoleLabel.leadingAnchor.constraint(equalTo: leadingAnchor),
+                reportRoleLabel.topAnchor.constraint(equalTo: reportDateTimeLabel.bottomAnchor),
+                reportRoleLabel.bottomAnchor.constraint(equalTo: bottomAnchor),
+                reportRoleLabel.trailingAnchor.constraint(equalTo: trailingAnchor)
+            ])
+        }
+        
+        func setupWithButton() {
+            addSubview(detailButton)
+            
+            detailButton.translatesAutoresizingMaskIntoConstraints = false
+            
+            NSLayoutConstraint.activate([
+                reportTypeLabel.leadingAnchor.constraint(equalTo: leadingAnchor),
+                reportTypeLabel.topAnchor.constraint(equalTo: topAnchor),
+                
+                reportDateTimeLabel.leadingAnchor.constraint(equalTo: leadingAnchor),
+                reportDateTimeLabel.topAnchor.constraint(equalTo: reportTypeLabel.bottomAnchor, constant: 3),
+                reportDateTimeLabel.trailingAnchor.constraint(lessThanOrEqualTo: trailingAnchor),
+                
+                reportRoleLabel.leadingAnchor.constraint(equalTo: leadingAnchor),
+                reportRoleLabel.topAnchor.constraint(equalTo: reportDateTimeLabel.bottomAnchor),
+                reportRoleLabel.bottomAnchor.constraint(equalTo: bottomAnchor),
+                reportRoleLabel.trailingAnchor.constraint(equalTo: trailingAnchor),
+                
+                detailButton.topAnchor.constraint(equalTo: topAnchor),
+                detailButton.trailingAnchor.constraint(equalTo: trailingAnchor),
+            ])
+        }
+    }
+    
+    @objc private func presentReportDetailView() {
+        self.timelineMapViewCoordinator.selectedUpdateReport = report
+    }
+}

@@ -8,28 +8,8 @@
 import SwiftUI
 import MapKit
 
-enum MapViewType: String, CaseIterable, Identifiable {
-    case standard = "Standard"
-    case birdsEye = "Birds Eye"
-    
-    var id: String {
-        self.rawValue
-    }
-    
-    var mapType: MKMapType {
-        switch self {
-        case .standard:
-            return .mutedStandard
-        case .birdsEye:
-            return .hybrid
-        }
-    }
-}
-
 struct TimelineMapView: View {
-    
-    @State private var presentMapOptions = false
-    
+        
     let report: Report
     
     @StateObject private var timelineMapCoordinator = TimelineMapViewCoordinator()
@@ -40,7 +20,7 @@ struct TimelineMapView: View {
     var body: some View {
         NavigationView {
             VStack {
-                TimelineMapViewRepresentabe(report: report, timelineMapCoordinator: timelineMapCoordinator)
+                TimelineMapViewRepresentabe(timelineMapCoordinator: timelineMapCoordinator)
                     .edgesIgnoringSafeArea(.bottom)
             }
             .navigationTitle("Timeline")
@@ -54,15 +34,20 @@ struct TimelineMapView: View {
                     }
                 }
             }
-            .confirmationDialog("", isPresented: $presentMapOptions) {
-                ForEach(MapViewType.allCases) { mapType in
-                    Button(mapType.rawValue) {
-                        timelineMapCoordinator.mapViewType = mapType
-                    }
-                }
-            }
         }
         .environmentObject(reportsVM)
+        .sheet(item: $timelineMapCoordinator.selectedUpdateReport) { report in
+            SelectedReportDetailView(report: report, timelineMapViewMode: .dismissWhenSelected)
+                .environmentObject(reportsVM)
+        }
+        .task {
+            await timelineMapCoordinator.getUpdates(report: report)
+        }
+        .alert("Uh oh", isPresented: $timelineMapCoordinator.showAlert) {
+            Button("Okay") { dismiss() }
+        } message: {
+            Text(timelineMapCoordinator.alertReportError?.rawValue ?? "There was an error")
+        }
     }
 }
 
