@@ -9,6 +9,8 @@ import Foundation
 import VisionKit
 import CoreML
 
-class LicensePlateTextScanner {
+///Handles VNRequests of Vehicle License Plates
+class LicnesePlateDectectionManager {
+    
     
 }
