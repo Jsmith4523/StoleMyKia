@@ -20,7 +20,7 @@ struct FeedListView: View {
         ZStack {
             Color(uiColor: .opaqueSeparator).opacity(0.16).ignoresSafeArea()
             VStack(spacing: 25) {
-                ForEach(reports) { report in
+                ForEach(reports.sorted(by: >)) { report in
                     ReportCellView(report: report)
                         .onTapGesture {
                             self.selectedReport = report
@@ -46,6 +46,7 @@ struct ReportsFeedView_Previews: PreviewProvider {
                 FeedListView(reports: .constant(.testReports()))
                     .environmentObject(ReportsViewModel())
                     .environmentObject(UserViewModel())
+                    .preferredColorScheme(.dark)
             }
         }
     }

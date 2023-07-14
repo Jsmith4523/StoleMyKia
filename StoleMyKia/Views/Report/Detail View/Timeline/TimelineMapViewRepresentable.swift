@@ -133,18 +133,6 @@ final class TimelineMapViewCoordinator: NSObject, MKMapViewDelegate, ObservableO
         mapView?.isUserInteractionEnabled = true
     }
     
-    private func testDummy() {
-        DispatchQueue.main.asyncAfter(deadline: .now() + 1.25) {
-            let dummyReports: [Report] = [
-                Report(id: self.reportId, dt: Date.now.epoch, reportType: .stolen, vehicle: .init(vehicleYear: 2017, vehicleMake: .hyundai, vehicleModel: .elantra, vehicleColor: .red), distinguishableDetails: "", location: .init(lat: 40.79072, lon: -74.07032)).setAsOriginal(),
-                Report(dt: Date.now.addingTimeInterval(7200*2.75).epoch, reportType: .withnessed, vehicle: .init(vehicleYear: 2017, vehicleMake: .hyundai, vehicleModel: .elantra, vehicleColor: .red), distinguishableDetails: "", location: .init(lat: 38.80712, lon: -76.94845)).setAsUpdate(UUID()),
-                Report(dt: Date.now.addingTimeInterval(7200*2).epoch, reportType: .located, vehicle: .init(vehicleYear: 2017, vehicleMake: .hyundai, vehicleModel: .elantra, vehicleColor: .red), distinguishableDetails: "", location: .init(lat: 40.70742, lon: -73.99858)).setAsUpdate(UUID()),
-                Report(dt: Date.now.addingTimeInterval(7200*4).epoch, reportType: .found, vehicle: .init(vehicleYear: 2017, vehicleMake: .hyundai, vehicleModel: .elantra, vehicleColor: .red), distinguishableDetails: "", location: .init(lat: 40.78363, lon: -73.97146)).setAsUpdate(UUID())
-            ].sorted(by: >)
-            self.reports = dummyReports
-        }
-    }
-    
     func mapView(_ mapView: MKMapView, viewFor annotation: MKAnnotation) -> MKAnnotationView? {
         if annotation is MKUserLocation { return nil }
             

@@ -58,7 +58,7 @@ struct Report: Identifiable, Codable, Comparable {
             return "Stolen/\(idString)"
         case .found:
             return "Found/\(idString)"
-        case .withnessed:
+        case .witnessed:
             return "Witnessed/\(idString)"
         case .located:
             return "Located/\(idString)"
@@ -93,11 +93,11 @@ extension Report {
     
     mutating func setLicensePlate(_ license: String) throws {
         guard !(license.isEmpty) else {
-            self.vehicle.licensePlate = nil
+            try self.vehicle.licensePlateString(nil)
             return
         }
         
-        self.vehicle.licensePlate = try EncryptedData.createEncryption(input: license)
+       try self.vehicle.licensePlateString(license)
     }
     
     var type: String {
@@ -184,7 +184,9 @@ extension [Report] {
     
     static func testReports() -> [Report] {
         return [
-            .init(dt: Date.now.epoch, reportType: .stolen, vehicle: .init(vehicleYear: 2017, vehicleMake: .hyundai, vehicleModel: .elantra, vehicleColor: .red), distinguishableDetails: "We regret to inform you that your 2017 Hyundai Elantra, with the license plate number ABC1234, has been reported stolen. This silver-colored vehicle has a distinct mark on the rear bumper, resembling a small scratch on the left corner. Please contact the local authorities immediately and provide them with the above details for further investigation. Your cooperation is highly appreciated in the recovery of your vehicle. Stay vigilant and let's work together to retrieve your stolen Hyundai Elantra", imageURL: "https://wtop.com/wp-content/uploads/2016/07/elantra3-1672x1254.jpg", location: .init(address: "801 K St, NW DC", name: "Apple Carniege Library", lat: 40.72781, lon: -74.00743)).setAsUpdate(UUID())
+            .init(dt: Date.now.epoch, reportType: .breakIn, vehicle: .init(year: 2017, make: .hyundai, model: .elantra, color: .black), distinguishableDetails: "We regret to inform you that your 2017 Hyundai Elantra, with the license plate number ABC1234, has been reported stolen. This silver-colored vehicle has a distinct mark on the rear bumper, resembling a small scratch on the left corner. Please contact the local authorities immediately and provide them with the above details for further investigation. Your cooperation is highly appreciated in the recovery of your vehicle. Stay vigilant and let's work together to retrieve your stolen Hyundai Elantra", imageURL: "https://wtop.com/wp-content/uploads/2016/07/elantra3-1672x1254.jpg", location: .init(address: "801 K St, NW DC", name: "Apple Carniege Library", lat: 40.72781, lon: -74.00743)).setAsUpdate(UUID()),
+            .init(dt: Date.now.epoch, reportType: .stolen, vehicle: .init(year: 2019, make: .kia, model: .soul, color: .green), distinguishableDetails: "My Kia Soul was stolen outside of Eddie's Bar in Times Square MD. Really hoping someone can help me locate it. Thanks!", imageURL: "https://i.ytimg.com/vi/dhQkYX5kmes/maxresdefault.jpg", location: .init(address: "801 K St, NW DC", name: "Eddie's bar", lat: 40.72781, lon: -74.00743)).setAsUpdate(UUID()),
+            .init(dt: Date.now.epoch, reportType: .found, vehicle: .init(year: 2018, make: .hyundai, model: .sonata, color: .brown), distinguishableDetails: "Found this Hyundai Sonata outside of my home this morning. Not sure whose car this is, but it's here! Please contact me for more info", location: .init(address: "801 K St, NW DC", lat: 40.72781, lon: -74.00743)).setAsOriginal()
         ]
     }
 }

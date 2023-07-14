@@ -22,8 +22,7 @@ struct ReportCellView: View {
                 if report.hasVehicleImage {
                     Image(uiImage: vehicleImage ?? .vehiclePlaceholder)
                         .resizable()
-                        .scaledToFill()
-                        .frame(width: UIScreen.main.bounds.width,height: 225)
+                        .scaledToFit()
                         .clipped()
                 }
                 VStack {
@@ -37,47 +36,37 @@ struct ReportCellView: View {
                                 .cornerRadius(10)
                             
                             Spacer()
-                            Text(report.dt.date)
-                                .font(.system(size: 17))
+                            VStack(alignment: .trailing) {
+                                Text(report.dt.full)
+                            }
                         }
-                        .font(.system(size: 19))
+                        .font(.system(size: 14))
                         .foregroundColor(.gray)
-                        Text(report.vehicleDetails)
-                            .font(.system(size: 20).weight(.heavy))
-                            .foregroundColor(Color(uiColor: .label))
-                            .lineLimit(2)
-                        HStack {
-                            if !(report.vehicle.licensePlateString.isEmpty) {
-                                Label(report.vehicle.licensePlateString, systemImage: "light.panel")
+                        VStack(alignment: .leading, spacing: 5) {
+                            Text(report.vehicleDetails)
+                                .font(.system(size: 20).weight(.heavy))
+                                .foregroundColor(Color(uiColor: .label))
+                                .lineLimit(2)
+                            if let locationName = report.location.name {
+                                Text(locationName)
+                                    .font(.system(size: 15))
+                                    .foregroundColor(.gray)
                             }
-                            if let name = report.location.name {
-                                Label(name, systemImage: "mappin.and.ellipse")
-                                    .foregroundColor(Color(uiColor: .label))
-                            }
-                            Spacer()
-                            HStack(spacing: 13) {
-                                Button {
-                                    
-                                } label: {
-                                   Image(systemName: "square.and.arrow.up")
-                                        .resizable()
-                                        .scaledToFit()
-                                        .frame(width: 25, height: 25)
-                                }
-                                Button {
-                                    
-                                } label: {
-                                    Image(systemName: "bookmark")
-                                        .resizable()
-                                        .scaledToFit()
-                                        .frame(width: 25, height: 25)
-                                }
-                            }
-                            .foregroundColor(Color(uiColor: .label))
+                            Text(report.distinguishableDetails)
+                                .font(.system(size: 15))
+                                .lineLimit(3)
                         }
-                        .font(.system(size: 17))
-                        Spacer()
-                            .frame(height: 5)
+                        HStack {
+                            Button {
+                                
+                            } label: {
+                                Image(systemName: "bookmark")
+                                    .resizable()
+                                    .scaledToFit()
+                                    .frame(width: 18, height: 18)
+                                    .foregroundColor(.gray)
+                            }
+                        }
                     }
                 }
                 .padding()
@@ -96,8 +85,15 @@ struct ReportCellView: View {
             guard let image else {
                 return
             }
-            
             self.vehicleImage = image
         }
+    }
+}
+
+struct ReportCellView_Previews: PreviewProvider {
+    static var previews: some View {
+        ReportCellView(report: [Report].testReports()[1])
+            .environmentObject(ReportsViewModel())
+            .environmentObject(UserViewModel())
     }
 }

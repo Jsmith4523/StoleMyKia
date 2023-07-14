@@ -84,12 +84,12 @@ class AppDelegate: UIScene, UIApplicationDelegate {
     }
     
     func application(_ application: UIApplication, didReceiveRemoteNotification userInfo: [AnyHashable : Any], fetchCompletionHandler completionHandler: @escaping (UIBackgroundFetchResult) -> Void) {
-        guard let userDelegate = firebaseUserDelegate, let uid = userDelegate.uid else {
-            return
-        }
+//        guard let userDelegate = firebaseUserDelegate, let uid = userDelegate.uid else {
+//            return
+//        }
         
         //TODO: Notification Key and make sure backend object matches.
-        guard let userInfo = userInfo as? FirebaseUserNotification else {
+        guard let userInfo = userInfo as? FirebaseNotification else {
             //Handle notification error
             return
             

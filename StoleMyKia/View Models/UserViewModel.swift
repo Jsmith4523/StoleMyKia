@@ -16,7 +16,7 @@ final class UserViewModel: ObservableObject {
     
     @Published private(set) var isSignedIn = false
     
-    @Published private(set) var firebaseUser: FirebaseUser!
+    @Published private(set) var firebaseUser: FirebaseUser?
     @Published private(set) var alertErrorLoggingIn = false
     
     private let accountManager = UserAccountManager()
@@ -40,5 +40,12 @@ extension UserViewModel: FirebaseUserNotificationRadiusDelegate {
     
     func setNewRadius(_ radius: Double, completion: @escaping (Bool) -> Void) {
         
+    }
+}
+
+//MARK: - FirebaseUserDelegate
+extension UserViewModel: FirebaseUserDelegate {
+    var uid: String {
+        return self.firebaseUser?.uid ?? "12345"
     }
 }

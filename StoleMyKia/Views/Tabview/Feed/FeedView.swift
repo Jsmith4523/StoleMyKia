@@ -7,10 +7,13 @@
 
 import SwiftUI
 
+enum FeedLoadStatus {
+    case loading, loaded
+}
+
 struct FeedView: View {
     
     @State private var isShowingNewReportView = false
-    @State private var reports = [Report].testReports()
     
     @EnvironmentObject var userModel: UserViewModel
     @EnvironmentObject var reportsVM: ReportsViewModel
@@ -19,11 +22,16 @@ struct FeedView: View {
         NavigationView {
             ZStack(alignment: .bottom) {
                 ScrollView {
-                    switch reports.isEmpty {
-                    case true:
-                        NoReportsAvaliableView()
-                    case false:
-                        FeedListView(reports: $reports)
+                    switch reportsVM.feedLoadStatus {
+                    case .loading:
+                        ProgressView()
+                    case .loaded:
+                        switch reportsVM.reports.isEmpty {
+                        case true:
+                            NoReportsAvaliableView()
+                        case false:
+                            FeedListView(reports: $reportsVM.reports)
+                        }
                     }
                 }
             }
@@ -31,19 +39,11 @@ struct FeedView: View {
             .environmentObject(reportsVM)
             .navigationTitle(ApplicationTabViewSelection.feed.title)
             .navigationBarTitleDisplayMode(.inline)
-            .toolbar {
-                ToolbarItem(placement: .navigationBarTrailing) {
-                    NavigationLink {
-                        FeedSearchView(reports: $reports)
-                    } label: {
-                        Image(systemName: "magnifyingglass")
-                    }
-                    Button {
-                        
-                    } label: {
-                        Image(systemName: "plus")
-                    }
-                }
+            .refreshable {
+                await reportsVM.fetchReports()
+            }
+            .task {
+                await onAppearFetchReports()
             }
         }
         .sheet(isPresented: $isShowingNewReportView) {
@@ -51,6 +51,12 @@ struct FeedView: View {
                 .tint(.brand)
         }
         .environmentObject(reportsVM)
+    }
+    
+    private func onAppearFetchReports() async {
+        //Prevents the view from fetching for reports when the array is not empty
+        guard !(reportsVM.reports.isEmpty) else { return }
+        await reportsVM.fetchReports()
     }
 }
 

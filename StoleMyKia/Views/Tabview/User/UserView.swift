@@ -31,20 +31,11 @@ struct UserView: View {
             .navigationTitle(ApplicationTabViewSelection.user.title)
             .navigationBarTitleDisplayMode(.inline)
             .toolbar {
-                ToolbarItem(placement: .navigationBarLeading) {
-                    Text(ApplicationTabViewSelection.user.title)
-                        .font(.system(size: 24).weight(.heavy))
-                }
-                ToolbarItem(placement: .principal) {
-                    //Hides the navigation bar title
-                    Text("")
-                }
                 ToolbarItem(placement: .navigationBarTrailing) {
                     Button {
                         isShowingSettingsView.toggle()
                     } label: {
                         Image(systemName: "gear")
-                            .bold()
                     }
                 }
             }

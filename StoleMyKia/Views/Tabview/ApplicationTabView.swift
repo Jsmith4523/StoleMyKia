@@ -18,7 +18,7 @@ enum ApplicationTabViewSelection {
         case .notification:
             return "Notifications"
         case .user:
-            return "Account"
+            return "My Account"
         }
     }
     
@@ -47,9 +47,11 @@ enum ApplicationTabViewSelection {
 
 struct ApplicationTabView: View {
     
+    @State private var notificationCount = 0
     @State private var selection: ApplicationTabViewSelection = .feed
     
     @StateObject private var reportsVM = ReportsViewModel()
+    @StateObject private var notificationVM = NotificationViewModel()
     @EnvironmentObject var userModel: UserViewModel
         
     var body: some View {
@@ -61,6 +63,7 @@ struct ApplicationTabView: View {
                 }
             NotificationView()
                 .tag(ApplicationTabViewSelection.notification)
+                .badge(notificationCount)
                 .tabItem {
                     ApplicationTabViewSelection.notification.tabItemLabel
                 }
@@ -72,7 +75,15 @@ struct ApplicationTabView: View {
         }
         .environmentObject(reportsVM)
         .environmentObject(userModel)
+        .environmentObject(notificationVM)
         .tint(Color(uiColor: .label))
+        .onReceive(notificationVM.$userNotifications) { notifications in
+            //Settings the NotificationView badge count to the number of un-read notifications...
+            self.notificationCount = notifications.filter({!$0.isRead}).count
+        }
+        .onAppear {
+            notificationVM.setDelegate(userModel)
+        }
     }
 }
 

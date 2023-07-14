@@ -14,7 +14,7 @@ enum ReportType: String, CaseIterable, Hashable, Identifiable, Codable {
     case carjacked   = "Car Jacking"
     case stolen      = "Stolen"
     case found       = "Found"
-    case withnessed  = "Witnessed"
+    case witnessed  = "Witnessed"
     case located     = "Located"
     case breakIn     = "Break-In"
     
@@ -29,7 +29,7 @@ enum ReportType: String, CaseIterable, Hashable, Identifiable, Codable {
             return "car.2.fill"
         case .found:
             return "checkmark.shield.fill"
-        case .withnessed:
+        case .witnessed:
             return "person.crop.circle.badge.exclamationmark.fill"
         case .located:
             return "eye.fill"
@@ -49,8 +49,8 @@ enum ReportType: String, CaseIterable, Hashable, Identifiable, Codable {
             return "Your vehicle was stolen and you are reporting it."
         case .found:
             return "You safely found a vehicle."
-        case .withnessed:
-            return "You withnessed a vehicle being stolen."
+        case .witnessed:
+            return "You witnessed a vehicle being stolen."
         case .located:
             return "You located this vehicle."
         case .carjacked:
@@ -69,7 +69,7 @@ enum ReportType: String, CaseIterable, Hashable, Identifiable, Codable {
             return .red
         case .found:
             return .purple
-        case .withnessed:
+        case .witnessed:
             return .systemBlue
         case .located:
             return .purple
@@ -91,7 +91,7 @@ enum ReportType: String, CaseIterable, Hashable, Identifiable, Codable {
             return true
         case .found:
             return true
-        case .withnessed:
+        case .witnessed:
             return true
         case .located:
             return false
@@ -111,7 +111,7 @@ enum ReportType: String, CaseIterable, Hashable, Identifiable, Codable {
             return true
         case .found:
             return false
-        case .withnessed:
+        case .witnessed:
             return false
         case .located:
             return false
@@ -119,38 +119,58 @@ enum ReportType: String, CaseIterable, Hashable, Identifiable, Codable {
             return false
         case .breakIn:
             return false
+        }
+    }
+    
+    ///Disables the License Plate and Vin information section.
+    var disableLicenseAndVinInformation: Bool {
+        switch self {
+        case .attempt:
+            return true
+        case .carjacked:
+            return false
+        case .stolen:
+            return false
+        case .found:
+            return false
+        case .witnessed:
+            return false
+        case .located:
+            return false
+        case .breakIn:
+            return true
         }
     }
     
     func generateNotificationBody(for vehicle: Vehicle) -> String {
         let vehicleDetails = vehicle.vehicleNotificationDetails
-        
+                
         switch self {
             
         case .carjacked:
-            return "A \(vehicleDetails) has been carjacked. Do not approach the vehicle and call local authorities immediately once located."
+            return "A \(vehicleDetails) has been reported in a carjacking. Do not approach the vehicle and call local authorities immediately once located."
         case .stolen:
-            return "A \(vehicleDetails) has been stolen."
+            return "A \(vehicleDetails) has been reported stolen."
         case .found:
-            return "A \(vehicleDetails) has been safely found."
-        case .withnessed:
-            return "Someone withnessed a \(vehicleDetails) being stolen."
+            return "A \(vehicleDetails) has been reported safely found."
+        case .witnessed:
+            return "Someone witnessed a \(vehicleDetails) being stolen."
         case .located:
             return "A \(vehicleDetails) has been located."
         case .attempt:
             return "Someone attempted to steal a \(vehicleDetails)."
         case .breakIn:
-            return "A break-in occurred on a \(vehicleDetails) "
+            return "A report of a break-in occurred on a \(vehicleDetails) "
         }
     }
     
     ///Enums avaliable when creating a NEW report.
     static var reports: [ReportType] {
-        [.carjacked, .stolen, .withnessed, .found, .attempt, .breakIn]
+        [.carjacked, .stolen, .witnessed, .found, .attempt, .breakIn]
     }
     
     ///Enums avaliable when updating a report
     static var update: [ReportType] {
-        [.carjacked, .stolen, .withnessed, .found, .located]
+        [.carjacked, .stolen, .witnessed, .found, .located]
     }
 }

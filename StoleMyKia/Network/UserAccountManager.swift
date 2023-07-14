@@ -101,7 +101,7 @@ class UserAccountManager {
     }
     
     ///Saves a recieved FCM notification to the users notification reference
-    func saveNotification(_ notification: FirebaseUserNotification) {
+    func saveNotification(_ notification: FirebaseNotification) {
 //        guard let currentUser = Auth.auth().currentUser else {
 //            return
 //        }
@@ -141,7 +141,7 @@ class UserAccountManager {
 //        }
     }
     
-    func removeNotification(_ notification: FirebaseUserNotification, completion: @escaping (Result<Bool, UAAccountError>) -> Void) {
+    func removeNotification(_ notification: FirebaseNotification, completion: @escaping (Result<Bool, UAAccountError>) -> Void) {
 //        guard let currentUser = Auth.auth().currentUser else {
 //            completion(.failure(.error("There was an error with your account. Please log out and try again")))
 //            return

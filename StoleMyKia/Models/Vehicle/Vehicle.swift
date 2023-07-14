@@ -9,12 +9,20 @@ import Foundation
 
 ///Associated with either the users current vehicle or reported vehicle
 struct Vehicle: Codable {
+    
+    init(year: Int, make: VehicleMake, model: VehicleModel, color: VehicleColor) {
+        self.vehicleYear = year
+        self.vehicleMake = make
+        self.vehicleModel = model
+        self.vehicleColor = color
+    }
+    
     let vehicleYear: Int
     let vehicleMake: VehicleMake
     let vehicleModel: VehicleModel
     let vehicleColor: VehicleColor
-    var licensePlate: Data?
-    var vin: Data?
+    private var licensePlate: Data?
+    private var vin: Data?
 }
 
 extension Vehicle {
@@ -26,7 +34,19 @@ extension Vehicle {
     
     ///Notification body cotent
     var vehicleNotificationDetails: String {
-        "\(vehicleColor) \(vehicleYear) \(vehicleMake.rawValue) \(vehicleModel.rawValue) (\(licensePlateString))"
+        if licensePlateString.isEmpty {
+            return "\(vehicleColor) \(vehicleYear) \(vehicleMake.rawValue) \(vehicleModel.rawValue)"
+        } else {
+            return "\(vehicleColor) \(vehicleYear) \(vehicleMake.rawValue) \(vehicleModel.rawValue) \(licensePlateString)"
+        }
+    }
+    
+    mutating func licensePlateString(_ licenseString: String?) throws {
+        guard let licenseString else {
+            self.licensePlate = nil
+            return
+        }
+        self.licensePlate = try EncryptedData.createEncryption(input: licenseString)
     }
     
     private var licenseEncryptedData: EncryptedData? {
@@ -51,11 +71,11 @@ extension Vehicle {
         }
     }
     
-    ///The decoded and unwrapped vehicle license plate string. Returns an empty string if not applicable
+    ///The decoded and unwrapped vehicle license plate string. Returns an empty string if not applicable.
     ///Note that if a report was not provided a vehicle with either a vin or license plate string, it cannot be updated.
     var licensePlateString: String {
         guard let licensePlateData = licenseEncryptedData, let licensePlateString = licensePlateData.decode() else {
-            return "1EP1757"
+            return ""
         }
         return licensePlateString.uppercased()
     }

@@ -6,15 +6,70 @@
 //
 
 import Foundation
+import SwiftUI
 
-///Custom notification object firebase creates and sends off when a notification comes in through AppDelegate
-struct FirebaseUserNotification: Identifiable, Codable {
+enum NotificationType: Codable, Identifiable {
+    case notification, update
+    
+    var id: String {
+        return self.title
+    }
+    
+    var title: String {
+        switch self {
+        case .notification:
+            return "Report"
+        case .update:
+            return "Update"
+        }
+    }
+    
+    var symbol: String {
+        switch self {
+        case .notification:
+            return ApplicationTabViewSelection.notification.symbol
+        case .update:
+            return "arrow.triangle.swap"
+        }
+    }
+    
+    var color: Color {
+        switch self {
+        case .notification:
+            return .yellow
+        case .update:
+            return .brown
+        }
+    }
+}
+
+struct FirebaseNotification: Identifiable, Codable, Comparable {
+    
+    static func < (lhs: FirebaseNotification, rhs: FirebaseNotification) -> Bool {
+        lhs.report.dt < rhs.report.dt
+    }
+    
+    static func > (lhs: FirebaseNotification, rhs: FirebaseNotification) -> Bool {
+        lhs.report.dt > rhs.report.dt
+    }
+    
+    static let isRead = "isRead"
     
     var id = UUID()
-    ///The UUID of the report. Firebase will fetch to see if the report is still avaliable.
-    let reportId: UUID
-    let dt: TimeInterval
-    let vehicle: Vehicle
-    let reportType: ReportType
-    var didRead: Bool = false
+    ///The report of this notification
+    let report: Report
+    ///Whether the user did or did not read this notification
+    var isRead: Bool = false
+    var notificationType: NotificationType
+}
+
+extension [FirebaseNotification] {
+    
+    static func dummyNotifications() -> [FirebaseNotification] {
+        [
+            .init(report: [Report].testReports()[0], notificationType: .notification),
+            .init(report: [Report].testReports()[1], isRead: true , notificationType: .notification),
+            .init(report: [Report].testReports()[2], notificationType: .update)
+        ]
+    }
 }

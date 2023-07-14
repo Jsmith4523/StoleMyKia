@@ -15,11 +15,8 @@ final class ReportsViewModel: NSObject, ObservableObject {
     @Published var isFetchingReports = false
     @Published var isShowingLicensePlateScannerView = false
 
-    @Published private(set) var reports = [Report]() {
-        didSet {
-            delegate?.reportsDelegate(didReceieveReports: reports)
-        }
-    }
+    @Published var feedLoadStatus: FeedLoadStatus = .loading
+    @Published var reports: [Report] = .testReports()
     
     private let manager = ReportManager.manager
 
@@ -30,11 +27,14 @@ final class ReportsViewModel: NSObject, ObservableObject {
         super.init()
     }
     
+    @MainActor
     func fetchReports() async {
         do {
-            self.reports = try await manager.fetch()
+            let fetchedReports = try await manager.fetch()
+           // self.reports = fetchedReports
+            self.feedLoadStatus = .loaded
         } catch {
-            
+            self.feedLoadStatus = .loaded
         }
     }
     
@@ -44,29 +44,6 @@ final class ReportsViewModel: NSObject, ObservableObject {
     
     deinit {
         print("Dead: ReportsViewModel")
-    }
-}
-
-enum FetchReportError: String, Error {
-    case unavaliable = "This report is unavaliable at the moment."
-    case deleted = "This report was deleted."
-    
-    var title: String {
-        switch self {
-        case .unavaliable:
-            return "Unavaliable!"
-        case .deleted:
-            return "Deleted!"
-        }
-    }
-    
-    var image: String {
-        switch self {
-        case .unavaliable:
-            return "doc"
-        case .deleted:
-            return "trash"
-        }
     }
 }
 

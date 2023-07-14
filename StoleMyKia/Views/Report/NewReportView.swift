@@ -17,12 +17,12 @@ struct NewReportView: View {
     @State private var location: Location!
     
     @State private var reportType: ReportType = .stolen
-    @State private var vehicleDescription: String = ""
+    @State private var distinguishableDescription: String = ""
     
     @State private var vehicleYear: Int = 2011
     @State private var vehicleMake: VehicleMake = .hyundai
-    @State private var vehicleModel: VehicleModel = .accent
-    @State private var vehicleColor: VehicleColor = .black
+    @State private var vehicleModel: VehicleModel = .elantra
+    @State private var vehicleColor: VehicleColor = .gray
     @State private var licensePlate: String = ""
     
     @State private var doesNotHaveVehicleIdentification = false
@@ -30,6 +30,7 @@ struct NewReportView: View {
     @State private var canUseUserLocation = true
     @State private var useCurrentLocation = true
     @State private var isShowingLocationView = false
+    @State private var disablesLicensePlateAndVinSection = false
     
     @State private var isShowingImagePicker = false
     @State private var imagePickerSourceType: UIImagePickerController.SourceType = .photoLibrary {
@@ -50,7 +51,7 @@ struct NewReportView: View {
     var isNotSatisfied: Bool {
         guard (licensePlate.range(of: ".*[^A-Za-z0-9].*", options: .regularExpression) == nil) else { return true
         }
-        return (self.licensePlate.isEmpty) && !doesNotHaveVehicleIdentification
+        return (self.licensePlate.isEmpty) && !doesNotHaveVehicleIdentification && !(disablesLicensePlateAndVinSection) && !(distinguishableDescription.count >= 40)
     }
     
     var body: some View {
@@ -70,7 +71,7 @@ struct NewReportView: View {
                     }
                 }
                 Section {
-                    Picker("Reporting...", selection: $reportType) {
+                    Picker("Type", selection: $reportType) {
                         ForEach(ReportType.reports, id: \.rawValue) {
                             Text($0.rawValue)
                                 .tag($0)
@@ -82,30 +83,6 @@ struct NewReportView: View {
                     Text(reportType.description)
                 }
                 
-                Section {
-                    Button("Select Photo") {
-                        imagePickerSourceType = .photoLibrary
-                    }
-                    Button("Take Photo") {
-                        imagePickerSourceType = .camera
-                    }
-                } header: {
-                    Text("Photo")
-                } footer: {
-                    Text("Include an image you have of the vehicle that would properly distinguish it from others.")
-                }
-                .disabled(!vehicleImage.isNil())
-                
-                Section {
-                    Button("Select Location") {
-                        isShowingLocationView.toggle()
-                    }
-                } header: {
-                    Text("Report Location")
-                } footer: {
-                    Text("Depending on your location services settings, your current location has been applied to this report.")
-                }
-
                 Section {
                     Picker("Year", selection: $vehicleYear) {
                         ForEach(vehicleModel.year, id: \.self) {
@@ -136,23 +113,57 @@ struct NewReportView: View {
                     Text("Vehicle Information")
                 }
                 
+                if !disablesLicensePlateAndVinSection {
+                    Section {
+                        Toggle("Not avaliable", isOn: $doesNotHaveVehicleIdentification)
+                            .disabled(self.reportType.requiresLicensePlateInformation)
+                            .tint(.brand)
+                        if !doesNotHaveVehicleIdentification {
+                            TextField("License Plate", text: $licensePlate)
+                                .keyboardType(.alphabet)
+                                .submitLabel(.done)
+                        }
+                    } header: {
+                        Text("Vehicle Identification")
+                    } footer: {
+                        if doesNotHaveVehicleIdentification {
+                            Text("You do not have any information that could further identify the vehicle you're reporting\n\nDo note that identifying this vehicle may vary depending on the information available in this report")
+                        } else {
+                            Text("Please enter the vehicle's full license plate. Do not include any spaces or special characters. Maximum characters allowed is 8.")
+                        }
+                    }
+                }
+                
                 Section {
-                    Toggle("Not avaliable", isOn: $doesNotHaveVehicleIdentification)
-                        .disabled(self.reportType.requiresLicensePlateInformation)
-                        .tint(.brand)
-                    if !doesNotHaveVehicleIdentification {
-                        TextField("License Plate", text: $licensePlate)
-                            .keyboardType(.alphabet)
-                            .submitLabel(.done)
+                    TextEditor(text: $distinguishableDescription)
+                } header: {
+                    Text("Distinguishable Details")
+                } footer: {
+                    Text("Describe the incident and include any distinguishable details of the vehicle in the field above. \n\nCharacter limit: 40-150 characters.")
+                }
+                
+                Section {
+                    Button("Select Photo") {
+                        imagePickerSourceType = .photoLibrary
+                    }
+                    Button("Take Photo") {
+                        imagePickerSourceType = .camera
                     }
                 } header: {
-                    Text("Vehicle Identification")
+                    Text("Photo")
                 } footer: {
-                    if doesNotHaveVehicleIdentification {
-                        Text("You do not have any information that could further identify the vehicle you're reporting\n\nNOTE: it might be more difficult to identify the vehicle. We suggest at least providing a description of the vehicle")
-                    } else {
-                        Text("Please enter the vehicle's full license plate. Do not inlucde any spaces or special characters. Maximum characters allowed is 8.")
+                    Text("Include an image you have of the vehicle that would properly distinguish it from others.")
+                }
+                .disabled(!vehicleImage.isNil())
+                
+                Section {
+                    Button("Nearby Locations") {
+                        isShowingLocationView.toggle()
                     }
+                } header: {
+                    Text("Report Location")
+                } footer: {
+                    Text("Depending on your location services settings, your current location has been applied to this report. You can select a nearby location if possible.")
                 }
             }
             .navigationTitle("New Report")
@@ -197,6 +208,14 @@ struct NewReportView: View {
                 self.licensePlate = ""
             }
             .onChange(of: reportType) { type in
+                if type.disableLicenseAndVinInformation {
+                    self.disablesLicensePlateAndVinSection = true
+                    self.doesNotHaveVehicleIdentification = true
+                } else {
+                    self.disablesLicensePlateAndVinSection = false
+                    self.doesNotHaveVehicleIdentification = false
+                }
+                
                 if type.requiresLicensePlateInformation {
                     self.doesNotHaveVehicleIdentification = false
                 }
@@ -233,15 +252,6 @@ struct NewReportView: View {
     
     //Retrieving the users locations...
     private func usersLocation() -> Location? {
-//        guard mapModel.locationAuth.isAuthorized(), let userLocation = mapModel.userLocation else {
-//            return nil
-//        }
-//
-//        let coords = userLocation.coordinate
-//        let usersLocation = Location(address: "", name: "", lat: coords.latitude, lon: coords.longitude)
-//
-//        return usersLocation
-        //TODO: Get the users location
         return nil
     }
     

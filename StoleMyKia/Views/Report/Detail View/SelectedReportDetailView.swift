@@ -21,6 +21,7 @@ struct SelectedReportDetailView: View {
     
     @State private var isShowingTimelineMapView = false
     @State private var isShowingUpdateReportView = false
+    @State private var isShowingReportOptions = false
     
     @State private var vehicleImage: UIImage?
     
@@ -37,6 +38,14 @@ struct SelectedReportDetailView: View {
                         VStack(alignment: .leading) {
                             if report.hasVehicleImage {
                                 vehicleImageView
+                            } else {
+                                SelectedReportDetailMapView(report: report)
+                                    .frame(height: 175)
+                                    .cornerRadius(20)
+                                    .onTapGesture {
+                                        presentTimelineMapView()
+                                    }
+                                    .padding()
                             }
                             VStack(spacing: 30) {
                                 VStack(alignment: .leading) {
@@ -48,7 +57,7 @@ struct SelectedReportDetailView: View {
                                             .foregroundColor(.white)
                                             .cornerRadius(10)
                                         Spacer()
-                                        Text("\(report.postDate) - \(report.postTime)")
+                                        Text(report.dt.full)
                                             .font(.system(size: 16))
                                             .foregroundColor(.gray)
                                     }
@@ -63,23 +72,25 @@ struct SelectedReportDetailView: View {
                                                     VStack(alignment: .leading) {
                                                         Text(report.location.name ?? "")
                                                         Text(report.location.address ?? "")
+                                                            .foregroundColor(.gray)
                                                     }
                                                 }
                                             }
                                             .font(.system(size: 17))
-                                            .foregroundColor(.gray)
                                         }
                                         Text(report.distinguishableDetails)
                                             .font(.system(size: 16))
                                             .lineSpacing(2)
                                     }
                                 }
-                                SelectedReportDetailMapView(report: report)
-                                    .frame(height: 175)
-                                    .cornerRadius(20)
-                                    .onTapGesture {
-                                        presentTimelineMapView()
-                                    }
+                                if report.hasVehicleImage {
+                                    SelectedReportDetailMapView(report: report)
+                                        .frame(height: 175)
+                                        .cornerRadius(20)
+                                        .onTapGesture {
+                                            presentTimelineMapView()
+                                        }
+                                }
                             }
                             .padding()
                         }
@@ -95,7 +106,7 @@ struct SelectedReportDetailView: View {
                         Image(systemName: "arrow.triangle.swap")
                     }
                     Button {
-                        
+                        isShowingReportOptions.toggle()
                     } label: {
                         Image(systemName: "ellipsis")
                     }
@@ -106,6 +117,20 @@ struct SelectedReportDetailView: View {
                 TimelineMapView(report: report)
                     .presentationDragIndicator(.visible)
                     .environmentObject(reportsVM)
+            }
+            .confirmationDialog("Options", isPresented: $isShowingReportOptions) {
+                Button("Directions") {
+                    URL.getDirectionsToLocation(coords: report.location.coordinates)
+                }
+                Button("False Report") {
+                    
+                }
+                Button("Bookmark") {
+                    
+                }
+                Button("Delete", role: .destructive) {
+                    
+                }
             }
         }
         .onAppear {
