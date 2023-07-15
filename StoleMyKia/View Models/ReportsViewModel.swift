@@ -48,8 +48,8 @@ final class ReportsViewModel: NSObject, ObservableObject {
 }
 
 
-//MARK: - LicenseScannerDelegate
-extension ReportsViewModel: LicenseScannerDelegate {
+//MARK: - LicensePlateCoordinatorDelegate
+extension ReportsViewModel: LicensePlateCoordinatorDelegate {
     func fetchReportsWithLicense(_ licenseString: String) async throws -> [Report] {
         return [Report]()
     }

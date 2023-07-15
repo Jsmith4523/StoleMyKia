@@ -65,13 +65,11 @@ struct UpdateReportView: View {
                     Button("Cancel") {
                         dismiss()
                     }
-                    .bold()
                 }
                 ToolbarItem(placement: .navigationBarTrailing) {
                     Button("Update") {
                         
                     }
-                    .bold()
                     .disabled(true)
                 }
             }

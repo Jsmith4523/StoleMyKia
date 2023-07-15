@@ -53,6 +53,7 @@
 		245B392129E39E90001DD213 /* ReportType.swift in Sources */ = {isa = PBXBuildFile; fileRef = 245B392029E39E90001DD213 /* ReportType.swift */; };
 		245B392329E39EC1001DD213 /* VehicleColor.swift in Sources */ = {isa = PBXBuildFile; fileRef = 245B392229E39EC1001DD213 /* VehicleColor.swift */; };
 		248278D72A03054C00C1E99D /* UISheetPC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 248278D62A03054C00C1E99D /* UISheetPC.swift */; };
+		24848AB72A61E38E003E037E /* LicenseTextDetectionManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 24848AB62A61E38E003E037E /* LicenseTextDetectionManager.swift */; };
 		248636AC2A3BCBE90092E184 /* PartialSheet in Frameworks */ = {isa = PBXBuildFile; productRef = 248636AB2A3BCBE90092E184 /* PartialSheet */; };
 		249254A42A37C9F70037C43C /* SignInView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 249254A32A37C9F70037C43C /* SignInView.swift */; };
 		249254A62A37CA590037C43C /* UIHostingController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 249254A52A37CA590037C43C /* UIHostingController.swift */; };
@@ -96,7 +97,7 @@
 		24EAF11729C2A02900B4CBFE /* SFSafariView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 24EAF11629C2A02900B4CBFE /* SFSafariView.swift */; };
 		24EAF11B29C2C10200B4CBFE /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 24EAF11A29C2C10200B4CBFE /* GoogleService-Info.plist */; };
 		24EE41122A59E0A800AF2A11 /* SMKLicensePlateDetector.mlmodel in Sources */ = {isa = PBXBuildFile; fileRef = 24EE41112A59E0A800AF2A11 /* SMKLicensePlateDetector.mlmodel */; };
-		24EE41142A59E0FD00AF2A11 /* LicensePlateTextScanner.swift in Sources */ = {isa = PBXBuildFile; fileRef = 24EE41132A59E0FD00AF2A11 /* LicensePlateTextScanner.swift */; };
+		24EE41142A59E0FD00AF2A11 /* LicnesePlateDectectionManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 24EE41132A59E0FD00AF2A11 /* LicnesePlateDectectionManager.swift */; };
 		24EE41162A5A84FB00AF2A11 /* StorageManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 24EE41152A5A84FB00AF2A11 /* StorageManager.swift */; };
 		24EE41182A5BB42D00AF2A11 /* QuerySnapshot.swift in Sources */ = {isa = PBXBuildFile; fileRef = 24EE41172A5BB42D00AF2A11 /* QuerySnapshot.swift */; };
 		24FA56BA2A29284D0074149B /* UIActivityVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 24FA56B92A29284D0074149B /* UIActivityVC.swift */; };
@@ -151,6 +152,7 @@
 		245B392029E39E90001DD213 /* ReportType.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReportType.swift; sourceTree = "<group>"; };
 		245B392229E39EC1001DD213 /* VehicleColor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VehicleColor.swift; sourceTree = "<group>"; };
 		248278D62A03054C00C1E99D /* UISheetPC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UISheetPC.swift; sourceTree = "<group>"; };
+		24848AB62A61E38E003E037E /* LicenseTextDetectionManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LicenseTextDetectionManager.swift; sourceTree = "<group>"; };
 		249254A32A37C9F70037C43C /* SignInView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SignInView.swift; sourceTree = "<group>"; };
 		249254A52A37CA590037C43C /* UIHostingController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UIHostingController.swift; sourceTree = "<group>"; };
 		249254A72A37D8720037C43C /* PhoneNumberReasonView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PhoneNumberReasonView.swift; sourceTree = "<group>"; };
@@ -195,7 +197,7 @@
 		24EAF11629C2A02900B4CBFE /* SFSafariView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SFSafariView.swift; sourceTree = "<group>"; };
 		24EAF11A29C2C10200B4CBFE /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
 		24EE41112A59E0A800AF2A11 /* SMKLicensePlateDetector.mlmodel */ = {isa = PBXFileReference; lastKnownFileType = file.mlmodel; path = SMKLicensePlateDetector.mlmodel; sourceTree = "<group>"; };
-		24EE41132A59E0FD00AF2A11 /* LicensePlateTextScanner.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LicensePlateTextScanner.swift; sourceTree = "<group>"; };
+		24EE41132A59E0FD00AF2A11 /* LicnesePlateDectectionManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LicnesePlateDectectionManager.swift; sourceTree = "<group>"; };
 		24EE41152A5A84FB00AF2A11 /* StorageManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StorageManager.swift; sourceTree = "<group>"; };
 		24EE41172A5BB42D00AF2A11 /* QuerySnapshot.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = QuerySnapshot.swift; sourceTree = "<group>"; };
 		24FA56B92A29284D0074149B /* UIActivityVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UIActivityVC.swift; sourceTree = "<group>"; };
@@ -657,7 +659,8 @@
 			isa = PBXGroup;
 			children = (
 				24EE41112A59E0A800AF2A11 /* SMKLicensePlateDetector.mlmodel */,
-				24EE41132A59E0FD00AF2A11 /* LicensePlateTextScanner.swift */,
+				24EE41132A59E0FD00AF2A11 /* LicnesePlateDectectionManager.swift */,
+				24848AB62A61E38E003E037E /* LicenseTextDetectionManager.swift */,
 			);
 			path = CoreML;
 			sourceTree = "<group>";
@@ -814,7 +817,7 @@
 				24A5792929BC567F00495E6F /* ReportAnnotation.swift in Sources */,
 				24065F5A2A3C25120070BC9B /* UserReportsView.swift in Sources */,
 				2426A61B2A23461300E78647 /* ReportsDelegate.swift in Sources */,
-				24EE41142A59E0FD00AF2A11 /* LicensePlateTextScanner.swift in Sources */,
+				24EE41142A59E0FD00AF2A11 /* LicnesePlateDectectionManager.swift in Sources */,
 				24C698382A4025D5003A1DE6 /* UserNotificationSettings.swift in Sources */,
 				2426A6202A23475A00E78647 /* ReportClusterAnnotationView.swift in Sources */,
 				249254AD2A3840EB0037C43C /* LicensePlateScannerView.swift in Sources */,
@@ -868,6 +871,7 @@
 				249254A82A37D8720037C43C /* PhoneNumberReasonView.swift in Sources */,
 				240F22492A350AD30078F97E /* LicenseScannerDelegate.swift in Sources */,
 				24A206922A08270300F5DC0C /* Vehicle.swift in Sources */,
+				24848AB72A61E38E003E037E /* LicenseTextDetectionManager.swift in Sources */,
 				24C6983A2A402ECD003A1DE6 /* ReportRole.swift in Sources */,
 				24EE41122A59E0A800AF2A11 /* SMKLicensePlateDetector.mlmodel in Sources */,
 				2425EAF92A003CDE00CC886F /* NavigationController.swift in Sources */,
@@ -1034,7 +1038,7 @@
 				INFOPLIST_KEY_UILaunchScreen_Generation = YES;
 				INFOPLIST_KEY_UILaunchStoryboardName = "Launch Screen.storyboard";
 				INFOPLIST_KEY_UISupportedInterfaceOrientations = UIInterfaceOrientationPortrait;
-				IPHONEOS_DEPLOYMENT_TARGET = 16.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 15.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
@@ -1076,7 +1080,7 @@
 				INFOPLIST_KEY_UILaunchScreen_Generation = YES;
 				INFOPLIST_KEY_UILaunchStoryboardName = "Launch Screen.storyboard";
 				INFOPLIST_KEY_UISupportedInterfaceOrientations = UIInterfaceOrientationPortrait;
-				IPHONEOS_DEPLOYMENT_TARGET = 16.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 15.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",

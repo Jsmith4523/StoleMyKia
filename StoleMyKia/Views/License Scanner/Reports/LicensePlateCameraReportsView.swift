@@ -24,7 +24,6 @@ struct LicensePlateCameraReportsView: View {
             }
             .navigationTitle(scannerCoordinator.licensePlateString)
             .navigationBarTitleDisplayMode(.inline)
-            .presentationDetents([.height(600)])
         }
         .environmentObject(reportsVM)
         .environmentObject(scannerCoordinator)

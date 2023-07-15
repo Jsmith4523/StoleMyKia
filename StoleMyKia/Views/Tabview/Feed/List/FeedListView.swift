@@ -32,7 +32,6 @@ struct FeedListView: View {
         .environmentObject(userModel)
         .sheet(item: $selectedReport) { report in
             SelectedReportDetailView(report: report)
-                .presentationDragIndicator(.visible)
                 .environmentObject(reportsVM)
                 .environmentObject(userModel)
         }

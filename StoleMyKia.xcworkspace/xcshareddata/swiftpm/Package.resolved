@@ -1,0 +1,14 @@
+{
+  "pins" : [
+    {
+      "identity" : "partialsheet",
+      "kind" : "remoteSourceControl",
+      "location" : "https://github.com/Jsmith4523/PartialSheet.git",
+      "state" : {
+        "branch" : "master",
+        "revision" : "415fafa8ed719613b3abc787d52a8aa32a4998b9"
+      }
+    }
+  ],
+  "version" : 2
+}

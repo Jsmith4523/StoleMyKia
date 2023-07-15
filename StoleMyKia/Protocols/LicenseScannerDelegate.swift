@@ -12,7 +12,7 @@ enum LicenseScannerError: String, Error {
     case networkError = "There was an error finding reports that contain that license plate."
 }
 
-protocol LicenseScannerDelegate: AnyObject {
+protocol LicensePlateCoordinatorDelegate: AnyObject {
     ///Fetches reports that contain license plate information.
     ///- Parameters:
     ///   - licenseString: The string value of a license plate text from VisionKit

@@ -115,7 +115,6 @@ struct SelectedReportDetailView: View {
             .tint(Color(uiColor: .label))
             .sheet(isPresented: $isShowingTimelineMapView) {
                 TimelineMapView(report: report)
-                    .presentationDragIndicator(.visible)
                     .environmentObject(reportsVM)
             }
             .confirmationDialog("Options", isPresented: $isShowingReportOptions) {

@@ -48,7 +48,6 @@ struct LicensePlateCameraView: View {
                         }
                     }
                     .foregroundColor(.white)
-                    .bold()
                     .padding()
                     LicenseCameraViewRepresentable(scannerCoordinator: scannerCoordinator)
                         .frame(height: UIScreen.main.bounds.height/1.5)

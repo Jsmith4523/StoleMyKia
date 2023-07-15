@@ -10,6 +10,8 @@ import UIKit
 
 extension UIImage {
     
+    static let vehiclePlaceholder = UIImage(named: "vehicle-placeholder")!
+    
     static func sizeImage(image: UIImage, targetSize: CGSize) -> UIImage? {
         let size = image.size
         
@@ -36,7 +38,21 @@ extension UIImage {
         return newImage
     }
     
-    static let vehiclePlaceholder = UIImage(named: "vehicle-placeholder")!
+    func cropToRect(rect: CGRect) -> UIImage? {
+        guard let image = self.cgImage else { return nil }
+        
+        let width  = CGFloat(image.width)
+        let height = CGFloat(image.height)
+        
+        let cropRect = CGRect(x: rect.origin.x * width, y: rect.origin.y * height,
+                              width: rect.width * width, height: rect.height * height)
+        
+        guard let newCgImage = image.cropping(to: cropRect) else { return nil}
+        
+        let croppedImage = UIImage(cgImage: newCgImage, scale: self.scale, orientation: self.imageOrientation)
+        
+        return croppedImage
+    }
 }
 
 extension UIImage? {

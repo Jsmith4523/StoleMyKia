@@ -34,13 +34,11 @@ struct NotificationRadiusView: View {
                     Button("Cancel") {
                         dismiss()
                     }
-                    .bold()
                 }
                 ToolbarItem(placement: .navigationBarTrailing) {
                     Button("Save") {
                         setNewRadius()
                     }
-                    .bold()
                     .disabled(!radiusMapCoordinator.canBeUpdated)
                 }
             }
