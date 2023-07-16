@@ -7,10 +7,15 @@
 
 import SwiftUI
 import UIKit
+import CoreLocation
 
 //TODO: Picker: the selection "" is invalid and does not have an associated tag, this will give undefined results. Not sure how to fix...
 
 struct NewReportView: View {
+    
+    enum NewReportError: Error {
+        case userLocationError, error
+    }
     
     @State private var vehicleImage: UIImage?
     
@@ -44,14 +49,14 @@ struct NewReportView: View {
     @State private var alertErrorUploading = false
     @State private var alertSelectLocation = false
     
-    @EnvironmentObject var reportsModel: ReportsViewModel
+    @EnvironmentObject var reportsVM: ReportsViewModel
     
     @Environment (\.dismiss) var dismiss
     
     var isNotSatisfied: Bool {
         guard (licensePlate.range(of: ".*[^A-Za-z0-9].*", options: .regularExpression) == nil) else { return true
         }
-        return (self.licensePlate.isEmpty) && !doesNotHaveVehicleIdentification && !(disablesLicensePlateAndVinSection) && !(distinguishableDescription.count >= 40)
+        return (self.licensePlate.isEmpty || !(self.licensePlate.count >= 7)) && !doesNotHaveVehicleIdentification && !(disablesLicensePlateAndVinSection)
     }
     
     var body: some View {
@@ -139,7 +144,7 @@ struct NewReportView: View {
                 } header: {
                     Text("Distinguishable Details")
                 } footer: {
-                    Text("Describe the incident and include any distinguishable details of the vehicle in the field above. \n\nCharacter limit: 40-150 characters.")
+                    Text("Describe the incident and include any distinguishable details of the vehicle in the field above. \n\nCharacter limit: 20-150 characters.")
                 }
                 
                 Section {
@@ -224,7 +229,6 @@ struct NewReportView: View {
         .interactiveDismissDisabled()
         .tint(Color(uiColor: .label))
         .disabled(isUploading)
-        
         .sheet(isPresented: $isShowingLocationView) {
             LocationSearchView(location: $location)
         }
@@ -250,14 +254,37 @@ struct NewReportView: View {
         }
     }
     
-    //Retrieving the users locations...
+    ///Retrieves the current location of the user
     private func usersLocation() -> Location? {
-        return nil
+        guard let userLocation = CLLocationManager.shared.usersCurrentLocation, (self.location == nil) else {
+            return nil
+        }
+        
+        return Location(coordinates: userLocation)
     }
     
     
     private func upload() {
-       
+        do {
+            self.isUploading = true
+            
+            guard let location = usersLocation() ?? location else {
+                throw NewReportError.userLocationError
+            }
+            
+            var vehicle = Vehicle(year: vehicleYear, make: vehicleMake, model: vehicleModel, color: vehicleColor)
+            try vehicle.licensePlateString(licensePlate)
+            let report = Report(type: reportType, Vehicle: vehicle, details: distinguishableDescription, location: location)
+            Task {
+                try await reportsVM.uploadReport(report, image: vehicleImage)
+            }
+        } catch NewReportError.userLocationError {
+            print("User location error")
+            self.isUploading = false
+        } catch {
+            print(error.localizedDescription)
+            self.isUploading = false
+        }
     }
 }
 

@@ -112,10 +112,10 @@ class ReportManager {
         //Saving the vehicle image to Firebase Storage...
         let imageUrl = try await StorageManager.shared.saveVehicleImage(image, to: report.vehicleImagePath)
         //Retrieving the image url...
-        report.imageURL = imageUrl?.absoluteString ?? nil
+        report.imageURL = imageUrl
         
         //Then encoding the report...
-        guard let jsonData = try JSONSerialization.createJsonFromObject(report) as? [String: Any] else {
+        guard let jsonData = try report.encodeForUploading() as? [String: Any] else {
             throw ReportManagerError.codableError
         }
         

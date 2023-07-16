@@ -31,11 +31,21 @@ final class ReportsViewModel: NSObject, ObservableObject {
     func fetchReports() async {
         do {
             let fetchedReports = try await manager.fetch()
-           // self.reports = fetchedReports
+            self.reports = fetchedReports
             self.feedLoadStatus = .loaded
         } catch {
             self.feedLoadStatus = .loaded
         }
+    }
+    
+    
+    /// Asynchronously upload a report and its vehicle image to Google Firestore and Firebase Storage
+    /// - Parameters:
+    ///   - report: The report object to be encoded and uploaded.
+    ///   - image: The optional image to be unwrapped and uploaded
+    func uploadReport(_ report: Report, image: UIImage? = nil) async throws {
+        try await manager.upload(report, image: image)
+        await UINotificationFeedbackGenerator().notificationOccurred(.success)
     }
     
     func deleteReport(report: Report) async throws {

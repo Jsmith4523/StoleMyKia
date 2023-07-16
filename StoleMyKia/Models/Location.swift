@@ -10,6 +10,19 @@ import MapKit
 
 ///Object relating to MKLocalSearch for a report
 struct Location: Codable, Identifiable, Hashable, Comparable {
+    
+    init(coordinates: CLLocationCoordinate2D) {
+        self.lat = coordinates.latitude
+        self.lon = coordinates.longitude
+    }
+    
+    init(address: String?, name: String?, lat: Double, lon: Double) {
+        self.address = address
+        self.name = name
+        self.lat = lat
+        self.lon = lon
+    }
+    
     var id = UUID()
     var address: String? = nil
     var name: String? =  nil

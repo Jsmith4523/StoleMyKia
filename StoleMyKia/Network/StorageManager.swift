@@ -31,7 +31,7 @@ class StorageManager {
     }
     
     ///Uploads the vehicles image to storage associated with the report UUID.
-    func saveVehicleImage(_ image: UIImage?, to path: String) async throws -> URL? {
+    func saveVehicleImage(_ image: UIImage?, to path: String) async throws -> String? {
         guard let image else { return nil }
         
         guard let imageData = image.pngData() else {
@@ -44,6 +44,6 @@ class StorageManager {
             throw StorageManagerError.imageUrlError
         }
         
-        return url
+        return url.absoluteString
     }
 }

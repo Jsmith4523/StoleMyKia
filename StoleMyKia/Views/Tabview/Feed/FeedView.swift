@@ -45,6 +45,11 @@ struct FeedView: View {
             .task {
                 await onAppearFetchReports()
             }
+            .toolbar {
+                Button("New Report") {
+                    self.isShowingNewReportView.toggle()
+                }
+            }
         }
         .sheet(isPresented: $isShowingNewReportView) {
             NewReportView()

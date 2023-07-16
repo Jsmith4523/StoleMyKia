@@ -66,10 +66,6 @@ struct FirebaseNotification: Identifiable, Codable, Comparable {
 extension [FirebaseNotification] {
     
     static func dummyNotifications() -> [FirebaseNotification] {
-        [
-            .init(report: [Report].testReports()[0], notificationType: .notification),
-            .init(report: [Report].testReports()[1], isRead: true , notificationType: .notification),
-            .init(report: [Report].testReports()[2], notificationType: .update)
-        ]
+        [FirebaseNotification]()
     }
 }
