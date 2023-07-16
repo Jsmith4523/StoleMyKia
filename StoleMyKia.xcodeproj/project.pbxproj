@@ -70,6 +70,7 @@
 		2492A2FB2A40352D0022C99D /* NotificationRadiusMapView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2492A2FA2A40352C0022C99D /* NotificationRadiusMapView.swift */; };
 		2495A02029CAC3DE00457CE7 /* Date+EXT.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2495A01F29CAC3DE00457CE7 /* Date+EXT.swift */; };
 		2495A02229CAC5DF00457CE7 /* String+EXT.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2495A02129CAC5DF00457CE7 /* String+EXT.swift */; };
+		249A0CE62A63274600A1D108 /* SearchView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 249A0CE52A63274500A1D108 /* SearchView.swift */; };
 		24A2068E2A07A18B00F5DC0C /* User.swift in Sources */ = {isa = PBXBuildFile; fileRef = 24A2068D2A07A18B00F5DC0C /* User.swift */; };
 		24A206902A0826BE00F5DC0C /* UserAccountManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 24A2068F2A0826BE00F5DC0C /* UserAccountManager.swift */; };
 		24A206922A08270300F5DC0C /* Vehicle.swift in Sources */ = {isa = PBXBuildFile; fileRef = 24A206912A08270300F5DC0C /* Vehicle.swift */; };
@@ -168,6 +169,7 @@
 		2492A2FA2A40352C0022C99D /* NotificationRadiusMapView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NotificationRadiusMapView.swift; sourceTree = "<group>"; };
 		2495A01F29CAC3DE00457CE7 /* Date+EXT.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Date+EXT.swift"; sourceTree = "<group>"; };
 		2495A02129CAC5DF00457CE7 /* String+EXT.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "String+EXT.swift"; sourceTree = "<group>"; };
+		249A0CE52A63274500A1D108 /* SearchView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchView.swift; sourceTree = "<group>"; };
 		24A2068D2A07A18B00F5DC0C /* User.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = User.swift; sourceTree = "<group>"; };
 		24A2068F2A0826BE00F5DC0C /* UserAccountManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserAccountManager.swift; sourceTree = "<group>"; };
 		24A206912A08270300F5DC0C /* Vehicle.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Vehicle.swift; sourceTree = "<group>"; };
@@ -277,6 +279,7 @@
 			children = (
 				240F224C2A350BBA0078F97E /* ApplicationTabView.swift */,
 				240F224E2A350C2A0078F97E /* Feed */,
+				249A0CE42A63255800A1D108 /* Search */,
 				240F224F2A350C2F0078F97E /* Notification */,
 				240F22502A350C350078F97E /* User */,
 			);
@@ -496,6 +499,14 @@
 				249254BE2A39279C0037C43C /* ParkingMapView.swift */,
 			);
 			path = "Parking Map";
+			sourceTree = "<group>";
+		};
+		249A0CE42A63255800A1D108 /* Search */ = {
+			isa = PBXGroup;
+			children = (
+				249A0CE52A63274500A1D108 /* SearchView.swift */,
+			);
+			path = Search;
 			sourceTree = "<group>";
 		};
 		24A206932A08310300F5DC0C /* Vehicle */ = {
@@ -815,6 +826,7 @@
 				240F225E2A351DB40078F97E /* NoReportsAvaliableView.swift in Sources */,
 				24A206902A0826BE00F5DC0C /* UserAccountManager.swift in Sources */,
 				24A5792929BC567F00495E6F /* ReportAnnotation.swift in Sources */,
+				249A0CE62A63274600A1D108 /* SearchView.swift in Sources */,
 				24065F5A2A3C25120070BC9B /* UserReportsView.swift in Sources */,
 				2426A61B2A23461300E78647 /* ReportsDelegate.swift in Sources */,
 				24EE41142A59E0FD00AF2A11 /* LicnesePlateDectectionManager.swift in Sources */,

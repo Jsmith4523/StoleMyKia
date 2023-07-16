@@ -30,7 +30,7 @@ class LicenseTextDetectionManager {
 //MARK: - LicensePlateDetectionDelegate
 extension LicenseTextDetectionManager: LicensePlateDetectionDelegate {
     func didLocateLicensePlate(image: UIImage) {
-        
+        self.textDectectionDelegate?.didLocateLicensePlateString("", image: image)
     }
     
     func didFailToLocateLicensePlate() {

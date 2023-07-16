@@ -8,11 +8,33 @@
 import SwiftUI
 
 struct SearchView: View {
+        
+    @EnvironmentObject var reportsVM: ReportsViewModel
+    @EnvironmentObject var userModel: UserViewModel
+    
     var body: some View {
-        Text(/*@START_MENU_TOKEN@*/"Hello, World!"/*@END_MENU_TOKEN@*/)
+        NavigationView {
+            VStack {
+                
+            }
+            .navigationTitle(ApplicationTabViewSelection.search.title)
+            .navigationBarTitleDisplayMode(.inline)
+            .toolbar {
+                Button {
+                    reportsVM.isShowingLicensePlateScannerView.toggle()
+                } label: {
+                   Image(systemName: "camera")
+                }
+            }
+            .fullScreenCover(isPresented: $reportsVM.isShowingLicensePlateScannerView) {
+                LicensePlateScannerView()
+                    .environmentObject(reportsVM)
+            }
+        }
     }
 }
 
 #Preview {
     SearchView()
+        .environmentObject(ReportsViewModel())
 }

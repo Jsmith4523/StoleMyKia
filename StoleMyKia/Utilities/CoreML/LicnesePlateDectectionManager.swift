@@ -43,7 +43,7 @@ class LicnesePlateDectectionManager {
             detectionDelegate?.didFailToConfigure()
             return
         }
-        
+                
         guard let results = request.results as? [VNRectangleObservation] else {
             detectionDelegate?.didFailToLocateLicensePlate()
             return

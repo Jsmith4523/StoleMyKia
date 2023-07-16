@@ -16,14 +16,12 @@ struct LicenseCameraViewRepresentable: UIViewRepresentable {
     @ObservedObject var scannerCoordinator: LicensePlateScannerCoordinator
     
     func makeUIView(context: Context) -> UIView {
-        let view = UIView()
-        
+        let view = UIView(frame: UIScreen.main.bounds)
         if let layer = context.coordinator.previewLayer {
             layer.frame = view.bounds
             layer.videoGravity = .resizeAspectFill
             view.layer.addSublayer(layer)
         }
-                
         return view
     }
     
@@ -60,7 +58,7 @@ final class LicensePlateScannerCoordinator: NSObject, ObservableObject {
     ///The string value of the license plate.
     @Published private(set) var licensePlateString = ""
     ///The cropped image of the license plate.
-    @Published private(set) var croppedLicensePlateImage: UIImage?
+    @Published var croppedLicensePlateImage: UIImage?
     
     ///Device camera permission access. Used to switch between multiple views if needed.
     @Published private(set) var permissionAccess: CameraPermissionAccess = .pending
@@ -99,7 +97,7 @@ final class LicensePlateScannerCoordinator: NSObject, ObservableObject {
         }
     }
     
-    private func setupCamera() {
+    func setupCamera() {
         guard let device = AVCaptureDevice.default(.builtInWideAngleCamera, for: .video, position: .back) else {
             return
         }
@@ -120,16 +118,21 @@ final class LicensePlateScannerCoordinator: NSObject, ObservableObject {
         captureSession.addInput(deviceInput)
         captureSession.commitConfiguration()
         
+        setPreviewLayer()
+        
+        func setPreviewLayer() {
+            self.previewLayer = AVCaptureVideoPreviewLayer(session: captureSession)
+            setupVideoOutput()
+        }
+        
         func setupVideoOutput() {
             let output = AVCapturePhotoOutput()
             
             guard captureSession.canAddOutput(output) else { return }
             captureSession.addOutput(output)
-        }
-        
-        @MainActor
-        func setPreviewLayer() {
-            self.previewLayer = AVCaptureVideoPreviewLayer(session: captureSession)
+            
+            self.captureOutput = output
+            resumeCameraSession()
         }
     }
     
@@ -178,16 +181,20 @@ final class LicensePlateScannerCoordinator: NSObject, ObservableObject {
 extension LicensePlateScannerCoordinator: AVCapturePhotoCaptureDelegate {
     
     func photoOutput(_ output: AVCapturePhotoOutput, didFinishProcessingPhoto photo: AVCapturePhoto, error: Error?) {
-        guard let photoPixies = photo.pixelBuffer else { return }
+        guard let photoData = photo.fileDataRepresentation() else { return }
+        
+        guard let uiImage = CIImage(data: photoData) else { return }
+        
+        self.croppedLicensePlateImage = UIImage(ciImage: uiImage)
                 
-        let ciImage = CIImage(cvPixelBuffer: photoPixies)
-        licensePlateDetectionManager.beginDetection(ciImage)
+        licensePlateDetectionManager.beginDetection(uiImage)
     }
 }
 
 //MARK: - LicenseTextDetectionDelegate
 extension LicensePlateScannerCoordinator: LicenseTextDetectionDelegate {
     func didLocateLicensePlateString(_ licenseString: String, image: UIImage) {
+        UIImpactFeedbackGenerator().impactOccurred()
         self.licensePlateString = licenseString
         self.croppedLicensePlateImage = image
     }

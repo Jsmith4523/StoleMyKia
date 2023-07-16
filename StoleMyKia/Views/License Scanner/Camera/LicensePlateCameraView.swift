@@ -15,7 +15,8 @@ struct LicensePlateCameraView: View {
     @EnvironmentObject var scannerCoordinator: LicensePlateScannerCoordinator
     
     var body: some View {
-        HostingView(statusBarStyle: .lightContent) {
+        //HostingView(statusBarStyle: .lightContent) {
+        NavigationView {
             ZStack {
                 Color.black.ignoresSafeArea()
                 VStack {
@@ -39,7 +40,7 @@ struct LicensePlateCameraView: View {
                         }
                         Spacer()
                         Button {
-                            
+                            scannerCoordinator.captureImage()
                         } label: {
                             Image(systemName: "circle.slash")
                                 .resizable()
@@ -66,13 +67,21 @@ struct LicensePlateCameraView: View {
                     }
                     .padding()
                     Spacer()
+                    if let licenseImage = scannerCoordinator.croppedLicensePlateImage {
+                        Image(uiImage: licenseImage)
+                            .resizable()
+                            .scaledToFit()
+                            .frame(width: 20, height: 20)
+                    }
                 }
                 .padding(.horizontal, 5)
             }
         }
+        // }
         .ignoresSafeArea()
         .onAppear {
             scannerCoordinator.setDelegate(reportsVM)
+            scannerCoordinator.setupCamera()
         }
     }
 }

@@ -9,7 +9,7 @@ import SwiftUI
 
 enum ApplicationTabViewSelection {
     
-    case feed, notification, user
+    case feed, notification, search, user
     
     var title: String {
         switch self {
@@ -19,6 +19,8 @@ enum ApplicationTabViewSelection {
             return "Notifications"
         case .user:
             return "My Account"
+        case .search:
+            return "Search"
         }
     }
     
@@ -30,18 +32,13 @@ enum ApplicationTabViewSelection {
             return "bell"
         case .user:
             return "person.crop.circle"
+        case .search:
+            return "magnifyingglass"
         }
     }
     
     var tabItemLabel: some View {
-        switch self {
-        case .feed:
-            return Label(self.title, systemImage: self.symbol)
-        case .notification:
-            return Label(self.title, systemImage: self.symbol)
-        case .user:
-            return Label(self.title, systemImage: self.symbol)
-        }
+        return Label(self.title, systemImage: self.symbol)
     }
 }
 
@@ -61,6 +58,11 @@ struct ApplicationTabView: View {
                 .tabItem {
                     ApplicationTabViewSelection.feed.tabItemLabel
                 }
+            SearchView()
+                .tag(ApplicationTabViewSelection.search)
+                .tabItem {
+                    ApplicationTabViewSelection.search.tabItemLabel
+                }
             NotificationView()
                 .tag(ApplicationTabViewSelection.notification)
                 .badge(notificationCount)
@@ -79,6 +81,7 @@ struct ApplicationTabView: View {
         .tint(Color(uiColor: .label))
         .onReceive(notificationVM.$userNotifications) { notifications in
             //Settings the NotificationView badge count to the number of un-read notifications...
+            //This code is completed here because if notification view is never selected by the user, the user would never know their un-read notification count.
             self.notificationCount = notifications.filter({!$0.isRead}).count
         }
         .onAppear {
