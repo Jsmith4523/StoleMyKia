@@ -33,22 +33,32 @@ final class NotificationViewModel: NSObject, ObservableObject {
         return db.reference(withPath: FirebaseDatabasesPaths.userNotificationDatabasePath).child(uid)
     }()
     
+    private var fcmTokenRef: DatabaseReference {
+        return db.reference(withPath: FirebaseDatabasesPaths.fcmTokenPath)
+    }
+    
+    override init() {
+        super.init()
+        UNUserNotificationCenter.current().delegate = self
+        Messaging.messaging().delegate = self
+    }
+    
     func setDelegate(_ delegate: FirebaseUserDelegate) {
         self.firebaseUserDelegate = delegate
         fetchFirebaseUserNotifications()
         beginListeningForNotifications()
-    }
-        
-    override init() {
-        super.init()
+        requestNotificationAuthorization()
     }
     
-    func requestNotificationCenterAccess() {
+    func requestNotificationAuthorization() {
         UNUserNotificationCenter.current().requestAuthorization(options: [.alert, .badge, .criticalAlert]) { success, err in
             guard success, err == nil else {
                 return
             }
+            print("APNS Registered!")
         }
+        
+        UIApplication.shared.registerForRemoteNotifications()
     }
     
     ///Begin observing when a notification object is added to the reference.
@@ -65,11 +75,11 @@ final class NotificationViewModel: NSObject, ObservableObject {
             do {
                 let snapshot = try await self.reference.getData()
                 guard let data = snapshot.value else { throw NotificationError.snapshotError }
-                let notifications = try JSONSerialization.objectsFromFoundationObjects(data, to: FirebaseNotification.self)
-                DispatchQueue.main.async {
-                    self.userNotifications = notifications
-                    self.notificationLoadStatus = .loaded
-                }
+//                let notifications = try JSONSerialization.objectsFromFoundationObjects(data, to: FirebaseNotification.self)
+//                DispatchQueue.main.async {
+//                    self.userNotifications = notifications
+//                    self.notificationLoadStatus = .loaded
+//                }
             } catch {
                 DispatchQueue.main.async {
                     self.userNotifications = .dummyNotifications()
@@ -96,5 +106,32 @@ final class NotificationViewModel: NSObject, ObservableObject {
     deinit {
         self.firebaseUserDelegate = nil
         print("Dead: NotificationViewModel")
+    }
+}
+
+extension NotificationViewModel: UNUserNotificationCenterDelegate {
+    
+    //Foreground
+    func userNotificationCenter(_ center: UNUserNotificationCenter, willPresent notification: UNNotification, withCompletionHandler completionHandler: @escaping (UNNotificationPresentationOptions) -> Void) {
+        completionHandler([.badge, .list])
+    }
+    
+    func userNotificationCenter(_ center: UNUserNotificationCenter, didReceive response: UNNotificationResponse, withCompletionHandler completionHandler: @escaping () -> Void) {
+        completionHandler()
+    }
+}
+
+extension NotificationViewModel: MessagingDelegate {
+    
+    func messaging(_ messaging: Messaging, didReceiveRegistrationToken fcmToken: String?) {
+        guard let firebaseUserDelegate, let uid = firebaseUserDelegate.uid, let fcmToken else { return }
+        self.setFcmToken(uid, fcmToken: fcmToken)
+    }
+    
+    private func setFcmToken(_ uid: String, fcmToken: String) {
+        var tokenDict = [String: Any]()
+        tokenDict["token"] = fcmToken
+        tokenDict["dt"] = Date.now.epoch
+        fcmTokenRef.child(uid).setValue(tokenDict)
     }
 }

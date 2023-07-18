@@ -28,14 +28,14 @@ class LicnesePlateDectectionManager {
     }
     
     private func setupDetectionModelRequest() {
-        do {
-            let detectionModel = try SMKLicensePlateDetector(configuration: MLModelConfiguration())
-            let model = try VNCoreMLModel(for: detectionModel.model)
-                    
-            self.dectectionRequest = VNCoreMLRequest(model: model, completionHandler: requestCompleted)
-        } catch {
-            detectionDelegate?.didFailToConfigure()
-        }
+//        do {
+//            let detectionModel = try SMKLicensePlateDetector(configuration: MLModelConfiguration())
+//            let model = try VNCoreMLModel(for: detectionModel.model)
+//                    
+//            self.dectectionRequest = VNCoreMLRequest(model: model, completionHandler: requestCompleted)
+//        } catch {
+//            detectionDelegate?.didFailToConfigure()
+//        }
     }
     
     private func requestCompleted(request: VNRequest, error: Error?) {

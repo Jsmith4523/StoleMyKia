@@ -16,7 +16,7 @@ final class UserViewModel: ObservableObject {
         case loading, loaded
     }
     
-    @Published private(set) var rootViewLoadStatus: RootViewLoadStatus = .loading
+    @Published private(set) var rootViewLoadStatus: RootViewLoadStatus = .loaded
                 
     @Published private(set) var firebaseUser: FirebaseUser?
     @Published private var userUid: String?

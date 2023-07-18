@@ -37,6 +37,9 @@ struct Report: Identifiable, Codable, Comparable {
     var imageURL: String?
     ///The location of this report
     let location: Location
+    ///UUIDs of reports that are updates to this report.
+    ///Firestore functions watches when this array is added a value and notifies the reporter of any updates.
+    var updates: [UUID]?
     ///The role of this report
     var role: ReportRole!
     

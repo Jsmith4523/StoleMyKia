@@ -101,7 +101,6 @@
 		24D441D72A6506DD00EEF2D1 /* ApplicationProgressView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 24D441D62A6506DD00EEF2D1 /* ApplicationProgressView.swift */; };
 		24EAF11729C2A02900B4CBFE /* SFSafariView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 24EAF11629C2A02900B4CBFE /* SFSafariView.swift */; };
 		24EAF11B29C2C10200B4CBFE /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 24EAF11A29C2C10200B4CBFE /* GoogleService-Info.plist */; };
-		24EE41122A59E0A800AF2A11 /* SMKLicensePlateDetector.mlmodel in Sources */ = {isa = PBXBuildFile; fileRef = 24EE41112A59E0A800AF2A11 /* SMKLicensePlateDetector.mlmodel */; };
 		24EE41142A59E0FD00AF2A11 /* LicnesePlateDectectionManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 24EE41132A59E0FD00AF2A11 /* LicnesePlateDectectionManager.swift */; };
 		24EE41162A5A84FB00AF2A11 /* StorageManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 24EE41152A5A84FB00AF2A11 /* StorageManager.swift */; };
 		24EE41182A5BB42D00AF2A11 /* QuerySnapshot.swift in Sources */ = {isa = PBXBuildFile; fileRef = 24EE41172A5BB42D00AF2A11 /* QuerySnapshot.swift */; };
@@ -206,7 +205,6 @@
 		24D441D62A6506DD00EEF2D1 /* ApplicationProgressView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ApplicationProgressView.swift; sourceTree = "<group>"; };
 		24EAF11629C2A02900B4CBFE /* SFSafariView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SFSafariView.swift; sourceTree = "<group>"; };
 		24EAF11A29C2C10200B4CBFE /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
-		24EE41112A59E0A800AF2A11 /* SMKLicensePlateDetector.mlmodel */ = {isa = PBXFileReference; lastKnownFileType = file.mlmodel; path = SMKLicensePlateDetector.mlmodel; sourceTree = "<group>"; };
 		24EE41132A59E0FD00AF2A11 /* LicnesePlateDectectionManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LicnesePlateDectectionManager.swift; sourceTree = "<group>"; };
 		24EE41152A5A84FB00AF2A11 /* StorageManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StorageManager.swift; sourceTree = "<group>"; };
 		24EE41172A5BB42D00AF2A11 /* QuerySnapshot.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = QuerySnapshot.swift; sourceTree = "<group>"; };
@@ -681,7 +679,6 @@
 		24EE41102A59E01F00AF2A11 /* CoreML */ = {
 			isa = PBXGroup;
 			children = (
-				24EE41112A59E0A800AF2A11 /* SMKLicensePlateDetector.mlmodel */,
 				24EE41132A59E0FD00AF2A11 /* LicnesePlateDectectionManager.swift */,
 				24848AB62A61E38E003E037E /* LicenseTextDetectionManager.swift */,
 			);
@@ -900,7 +897,6 @@
 				24A206922A08270300F5DC0C /* Vehicle.swift in Sources */,
 				24848AB72A61E38E003E037E /* LicenseTextDetectionManager.swift in Sources */,
 				24C6983A2A402ECD003A1DE6 /* ReportRole.swift in Sources */,
-				24EE41122A59E0A800AF2A11 /* SMKLicensePlateDetector.mlmodel in Sources */,
 				2425EAF92A003CDE00CC886F /* NavigationController.swift in Sources */,
 				2495A02229CAC5DF00457CE7 /* String+EXT.swift in Sources */,
 				248278D72A03054C00C1E99D /* UISheetPC.swift in Sources */,

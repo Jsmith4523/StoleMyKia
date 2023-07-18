@@ -22,21 +22,15 @@ class FirebaseAuthViewModel: ObservableObject {
     weak private var firebaseAuthDelegate: FirebaseAuthDelegate?
     
     init() {
-        self.createAuthListener()
+        guard let user = Auth.auth().currentUser else {
+            self.prepareForSignOut()
+            return
+        }
+        self.prepareForSignIn(uid: user.uid)
     }
     
     func setDelegate(_ delegate: FirebaseAuthDelegate) {
         self.firebaseAuthDelegate = delegate
-    }
-    
-    private func createAuthListener() {
-        auth.addStateDidChangeListener { [weak self] auth, user in
-            guard let user else {
-                self?.prepareForSignOut()
-                return
-            }
-            self?.prepareForSignIn(uid: user.uid)
-        }
     }
     
     /// Begin setting up the application for sign in.
