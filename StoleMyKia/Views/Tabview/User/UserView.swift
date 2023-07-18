@@ -30,6 +30,8 @@ struct UserView: View {
             }
             .navigationTitle(ApplicationTabViewSelection.user.title)
             .navigationBarTitleDisplayMode(.inline)
+            .environmentObject(userModel)
+            .environmentObject(reportsModel)
             .toolbar {
                 ToolbarItem(placement: .navigationBarTrailing) {
                     Button {
@@ -39,13 +41,11 @@ struct UserView: View {
                     }
                 }
             }
-            .customSheetView(isPresented: $isShowingSettingsView, detents: [.large()]) {
+            .sheet(isPresented: $isShowingSettingsView) {
                 SettingsView()
                     .environmentObject(userModel)
                     .environmentObject(reportsModel)
             }
-            .environmentObject(userModel)
-            .environmentObject(reportsModel)
         }
     }
 }

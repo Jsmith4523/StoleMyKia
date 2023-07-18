@@ -12,12 +12,13 @@ import SwiftUI
 
 struct Report: Identifiable, Codable, Comparable {
     
-    init(type: ReportType, Vehicle: Vehicle, details: String, location: Location) {
+    init(uid: String, type: ReportType, Vehicle: Vehicle, details: String, location: Location) {
         self.dt = Date.now.epoch
         self.reportType = type
         self.vehicle = Vehicle
         self.distinguishableDetails = details
         self.location = location
+        self.setAsOriginal()
     }
 
     var id = UUID()
@@ -37,7 +38,7 @@ struct Report: Identifiable, Codable, Comparable {
     ///The location of this report
     let location: Location
     ///The role of this report
-    private(set) var role: ReportRole!
+    var role: ReportRole!
     
     static func == (lhs: Report, rhs: Report) -> Bool {
         return true
@@ -83,11 +84,8 @@ struct Report: Identifiable, Codable, Comparable {
 extension Report {
     
     /// Set this report.role as 'original'
-    /// - Returns: self
-    func setAsOriginal() -> Self {
-        var report = self
-        report.role = .original(report.id)
-        return report
+    mutating func setAsOriginal() {
+        self.role = .original(self.id)
     }
     
     /// Set this report as 'update'

@@ -15,7 +15,7 @@ struct FeedView: View {
     
     @State private var isShowingNewReportView = false
     
-    @EnvironmentObject var userModel: UserViewModel
+    @EnvironmentObject var userVM: UserViewModel
     @EnvironmentObject var reportsVM: ReportsViewModel
     
     var body: some View {
@@ -35,7 +35,7 @@ struct FeedView: View {
                     }
                 }
             }
-            .environmentObject(userModel)
+            .environmentObject(userVM)
             .environmentObject(reportsVM)
             .navigationTitle(ApplicationTabViewSelection.feed.title)
             .navigationBarTitleDisplayMode(.inline)
@@ -53,14 +53,14 @@ struct FeedView: View {
         }
         .sheet(isPresented: $isShowingNewReportView) {
             NewReportView()
-                .tint(.brand)
+                .environmentObject(reportsVM)
+                .environmentObject(userVM)
         }
-        .environmentObject(reportsVM)
     }
     
     private func onAppearFetchReports() async {
         //Prevents the view from fetching for reports when the array is not empty
-        guard !(reportsVM.reports.isEmpty) else { return }
+        guard reportsVM.reports.isEmpty else { return }
         await reportsVM.fetchReports()
     }
 }

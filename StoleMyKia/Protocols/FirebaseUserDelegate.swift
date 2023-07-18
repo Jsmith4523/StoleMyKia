@@ -8,5 +8,5 @@
 import Foundation
 
 protocol FirebaseUserDelegate: AnyObject {
-    var uid: String {get}
+    var uid: String? {get}
 }

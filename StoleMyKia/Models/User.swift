@@ -9,7 +9,7 @@ import Foundation
 
 
 struct FirebaseUser: Codable {
-    
+        
     ///The firebase users uid
     let uid: String
     ///The users notification settings

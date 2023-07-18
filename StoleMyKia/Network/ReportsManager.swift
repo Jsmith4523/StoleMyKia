@@ -110,7 +110,9 @@ class ReportManager {
         var report = report
         
         //Saving the vehicle image to Firebase Storage...
-        let imageUrl = try await StorageManager.shared.saveVehicleImage(image, to: report.vehicleImagePath)
+        let imageUrl = try await StorageManager.shared.saveVehicleImage(image,
+                                                                        reportType: report.reportType,
+                                                                        id: report.id)
         //Retrieving the image url...
         report.imageURL = imageUrl
         

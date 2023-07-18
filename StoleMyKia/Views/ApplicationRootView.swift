@@ -8,11 +8,27 @@
 import SwiftUI
 
 struct ApplicationRootView: View {
+    
+    @EnvironmentObject var firebaseAuthModel: FirebaseAuthViewModel
+    @StateObject private var userVM = UserViewModel()
+    
     var body: some View {
-        Text(/*@START_MENU_TOKEN@*/"Hello, World!"/*@END_MENU_TOKEN@*/)
+        ZStack {
+            switch userVM.rootViewLoadStatus {
+            case .loading:
+                ApplicationProgressView()
+            case .loaded:
+                ApplicationTabView()
+                    .environmentObject(userVM)
+            }
+        }
+        .onAppear {
+            firebaseAuthModel.setDelegate(userVM)
+        }
     }
 }
 
 #Preview {
     ApplicationRootView()
+        .environmentObject(FirebaseAuthViewModel())
 }

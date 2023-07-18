@@ -11,17 +11,46 @@ import Firebase
 
 
 final class UserViewModel: ObservableObject {
-        
-    @Published var showLoginProgressView = true
     
-    @Published private(set) var isSignedIn = false
+    enum RootViewLoadStatus {
+        case loading, loaded
+    }
     
+    @Published private(set) var rootViewLoadStatus: RootViewLoadStatus = .loading
+                
     @Published private(set) var firebaseUser: FirebaseUser?
-    @Published private(set) var alertErrorLoggingIn = false
+    @Published private var userUid: String?
     
-    private let accountManager = UserAccountManager()
-            
-    private let auth = Auth.auth()
+    private let firebaseManager = FirebaseUserManager()
+    
+    func fetchUserInformation() async throws {
+        guard let userUid else { return }
+        self.firebaseUser = try await firebaseManager.fetchSignedInUserInformation(uid: userUid)
+    }
+    
+    func fetchUsersReports() async throws -> [Report] {
+        return try await firebaseManager.getUserReports()
+    }
+    
+    func fetchUserReports() async throws -> [Report] {
+        return try await firebaseManager.getUserReports()
+    }
+    
+    func bookmarkReport(_ id: UUID) async throws {
+        try await firebaseManager.addBookmark(reportId: id)
+    }
+    
+    func removeBookmark(_ id: UUID) async throws {
+        try await firebaseManager.removeBookmark(reportId: id)
+    }
+    
+    func reportIsBookmarked(_ id: UUID) async throws -> Bool {
+        return try await firebaseManager.isBookmarked(id)
+    }
+    
+    func signOut() {
+        try? Auth.auth().signOut()
+    }
         
     deinit {
         print("Dead: UserViewModel")
@@ -43,9 +72,33 @@ extension UserViewModel: FirebaseUserNotificationRadiusDelegate {
     }
 }
 
+//MARK: - FirebaseAuthDelegate
+extension UserViewModel: FirebaseAuthDelegate {
+    func userHasSignedIn(uid: String) async -> LoginLoadStatus {
+        do {
+            self.userUid = uid
+            self.firebaseUser = try await firebaseManager.fetchSignedInUserInformation(uid: uid)
+            self.rootViewLoadStatus = .loaded
+        } catch FirebaseUserManagerError.doesNotExist {
+            //Sign the user out if data is not avaliable
+            return .signedOut
+        } catch {
+            self.rootViewLoadStatus = .loaded
+            return .signedIn
+        }
+        
+        return .signedIn
+    }
+    
+    func userHasSignedOut() {
+        self.firebaseUser = nil
+        firebaseManager.userIsSigningOut()
+    }
+}
+
 //MARK: - FirebaseUserDelegate
 extension UserViewModel: FirebaseUserDelegate {
-    var uid: String {
-        return self.firebaseUser?.uid ?? "12345"
+    var uid: String? {
+        return userUid ?? "12345"
     }
 }

@@ -9,8 +9,8 @@ import SwiftUI
 
 struct UserReportsView: View {
     
-    @EnvironmentObject var reportsModel: ReportsViewModel
-    @EnvironmentObject var userModel: UserViewModel
+    @EnvironmentObject var reportsVM: ReportsViewModel
+    @EnvironmentObject var userVM: UserViewModel
     
     @State private var alertErrorGettingReports = false
     
@@ -25,7 +25,8 @@ struct UserReportsView: View {
                 list
             }
         }
-        .environmentObject(reportsModel)
+        .environmentObject(reportsVM)
+        .environmentObject(userVM)
         .refreshable {
             self.getUserReports()
         }
@@ -39,11 +40,7 @@ struct UserReportsView: View {
     private var list: some View {
         VStack {
             ForEach(reports) { report in
-//                NavigationLink {
-//                    SelectedReportDetailView(reportID: report.id)
-//                } label: {
-//                    ReportCellView(report: report)
-//                }
+
             }
         }
     }

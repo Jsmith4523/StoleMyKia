@@ -14,7 +14,7 @@ import CoreLocation
 struct NewReportView: View {
     
     enum NewReportError: Error {
-        case userLocationError, error
+        case locationError, userIdError, error
     }
     
     @State private var vehicleImage: UIImage?
@@ -50,13 +50,14 @@ struct NewReportView: View {
     @State private var alertSelectLocation = false
     
     @EnvironmentObject var reportsVM: ReportsViewModel
+    @EnvironmentObject var userVM: UserViewModel
     
     @Environment (\.dismiss) var dismiss
     
     var isNotSatisfied: Bool {
-        guard (licensePlate.range(of: ".*[^A-Za-z0-9].*", options: .regularExpression) == nil) else { return true
-        }
-        return (self.licensePlate.isEmpty || !(self.licensePlate.count >= 7)) && !doesNotHaveVehicleIdentification && !(disablesLicensePlateAndVinSection)
+        guard (licensePlate.range(of: ".*[^A-Za-z0-9].*", options: .regularExpression) == nil) else { return true }
+        return (self.licensePlate.isEmpty || self.licensePlate.count < 6)
+        && (!doesNotHaveVehicleIdentification || (self.distinguishableDescription.isEmpty || self.distinguishableDescription.count < 19 || self.distinguishableDescription.count > 301))
     }
     
     var body: some View {
@@ -68,7 +69,7 @@ struct NewReportView: View {
                         Image(uiImage: vehicleImage)
                             .resizable()
                             .scaledToFill()
-                            .frame(width: 100, height: 100)
+                            .frame(width: 150, height: 150)
                             .onTapGesture {
                                 isShowingPhotoRemoveConfirmation.toggle()
                             }
@@ -132,7 +133,7 @@ struct NewReportView: View {
                         Text("Vehicle Identification")
                     } footer: {
                         if doesNotHaveVehicleIdentification {
-                            Text("You do not have any information that could further identify the vehicle you're reporting\n\nDo note that identifying this vehicle may vary depending on the information available in this report")
+                            Text("Note that the difficulty of identifying the vehicle may vary based on the information you have included with this report. Please make sure information is accurate.")
                         } else {
                             Text("Please enter the vehicle's full license plate. Do not include any spaces or special characters. Maximum characters allowed is 8.")
                         }
@@ -144,7 +145,7 @@ struct NewReportView: View {
                 } header: {
                     Text("Distinguishable Details")
                 } footer: {
-                    Text("Describe the incident and include any distinguishable details of the vehicle in the field above. \n\nCharacter limit: 20-150 characters.")
+                    Text("Describe the incident and include any distinguishable details of the vehicle in the field above. \n\nCharacter limit: 20-300 characters.")
                 }
                 
                 Section {
@@ -234,6 +235,7 @@ struct NewReportView: View {
         }
         .sheet(isPresented: $isShowingImagePicker) {
             PhotoPicker(selectedImage: $vehicleImage, source: imagePickerSourceType)
+                .ignoresSafeArea()
         }
         .confirmationDialog("", isPresented: $isShowingPhotoRemoveConfirmation) {
             Button("Remove", role: .destructive) {
@@ -263,23 +265,29 @@ struct NewReportView: View {
         return Location(coordinates: userLocation)
     }
     
-    
     private func upload() {
         do {
             self.isUploading = true
             
+            guard let uid = userVM.uid else {
+                throw NewReportError.userIdError
+            }
+            
             guard let location = usersLocation() ?? location else {
-                throw NewReportError.userLocationError
+                throw NewReportError.locationError
             }
             
             var vehicle = Vehicle(year: vehicleYear, make: vehicleMake, model: vehicleModel, color: vehicleColor)
             try vehicle.licensePlateString(licensePlate)
-            let report = Report(type: reportType, Vehicle: vehicle, details: distinguishableDescription, location: location)
+            let report = Report(uid: uid, type: reportType, Vehicle: vehicle, details: distinguishableDescription, location: location)
+            
             Task {
                 try await reportsVM.uploadReport(report, image: vehicleImage)
+                DispatchQueue.main.async {
+                    dismiss()
+                }
             }
-        } catch NewReportError.userLocationError {
-            print("User location error")
+        } catch NewReportError.locationError {
             self.isUploading = false
         } catch {
             print(error.localizedDescription)
@@ -292,6 +300,7 @@ struct NewReportView_Previews: PreviewProvider {
     static var previews: some View {
         NewReportView()
             .environmentObject(ReportsViewModel())
+            .environmentObject(UserViewModel())
             .tint(Color(uiColor: .label))
     }
 }

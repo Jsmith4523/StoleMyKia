@@ -124,22 +124,23 @@ enum ReportType: String, CaseIterable, Hashable, Identifiable, Codable {
     
     ///Disables the License Plate and Vin information section.
     var disableLicenseAndVinInformation: Bool {
-        switch self {
-        case .attempt:
-            return true
-        case .carjacked:
-            return false
-        case .stolen:
-            return false
-        case .found:
-            return false
-        case .witnessed:
-            return false
-        case .located:
-            return false
-        case .breakIn:
-            return true
-        }
+//        switch self {
+//        case .attempt:
+//            return true
+//        case .carjacked:
+//            return false
+//        case .stolen:
+//            return false
+//        case .found:
+//            return false
+//        case .witnessed:
+//            return false
+//        case .located:
+//            return false
+//        case .breakIn:
+//            return true
+//        }
+        return false
     }
     
     func generateNotificationBody(for vehicle: Vehicle) -> String {

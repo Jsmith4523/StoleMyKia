@@ -11,6 +11,7 @@
 		24065F5A2A3C25120070BC9B /* UserReportsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 24065F592A3C25120070BC9B /* UserReportsView.swift */; };
 		24065F5C2A3C25400070BC9B /* UserBookmarksView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 24065F5B2A3C25400070BC9B /* UserBookmarksView.swift */; };
 		24065F5E2A3D0E960070BC9B /* SettingsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 24065F5D2A3D0E960070BC9B /* SettingsView.swift */; };
+		240910C42A64639E00DC699A /* FirebaseAuthViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 240910C32A64639E00DC699A /* FirebaseAuthViewModel.swift */; };
 		240CD8C92A60A49800D04D1A /* FirebaseDatabasesPaths.swift in Sources */ = {isa = PBXBuildFile; fileRef = 240CD8C82A60A49800D04D1A /* FirebaseDatabasesPaths.swift */; };
 		240CD8CB2A60BACA00D04D1A /* NoNotificationsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 240CD8CA2A60BACA00D04D1A /* NoNotificationsView.swift */; };
 		240CD8CD2A60CA5200D04D1A /* NotificationListView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 240CD8CC2A60CA5200D04D1A /* NotificationListView.swift */; };
@@ -72,7 +73,7 @@
 		2495A02229CAC5DF00457CE7 /* String+EXT.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2495A02129CAC5DF00457CE7 /* String+EXT.swift */; };
 		249A0CE62A63274600A1D108 /* SearchView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 249A0CE52A63274500A1D108 /* SearchView.swift */; };
 		24A2068E2A07A18B00F5DC0C /* User.swift in Sources */ = {isa = PBXBuildFile; fileRef = 24A2068D2A07A18B00F5DC0C /* User.swift */; };
-		24A206902A0826BE00F5DC0C /* UserAccountManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 24A2068F2A0826BE00F5DC0C /* UserAccountManager.swift */; };
+		24A206902A0826BE00F5DC0C /* FirebaseUserManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 24A2068F2A0826BE00F5DC0C /* FirebaseUserManager.swift */; };
 		24A206922A08270300F5DC0C /* Vehicle.swift in Sources */ = {isa = PBXBuildFile; fileRef = 24A206912A08270300F5DC0C /* Vehicle.swift */; };
 		24A206952A08334400F5DC0C /* Location.swift in Sources */ = {isa = PBXBuildFile; fileRef = 24A206942A08334400F5DC0C /* Location.swift */; };
 		24A4CEDE29BFA2CE00B856BC /* UNAuth+EXT.swift in Sources */ = {isa = PBXBuildFile; fileRef = 24A4CEDD29BFA2CE00B856BC /* UNAuth+EXT.swift */; };
@@ -95,6 +96,9 @@
 		24C698362A401B0C003A1DE6 /* UserAccountSettings.swift in Sources */ = {isa = PBXBuildFile; fileRef = 24C698352A401B0C003A1DE6 /* UserAccountSettings.swift */; };
 		24C698382A4025D5003A1DE6 /* UserNotificationSettings.swift in Sources */ = {isa = PBXBuildFile; fileRef = 24C698372A4025D5003A1DE6 /* UserNotificationSettings.swift */; };
 		24C6983A2A402ECD003A1DE6 /* ReportRole.swift in Sources */ = {isa = PBXBuildFile; fileRef = 24C698392A402ECD003A1DE6 /* ReportRole.swift */; };
+		24D441D32A65061D00EEF2D1 /* ApplicationRootView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 24D441D22A65061D00EEF2D1 /* ApplicationRootView.swift */; };
+		24D441D52A6506C300EEF2D1 /* ApplicationAuthView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 24D441D42A6506C300EEF2D1 /* ApplicationAuthView.swift */; };
+		24D441D72A6506DD00EEF2D1 /* ApplicationProgressView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 24D441D62A6506DD00EEF2D1 /* ApplicationProgressView.swift */; };
 		24EAF11729C2A02900B4CBFE /* SFSafariView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 24EAF11629C2A02900B4CBFE /* SFSafariView.swift */; };
 		24EAF11B29C2C10200B4CBFE /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 24EAF11A29C2C10200B4CBFE /* GoogleService-Info.plist */; };
 		24EE41122A59E0A800AF2A11 /* SMKLicensePlateDetector.mlmodel in Sources */ = {isa = PBXBuildFile; fileRef = 24EE41112A59E0A800AF2A11 /* SMKLicensePlateDetector.mlmodel */; };
@@ -111,6 +115,7 @@
 		24065F592A3C25120070BC9B /* UserReportsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserReportsView.swift; sourceTree = "<group>"; };
 		24065F5B2A3C25400070BC9B /* UserBookmarksView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserBookmarksView.swift; sourceTree = "<group>"; };
 		24065F5D2A3D0E960070BC9B /* SettingsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsView.swift; sourceTree = "<group>"; };
+		240910C32A64639E00DC699A /* FirebaseAuthViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FirebaseAuthViewModel.swift; sourceTree = "<group>"; };
 		240CD8C82A60A49800D04D1A /* FirebaseDatabasesPaths.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FirebaseDatabasesPaths.swift; sourceTree = "<group>"; };
 		240CD8CA2A60BACA00D04D1A /* NoNotificationsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NoNotificationsView.swift; sourceTree = "<group>"; };
 		240CD8CC2A60CA5200D04D1A /* NotificationListView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NotificationListView.swift; sourceTree = "<group>"; };
@@ -171,7 +176,7 @@
 		2495A02129CAC5DF00457CE7 /* String+EXT.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "String+EXT.swift"; sourceTree = "<group>"; };
 		249A0CE52A63274500A1D108 /* SearchView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchView.swift; sourceTree = "<group>"; };
 		24A2068D2A07A18B00F5DC0C /* User.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = User.swift; sourceTree = "<group>"; };
-		24A2068F2A0826BE00F5DC0C /* UserAccountManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserAccountManager.swift; sourceTree = "<group>"; };
+		24A2068F2A0826BE00F5DC0C /* FirebaseUserManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FirebaseUserManager.swift; sourceTree = "<group>"; };
 		24A206912A08270300F5DC0C /* Vehicle.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Vehicle.swift; sourceTree = "<group>"; };
 		24A206942A08334400F5DC0C /* Location.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Location.swift; sourceTree = "<group>"; };
 		24A206962A08D29E00F5DC0C /* StoleMyKia.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = StoleMyKia.entitlements; sourceTree = "<group>"; };
@@ -196,6 +201,9 @@
 		24C698352A401B0C003A1DE6 /* UserAccountSettings.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserAccountSettings.swift; sourceTree = "<group>"; };
 		24C698372A4025D5003A1DE6 /* UserNotificationSettings.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserNotificationSettings.swift; sourceTree = "<group>"; };
 		24C698392A402ECD003A1DE6 /* ReportRole.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReportRole.swift; sourceTree = "<group>"; };
+		24D441D22A65061D00EEF2D1 /* ApplicationRootView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ApplicationRootView.swift; sourceTree = "<group>"; };
+		24D441D42A6506C300EEF2D1 /* ApplicationAuthView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ApplicationAuthView.swift; sourceTree = "<group>"; };
+		24D441D62A6506DD00EEF2D1 /* ApplicationProgressView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ApplicationProgressView.swift; sourceTree = "<group>"; };
 		24EAF11629C2A02900B4CBFE /* SFSafariView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SFSafariView.swift; sourceTree = "<group>"; };
 		24EAF11A29C2C10200B4CBFE /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
 		24EE41112A59E0A800AF2A11 /* SMKLicensePlateDetector.mlmodel */ = {isa = PBXFileReference; lastKnownFileType = file.mlmodel; path = SMKLicensePlateDetector.mlmodel; sourceTree = "<group>"; };
@@ -265,6 +273,7 @@
 		240F224A2A350B9B0078F97E /* Views */ = {
 			isa = PBXGroup;
 			children = (
+				24D441D22A65061D00EEF2D1 /* ApplicationRootView.swift */,
 				249254AB2A3840DB0037C43C /* License Scanner */,
 				240F224B2A350BAA0078F97E /* Tabview */,
 				249254A02A37C9D70037C43C /* Auth */,
@@ -433,8 +442,10 @@
 		249254A02A37C9D70037C43C /* Auth */ = {
 			isa = PBXGroup;
 			children = (
+				24D441D42A6506C300EEF2D1 /* ApplicationAuthView.swift */,
 				249254A22A37C9E90037C43C /* NewAccount */,
 				249254A12A37C9E20037C43C /* SignIn */,
+				24D441D62A6506DD00EEF2D1 /* ApplicationProgressView.swift */,
 			);
 			path = Auth;
 			sourceTree = "<group>";
@@ -606,6 +617,7 @@
 				24A5792E29BC5C8700495E6F /* ReportsViewModel.swift */,
 				2437327F29BEF8FC008F4C4E /* NotificationViewModel.swift */,
 				24B897EB29CF5A3B0003BCC8 /* UserViewModel.swift */,
+				240910C32A64639E00DC699A /* FirebaseAuthViewModel.swift */,
 			);
 			path = "View Models";
 			sourceTree = "<group>";
@@ -616,7 +628,7 @@
 				240CD8C82A60A49800D04D1A /* FirebaseDatabasesPaths.swift */,
 				24A662F629C2F45B00AD784F /* ReportsManager.swift */,
 				24EE41152A5A84FB00AF2A11 /* StorageManager.swift */,
-				24A2068F2A0826BE00F5DC0C /* UserAccountManager.swift */,
+				24A2068F2A0826BE00F5DC0C /* FirebaseUserManager.swift */,
 				244BF51829D33F4E00951765 /* ImageCache.swift */,
 			);
 			path = Network;
@@ -821,10 +833,11 @@
 				245B391D29E39E49001DD213 /* VehicleMake.swift in Sources */,
 				24A662FC29C6DD5100AD784F /* UNUserNC+EXT.swift in Sources */,
 				24065F582A3C227A0070BC9B /* UserViewTabSelectionView.swift in Sources */,
+				24D441D52A6506C300EEF2D1 /* ApplicationAuthView.swift in Sources */,
 				24065F5E2A3D0E960070BC9B /* SettingsView.swift in Sources */,
 				24B071A12A363E30000C6B75 /* ReportTimelimeAnnotationView.swift in Sources */,
 				240F225E2A351DB40078F97E /* NoReportsAvaliableView.swift in Sources */,
-				24A206902A0826BE00F5DC0C /* UserAccountManager.swift in Sources */,
+				24A206902A0826BE00F5DC0C /* FirebaseUserManager.swift in Sources */,
 				24A5792929BC567F00495E6F /* ReportAnnotation.swift in Sources */,
 				249A0CE62A63274600A1D108 /* SearchView.swift in Sources */,
 				24065F5A2A3C25120070BC9B /* UserReportsView.swift in Sources */,
@@ -868,6 +881,7 @@
 				249254BF2A39279C0037C43C /* ParkingMapView.swift in Sources */,
 				240F225A2A3510E20078F97E /* ReportCellView.swift in Sources */,
 				24EE41162A5A84FB00AF2A11 /* StorageManager.swift in Sources */,
+				24D441D72A6506DD00EEF2D1 /* ApplicationProgressView.swift in Sources */,
 				245B391729E39159001DD213 /* Color+EXT.swift in Sources */,
 				24A4CEE729C04CBA00B856BC /* ReportAnnotationCallout.swift in Sources */,
 				249254BD2A3926120037C43C /* ParkingMapViewRepresentable.swift in Sources */,
@@ -881,6 +895,7 @@
 				245B391F29E39E55001DD213 /* VehicleModel.swift in Sources */,
 				2426A62A2A243F0E00E78647 /* AnnotationCalloutDelegate.swift in Sources */,
 				249254A82A37D8720037C43C /* PhoneNumberReasonView.swift in Sources */,
+				240910C42A64639E00DC699A /* FirebaseAuthViewModel.swift in Sources */,
 				240F22492A350AD30078F97E /* LicenseScannerDelegate.swift in Sources */,
 				24A206922A08270300F5DC0C /* Vehicle.swift in Sources */,
 				24848AB72A61E38E003E037E /* LicenseTextDetectionManager.swift in Sources */,
@@ -900,6 +915,7 @@
 				24FA56BA2A29284D0074149B /* UIActivityVC.swift in Sources */,
 				2495A02029CAC3DE00457CE7 /* Date+EXT.swift in Sources */,
 				24A662F729C2F45B00AD784F /* ReportsManager.swift in Sources */,
+				24D441D32A65061D00EEF2D1 /* ApplicationRootView.swift in Sources */,
 				249254AF2A3841100037C43C /* LicenseScannerPermissionDeniedView.swift in Sources */,
 				2448C3A52A2A3B1800A72D9F /* JSONSerial+EXT.swift in Sources */,
 				240F226C2A3539A20078F97E /* TimelineMapViewRepresentable.swift in Sources */,
