@@ -1,6 +1,0 @@
-framework module Pods_StoleMyKia {
-  umbrella header "Pods-StoleMyKia-umbrella.h"
-
-  export *
-  module * { export * }
-}
