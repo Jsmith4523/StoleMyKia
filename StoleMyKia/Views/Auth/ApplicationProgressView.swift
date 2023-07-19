@@ -15,6 +15,6 @@ struct ApplicationProgressView: View {
     }
 }
 
-#Preview {
-    ApplicationProgressView()
-}
+//#Preview {
+//    ApplicationProgressView()
+//}

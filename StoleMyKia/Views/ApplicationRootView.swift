@@ -28,7 +28,7 @@ struct ApplicationRootView: View {
     }
 }
 
-#Preview {
-    ApplicationRootView()
-        .environmentObject(FirebaseAuthViewModel())
-}
+//#Preview {
+//    ApplicationRootView()
+//        .environmentObject(FirebaseAuthViewModel())
+//}

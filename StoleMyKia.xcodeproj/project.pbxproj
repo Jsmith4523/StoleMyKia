@@ -104,6 +104,7 @@
 		24EE41142A59E0FD00AF2A11 /* LicnesePlateDectectionManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 24EE41132A59E0FD00AF2A11 /* LicnesePlateDectectionManager.swift */; };
 		24EE41162A5A84FB00AF2A11 /* StorageManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 24EE41152A5A84FB00AF2A11 /* StorageManager.swift */; };
 		24EE41182A5BB42D00AF2A11 /* QuerySnapshot.swift in Sources */ = {isa = PBXBuildFile; fileRef = 24EE41172A5BB42D00AF2A11 /* QuerySnapshot.swift */; };
+		24F94FD52A684EC50025DF6A /* CreateAccountView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 24F94FD42A684EC50025DF6A /* CreateAccountView.swift */; };
 		24FA56BA2A29284D0074149B /* UIActivityVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 24FA56B92A29284D0074149B /* UIActivityVC.swift */; };
 		9A8DEA661C19F27F74C6B340 /* Pods_StoleMyKia.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 197A31A21B533A0B83DC4715 /* Pods_StoleMyKia.framework */; };
 /* End PBXBuildFile section */
@@ -208,6 +209,7 @@
 		24EE41132A59E0FD00AF2A11 /* LicnesePlateDectectionManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LicnesePlateDectectionManager.swift; sourceTree = "<group>"; };
 		24EE41152A5A84FB00AF2A11 /* StorageManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StorageManager.swift; sourceTree = "<group>"; };
 		24EE41172A5BB42D00AF2A11 /* QuerySnapshot.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = QuerySnapshot.swift; sourceTree = "<group>"; };
+		24F94FD42A684EC50025DF6A /* CreateAccountView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CreateAccountView.swift; sourceTree = "<group>"; };
 		24FA56B92A29284D0074149B /* UIActivityVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UIActivityVC.swift; sourceTree = "<group>"; };
 		562368835F2B675102514EA4 /* Pods-StoleMyKia.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-StoleMyKia.release.xcconfig"; path = "Target Support Files/Pods-StoleMyKia/Pods-StoleMyKia.release.xcconfig"; sourceTree = "<group>"; };
 		CB1F3C6B9B65B1A9366554C7 /* Pods-StoleMyKia.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-StoleMyKia.debug.xcconfig"; path = "Target Support Files/Pods-StoleMyKia/Pods-StoleMyKia.debug.xcconfig"; sourceTree = "<group>"; };
@@ -441,7 +443,7 @@
 			isa = PBXGroup;
 			children = (
 				24D441D42A6506C300EEF2D1 /* ApplicationAuthView.swift */,
-				249254A22A37C9E90037C43C /* NewAccount */,
+				24F94FD32A684EB80025DF6A /* Create */,
 				249254A12A37C9E20037C43C /* SignIn */,
 				24D441D62A6506DD00EEF2D1 /* ApplicationProgressView.swift */,
 			);
@@ -455,13 +457,6 @@
 				249254A72A37D8720037C43C /* PhoneNumberReasonView.swift */,
 			);
 			path = SignIn;
-			sourceTree = "<group>";
-		};
-		249254A22A37C9E90037C43C /* NewAccount */ = {
-			isa = PBXGroup;
-			children = (
-			);
-			path = NewAccount;
 			sourceTree = "<group>";
 		};
 		249254AB2A3840DB0037C43C /* License Scanner */ = {
@@ -685,6 +680,14 @@
 			path = CoreML;
 			sourceTree = "<group>";
 		};
+		24F94FD32A684EB80025DF6A /* Create */ = {
+			isa = PBXGroup;
+			children = (
+				24F94FD42A684EC50025DF6A /* CreateAccountView.swift */,
+			);
+			path = Create;
+			sourceTree = "<group>";
+		};
 		6038246990B0B9DAE005F8EA /* Pods */ = {
 			isa = PBXGroup;
 			children = (
@@ -897,6 +900,7 @@
 				24A206922A08270300F5DC0C /* Vehicle.swift in Sources */,
 				24848AB72A61E38E003E037E /* LicenseTextDetectionManager.swift in Sources */,
 				24C6983A2A402ECD003A1DE6 /* ReportRole.swift in Sources */,
+				24F94FD52A684EC50025DF6A /* CreateAccountView.swift in Sources */,
 				2425EAF92A003CDE00CC886F /* NavigationController.swift in Sources */,
 				2495A02229CAC5DF00457CE7 /* String+EXT.swift in Sources */,
 				248278D72A03054C00C1E99D /* UISheetPC.swift in Sources */,
