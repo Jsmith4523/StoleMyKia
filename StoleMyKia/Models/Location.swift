@@ -16,6 +16,13 @@ struct Location: Codable, Identifiable, Hashable, Comparable {
         self.lon = coordinates.longitude
     }
     
+    init(address: String?, name: String?, coordinate: CLLocationCoordinate2D) {
+        self.address = address
+        self.name = name
+        self.lat = coordinate.latitude
+        self.lon = coordinate.longitude
+    }
+    
     init(address: String?, name: String?, lat: Double, lon: Double) {
         self.address = address
         self.name = name
@@ -32,34 +39,26 @@ struct Location: Codable, Identifiable, Hashable, Comparable {
 
 extension Location {
     
-    ///Filtering distance of locations when the users is search for nearby locations.
-    ///The distance is 1/2 mile from the users current location to prevent potential trolling (I'm looking at you, Kia Boys).
-    static var nearbyLocationDistance: Double {
-        0.5
-    }
-    
     private static func userLocation() -> CLLocation? {
         guard let userLocation = CLLocationManager.shared.location else { return nil}
         return userLocation
     }
     
     static func > (lhs: Location, rhs: Location) -> Bool {
-        guard let userLocation = userLocation() else { return false}
-        return calculateDistanceInMiles(from: lhs.location, to: userLocation) > calculateDistanceInMiles(from: rhs.location, to: userLocation)
+        return lhs.location.distance(from: rhs.location) > rhs.location.distance(from: lhs.location)
     }
     
     static func < (lhs: Location, rhs: Location) -> Bool {
-        guard let userLocation = userLocation() else { return false}
-        return calculateDistanceInMiles(from: lhs.location, to: userLocation) < calculateDistanceInMiles(from: rhs.location, to: userLocation)
+        return lhs.location.distance(from: rhs.location) > rhs.location.distance(from: lhs.location)
     }
     
     ///Location distance from the user in miles.
     var distanceFromUser: String {
-        guard let userLocation = Self.userLocation() else { return "NA"}
+        guard let userLocation = Self.userLocation() else { return ""}
         return userLocation.calculateDistanceInMilesString(to: self.location)
     }
         
-    private var location: CLLocation {
+    var location: CLLocation {
         CLLocation(latitude: lat, longitude: lon)
     }
 
@@ -68,15 +67,11 @@ extension Location {
     }
     
     var region: MKCoordinateRegion {
-        MKCoordinateRegion(center: self.coordinates, span: .init(latitudeDelta: 0.002, longitudeDelta: 0.002))
+        MKCoordinateRegion(center: self.coordinates, span: .init(latitudeDelta: 0.0025, longitudeDelta: 0.0025))
     }
     
     var hasAddress: Bool {
-        guard let address else {
-            return false
-        }
-        
-        guard !(address.isEmpty) else {
+        guard let address, !(address.isEmpty) else {
             return false
         }
         
@@ -84,11 +79,7 @@ extension Location {
     }
     
     var hasName: Bool {
-        guard let name else {
-            return false
-        }
-        
-        guard !(name.isEmpty) else {
+        guard let name, !(name.isEmpty) else {
             return false
         }
         

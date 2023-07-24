@@ -70,7 +70,7 @@ enum ReportType: String, CaseIterable, Hashable, Identifiable, Codable {
         case .found:
             return .purple
         case .witnessed:
-            return .systemBlue
+            return .red
         case .located:
             return .purple
         case .carjacked:
@@ -78,7 +78,7 @@ enum ReportType: String, CaseIterable, Hashable, Identifiable, Codable {
         case .attempt:
             return .orange
         case .breakIn:
-            return .orange
+            return .systemOrange
         }
     }
     

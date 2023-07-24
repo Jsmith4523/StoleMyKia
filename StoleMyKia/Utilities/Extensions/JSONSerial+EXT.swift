@@ -10,6 +10,10 @@ import FirebaseFirestore
 
 extension JSONSerialization {
     
+    enum JSONSearizationError: Error {
+        case incompatible
+    }
+    
     ///Create object from input.
     static func objectFromData<T: Codable>(_ object: T.Type, jsonObject: Any?) -> T? {
         guard let jsonObject else { return nil }
@@ -32,8 +36,12 @@ extension JSONSerialization {
         return jsonObject
     }
     
-    ///Creates objects from input.
+    ///Creates QuerySnapshotData from input.
     static func objectsFromFoundationObjects<T: Codable>(_ jsonObjects: Any, to object: T.Type) throws -> [T] {
+        guard let jsonObjects = jsonObjects as? [[String: Any]] else {
+            throw Self.JSONSearizationError.incompatible
+        }
+        
         let data = try JSONSerialization.data(withJSONObject: jsonObjects)
         let objects = try JSONDecoder().decode([T].self, from: data)
         return objects

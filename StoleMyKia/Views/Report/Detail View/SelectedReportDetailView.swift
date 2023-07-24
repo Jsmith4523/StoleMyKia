@@ -40,12 +40,10 @@ struct SelectedReportDetailView: View {
                                 vehicleImageView
                             } else {
                                 SelectedReportDetailMapView(report: report)
-                                    .frame(height: 175)
-                                    .cornerRadius(20)
+                                    .frame(height: 215)
                                     .onTapGesture {
                                         presentTimelineMapView()
                                     }
-                                    .padding()
                             }
                             VStack(spacing: 30) {
                                 VStack(alignment: .leading) {

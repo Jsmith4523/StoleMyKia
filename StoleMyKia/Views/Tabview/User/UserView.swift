@@ -18,7 +18,7 @@ struct UserView: View {
     
     var body: some View {
         NavigationView {
-            VStack {
+            VStack(spacing: 0) {
                 UserViewTabSelectionView(selection: $tabViewSelection)
                 TabView(selection: $tabViewSelection) {
                     UserReportsView()

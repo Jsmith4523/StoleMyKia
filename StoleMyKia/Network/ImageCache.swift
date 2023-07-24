@@ -14,9 +14,7 @@ class ImageCache {
     
     private var cache = NSCache<AnyObject, AnyObject>()
     
-    private init() {
-        
-    }
+    private init() {}
     
     func getImage(_ urlString: String?, completion: @escaping (UIImage?)->Void) {
         if let image = cache.object(forKey: urlString as AnyObject) as? UIImage {

@@ -28,7 +28,7 @@ enum ReportRole: Identifiable, Codable, Equatable {
     var title: String {
         switch self {
         case .original:
-            return "Original Report"
+            return "Report"
         case .update(_):
             return "Update"
         }

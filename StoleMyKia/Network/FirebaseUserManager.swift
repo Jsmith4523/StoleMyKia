@@ -20,7 +20,7 @@ enum FirebaseUserManagerError: Error {
 class FirebaseUserManager {
     
     ///The Logged in Auth user id
-    private var uid: String?
+    private var uid: String? = "12345"
     
     private let db = Database.database()
     private let fs = Firestore.firestore()
@@ -123,7 +123,7 @@ class FirebaseUserManager {
     func getUserReports() async throws -> [Report] {
         guard let uid else { throw FirebaseUserManagerError.userIdError}
         
-        let documents = try await firestoreReference.whereField("uid", isEqualTo: uid).getDocuments().documents
+        let documents = try await firestoreReference.whereField("uid", isEqualTo: uid).getDocuments().documents.map({$0.data()})
         let userReports = try JSONSerialization.objectsFromFoundationObjects(documents, to: Report.self)
         
         return userReports

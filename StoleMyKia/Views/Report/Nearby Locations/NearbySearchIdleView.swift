@@ -10,8 +10,14 @@ import SwiftUI
 struct NearbySearchIdleView: View {
     var body: some View {
         VStack {
-            Text("")
+            Spacer()
+            Text("Begin searching for nearby locations..")
+                .font(.system(size: 17))
+                .foregroundColor(.gray)
+            Spacer()
         }
+        .multilineTextAlignment(.center)
+        .padding()
     }
 }
 

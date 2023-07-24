@@ -9,71 +9,65 @@ import SwiftUI
 
 struct UserReportsView: View {
     
+    enum UserReportsLoadStatus {
+        case loading, loaded
+    }
+    
     @EnvironmentObject var reportsVM: ReportsViewModel
     @EnvironmentObject var userVM: UserViewModel
     
-    @State private var alertErrorGettingReports = false
+    @State private var userReportsLoadStatus: UserReportsLoadStatus = .loading
     
     @State private var reports = [Report]()
-    
+            
     var body: some View {
-        ScrollView {
-            switch reports.isEmpty {
-            case true:
-                noUserReports
-            case false:
+        ZStack {
+            switch userReportsLoadStatus {
+            case .loading:
+                ReportSkeletonView()
+            case .loaded:
                 list
             }
         }
         .environmentObject(reportsVM)
         .environmentObject(userVM)
-        .refreshable {
-            self.getUserReports()
+        .task {
+            await onAppearFetchUserReports()
         }
-        .alert("That's an error!", isPresented: $alertErrorGettingReports) {
-            Button("OK") {}
-        } message: {
-            Text("There was an issue gathering your reports. Please check your network and try again.")
+        .onReceive(userVM.$userReports) { reports in
+            self.reports = reports
         }
     }
     
     private var list: some View {
         VStack {
-            ForEach(reports) { report in
-
+            switch reports.isEmpty {
+            case true:
+                Text("Your reports are empty")
+            case false:
+                ScrollView {
+                    FeedListView(reports: $reports)
+                        .environmentObject(reportsVM)
+                        .environmentObject(userVM)
+                }
+                .refreshable {
+                    await userVM.fetchUserReports()
+                }
             }
         }
     }
     
-    var noUserReports: some View {
-        VStack {
-            Spacer()
-                .frame(height: 135)
-            VStack(spacing: 15) {
-                Image(systemName: UserTabViewSelection.reports.symbol)
-                    .resizable()
-                    .scaledToFit()
-                    .frame(width: 55, height: 55)
-                Text("Any reports you make will appear here.")
-                    .font(.system(size: 22).bold())
-                Text("This includes any updates you have made to existing reports")
-                    .font(.system(size: 16))
-                    .foregroundColor(.gray)
-            }
-        }
-        .multilineTextAlignment(.center)
-        .padding(.horizontal)
-    }
-    
-    
-    private func getUserReports() {
-        
+    private func onAppearFetchUserReports() async {
+        guard reports.isEmpty else { return }
+        await userVM.fetchUserReports()
+        self.userReportsLoadStatus = .loaded
     }
 }
 
 struct UserReportsView_Previews: PreviewProvider {
     static var previews: some View {
-        UserReportsView().noUserReports
+        UserReportsView()
             .environmentObject(UserViewModel())
+            .environmentObject(ReportsViewModel())
     }
 }

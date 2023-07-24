@@ -16,7 +16,7 @@ final class ReportsViewModel: NSObject, ObservableObject {
     @Published var isShowingLicensePlateScannerView = false
 
     @Published var feedLoadStatus: FeedLoadStatus = .loading
-    @Published var reports: [Report] = .testReports()
+    @Published var reports: [Report] = []
     
     private let manager = ReportManager.manager
 
@@ -54,6 +54,20 @@ final class ReportsViewModel: NSObject, ObservableObject {
     
     deinit {
         print("Dead: ReportsViewModel")
+    }
+}
+
+//MARK: - TimelineMapViewDelegate
+extension ReportsViewModel: TimelineMapViewDelegate {
+    func getTimelineUpdates(updateIds: [UUID]) async throws -> [Report] {
+        var reports = [Report?]()
+        
+        for updateId in updateIds {
+            let report = try await manager.fetchSingleReport(updateId, errorIfUnavaliable: false)
+            reports.append(report)
+        }
+        
+        return reports.compactMap({$0})
     }
 }
 

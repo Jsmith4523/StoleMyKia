@@ -24,6 +24,12 @@ extension Date {
     var time: String {
         self.formatted(.dateTime.hour().minute())
     }
+    
+    func timeAgoDisplay() -> String {
+        let formatter = RelativeDateTimeFormatter()
+        formatter.unitsStyle = .full
+        return formatter.localizedString(for: self, relativeTo: Date())
+    }
 }
 
 extension TimeInterval {
@@ -39,5 +45,20 @@ extension TimeInterval {
     
     var full: String {
         Date(timeIntervalSince1970: self).formatted(date: .abbreviated, time: .shortened)
+    }
+    
+    func timeAgoDisplay() -> String {
+        let formatter = RelativeDateTimeFormatter()
+        formatter.unitsStyle = .full
+        let date = Date(timeIntervalSince1970: self)
+        return formatter.localizedString(for: date, relativeTo: Date())
+    }
+    
+    func timeBetweenDates(interval: TimeInterval) -> String {
+        let formatter = RelativeDateTimeFormatter()
+        formatter.unitsStyle = .short
+        let date = Date(timeIntervalSince1970: self)
+        let referenceDate = Date(timeIntervalSince1970: interval)
+        return formatter.localizedString(for: date, relativeTo: referenceDate)
     }
 }

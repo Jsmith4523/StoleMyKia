@@ -49,3 +49,17 @@ extension CLLocation {
         return "\(String(format: "%.2f", miles)) \(miles > 1 ? "miles" : "mile") away"
     }
 }
+
+extension CLLocationCoordinate2D {
+    
+    var location: CLLocation {
+        CLLocation(latitude: self.latitude, longitude: self.longitude)
+    }
+}
+
+extension MKCoordinateSpan {
+    
+    static var halfAMile: MKCoordinateSpan {
+        return MKCoordinateSpan(latitudeDelta: 0.007236, longitudeDelta: 0.007236)
+    }
+}

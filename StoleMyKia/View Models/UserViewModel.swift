@@ -16,6 +16,9 @@ final class UserViewModel: ObservableObject {
         case loading, loaded
     }
     
+    @Published private(set) var userReports = [Report]()
+    @Published private(set) var userBookmarks = [Report]()
+    
     @Published private(set) var rootViewLoadStatus: RootViewLoadStatus = .loaded
                 
     @Published private(set) var firebaseUser: FirebaseUser?
@@ -32,8 +35,13 @@ final class UserViewModel: ObservableObject {
         return try await firebaseManager.getUserReports()
     }
     
-    func fetchUserReports() async throws -> [Report] {
-        return try await firebaseManager.getUserReports()
+    @MainActor
+    func fetchUserReports() async {
+        guard let reports = try? await firebaseManager.getUserReports() else {
+            return
+        }
+        
+        self.userReports = reports
     }
     
     func bookmarkReport(_ id: UUID) async throws {

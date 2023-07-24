@@ -51,10 +51,6 @@ class ReportManager {
     /// - Returns: An array of reports.
     /// - Throws: Error if the user location settings are not enabled or documents could not be retrieved.
     func fetch() async throws -> [Report] {
-        guard CLLocationManager.shared.authorizationStatus.isAuthorized else {
-            throw ReportManagerError.locationServicesDenied
-        }
-                
         let documents = try await self.collection.getDocuments()
         let reports = documents.reportsFromSnapshot()
         
@@ -88,6 +84,10 @@ class ReportManager {
         
         return report
     }
+    
+//    func fetchUpdates(_ updates: [UUID]) async throws -> [Report] {
+//        
+//    }
     
     ///Retrieves reports from Firestore Database with a matching dot notation
     ///- Parameters:

@@ -12,10 +12,24 @@ import SwiftUI
 
 struct Report: Identifiable, Codable, Comparable {
     
+    ///init with requried details
     init(uid: String, type: ReportType, Vehicle: Vehicle, details: String, location: Location) {
         self.dt = Date.now.epoch
+        self.uid = uid
         self.reportType = type
         self.vehicle = Vehicle
+        self.distinguishableDetails = details
+        self.location = location
+        self.setAsOriginal()
+    }
+    
+    ///Init with required detail and optional vehicle image url.
+    init(uid: String, type: ReportType, Vehicle: Vehicle, vehicleImageUrl: String?, details: String, location: Location) {
+        self.dt = Date.now.epoch
+        self.uid = uid
+        self.reportType = type
+        self.vehicle = Vehicle
+        self.imageURL = vehicleImageUrl
         self.distinguishableDetails = details
         self.location = location
         self.setAsOriginal()
@@ -24,7 +38,7 @@ struct Report: Identifiable, Codable, Comparable {
     var id = UUID()
     
     ///The logged in Firebase Auth users uid
-    var uid: String?
+    let uid: String
     ///The time of this report in epoch
     let dt: TimeInterval
     ///The type of report
@@ -169,6 +183,10 @@ extension Report {
     ) -> Bool {
         (self.vehicle.vehicleYear == year || self.reportType == reportType || self.vehicle.vehicleMake == make || self.vehicle.vehicleModel == model || self.verifyLicensePlate(input) || self.verifyDescription(input))
     }
+    
+    func timeSinceString() -> String {
+        self.dt.timeAgoDisplay()
+    }
 }
 
 extension [Report] {
@@ -192,6 +210,10 @@ extension [Report] {
     }
     
     static func testReports() -> [Report] {
-        return [Report]()
+        return [
+            .init(uid: "", type: .stolen, Vehicle: .init(year: 2017, make: .hyundai, model: .elantra, color: .red), vehicleImageUrl: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQOSQgw1Nar0ReZayYVd1z5-0SCka8RzeW3ZbhMZe3mxZ1aQ_6eiq7Rgx-RLHDU4aHYp8k7QG2JZhY&s=3", details: "Testing this report as the text is truncating when within the scrollview. Not sure why! Help!", location: .init(address: "123 Fun Street", name: "McDonald's", lat: 0, lon: 0)),
+            .init(uid: "", type: .found, Vehicle: .init(year: 2021, make: .kia, model: .forte, color: .red), details: "", location: .init(coordinates: .init())),
+            .init(uid: "", type: .breakIn, Vehicle: .init(year: 2013, make: .hyundai, model: .elantra, color: .orange), details: "", location: .init(coordinates: .init()))
+        ]
     }
 }

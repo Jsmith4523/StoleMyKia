@@ -20,7 +20,7 @@ struct SelectedReportDetailMapView: UIViewRepresentable {
         let mapView = MKMapView()
         mapView.delegate = context.coordinator
         mapView.mapType = .mutedStandard
-        mapView.showsUserLocation = true
+        mapView.showsUserLocation = false
         mapView.isUserInteractionEnabled = false
         
         let annotation = ReportAnnotation(report: report)

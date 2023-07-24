@@ -18,8 +18,7 @@ struct FeedListView: View {
         
     var body: some View {
         ZStack {
-            Color(uiColor: .opaqueSeparator).opacity(0.16).ignoresSafeArea()
-            VStack(spacing: 25) {
+            VStack(spacing: 11) {
                 ForEach(reports.sorted(by: >)) { report in
                     ReportCellView(report: report)
                         .onTapGesture {
@@ -27,6 +26,7 @@ struct FeedListView: View {
                         }
                 }
             }
+            .background(Color(uiColor: .opaqueSeparator).opacity(0.16))
         }
         .environmentObject(reportsVM)
         .environmentObject(userModel)

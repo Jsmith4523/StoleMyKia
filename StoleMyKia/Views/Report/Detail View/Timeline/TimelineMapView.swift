@@ -9,7 +9,7 @@ import SwiftUI
 import MapKit
 
 struct TimelineMapView: View {
-        
+            
     let report: Report
     
     @StateObject private var timelineMapCoordinator = TimelineMapViewCoordinator()
@@ -33,20 +33,54 @@ struct TimelineMapView: View {
                         Image(systemName: "xmark")
                     }
                 }
+                ToolbarItemGroup(placement: .navigationBarTrailing) {
+                    if timelineMapCoordinator.isLoading {
+                        ProgressView()
+                    } else {
+                        Button {
+                            refresh()
+                        } label: {
+                            Image(systemName: "arrow.clockwise")
+                        }
+                    }
+                    
+                    if !(timelineMapCoordinator.isLoading) {
+                        Button {
+                            timelineMapCoordinator.mapViewSheetMode = .list
+                        } label: {
+                            Image(systemName: "list.dash")
+                        }
+                    }
+                }
             }
         }
         .environmentObject(reportsVM)
-        .sheet(item: $timelineMapCoordinator.selectedUpdateReport) { report in
-            SelectedReportDetailView(report: report, timelineMapViewMode: .dismissWhenSelected)
-                .environmentObject(reportsVM)
+        .onAppear {
+            timelineMapCoordinator.setDelegate(reportsVM)
         }
         .task {
-            await timelineMapCoordinator.getUpdates(report: report)
+            await timelineMapCoordinator.getUpdates(report)
         }
         .alert("Uh oh", isPresented: $timelineMapCoordinator.showAlert) {
             Button("Okay") { dismiss() }
         } message: {
             Text(timelineMapCoordinator.alertReportError?.rawValue ?? "There was an error")
+        }
+        .sheet(item: $timelineMapCoordinator.mapViewSheetMode) { mode in
+            switch mode {
+            case .list:
+                TimelineListView()
+                    .environmentObject(timelineMapCoordinator)
+            case .report(let report):
+                SelectedReportDetailView(report: report, timelineMapViewMode: .dismissWhenSelected)
+                    .environmentObject(reportsVM)
+            }
+        }
+    }
+    
+    private func refresh() {
+        Task {
+            await timelineMapCoordinator.refreshForNewUpdates()
         }
     }
 }

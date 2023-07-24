@@ -23,15 +23,13 @@ struct LocationSearchCellView: View {
                 Text(location.distanceFromUser)
                     .font(.system(size: 13.75))
                     .foregroundColor(.gray)
+                if isSelected {
+                    Text("Selected")
+                        .font(.system(size: 13).bold())
+                        .foregroundColor(.green)
+                }
             }
             Spacer()
-            if isSelected {
-                Image(systemName: "checkmark.circle.fill")
-                    .resizable()
-                    .scaledToFit()
-                    .frame(width: 25, height: 25)
-                    .foregroundColor(.blue)
-            }
         }
         .padding()
         .onAppear {

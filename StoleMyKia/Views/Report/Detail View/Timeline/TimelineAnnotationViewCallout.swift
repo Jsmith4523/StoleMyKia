@@ -7,6 +7,12 @@
 
 import UIKit
 
+protocol TimelineAnnotationViewCalloutDelegate: AnyObject {
+    //When the users presses the information button, this method will call
+    //and a sheet will present the report they've selected.
+    func didSelectReport(_ report: Report)
+}
+
 class TimelineAnnotationViewCallout: UIView {
     
     private var reportTypeLabel: UILabel = {
@@ -34,20 +40,24 @@ class TimelineAnnotationViewCallout: UIView {
         return button
     }()
     
+    weak private var timelineAnnotationCalloutDelegate: TimelineAnnotationViewCalloutDelegate?
+    
     private var isSelectedReport: Bool
     private var report: Report
-    private var timelineMapViewCoordinator: TimelineMapViewCoordinator
     
-    init(report: Report, timelineMapViewCoordinator: TimelineMapViewCoordinator, selectedReportId: UUID) {
+    init(report: Report, selectedReportId: UUID) {
         self.report                     = report
         self.isSelectedReport           = report.id == selectedReportId
-        self.timelineMapViewCoordinator = timelineMapViewCoordinator
         super.init(frame: .zero)
         setupViews()
     }
     
     required init?(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
+    }
+    
+    func setDelegate(_ delegate: TimelineAnnotationViewCalloutDelegate) {
+        self.timelineAnnotationCalloutDelegate = delegate
     }
     
     private func setupViews() {
@@ -118,6 +128,10 @@ class TimelineAnnotationViewCallout: UIView {
     }
     
     @objc private func presentReportDetailView() {
-        self.timelineMapViewCoordinator.selectedUpdateReport = report
+        self.timelineAnnotationCalloutDelegate?.didSelectReport(report)
+    }
+    
+    deinit {
+        timelineAnnotationCalloutDelegate = nil
     }
 }

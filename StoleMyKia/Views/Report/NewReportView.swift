@@ -13,8 +13,11 @@ import CoreLocation
 
 struct NewReportView: View {
     
-    enum NewReportError: Error {
-        case locationError, userIdError, error
+    enum NewReportError: String, Error {
+        case locationError = "Please select a location"
+        case userIdError = "Something went wrong. You do not appear to be signed in. Please contact the developer!"
+        case error = "We ran into an error when completing your request. Please try again."
+        case detailIsEmpty = "Please enter details regarding your vehicle and the incident you are reporting"
     }
     
     @State private var vehicleImage: UIImage?
@@ -46,6 +49,7 @@ struct NewReportView: View {
     @State private var isShowingPhotoRemoveConfirmation = false
         
     @State private var isUploading = false
+    @State private var alertReason: NewReportError?
     @State private var alertErrorUploading = false
     @State private var alertSelectLocation = false
     
@@ -56,8 +60,12 @@ struct NewReportView: View {
     
     var isNotSatisfied: Bool {
         guard (licensePlate.range(of: ".*[^A-Za-z0-9].*", options: .regularExpression) == nil) else { return true }
-        return (self.licensePlate.isEmpty || self.licensePlate.count < 6)
-        && (!doesNotHaveVehicleIdentification || (self.distinguishableDescription.isEmpty || self.distinguishableDescription.count < 19 || self.distinguishableDescription.count > 301))
+        if (doesNotHaveVehicleIdentification) {
+            return (self.distinguishableDescription.isEmpty || self.distinguishableDescription.count < 19 || self.distinguishableDescription.count > 301)
+        } else {
+            return (self.licensePlate.isEmpty || self.licensePlate.count < 6)
+            || (self.distinguishableDescription.isEmpty || self.distinguishableDescription.count < 19 || self.distinguishableDescription.count > 301)
+        }
     }
     
     var body: some View {
@@ -145,7 +153,7 @@ struct NewReportView: View {
                 } header: {
                     Text("Distinguishable Details")
                 } footer: {
-                    Text("Describe the incident and include any distinguishable details of the vehicle in the field above. \n\nCharacter limit: 20-300 characters.")
+                    Text("Describe the incident and include any distinguishable details of the vehicle in the field above. \n\nCharacter limit: 20-400 characters.")
                 }
                 
                 Section {
@@ -230,8 +238,8 @@ struct NewReportView: View {
         .interactiveDismissDisabled()
         .tint(Color(uiColor: .label))
         .disabled(isUploading)
-        .sheet(isPresented: $isShowingLocationView) {
-            LocationSearchView(location: $location)
+        .customSheetView(isPresented: $isShowingLocationView, detents: [.large()], showsIndicator: true) {
+            NearbyLocationSearchView(location: $location)
         }
         .sheet(isPresented: $isShowingImagePicker) {
             PhotoPicker(selectedImage: $vehicleImage, source: imagePickerSourceType)
@@ -244,10 +252,10 @@ struct NewReportView: View {
         } message: {
             Text("Remove Image?")
         }
-        .alert("Error uploading report", isPresented: $alertErrorUploading) {
+        .alert("Unable to upload", isPresented: $alertErrorUploading) {
             Button("OK") {}
         } message: {
-            Text("There was a problem uploading your report. Please try again later")
+            Text(alertReason?.rawValue ?? "We ran into a problem completing that request. Please try again")
         }
         .alert("Location not selected", isPresented: $alertSelectLocation) {
             Button("OK") { isShowingLocationView.toggle()}
@@ -273,6 +281,10 @@ struct NewReportView: View {
                 throw NewReportError.userIdError
             }
             
+            guard !(distinguishableDescription.isEmpty) else {
+                throw NewReportError.detailIsEmpty
+            }
+                        
             guard let location = usersLocation() ?? location else {
                 throw NewReportError.locationError
             }
@@ -282,16 +294,22 @@ struct NewReportView: View {
             let report = Report(uid: uid, type: reportType, Vehicle: vehicle, details: distinguishableDescription, location: location)
             
             Task {
-                try await reportsVM.uploadReport(report, image: vehicleImage)
+                guard let _ = try? await reportsVM.uploadReport(report, image: vehicleImage) else {
+                    throw NewReportError.error
+                }
                 DispatchQueue.main.async {
                     dismiss()
                 }
             }
         } catch NewReportError.locationError {
             self.isUploading = false
+            self.alertSelectLocation.toggle()
         } catch {
-            print(error.localizedDescription)
+            if let error = error as? NewReportError {
+                self.alertReason = error
+            }
             self.isUploading = false
+            self.alertErrorUploading = true
         }
     }
 }

@@ -13,6 +13,7 @@ enum FeedLoadStatus {
 
 struct FeedView: View {
     
+    @State private var isShowingNearbyMapView = false
     @State private var isShowingNewReportView = false
     
     @EnvironmentObject var userVM: UserViewModel
@@ -46,8 +47,15 @@ struct FeedView: View {
                 await onAppearFetchReports()
             }
             .toolbar {
-                Button("New Report") {
-                    self.isShowingNewReportView.toggle()
+                Button {
+                    isShowingNearbyMapView.toggle()
+                } label: {
+                    Image(systemName: "map")
+                }
+                Button {
+                    isShowingNewReportView.toggle()
+                } label: {
+                    Image(systemName: "exclamationmark.bubble")
                 }
             }
         }
@@ -55,6 +63,9 @@ struct FeedView: View {
             NewReportView()
                 .environmentObject(reportsVM)
                 .environmentObject(userVM)
+        }
+        .fullScreenCover(isPresented: $isShowingNearbyMapView) {
+            
         }
     }
     

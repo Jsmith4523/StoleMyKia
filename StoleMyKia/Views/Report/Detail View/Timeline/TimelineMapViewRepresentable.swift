@@ -40,76 +40,103 @@ struct TimelineMapViewRepresentabe: UIViewRepresentable {
 
 final class TimelineMapViewCoordinator: NSObject, MKMapViewDelegate, ObservableObject {
     
-    enum TimelineAlertMode: String {
+    enum TimelineMapViewSheetMode: Identifiable {
+        case list
+        case report(Report)
+        
+        var id: String {
+            switch self {
+            case .list:
+                return "List"
+            case .report(_):
+                return "Report"
+            }
+        }
+    }
+    
+    enum TimelineAlertMode: String, Error {
         case error = "There was an error with that request. Please try again later."
         case originalReportNoLongerExist = "Sorry, the original report is no longer avaliable."
         case noLongerExist = "Sorry, this report no longer unavaliable."
         case noUpdates = "Not updates have been made yet."
     }
-        
-    @Published private var reports = [Report]() {
-        didSet {
-           setupMapForUpdateReports()
-        }
-    }
+    
+    @Published var isShowingTimelineListView = false
+    @Published private(set) var isLoading = false
+    @Published private(set) var reports = [Report]()
+    @Published private(set) var report: Report?
     
     @Published var showAlert = false
     @Published var alertReportError: TimelineAlertMode? {
         didSet {
-            self.showAlert = true
+            presentAlert()
         }
     }
     
-    @Published var selectedUpdateReport: Report?
+    ///The report the users selected from the map
+    @Published var mapViewSheetMode: TimelineMapViewSheetMode?
     
-    ///The UUID of the selected report
+    ///The UUID of the report
     private var reportId: UUID!
     private var isOriginalReport: Bool!
     
     var mapView: MKMapView?
+    
     weak private var timelineMapViewDelegate: TimelineMapViewDelegate?
         
     func setDelegate(_ delegate: TimelineMapViewDelegate) {
         self.timelineMapViewDelegate = delegate
     }
     
-    override init() {
-        super.init()
-    }
-    
     /// Fetch reports that are updates to this report or its parent.
     /// - Parameter role: The role of the report.
-    func getUpdates(report: Report) async {
+    @MainActor
+    func getUpdates(_ report: Report) async {
         do {
+            self.isLoading = true
+            self.report = report
             self.reportId = report.id
             self.isOriginalReport = report.role.hasParent
             
-            var reports = [Report?]()
+            var reports = [Report]()
             
-            //Fetching the original report
+           // Fetching the original report
             let originalReport = try await ReportManager.manager.fetchSingleReport(report.role.associatedValue)
+            
+            guard let originalReport else {
+                throw ReportManagerError.doesNotExist
+            }
+            
             reports.append(originalReport)
             
+            guard let updateIds = originalReport.updates else {
+                throw TimelineAlertMode.noUpdates
+            }
+            
             //Then fetching the updates to the original report
-            guard let updateReports = try await timelineMapViewDelegate?.getTimelineUpdates(role: report.role) else {
-                return
+            guard let updateReports = try await timelineMapViewDelegate?.getTimelineUpdates(updateIds: updateIds) else {
+                throw TimelineAlertMode.error
             }
             
             guard !(updateReports.isEmpty) else {
-                DispatchQueue.main.async {
-                    self.alertReportError = .noUpdates
-                }
-                return
+                throw TimelineAlertMode.noUpdates
             }
             
             reports.append(contentsOf: updateReports)
+            self.reports = reports
             
-            //Some reports may be nil on arrival...
-            self.reports = reports.compactMap({$0})
+            DispatchQueue.main.asyncAfter(deadline: .now() + 0.35) {
+                self.setupMapForUpdateReports()
+            }
         }
         catch ReportManagerError.doesNotExist {
             DispatchQueue.main.async {
                 self.alertReportError = self.isOriginalReport ? .noLongerExist : .originalReportNoLongerExist
+            }
+        }
+        catch TimelineAlertMode.noUpdates {
+            DispatchQueue.main.async {
+                self.alertReportError = .noUpdates
             }
         }
         catch {
@@ -119,18 +146,36 @@ final class TimelineMapViewCoordinator: NSObject, MKMapViewDelegate, ObservableO
         }
     }
     
-    ///Setups the map for fetched reports
+    func refreshForNewUpdates() async {
+        guard let report else { return }
+        await getUpdates(report)
+    }
+    
+    ///Setups the map to display overlays and annotations.
     private func setupMapForUpdateReports() {
-        for report in reports.sorted(by: >) {
-            mapView?.addAnnotation(ReportAnnotation(report: report))
+        DispatchQueue.main.async {
+            if let mapView = self.mapView {
+                mapView.removeAnnotations(mapView.annotations)
+                mapView.removeOverlays(mapView.overlays)
+                let annotations = self.reports.sorted(by: >).map({ReportAnnotation(report: $0)})
+                let polyline = MKPolyline(coordinates: annotations.map({$0.coordinate}), count: annotations.count)
+                mapView.addAnnotations(annotations)
+                mapView.addOverlay(polyline)
+                mapView.setVisibleMapRect(polyline.boundingMapRect, edgePadding: .init(top: 65, left: 75, bottom: 65, right: 75), animated: true)
+                mapView.isUserInteractionEnabled = true
+            }
+            self.isLoading = false
         }
-        
-        let coordinates = reports.map { $0.location.coordinates }
-        let polyline = MKPolyline(coordinates: coordinates, count: coordinates.count)
-        mapView?.addOverlay(polyline)
-        mapView?.setVisibleMapRect(polyline.boundingMapRect, edgePadding: .init(top: 25, left: 75, bottom: 45, right: 75), animated: true)
-        
-        mapView?.isUserInteractionEnabled = true
+    }
+    
+    func setRegionToReport(location: Location) {
+        mapView?.setRegion(location.region, animated: true)
+    }
+    
+    private func presentAlert() {
+        UINotificationFeedbackGenerator().notificationOccurred(.error)
+        self.isLoading = false
+        self.showAlert = true
     }
     
     func mapView(_ mapView: MKMapView, viewFor annotation: MKAnnotation) -> MKAnnotationView? {
@@ -138,9 +183,10 @@ final class TimelineMapViewCoordinator: NSObject, MKMapViewDelegate, ObservableO
             
         if let annotation = annotation as? ReportAnnotation {
             let annotationView = ReportTimelineAnnotationView(annotation: annotation)
-            annotationView.leftCalloutAccessoryView = nil
+            let calloutView = TimelineAnnotationViewCallout(report: annotation.report, selectedReportId: reportId)
+            calloutView.setDelegate(self)
             annotationView.canShowCallout = true
-            annotationView.detailCalloutAccessoryView = TimelineAnnotationViewCallout(report: annotation.report, timelineMapViewCoordinator: self, selectedReportId: reportId)
+            annotationView.detailCalloutAccessoryView = calloutView
             return annotationView
         }
         return nil
@@ -148,17 +194,29 @@ final class TimelineMapViewCoordinator: NSObject, MKMapViewDelegate, ObservableO
     
     func mapView(_ mapView: MKMapView, rendererFor overlay: MKOverlay) -> MKOverlayRenderer {
         if let polyline = overlay as? MKPolyline {
-            let lineRenderer = MKPolylineRenderer(polyline: polyline)
-            lineRenderer.strokeColor = .systemTeal
-            lineRenderer.lineWidth = 3.5
-            lineRenderer.lineDashPhase = 0.5
-            return lineRenderer
+            let overlay = MKPolylineRenderer(polyline: polyline)
+            overlay.strokeColor = .systemBlue
+            overlay.lineWidth = 3
+            overlay.lineJoin = .miter
+            return overlay
         }
         
         return MKOverlayRenderer()
     }
+    
+    deinit {
+        timelineMapViewDelegate = nil
+        print("Dead: TimelineMapViewCoordinator")
+    }
+}
+
+//MARK: - TimelineAnnotationViewCalloutDelegate
+extension TimelineMapViewCoordinator: TimelineAnnotationViewCalloutDelegate {
+    func didSelectReport(_ report: Report) {
+        self.mapViewSheetMode = .report(report)
+    }
 }
 
 protocol TimelineMapViewDelegate: AnyObject {
-    func getTimelineUpdates(role: ReportRole) async throws -> [Report]
+    func getTimelineUpdates(updateIds: [UUID]) async throws -> [Report]
 }

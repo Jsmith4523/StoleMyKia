@@ -9,7 +9,16 @@ import SwiftUI
 
 struct NearbySearchUserLocationErrorView: View {
     var body: some View {
-        Text(/*@START_MENU_TOKEN@*/"Hello, World!"/*@END_MENU_TOKEN@*/)
+        VStack {
+            Spacer()
+            Text("We ran into an issue locating your. Please try again.")
+                .font(.system(size: 17))
+                .foregroundColor(.gray)
+            Spacer()
+        }
+        .multilineTextAlignment(.center)
+        .padding()
+        .padding(.horizontal)
     }
 }
 

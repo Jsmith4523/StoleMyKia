@@ -25,7 +25,7 @@ extension URL {
         let lat = coords.latitude
         let lon = coords.longitude
         
-        if let url = URL(string: "http://maps.apple.com/?ll=\(lat),\(lon)") {
+        if let url = URL(string: "maps://?q=\("Report Location"),saddr=&daddr=\(lat),\(lon)") {
             UIApplication.shared.open(url)
         }
     }
