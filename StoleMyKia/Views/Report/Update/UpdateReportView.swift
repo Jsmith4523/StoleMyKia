@@ -74,7 +74,7 @@ struct UpdateReportView: View {
                 }
             }
             .sheet(isPresented: $isShowingLocationSearchView) {
-                LocationSearchView(location: $location)
+                NearbyLocationSearchView(location: $location)
             }
         }
     }
