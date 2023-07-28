@@ -397,7 +397,7 @@
 				24A5791729BC552E00495E6F /* Assets.xcassets */,
 				24127C1E29E3F4AC00C09FE5 /* Launch Screen.storyboard */,
 				24EAF11A29C2C10200B4CBFE /* GoogleService-Info.plist */,
-				24CC5ECB2A745DE70078C921 /* SwiftUI Views */,
+				24CC5ECB2A745DE70078C921 /* SwiftUI */,
 				2426A6172A2345DE00E78647 /* Protocols */,
 				24A662F529C2F34700AD784F /* Network */,
 				2426A6162A2345CB00E78647 /* Utilities */,
@@ -460,7 +460,7 @@
 			path = MKMapView;
 			sourceTree = "<group>";
 		};
-		24CC5ECB2A745DE70078C921 /* SwiftUI Views */ = {
+		24CC5ECB2A745DE70078C921 /* SwiftUI */ = {
 			isa = PBXGroup;
 			children = (
 				24CC5ECC2A745DE70078C921 /* Auth */,
@@ -470,7 +470,7 @@
 				24CC5F102A745DE70078C921 /* ApplicationRootView.swift */,
 				24CC5F112A745DE70078C921 /* Progress Views */,
 			);
-			path = "SwiftUI Views";
+			path = SwiftUI;
 			sourceTree = "<group>";
 		};
 		24CC5ECC2A745DE70078C921 /* Auth */ = {
