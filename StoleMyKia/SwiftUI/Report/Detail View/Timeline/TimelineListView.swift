@@ -144,6 +144,6 @@ fileprivate struct TimelineListCellView: View {
     }
 }
 
-#Preview {
-    TimelineListCellView(report: [Report].testReports().first!)
-}
+//#Preview {
+//    TimelineListCellView(report: [Report].testReports().first!)
+//}

@@ -47,11 +47,11 @@ struct FeedView: View {
                 await onAppearFetchReports()
             }
             .toolbar {
-                Button {
-                    isShowingNearbyMapView.toggle()
-                } label: {
-                    Image(systemName: "map")
-                }
+//                Button {
+//                    isShowingNearbyMapView.toggle()
+//                } label: {
+//                    Image(systemName: "map")
+//                }
                 Button {
                     isShowingNewReportView.toggle()
                 } label: {

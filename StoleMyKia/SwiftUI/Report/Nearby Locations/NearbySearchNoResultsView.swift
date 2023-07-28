@@ -21,6 +21,6 @@ struct NearbySearchNoResultsView: View {
     }
 }
 
-#Preview {
-    NearbySearchNoResultsView()
-}
+//#Preview {
+//    NearbySearchNoResultsView()
+//}

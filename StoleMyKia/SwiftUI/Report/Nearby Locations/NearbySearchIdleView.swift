@@ -21,6 +21,6 @@ struct NearbySearchIdleView: View {
     }
 }
 
-#Preview {
-    NearbySearchIdleView()
-}
+//#Preview {
+//    NearbySearchIdleView()
+//}

@@ -17,6 +17,6 @@ struct ReportSkeletonView: View {
     }
 }
 
-#Preview {
-    ReportSkeletonView()
-}
+//#Preview {
+//    ReportSkeletonView()
+//}

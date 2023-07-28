@@ -21,6 +21,6 @@ struct NearbyLocationSearchErrorView: View {
     }
 }
 
-#Preview {
-    NearbyLocationSearchErrorView()
-}
+//#Preview {
+//    NearbyLocationSearchErrorView()
+//}

@@ -217,6 +217,7 @@
 		24CC5F0F2A745DE70078C921 /* TimelineAnnotationViewCallout.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TimelineAnnotationViewCallout.swift; sourceTree = "<group>"; };
 		24CC5F102A745DE70078C921 /* ApplicationRootView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ApplicationRootView.swift; sourceTree = "<group>"; };
 		24CC5F122A745DE70078C921 /* ReportSkeletonView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ReportSkeletonView.swift; sourceTree = "<group>"; };
+		24CC5F412A747E9B0078C921 /* notification_report.caf */ = {isa = PBXFileReference; lastKnownFileType = file; path = notification_report.caf; sourceTree = "<group>"; };
 		24EAF11629C2A02900B4CBFE /* SFSafariView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SFSafariView.swift; sourceTree = "<group>"; };
 		24EAF11A29C2C10200B4CBFE /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
 		24EE41132A59E0FD00AF2A11 /* LicnesePlateDectectionManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LicnesePlateDectectionManager.swift; sourceTree = "<group>"; };
@@ -391,6 +392,7 @@
 		24A5791229BC552C00495E6F /* StoleMyKia */ = {
 			isa = PBXGroup;
 			children = (
+				24CC5F412A747E9B0078C921 /* notification_report.caf */,
 				24A206962A08D29E00F5DC0C /* StoleMyKia.entitlements */,
 				24A5791329BC552C00495E6F /* StoleMyKiaApp.swift */,
 				240F22412A33F0020078F97E /* README.rtf */,
@@ -463,11 +465,11 @@
 		24CC5ECB2A745DE70078C921 /* SwiftUI */ = {
 			isa = PBXGroup;
 			children = (
+				24CC5F102A745DE70078C921 /* ApplicationRootView.swift */,
 				24CC5ECC2A745DE70078C921 /* Auth */,
 				24CC5ED42A745DE70078C921 /* License Scanner */,
 				24CC5EDE2A745DE70078C921 /* Tabview */,
 				24CC5EFB2A745DE70078C921 /* Report */,
-				24CC5F102A745DE70078C921 /* ApplicationRootView.swift */,
 				24CC5F112A745DE70078C921 /* Progress Views */,
 			);
 			path = SwiftUI;

@@ -53,6 +53,15 @@ extension AppDelegate: UNUserNotificationCenterDelegate {
         print("Registered for remote notifications: \(deviceToken)")
         Messaging.messaging().apnsToken = deviceToken
     }
+    
+    //Foreground
+    func userNotificationCenter(_ center: UNUserNotificationCenter, willPresent notification: UNNotification, withCompletionHandler completionHandler: @escaping (UNNotificationPresentationOptions) -> Void) {
+        completionHandler([.badge, .banner, .list, .sound])
+    }
+    
+    func userNotificationCenter(_ center: UNUserNotificationCenter, didReceive response: UNNotificationResponse, withCompletionHandler completionHandler: @escaping () -> Void) {
+        completionHandler()
+    }
 }
 
 
