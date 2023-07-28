@@ -7,6 +7,7 @@
 
 import Foundation
 import FirebaseAuth
+import FirebaseMessaging
 
 enum LoginLoadStatus {
     case signedOut, signedIn
@@ -26,7 +27,9 @@ class FirebaseAuthViewModel: ObservableObject {
             self.prepareForSignOut()
             return
         }
+        
         self.prepareForSignIn(uid: user.uid)
+        Messaging.messaging().subscribe(toTopic: "Report")
     }
     
     func setDelegate(_ delegate: FirebaseAuthDelegate) {
