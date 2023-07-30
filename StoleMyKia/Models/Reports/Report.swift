@@ -14,17 +14,21 @@ struct Report: Identifiable, Codable, Comparable {
     
     ///init with requried details
     init(uid: String, type: ReportType, Vehicle: Vehicle, details: String, location: Location) {
+        let id = UUID()
+        self.id = id
         self.dt = Date.now.epoch
         self.uid = uid
         self.reportType = type
         self.vehicle = Vehicle
         self.distinguishableDetails = details
         self.location = location
-        self.setAsOriginal()
+        self.role = .original(id)
     }
     
     ///Init with required detail and optional vehicle image url.
     init(uid: String, type: ReportType, Vehicle: Vehicle, vehicleImageUrl: String?, details: String, location: Location) {
+        let id = UUID()
+        self.id = id
         self.dt = Date.now.epoch
         self.uid = uid
         self.reportType = type
@@ -32,11 +36,10 @@ struct Report: Identifiable, Codable, Comparable {
         self.imageURL = vehicleImageUrl
         self.distinguishableDetails = details
         self.location = location
-        self.setAsOriginal()
+        self.role = .original(id)
     }
 
-    var id = UUID()
-    
+    var id: UUID
     ///The logged in Firebase Auth users uid
     let uid: String
     ///The time of this report in epoch
@@ -51,11 +54,12 @@ struct Report: Identifiable, Codable, Comparable {
     var imageURL: String?
     ///The location of this report
     let location: Location
-    ///UUIDs of reports that are updates to this report.
-    ///Firestore functions watches when this array is added a value and notifies the reporter of any updates.
-    var updates: [UUID]?
     ///The role of this report
-    var role: ReportRole!
+    var role: ReportRole
+    ///On the client side, the property is immutable.
+    ///On the admin side, this property is mutable if the report is determined false
+    var isFalseReport: Bool = false
+    var updates: [UUID]?
     
     static func == (lhs: Report, rhs: Report) -> Bool {
         return true
@@ -100,9 +104,8 @@ struct Report: Identifiable, Codable, Comparable {
 
 extension Report {
     
-    /// Set this report.role as 'original'
-    mutating func setAsOriginal() {
-        self.role = .original(self.id)
+    private func setAsOriginal() -> ReportRole {
+        return .original(self.id)
     }
     
     /// Set this report as 'update'
@@ -112,6 +115,11 @@ extension Report {
         var report = self
         report.role = .update(parentId)
         return report
+    }
+    
+    ///Determines if the report can be updated
+    func allowsForUpdates() -> Bool {
+        return !(isFalseReport || self.reportType.allowsForUpdates && self.role.allowsForUpdates)
     }
     
     mutating func setLicensePlate(_ license: String) throws {
@@ -138,6 +146,14 @@ extension Report {
         }
         
         return true
+    }
+    
+    var hasLicensePlate: Bool {
+        self.vehicle.hasLicensePlate
+    }
+    
+    var hasVin: Bool {
+        self.vehicle.hasVin
     }
     
     var vehicleDetails: String {

@@ -14,9 +14,9 @@ extension JSONSerialization {
         case incompatible
     }
     
-    ///Create object from input.
+    ///Create object from JSON Object.
     static func objectFromData<T: Codable>(_ object: T.Type, jsonObject: Any?) -> T? {
-        guard let jsonObject else { return nil }
+        guard let jsonObject = jsonObject as? [String: Any] else { return nil }
         
         do {
             let data = try JSONSerialization.data(withJSONObject: jsonObject)
@@ -30,6 +30,13 @@ extension JSONSerialization {
         
     ///Create JSON from Encodable Object.
     static func createJsonFromObject<T: Codable>(_ object: T) throws -> Any? {
+        let data = try JSONEncoder().encode(object)
+        let jsonObject = try JSONSerialization.jsonObject(with: data)
+        
+        return jsonObject
+    }
+    
+    static func createJsonFromObject<T: Encodable>(_ object: T) throws -> Any? {
         let data = try JSONEncoder().encode(object)
         let jsonObject = try JSONSerialization.jsonObject(with: data)
         

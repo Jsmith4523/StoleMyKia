@@ -59,15 +59,8 @@ final class ReportsViewModel: NSObject, ObservableObject {
 
 //MARK: - TimelineMapViewDelegate
 extension ReportsViewModel: TimelineMapViewDelegate {
-    func getTimelineUpdates(updateIds: [UUID]) async throws -> [Report] {
-        var reports = [Report?]()
-        
-        for updateId in updateIds {
-            let report = try await manager.fetchSingleReport(updateId, errorIfUnavaliable: false)
-            reports.append(report)
-        }
-        
-        return reports.compactMap({$0})
+    func getTimelineUpdates(for report: Report) async throws -> [Report] {
+        try await manager.fetchUpdates(report)
     }
 }
 

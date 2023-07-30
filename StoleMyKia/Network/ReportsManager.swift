@@ -65,7 +65,7 @@ class ReportManager {
     func fetchSingleReport(_ id: UUID, errorIfUnavaliable: Bool = true) async throws -> Report? {
         
         let document = try await collection.document(id.uuidString).getDocument()
-        
+                
         guard document.exists else {
             if errorIfUnavaliable {
                 throw ReportManagerError.doesNotExist
@@ -78,16 +78,37 @@ class ReportManager {
             throw ReportManagerError.dataError
         }
         
-        guard let report = JSONSerialization.objectFromData(Report.self, jsonObject: data ) else {
+        guard let report = JSONSerialization.objectFromData(Report.self, jsonObject: data) else {
             throw ReportManagerError.codableError
         }
-        
+                        
         return report
     }
     
-//    func fetchUpdates(_ updates: [UUID]) async throws -> [Report] {
-//        
-//    }
+    func fetchUpdates(_ report: Report) async throws -> [Report] {
+        let collection = collection.document(report.id.uuidString).collection("Updates")
+        let snapshot = try await collection.getDocuments().documents
+               
+        guard let data = snapshot.map({$0.data()}) as? [[String: Any]] else {
+            throw ReportManagerError.codableError
+        }
+        
+        guard let updates = try? JSONSerialization.objectsFromFoundationObjects(data, to: Update.self) else {
+            throw ReportManagerError.codableError
+        }
+        
+        let ids = updates.map({$0.id})
+        
+        var reports = [Report?]()
+        for id in ids {
+            print(id)
+            let report = try await self.fetchSingleReport(id, errorIfUnavaliable: false)
+            print(report)
+            reports.append(report)
+        }
+        
+        return reports.compactMap({$0})
+    }
     
     ///Retrieves reports from Firestore Database with a matching dot notation
     ///- Parameters:
@@ -122,7 +143,7 @@ class ReportManager {
         }
         
         //Now upload!
-        try await self.collection.document(report.id.uuidString).setData(jsonData)
+        try await collection.document(report.id.uuidString).setData(jsonData)
     }
     
     /// Deletes a report and associated vehicle image from Firestore Database and Firebase Storage.

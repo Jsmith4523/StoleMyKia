@@ -63,7 +63,11 @@ final class TimelineMapViewCoordinator: NSObject, MKMapViewDelegate, ObservableO
     
     @Published var isShowingTimelineListView = false
     @Published private(set) var isLoading = false
-    @Published private(set) var reports = [Report]()
+    @Published private(set) var reports = [Report]() {
+        didSet {
+            setupMapForUpdateReports()
+        }
+    }
     @Published private(set) var report: Report?
     
     @Published var showAlert = false
@@ -100,34 +104,19 @@ final class TimelineMapViewCoordinator: NSObject, MKMapViewDelegate, ObservableO
             
             var reports = [Report]()
             
-           // Fetching the original report
-            let originalReport = try await ReportManager.manager.fetchSingleReport(report.role.associatedValue)
+            let originalReport = report
+               
+            //Check if the report still exists in Firestore Database
+            guard try await ReportManager.manager.reportDoesExist(originalReport.id) else { throw ReportManagerError.doesNotExist }
             
-            guard let originalReport else {
-                throw ReportManagerError.doesNotExist
+            guard let updates = try await timelineMapViewDelegate?.getTimelineUpdates(for: originalReport), !(updates.isEmpty) else {
+                throw TimelineAlertMode.noUpdates
             }
-            
+
             reports.append(originalReport)
-            
-            guard let updateIds = originalReport.updates else {
-                throw TimelineAlertMode.noUpdates
-            }
-            
-            //Then fetching the updates to the original report
-            guard let updateReports = try await timelineMapViewDelegate?.getTimelineUpdates(updateIds: updateIds) else {
-                throw TimelineAlertMode.error
-            }
-            
-            guard !(updateReports.isEmpty) else {
-                throw TimelineAlertMode.noUpdates
-            }
-            
-            reports.append(contentsOf: updateReports)
-            self.reports = reports
-            
-            DispatchQueue.main.asyncAfter(deadline: .now() + 0.35) {
-                self.setupMapForUpdateReports()
-            }
+            reports.append(contentsOf: updates)
+            self.reports = reports.sorted(by: >)
+            self.isLoading = false
         }
         catch ReportManagerError.doesNotExist {
             DispatchQueue.main.async {
@@ -140,6 +129,7 @@ final class TimelineMapViewCoordinator: NSObject, MKMapViewDelegate, ObservableO
             }
         }
         catch {
+            print(error.localizedDescription)
             DispatchQueue.main.async {
                 self.alertReportError = .error
             }
@@ -196,7 +186,7 @@ final class TimelineMapViewCoordinator: NSObject, MKMapViewDelegate, ObservableO
         if let polyline = overlay as? MKPolyline {
             let overlay = MKPolylineRenderer(polyline: polyline)
             overlay.strokeColor = .systemBlue
-            overlay.lineWidth = 3
+            overlay.lineWidth = 2.5
             overlay.lineJoin = .miter
             return overlay
         }
@@ -218,5 +208,5 @@ extension TimelineMapViewCoordinator: TimelineAnnotationViewCalloutDelegate {
 }
 
 protocol TimelineMapViewDelegate: AnyObject {
-    func getTimelineUpdates(updateIds: [UUID]) async throws -> [Report]
+    func getTimelineUpdates(for report: Report) async throws -> [Report]
 }

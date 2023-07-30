@@ -7,145 +7,17 @@
       <BreakpointProxy
          BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
          <BreakpointContent
-            uuid = "5039828B-BD54-4C09-94E3-4760D8B92480"
+            uuid = "EAC08404-99CE-441E-80F3-F0BBCAD0971F"
             shouldBeEnabled = "Yes"
             ignoreCount = "0"
             continueAfterRunningActions = "No"
-            filePath = "StoleMyKia/View Models/NotificationViewModel.swift"
+            filePath = "StoleMyKia/SwiftUI/Report/Detail View/Timeline/TimelineMapViewRepresentable.swift"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "56"
-            endingLineNumber = "56"
-            landmarkName = "requestNotificationAuthorization()"
+            startingLineNumber = "119"
+            endingLineNumber = "119"
+            landmarkName = "getUpdates(_:)"
             landmarkType = "7">
-            <Locations>
-               <Location
-                  uuid = "5039828B-BD54-4C09-94E3-4760D8B92480 - d7321cb0a13e7be3"
-                  shouldBeEnabled = "Yes"
-                  ignoreCount = "0"
-                  continueAfterRunningActions = "No"
-                  symbolName = "StoleMyKia.NotificationViewModel.requestNotificationAuthorization() -&gt; ()"
-                  moduleName = "StoleMyKia"
-                  usesParentBreakpointCondition = "Yes"
-                  urlString = "file:///Users/jaylensmith/Library/Mobile%20Documents/com~apple~CloudDocs/Mac%20Mini%20Xcode/StoleMyKia/StoleMyKia/View%20Models/NotificationViewModel.swift"
-                  startingColumnNumber = "9223372036854775807"
-                  endingColumnNumber = "9223372036854775807"
-                  startingLineNumber = "57"
-                  endingLineNumber = "57"
-                  offsetFromSymbolStart = "276">
-               </Location>
-               <Location
-                  uuid = "5039828B-BD54-4C09-94E3-4760D8B92480 - 4a7d52a0a5bb5e90"
-                  shouldBeEnabled = "Yes"
-                  ignoreCount = "0"
-                  continueAfterRunningActions = "No"
-                  symbolName = "closure #1 (Swift.Bool, Swift.Optional&lt;Swift.Error&gt;) -&gt; () in StoleMyKia.NotificationViewModel.requestNotificationAuthorization() -&gt; ()"
-                  moduleName = "StoleMyKia"
-                  usesParentBreakpointCondition = "Yes"
-                  urlString = "file:///Users/jaylensmith/Library/Mobile%20Documents/com~apple~CloudDocs/Mac%20Mini%20Xcode/StoleMyKia/StoleMyKia/View%20Models/NotificationViewModel.swift"
-                  startingColumnNumber = "9223372036854775807"
-                  endingColumnNumber = "9223372036854775807"
-                  startingLineNumber = "56"
-                  endingLineNumber = "56"
-                  offsetFromSymbolStart = "328">
-               </Location>
-            </Locations>
-         </BreakpointContent>
-      </BreakpointProxy>
-      <BreakpointProxy
-         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
-         <BreakpointContent
-            uuid = "CFAE8819-0681-4955-A920-713087D34D6D"
-            shouldBeEnabled = "Yes"
-            ignoreCount = "0"
-            continueAfterRunningActions = "No"
-            filePath = "StoleMyKia/StoleMyKiaApp.swift"
-            startingColumnNumber = "9223372036854775807"
-            endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "54"
-            endingLineNumber = "54"
-            landmarkName = "application(_:didRegisterForRemoteNotificationsWithDeviceToken:)"
-            landmarkType = "7">
-            <Locations>
-               <Location
-                  uuid = "CFAE8819-0681-4955-A920-713087D34D6D - b62103dcf116c065"
-                  shouldBeEnabled = "Yes"
-                  ignoreCount = "0"
-                  continueAfterRunningActions = "No"
-                  symbolName = "StoleMyKia.AppDelegate.application(_: __C.UIApplication, didRegisterForRemoteNotificationsWithDeviceToken: Foundation.Data) -&gt; ()"
-                  moduleName = "StoleMyKia"
-                  usesParentBreakpointCondition = "Yes"
-                  urlString = "file:///Users/jaylensmith/Library/Mobile%20Documents/com~apple~CloudDocs/Mac%20Mini%20Xcode/StoleMyKia/StoleMyKia/StoleMyKiaApp.swift"
-                  startingColumnNumber = "9223372036854775807"
-                  endingColumnNumber = "9223372036854775807"
-                  startingLineNumber = "55"
-                  endingLineNumber = "55"
-                  offsetFromSymbolStart = "120">
-               </Location>
-               <Location
-                  uuid = "CFAE8819-0681-4955-A920-713087D34D6D - b62103dcf116c042"
-                  shouldBeEnabled = "Yes"
-                  ignoreCount = "0"
-                  continueAfterRunningActions = "No"
-                  symbolName = "StoleMyKia.AppDelegate.application(_: __C.UIApplication, didRegisterForRemoteNotificationsWithDeviceToken: Foundation.Data) -&gt; ()"
-                  moduleName = "StoleMyKia"
-                  usesParentBreakpointCondition = "Yes"
-                  urlString = "file:///Users/jaylensmith/Library/Mobile%20Documents/com~apple~CloudDocs/Mac%20Mini%20Xcode/StoleMyKia/StoleMyKia/StoleMyKiaApp.swift"
-                  startingColumnNumber = "9223372036854775807"
-                  endingColumnNumber = "9223372036854775807"
-                  startingLineNumber = "54"
-                  endingLineNumber = "54"
-                  offsetFromSymbolStart = "444">
-               </Location>
-            </Locations>
-         </BreakpointContent>
-      </BreakpointProxy>
-      <BreakpointProxy
-         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
-         <BreakpointContent
-            uuid = "3056A513-2071-4E5F-8A99-22556B693CD7"
-            shouldBeEnabled = "Yes"
-            ignoreCount = "0"
-            continueAfterRunningActions = "No"
-            filePath = "StoleMyKia/StoleMyKiaApp.swift"
-            startingColumnNumber = "9223372036854775807"
-            endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "53"
-            endingLineNumber = "53"
-            landmarkName = "application(_:didRegisterForRemoteNotificationsWithDeviceToken:)"
-            landmarkType = "7">
-            <Locations>
-               <Location
-                  uuid = "3056A513-2071-4E5F-8A99-22556B693CD7 - b62103dcf116c065"
-                  shouldBeEnabled = "Yes"
-                  ignoreCount = "0"
-                  continueAfterRunningActions = "No"
-                  symbolName = "StoleMyKia.AppDelegate.application(_: __C.UIApplication, didRegisterForRemoteNotificationsWithDeviceToken: Foundation.Data) -&gt; ()"
-                  moduleName = "StoleMyKia"
-                  usesParentBreakpointCondition = "Yes"
-                  urlString = "file:///Users/jaylensmith/Library/Mobile%20Documents/com~apple~CloudDocs/Mac%20Mini%20Xcode/StoleMyKia/StoleMyKia/StoleMyKiaApp.swift"
-                  startingColumnNumber = "9223372036854775807"
-                  endingColumnNumber = "9223372036854775807"
-                  startingLineNumber = "55"
-                  endingLineNumber = "55"
-                  offsetFromSymbolStart = "120">
-               </Location>
-               <Location
-                  uuid = "3056A513-2071-4E5F-8A99-22556B693CD7 - b62103dcf116c7a3"
-                  shouldBeEnabled = "Yes"
-                  ignoreCount = "0"
-                  continueAfterRunningActions = "No"
-                  symbolName = "StoleMyKia.AppDelegate.application(_: __C.UIApplication, didRegisterForRemoteNotificationsWithDeviceToken: Foundation.Data) -&gt; ()"
-                  moduleName = "StoleMyKia"
-                  usesParentBreakpointCondition = "Yes"
-                  urlString = "file:///Users/jaylensmith/Library/Mobile%20Documents/com~apple~CloudDocs/Mac%20Mini%20Xcode/StoleMyKia/StoleMyKia/StoleMyKiaApp.swift"
-                  startingColumnNumber = "9223372036854775807"
-                  endingColumnNumber = "9223372036854775807"
-                  startingLineNumber = "53"
-                  endingLineNumber = "53"
-                  offsetFromSymbolStart = "120">
-               </Location>
-            </Locations>
          </BreakpointContent>
       </BreakpointProxy>
    </Breakpoints>

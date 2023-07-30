@@ -39,7 +39,7 @@ final class NotificationViewModel: NSObject, ObservableObject {
     
     override init() {
         super.init()
-        //UNUserNotificationCenter.current().delegate = self
+        UNUserNotificationCenter.current().delegate = self
         Messaging.messaging().delegate = self
     }
     
@@ -109,8 +109,19 @@ final class NotificationViewModel: NSObject, ObservableObject {
     }
 }
 
+extension NotificationViewModel: UNUserNotificationCenterDelegate {
+    //Foreground
+    func userNotificationCenter(_ center: UNUserNotificationCenter, willPresent notification: UNNotification, withCompletionHandler completionHandler: @escaping (UNNotificationPresentationOptions) -> Void) {
+        completionHandler([.badge, .banner, .list, .sound])
+    }
+    
+    func userNotificationCenter(_ center: UNUserNotificationCenter, didReceive response: UNNotificationResponse, withCompletionHandler completionHandler: @escaping () -> Void) {
+        print(response.notification.request.content.userInfo)
+        completionHandler()
+    }
+}
 
-
+//MARK: - MessagingDelegate
 extension NotificationViewModel: MessagingDelegate {
     
     func messaging(_ messaging: Messaging, didReceiveRegistrationToken fcmToken: String?) {

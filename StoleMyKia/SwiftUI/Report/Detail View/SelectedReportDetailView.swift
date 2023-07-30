@@ -19,6 +19,7 @@ struct SelectedReportDetailView: View {
     let report: Report
     var timelineMapViewMode: TimelineMapViewMode = .presentWhenSelected
     
+    @State private var isShowingFalseReportView = false
     @State private var isShowingTimelineMapView = false
     @State private var isShowingUpdateReportView = false
     @State private var isShowingReportOptions = false
@@ -26,7 +27,7 @@ struct SelectedReportDetailView: View {
     @State private var vehicleImage: UIImage?
     
     @EnvironmentObject var reportsVM: ReportsViewModel
-    @EnvironmentObject var userModel: UserViewModel
+    @EnvironmentObject var userVM: UserViewModel
     
     @Environment (\.dismiss) var dismiss
         
@@ -55,17 +56,18 @@ struct SelectedReportDetailView: View {
                                             .foregroundColor(.white)
                                             .cornerRadius(10)
                                         Spacer()
-                                        Text(report.dt.full)
+                                        Text(report.timeSinceString())
                                             .font(.system(size: 16))
                                             .foregroundColor(.gray)
                                     }
                                     VStack(alignment: .leading, spacing: 10) {
                                         VStack(alignment: .leading, spacing: 7) {
                                             Text(report.vehicleDetails)
-                                                .font(.system(size: 25).weight(.bold))
+                                                .font(.system(size: 25).weight(.heavy))
                                             VStack(alignment: .leading) {
-                                                Text(report.vehicle.licensePlateString)
-                                                    .font(.system(size: 20).weight(.heavy))
+                                                if report.hasLicensePlate {
+                                                    Text(report.vehicle.licensePlateString)
+                                                }
                                                 if report.location.hasName {
                                                     VStack(alignment: .leading) {
                                                         Text(report.location.name ?? "")
@@ -97,12 +99,14 @@ struct SelectedReportDetailView: View {
                 }
             }
             .toolbar {
-                ToolbarItemGroup(placement: .navigationBarTrailing) {
+                ToolbarItem(placement: .navigationBarLeading) {
                     Button {
                         
                     } label: {
-                        Image(systemName: "arrow.triangle.swap")
+                        Image(systemName: "arrow.2.squarepath")
                     }
+                }
+                ToolbarItem(placement: .navigationBarTrailing) {
                     Button {
                         isShowingReportOptions.toggle()
                     } label: {
@@ -111,23 +115,32 @@ struct SelectedReportDetailView: View {
                 }
             }
             .tint(Color(uiColor: .label))
-            .sheet(isPresented: $isShowingTimelineMapView) {
-                TimelineMapView(report: report)
-                    .environmentObject(reportsVM)
-            }
             .confirmationDialog("Options", isPresented: $isShowingReportOptions) {
                 Button("Directions") {
                     URL.getDirectionsToLocation(coords: report.location.coordinates)
                 }
-                Button("False Report") {
-                    
-                }
                 Button("Bookmark") {
                     
                 }
-                Button("Delete", role: .destructive) {
-                    
+                if let uid = userVM.uid {
+                    if report.uid == uid {
+                        Button("Delete", role: .destructive) {
+                            
+                        }
+                    } else {
+                        Button("False Report") {
+                            self.isShowingFalseReportView.toggle()
+                        }
+                    }
                 }
+            }
+            .sheet(isPresented: $isShowingTimelineMapView) {
+                TimelineMapView(report: report)
+                    .environmentObject(reportsVM)
+            }
+            .fullScreenCover(isPresented: $isShowingFalseReportView) {
+                FalseReportView(report: report)
+                    .environmentObject(userVM)
             }
         }
         .onAppear {
@@ -150,6 +163,8 @@ struct SelectedReportDetailView: View {
         Image(uiImage: vehicleImage ?? .vehiclePlaceholder)
             .resizable()
             .scaledToFill()
+            .frame(height: 300)
+            .clipped()
     }
     
     private func getVehicleImage() {
@@ -163,5 +178,6 @@ struct SelectedReportDetailView_Previews: PreviewProvider {
     static var previews: some View {
         SelectedReportDetailView(report: [Report].testReports().first!)
             .environmentObject(ReportsViewModel())
+            .environmentObject(UserViewModel())
     }
 }

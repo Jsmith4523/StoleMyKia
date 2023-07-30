@@ -34,6 +34,15 @@ enum ReportRole: Identifiable, Codable, Equatable {
         }
     }
     
+    var allowsForUpdates: Bool {
+        switch self {
+        case .original(_):
+            return true
+        case .update(_):
+            return false
+        }
+    }
+    
     var notificationTitle: String {
         switch self {
         case .original(_):

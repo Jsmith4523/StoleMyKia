@@ -27,6 +27,24 @@ struct Vehicle: Codable {
 
 extension Vehicle {
     
+    ///This vehicle contains license plate information.
+    var hasLicensePlate: Bool {
+        guard !(licensePlate == nil) else {
+            return false
+        }
+        
+        return true
+    }
+    
+    ///This vehicle contains vin information.
+    var hasVin: Bool {
+        guard !(licensePlate == nil) else {
+            return false
+        }
+        
+        return true
+    }
+    
     ///Year, make, model, and color of the vehicle
     var details: String {
         "\(vehicleYear) \(vehicleMake.rawValue) \(vehicleModel.rawValue) (\(vehicleColor.rawValue))"
