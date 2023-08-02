@@ -18,6 +18,288 @@
             endingLineNumber = "119"
             landmarkName = "getUpdates(_:)"
             landmarkType = "7">
+            <Locations>
+               <Location
+                  uuid = "EAC08404-99CE-441E-80F3-F0BBCAD0971F - 724c4b8aed59f4e"
+                  shouldBeEnabled = "Yes"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "(3) suspend resume partial function for StoleMyKia.TimelineMapViewCoordinator.getUpdates(StoleMyKia.Report) async -&gt; ()"
+                  moduleName = "StoleMyKia"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/jaylensmith/Documents/Macbook%20Pro%20Xcode/StoleMyKia/StoleMyKia/SwiftUI/Report/Detail%20View/Timeline/TimelineMapViewRepresentable.swift"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "119"
+                  endingLineNumber = "119"
+                  offsetFromSymbolStart = "1254">
+               </Location>
+               <Location
+                  uuid = "EAC08404-99CE-441E-80F3-F0BBCAD0971F - 38d2f406423c5b48"
+                  shouldBeEnabled = "Yes"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "(5) suspend resume partial function for StoleMyKia.TimelineMapViewCoordinator.getUpdates(StoleMyKia.Report) async -&gt; ()"
+                  moduleName = "StoleMyKia"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/jaylensmith/Documents/Macbook%20Pro%20Xcode/StoleMyKia/StoleMyKia/SwiftUI/Report/Detail%20View/Timeline/TimelineMapViewRepresentable.swift"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "119"
+                  endingLineNumber = "119"
+                  offsetFromSymbolStart = "802">
+               </Location>
+            </Locations>
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            uuid = "C0585D80-FF0A-4718-AFBD-535D35236452"
+            shouldBeEnabled = "Yes"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "StoleMyKia/SwiftUI/Report/Update/UpdateReportView.swift"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "174"
+            endingLineNumber = "174"
+            landmarkName = "prepareForUpload()"
+            landmarkType = "7">
+            <Locations>
+               <Location
+                  uuid = "C0585D80-FF0A-4718-AFBD-535D35236452 - d75c86a798ecc9db"
+                  shouldBeEnabled = "Yes"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "(1) suspend resume partial function for closure #1 @Sendable () async -&gt; () in StoleMyKia.UpdateReportView.prepareForUpload() -&gt; ()"
+                  moduleName = "StoleMyKia"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/jaylensmith/Documents/Macbook%20Pro%20Xcode/StoleMyKia/StoleMyKia/SwiftUI/Report/Update/UpdateReportView.swift"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "172"
+                  endingLineNumber = "172"
+                  offsetFromSymbolStart = "463">
+               </Location>
+               <Location
+                  uuid = "C0585D80-FF0A-4718-AFBD-535D35236452 - d75c86a798ecc9db"
+                  shouldBeEnabled = "Yes"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "(1) suspend resume partial function for closure #1 @Sendable () async -&gt; () in StoleMyKia.UpdateReportView.prepareForUpload() -&gt; ()"
+                  moduleName = "StoleMyKia"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/jaylensmith/Documents/Macbook%20Pro%20Xcode/StoleMyKia/StoleMyKia/SwiftUI/Report/Update/UpdateReportView.swift"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "172"
+                  endingLineNumber = "172"
+                  offsetFromSymbolStart = "506">
+               </Location>
+            </Locations>
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            uuid = "3F1488CB-4636-46CC-B459-3FB4D29D05B4"
+            shouldBeEnabled = "Yes"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "StoleMyKia/SwiftUI/Report/Update/UpdateReportView.swift"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "178"
+            endingLineNumber = "178"
+            landmarkName = "prepareForUpload()"
+            landmarkType = "7">
+            <Locations>
+               <Location
+                  uuid = "3F1488CB-4636-46CC-B459-3FB4D29D05B4 - d75c86a798ecc947"
+                  shouldBeEnabled = "Yes"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "(1) suspend resume partial function for closure #1 @Sendable () async -&gt; () in StoleMyKia.UpdateReportView.prepareForUpload() -&gt; ()"
+                  moduleName = "StoleMyKia"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/jaylensmith/Documents/Macbook%20Pro%20Xcode/StoleMyKia/StoleMyKia/SwiftUI/Report/Update/UpdateReportView.swift"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "176"
+                  endingLineNumber = "176"
+                  offsetFromSymbolStart = "1000">
+               </Location>
+               <Location
+                  uuid = "3F1488CB-4636-46CC-B459-3FB4D29D05B4 - d75c86a798ecc947"
+                  shouldBeEnabled = "Yes"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "(1) suspend resume partial function for closure #1 @Sendable () async -&gt; () in StoleMyKia.UpdateReportView.prepareForUpload() -&gt; ()"
+                  moduleName = "StoleMyKia"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/jaylensmith/Documents/Macbook%20Pro%20Xcode/StoleMyKia/StoleMyKia/SwiftUI/Report/Update/UpdateReportView.swift"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "176"
+                  endingLineNumber = "176"
+                  offsetFromSymbolStart = "1043">
+               </Location>
+            </Locations>
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            uuid = "D2E7D1DC-5E05-4207-A87F-7A686E50A7A3"
+            shouldBeEnabled = "No"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "StoleMyKia/View Models/ReportsViewModel.swift"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "68"
+            endingLineNumber = "68"
+            landmarkName = "addUpdateToOriginalReport(originalReport:report:vehicleImage:)"
+            landmarkType = "7">
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            uuid = "4E2617D1-2CCB-4C99-A471-F5F65B96FBEB"
+            shouldBeEnabled = "Yes"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "StoleMyKia/View Models/ReportsViewModel.swift"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "66"
+            endingLineNumber = "66"
+            landmarkName = "addUpdateToOriginalReport(originalReport:report:vehicleImage:)"
+            landmarkType = "7">
+            <Locations>
+               <Location
+                  uuid = "4E2617D1-2CCB-4C99-A471-F5F65B96FBEB - 3e48835881a8edf8"
+                  shouldBeEnabled = "Yes"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "(1) suspend resume partial function for StoleMyKia.ReportsViewModel.addUpdateToOriginalReport(originalReport: StoleMyKia.Report, report: StoleMyKia.Report, vehicleImage: Swift.Optional&lt;__C.UIImage&gt;) async throws -&gt; ()"
+                  moduleName = "StoleMyKia"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/jaylensmith/Documents/Macbook%20Pro%20Xcode/StoleMyKia/StoleMyKia/View%20Models/ReportsViewModel.swift"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "65"
+                  endingLineNumber = "65"
+                  offsetFromSymbolStart = "542">
+               </Location>
+               <Location
+                  uuid = "4E2617D1-2CCB-4C99-A471-F5F65B96FBEB - 214bf2ae9ebb671e"
+                  shouldBeEnabled = "Yes"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "(2) await resume partial function for StoleMyKia.ReportsViewModel.addUpdateToOriginalReport(originalReport: StoleMyKia.Report, report: StoleMyKia.Report, vehicleImage: Swift.Optional&lt;__C.UIImage&gt;) async throws -&gt; ()"
+                  moduleName = "StoleMyKia"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/jaylensmith/Documents/Macbook%20Pro%20Xcode/StoleMyKia/StoleMyKia/View%20Models/ReportsViewModel.swift"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "65"
+                  endingLineNumber = "65"
+                  offsetFromSymbolStart = "48">
+               </Location>
+               <Location
+                  uuid = "4E2617D1-2CCB-4C99-A471-F5F65B96FBEB - d14759f7efc3a9fa"
+                  shouldBeEnabled = "Yes"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "(3) suspend resume partial function for StoleMyKia.ReportsViewModel.addUpdateToOriginalReport(originalReport: StoleMyKia.Report, report: StoleMyKia.Report, vehicleImage: Swift.Optional&lt;__C.UIImage&gt;) async throws -&gt; ()"
+                  moduleName = "StoleMyKia"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/jaylensmith/Documents/Macbook%20Pro%20Xcode/StoleMyKia/StoleMyKia/View%20Models/ReportsViewModel.swift"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "65"
+                  endingLineNumber = "65"
+                  offsetFromSymbolStart = "161">
+               </Location>
+               <Location
+                  uuid = "4E2617D1-2CCB-4C99-A471-F5F65B96FBEB - 404210124e1d65fc"
+                  shouldBeEnabled = "Yes"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "(5) suspend resume partial function for StoleMyKia.ReportsViewModel.addUpdateToOriginalReport(originalReport: StoleMyKia.Report, report: StoleMyKia.Report, vehicleImage: Swift.Optional&lt;__C.UIImage&gt;) async throws -&gt; ()"
+                  moduleName = "StoleMyKia"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/jaylensmith/Documents/Macbook%20Pro%20Xcode/StoleMyKia/StoleMyKia/View%20Models/ReportsViewModel.swift"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "65"
+                  endingLineNumber = "65"
+                  offsetFromSymbolStart = "89">
+               </Location>
+               <Location
+                  uuid = "4E2617D1-2CCB-4C99-A471-F5F65B96FBEB - bbde01fb5b234375"
+                  shouldBeEnabled = "Yes"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "(8) suspend resume partial function for StoleMyKia.ReportsViewModel.addUpdateToOriginalReport(originalReport: StoleMyKia.Report, report: StoleMyKia.Report, vehicleImage: Swift.Optional&lt;__C.UIImage&gt;) async throws -&gt; ()"
+                  moduleName = "StoleMyKia"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/jaylensmith/Documents/Macbook%20Pro%20Xcode/StoleMyKia/StoleMyKia/View%20Models/ReportsViewModel.swift"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "61"
+                  endingLineNumber = "61"
+                  offsetFromSymbolStart = "75">
+               </Location>
+               <Location
+                  uuid = "4E2617D1-2CCB-4C99-A471-F5F65B96FBEB - bbde01fb5b2343f1"
+                  shouldBeEnabled = "Yes"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "(8) suspend resume partial function for StoleMyKia.ReportsViewModel.addUpdateToOriginalReport(originalReport: StoleMyKia.Report, report: StoleMyKia.Report, vehicleImage: Swift.Optional&lt;__C.UIImage&gt;) async throws -&gt; ()"
+                  moduleName = "StoleMyKia"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/jaylensmith/Documents/Macbook%20Pro%20Xcode/StoleMyKia/StoleMyKia/View%20Models/ReportsViewModel.swift"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "65"
+                  endingLineNumber = "65"
+                  offsetFromSymbolStart = "139">
+               </Location>
+               <Location
+                  uuid = "4E2617D1-2CCB-4C99-A471-F5F65B96FBEB - 625f7cc50a4f9df0"
+                  shouldBeEnabled = "Yes"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "(9) suspend resume partial function for StoleMyKia.ReportsViewModel.addUpdateToOriginalReport(originalReport: StoleMyKia.Report, report: StoleMyKia.Report, vehicleImage: Swift.Optional&lt;__C.UIImage&gt;) async throws -&gt; ()"
+                  moduleName = "StoleMyKia"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/jaylensmith/Documents/Macbook%20Pro%20Xcode/StoleMyKia/StoleMyKia/View%20Models/ReportsViewModel.swift"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "65"
+                  endingLineNumber = "65"
+                  offsetFromSymbolStart = "75">
+               </Location>
+               <Location
+                  uuid = "4E2617D1-2CCB-4C99-A471-F5F65B96FBEB - 3e48835881a8eddb"
+                  shouldBeEnabled = "Yes"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "(1) suspend resume partial function for StoleMyKia.ReportsViewModel.addUpdateToOriginalReport(originalReport: StoleMyKia.Report, report: StoleMyKia.Report, vehicleImage: Swift.Optional&lt;__C.UIImage&gt;) async throws -&gt; ()"
+                  moduleName = "StoleMyKia"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/jaylensmith/Documents/Macbook%20Pro%20Xcode/StoleMyKia/StoleMyKia/View%20Models/ReportsViewModel.swift"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "66"
+                  endingLineNumber = "66"
+                  offsetFromSymbolStart = "795">
+               </Location>
+            </Locations>
          </BreakpointContent>
       </BreakpointProxy>
    </Breakpoints>

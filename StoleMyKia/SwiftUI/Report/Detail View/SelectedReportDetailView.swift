@@ -101,7 +101,7 @@ struct SelectedReportDetailView: View {
             .toolbar {
                 ToolbarItem(placement: .navigationBarLeading) {
                     Button {
-                        
+                        isShowingUpdateReportView.toggle()
                     } label: {
                         Image(systemName: "arrow.2.squarepath")
                     }
@@ -141,6 +141,11 @@ struct SelectedReportDetailView: View {
             .fullScreenCover(isPresented: $isShowingFalseReportView) {
                 FalseReportView(report: report)
                     .environmentObject(userVM)
+            }
+            .sheet(isPresented: $isShowingUpdateReportView) {
+                UpdateReportView(originalReport: report)
+                    .environmentObject(userVM)
+                    .environmentObject(reportsVM)
             }
         }
         .onAppear {

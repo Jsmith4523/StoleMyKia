@@ -20,7 +20,7 @@ struct FirebaseDatabasesPaths {
     ///Path to user vehicle images
     static let usersVehicleImageStoragePath  = "Vehicles/Users/"
     ///Path for vehicle reports
-    static let reportsDatabasePath           = "Reports"
+    static let reportsDatabasePath           = "Reports/"
     ///Path to Firebase users FCM tokens
     static let fcmTokenPath                  = "Users/Fcms"
     ///Path to the updates of a report

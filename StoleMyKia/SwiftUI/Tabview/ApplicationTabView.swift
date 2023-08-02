@@ -49,7 +49,7 @@ struct ApplicationTabView: View {
     
     @StateObject private var reportsVM = ReportsViewModel()
     @StateObject private var notificationVM = NotificationViewModel()
-    @EnvironmentObject var userModel: UserViewModel
+    @EnvironmentObject var userVM: UserViewModel
         
     var body: some View {
         TabView(selection: $selection) {
@@ -76,7 +76,7 @@ struct ApplicationTabView: View {
                 }
         }
         .environmentObject(reportsVM)
-        .environmentObject(userModel)
+        .environmentObject(userVM)
         .environmentObject(notificationVM)
         .tint(Color(uiColor: .label))
         .onReceive(notificationVM.$userNotifications) { notifications in
@@ -85,7 +85,8 @@ struct ApplicationTabView: View {
             self.notificationCount = notifications.filter({!$0.isRead}).count
         }
         .onAppear {
-            notificationVM.setDelegate(userModel)
+            notificationVM.setDelegate(userVM)
+            reportsVM.setFirebaseUserDelegate(userVM)
         }
     }
 }

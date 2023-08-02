@@ -11,14 +11,14 @@ import CoreLocation
 
 //TODO: Picker: the selection "" is invalid and does not have an associated tag, this will give undefined results. Not sure how to fix...
 
+enum NewReportError: String, Error {
+    case locationError = "Please select a location"
+    case userIdError = "Something went wrong. You do not appear to be signed in. Please contact the developer!"
+    case error = "We ran into an error when completing your request. Please try again."
+    case detailIsEmpty = "Please enter details regarding your vehicle and the incident you are reporting"
+}
+
 struct NewReportView: View {
-    
-    enum NewReportError: String, Error {
-        case locationError = "Please select a location"
-        case userIdError = "Something went wrong. You do not appear to be signed in. Please contact the developer!"
-        case error = "We ran into an error when completing your request. Please try again."
-        case detailIsEmpty = "Please enter details regarding your vehicle and the incident you are reporting"
-    }
     
     @State private var vehicleImage: UIImage?
     
@@ -273,43 +273,44 @@ struct NewReportView: View {
         return Location(coordinates: userLocation)
     }
     
+    @MainActor
     private func upload() {
-        do {
-            self.isUploading = true
-            
-            guard let uid = userVM.uid else {
-                throw NewReportError.userIdError
-            }
-            
-            guard !(distinguishableDescription.isEmpty) else {
-                throw NewReportError.detailIsEmpty
-            }
-                        
-            guard let location = usersLocation() ?? location else {
-                throw NewReportError.locationError
-            }
-            
-            var vehicle = Vehicle(year: vehicleYear, make: vehicleMake, model: vehicleModel, color: vehicleColor)
-            try vehicle.licensePlateString(licensePlate)
-            let report = Report(uid: uid, type: reportType, Vehicle: vehicle, details: distinguishableDescription, location: location)
-            
-            Task {
+        Task {
+            do {
+                self.isUploading = true
+                
+                guard let uid = userVM.uid else {
+                    throw NewReportError.userIdError
+                }
+                
+                guard !(distinguishableDescription.isEmpty) else {
+                    throw NewReportError.detailIsEmpty
+                }
+                            
+                guard let location = usersLocation() ?? location else {
+                    throw NewReportError.locationError
+                }
+                
+                var vehicle = Vehicle(year: vehicleYear, make: vehicleMake, model: vehicleModel, color: vehicleColor)
+                try vehicle.licensePlateString(licensePlate)
+                let report = Report(uid: uid, type: reportType, Vehicle: vehicle, details: distinguishableDescription, location: location)
+                
                 guard let _ = try? await reportsVM.uploadReport(report, image: vehicleImage) else {
                     throw NewReportError.error
                 }
-                DispatchQueue.main.async {
-                    dismiss()
+                
+                dismiss()
+                
+            } catch NewReportError.locationError {
+                self.isUploading = false
+                self.alertSelectLocation.toggle()
+            } catch {
+                if let error = error as? NewReportError {
+                    self.alertReason = error
                 }
+                self.isUploading = false
+                self.alertErrorUploading = true
             }
-        } catch NewReportError.locationError {
-            self.isUploading = false
-            self.alertSelectLocation.toggle()
-        } catch {
-            if let error = error as? NewReportError {
-                self.alertReason = error
-            }
-            self.isUploading = false
-            self.alertErrorUploading = true
         }
     }
 }

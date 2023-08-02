@@ -85,8 +85,11 @@ class ReportManager {
         return report
     }
     
-    func fetchUpdates(_ report: Report) async throws -> [Report] {
-        let collection = collection.document(report.id.uuidString).collection("Updates")
+    /// Get any available updates for a original report
+    /// - Parameter reportId: The UUID of the original report
+    /// - Returns: An array of reports that are updates
+    func fetchUpdates(_ reportId: UUID) async throws -> [Report] {
+        let collection = collection.document(reportId.uuidString).collection("Updates")
         let snapshot = try await collection.getDocuments().documents
                
         guard let data = snapshot.map({$0.data()}) as? [[String: Any]] else {
@@ -97,13 +100,12 @@ class ReportManager {
             throw ReportManagerError.codableError
         }
         
-        let ids = updates.map({$0.id})
+        let ids = updates.map({$0.reportId})
         
         var reports = [Report?]()
         for id in ids {
             print(id)
             let report = try await self.fetchSingleReport(id, errorIfUnavaliable: false)
-            print(report)
             reports.append(report)
         }
         
@@ -120,6 +122,25 @@ class ReportManager {
         let documents = try await self.collection.getDocuments()
         
         return documents.reportsFromSnapshot()
+    }
+    
+    func appendUpdateToReport(_ originalReportId: UUID, update: Update) async throws -> String {
+        //Check if the original report still exist
+        guard try await reportDoesExist(originalReportId) else {
+            throw ReportManagerError.doesNotExist
+        }
+        
+        guard let jsonData = try update.encodeForAppending() as? [String: Any] else {
+            throw ReportManagerError.codableError
+        }
+        
+        try await db.document("\(FirebaseDatabasesPaths.reportsDatabasePath)\(originalReportId.uuidString)")
+            .collection("Updates")
+            .document(update.id.uuidString)
+            .setData(jsonData)
+        
+        //Returning the update UUID string...
+        return update.id.uuidString
     }
     
     /// Uploads a report to Firestore Database. Also uploads the associated vehicle image (if included) to Firebase Storage.
@@ -157,13 +178,14 @@ class ReportManager {
         try await self.collection.document(id.uuidString).delete()
     }
     
-    
     /// Checks the Firestore collection if a report still exists in the database.
     /// - Parameter id: The UUID of the report.
     /// - Returns: True if the report exists and no errors are thrown.
     /// - Throws: Error if the report could not be retrieved.
     func reportDoesExist(_ id: UUID) async throws -> Bool {
-        let document = try await collection.document(id.uuidString).getDocument()
+        let document = try await collection
+            .document(id.uuidString)
+            .getDocument()
         
         guard document.exists else {
             return false

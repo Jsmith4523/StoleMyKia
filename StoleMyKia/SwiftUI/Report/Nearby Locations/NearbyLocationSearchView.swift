@@ -154,24 +154,31 @@ final fileprivate class LocationSearchViewModel: ObservableObject {
             
             let search = MKLocalSearch(request: request)
             let response = try await search.start()
-            //Filtering locations within a mile from the users current location
-//            let locations = response.mapItems
-//                .filter({usersCurrentLocation.calculateDistanceInMiles(to: $0.location) <= 1})
-//                .map ({Location(address: $0.placemark.title, name: $0.name, coordinate: $0.placemark.coordinate)})
-//            
-//            
-//            guard !(locations.isEmpty) else {
-//                self.locations = []
-//                self.loadStatus = .noResults
-//                return
-//            }
-//            self.locations = locations
-//            self.loadStatus = .loaded
+            // Filtering locations within a mile from the users current location
+            let locations = response.mapItems
+                .filter({usersCurrentLocation.calculateDistanceInMiles(to: $0.location) <= 2.0})
+                .map ({Location(address: $0.placemark.title, name: $0.name, coordinate: $0.placemark.coordinate)})
+            
+            
+            guard !(locations.isEmpty) else {
+                self.locations = []
+                self.loadStatus = .noResults
+                return
+            }
+            self.locations = locations
+            self.loadStatus = .loaded
         }
         catch {
             self.loadStatus = .error
             UINotificationFeedbackGenerator().notificationOccurred(.error)
         }
+    }
+}
+
+extension MKMapItem {
+    
+    var location: CLLocation {
+        CLLocation(latitude: self.placemark.coordinate.latitude, longitude: self.placemark.coordinate.longitude)
     }
 }
 

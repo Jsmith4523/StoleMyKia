@@ -59,7 +59,10 @@ struct Report: Identifiable, Codable, Comparable {
     ///On the client side, the property is immutable.
     ///On the admin side, this property is mutable if the report is determined false
     var isFalseReport: Bool = false
-    var updates: [UUID]?
+    ///The UUID string of the update object if applicable.
+    ///This is useful when wanting to delete a report if it's an update.
+    ///Firebase functions will handle the rest after this report has been deleted.
+    var updateId: String?
     
     static func == (lhs: Report, rhs: Report) -> Bool {
         return true
@@ -111,10 +114,8 @@ extension Report {
     /// Set this report as 'update'
     /// - Parameter parentId: The parent report UUID.
     /// - Returns: self
-    func setAsUpdate(_ parentId: UUID) -> Self {
-        var report = self
-        report.role = .update(parentId)
-        return report
+    mutating func setAsUpdate(_ parentId: UUID) {
+        self.role = .update(parentId)
     }
     
     ///Determines if the report can be updated

@@ -14,8 +14,8 @@ enum ReportType: String, CaseIterable, Hashable, Identifiable, Codable {
     case carjacked   = "Car Jacking"
     case stolen      = "Stolen"
     case found       = "Found"
-    case witnessed  = "Witnessed"
-    case located     = "Located"
+    case witnessed   = "Witnessed"
+    case located     = "Seen"
     case breakIn     = "Break-In"
     
     ///Raw value
@@ -157,7 +157,7 @@ enum ReportType: String, CaseIterable, Hashable, Identifiable, Codable {
         case .witnessed:
             return "Someone witnessed a \(vehicleDetails) being stolen."
         case .located:
-            return "A \(vehicleDetails) has been located."
+            return "A \(vehicleDetails) has been seen."
         case .attempt:
             return "Someone attempted to steal a \(vehicleDetails)."
         case .breakIn:

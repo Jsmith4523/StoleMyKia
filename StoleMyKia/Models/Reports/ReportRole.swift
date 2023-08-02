@@ -61,6 +61,15 @@ enum ReportRole: Identifiable, Codable, Equatable {
         }
     }
     
+    var isAnUpdate: Bool {
+        switch self {
+        case .original(_):
+            return false
+        case .update(_):
+            return true
+        }
+    }
+    
     var id: String {
         self.title
     }

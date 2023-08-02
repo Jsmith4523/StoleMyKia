@@ -49,18 +49,21 @@ extension View {
             .sheet(isPresented: isPresented) { PhotoPicker(selectedImage: selectedImage, source: sourceType) }
     }
     
+    func imagePicker(source: Binding<UIImagePickerController.SourceType?>, image: Binding<UIImage?>) -> some View {
+        return self
+            .sheet(item: source) { source in
+                PhotoPicker(selectedImage: image, source: source)
+                //Preventing white space at the bottom of the modal...
+                    .ignoresSafeArea()
+            }
+    }
+    
     func customSheetView<Content: View>(isPresented: Binding<Bool>, detents: [UISheetPresentationController.Detent] = [.medium()], showsIndicator: Bool = false, cornerRadius: CGFloat = 15, @ViewBuilder child: @escaping ()->Content) -> some View {
         return self
             .background {
                 CustomSheetView(isPresented: isPresented, detents: detents, showsIndicator: showsIndicator, cornerRadius: cornerRadius, child: child)
             }
     }
-    
-//    func drawer<C: View>(_ mode: Binding<Mode>, content: @escaping () -> C) -> some View {
-//        InteractiveDrawer(mode: mode) {
-//            content()
-//        }
-//    }
     
     //TODO: Crete privacy policy
     func privacyPolicy(isPresented: Binding<Bool>) -> some View {

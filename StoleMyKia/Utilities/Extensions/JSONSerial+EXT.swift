@@ -12,6 +12,7 @@ extension JSONSerialization {
     
     enum JSONSearizationError: Error {
         case incompatible
+        case error
     }
     
     ///Create object from JSON Object.

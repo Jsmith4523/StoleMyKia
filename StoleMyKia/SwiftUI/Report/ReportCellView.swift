@@ -30,12 +30,20 @@ struct ReportCellView: View {
                     VStack {
                         VStack(alignment: .leading, spacing: 11) {
                             HStack {
-                                Text(report.reportType.rawValue)
-                                    .padding(5)
-                                    .background(Color(uiColor: report.reportType.annotationColor).opacity(0.65))
-                                    .font(.system(size: 16).weight(.heavy))
-                                    .foregroundColor(.white)
-                                    .cornerRadius(10)
+                                HStack {
+                                    if report.role.isAnUpdate {
+                                        Image(systemName: "arrow.2.squarepath")
+                                            .resizable()
+                                            .scaledToFit()
+                                            .frame(width: 20, height: 20)
+                                    }
+                                    Text(report.reportType.rawValue)
+                                }
+                                .padding(5)
+                                .background(Color(uiColor: report.reportType.annotationColor).opacity(0.65))
+                                .font(.system(size: 16).weight(.heavy))
+                                .foregroundColor(.white)
+                                .cornerRadius(10)
                                 
                                 Spacer()
                                 VStack(alignment: .trailing) {

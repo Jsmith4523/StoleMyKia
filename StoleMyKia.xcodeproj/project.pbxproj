@@ -419,6 +419,7 @@
 		24A5790729BC552C00495E6F = {
 			isa = PBXGroup;
 			children = (
+				24CC5F682A7A00BE0078C921 /* Library */,
 				24A5791229BC552C00495E6F /* StoleMyKia */,
 				24CC5F492A74E0870078C921 /* SMKNotificationService */,
 				24A5791129BC552C00495E6F /* Products */,
@@ -439,7 +440,6 @@
 		24A5791229BC552C00495E6F /* StoleMyKia */ = {
 			isa = PBXGroup;
 			children = (
-				24CC5F412A747E9B0078C921 /* notification_report.caf */,
 				24A206962A08D29E00F5DC0C /* StoleMyKia.entitlements */,
 				24A5791329BC552C00495E6F /* StoleMyKiaApp.swift */,
 				240F22412A33F0020078F97E /* README.rtf */,
@@ -788,6 +788,22 @@
 				24CC5F582A75BAB50078C921 /* FalseReport.swift */,
 			);
 			path = "False Report";
+			sourceTree = "<group>";
+		};
+		24CC5F682A7A00BE0078C921 /* Library */ = {
+			isa = PBXGroup;
+			children = (
+				24CC5F692A7A00C80078C921 /* Sounds */,
+			);
+			path = Library;
+			sourceTree = "<group>";
+		};
+		24CC5F692A7A00C80078C921 /* Sounds */ = {
+			isa = PBXGroup;
+			children = (
+				24CC5F412A747E9B0078C921 /* notification_report.caf */,
+			);
+			path = Sounds;
 			sourceTree = "<group>";
 		};
 		24EE41102A59E01F00AF2A11 /* CoreML */ = {
@@ -1316,7 +1332,7 @@
 				SKIP_INSTALL = YES;
 				SWIFT_EMIT_LOC_STRINGS = YES;
 				SWIFT_VERSION = 5.0;
-				TARGETED_DEVICE_FAMILY = "1,2";
+				TARGETED_DEVICE_FAMILY = 1;
 			};
 			name = Debug;
 		};
@@ -1342,7 +1358,7 @@
 				SKIP_INSTALL = YES;
 				SWIFT_EMIT_LOC_STRINGS = YES;
 				SWIFT_VERSION = 5.0;
-				TARGETED_DEVICE_FAMILY = "1,2";
+				TARGETED_DEVICE_FAMILY = 1;
 			};
 			name = Release;
 		};

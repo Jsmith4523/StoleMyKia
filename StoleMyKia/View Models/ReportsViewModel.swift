@@ -20,11 +20,15 @@ final class ReportsViewModel: NSObject, ObservableObject {
     
     private let manager = ReportManager.manager
 
-    weak var delegate: ReportsDelegate?
-    weak var firebaseUserDelegate: FirebaseUserDelegate?
+    weak private var delegate: ReportsDelegate?
+    weak private var firebaseUserDelegate: FirebaseUserDelegate?
     
     override init() {
         super.init()
+    }
+    
+    func setFirebaseUserDelegate(_ delegate: FirebaseUserDelegate) {
+        self.firebaseUserDelegate = delegate
     }
     
     @MainActor
@@ -46,10 +50,33 @@ final class ReportsViewModel: NSObject, ObservableObject {
     func uploadReport(_ report: Report, image: UIImage? = nil) async throws {
         try await manager.upload(report, image: image)
         await UINotificationFeedbackGenerator().notificationOccurred(.success)
+        await fetchReports()
     }
     
     func deleteReport(report: Report) async throws {
         try await manager.delete(report.id, path: report.vehicleImagePath)
+    }
+    
+    /// Update a original report
+    /// - Parameters:
+    ///   - originalReportId: The UUID of the original report
+    ///   - update: The Update object
+    func addUpdateToOriginalReport(originalReport: Report, report: Report, vehicleImage: UIImage? = nil) async throws {
+        guard let uid = firebaseUserDelegate?.uid else {
+            throw ReportManagerError.error
+        }
+        
+        guard try await manager.reportDoesExist(originalReport.id) else {
+            throw ReportManagerError.doesNotExist
+        }
+        
+        var report = report
+        let update = Update(uid: uid, authorUid: originalReport.uid, type: report.reportType, reportId: report.id, dt: report.dt)
+        let updateId = try await manager.appendUpdateToReport(originalReport.role.associatedValue, update: update)
+        
+        report.updateId = updateId
+        
+        try await uploadReport(report, image: vehicleImage)
     }
     
     deinit {
@@ -60,7 +87,8 @@ final class ReportsViewModel: NSObject, ObservableObject {
 //MARK: - TimelineMapViewDelegate
 extension ReportsViewModel: TimelineMapViewDelegate {
     func getTimelineUpdates(for report: Report) async throws -> [Report] {
-        try await manager.fetchUpdates(report)
+        //Using the associated value for both original and update reports
+        try await manager.fetchUpdates(report.role.associatedValue)
     }
 }
 

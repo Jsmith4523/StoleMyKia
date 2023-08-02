@@ -10,9 +10,16 @@ import CommonCrypto
 import CryptoKit
 
 struct EncryptedData: Codable, Hashable {
-    let data: String
-    let key: Data
-    let iv: Data
+    
+    init(data: String, key: Data, iv: Data) {
+        self.data = data
+        self.key  = key
+        self.iv   = iv
+    }
+    
+    private let data: String
+    private let key: Data
+    private let iv: Data
 }
 
 enum EDEncryptionStatus: Error {
