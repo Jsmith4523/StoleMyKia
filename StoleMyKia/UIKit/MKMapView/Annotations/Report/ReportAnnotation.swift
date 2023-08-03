@@ -18,10 +18,19 @@ class ReportAnnotation: NSObject, MKAnnotation {
     var coordinate: CLLocationCoordinate2D
     var report: Report
     
+    var index: Int?
+    
     init(report: Report) {
         self.coordinate    = report.location.coordinates
         self.report        = report
-        self.subtitle      = "\(report.reportType.rawValue)\n\(report.dt.full)"
+        self.subtitle      = "\(report.reportType.rawValue)\n\(report.dt.timeAgoDisplay())"
+    }
+    
+    init(report: Report, index: Int?) {
+        self.coordinate    = report.location.coordinates
+        self.report        = report
+        self.subtitle      = "\(report.reportType.rawValue)\n\(report.dt.timeAgoDisplay())"
+        self.index         = index
     }
 }
 

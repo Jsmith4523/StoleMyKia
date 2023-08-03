@@ -77,12 +77,7 @@ fileprivate struct TimelineListCellView: View {
     var body: some View {
         VStack(alignment: .leading, spacing: 10) {
             HStack {
-                Text(report.reportType.rawValue)
-                    .foregroundColor(.white)
-                    .font(.system(size: 16).bold())
-                    .padding(3)
-                    .background(Color(uiColor: report.reportType.annotationColor).opacity(0.65))
-                    .clipShape(RoundedRectangle(cornerRadius: 6))
+                reportTypeLabelStyle(report: report)
                 Spacer()
                 Text(report.timeSinceString())
                     .font(.system(size: 13))
@@ -114,17 +109,6 @@ fileprivate struct TimelineListCellView: View {
                         .clipShape(RoundedRectangle(cornerRadius: 10))
                 }
             }
-            HStack(spacing: 13) {
-                Button {
-                    getDirectionsForReport()
-                } label: {
-                    Image(systemName: "arrow.triangle.turn.up.right.diamond")
-                        .resizable()
-                        .scaledToFit()
-                        .frame(width: 22, height: 22)
-                }
-            }
-            .foregroundColor(Color(uiColor: .label))
         }
         .padding()
         .multilineTextAlignment(.leading)
@@ -137,10 +121,6 @@ fileprivate struct TimelineListCellView: View {
         ImageCache.shared.getImage(report.imageURL) { image in
             self.vehicleImage = image
         }
-    }
-    
-    private func getDirectionsForReport() {
-        URL.getDirectionsToLocation(coords: report.location.coordinates)
     }
 }
 

@@ -9,11 +9,12 @@ import Foundation
 
 struct Update: Identifiable, Codable {
     
-    init(uid: String, authorUid: String, type: ReportType, reportId: UUID, dt: TimeInterval = Date.now.epoch) {
+    init(uid: String, authorUid: String, type: ReportType, vehicle: Vehicle, reportId: UUID, dt: TimeInterval = Date.now.epoch) {
         self.uid              = uid
         self.authorUid        = authorUid
         self.reportId         = reportId
         self.updateReportType = type
+        self.vehicleDetails   = vehicle.vehicleNotificationDetails
         self.dt               = dt
     }
     
@@ -28,6 +29,9 @@ struct Update: Identifiable, Codable {
     let reportId: UUID
     ///The report type of the update report
     let updateReportType: ReportType
+    ///The vehicle associated with this update.
+    ///This will be just a string value to avoid including sensitive data
+    let vehicleDetails: String
     ///The time of the update report
     let dt: TimeInterval
     

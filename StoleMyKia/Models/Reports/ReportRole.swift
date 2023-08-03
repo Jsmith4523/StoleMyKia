@@ -70,6 +70,15 @@ enum ReportRole: Identifiable, Codable, Equatable {
         }
     }
     
+    var falseReportDescription: String {
+        switch self {
+        case .original(_):
+            return "We have determined that this report is false. This report can no longer be updated"
+        case .update(_):
+            return "We have determined that this update is false. The original report cannot be updated through this report."
+        }
+    }
+    
     var id: String {
         self.title
     }

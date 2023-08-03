@@ -8,6 +8,8 @@
 import SwiftUI
 
 struct ReportCellView: View {
+    
+    @State private var presentAlertFalseReport = false
         
     @State private var vehicleImage: UIImage?
     
@@ -30,21 +32,7 @@ struct ReportCellView: View {
                     VStack {
                         VStack(alignment: .leading, spacing: 11) {
                             HStack {
-                                HStack {
-                                    if report.role.isAnUpdate {
-                                        Image(systemName: "arrow.2.squarepath")
-                                            .resizable()
-                                            .scaledToFit()
-                                            .frame(width: 20, height: 20)
-                                    }
-                                    Text(report.reportType.rawValue)
-                                }
-                                .padding(5)
-                                .background(Color(uiColor: report.reportType.annotationColor).opacity(0.65))
-                                .font(.system(size: 16).weight(.heavy))
-                                .foregroundColor(.white)
-                                .cornerRadius(10)
-                                
+                                reportTypeLabelStyle(report: report)
                                 Spacer()
                                 VStack(alignment: .trailing) {
                                     Text(report.timeSinceString())
@@ -90,6 +78,11 @@ struct ReportCellView: View {
         .onAppear {
             getVehicleImage()
         }
+        .alert("False!", isPresented: $presentAlertFalseReport) {
+            Button("OK") {}
+        } message: {
+            Text(report.role.falseReportDescription)
+        }
     }
     
     
@@ -100,6 +93,31 @@ struct ReportCellView: View {
             }
             self.vehicleImage = image
         }
+    }
+}
+
+extension View  {
+    
+    func reportTypeLabelStyle(report: Report) -> some View {
+        HStack {
+            if report.isFalseReport {
+                Image(systemName: "exclamationmark.shield")
+                    .resizable()
+                    .scaledToFit()
+                    .frame(width: 20, height: 20)
+            } else if report.role.isAnUpdate {
+                Image(systemName: "arrow.2.squarepath")
+                    .resizable()
+                    .scaledToFit()
+                    .frame(width: 20, height: 20)
+            }
+            Text(report.reportType.rawValue)
+        }
+        .padding(5)
+        .background(Color(uiColor: report.reportType.annotationColor).opacity(0.72))
+        .font(.system(size: 16).weight(.heavy))
+        .foregroundColor(.white)
+        .cornerRadius(10)
     }
 }
 

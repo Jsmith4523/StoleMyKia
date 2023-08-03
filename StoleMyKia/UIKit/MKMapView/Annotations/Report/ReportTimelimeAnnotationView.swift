@@ -11,12 +11,15 @@ import SwiftUI
 
 class ReportTimelineAnnotationView: MKMarkerAnnotationView {
     
+    private var reportAnnotation: ReportAnnotation
     private var report: Report
     
     init(annotation: ReportAnnotation) {
+        self.reportAnnotation = annotation
         self.report = annotation.report
         super.init(annotation: annotation, reuseIdentifier: ReportAnnotation.reusableID)
         self.canShowCallout = false
+        self.animatesWhenAdded = true
         setupView()
     }
     
@@ -26,6 +29,7 @@ class ReportTimelineAnnotationView: MKMarkerAnnotationView {
     
     override func prepareForDisplay() {
         super.prepareForDisplay()
+        displayPriority = .defaultHigh
     }
     
     private func setupView() {

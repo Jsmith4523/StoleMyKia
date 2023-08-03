@@ -18,7 +18,7 @@ struct FeedListView: View {
         
     var body: some View {
         ZStack {
-            VStack(spacing: 11) {
+            LazyVStack(spacing: 11) {
                 ForEach(reports.sorted(by: >)) { report in
                     ReportCellView(report: report)
                         .onTapGesture {

@@ -71,7 +71,7 @@ final class ReportsViewModel: NSObject, ObservableObject {
         }
         
         var report = report
-        let update = Update(uid: uid, authorUid: originalReport.uid, type: report.reportType, reportId: report.id, dt: report.dt)
+        let update = Update(uid: uid, authorUid: originalReport.uid, type: report.reportType, vehicle: report.vehicle, reportId: report.id, dt: report.dt)
         let updateId = try await manager.appendUpdateToReport(originalReport.role.associatedValue, update: update)
         
         report.updateId = updateId

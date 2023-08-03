@@ -104,7 +104,6 @@ class ReportManager {
         
         var reports = [Report?]()
         for id in ids {
-            print(id)
             let report = try await self.fetchSingleReport(id, errorIfUnavaliable: false)
             reports.append(report)
         }

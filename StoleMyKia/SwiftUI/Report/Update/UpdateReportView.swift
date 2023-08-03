@@ -180,7 +180,7 @@ struct UpdateReportView: View {
                 
                 var report = Report(uid: uid, type: updateReportType, Vehicle: self.originalReport.vehicle, details: self.description, location: location)
                 report.setAsUpdate(originalReport.role.associatedValue)
-                try await reportsVM.addUpdateToOriginalReport(originalReport: originalReport, report: report)
+                try await reportsVM.addUpdateToOriginalReport(originalReport: originalReport, report: report, vehicleImage: vehicleImage)
                 dismiss()
             } catch {
                 print(error.localizedDescription)

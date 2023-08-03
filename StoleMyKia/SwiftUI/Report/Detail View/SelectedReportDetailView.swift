@@ -150,12 +150,13 @@ struct SelectedReportDetailView: View {
         }
         .onAppear {
             getVehicleImage()
+            UIImpactFeedbackGenerator(style: .medium).impactOccurred()
         }
     }
     
     private func presentTimelineMapView() {
-        //Prevents allocating a new MKMapView in cases if this detail view
-        //Is presented within the TimelineMapView
+        //Prevents allocating a new MKMapView in cases where the detail view
+        //is presented within the TimelineMapView
         switch timelineMapViewMode {
         case .dismissWhenSelected:
             dismiss()
@@ -168,7 +169,7 @@ struct SelectedReportDetailView: View {
         Image(uiImage: vehicleImage ?? .vehiclePlaceholder)
             .resizable()
             .scaledToFill()
-            .frame(height: 300)
+            .frame(width: UIScreen.main.bounds.width, height: 300)
             .clipped()
     }
     

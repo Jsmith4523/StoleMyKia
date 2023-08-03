@@ -26,7 +26,7 @@ enum ReportType: String, CaseIterable, Hashable, Identifiable, Codable {
     var annotationImage: String {
         switch self {
         case .stolen:
-            return "car.2.fill"
+            return "car.fill"
         case .found:
             return "checkmark.shield.fill"
         case .witnessed:
@@ -34,7 +34,7 @@ enum ReportType: String, CaseIterable, Hashable, Identifiable, Codable {
         case .located:
             return "eye.fill"
         case .carjacked:
-            return "light.beacon.max.fill"
+            return "car.fill"
         case .attempt:
             return "exclamation"
         case .breakIn:

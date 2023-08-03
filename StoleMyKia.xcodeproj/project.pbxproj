@@ -112,6 +112,7 @@
 		24CC5F592A75BAB50078C921 /* FalseReport.swift in Sources */ = {isa = PBXBuildFile; fileRef = 24CC5F582A75BAB50078C921 /* FalseReport.swift */; };
 		24CC5F5B2A75BEA20078C921 /* FalseReportManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 24CC5F5A2A75BEA20078C921 /* FalseReportManager.swift */; };
 		24CC5F5D2A761B120078C921 /* Update.swift in Sources */ = {isa = PBXBuildFile; fileRef = 24CC5F5C2A761B120078C921 /* Update.swift */; };
+		24CC5F6A2A7B84BB0078C921 /* notification_report.caf in Resources */ = {isa = PBXBuildFile; fileRef = 24CC5F412A747E9B0078C921 /* notification_report.caf */; };
 		24EAF11729C2A02900B4CBFE /* SFSafariView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 24EAF11629C2A02900B4CBFE /* SFSafariView.swift */; };
 		24EAF11B29C2C10200B4CBFE /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 24EAF11A29C2C10200B4CBFE /* GoogleService-Info.plist */; };
 		24EE41142A59E0FD00AF2A11 /* LicnesePlateDectectionManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 24EE41132A59E0FD00AF2A11 /* LicnesePlateDectectionManager.swift */; };
@@ -419,7 +420,7 @@
 		24A5790729BC552C00495E6F = {
 			isa = PBXGroup;
 			children = (
-				24CC5F682A7A00BE0078C921 /* Library */,
+				24CC5F412A747E9B0078C921 /* notification_report.caf */,
 				24A5791229BC552C00495E6F /* StoleMyKia */,
 				24CC5F492A74E0870078C921 /* SMKNotificationService */,
 				24A5791129BC552C00495E6F /* Products */,
@@ -790,22 +791,6 @@
 			path = "False Report";
 			sourceTree = "<group>";
 		};
-		24CC5F682A7A00BE0078C921 /* Library */ = {
-			isa = PBXGroup;
-			children = (
-				24CC5F692A7A00C80078C921 /* Sounds */,
-			);
-			path = Library;
-			sourceTree = "<group>";
-		};
-		24CC5F692A7A00C80078C921 /* Sounds */ = {
-			isa = PBXGroup;
-			children = (
-				24CC5F412A747E9B0078C921 /* notification_report.caf */,
-			);
-			path = Sounds;
-			sourceTree = "<group>";
-		};
 		24EE41102A59E01F00AF2A11 /* CoreML */ = {
 			isa = PBXGroup;
 			children = (
@@ -921,6 +906,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				24CC5F6A2A7B84BB0078C921 /* notification_report.caf in Resources */,
 				24A5791B29BC552E00495E6F /* Preview Assets.xcassets in Resources */,
 				24A5791829BC552E00495E6F /* Assets.xcassets in Resources */,
 				24127C1F29E3F4AC00C09FE5 /* Launch Screen.storyboard in Resources */,

@@ -65,7 +65,7 @@ final class TimelineMapViewCoordinator: NSObject, MKMapViewDelegate, ObservableO
     @Published private(set) var isLoading = false
     @Published private(set) var reports = [Report]() {
         didSet {
-            setupMapForUpdateReports()
+            setupMapView()
         }
     }
     @Published private(set) var report: Report?
@@ -84,16 +84,15 @@ final class TimelineMapViewCoordinator: NSObject, MKMapViewDelegate, ObservableO
     private var reportId: UUID!
     private var isOriginalReport: Bool!
     
-    var mapView: MKMapView?
+    weak var mapView: MKMapView?
     
     weak private var timelineMapViewDelegate: TimelineMapViewDelegate?
+    private var loadingTask: Task<Void, Never>?
         
     func setDelegate(_ delegate: TimelineMapViewDelegate) {
         self.timelineMapViewDelegate = delegate
     }
     
-    /// Fetch reports that are updates to this report or its parent.
-    /// - Parameter role: The role of the report.
     @MainActor
     func getUpdates(_ report: Report) async {
         do {
@@ -101,21 +100,26 @@ final class TimelineMapViewCoordinator: NSObject, MKMapViewDelegate, ObservableO
             self.report = report
             self.reportId = report.id
             self.isOriginalReport = report.role.hasParent
-            
-            var reports = [Report]()
-            
-            let originalReport = report
-               
+                                       
             //Check if the report still exists in Firestore Database
-            guard try await ReportManager.manager.reportDoesExist(originalReport.id) else { throw ReportManagerError.doesNotExist }
+            guard try await ReportManager.manager.reportDoesExist(report.role.associatedValue) else {
+                throw ReportManagerError.doesNotExist
+            }
+            
+            guard let originalReport = try await ReportManager.manager.fetchSingleReport(report.role.associatedValue) else {
+                throw ReportManagerError.error
+            }
             
             guard let updates = try await timelineMapViewDelegate?.getTimelineUpdates(for: originalReport), !(updates.isEmpty) else {
                 throw TimelineAlertMode.noUpdates
             }
-
+            
+            var reports = [Report]()
             reports.append(originalReport)
             reports.append(contentsOf: updates)
-            self.reports = reports.sorted(by: >)
+            
+            //Filtering out false reports
+            self.reports = reports.filter({!($0.isFalseReport)}).sorted(by: >)
             self.isLoading = false
         }
         catch ReportManagerError.doesNotExist {
@@ -136,22 +140,34 @@ final class TimelineMapViewCoordinator: NSObject, MKMapViewDelegate, ObservableO
         }
     }
     
+    func suspendTask() {
+        loadingTask?.cancel()
+        loadingTask = nil
+    }
+    
     func refreshForNewUpdates() async {
         guard let report else { return }
         await getUpdates(report)
     }
     
     ///Setups the map to display overlays and annotations.
-    private func setupMapForUpdateReports() {
+    private func setupMapView() {
         DispatchQueue.main.async {
             if let mapView = self.mapView {
                 mapView.removeAnnotations(mapView.annotations)
                 mapView.removeOverlays(mapView.overlays)
-                let annotations = self.reports.sorted(by: >).map({ReportAnnotation(report: $0)})
+                
+                //Setting the index of reports that are updates
+                let annotations = self.reports
+                    .sorted(by: >)
+                    .map({ReportAnnotation(report: $0)})
+            
                 let polyline = MKPolyline(coordinates: annotations.map({$0.coordinate}), count: annotations.count)
                 mapView.addAnnotations(annotations)
                 mapView.addOverlay(polyline)
-                mapView.setVisibleMapRect(polyline.boundingMapRect, edgePadding: .init(top: 65, left: 75, bottom: 65, right: 75), animated: true)
+                mapView.setVisibleMapRect(polyline.boundingMapRect,
+                                          edgePadding: .init(top: 65, left: 75, bottom: 65, right: 75),
+                                          animated: true)
                 mapView.isUserInteractionEnabled = true
             }
             self.isLoading = false
@@ -169,15 +185,14 @@ final class TimelineMapViewCoordinator: NSObject, MKMapViewDelegate, ObservableO
     }
     
     func mapView(_ mapView: MKMapView, viewFor annotation: MKAnnotation) -> MKAnnotationView? {
-        if annotation is MKUserLocation { return nil }
-            
         if let annotation = annotation as? ReportAnnotation {
-            let annotationView = ReportTimelineAnnotationView(annotation: annotation)
+            let reportAnnotationView = ReportTimelineAnnotationView(annotation: annotation)
             let calloutView = TimelineAnnotationViewCallout(report: annotation.report, selectedReportId: reportId)
             calloutView.setDelegate(self)
-            annotationView.canShowCallout = true
-            annotationView.detailCalloutAccessoryView = calloutView
-            return annotationView
+            reportAnnotationView.detailCalloutAccessoryView = calloutView
+            reportAnnotationView.canShowCallout = true
+            reportAnnotationView.displayPriority = .defaultHigh
+            return reportAnnotationView
         }
         return nil
     }
@@ -196,6 +211,7 @@ final class TimelineMapViewCoordinator: NSObject, MKMapViewDelegate, ObservableO
     
     deinit {
         timelineMapViewDelegate = nil
+        suspendTask()
         print("Dead: TimelineMapViewCoordinator")
     }
 }

@@ -7,54 +7,6 @@
       <BreakpointProxy
          BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
          <BreakpointContent
-            uuid = "EAC08404-99CE-441E-80F3-F0BBCAD0971F"
-            shouldBeEnabled = "Yes"
-            ignoreCount = "0"
-            continueAfterRunningActions = "No"
-            filePath = "StoleMyKia/SwiftUI/Report/Detail View/Timeline/TimelineMapViewRepresentable.swift"
-            startingColumnNumber = "9223372036854775807"
-            endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "119"
-            endingLineNumber = "119"
-            landmarkName = "getUpdates(_:)"
-            landmarkType = "7">
-            <Locations>
-               <Location
-                  uuid = "EAC08404-99CE-441E-80F3-F0BBCAD0971F - 724c4b8aed59f4e"
-                  shouldBeEnabled = "Yes"
-                  ignoreCount = "0"
-                  continueAfterRunningActions = "No"
-                  symbolName = "(3) suspend resume partial function for StoleMyKia.TimelineMapViewCoordinator.getUpdates(StoleMyKia.Report) async -&gt; ()"
-                  moduleName = "StoleMyKia"
-                  usesParentBreakpointCondition = "Yes"
-                  urlString = "file:///Users/jaylensmith/Documents/Macbook%20Pro%20Xcode/StoleMyKia/StoleMyKia/SwiftUI/Report/Detail%20View/Timeline/TimelineMapViewRepresentable.swift"
-                  startingColumnNumber = "9223372036854775807"
-                  endingColumnNumber = "9223372036854775807"
-                  startingLineNumber = "119"
-                  endingLineNumber = "119"
-                  offsetFromSymbolStart = "1254">
-               </Location>
-               <Location
-                  uuid = "EAC08404-99CE-441E-80F3-F0BBCAD0971F - 38d2f406423c5b48"
-                  shouldBeEnabled = "Yes"
-                  ignoreCount = "0"
-                  continueAfterRunningActions = "No"
-                  symbolName = "(5) suspend resume partial function for StoleMyKia.TimelineMapViewCoordinator.getUpdates(StoleMyKia.Report) async -&gt; ()"
-                  moduleName = "StoleMyKia"
-                  usesParentBreakpointCondition = "Yes"
-                  urlString = "file:///Users/jaylensmith/Documents/Macbook%20Pro%20Xcode/StoleMyKia/StoleMyKia/SwiftUI/Report/Detail%20View/Timeline/TimelineMapViewRepresentable.swift"
-                  startingColumnNumber = "9223372036854775807"
-                  endingColumnNumber = "9223372036854775807"
-                  startingLineNumber = "119"
-                  endingLineNumber = "119"
-                  offsetFromSymbolStart = "802">
-               </Location>
-            </Locations>
-         </BreakpointContent>
-      </BreakpointProxy>
-      <BreakpointProxy
-         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
-         <BreakpointContent
             uuid = "C0585D80-FF0A-4718-AFBD-535D35236452"
             shouldBeEnabled = "Yes"
             ignoreCount = "0"
@@ -96,6 +48,21 @@
                   startingLineNumber = "172"
                   endingLineNumber = "172"
                   offsetFromSymbolStart = "506">
+               </Location>
+               <Location
+                  uuid = "C0585D80-FF0A-4718-AFBD-535D35236452 - d75c86a798ecc919"
+                  shouldBeEnabled = "Yes"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "(1) suspend resume partial function for closure #1 @Sendable () async -&gt; () in StoleMyKia.UpdateReportView.prepareForUpload() -&gt; ()"
+                  moduleName = "StoleMyKia"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/jaylensmith/Documents/Macbook%20Pro%20Xcode/StoleMyKia/StoleMyKia/SwiftUI/Report/Update/UpdateReportView.swift"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "174"
+                  endingLineNumber = "174"
+                  offsetFromSymbolStart = "412">
                </Location>
             </Locations>
          </BreakpointContent>
@@ -144,6 +111,21 @@
                   startingLineNumber = "176"
                   endingLineNumber = "176"
                   offsetFromSymbolStart = "1043">
+               </Location>
+               <Location
+                  uuid = "3F1488CB-4636-46CC-B459-3FB4D29D05B4 - d75c86a798ecc685"
+                  shouldBeEnabled = "Yes"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "(1) suspend resume partial function for closure #1 @Sendable () async -&gt; () in StoleMyKia.UpdateReportView.prepareForUpload() -&gt; ()"
+                  moduleName = "StoleMyKia"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/jaylensmith/Documents/Macbook%20Pro%20Xcode/StoleMyKia/StoleMyKia/SwiftUI/Report/Update/UpdateReportView.swift"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "178"
+                  endingLineNumber = "178"
+                  offsetFromSymbolStart = "804">
                </Location>
             </Locations>
          </BreakpointContent>
@@ -299,7 +281,54 @@
                   endingLineNumber = "66"
                   offsetFromSymbolStart = "795">
                </Location>
+               <Location
+                  uuid = "4E2617D1-2CCB-4C99-A471-F5F65B96FBEB - 3e48835881a8eddb"
+                  shouldBeEnabled = "Yes"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "(1) suspend resume partial function for StoleMyKia.ReportsViewModel.addUpdateToOriginalReport(originalReport: StoleMyKia.Report, report: StoleMyKia.Report, vehicleImage: Swift.Optional&lt;__C.UIImage&gt;) async throws -&gt; ()"
+                  moduleName = "StoleMyKia"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/jaylensmith/Documents/Macbook%20Pro%20Xcode/StoleMyKia/StoleMyKia/View%20Models/ReportsViewModel.swift"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "66"
+                  endingLineNumber = "66"
+                  offsetFromSymbolStart = "688">
+               </Location>
             </Locations>
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            uuid = "11EDB49A-519C-4148-B67A-F395C9A5BABF"
+            shouldBeEnabled = "Yes"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "StoleMyKia/SwiftUI/Report/Detail View/Timeline/TimelineMapViewRepresentable.swift"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "213"
+            endingLineNumber = "213"
+            landmarkName = "TimelineMapViewCoordinator"
+            landmarkType = "3">
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            uuid = "E99FEDE8-609F-4ECF-BDA8-D5CF5EEF4252"
+            shouldBeEnabled = "Yes"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "StoleMyKia/SwiftUI/Report/Detail View/Timeline/TimelineMapViewRepresentable.swift"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "214"
+            endingLineNumber = "214"
+            landmarkName = "TimelineMapViewCoordinator"
+            landmarkType = "3">
          </BreakpointContent>
       </BreakpointProxy>
    </Breakpoints>

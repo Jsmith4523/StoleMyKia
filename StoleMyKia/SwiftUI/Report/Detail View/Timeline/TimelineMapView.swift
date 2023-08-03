@@ -58,6 +58,9 @@ struct TimelineMapView: View {
         .onAppear {
             timelineMapCoordinator.setDelegate(reportsVM)
         }
+        .onDisappear {
+            timelineMapCoordinator.suspendTask()
+        }
         .task {
             await timelineMapCoordinator.getUpdates(report)
         }

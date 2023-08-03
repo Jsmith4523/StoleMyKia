@@ -113,7 +113,7 @@ struct NearbyLocationSearchView: View {
     private func setLocationToReport(_ location: Location?) {
         self.location = location
         UINotificationFeedbackGenerator().notificationOccurred(.success)
-        DispatchQueue.main.asyncAfter(deadline: .now() + 0.25) {
+        DispatchQueue.main.asyncAfter(deadline: .now() + 0.75) {
             dismiss()
         }
     }

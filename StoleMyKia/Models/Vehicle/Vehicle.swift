@@ -50,13 +50,9 @@ extension Vehicle {
         "\(vehicleYear) \(vehicleMake.rawValue) \(vehicleModel.rawValue) (\(vehicleColor.rawValue))"
     }
     
-    ///Notification body cotent
+    ///Remote notification body content
     var vehicleNotificationDetails: String {
-        if licensePlateString.isEmpty {
-            return "\(vehicleColor) \(vehicleYear) \(vehicleMake.rawValue) \(vehicleModel.rawValue)"
-        } else {
-            return "\(vehicleColor) \(vehicleYear) \(vehicleMake.rawValue) \(vehicleModel.rawValue) \(licensePlateString)"
-        }
+        return "\(vehicleColor.rawValue) \(vehicleYear) \(vehicleMake.rawValue) \(vehicleModel.rawValue)"
     }
     
     mutating func licensePlateString(_ licenseString: String?) throws {

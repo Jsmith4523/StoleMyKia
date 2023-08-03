@@ -127,7 +127,6 @@ extension NotificationViewModel: MessagingDelegate {
     func messaging(_ messaging: Messaging, didReceiveRegistrationToken fcmToken: String?) {
         guard let firebaseUserDelegate, let uid = firebaseUserDelegate.uid, let fcmToken else { return }
         self.setFcmToken(uid, fcmToken: fcmToken)
-        Messaging.messaging().subscribe(toTopic: "Report")
     }
     
     private func setFcmToken(_ uid: String, fcmToken: String) {
