@@ -10,54 +10,74 @@ import SwiftUI
 struct ApplicationAuthView: View {
     
     @State private var isShowingCreateAccountView = false
-    @State private var phoneNumber = ""
     
     @EnvironmentObject var firebaseAuthVM: FirebaseAuthViewModel
     
+    @Environment (\.colorScheme) var colorScheme
+    
     var body: some View {
-        HostingView(statusBarStyle: .lightContent) {
-            NavigationView {
-                ZStack {
-                    Color("auth-background").ignoresSafeArea()
-                    VStack {
-                        Spacer()
-                        VStack {
-                            Button {
-                                isShowingCreateAccountView.toggle()
-                            } label: {
-                                Text("Create Account")
-                                    .authViewButtonStyle(backgroundColor: .gray.opacity(0.20), foregroundColor: .white)
-                            }
-                            NavigationLink {
-                                
-                            } label: {
-                                Text("Login")
-                                    .authViewButtonStyle(backgroundColor: .white, foregroundColor: .black)
-                            }
+        NavigationView {
+            ZStack {
+                VStack {
+                    Spacer()
+                    VStack(spacing: 30) {
+                        Image(systemName: "car.fill")
+                            .resizable()
+                            .scaledToFit()
+                            .frame(width: 115, height: 115)
+                            .foregroundColor(colorScheme == .light ? .brand : .white)
+                        Text("Help your community!")
+                            .font(.system(size: 19))
+                            .foregroundColor(.gray)
+                    }
+                    Spacer()
+                    VStack(spacing: 20) {
+                        NavigationLink {
+                            SignInView()
+                                .environmentObject(firebaseAuthVM)
+                        } label: {
+                            Text("Sign In")
+                                .authButtonStyle()
+                        }
+                        NavigationLink {
+                            
+                        } label: {
+                            Text("Join")
+                                .padding()
+                                .frame(width: 310)
+                                .font(.system(size: 22).weight(.heavy))
+                                .foregroundColor(Color(uiColor: .label))
                         }
                     }
-                    .padding()
+                }
+                .padding()
+            }
+            .navigationTitle("Welcome")
+            .navigationBarTitleDisplayMode(.inline)
+            .toolbar {
+                ToolbarItem(placement: .principal) {
+                    Text("")
                 }
             }
-            .customSheetView(isPresented: $isShowingCreateAccountView, detents: [.large()], cornerRadius: 25) {
-                
-            }
         }
-        .ignoresSafeArea()
+        .multilineTextAlignment(.center)
+        .tint(Color(uiColor: .label))
+        .customSheetView(isPresented: $isShowingCreateAccountView, detents: [.large()], cornerRadius: 25) {
+            
+        }
+
     }
 }
 
-private extension Text {
-    
-    func authViewButtonStyle(backgroundColor: Color, foregroundColor: Color = .black) -> some View {
+extension Text {
+    func authButtonStyle() -> some View {
         return self
-            .font(.system(size: 16).bold())
-            .foregroundColor(foregroundColor)
-            .padding(17)
-            .frame(width: 315)
-            .background(backgroundColor)
-            .cornerRadius(15)
-            .shadow(radius: 0.5)
+            .padding()
+            .frame(width: 310)
+            .font(.system(size: 22).weight(.heavy))
+            .background(Color.brand)
+            .foregroundColor(Color.white)
+            .clipShape(RoundedRectangle(cornerRadius: 20))
     }
 }
 
@@ -66,6 +86,7 @@ struct MyPreviewProvider_Previews: PreviewProvider {
     static var previews: some View {
         ApplicationAuthView()
             .environmentObject(FirebaseAuthViewModel())
+            .preferredColorScheme(.dark)
     }
 }
 

@@ -9,89 +9,89 @@ import SwiftUI
 
 struct SignInView: View {
         
+    @State private var isLoading = false
+    
     @State private var phoneNumber = ""
+        
+    @EnvironmentObject var firebaseAuthVM: FirebaseAuthViewModel
     
-    @FocusState private var isFocusedOnPhoneNumber: Bool
+    @FocusState var phoneNumberFocus: Bool
     
-    @EnvironmentObject var userModel: UserViewModel
+    private var isSatisfied: Bool {
+        guard (phoneNumber.range(of: ".*[^0-9].*", options: .regularExpression) == nil), phoneNumber.count == 10 else { return false }
+        return true
+    }
     
     var body: some View {
-        NavigationView {
-            HostingView(statusBarStyle: .lightContent) {
-                ZStack(alignment: .center) {
-                    Color.brand.ignoresSafeArea()
-                    VStack(spacing: 75) {
-                        Spacer()
-                            .frame(height: 60)
-                        Image(systemName: "car")
-                            .resizable()
-                            .scaledToFit()
-                            .frame(width: 100, height: 100)
-                            .foregroundColor(.white)
-                        VStack(spacing: 15) {
-                            TextField(text: $phoneNumber) {
-                                Text("Enter Phone Number")
-                                    .foregroundColor(.white)
-                            }
-                            .phoneNumberTextField()
-                            .keyboardType(.numberPad)
-                            NavigationLink {
-                                
-                            } label: {
-                                Text("Text Me")
-                                    .loginViewButtonStyle()
-                            }
-                        }
-                        Spacer()
-                        HStack {
-                            Button {
-                                
-                            } label: {
-                                Text("New Account")
-                                    .foregroundColor(.white)
-                                    .font(.system(size: 16))
-                            }
-                        }
+        VStack {
+            Spacer()
+                .frame(height: 65)
+            VStack(spacing: 65) {
+                VStack(spacing: 5) {
+                    Spacer()
+                        .frame(height: 5)
+                    Text("Welcome Back!")
+                        .font(.system(size: 27).weight(.heavy))
+                    Text("Enter your phone number..")
+                        .font(.system(size: 17))
+                        .foregroundColor(.gray)
+                }
+                TextField("Phone Number", text: $phoneNumber)
+                    .padding(15)
+                    .background(.ultraThinMaterial)
+                    .cornerRadius(15)
+                    .keyboardType(.decimalPad)
+                    .focused($phoneNumberFocus)
+                Spacer()
+                if isSatisfied {
+                    Button {
+                        sendVerificationCode()
+                    } label: {
+                        Text("Send Code")
+                            .authButtonStyle()
                     }
-                    .frame(width: 350)
-                    .padding()
+                }
+                Spacer()
+            }
+            .padding()
+        }
+        .navigationTitle("Phone Number")
+        .navigationBarTitleDisplayMode(.inline)
+        .toolbar {
+            ToolbarItem(placement: .principal) {
+                Text("")
+            }
+            ToolbarItem(placement: .keyboard) {
+                Button("Done") {
+                    phoneNumberFocus = false
                 }
             }
-            .ignoresSafeArea()
-            .tint(.white)
+            ToolbarItem(placement: .navigationBarTrailing) {
+                if isLoading {
+                    ProgressView()
+                }
+            }
         }
     }
-}
-
-private extension Text {
     
-    func loginViewButtonStyle() -> some View {
-        return self
-            .frame(maxWidth: .infinity)
-            .padding()
-            .background(Color.white)
-            .foregroundColor(.brand)
-            .font(.system(size: 17).bold())
-            .clipShape(Capsule())
-    }
-}
-
-private extension TextField {
-    
-    func phoneNumberTextField() -> some View {
-        return self
-            .foregroundColor(.white)
-            .font(.system(size: 16))
-            .padding()
-            .background(Color.gray.opacity(0.2))
-            .clipShape(Capsule())
-            
+    func sendVerificationCode() {
+        isLoading = true
+        Task {
+            do {
+                try await firebaseAuthVM.authWithPhoneNumber(phoneNumber)
+            } catch {
+                isLoading = false
+                print(error.localizedDescription)
+            }
+        }
     }
 }
 
 struct SignInView_Previews: PreviewProvider {
     static var previews: some View {
-        SignInView()
-            .environmentObject(UserViewModel())
+        NavigationView {
+            SignInView()
+                .environmentObject(FirebaseAuthViewModel())
+        }
     }
 }

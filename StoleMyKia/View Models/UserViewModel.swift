@@ -82,7 +82,7 @@ extension UserViewModel: FirebaseUserNotificationRadiusDelegate {
 
 //MARK: - FirebaseAuthDelegate
 extension UserViewModel: FirebaseAuthDelegate {
-    func userHasSignedIn(uid: String) async -> LoginLoadStatus {
+    func userHasSignedIn(uid: String) async -> LoginStatus {
         do {
             self.userUid = uid
             self.firebaseUser = try await firebaseManager.fetchSignedInUserInformation(uid: uid)

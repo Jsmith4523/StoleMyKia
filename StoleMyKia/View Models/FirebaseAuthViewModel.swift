@@ -9,41 +9,38 @@ import Foundation
 import FirebaseAuth
 import FirebaseMessaging
 
-enum LoginLoadStatus {
+enum LoginStatus {
     case signedOut, signedIn
 }
 
-///Handles Firebase Authenfication events and actions such as sign in/out, account creation, and authenification states
+@MainActor
 class FirebaseAuthViewModel: ObservableObject {
     
-    @Published private(set) var loginStatus: LoginLoadStatus = .signedIn
+    @Published private(set) var loginStatus: LoginStatus = .signedOut
     
-    private let auth = Auth.auth()
-    
+    private let authManager = FirebaseAuthManager.manager
     weak private var firebaseAuthDelegate: FirebaseAuthDelegate?
     
     init() {
-        guard let user = Auth.auth().currentUser else {
-            self.prepareForSignOut()
-            return
-        }
-        
-        self.prepareForSignIn(uid: user.uid)
-        Messaging.messaging().subscribe(toTopic: "Report")
+        createAuthStateListener()
     }
     
     func setDelegate(_ delegate: FirebaseAuthDelegate) {
         self.firebaseAuthDelegate = delegate
     }
     
-    /// Begin setting up the application for sign in.
+    
+    func authWithPhoneNumber(_ phoneNumber: String) async throws {
+        try await authManager.authWithPhoneNumber(phoneNumber)
+    }
+    
+    /// Begin setting up the application after successful sign in.
     /// - Parameter uid: The Firebase auth user uid.
     private func prepareForSignIn(uid: String) {
         self.loginStatus = .signedIn
-        
         Task {
             guard let status = await firebaseAuthDelegate?.userHasSignedIn(uid: uid) else {
-                prepareForSignOut()
+                self.loginStatus = .signedOut
                 return
             }
             self.loginStatus = status
@@ -52,7 +49,7 @@ class FirebaseAuthViewModel: ObservableObject {
     
     ///Begin setting up the application for sign out.
     private func prepareForSignOut() {
-        try? auth.signOut()
+        try? authManager.signOutUser()
         
         self.firebaseAuthDelegate?.userHasSignedOut()
         self.loginStatus = .signedOut
@@ -67,11 +64,21 @@ class FirebaseAuthViewModel: ObservableObject {
             UIApplication.shared.applicationIconBadgeNumber = 0
         }
     }
+    
+    private func createAuthStateListener() {
+        Auth.auth().addStateDidChangeListener { [weak self] auth, user in
+            guard let user else {
+                self?.prepareForSignOut()
+                return
+            }
+            self?.prepareForSignIn(uid: user.uid)
+        }
+    }
 }
 
 protocol FirebaseAuthDelegate: AnyObject {
     ///Called when the Firebase Auth user has succesfully signed in.
-    func userHasSignedIn(uid: String) async -> LoginLoadStatus
+    func userHasSignedIn(uid: String) async -> LoginStatus
     ///Callled when the Firebase Auth user is signing out.
     func userHasSignedOut()
 }

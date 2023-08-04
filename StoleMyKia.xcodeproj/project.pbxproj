@@ -113,6 +113,7 @@
 		24CC5F5B2A75BEA20078C921 /* FalseReportManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 24CC5F5A2A75BEA20078C921 /* FalseReportManager.swift */; };
 		24CC5F5D2A761B120078C921 /* Update.swift in Sources */ = {isa = PBXBuildFile; fileRef = 24CC5F5C2A761B120078C921 /* Update.swift */; };
 		24CC5F6A2A7B84BB0078C921 /* notification_report.caf in Resources */ = {isa = PBXBuildFile; fileRef = 24CC5F412A747E9B0078C921 /* notification_report.caf */; };
+		24CC5F6E2A7CD8FF0078C921 /* FirebaseAuthManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 24CC5F6D2A7CD8FE0078C921 /* FirebaseAuthManager.swift */; };
 		24EAF11729C2A02900B4CBFE /* SFSafariView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 24EAF11629C2A02900B4CBFE /* SFSafariView.swift */; };
 		24EAF11B29C2C10200B4CBFE /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 24EAF11A29C2C10200B4CBFE /* GoogleService-Info.plist */; };
 		24EE41142A59E0FD00AF2A11 /* LicnesePlateDectectionManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 24EE41132A59E0FD00AF2A11 /* LicnesePlateDectectionManager.swift */; };
@@ -256,6 +257,7 @@
 		24CC5F582A75BAB50078C921 /* FalseReport.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FalseReport.swift; sourceTree = "<group>"; };
 		24CC5F5A2A75BEA20078C921 /* FalseReportManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FalseReportManager.swift; sourceTree = "<group>"; };
 		24CC5F5C2A761B120078C921 /* Update.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Update.swift; sourceTree = "<group>"; };
+		24CC5F6D2A7CD8FE0078C921 /* FirebaseAuthManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FirebaseAuthManager.swift; sourceTree = "<group>"; };
 		24EAF11629C2A02900B4CBFE /* SFSafariView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SFSafariView.swift; sourceTree = "<group>"; };
 		24EAF11A29C2C10200B4CBFE /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
 		24EE41132A59E0FD00AF2A11 /* LicnesePlateDectectionManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LicnesePlateDectectionManager.swift; sourceTree = "<group>"; };
@@ -500,6 +502,7 @@
 				24EE41152A5A84FB00AF2A11 /* StorageManager.swift */,
 				24A2068F2A0826BE00F5DC0C /* FirebaseUserManager.swift */,
 				244BF51829D33F4E00951765 /* ImageCache.swift */,
+				24CC5F6D2A7CD8FE0078C921 /* FirebaseAuthManager.swift */,
 			);
 			path = Network;
 			sourceTree = "<group>";
@@ -981,6 +984,7 @@
 				24CC5F212A745DE70078C921 /* SettingsView.swift in Sources */,
 				2426A61B2A23461300E78647 /* ReportsDelegate.swift in Sources */,
 				24EE41142A59E0FD00AF2A11 /* LicnesePlateDectectionManager.swift in Sources */,
+				24CC5F6E2A7CD8FF0078C921 /* FirebaseAuthManager.swift in Sources */,
 				24CC5F2C2A745DE70078C921 /* NoReportsAvaliableView.swift in Sources */,
 				2426A6202A23475A00E78647 /* ReportClusterAnnotationView.swift in Sources */,
 				240F22472A34FEF70078F97E /* FirebaseAuth.swift in Sources */,
@@ -1227,10 +1231,9 @@
 				INFOPLIST_FILE = StoleMyKia/Info.plist;
 				INFOPLIST_KEY_CFBundleDisplayName = StoleMyKia;
 				INFOPLIST_KEY_LSApplicationCategoryType = "public.app-category.utilities";
-				INFOPLIST_KEY_NSCameraUsageDescription = "Your device's camera will be used to detect license plates. It'll also be used to capture images of vehicles.";
+				INFOPLIST_KEY_NSCameraUsageDescription = "We use your device's camera to capture and detect vehicle license plates. Camera is also used to capture images of vehicles for reports and updates.";
 				INFOPLIST_KEY_NSFileProviderDomainUsageDescription = StoleMyKia;
-				INFOPLIST_KEY_NSLocationAlwaysAndWhenInUseUsageDescription = "Your location is automatically applied to a report you make when authorized. Your location is also used to cater reports closests to your location.";
-				INFOPLIST_KEY_NSLocationWhenInUseUsageDescription = "Your location is automatically applied to a report you make when authorized. Your location is also used to cater reports closests to your location.";
+				INFOPLIST_KEY_NSLocationAlwaysAndWhenInUseUsageDescription = "Location is automatically applied every time you make a report or update. It is also visible within the Timeline Map.";
 				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchScreen_Generation = YES;
@@ -1270,10 +1273,9 @@
 				INFOPLIST_FILE = StoleMyKia/Info.plist;
 				INFOPLIST_KEY_CFBundleDisplayName = StoleMyKia;
 				INFOPLIST_KEY_LSApplicationCategoryType = "public.app-category.utilities";
-				INFOPLIST_KEY_NSCameraUsageDescription = "Your device's camera will be used to detect license plates. It'll also be used to capture images of vehicles.";
+				INFOPLIST_KEY_NSCameraUsageDescription = "We use your device's camera to capture and detect vehicle license plates. Camera is also used to capture images of vehicles for reports and updates.";
 				INFOPLIST_KEY_NSFileProviderDomainUsageDescription = StoleMyKia;
-				INFOPLIST_KEY_NSLocationAlwaysAndWhenInUseUsageDescription = "Your location is automatically applied to a report you make when authorized. Your location is also used to cater reports closests to your location.";
-				INFOPLIST_KEY_NSLocationWhenInUseUsageDescription = "Your location is automatically applied to a report you make when authorized. Your location is also used to cater reports closests to your location.";
+				INFOPLIST_KEY_NSLocationAlwaysAndWhenInUseUsageDescription = "Location is automatically applied every time you make a report or update. It is also visible within the Timeline Map.";
 				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchScreen_Generation = YES;

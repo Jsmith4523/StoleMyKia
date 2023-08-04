@@ -20,13 +20,14 @@ struct StoleMyKiaApp: App {
     var body: some Scene {
         WindowGroup {
             ZStack {
-//                switch firebaseAuthModel.loginStatus {
-//                case .signedOut:
-//                    ApplicationAuthView()
-//                case .signedIn:
+                switch firebaseAuthModel.loginStatus {
+                case .signedOut:
+                    ApplicationAuthView()
+                        .environmentObject(firebaseAuthModel)
+                case .signedIn:
                     ApplicationRootView()
                         .environmentObject(firebaseAuthModel)
-                //}
+                }
             }
             .accentColor(Color(uiColor: .label))
         }
