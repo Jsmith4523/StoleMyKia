@@ -1233,7 +1233,7 @@
 				INFOPLIST_KEY_LSApplicationCategoryType = "public.app-category.utilities";
 				INFOPLIST_KEY_NSCameraUsageDescription = "We use your device's camera to capture and detect vehicle license plates. Camera is also used to capture images of vehicles for reports and updates.";
 				INFOPLIST_KEY_NSFileProviderDomainUsageDescription = StoleMyKia;
-				INFOPLIST_KEY_NSLocationAlwaysAndWhenInUseUsageDescription = "Location is automatically applied every time you make a report or update. It is also visible within the Timeline Map.";
+				INFOPLIST_KEY_NSLocationAlwaysAndWhenInUseUsageDescription = "Location is automatically applied every time you make a report or update. It is also visible within the Timeline Map. We highly suggesting enabling 'Percise Location' in order to improve location accuracy with reports, updates, and more.";
 				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchScreen_Generation = YES;
@@ -1275,7 +1275,7 @@
 				INFOPLIST_KEY_LSApplicationCategoryType = "public.app-category.utilities";
 				INFOPLIST_KEY_NSCameraUsageDescription = "We use your device's camera to capture and detect vehicle license plates. Camera is also used to capture images of vehicles for reports and updates.";
 				INFOPLIST_KEY_NSFileProviderDomainUsageDescription = StoleMyKia;
-				INFOPLIST_KEY_NSLocationAlwaysAndWhenInUseUsageDescription = "Location is automatically applied every time you make a report or update. It is also visible within the Timeline Map.";
+				INFOPLIST_KEY_NSLocationAlwaysAndWhenInUseUsageDescription = "Location is automatically applied every time you make a report or update. We highly suggesting enabling 'Percise Location' in order to improve location accuracy with reports. It is also visible within the Timeline Map.";
 				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchScreen_Generation = YES;
