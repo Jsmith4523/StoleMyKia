@@ -9,6 +9,7 @@ import SwiftUI
 
 struct SignInView: View {
         
+    @State private var pushToVerificationCodeView = false
     @State private var isLoading = false
     
     @State private var phoneNumber = ""
@@ -37,10 +38,7 @@ struct SignInView: View {
                         .foregroundColor(.gray)
                 }
                 TextField("Phone Number", text: $phoneNumber)
-                    .padding(15)
-                    .background(.ultraThinMaterial)
-                    .cornerRadius(15)
-                    .keyboardType(.decimalPad)
+                    .authTextFieldStyle()
                     .focused($phoneNumberFocus)
                 Spacer()
                 if isSatisfied {
@@ -54,6 +52,11 @@ struct SignInView: View {
                 Spacer()
             }
             .padding()
+            NavigationLink(isActive: $pushToVerificationCodeView) {
+                SignInCodeVerificationView(phoneNumber: phoneNumber)
+                    .environmentObject(firebaseAuthVM)
+            } label: {}
+                .disabled(true)
         }
         .navigationTitle("Phone Number")
         .navigationBarTitleDisplayMode(.inline)
@@ -78,12 +81,26 @@ struct SignInView: View {
         isLoading = true
         Task {
             do {
-                try await firebaseAuthVM.authWithPhoneNumber(phoneNumber)
+                guard let formattedPhoneNumber = ApplicationFormats.authPhoneNumberFormat(phoneNumber) else { return }
+                try await firebaseAuthVM.authWithPhoneNumber(formattedPhoneNumber)
+                isLoading = false
+                pushToVerificationCodeView = true
             } catch {
                 isLoading = false
                 print(error.localizedDescription)
             }
         }
+    }
+}
+
+extension View {
+    
+    func authTextFieldStyle() -> some View {
+        return self
+            .padding(15)
+            .background(.ultraThinMaterial)
+            .cornerRadius(15)
+            .keyboardType(.decimalPad)
     }
 }
 

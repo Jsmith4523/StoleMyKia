@@ -10,6 +10,13 @@ import FirebaseAuth
 
 class FirebaseAuthManager {
     
+    enum FirebaseAuthManagerError: Error {
+        case verificationIdError
+        case userDoesNotExist
+        case userAlreadyExist
+        case error
+    }
+    
     private let auth = Auth.auth()
     
     var verificationId: String?
@@ -27,7 +34,9 @@ class FirebaseAuthManager {
     }
     
     public func verifyCode(_ code: String) async throws {
-        guard let verificationId else { return }
+        guard let verificationId else {
+            throw FirebaseAuthManagerError.verificationIdError
+        }
         
         let credential = PhoneAuthProvider.provider().credential(withVerificationID: verificationId, verificationCode: code)
         try await auth.signIn(with: credential)

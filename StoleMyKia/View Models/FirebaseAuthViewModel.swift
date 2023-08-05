@@ -29,21 +29,26 @@ class FirebaseAuthViewModel: ObservableObject {
         self.firebaseAuthDelegate = delegate
     }
     
-    
     func authWithPhoneNumber(_ phoneNumber: String) async throws {
         try await authManager.authWithPhoneNumber(phoneNumber)
+    }
+    
+    func verifyCode(_ code: String) async throws {
+        try await authManager.verifyCode(code)
     }
     
     /// Begin setting up the application after successful sign in.
     /// - Parameter uid: The Firebase auth user uid.
     private func prepareForSignIn(uid: String) {
         self.loginStatus = .signedIn
-        Task {
-            guard let status = await firebaseAuthDelegate?.userHasSignedIn(uid: uid) else {
-                self.loginStatus = .signedOut
-                return
+        DispatchQueue.main.asyncAfter(deadline: .now() + 0.12) {
+            Task {
+                guard let status = await self.firebaseAuthDelegate?.userHasSignedIn(uid: uid) else {
+                    self.loginStatus = .signedOut
+                    return
+                }
+                self.loginStatus = status
             }
-            self.loginStatus = status
         }
     }
     

@@ -6,6 +6,7 @@
 //
 
 import SwiftUI
+import CoreLocation
 
 enum ApplicationTabViewSelection {
     
@@ -87,6 +88,7 @@ struct ApplicationTabView: View {
         .onAppear {
             notificationVM.setDelegate(userVM)
             reportsVM.setFirebaseUserDelegate(userVM)
+            CLLocationManager().requestAlwaysAuthorization()
         }
     }
 }

@@ -42,9 +42,17 @@ class AppDelegate: UIScene, UIApplicationDelegate {
         UITabBar.appearance().barTintColor = .systemBackground
         UINavigationBar.appearance().barTintColor = .systemBackground
         
+        Messaging.messaging().delegate = self
+        
         UNUserNotificationCenter.current().delegate = self
                         
         return true
+    }
+    
+    func application(_ application: UIApplication, didReceiveRemoteNotification userInfo: [AnyHashable : Any], fetchCompletionHandler completionHandler: @escaping (UIBackgroundFetchResult) -> Void) {
+        if Auth.auth().canHandleNotification(userInfo) {
+            completionHandler(.noData)
+        }
     }
 }
 
@@ -53,6 +61,13 @@ extension AppDelegate: UNUserNotificationCenterDelegate {
     func application(_ application: UIApplication, didRegisterForRemoteNotificationsWithDeviceToken deviceToken: Data) {
         print("Registered for remote notifications: \(deviceToken)")
         Messaging.messaging().apnsToken = deviceToken
+    }
+}
+
+extension AppDelegate: MessagingDelegate {
+    func messaging(_ messaging: Messaging, didReceiveRegistrationToken fcmToken: String?) {
+        UserDefaults.standard.setValue(fcmToken, forKey: "fcmToken")
+        print("APNS Token saved for later")
     }
 }
 

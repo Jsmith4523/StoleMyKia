@@ -11,8 +11,12 @@ import UIKit
 
 extension UINavigationController {
     
-    open override func viewDidLoad() {
+    open override func viewWillLayoutSubviews() {
+        //Customizing UINavigationBar back button
+        super.viewDidLayoutSubviews()
         self.navigationBar.topItem?.backButtonDisplayMode = .minimal
+        self.navigationBar.backIndicatorImage = UIImage(systemName: "arrow.backward")
+        self.navigationBar.backIndicatorTransitionMaskImage = UIImage(systemName: "arrow.backward")
     }
 }
 

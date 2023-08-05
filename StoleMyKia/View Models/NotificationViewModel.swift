@@ -40,14 +40,12 @@ final class NotificationViewModel: NSObject, ObservableObject {
     override init() {
         super.init()
         UNUserNotificationCenter.current().delegate = self
-        Messaging.messaging().delegate = self
     }
     
     func setDelegate(_ delegate: FirebaseUserDelegate) {
         self.firebaseUserDelegate = delegate
-        fetchFirebaseUserNotifications()
-        beginListeningForNotifications()
-        requestNotificationAuthorization()
+        print(delegate.uid)
+        self.setFcmToken(firebaseUserDelegate?.uid)
     }
     
     func requestNotificationAuthorization() {
@@ -119,17 +117,10 @@ extension NotificationViewModel: UNUserNotificationCenterDelegate {
         print(response.notification.request.content.userInfo)
         completionHandler()
     }
-}
-
-//MARK: - MessagingDelegate
-extension NotificationViewModel: MessagingDelegate {
     
-    func messaging(_ messaging: Messaging, didReceiveRegistrationToken fcmToken: String?) {
-        guard let firebaseUserDelegate, let uid = firebaseUserDelegate.uid, let fcmToken else { return }
-        self.setFcmToken(uid, fcmToken: fcmToken)
-    }
-    
-    private func setFcmToken(_ uid: String, fcmToken: String) {
+    private func setFcmToken(_ uid: String?) {
+        guard let uid else { return }
+        guard let fcmToken = UserDefaults.standard.string(forKey: "fcmToken") else { return }
         var tokenDict = [String: Any]()
         tokenDict["token"] = fcmToken
         tokenDict["dt"] = Date.now.epoch

@@ -19,7 +19,7 @@ final class UserViewModel: ObservableObject {
     @Published private(set) var userReports = [Report]()
     @Published private(set) var userBookmarks = [Report]()
     
-    @Published private(set) var rootViewLoadStatus: RootViewLoadStatus = .loaded
+    @Published private(set) var rootViewLoadStatus: RootViewLoadStatus = .loading
                 
     @Published private(set) var firebaseUser: FirebaseUser?
     @Published private var userUid: String?
@@ -82,18 +82,10 @@ extension UserViewModel: FirebaseUserNotificationRadiusDelegate {
 
 //MARK: - FirebaseAuthDelegate
 extension UserViewModel: FirebaseAuthDelegate {
+    @MainActor
     func userHasSignedIn(uid: String) async -> LoginStatus {
-        do {
-            self.userUid = uid
-            self.firebaseUser = try await firebaseManager.fetchSignedInUserInformation(uid: uid)
-            self.rootViewLoadStatus = .loaded
-        } catch FirebaseUserManagerError.doesNotExist {
-            //Sign the user out if data is not avaliable
-            return .signedOut
-        } catch {
-            self.rootViewLoadStatus = .loaded
-            return .signedIn
-        }
+        self.userUid = uid
+        self.rootViewLoadStatus = .loaded
         
         return .signedIn
     }
@@ -107,6 +99,6 @@ extension UserViewModel: FirebaseAuthDelegate {
 //MARK: - FirebaseUserDelegate
 extension UserViewModel: FirebaseUserDelegate {
     var uid: String? {
-        return userUid ?? "12345"
+        return userUid
     }
 }
