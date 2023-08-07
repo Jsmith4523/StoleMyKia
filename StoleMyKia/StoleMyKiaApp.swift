@@ -51,6 +51,7 @@ class AppDelegate: UIScene, UIApplicationDelegate {
     
     func application(_ application: UIApplication, didReceiveRemoteNotification userInfo: [AnyHashable : Any], fetchCompletionHandler completionHandler: @escaping (UIBackgroundFetchResult) -> Void) {
         if Auth.auth().canHandleNotification(userInfo) {
+            print(userInfo.values)
             completionHandler(.noData)
         }
     }

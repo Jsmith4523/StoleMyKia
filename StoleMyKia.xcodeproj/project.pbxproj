@@ -17,6 +17,9 @@
 		24127C1F29E3F4AC00C09FE5 /* Launch Screen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 24127C1E29E3F4AC00C09FE5 /* Launch Screen.storyboard */; };
 		2423702C2A7DA65800795C87 /* ApplicationFormats.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2423702B2A7DA65800795C87 /* ApplicationFormats.swift */; };
 		2423702E2A7DBFE000795C87 /* SignInCodeVerificationView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2423702D2A7DBFE000795C87 /* SignInCodeVerificationView.swift */; };
+		242370302A7EE71B00795C87 /* SelectedReportDetailImageView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2423702F2A7EE71B00795C87 /* SelectedReportDetailImageView.swift */; };
+		242370332A7EF5A300795C87 /* SkeletonLoadingCellView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 242370322A7EF5A300795C87 /* SkeletonLoadingCellView.swift */; };
+		242370352A7EF5B300795C87 /* ReportsSkeletonLoadingListView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 242370342A7EF5B300795C87 /* ReportsSkeletonLoadingListView.swift */; };
 		2425EAF92A003CDE00CC886F /* NavigationController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2425EAF82A003CDE00CC886F /* NavigationController.swift */; };
 		2426A6192A2345EF00E78647 /* FirebaseUserDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2426A6182A2345EF00E78647 /* FirebaseUserDelegate.swift */; };
 		2426A61B2A23461300E78647 /* ReportsDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2426A61A2A23461300E78647 /* ReportsDelegate.swift */; };
@@ -61,12 +64,12 @@
 		24AAC49A29CC1A6400125196 /* AES+EXT.swift in Sources */ = {isa = PBXBuildFile; fileRef = 24AAC49929CC1A6400125196 /* AES+EXT.swift */; };
 		24B071A12A363E30000C6B75 /* ReportTimelimeAnnotationView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 24B071A02A363E30000C6B75 /* ReportTimelimeAnnotationView.swift */; };
 		24B897EC29CF5A3B0003BCC8 /* UserViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 24B897EB29CF5A3B0003BCC8 /* UserViewModel.swift */; };
+		24BFA1802A8047240049F306 /* SMKLicensePlateScanner.mlmodel in Sources */ = {isa = PBXBuildFile; fileRef = 24BFA17F2A8047240049F306 /* SMKLicensePlateScanner.mlmodel */; };
 		24C6983A2A402ECD003A1DE6 /* ReportRole.swift in Sources */ = {isa = PBXBuildFile; fileRef = 24C698392A402ECD003A1DE6 /* ReportRole.swift */; };
 		24CC5F132A745DE70078C921 /* ApplicationAuthView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 24CC5ECD2A745DE70078C921 /* ApplicationAuthView.swift */; };
 		24CC5F142A745DE70078C921 /* ApplicationProgressView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 24CC5ECE2A745DE70078C921 /* ApplicationProgressView.swift */; };
 		24CC5F152A745DE70078C921 /* PhoneNumberReasonView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 24CC5ED02A745DE70078C921 /* PhoneNumberReasonView.swift */; };
 		24CC5F162A745DE70078C921 /* SignInView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 24CC5ED12A745DE70078C921 /* SignInView.swift */; };
-		24CC5F172A745DE70078C921 /* CreateAccountView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 24CC5ED32A745DE70078C921 /* CreateAccountView.swift */; };
 		24CC5F182A745DE70078C921 /* LicenseCameraViewRepresentable.swift in Sources */ = {isa = PBXBuildFile; fileRef = 24CC5ED62A745DE70078C921 /* LicenseCameraViewRepresentable.swift */; };
 		24CC5F192A745DE70078C921 /* LicensePlateCameraView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 24CC5ED72A745DE70078C921 /* LicensePlateCameraView.swift */; };
 		24CC5F1A2A745DE70078C921 /* LicensePlateScannerView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 24CC5ED82A745DE70078C921 /* LicensePlateScannerView.swift */; };
@@ -118,7 +121,7 @@
 		24CC5F6E2A7CD8FF0078C921 /* FirebaseAuthManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 24CC5F6D2A7CD8FE0078C921 /* FirebaseAuthManager.swift */; };
 		24EAF11729C2A02900B4CBFE /* SFSafariView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 24EAF11629C2A02900B4CBFE /* SFSafariView.swift */; };
 		24EAF11B29C2C10200B4CBFE /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 24EAF11A29C2C10200B4CBFE /* GoogleService-Info.plist */; };
-		24EE41142A59E0FD00AF2A11 /* LicnesePlateDectectionManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 24EE41132A59E0FD00AF2A11 /* LicnesePlateDectectionManager.swift */; };
+		24EE41142A59E0FD00AF2A11 /* LicensePlateDetectionManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 24EE41132A59E0FD00AF2A11 /* LicensePlateDetectionManager.swift */; };
 		24EE41162A5A84FB00AF2A11 /* StorageManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 24EE41152A5A84FB00AF2A11 /* StorageManager.swift */; };
 		24EE41182A5BB42D00AF2A11 /* QuerySnapshot.swift in Sources */ = {isa = PBXBuildFile; fileRef = 24EE41172A5BB42D00AF2A11 /* QuerySnapshot.swift */; };
 		24FA56BA2A29284D0074149B /* UIActivityVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 24FA56B92A29284D0074149B /* UIActivityVC.swift */; };
@@ -161,6 +164,9 @@
 		24127C1E29E3F4AC00C09FE5 /* Launch Screen.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = "Launch Screen.storyboard"; sourceTree = "<group>"; };
 		2423702B2A7DA65800795C87 /* ApplicationFormats.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ApplicationFormats.swift; sourceTree = "<group>"; };
 		2423702D2A7DBFE000795C87 /* SignInCodeVerificationView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SignInCodeVerificationView.swift; sourceTree = "<group>"; };
+		2423702F2A7EE71B00795C87 /* SelectedReportDetailImageView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SelectedReportDetailImageView.swift; sourceTree = "<group>"; };
+		242370322A7EF5A300795C87 /* SkeletonLoadingCellView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SkeletonLoadingCellView.swift; sourceTree = "<group>"; };
+		242370342A7EF5B300795C87 /* ReportsSkeletonLoadingListView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReportsSkeletonLoadingListView.swift; sourceTree = "<group>"; };
 		2425EAF82A003CDE00CC886F /* NavigationController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NavigationController.swift; sourceTree = "<group>"; };
 		2426A6182A2345EF00E78647 /* FirebaseUserDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FirebaseUserDelegate.swift; sourceTree = "<group>"; };
 		2426A61A2A23461300E78647 /* ReportsDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReportsDelegate.swift; sourceTree = "<group>"; };
@@ -206,12 +212,12 @@
 		24AAC49929CC1A6400125196 /* AES+EXT.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "AES+EXT.swift"; sourceTree = "<group>"; };
 		24B071A02A363E30000C6B75 /* ReportTimelimeAnnotationView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReportTimelimeAnnotationView.swift; sourceTree = "<group>"; };
 		24B897EB29CF5A3B0003BCC8 /* UserViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserViewModel.swift; sourceTree = "<group>"; };
+		24BFA17F2A8047240049F306 /* SMKLicensePlateScanner.mlmodel */ = {isa = PBXFileReference; lastKnownFileType = file.mlmodel; path = SMKLicensePlateScanner.mlmodel; sourceTree = "<group>"; };
 		24C698392A402ECD003A1DE6 /* ReportRole.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReportRole.swift; sourceTree = "<group>"; };
 		24CC5ECD2A745DE70078C921 /* ApplicationAuthView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ApplicationAuthView.swift; sourceTree = "<group>"; };
 		24CC5ECE2A745DE70078C921 /* ApplicationProgressView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ApplicationProgressView.swift; sourceTree = "<group>"; };
 		24CC5ED02A745DE70078C921 /* PhoneNumberReasonView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PhoneNumberReasonView.swift; sourceTree = "<group>"; };
 		24CC5ED12A745DE70078C921 /* SignInView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SignInView.swift; sourceTree = "<group>"; };
-		24CC5ED32A745DE70078C921 /* CreateAccountView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CreateAccountView.swift; sourceTree = "<group>"; };
 		24CC5ED62A745DE70078C921 /* LicenseCameraViewRepresentable.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LicenseCameraViewRepresentable.swift; sourceTree = "<group>"; };
 		24CC5ED72A745DE70078C921 /* LicensePlateCameraView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LicensePlateCameraView.swift; sourceTree = "<group>"; };
 		24CC5ED82A745DE70078C921 /* LicensePlateScannerView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LicensePlateScannerView.swift; sourceTree = "<group>"; };
@@ -264,7 +270,7 @@
 		24CC5F6D2A7CD8FE0078C921 /* FirebaseAuthManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FirebaseAuthManager.swift; sourceTree = "<group>"; };
 		24EAF11629C2A02900B4CBFE /* SFSafariView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SFSafariView.swift; sourceTree = "<group>"; };
 		24EAF11A29C2C10200B4CBFE /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
-		24EE41132A59E0FD00AF2A11 /* LicnesePlateDectectionManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LicnesePlateDectectionManager.swift; sourceTree = "<group>"; };
+		24EE41132A59E0FD00AF2A11 /* LicensePlateDetectionManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LicensePlateDetectionManager.swift; sourceTree = "<group>"; };
 		24EE41152A5A84FB00AF2A11 /* StorageManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StorageManager.swift; sourceTree = "<group>"; };
 		24EE41172A5BB42D00AF2A11 /* QuerySnapshot.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = QuerySnapshot.swift; sourceTree = "<group>"; };
 		24FA56B92A29284D0074149B /* UIActivityVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UIActivityVC.swift; sourceTree = "<group>"; };
@@ -323,6 +329,15 @@
 				2423702B2A7DA65800795C87 /* ApplicationFormats.swift */,
 			);
 			path = Helpers;
+			sourceTree = "<group>";
+		};
+		242370312A7EF59300795C87 /* Skeleton */ = {
+			isa = PBXGroup;
+			children = (
+				242370322A7EF5A300795C87 /* SkeletonLoadingCellView.swift */,
+				242370342A7EF5B300795C87 /* ReportsSkeletonLoadingListView.swift */,
+			);
+			path = Skeleton;
 			sourceTree = "<group>";
 		};
 		2426A6162A2345CB00E78647 /* Utilities */ = {
@@ -459,6 +474,7 @@
 				24A206962A08D29E00F5DC0C /* StoleMyKia.entitlements */,
 				24A5791329BC552C00495E6F /* StoleMyKiaApp.swift */,
 				240F22412A33F0020078F97E /* README.rtf */,
+				24BFA17F2A8047240049F306 /* SMKLicensePlateScanner.mlmodel */,
 				24A5791729BC552E00495E6F /* Assets.xcassets */,
 				24127C1E29E3F4AC00C09FE5 /* Launch Screen.storyboard */,
 				24EAF11A29C2C10200B4CBFE /* GoogleService-Info.plist */,
@@ -548,7 +564,6 @@
 				24CC5ECD2A745DE70078C921 /* ApplicationAuthView.swift */,
 				24CC5ECE2A745DE70078C921 /* ApplicationProgressView.swift */,
 				24CC5ECF2A745DE70078C921 /* SignIn */,
-				24CC5ED22A745DE70078C921 /* Create */,
 			);
 			path = Auth;
 			sourceTree = "<group>";
@@ -561,14 +576,6 @@
 				2423702D2A7DBFE000795C87 /* SignInCodeVerificationView.swift */,
 			);
 			path = SignIn;
-			sourceTree = "<group>";
-		};
-		24CC5ED22A745DE70078C921 /* Create */ = {
-			isa = PBXGroup;
-			children = (
-				24CC5ED32A745DE70078C921 /* CreateAccountView.swift */,
-			);
-			path = Create;
 			sourceTree = "<group>";
 		};
 		24CC5ED42A745DE70078C921 /* License Scanner */ = {
@@ -705,6 +712,7 @@
 		24CC5EF52A745DE70078C921 /* Feed */ = {
 			isa = PBXGroup;
 			children = (
+				242370312A7EF59300795C87 /* Skeleton */,
 				24CC5EF62A745DE70078C921 /* List */,
 				24CC5EF82A745DE70078C921 /* NoReportsAvaliableView.swift */,
 				24CC5EF92A745DE70078C921 /* FeedView.swift */,
@@ -759,6 +767,7 @@
 			children = (
 				24CC5F092A745DE70078C921 /* SelectedReportDetailViewMap.swift */,
 				24CC5F0A2A745DE70078C921 /* SelectedReportDetailView.swift */,
+				2423702F2A7EE71B00795C87 /* SelectedReportDetailImageView.swift */,
 				24CC5F0B2A745DE70078C921 /* Timeline */,
 			);
 			path = "Detail View";
@@ -811,7 +820,7 @@
 		24EE41102A59E01F00AF2A11 /* CoreML */ = {
 			isa = PBXGroup;
 			children = (
-				24EE41132A59E0FD00AF2A11 /* LicnesePlateDectectionManager.swift */,
+				24EE41132A59E0FD00AF2A11 /* LicensePlateDetectionManager.swift */,
 				24848AB62A61E38E003E037E /* LicenseTextDetectionManager.swift */,
 			);
 			path = CoreML;
@@ -997,7 +1006,7 @@
 				24A5792929BC567F00495E6F /* ReportAnnotation.swift in Sources */,
 				24CC5F212A745DE70078C921 /* SettingsView.swift in Sources */,
 				2426A61B2A23461300E78647 /* ReportsDelegate.swift in Sources */,
-				24EE41142A59E0FD00AF2A11 /* LicnesePlateDectectionManager.swift in Sources */,
+				24EE41142A59E0FD00AF2A11 /* LicensePlateDetectionManager.swift in Sources */,
 				24CC5F6E2A7CD8FF0078C921 /* FirebaseAuthManager.swift in Sources */,
 				24CC5F2C2A745DE70078C921 /* NoReportsAvaliableView.swift in Sources */,
 				2426A6202A23475A00E78647 /* ReportClusterAnnotationView.swift in Sources */,
@@ -1043,7 +1052,6 @@
 				24CC5F332A745DE70078C921 /* NearbySearchIdleView.swift in Sources */,
 				2426A6192A2345EF00E78647 /* FirebaseUserDelegate.swift in Sources */,
 				24CC5F2D2A745DE70078C921 /* FeedView.swift in Sources */,
-				24CC5F172A745DE70078C921 /* CreateAccountView.swift in Sources */,
 				24CC5F282A745DE70078C921 /* UserViewTabSelectionView.swift in Sources */,
 				24CC5F222A745DE70078C921 /* UserAccountSettings.swift in Sources */,
 				249254A62A37CA590037C43C /* UIHostingController.swift in Sources */,
@@ -1062,11 +1070,13 @@
 				24CC5F1F2A745DE70078C921 /* NoNotificationsView.swift in Sources */,
 				24CC5F3D2A745DE70078C921 /* TimelineListView.swift in Sources */,
 				24CC5F202A745DE70078C921 /* NotificationView.swift in Sources */,
+				242370332A7EF5A300795C87 /* SkeletonLoadingCellView.swift in Sources */,
 				24848AB72A61E38E003E037E /* LicenseTextDetectionManager.swift in Sources */,
 				24CC5F372A745DE70078C921 /* LocationSearchCellView.swift in Sources */,
 				24CC5F592A75BAB50078C921 /* FalseReport.swift in Sources */,
 				24C6983A2A402ECD003A1DE6 /* ReportRole.swift in Sources */,
 				2425EAF92A003CDE00CC886F /* NavigationController.swift in Sources */,
+				24BFA1802A8047240049F306 /* SMKLicensePlateScanner.mlmodel in Sources */,
 				24CC5F3A2A745DE70078C921 /* SelectedReportDetailView.swift in Sources */,
 				2495A02229CAC5DF00457CE7 /* String+EXT.swift in Sources */,
 				24CC5F192A745DE70078C921 /* LicensePlateCameraView.swift in Sources */,
@@ -1090,9 +1100,11 @@
 				24CC5F252A745DE70078C921 /* NotificationRadiusMapView.swift in Sources */,
 				24FA56BA2A29284D0074149B /* UIActivityVC.swift in Sources */,
 				24CC5F312A745DE70078C921 /* NewReportView.swift in Sources */,
+				242370302A7EE71B00795C87 /* SelectedReportDetailImageView.swift in Sources */,
 				2495A02029CAC3DE00457CE7 /* Date+EXT.swift in Sources */,
 				24A662F729C2F45B00AD784F /* ReportsManager.swift in Sources */,
 				2448C3A52A2A3B1800A72D9F /* JSONSerial+EXT.swift in Sources */,
+				242370352A7EF5B300795C87 /* ReportsSkeletonLoadingListView.swift in Sources */,
 				24A2068E2A07A18B00F5DC0C /* User.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -1252,10 +1264,12 @@
 				INFOPLIST_KEY_NSLocationAlwaysAndWhenInUseUsageDescription = "Location is automatically applied every time you make a report or update. It is also visible within the Timeline Map. We highly suggesting enabling 'Percise Location' in order to improve location accuracy with reports, updates, and more.";
 				INFOPLIST_KEY_NSLocationAlwaysUsageDescription = "Location is automatically applied every time you make a report or update. It is also visible within the Timeline Map. We highly suggesting enabling 'Percise Location' in order to improve location accuracy with reports, updates, and more.";
 				INFOPLIST_KEY_NSLocationWhenInUseUsageDescription = "Location is automatically applied every time you make a report or update. It is also visible within the Timeline Map. We highly suggesting enabling 'Percise Location' in order to improve location accuracy with reports, updates, and more.";
+				INFOPLIST_KEY_NSPhotoLibraryUsageDescription = "Access to your photo library allows you to save images of vehicles.";
 				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchScreen_Generation = YES;
 				INFOPLIST_KEY_UILaunchStoryboardName = "Launch Screen.storyboard";
+				INFOPLIST_KEY_UIStatusBarHidden = YES;
 				INFOPLIST_KEY_UISupportedInterfaceOrientations = UIInterfaceOrientationPortrait;
 				IPHONEOS_DEPLOYMENT_TARGET = 15.0;
 				LD_RUNPATH_SEARCH_PATHS = (
@@ -1296,10 +1310,12 @@
 				INFOPLIST_KEY_NSLocationAlwaysAndWhenInUseUsageDescription = "Location is automatically applied every time you make a report or update. It is also visible within the Timeline Map. We highly suggesting enabling 'Percise Location' in order to improve location accuracy with reports, updates, and more.";
 				INFOPLIST_KEY_NSLocationAlwaysUsageDescription = "Location is automatically applied every time you make a report or update. It is also visible within the Timeline Map. We highly suggesting enabling 'Percise Location' in order to improve location accuracy with reports, updates, and more.";
 				INFOPLIST_KEY_NSLocationWhenInUseUsageDescription = "Location is automatically applied every time you make a report or update. It is also visible within the Timeline Map. We highly suggesting enabling 'Percise Location' in order to improve location accuracy with reports, updates, and more.";
+				INFOPLIST_KEY_NSPhotoLibraryUsageDescription = "Access to your photo library allows you to save images of vehicles.";
 				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchScreen_Generation = YES;
 				INFOPLIST_KEY_UILaunchStoryboardName = "Launch Screen.storyboard";
+				INFOPLIST_KEY_UIStatusBarHidden = YES;
 				INFOPLIST_KEY_UISupportedInterfaceOrientations = UIInterfaceOrientationPortrait;
 				IPHONEOS_DEPLOYMENT_TARGET = 15.0;
 				LD_RUNPATH_SEARCH_PATHS = (

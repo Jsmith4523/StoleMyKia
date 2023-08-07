@@ -10,12 +10,12 @@ import SwiftUI
 struct SignInView: View {
         
     @State private var pushToVerificationCodeView = false
+    @State private var alertErrorPhoneNumber = false
     @State private var isLoading = false
     
     @State private var phoneNumber = ""
         
     @EnvironmentObject var firebaseAuthVM: FirebaseAuthViewModel
-    
     @FocusState var phoneNumberFocus: Bool
     
     private var isSatisfied: Bool {
@@ -31,9 +31,9 @@ struct SignInView: View {
                 VStack(spacing: 5) {
                     Spacer()
                         .frame(height: 5)
-                    Text("Welcome Back!")
+                    Text("Welcome!")
                         .font(.system(size: 27).weight(.heavy))
-                    Text("Enter your phone number..")
+                    Text("Enter your phone number")
                         .font(.system(size: 17))
                         .foregroundColor(.gray)
                 }
@@ -64,16 +64,16 @@ struct SignInView: View {
             ToolbarItem(placement: .principal) {
                 Text("")
             }
-            ToolbarItem(placement: .keyboard) {
-                Button("Done") {
-                    phoneNumberFocus = false
-                }
-            }
             ToolbarItem(placement: .navigationBarTrailing) {
                 if isLoading {
                     ProgressView()
                 }
             }
+        }
+        .alert("Unable to send verification code", isPresented: $alertErrorPhoneNumber) {
+            Button("OK") {}
+        } message: {
+            Text("We ran into an issue sending a verification code to \(phoneNumber). Make sure that phone number is a valid and try again.\n\nNote: Actions such as logging into too many devices at once with this phone number will cause an error. A cool-down of 10 minutes is applied to prevent spam.")
         }
     }
     
@@ -87,7 +87,7 @@ struct SignInView: View {
                 pushToVerificationCodeView = true
             } catch {
                 isLoading = false
-                print(error.localizedDescription)
+                alertErrorPhoneNumber.toggle()
             }
         }
     }

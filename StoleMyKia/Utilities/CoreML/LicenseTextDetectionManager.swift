@@ -11,10 +11,10 @@ import VisionKit
 
 class LicenseTextDetectionManager {
     
-    weak private var textDectectionDelegate: LicenseTextDetectionDelegate?
+    weak private var textDetectionDelegate: LicenseTextDetectionDelegate?
     
     func setDelegate(_ delegate: LicenseTextDetectionDelegate) {
-        self.textDectectionDelegate = delegate
+        self.textDetectionDelegate = delegate
     }
     
     private func extractLicenseFromImage() {
@@ -22,7 +22,7 @@ class LicenseTextDetectionManager {
     }
     
     deinit {
-        textDectectionDelegate = nil
+        self.textDetectionDelegate = nil
         print("Dead: LicenseTextDetectionManager")
     }
 }
@@ -30,15 +30,15 @@ class LicenseTextDetectionManager {
 //MARK: - LicensePlateDetectionDelegate
 extension LicenseTextDetectionManager: LicensePlateDetectionDelegate {
     func didLocateLicensePlate(image: UIImage) {
-        self.textDectectionDelegate?.didLocateLicensePlateString("", image: image)
+        self.textDetectionDelegate?.didLocateLicensePlateString("", image: image)
     }
     
     func didFailToLocateLicensePlate() {
-        
+        self.textDetectionDelegate?.didFailToLocateLicensePlate()
     }
     
     func didFailToConfigure() {
-        
+        self.textDetectionDelegate?.didFailToConfigure()
     }
 }
 

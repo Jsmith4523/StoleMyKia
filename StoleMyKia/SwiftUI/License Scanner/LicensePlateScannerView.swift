@@ -15,14 +15,7 @@ struct LicensePlateScannerView: View {
     var body: some View {
         NavigationView {
             ZStack {
-                switch scannerCoordinator.permissionAccess {
-                case .authorized:
-                    LicensePlateCameraView()
-                case .denied:
-                    LicenseScannerPermissionDeniedView()
-                case .pending:
-                    LicenseScannerRequestPermissionView()
-                }
+                LicensePlateCameraView()
             }
         }
         .environmentObject(scannerCoordinator)

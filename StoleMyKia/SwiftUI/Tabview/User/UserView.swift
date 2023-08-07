@@ -8,9 +8,7 @@
 import SwiftUI
 
 struct UserView: View {
-    
-    @State private var isShowingSettingsView = false
-    
+        
     @EnvironmentObject var userModel: UserViewModel
     @EnvironmentObject var reportsModel: ReportsViewModel
     
@@ -34,19 +32,17 @@ struct UserView: View {
             .environmentObject(reportsModel)
             .toolbar {
                 ToolbarItem(placement: .navigationBarTrailing) {
-                    Button {
-                        isShowingSettingsView.toggle()
+                    NavigationLink {
+                        SettingsView()
+                            .environmentObject(userModel)
+                            .environmentObject(reportsModel)
                     } label: {
                         Image(systemName: "gear")
                     }
                 }
             }
-            .sheet(isPresented: $isShowingSettingsView) {
-                SettingsView()
-                    .environmentObject(userModel)
-                    .environmentObject(reportsModel)
-            }
         }
+        .tint(Color(uiColor: .label))
     }
 }
 

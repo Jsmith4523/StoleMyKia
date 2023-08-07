@@ -8,80 +8,83 @@
 import SwiftUI
 
 struct LicensePlateCameraView: View {
-    
-    @State private var value = 0.0
-    
+                
     @EnvironmentObject var reportsVM: ReportsViewModel
     @EnvironmentObject var scannerCoordinator: LicensePlateScannerCoordinator
     
+    @Environment (\.colorScheme) var colorScheme
+    
     var body: some View {
-        //HostingView(statusBarStyle: .lightContent) {
         NavigationView {
-            ZStack {
-                Color.black.ignoresSafeArea()
+            VStack {
+                LicenseCameraViewRepresentable(scannerCoordinator: scannerCoordinator)
+                    .frame(maxHeight: .infinity)
                 VStack {
+                    Divider()
+                    Slider(value: $scannerCoordinator.zoomAmount, in: 0.0...2.0)
+                        .padding([.horizontal, .top])
                     HStack {
+                        Spacer()
                         Button {
-                            reportsVM.isShowingLicensePlateScannerView = false
+                            prepareToDismiss()
                         } label: {
                             Image(systemName: "xmark")
                                 .resizable()
                                 .scaledToFit()
-                                .frame(width: 22, height: 22)
-                        }
-                        Spacer()
-                        Button {
-                            
-                        } label: {
-                            Image(systemName: "questionmark.circle")
-                                .resizable()
-                                .scaledToFit()
-                                .frame(width: 30, height: 30)
+                                .frame(width: 20, height: 20)
+                                .padding()
+                                .frame(width: 45, height: 45)
+                                .padding()
+                                .background(.ultraThinMaterial)
+                                .clipShape(Circle())
                         }
                         Spacer()
                         Button {
                             scannerCoordinator.captureImage()
                         } label: {
-                            Image(systemName: "circle.slash")
+                            Image(systemName: "camera.aperture")
                                 .resizable()
                                 .scaledToFit()
-                                .frame(width: 24, height: 24)
+                                .frame(width: 50, height: 50)
+                                .padding()
+                                .frame(width: 65, height: 65)
+                                .padding()
+                                .foregroundColor(Color(uiColor: .systemBackground))
+                                .background(Color(uiColor: .label))
+                                .clipShape(Circle())
                         }
-                    }
-                    .foregroundColor(.white)
-                    .padding()
-                    LicenseCameraViewRepresentable(scannerCoordinator: scannerCoordinator)
-                        .frame(height: UIScreen.main.bounds.height/1.5)
-                        .cornerRadius(30)
-                    VStack {
-                        HStack {
-                            Image(systemName: "minus")
-                            Slider(value: $value)
-                                .padding(.horizontal, 7)
-                                .tint(.white)
-                            Image(systemName: "plus")
+                        Spacer()
+                        Button {
+                            
+                        } label: {
+                            Image(systemName: "bolt.fill")
+                                .resizable()
+                                .scaledToFit()
+                                .frame(width: 30, height: 30)
+                                .padding()
+                                .frame(width: 45, height: 45)
+                                .padding()
+                                .background(.ultraThinMaterial)
+                                .clipShape(Circle())
                         }
-                        .foregroundColor(.white)
-                        .font(.system(size: 22).bold())
                         Spacer()
                     }
                     .padding()
-                    Spacer()
-                    if let licenseImage = scannerCoordinator.croppedLicensePlateImage {
-                        Image(uiImage: licenseImage)
-                            .resizable()
-                            .scaledToFit()
-                            .frame(width: 20, height: 20)
-                    }
                 }
-                .padding(.horizontal, 5)
+                .background(colorScheme == .dark ? .black : .white)
             }
+            .tint(Color(uiColor: .label))
         }
-        // }
-        .ignoresSafeArea()
         .onAppear {
             scannerCoordinator.setDelegate(reportsVM)
             scannerCoordinator.setupCamera()
+        }
+    }
+    
+    func prepareToDismiss() {
+        scannerCoordinator.suspendCameraSession()
+        DispatchQueue.main.asyncAfter(deadline: .now() + 0.25) {
+            reportsVM.isShowingLicensePlateScannerView = false
         }
     }
 }
@@ -90,6 +93,6 @@ struct LicensePlateCameraView_Previews: PreviewProvider {
     static var previews: some View {
         LicensePlateCameraView()
             .environmentObject(LicensePlateScannerCoordinator())
-            .environmentObject(ReportsViewModel())
+            //.preferredColorScheme(.dark)
     }
 }

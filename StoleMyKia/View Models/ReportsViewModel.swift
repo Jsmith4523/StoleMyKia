@@ -18,12 +18,13 @@ final class ReportsViewModel: NSObject, ObservableObject {
     @Published var feedLoadStatus: FeedLoadStatus = .loading
     @Published var reports: [Report] = []
     
-    private let manager = ReportManager.manager
+    private let manager = ReportManager()
 
     weak private var delegate: ReportsDelegate?
     weak private var firebaseUserDelegate: FirebaseUserDelegate?
     
     override init() {
+        print("Alive: ReportsViewModel")
         super.init()
     }
     
@@ -41,7 +42,6 @@ final class ReportsViewModel: NSObject, ObservableObject {
             self.feedLoadStatus = .loaded
         }
     }
-    
     
     /// Asynchronously upload a report and its vehicle image to Google Firestore and Firebase Storage
     /// - Parameters:

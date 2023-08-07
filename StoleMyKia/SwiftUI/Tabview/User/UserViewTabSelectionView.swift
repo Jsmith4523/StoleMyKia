@@ -18,9 +18,9 @@ enum UserTabViewSelection: CaseIterable, Identifiable {
     var title: String {
         switch self {
         case .reports:
-            return "My Reports"
+            return "Reports"
         case .bookmarks:
-            return "My Bookmarks"
+            return "Bookmarks"
         }
     }
     
@@ -43,26 +43,27 @@ struct UserViewTabSelectionView: View {
             HStack {
                 Spacer()
                 ForEach(UserTabViewSelection.allCases) { selection in
-                    Button {
-                        self.changeSelection(to: selection)
-                    } label: {
+                    Label {
+                        Text(selection.title)
+                    } icon: {
                         Image(systemName: selection.symbol)
-                            .resizable()
-                            .scaledToFit()
-                            .frame(width: 30, height: 30)
-                            .foregroundColor(self.selection == selection ? Color(uiColor: .label) : .gray)
+                    }
+                    .font(.system(size: 17))
+                    .foregroundColor(self.selection == selection ? Color(uiColor: .label) : .gray)
+                    .onTapGesture {
+                        self.changeSelection(to: selection)
                     }
                     Spacer()
                 }
             }
-            .padding()
+            .padding([.top, .horizontal])
+            .padding(.bottom, 10)
             Divider()
         }
         .onChange(of: selection) { _ in
             UIImpactFeedbackGenerator().impactOccurred(intensity: 5)
         }
     }
-    
     
     private func changeSelection(to selection: UserTabViewSelection) {
         withAnimation {

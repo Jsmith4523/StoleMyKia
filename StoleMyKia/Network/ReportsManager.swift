@@ -45,8 +45,6 @@ class ReportManager {
         db.collection("Reports")
     }
     
-    private init() {}
-    
     /// Retrieves the latest reports from Firestore Database.
     /// - Returns: An array of reports.
     /// - Throws: Error if the user location settings are not enabled or documents could not be retrieved.

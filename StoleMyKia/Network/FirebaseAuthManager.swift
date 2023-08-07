@@ -28,7 +28,7 @@ class FirebaseAuthManager {
     
     /// Authenticate with users phone number
     /// - Parameter phoneNumber: The users phone number
-    public func authWithPhoneNumber(_ phoneNumber: String) async throws {
+    public func authWithPhoneNumber(_ phoneNumber: String) async throws {        
         let verificationId = try await PhoneAuthProvider.provider().verifyPhoneNumber(phoneNumber, uiDelegate: nil)
         self.verificationId = verificationId
     }

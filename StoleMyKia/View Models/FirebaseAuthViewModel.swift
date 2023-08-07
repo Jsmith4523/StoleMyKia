@@ -22,7 +22,16 @@ class FirebaseAuthViewModel: ObservableObject {
     weak private var firebaseAuthDelegate: FirebaseAuthDelegate?
     
     init() {
-        createAuthStateListener()
+        print("Alive: FirebaseAuthViewModel")
+        
+        guard let user = Auth.auth().currentUser else {
+            self.loginStatus = .signedOut
+            return
+        }
+        
+        self.prepareForSignIn(uid: user.uid)
+        self.loginStatus = .signedIn
+        //createAuthStateListener()
     }
     
     func setDelegate(_ delegate: FirebaseAuthDelegate) {
@@ -35,6 +44,12 @@ class FirebaseAuthViewModel: ObservableObject {
     
     func verifyCode(_ code: String) async throws {
         try await authManager.verifyCode(code)
+        
+        guard let user = Auth.auth().currentUser else {
+            return
+        }
+        
+        prepareForSignIn(uid: user.uid)
     }
     
     /// Begin setting up the application after successful sign in.
@@ -56,7 +71,7 @@ class FirebaseAuthViewModel: ObservableObject {
     private func prepareForSignOut() {
         try? authManager.signOutUser()
         
-        self.firebaseAuthDelegate?.userHasSignedOut()
+        //self.firebaseAuthDelegate?.userHasSignedOut()
         self.loginStatus = .signedOut
         
         //Removing notifications and resetting application badge...
@@ -77,6 +92,15 @@ class FirebaseAuthViewModel: ObservableObject {
                 return
             }
             self?.prepareForSignIn(uid: user.uid)
+        }
+    }
+}
+
+//MARK: - UserViewModelDelegate
+extension FirebaseAuthViewModel: UserViewModelDelegate {
+    func userDidSuccessfullySignOut() {
+        if Auth.auth().currentUser == nil {
+            self.loginStatus = .signedOut
         }
     }
 }

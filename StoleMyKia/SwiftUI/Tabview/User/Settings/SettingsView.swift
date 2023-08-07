@@ -13,7 +13,7 @@ struct SettingsView: View {
     @EnvironmentObject var reportsModel: ReportsViewModel
     
     var body: some View {
-        NavigationView {
+       // NavigationView {
             Form {
                 Section("Account") {
                     NavigationLink {
@@ -59,8 +59,7 @@ struct SettingsView: View {
             }
             .navigationTitle("Settings")
             .navigationBarTitleDisplayMode(.inline)
-        }
-        .tint(Color(uiColor: .label))
+        //}
         .environmentObject(userModel)
         .environmentObject(reportsModel)
     }

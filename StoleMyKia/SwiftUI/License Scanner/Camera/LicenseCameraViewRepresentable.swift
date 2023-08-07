@@ -21,8 +21,14 @@ struct LicenseCameraViewRepresentable: UIViewRepresentable {
             layer.frame = view.bounds
             layer.videoGravity = .resizeAspectFill
             view.layer.addSublayer(layer)
+        } else {
+            print("Not set")
         }
         return view
+    }
+    
+    static func dismantleUIView(_ uiView: UIView, coordinator: LicensePlateScannerCoordinator) {
+        
     }
     
     func makeCoordinator() -> LicensePlateScannerCoordinator {
@@ -46,6 +52,7 @@ final class LicensePlateScannerCoordinator: NSObject, ObservableObject {
     @Published private var captureOutput: AVCapturePhotoOutput!
     @Published private var captureSession: AVCaptureSession!
     @Published private(set) var previewLayer: AVCaptureVideoPreviewLayer!
+    @Published var zoomAmount: Double = 0.0
     
     @Published private(set) var alertErrorFetchingReports = false
     @Published private(set) var errorReason: LicenseScannerError?
@@ -65,39 +72,29 @@ final class LicensePlateScannerCoordinator: NSObject, ObservableObject {
     
     weak private var licensePlateScannerDelegate: LicensePlateCoordinatorDelegate?
     
-    private let licensePlateDetectionManager = LicnesePlateDectectionManager()
-    private let licenseTextDectectionManager = LicenseTextDetectionManager()
+    private let licensePlateDetectionManager = LicensePlateDetectionManager()
+    private let licenseTextDetectionManager = LicenseTextDetectionManager()
         
     override init() {
         super.init()
-        self.checkPermissions()
-        
-        licensePlateDetectionManager.setDelegate(licenseTextDectectionManager)
-        licenseTextDectectionManager.setDelegate(self)
+        licensePlateDetectionManager.setDelegate(licenseTextDetectionManager)
+        licenseTextDetectionManager.setDelegate(self)
     }
         
     func setDelegate(_ delegate: LicensePlateCoordinatorDelegate) {
         self.licensePlateScannerDelegate = delegate
     }
     
-    private func checkPermissions() {
-        DispatchQueue.main.async {
-            switch AVCaptureDevice.authorizationStatus(for: .video) {
-            case .authorized:
-                self.permissionAccess = .authorized
-            case .denied:
-                self.permissionAccess = .denied
-            case .restricted:
-                self.permissionAccess = .pending
-            case .notDetermined:
-                self.permissionAccess = .pending
-            default:
-                self.permissionAccess = .denied
-            }
-        }
+    //Check permission and setup camera if authorized
+    private func authorizationStatus() -> AVAuthorizationStatus {
+        return AVCaptureDevice.authorizationStatus(for: .video)
     }
     
     func setupCamera() {
+        guard authorizationStatus() == .authorized else {
+            return
+        }
+        
         guard let device = AVCaptureDevice.default(.builtInWideAngleCamera, for: .video, position: .back) else {
             return
         }
@@ -119,10 +116,10 @@ final class LicensePlateScannerCoordinator: NSObject, ObservableObject {
         captureSession.commitConfiguration()
         
         setPreviewLayer()
+        setupVideoOutput()
         
         func setPreviewLayer() {
             self.previewLayer = AVCaptureVideoPreviewLayer(session: captureSession)
-            setupVideoOutput()
         }
         
         func setupVideoOutput() {
@@ -139,7 +136,7 @@ final class LicensePlateScannerCoordinator: NSObject, ObservableObject {
     func askForPermission() {
         AVCaptureDevice.requestAccess(for: .video) { [weak self] _ in
             //Recheck the current permissions...
-            self?.checkPermissions()
+            self?.setupCamera()
         }
     }
     
@@ -168,10 +165,12 @@ final class LicensePlateScannerCoordinator: NSObject, ObservableObject {
         }
         
         captureOutput.capturePhoto(with: captureSettings, delegate: self)
+        suspendCameraSession()
     }
     
     deinit {
         licensePlateScannerDelegate = nil
+        licensePlateDetectionManager.prepareCleanUp()
         print("Dead: LicensePlateScannerCoordinator")
     }
 }
@@ -186,7 +185,7 @@ extension LicensePlateScannerCoordinator: AVCapturePhotoCaptureDelegate {
         guard let uiImage = CIImage(data: photoData) else { return }
         
         self.croppedLicensePlateImage = UIImage(ciImage: uiImage)
-                
+        
         licensePlateDetectionManager.beginDetection(uiImage)
     }
 }
@@ -194,18 +193,20 @@ extension LicensePlateScannerCoordinator: AVCapturePhotoCaptureDelegate {
 //MARK: - LicenseTextDetectionDelegate
 extension LicensePlateScannerCoordinator: LicenseTextDetectionDelegate {
     func didLocateLicensePlateString(_ licenseString: String, image: UIImage) {
-        UIImpactFeedbackGenerator().impactOccurred()
+        UINotificationFeedbackGenerator().notificationOccurred(.success)
         self.licensePlateString = licenseString
         self.croppedLicensePlateImage = image
     }
     
-    func didLocateLicensePlate(image: UIImage) {}
+    func didLocateLicensePlate(image: UIImage) {
+        UINotificationFeedbackGenerator().notificationOccurred(.error)
+    }
     
     func didFailToLocateLicensePlate() {
-        
+        UINotificationFeedbackGenerator().notificationOccurred(.error)
     }
     
     func didFailToConfigure() {
-        
+        UINotificationFeedbackGenerator().notificationOccurred(.error)
     }
 }

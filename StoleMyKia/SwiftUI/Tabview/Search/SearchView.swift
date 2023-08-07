@@ -19,17 +19,17 @@ struct SearchView: View {
             }
             .navigationTitle(ApplicationTabViewSelection.search.title)
             .navigationBarTitleDisplayMode(.inline)
-//            .toolbar {
-//                Button {
-//                    reportsVM.isShowingLicensePlateScannerView.toggle()
-//                } label: {
-//                   Image(systemName: "camera")
-//                }
-//            }
-//            .fullScreenCover(isPresented: $reportsVM.isShowingLicensePlateScannerView) {
-//                LicensePlateScannerView()
-//                    .environmentObject(reportsVM)
-//            }
+            .toolbar {
+                Button {
+                    reportsVM.isShowingLicensePlateScannerView.toggle()
+                } label: {
+                   Image(systemName: "camera")
+                }
+            }
+            .sheet(isPresented: $reportsVM.isShowingLicensePlateScannerView) {
+                LicensePlateScannerView()
+                    .environmentObject(reportsVM)
+            }
         }
     }
 }
@@ -38,6 +38,6 @@ struct SearchView_Previews: PreviewProvider {
     static var previews: some View {
         SearchView()
             .environmentObject(ReportsViewModel())
-            .environmentObject(UserViewModel() )
+            .environmentObject(UserViewModel())
     }
 }

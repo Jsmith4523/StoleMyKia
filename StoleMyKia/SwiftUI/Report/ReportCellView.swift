@@ -27,6 +27,7 @@ struct ReportCellView: View {
                         .scaledToFill()
                         .frame(width: UIScreen.main.bounds.width, height: 300)
                         .clipped()
+                        .redacted(reason: vehicleImage == nil ? .placeholder : [])
                 }
                 VStack(alignment: .leading, spacing: 20) {
                     VStack {

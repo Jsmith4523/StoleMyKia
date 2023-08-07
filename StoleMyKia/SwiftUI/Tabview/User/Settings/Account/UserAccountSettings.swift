@@ -6,6 +6,7 @@
 //
 
 import SwiftUI
+import Firebase
 
 struct UserAccountSettings: View {
     
@@ -24,7 +25,7 @@ struct UserAccountSettings: View {
             }
             
             Button {
-                
+                userModel.signOut()
             } label: {
                 Label("Sign out", systemImage: "door.right.hand.open")
             }

@@ -10,7 +10,7 @@ import SwiftUI
 struct UserReportsView: View {
     
     enum UserReportsLoadStatus {
-        case loading, loaded
+        case loading, loaded, empty, error
     }
     
     @EnvironmentObject var reportsVM: ReportsViewModel
@@ -21,12 +21,16 @@ struct UserReportsView: View {
     @State private var reports = [Report]()
             
     var body: some View {
-        ZStack {
+        ScrollView {
             switch userReportsLoadStatus {
             case .loading:
-                ReportSkeletonView()
+                ReportsSkeletonLoadingListView()
             case .loaded:
-                list
+                FeedListView(reports: $reports)
+            case .empty:
+                Text("Empty")
+            case .error:
+                Text("Error")
             }
         }
         .environmentObject(reportsVM)
@@ -37,30 +41,24 @@ struct UserReportsView: View {
         .onReceive(userVM.$userReports) { reports in
             self.reports = reports
         }
-    }
-    
-    private var list: some View {
-        VStack {
-            switch reports.isEmpty {
-            case true:
-                Text("Your reports are empty")
-            case false:
-                ScrollView {
-                    FeedListView(reports: $reports)
-                        .environmentObject(reportsVM)
-                        .environmentObject(userVM)
-                }
-                .refreshable {
-                    await userVM.fetchUserReports()
-                }
-            }
+        .refreshable {
+            try? await userVM.fetchUserReports()
         }
     }
     
     private func onAppearFetchUserReports() async {
         guard reports.isEmpty else { return }
-        await userVM.fetchUserReports()
-        self.userReportsLoadStatus = .loaded
+        do {
+            try await userVM.fetchUserReports()
+            guard !(userVM.userReports.isEmpty) else {
+                self.userReportsLoadStatus = .empty
+                return
+            }
+            self.userReportsLoadStatus = .loaded
+        } catch {
+            print(error.localizedDescription)
+            self.userReportsLoadStatus = .error
+        }
     }
 }
 

@@ -10,11 +10,22 @@ import SwiftUI
 struct ApplicationProgressView: View {
     var body: some View {
         ZStack {
-            Text("Loading")
+            Color.brand.ignoresSafeArea()
+            VStack(spacing: 20 ) {
+                Image(systemName: "car.fill")
+                    .resizable()
+                    .scaledToFit()
+                    .frame(width: 100, height: 100)
+                    .foregroundColor(.white)
+                ProgressView()
+                    .tint(.white)
+            }
         }
     }
 }
 
-//#Preview {
-//    ApplicationProgressView()
-//}
+struct MyPreviewProvider69Nice_Previews: PreviewProvider {
+    static var previews: some View {
+        ApplicationProgressView()
+    }
+}

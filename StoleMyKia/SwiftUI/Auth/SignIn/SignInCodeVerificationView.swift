@@ -10,6 +10,7 @@ import SwiftUI
 struct SignInCodeVerificationView: View {
     
     @State private var isLoading = false
+    @State private var alertErrorVerificationCode = false
     @State private var verificationCode = ""
     
     let phoneNumber: String
@@ -17,19 +18,17 @@ struct SignInCodeVerificationView: View {
     @EnvironmentObject var firebaseAuthVM: FirebaseAuthViewModel
     
     private var isSatisfied: Bool {
-        guard (verificationCode.range(of: ".*[^0-9].*", options: .regularExpression) == nil), verificationCode.count == 6 else { return true }
+        guard (verificationCode.range(of: ".*[^0-9].*", options: .regularExpression) == nil), verificationCode.count == 6 else { return false }
         return true
     }
     
     var body: some View {
         VStack {
-            Spacer()
-                .frame(height: 35)
             VStack(spacing: 35) {
                 Image(systemName: "paperplane")
                     .resizable()
                     .scaledToFit()
-                    .frame(width: 65, height: 65)
+                    .frame(width: 55, height: 55)
                 VStack(spacing: 10) {
                     Text("Verification Code Sent!")
                         .font(.system(size: 21).weight(.heavy))
@@ -50,6 +49,7 @@ struct SignInCodeVerificationView: View {
                 }
             }
             Spacer()
+                .frame(height: 15)
         }
         .padding()
         .multilineTextAlignment(.center)
@@ -65,6 +65,11 @@ struct SignInCodeVerificationView: View {
             }
         }
         .disabled(isLoading)
+        .alert("Unable to verify SMS Code", isPresented: $alertErrorVerificationCode) {
+            Button("OK") {}
+        } message: {
+            Text("We ran into an issue trying to verify the SMS code. Make sure the code is valid and try again. You can always re-send another code.\n\nIf the issue persists, contact support")
+        }
     }
     
     private func beginVerifyingSmsCode() {
@@ -73,8 +78,8 @@ struct SignInCodeVerificationView: View {
             do {
                 try await firebaseAuthVM.verifyCode(verificationCode)
             } catch {
-                print("Error with code: \(error.localizedDescription)")
                 isLoading = false
+                alertErrorVerificationCode.toggle()
             }
         }
     }

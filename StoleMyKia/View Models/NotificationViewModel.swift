@@ -28,34 +28,36 @@ final class NotificationViewModel: NSObject, ObservableObject {
     
     private let db = Database.database()
     
-    private lazy var reference: DatabaseReference = {
-        guard let uid = firebaseUserDelegate?.uid else { fatalError("FirebaseUserDelegate was not set!") }
-        return db.reference(withPath: FirebaseDatabasesPaths.userNotificationDatabasePath).child(uid)
-    }()
+    private var reference: DatabaseReference {
+//        guard let uid = firebaseUserDelegate?.uid else { fatalError("FirebaseUserDelegate was not set!") }
+//        return db.reference(withPath: FirebaseDatabasesPaths.userNotificationDatabasePath).child(uid)
+        DatabaseReference()
+    }
     
     private var fcmTokenRef: DatabaseReference {
         return db.reference(withPath: FirebaseDatabasesPaths.fcmTokenPath)
     }
     
     override init() {
+        print("Alive: NotificationViewModel")
         super.init()
+        
         UNUserNotificationCenter.current().delegate = self
+        requestNotificationAuthorization()
     }
     
     func setDelegate(_ delegate: FirebaseUserDelegate) {
-        self.firebaseUserDelegate = delegate
-        print(delegate.uid)
+//        self.firebaseUserDelegate = delegate
         self.setFcmToken(firebaseUserDelegate?.uid)
     }
     
     func requestNotificationAuthorization() {
-        UNUserNotificationCenter.current().requestAuthorization(options: [.alert, .sound, .badge, .carPlay, .timeSensitive]) { success, err in
+        UNUserNotificationCenter.current().requestAuthorization(options: [.alert, .sound, .badge, .carPlay]) { success, err in
             guard success, err == nil else {
                 return
             }
             print("APNS Registered!")
         }
-        
         UIApplication.shared.registerForRemoteNotifications()
     }
     
@@ -114,7 +116,6 @@ extension NotificationViewModel: UNUserNotificationCenterDelegate {
     }
     
     func userNotificationCenter(_ center: UNUserNotificationCenter, didReceive response: UNNotificationResponse, withCompletionHandler completionHandler: @escaping () -> Void) {
-        print(response.notification.request.content.userInfo)
         completionHandler()
     }
     

@@ -15,10 +15,10 @@ struct NoReportsAvaliableView: View {
             Image(systemName: ApplicationTabViewSelection.feed.symbol)
                 .resizable()
                 .scaledToFit()
-                .frame(width: 65, height: 65)
+                .frame(width: 45, height: 45)
             VStack(spacing: 8) {
                 Text("Nothing to report at the moment..")
-                    .font(.system(size: 22).bold())
+                    .font(.system(size: 19).bold())
                 Text("Some would say that's a good thing.")
                     .font(.body)
                     .foregroundColor(.gray)

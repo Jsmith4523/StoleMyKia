@@ -8,7 +8,7 @@
 import SwiftUI
 
 enum FeedLoadStatus {
-    case loading, loaded
+    case loading, loaded, empty, error
 }
 
 struct FeedView: View {
@@ -25,14 +25,13 @@ struct FeedView: View {
                 ScrollView {
                     switch reportsVM.feedLoadStatus {
                     case .loading:
-                        ProgressView()
+                        ReportsSkeletonLoadingListView()
                     case .loaded:
-                        switch reportsVM.reports.isEmpty {
-                        case true:
-                            NoReportsAvaliableView()
-                        case false:
-                            FeedListView(reports: $reportsVM.reports)
-                        }
+                        FeedListView(reports: $reportsVM.reports)
+                    case .empty:
+                        NoReportsAvaliableView()
+                    case .error:
+                        Color.orange
                     }
                 }
             }
@@ -47,15 +46,10 @@ struct FeedView: View {
                 await onAppearFetchReports()
             }
             .toolbar {
-//                Button {
-//                    isShowingNearbyMapView.toggle()
-//                } label: {
-//                    Image(systemName: "map")
-//                }
                 Button {
                     isShowingNewReportView.toggle()
                 } label: {
-                    Image(systemName: "exclamationmark.bubble")
+                    Image(systemName: "plus")
                 }
             }
         }
@@ -63,9 +57,6 @@ struct FeedView: View {
             NewReportView()
                 .environmentObject(reportsVM)
                 .environmentObject(userVM)
-        }
-        .fullScreenCover(isPresented: $isShowingNearbyMapView) {
-            
         }
     }
     

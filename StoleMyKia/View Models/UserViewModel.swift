@@ -8,7 +8,7 @@
 import Foundation
 import FirebaseAuth
 import Firebase
-
+import SwiftUI
 
 final class UserViewModel: ObservableObject {
     
@@ -25,6 +25,12 @@ final class UserViewModel: ObservableObject {
     @Published private var userUid: String?
     
     private let firebaseManager = FirebaseUserManager()
+    weak private var delegate: UserViewModelDelegate?
+    
+    init() {
+        print("Alive: UserViewModel")
+        firebaseManager.setDelegate(self)
+    }
     
     func fetchUserInformation() async throws {
         guard let userUid else { return }
@@ -35,12 +41,13 @@ final class UserViewModel: ObservableObject {
         return try await firebaseManager.getUserReports()
     }
     
+    func setDelegate(_ delegate: UserViewModelDelegate) {
+        self.delegate = delegate
+    }
+    
     @MainActor
-    func fetchUserReports() async {
-        guard let reports = try? await firebaseManager.getUserReports() else {
-            return
-        }
-        
+    func fetchUserReports() async throws {
+        let reports = try await firebaseManager.getUserReports()
         self.userReports = reports
     }
     
@@ -58,6 +65,7 @@ final class UserViewModel: ObservableObject {
     
     func signOut() {
         try? Auth.auth().signOut()
+        delegate?.userDidSuccessfullySignOut()
     }
         
     deinit {
@@ -85,14 +93,14 @@ extension UserViewModel: FirebaseAuthDelegate {
     @MainActor
     func userHasSignedIn(uid: String) async -> LoginStatus {
         self.userUid = uid
-        self.rootViewLoadStatus = .loaded
-        
+        withAnimation {
+            self.rootViewLoadStatus = .loaded
+        }
         return .signedIn
     }
     
     func userHasSignedOut() {
         self.firebaseUser = nil
-        firebaseManager.userIsSigningOut()
     }
 }
 
@@ -101,4 +109,9 @@ extension UserViewModel: FirebaseUserDelegate {
     var uid: String? {
         return userUid
     }
+}
+
+
+protocol UserViewModelDelegate: AnyObject {
+    func userDidSuccessfullySignOut()
 }

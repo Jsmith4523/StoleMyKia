@@ -8,11 +8,8 @@
 import SwiftUI
 
 struct ApplicationAuthView: View {
-    
-    @State private var isShowingCreateAccountView = false
-    
+            
     @EnvironmentObject var firebaseAuthVM: FirebaseAuthViewModel
-    
     @Environment (\.colorScheme) var colorScheme
     
     var body: some View {
@@ -36,19 +33,12 @@ struct ApplicationAuthView: View {
                             SignInView()
                                 .environmentObject(firebaseAuthVM)
                         } label: {
-                            Text("Sign In")
+                            Text("Join")
                                 .authButtonStyle()
                         }
-                        NavigationLink {
-                            
-                        } label: {
-                            Text("Join")
-                                .padding()
-                                .frame(width: 310)
-                                .font(.system(size: 22).weight(.heavy))
-                                .foregroundColor(Color(uiColor: .label))
-                        }
                     }
+                    Spacer()
+                        .frame(height: 45)
                 }
                 .padding()
             }
@@ -62,10 +52,6 @@ struct ApplicationAuthView: View {
         }
         .multilineTextAlignment(.center)
         .tint(Color(uiColor: .label))
-        .customSheetView(isPresented: $isShowingCreateAccountView, detents: [.large()], cornerRadius: 25) {
-            
-        }
-
     }
 }
 

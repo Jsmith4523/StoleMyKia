@@ -19,11 +19,14 @@ enum FirebaseUserManagerError: Error {
 
 class FirebaseUserManager {
     
-    ///The Logged in Auth user id
-    private var uid: String? = "12345"
-    
     private let db = Database.database()
     private let fs = Firestore.firestore()
+    
+    private weak var firebaseUserDelegate: FirebaseUserDelegate?
+
+    private var userUid: String? {
+        firebaseUserDelegate?.uid
+    }
         
     private var reference: DatabaseReference {
         db.reference(withPath: FirebaseDatabasesPaths.usersDatabasePath)
@@ -33,6 +36,10 @@ class FirebaseUserManager {
         fs.collection(FirebaseDatabasesPaths.reportsDatabasePath)
     }
         
+    func setDelegate(_ delegate: FirebaseUserDelegate) {
+        self.firebaseUserDelegate = delegate
+    }
+            
     /// Fetch the signed in users information.
     /// - Parameter uid: The Auth user uid.
     func fetchSignedInUserInformation(uid: String) async throws -> FirebaseUser {
@@ -49,9 +56,7 @@ class FirebaseUserManager {
         guard let firebaseUser = JSONSerialization.objectFromData(FirebaseUser.self, jsonObject: data) else {
             throw FirebaseUserManagerError.codableError
         }
-        
-        self.uid = uid
-        
+                
         return firebaseUser
     }
     
@@ -59,7 +64,7 @@ class FirebaseUserManager {
     /// - Parameters:
     ///   - reportId: The UUID of the report the user is bookmarking.
     func addBookmark(reportId: UUID) async throws {
-        guard let uid else {
+        guard let userUid else {
             throw FirebaseUserManagerError.userIdError
         }
         
@@ -67,7 +72,7 @@ class FirebaseUserManager {
             throw FirebaseUserManagerError.reportDoesNotExist
         }
         
-        let userBookmarkReference = reference.child(uid).child(FirebaseDatabasesPaths.userBookmarksPath)
+        let userBookmarkReference = reference.child(userUid).child(FirebaseDatabasesPaths.userBookmarksPath)
         let currentBookmarks = try await getUserCurrentBookmarks()
         
         var bookmarks = currentBookmarks
@@ -79,11 +84,11 @@ class FirebaseUserManager {
     /// Removes a users bookmarked report.
     /// - Parameter reportId: The UUID of the report the user wants to no longer bookmark.
     func removeBookmark(reportId: UUID) async throws {
-        guard let uid else {
+        guard let userUid else {
             throw FirebaseUserManagerError.userIdError
         }
         
-        let userBookmarkReference = reference.child(uid).child(FirebaseDatabasesPaths.userBookmarksPath)
+        let userBookmarkReference = reference.child(userUid).child(FirebaseDatabasesPaths.userBookmarksPath)
         let currentBookmarks = try await getUserCurrentBookmarks()
         
         guard let bookmarkIndex = currentBookmarks.firstIndex(of: reportId) else { return }
@@ -97,11 +102,11 @@ class FirebaseUserManager {
     /// Retrives the signed in users current bookmarks.
     /// - Returns: The array of the user's bookmarked reports by UUIDs.
     private func getUserCurrentBookmarks() async throws -> [UUID] {
-        guard let uid else {
+        guard let userUid else {
             throw FirebaseUserManagerError.userIdError
         }
         
-        let userBookmarkReference = reference.child(uid).child(FirebaseDatabasesPaths.userBookmarksPath)
+        let userBookmarkReference = reference.child(userUid).child(FirebaseDatabasesPaths.userBookmarksPath)
         
         guard let currentBookmarks = try await userBookmarkReference.getData().value as? [UUID] else {
             throw FirebaseUserManagerError.bookmarksError
@@ -121,12 +126,13 @@ class FirebaseUserManager {
     }
     
     func getUserReports() async throws -> [Report] {
-        guard let uid else { throw FirebaseUserManagerError.userIdError}
+        guard let userUid else { throw FirebaseUserManagerError.userIdError}
         
-        let documents = try await firestoreReference.whereField("uid", isEqualTo: uid).getDocuments().documents.map({$0.data()})
-        let userReports = try JSONSerialization.objectsFromFoundationObjects(documents, to: Report.self)
+        let data = try await firestoreReference.whereField("uid", isEqualTo: userUid).getDocuments().documents.map({$0.data()})
         
-        return userReports
+        let userReports = data.map({JSONSerialization.objectFromData(Report.self, jsonObject: $0)})
+        
+        return userReports.compactMap({$0})
     }
     
     
@@ -143,8 +149,8 @@ class FirebaseUserManager {
         return reports.compactMap({$0})
     }
     
-    /// Sets the Auth user uid to nil
-    func userIsSigningOut() {
-        self.uid = nil
+    deinit {
+        firebaseUserDelegate = nil
+        print("Dead: FirebaseUserManager")
     }
 }

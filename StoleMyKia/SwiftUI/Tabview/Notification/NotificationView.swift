@@ -25,7 +25,7 @@ struct NotificationView: View {
                     switch notificationVM.userNotifications.isEmpty {
                     case true:
                         NoNotificationsView()
-                        
+
                     case false:
                         NotificationListView()
                     }
@@ -44,8 +44,8 @@ struct NotificationView: View {
     
     private func fetchForUserNotifications() {
         //FIXME: FirebaseUserDelegate is nil within this view and will fatally crash once switch the guard statement to test for false cases if shown on Preview Provider
-        guard notificationVM.userNotifications.isEmpty else { return }
-        notificationVM.fetchFirebaseUserNotifications()
+//        guard notificationVM.userNotifications.isEmpty else { return }
+//        notificationVM.fetchFirebaseUserNotifications()
     }
 }
 

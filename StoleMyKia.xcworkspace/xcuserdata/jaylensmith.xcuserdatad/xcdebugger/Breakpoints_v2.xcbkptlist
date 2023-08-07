@@ -7,49 +7,112 @@
       <BreakpointProxy
          BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
          <BreakpointContent
-            uuid = "1DDE9B1F-710C-4481-AEE0-0840898F4570"
-            shouldBeEnabled = "Yes"
+            uuid = "CB155ADA-9F21-467C-A8DA-4025289B8F3E"
+            shouldBeEnabled = "No"
             ignoreCount = "0"
             continueAfterRunningActions = "No"
-            filePath = "StoleMyKia/View Models/NotificationViewModel.swift"
+            filePath = "StoleMyKia/Utilities/CoreML/LicensePlateDetectionManager.swift"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "123"
-            endingLineNumber = "123"
-            landmarkName = "setFcmToken(_:)"
+            startingLineNumber = "31"
+            endingLineNumber = "31"
+            landmarkName = "setupDetectionModelRequest()"
             landmarkType = "7">
             <Locations>
                <Location
-                  uuid = "1DDE9B1F-710C-4481-AEE0-0840898F4570 - d54ed6b2b9e49b5d"
+                  uuid = "CB155ADA-9F21-467C-A8DA-4025289B8F3E - 403d8c92e6b30b89"
                   shouldBeEnabled = "Yes"
                   ignoreCount = "0"
                   continueAfterRunningActions = "No"
-                  symbolName = "StoleMyKia.NotificationViewModel.setFcmToken(Swift.Optional&lt;Swift.String&gt;) -&gt; ()"
+                  symbolName = "StoleMyKia.LicensePlateDetectionManager.setupDetectionModelRequest() -&gt; ()"
                   moduleName = "StoleMyKia"
                   usesParentBreakpointCondition = "Yes"
-                  urlString = "file:///Users/jaylensmith/Documents/Macbook%20Pro%20Xcode/StoleMyKia/StoleMyKia/View%20Models/NotificationViewModel.swift"
+                  urlString = "file:///Users/jaylensmith/Documents/Macbook%20Pro%20Xcode/StoleMyKia/StoleMyKia/Utilities/CoreML/LicensePlateDetectionManager.swift"
                   startingColumnNumber = "9223372036854775807"
                   endingColumnNumber = "9223372036854775807"
-                  startingLineNumber = "123"
-                  endingLineNumber = "123"
-                  offsetFromSymbolStart = "254">
+                  startingLineNumber = "31"
+                  endingLineNumber = "31"
+                  offsetFromSymbolStart = "212">
                </Location>
                <Location
-                  uuid = "1DDE9B1F-710C-4481-AEE0-0840898F4570 - d54ed6b2b9e49b5d"
+                  uuid = "CB155ADA-9F21-467C-A8DA-4025289B8F3E - 4f1fea26f4fa49b3"
                   shouldBeEnabled = "Yes"
                   ignoreCount = "0"
                   continueAfterRunningActions = "No"
-                  symbolName = "StoleMyKia.NotificationViewModel.setFcmToken(Swift.Optional&lt;Swift.String&gt;) -&gt; ()"
+                  symbolName = "implicit closure #1 (StoleMyKia.LicensePlateDetectionManager) -&gt; (__C.VNRequest, Swift.Optional&lt;Swift.Error&gt;) -&gt; () in StoleMyKia.LicensePlateDetectionManager.setupDetectionModelRequest() -&gt; ()"
                   moduleName = "StoleMyKia"
                   usesParentBreakpointCondition = "Yes"
-                  urlString = "file:///Users/jaylensmith/Documents/Macbook%20Pro%20Xcode/StoleMyKia/StoleMyKia/View%20Models/NotificationViewModel.swift"
+                  urlString = "file:///Users/jaylensmith/Documents/Macbook%20Pro%20Xcode/StoleMyKia/StoleMyKia/Utilities/CoreML/LicensePlateDetectionManager.swift"
                   startingColumnNumber = "9223372036854775807"
                   endingColumnNumber = "9223372036854775807"
-                  startingLineNumber = "123"
-                  endingLineNumber = "123"
-                  offsetFromSymbolStart = "463">
+                  startingLineNumber = "31"
+                  endingLineNumber = "31"
+                  offsetFromSymbolStart = "44">
+               </Location>
+               <Location
+                  uuid = "CB155ADA-9F21-467C-A8DA-4025289B8F3E - f3d79f9008f2ecf1"
+                  shouldBeEnabled = "Yes"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "implicit closure #2 (__C.VNRequest, Swift.Optional&lt;Swift.Error&gt;) -&gt; () in implicit closure #1 (StoleMyKia.LicensePlateDetectionManager) -&gt; (__C.VNRequest, Swift.Optional&lt;Swift.Error&gt;) -&gt; () in StoleMyKia.LicensePlateDetectionManager.setupDetectionModelRequest() -&gt; ()"
+                  moduleName = "StoleMyKia"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/jaylensmith/Documents/Macbook%20Pro%20Xcode/StoleMyKia/StoleMyKia/Utilities/CoreML/LicensePlateDetectionManager.swift"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "31"
+                  endingLineNumber = "31"
+                  offsetFromSymbolStart = "52">
                </Location>
             </Locations>
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            uuid = "821A8A87-9BDC-442F-A388-1821C61B2888"
+            shouldBeEnabled = "No"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "StoleMyKia/Utilities/CoreML/LicensePlateDetectionManager.swift"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "30"
+            endingLineNumber = "30"
+            landmarkName = "setupDetectionModelRequest()"
+            landmarkType = "7">
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            uuid = "9979175D-1092-49CD-BFEE-284091DDBF61"
+            shouldBeEnabled = "No"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "StoleMyKia/Utilities/CoreML/LicensePlateDetectionManager.swift"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "29"
+            endingLineNumber = "29"
+            landmarkName = "setupDetectionModelRequest()"
+            landmarkType = "7">
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            uuid = "2FD1A576-5238-4266-A5AC-0E3684768B4E"
+            shouldBeEnabled = "Yes"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "StoleMyKia/Utilities/CoreML/LicensePlateDetectionManager.swift"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "33"
+            endingLineNumber = "33"
+            landmarkName = "setupDetectionModelRequest()"
+            landmarkType = "7">
          </BreakpointContent>
       </BreakpointProxy>
    </Breakpoints>
