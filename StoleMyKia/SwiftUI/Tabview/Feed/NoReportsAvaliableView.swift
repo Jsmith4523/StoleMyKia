@@ -17,9 +17,9 @@ struct NoReportsAvaliableView: View {
                 .scaledToFit()
                 .frame(width: 45, height: 45)
             VStack(spacing: 8) {
-                Text("Nothing to report at the moment..")
+                Text("Nothing to report")
                     .font(.system(size: 19).bold())
-                Text("Some would say that's a good thing.")
+                Text("Refresh by pulling this screen down.")
                     .font(.body)
                     .foregroundColor(.gray)
             }

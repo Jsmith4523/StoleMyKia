@@ -7,62 +7,62 @@
       <BreakpointProxy
          BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
          <BreakpointContent
-            uuid = "CB155ADA-9F21-467C-A8DA-4025289B8F3E"
-            shouldBeEnabled = "No"
+            uuid = "0E8FD77E-39AC-4AD8-B3DC-FE11591BE812"
+            shouldBeEnabled = "Yes"
             ignoreCount = "0"
             continueAfterRunningActions = "No"
-            filePath = "StoleMyKia/Utilities/CoreML/LicensePlateDetectionManager.swift"
+            filePath = "StoleMyKia/Utilities/Extensions/UIImage+EXT.swift"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "31"
-            endingLineNumber = "31"
-            landmarkName = "setupDetectionModelRequest()"
+            startingLineNumber = "44"
+            endingLineNumber = "44"
+            landmarkName = "cropToRect(rect:)"
             landmarkType = "7">
             <Locations>
                <Location
-                  uuid = "CB155ADA-9F21-467C-A8DA-4025289B8F3E - 403d8c92e6b30b89"
+                  uuid = "0E8FD77E-39AC-4AD8-B3DC-FE11591BE812 - 307be842fe035087"
                   shouldBeEnabled = "Yes"
                   ignoreCount = "0"
                   continueAfterRunningActions = "No"
-                  symbolName = "StoleMyKia.LicensePlateDetectionManager.setupDetectionModelRequest() -&gt; ()"
+                  symbolName = "__C.UIImage.cropToRect(rect: __C.CGRect) -&gt; Swift.Optional&lt;__C.UIImage&gt;"
                   moduleName = "StoleMyKia"
                   usesParentBreakpointCondition = "Yes"
-                  urlString = "file:///Users/jaylensmith/Documents/Macbook%20Pro%20Xcode/StoleMyKia/StoleMyKia/Utilities/CoreML/LicensePlateDetectionManager.swift"
+                  urlString = "file:///Users/jaylensmith/Documents/Macbook%20Pro%20Xcode/StoleMyKia/StoleMyKia/Utilities/Extensions/UIImage+EXT.swift"
                   startingColumnNumber = "9223372036854775807"
                   endingColumnNumber = "9223372036854775807"
-                  startingLineNumber = "31"
-                  endingLineNumber = "31"
-                  offsetFromSymbolStart = "212">
+                  startingLineNumber = "44"
+                  endingLineNumber = "44"
+                  offsetFromSymbolStart = "184">
                </Location>
                <Location
-                  uuid = "CB155ADA-9F21-467C-A8DA-4025289B8F3E - 4f1fea26f4fa49b3"
+                  uuid = "0E8FD77E-39AC-4AD8-B3DC-FE11591BE812 - 307be842fe035087"
                   shouldBeEnabled = "Yes"
                   ignoreCount = "0"
                   continueAfterRunningActions = "No"
-                  symbolName = "implicit closure #1 (StoleMyKia.LicensePlateDetectionManager) -&gt; (__C.VNRequest, Swift.Optional&lt;Swift.Error&gt;) -&gt; () in StoleMyKia.LicensePlateDetectionManager.setupDetectionModelRequest() -&gt; ()"
+                  symbolName = "__C.UIImage.cropToRect(rect: __C.CGRect) -&gt; Swift.Optional&lt;__C.UIImage&gt;"
                   moduleName = "StoleMyKia"
                   usesParentBreakpointCondition = "Yes"
-                  urlString = "file:///Users/jaylensmith/Documents/Macbook%20Pro%20Xcode/StoleMyKia/StoleMyKia/Utilities/CoreML/LicensePlateDetectionManager.swift"
+                  urlString = "file:///Users/jaylensmith/Documents/Macbook%20Pro%20Xcode/StoleMyKia/StoleMyKia/Utilities/Extensions/UIImage+EXT.swift"
                   startingColumnNumber = "9223372036854775807"
                   endingColumnNumber = "9223372036854775807"
-                  startingLineNumber = "31"
-                  endingLineNumber = "31"
-                  offsetFromSymbolStart = "44">
+                  startingLineNumber = "44"
+                  endingLineNumber = "44"
+                  offsetFromSymbolStart = "332">
                </Location>
                <Location
-                  uuid = "CB155ADA-9F21-467C-A8DA-4025289B8F3E - f3d79f9008f2ecf1"
+                  uuid = "0E8FD77E-39AC-4AD8-B3DC-FE11591BE812 - 307be842fe035087"
                   shouldBeEnabled = "Yes"
                   ignoreCount = "0"
                   continueAfterRunningActions = "No"
-                  symbolName = "implicit closure #2 (__C.VNRequest, Swift.Optional&lt;Swift.Error&gt;) -&gt; () in implicit closure #1 (StoleMyKia.LicensePlateDetectionManager) -&gt; (__C.VNRequest, Swift.Optional&lt;Swift.Error&gt;) -&gt; () in StoleMyKia.LicensePlateDetectionManager.setupDetectionModelRequest() -&gt; ()"
+                  symbolName = "__C.UIImage.cropToRect(rect: __C.CGRect) -&gt; Swift.Optional&lt;__C.UIImage&gt;"
                   moduleName = "StoleMyKia"
                   usesParentBreakpointCondition = "Yes"
-                  urlString = "file:///Users/jaylensmith/Documents/Macbook%20Pro%20Xcode/StoleMyKia/StoleMyKia/Utilities/CoreML/LicensePlateDetectionManager.swift"
+                  urlString = "file:///Users/jaylensmith/Documents/Macbook%20Pro%20Xcode/StoleMyKia/StoleMyKia/Utilities/Extensions/UIImage+EXT.swift"
                   startingColumnNumber = "9223372036854775807"
                   endingColumnNumber = "9223372036854775807"
-                  startingLineNumber = "31"
-                  endingLineNumber = "31"
-                  offsetFromSymbolStart = "52">
+                  startingLineNumber = "44"
+                  endingLineNumber = "44"
+                  offsetFromSymbolStart = "312">
                </Location>
             </Locations>
          </BreakpointContent>
@@ -70,49 +70,145 @@
       <BreakpointProxy
          BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
          <BreakpointContent
-            uuid = "821A8A87-9BDC-442F-A388-1821C61B2888"
-            shouldBeEnabled = "No"
-            ignoreCount = "0"
-            continueAfterRunningActions = "No"
-            filePath = "StoleMyKia/Utilities/CoreML/LicensePlateDetectionManager.swift"
-            startingColumnNumber = "9223372036854775807"
-            endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "30"
-            endingLineNumber = "30"
-            landmarkName = "setupDetectionModelRequest()"
-            landmarkType = "7">
-         </BreakpointContent>
-      </BreakpointProxy>
-      <BreakpointProxy
-         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
-         <BreakpointContent
-            uuid = "9979175D-1092-49CD-BFEE-284091DDBF61"
-            shouldBeEnabled = "No"
-            ignoreCount = "0"
-            continueAfterRunningActions = "No"
-            filePath = "StoleMyKia/Utilities/CoreML/LicensePlateDetectionManager.swift"
-            startingColumnNumber = "9223372036854775807"
-            endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "29"
-            endingLineNumber = "29"
-            landmarkName = "setupDetectionModelRequest()"
-            landmarkType = "7">
-         </BreakpointContent>
-      </BreakpointProxy>
-      <BreakpointProxy
-         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
-         <BreakpointContent
-            uuid = "2FD1A576-5238-4266-A5AC-0E3684768B4E"
+            uuid = "6A45E3F0-C40A-4F2D-98AD-C042AB297558"
             shouldBeEnabled = "Yes"
             ignoreCount = "0"
             continueAfterRunningActions = "No"
-            filePath = "StoleMyKia/Utilities/CoreML/LicensePlateDetectionManager.swift"
+            filePath = "StoleMyKia/Utilities/Extensions/UIImage+EXT.swift"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "33"
-            endingLineNumber = "33"
-            landmarkName = "setupDetectionModelRequest()"
+            startingLineNumber = "46"
+            endingLineNumber = "46"
+            landmarkName = "cropToRect(rect:)"
             landmarkType = "7">
+            <Locations>
+               <Location
+                  uuid = "6A45E3F0-C40A-4F2D-98AD-C042AB297558 - 307be842fe035041"
+                  shouldBeEnabled = "Yes"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "__C.UIImage.cropToRect(rect: __C.CGRect) -&gt; Swift.Optional&lt;__C.UIImage&gt;"
+                  moduleName = "StoleMyKia"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/jaylensmith/Documents/Macbook%20Pro%20Xcode/StoleMyKia/StoleMyKia/Utilities/Extensions/UIImage+EXT.swift"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "46"
+                  endingLineNumber = "46"
+                  offsetFromSymbolStart = "392">
+               </Location>
+               <Location
+                  uuid = "6A45E3F0-C40A-4F2D-98AD-C042AB297558 - 307be842fe035041"
+                  shouldBeEnabled = "Yes"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "__C.UIImage.cropToRect(rect: __C.CGRect) -&gt; Swift.Optional&lt;__C.UIImage&gt;"
+                  moduleName = "StoleMyKia"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/jaylensmith/Documents/Macbook%20Pro%20Xcode/StoleMyKia/StoleMyKia/Utilities/Extensions/UIImage+EXT.swift"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "46"
+                  endingLineNumber = "46"
+                  offsetFromSymbolStart = "388">
+               </Location>
+            </Locations>
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            uuid = "19A2BA0C-29F4-4474-91CD-E40B407E7FC6"
+            shouldBeEnabled = "Yes"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "StoleMyKia/Utilities/Extensions/UIImage+EXT.swift"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "48"
+            endingLineNumber = "48"
+            landmarkName = "cropToRect(rect:)"
+            landmarkType = "7">
+            <Locations>
+               <Location
+                  uuid = "19A2BA0C-29F4-4474-91CD-E40B407E7FC6 - 307be842fe03503c"
+                  shouldBeEnabled = "Yes"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "__C.UIImage.cropToRect(rect: __C.CGRect) -&gt; Swift.Optional&lt;__C.UIImage&gt;"
+                  moduleName = "StoleMyKia"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/jaylensmith/Documents/Macbook%20Pro%20Xcode/StoleMyKia/StoleMyKia/Utilities/Extensions/UIImage+EXT.swift"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "49"
+                  endingLineNumber = "49"
+                  offsetFromSymbolStart = "512">
+               </Location>
+               <Location
+                  uuid = "19A2BA0C-29F4-4474-91CD-E40B407E7FC6 - 307be842fe035003"
+                  shouldBeEnabled = "Yes"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "__C.UIImage.cropToRect(rect: __C.CGRect) -&gt; Swift.Optional&lt;__C.UIImage&gt;"
+                  moduleName = "StoleMyKia"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/jaylensmith/Documents/Macbook%20Pro%20Xcode/StoleMyKia/StoleMyKia/Utilities/Extensions/UIImage+EXT.swift"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "48"
+                  endingLineNumber = "48"
+                  offsetFromSymbolStart = "472">
+               </Location>
+            </Locations>
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            uuid = "349D32B9-11C2-46AA-A61D-D1E0864906E6"
+            shouldBeEnabled = "Yes"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "StoleMyKia/Utilities/Extensions/UIImage+EXT.swift"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "50"
+            endingLineNumber = "50"
+            landmarkName = "cropToRect(rect:)"
+            landmarkType = "7">
+            <Locations>
+               <Location
+                  uuid = "349D32B9-11C2-46AA-A61D-D1E0864906E6 - 307be842fe0351dd"
+                  shouldBeEnabled = "Yes"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "__C.UIImage.cropToRect(rect: __C.CGRect) -&gt; Swift.Optional&lt;__C.UIImage&gt;"
+                  moduleName = "StoleMyKia"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/jaylensmith/Documents/Macbook%20Pro%20Xcode/StoleMyKia/StoleMyKia/Utilities/Extensions/UIImage+EXT.swift"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "50"
+                  endingLineNumber = "50"
+                  offsetFromSymbolStart = "524">
+               </Location>
+               <Location
+                  uuid = "349D32B9-11C2-46AA-A61D-D1E0864906E6 - 307be842fe0351dd"
+                  shouldBeEnabled = "Yes"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "__C.UIImage.cropToRect(rect: __C.CGRect) -&gt; Swift.Optional&lt;__C.UIImage&gt;"
+                  moduleName = "StoleMyKia"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/jaylensmith/Documents/Macbook%20Pro%20Xcode/StoleMyKia/StoleMyKia/Utilities/Extensions/UIImage+EXT.swift"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "50"
+                  endingLineNumber = "50"
+                  offsetFromSymbolStart = "548">
+               </Location>
+            </Locations>
          </BreakpointContent>
       </BreakpointProxy>
    </Breakpoints>

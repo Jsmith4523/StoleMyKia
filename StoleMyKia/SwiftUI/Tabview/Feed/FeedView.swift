@@ -46,10 +46,12 @@ struct FeedView: View {
                 await onAppearFetchReports()
             }
             .toolbar {
-                Button {
-                    isShowingNewReportView.toggle()
-                } label: {
-                    Image(systemName: "plus")
+                ToolbarItem(placement: .navigationBarTrailing) {
+                    Button {
+                        isShowingNewReportView.toggle()
+                    } label: {
+                        Image(systemName: "plus")
+                    }
                 }
             }
         }

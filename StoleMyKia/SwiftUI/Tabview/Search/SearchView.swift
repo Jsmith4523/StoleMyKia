@@ -23,7 +23,8 @@ struct SearchView: View {
                 Button {
                     reportsVM.isShowingLicensePlateScannerView.toggle()
                 } label: {
-                   Image(systemName: "camera")
+                   Image(systemName: "camera.aperture")
+                        .font(.system(size: 22).bold())
                 }
             }
             .sheet(isPresented: $reportsVM.isShowingLicensePlateScannerView) {

@@ -19,7 +19,7 @@ class FirebaseAuthViewModel: ObservableObject {
     @Published private(set) var loginStatus: LoginStatus = .signedOut
     
     private let authManager = FirebaseAuthManager.manager
-    weak private var firebaseAuthDelegate: FirebaseAuthDelegate?
+    weak var firebaseAuthDelegate: FirebaseAuthDelegate?
     
     init() {
         print("Alive: FirebaseAuthViewModel")
@@ -84,23 +84,15 @@ class FirebaseAuthViewModel: ObservableObject {
             UIApplication.shared.applicationIconBadgeNumber = 0
         }
     }
-    
-    private func createAuthStateListener() {
-        Auth.auth().addStateDidChangeListener { [weak self] auth, user in
-            guard let user else {
-                self?.prepareForSignOut()
-                return
-            }
-            self?.prepareForSignIn(uid: user.uid)
-        }
-    }
 }
 
 //MARK: - UserViewModelDelegate
 extension FirebaseAuthViewModel: UserViewModelDelegate {
     func userDidSuccessfullySignOut() {
         if Auth.auth().currentUser == nil {
-            self.loginStatus = .signedOut
+            DispatchQueue.main.asyncAfter(deadline: .now() + 0.15) {
+                self.loginStatus = .signedOut
+            }
         }
     }
 }

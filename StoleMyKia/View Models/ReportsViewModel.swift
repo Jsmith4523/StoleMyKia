@@ -37,6 +37,10 @@ final class ReportsViewModel: NSObject, ObservableObject {
         do {
             let fetchedReports = try await manager.fetch()
             self.reports = fetchedReports
+            guard !(reports.isEmpty) else {
+                self.feedLoadStatus = .empty
+                return
+            }
             self.feedLoadStatus = .loaded
         } catch {
             self.feedLoadStatus = .loaded

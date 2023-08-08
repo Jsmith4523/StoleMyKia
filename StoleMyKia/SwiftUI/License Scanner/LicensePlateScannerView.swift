@@ -13,13 +13,23 @@ struct LicensePlateScannerView: View {
     @StateObject private var scannerCoordinator = LicensePlateScannerCoordinator()
     
     var body: some View {
-        NavigationView {
-            ZStack {
-                LicensePlateCameraView()
-            }
+        ZStack {
+            LicensePlateCameraView()
         }
         .environmentObject(scannerCoordinator)
         .environmentObject(reportsVM)
+        .sheet(item: $scannerCoordinator.croppedLicensePlateImage) { image in
+            Image(uiImage: image)
+                .resizable()
+                .scaledToFit()
+        }
+    }
+}
+
+extension UIImage: Identifiable {
+    
+    public var id: UUID {
+        return UUID()
     }
 }
 

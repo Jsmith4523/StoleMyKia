@@ -88,21 +88,18 @@ class ReportManager {
     /// - Returns: An array of reports that are updates
     func fetchUpdates(_ reportId: UUID) async throws -> [Report] {
         let collection = collection.document(reportId.uuidString).collection("Updates")
-        let snapshot = try await collection.getDocuments().documents
+        let documents = try await collection.getDocuments().documents
                
-        guard let data = snapshot.map({$0.data()}) as? [[String: Any]] else {
-            throw ReportManagerError.codableError
-        }
+        let documentData = documents.map({$0.data()})
+        let updates = documentData
+            .map({JSONSerialization.objectFromData(Update.self, jsonObject: $0)})
+            .compactMap({$0})
         
-        guard let updates = try? JSONSerialization.objectsFromFoundationObjects(data, to: Update.self) else {
-            throw ReportManagerError.codableError
-        }
-        
-        let ids = updates.map({$0.reportId})
+        let reportIds = updates.map({$0.reportId})
         
         var reports = [Report?]()
-        for id in ids {
-            let report = try await self.fetchSingleReport(id, errorIfUnavaliable: false)
+        for id in reportIds {
+            let report = try await fetchSingleReport(id)
             reports.append(report)
         }
         

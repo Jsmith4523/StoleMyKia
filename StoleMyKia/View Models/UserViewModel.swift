@@ -10,11 +10,11 @@ import FirebaseAuth
 import Firebase
 import SwiftUI
 
+enum RootViewLoadStatus {
+    case loading, loaded
+}
+
 final class UserViewModel: ObservableObject {
-    
-    enum RootViewLoadStatus {
-        case loading, loaded
-    }
     
     @Published private(set) var userReports = [Report]()
     @Published private(set) var userBookmarks = [Report]()
@@ -25,7 +25,7 @@ final class UserViewModel: ObservableObject {
     @Published private var userUid: String?
     
     private let firebaseManager = FirebaseUserManager()
-    weak private var delegate: UserViewModelDelegate?
+    weak var delegate: UserViewModelDelegate?
     
     init() {
         print("Alive: UserViewModel")

@@ -21,8 +21,6 @@ struct LicenseCameraViewRepresentable: UIViewRepresentable {
             layer.frame = view.bounds
             layer.videoGravity = .resizeAspectFill
             view.layer.addSublayer(layer)
-        } else {
-            print("Not set")
         }
         return view
     }
@@ -165,7 +163,7 @@ final class LicensePlateScannerCoordinator: NSObject, ObservableObject {
         }
         
         captureOutput.capturePhoto(with: captureSettings, delegate: self)
-        suspendCameraSession()
+        //suspendCameraSession()
     }
     
     deinit {
@@ -180,33 +178,30 @@ final class LicensePlateScannerCoordinator: NSObject, ObservableObject {
 extension LicensePlateScannerCoordinator: AVCapturePhotoCaptureDelegate {
     
     func photoOutput(_ output: AVCapturePhotoOutput, didFinishProcessingPhoto photo: AVCapturePhoto, error: Error?) {
-        guard let photoData = photo.fileDataRepresentation() else { return }
-        
-        guard let uiImage = CIImage(data: photoData) else { return }
-        
-        self.croppedLicensePlateImage = UIImage(ciImage: uiImage)
-        
-        licensePlateDetectionManager.beginDetection(uiImage)
+        if let imageData = photo.fileDataRepresentation() {
+            licensePlateDetectionManager.detect(data: imageData)
+        }
     }
 }
 
 //MARK: - LicenseTextDetectionDelegate
 extension LicensePlateScannerCoordinator: LicenseTextDetectionDelegate {
-    func didLocateLicensePlateString(_ licenseString: String, image: UIImage) {
-        UINotificationFeedbackGenerator().notificationOccurred(.success)
-        self.licensePlateString = licenseString
-        self.croppedLicensePlateImage = image
+    func didSuccessfullyLocateLicensePlateText(_ textString: String, prediction: Prediction) {
+        print("Did successfully detect License Plate Text: \(textString)")
+        if let imageData = prediction.imageData, let image = UIImage(data: imageData)?.cropToRect(rect: prediction.detectionArea) {
+            self.croppedLicensePlateImage = image
+        }
     }
     
-    func didLocateLicensePlate(image: UIImage) {
-        UINotificationFeedbackGenerator().notificationOccurred(.error)
+    func didFailToLocateLicensePlateText() {
+        print("Did not detect License Plate Text")
     }
     
-    func didFailToLocateLicensePlate() {
-        UINotificationFeedbackGenerator().notificationOccurred(.error)
+    func didDetectLicensePlate(_ prediction: Prediction) {
+        print("Detected License Plate: Confidence is \(prediction.confidence)")
+
     }
-    
-    func didFailToConfigure() {
-        UINotificationFeedbackGenerator().notificationOccurred(.error)
+    func didFailToDetectLicensePlate() {
+        print("Did not detect License Plate")
     }
 }

@@ -39,15 +39,11 @@ extension UIImage {
     }
     
     func cropToRect(rect: CGRect) -> UIImage? {
+        print(rect)
+        
         guard let image = self.cgImage else { return nil }
         
-        let width  = CGFloat(image.width)
-        let height = CGFloat(image.height)
-        
-        let cropRect = CGRect(x: rect.origin.x * width, y: rect.origin.y * height,
-                              width: rect.width * width, height: rect.height * height)
-        
-        guard let newCgImage = image.cropping(to: cropRect) else { return nil}
+        guard let newCgImage = image.cropping(to: rect) else { return nil}
         
         let croppedImage = UIImage(cgImage: newCgImage, scale: self.scale, orientation: self.imageOrientation)
         

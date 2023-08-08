@@ -65,6 +65,7 @@
 		24B071A12A363E30000C6B75 /* ReportTimelimeAnnotationView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 24B071A02A363E30000C6B75 /* ReportTimelimeAnnotationView.swift */; };
 		24B897EC29CF5A3B0003BCC8 /* UserViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 24B897EB29CF5A3B0003BCC8 /* UserViewModel.swift */; };
 		24BFA1802A8047240049F306 /* SMKLicensePlateScanner.mlmodel in Sources */ = {isa = PBXBuildFile; fileRef = 24BFA17F2A8047240049F306 /* SMKLicensePlateScanner.mlmodel */; };
+		24BFA1822A81AC030049F306 /* Prediction.swift in Sources */ = {isa = PBXBuildFile; fileRef = 24BFA1812A81AC030049F306 /* Prediction.swift */; };
 		24C6983A2A402ECD003A1DE6 /* ReportRole.swift in Sources */ = {isa = PBXBuildFile; fileRef = 24C698392A402ECD003A1DE6 /* ReportRole.swift */; };
 		24CC5F132A745DE70078C921 /* ApplicationAuthView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 24CC5ECD2A745DE70078C921 /* ApplicationAuthView.swift */; };
 		24CC5F142A745DE70078C921 /* ApplicationProgressView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 24CC5ECE2A745DE70078C921 /* ApplicationProgressView.swift */; };
@@ -213,6 +214,7 @@
 		24B071A02A363E30000C6B75 /* ReportTimelimeAnnotationView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReportTimelimeAnnotationView.swift; sourceTree = "<group>"; };
 		24B897EB29CF5A3B0003BCC8 /* UserViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserViewModel.swift; sourceTree = "<group>"; };
 		24BFA17F2A8047240049F306 /* SMKLicensePlateScanner.mlmodel */ = {isa = PBXFileReference; lastKnownFileType = file.mlmodel; path = SMKLicensePlateScanner.mlmodel; sourceTree = "<group>"; };
+		24BFA1812A81AC030049F306 /* Prediction.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Prediction.swift; sourceTree = "<group>"; };
 		24C698392A402ECD003A1DE6 /* ReportRole.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReportRole.swift; sourceTree = "<group>"; };
 		24CC5ECD2A745DE70078C921 /* ApplicationAuthView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ApplicationAuthView.swift; sourceTree = "<group>"; };
 		24CC5ECE2A745DE70078C921 /* ApplicationProgressView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ApplicationProgressView.swift; sourceTree = "<group>"; };
@@ -507,6 +509,7 @@
 				245B391B29E39E2C001DD213 /* Reports */,
 				24A2068D2A07A18B00F5DC0C /* User.swift */,
 				24A206942A08334400F5DC0C /* Location.swift */,
+				24BFA1812A81AC030049F306 /* Prediction.swift */,
 			);
 			path = Models;
 			sourceTree = "<group>";
@@ -1055,6 +1058,7 @@
 				24CC5F282A745DE70078C921 /* UserViewTabSelectionView.swift in Sources */,
 				24CC5F222A745DE70078C921 /* UserAccountSettings.swift in Sources */,
 				249254A62A37CA590037C43C /* UIHostingController.swift in Sources */,
+				24BFA1822A81AC030049F306 /* Prediction.swift in Sources */,
 				24A5792C29BC56B000495E6F /* Report.swift in Sources */,
 				245B391F29E39E55001DD213 /* VehicleModel.swift in Sources */,
 				24CC5F302A745DE70078C921 /* UpdateReportView.swift in Sources */,

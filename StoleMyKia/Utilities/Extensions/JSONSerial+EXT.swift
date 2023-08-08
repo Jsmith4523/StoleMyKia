@@ -45,13 +45,14 @@ extension JSONSerialization {
     }
     
     ///Creates QuerySnapshotData from input.
-    static func objectsFromFoundationObjects<T: Codable>(_ jsonObjects: Any, to object: T.Type) throws -> [T] {
+    static func objectsFromFoundationObjects<T: Codable>(_ jsonObjects: Any, to object: T.Type) throws -> [[T]] {
         guard let jsonObjects = jsonObjects as? [[String: Any]] else {
             throw Self.JSONSearizationError.incompatible
         }
         
         let data = try JSONSerialization.data(withJSONObject: jsonObjects)
-        let objects = try JSONDecoder().decode([T].self, from: data)
+        print(data)
+        let objects = try JSONDecoder().decode([[T]].self, from: data)
         return objects
     }
 }
