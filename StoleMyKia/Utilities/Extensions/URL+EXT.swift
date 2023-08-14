@@ -21,11 +21,15 @@ extension URL {
         UIApplication.shared.open(applicationUrl)
     }
     
-    static func getDirectionsToLocation(coords: CLLocationCoordinate2D) {
+    static func getDirectionsToLocation(title: String, coords: CLLocationCoordinate2D) {
         let lat = coords.latitude
         let lon = coords.longitude
         
-        if let url = URL(string: "maps://?q=\("Report Location"),saddr=&daddr=\(lat),\(lon)") {
+        let title = title.replacingOccurrences(of: " ", with: "+")
+        
+        print("maps://?q=\(title)&ll=\(lat),\(lon)")
+               
+        if let url = URL(string: "maps://?q=\(title)&ll=\(lat),\(lon)") {
             UIApplication.shared.open(url)
         }
     }

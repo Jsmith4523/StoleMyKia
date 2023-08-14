@@ -43,7 +43,6 @@ class AppDelegate: UIScene, UIApplicationDelegate {
         UINavigationBar.appearance().barTintColor = .systemBackground
         
         Messaging.messaging().delegate = self
-        
         UNUserNotificationCenter.current().delegate = self
                         
         return true
@@ -51,7 +50,6 @@ class AppDelegate: UIScene, UIApplicationDelegate {
     
     func application(_ application: UIApplication, didReceiveRemoteNotification userInfo: [AnyHashable : Any], fetchCompletionHandler completionHandler: @escaping (UIBackgroundFetchResult) -> Void) {
         if Auth.auth().canHandleNotification(userInfo) {
-            print(userInfo.values)
             completionHandler(.noData)
         }
     }
@@ -65,6 +63,7 @@ extension AppDelegate: UNUserNotificationCenterDelegate {
     }
 }
 
+//MARK: - MessagingDelegate
 extension AppDelegate: MessagingDelegate {
     func messaging(_ messaging: Messaging, didReceiveRegistrationToken fcmToken: String?) {
         UserDefaults.standard.setValue(fcmToken, forKey: "fcmToken")

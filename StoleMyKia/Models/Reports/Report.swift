@@ -10,7 +10,7 @@ import UIKit
 import MapKit
 import SwiftUI
 
-struct Report: Identifiable, Codable, Comparable {
+public struct Report: Identifiable, Codable, Comparable {
     
     ///init with requried details
     init(uid: String, type: ReportType, Vehicle: Vehicle, details: String, location: Location) {
@@ -39,7 +39,7 @@ struct Report: Identifiable, Codable, Comparable {
         self.role = .original(id)
     }
 
-    var id: UUID
+    public var id: UUID
     ///The logged in Firebase Auth users uid
     let uid: String
     ///The time of this report in epoch
@@ -64,15 +64,15 @@ struct Report: Identifiable, Codable, Comparable {
     ///Firebase functions will handle the rest after this report has been deleted.
     var updateId: String?
     
-    static func == (lhs: Report, rhs: Report) -> Bool {
+    public static func == (lhs: Report, rhs: Report) -> Bool {
         return true
     }
     
-    static func < (lhs: Report, rhs: Report) -> Bool {
+    public static func < (lhs: Report, rhs: Report) -> Bool {
         lhs.dt < rhs.dt
     }
     
-    static func > (lhs: Report, rhs: Report) -> Bool {
+    public static func > (lhs: Report, rhs: Report) -> Bool {
         lhs.dt > rhs.dt
     }
     
@@ -85,22 +85,23 @@ struct Report: Identifiable, Codable, Comparable {
     var path: String {
         
         let idString = id.uuidString
+        let reportTypeRawValue = self.reportType.rawValue
         
         switch self.reportType {
         case .stolen:
-            return "Stolen/\(idString)"
+            return "\(reportTypeRawValue)/\(idString)"
         case .found:
-            return "Found/\(idString)"
+            return "\(reportTypeRawValue)/\(idString)"
         case .witnessed:
-            return "Witnessed/\(idString)"
+            return "\(reportTypeRawValue)/\(idString)"
         case .located:
-            return "Located/\(idString)"
+            return "\(reportTypeRawValue)/\(idString)"
         case .carjacked:
-            return "Carjacked/\(idString)"
+            return "\(reportTypeRawValue)/\(idString)"
         case .attempt:
-            return "Attempt/\(idString)"
+            return "\(reportTypeRawValue)/\(idString)"
         case .breakIn:
-            return "BreakIn/\(idString)"
+            return "\(reportTypeRawValue)/\(idString)"
         }
     }
 }
@@ -136,11 +137,26 @@ extension Report {
         self.reportType.rawValue
     }
     
-    ///Absolute file path to this image associated with this report in Google Storage
-    var vehicleImagePath: String {
-        return "Reports/Vehicles/\(path)"
+    ///The Storage path to the vehicle's image
+    var vehicleImagePath: String? {
+        guard !(imageURL == nil) else {
+            return nil
+        }
+        return self.path
     }
     
+    var appleMapsAnnotationTitle: String {
+        "\(type) \(self.vehicle.appleMapsAnnotationTitle)"
+    }
+    
+    var deletionBodyText: String {
+        if self.role.isAnUpdate {
+            return "When deleting this report, it will be removed as an update from the initial report. Are you sure you want to delete?"
+        } else {
+            return "When deleting this report, any updates made will not be deleted. Are you sure you want to delete?"
+        }
+    }
+        
     var hasVehicleImage: Bool {
         guard !(imageURL == nil) else {
             return false

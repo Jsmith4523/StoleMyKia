@@ -8,7 +8,25 @@
 import Foundation
 
 
-enum ReportRole: Identifiable, Codable, Equatable {
+enum ReportRole: Identifiable, Codable, Equatable, Comparable {
+    
+    enum Role: String, Identifiable, Comparable, CaseIterable {
+        
+        case original = "Original"
+        case update = "Update"
+        
+        var id: String {
+            self.rawValue
+        }
+        
+        static func < (lhs: ReportRole.Role, rhs: ReportRole.Role) -> Bool {
+            lhs.rawValue < rhs.rawValue
+        }
+        
+        static func > (lhs: ReportRole.Role, rhs: ReportRole.Role) -> Bool {
+            lhs.rawValue > rhs.rawValue
+        }
+    }
     
     ///This is a original report.
     case original(UUID)
@@ -28,35 +46,44 @@ enum ReportRole: Identifiable, Codable, Equatable {
     var title: String {
         switch self {
         case .original:
-            return "Report"
-        case .update(_):
+            return "Original"
+        case .update:
             return "Update"
+        }
+    }
+    
+    var image: String {
+        switch self {
+        case .original:
+            return "arrow.up"
+        case .update:
+            return "arrow.2.squarepath"
         }
     }
     
     var allowsForUpdates: Bool {
         switch self {
-        case .original(_):
+        case .original:
             return true
-        case .update(_):
+        case .update:
             return false
         }
     }
     
     var notificationTitle: String {
         switch self {
-        case .original(_):
+        case .original:
             return "Report"
-        case .update(_):
+        case .update:
             return "Update"
         }
     }
     
     var hasParent: Bool {
         switch self {
-        case .original(_):
+        case .original:
             return true
-        case .update(_):
+        case .update:
             return false
         }
     }
@@ -67,6 +94,15 @@ enum ReportRole: Identifiable, Codable, Equatable {
             return false
         case .update(_):
             return true
+        }
+    }
+    
+    var role: Self.Role {
+        switch self {
+        case .original:
+            return .original
+        case .update:
+            return .update
         }
     }
     
@@ -81,5 +117,13 @@ enum ReportRole: Identifiable, Codable, Equatable {
     
     var id: String {
         self.title
+    }
+    
+    static func < (lhs: ReportRole, rhs: ReportRole) -> Bool {
+        lhs.title < rhs.title
+    }
+    
+    static func > (lhs: ReportRole, rhs: ReportRole) -> Bool {
+        lhs.title > rhs.title
     }
 }

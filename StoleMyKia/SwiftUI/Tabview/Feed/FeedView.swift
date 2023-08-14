@@ -6,6 +6,7 @@
 //
 
 import SwiftUI
+import CoreLocation
 
 enum FeedLoadStatus {
     case loading, loaded, empty, error
@@ -13,11 +14,49 @@ enum FeedLoadStatus {
 
 struct FeedView: View {
     
+    @State private var isShowingReportTypeFilterView = false
     @State private var isShowingNearbyMapView = false
     @State private var isShowingNewReportView = false
     
+    //Filters
+    @State private var filterByUserLocation = false
+    @State private var nearbyDistance: NearbyDistance = .fiveMiles
+    @State private var search = ""
+    @State private var reportType: ReportType?
+    @State private var reportRole: ReportRole.Role?
+    
     @EnvironmentObject var userVM: UserViewModel
     @EnvironmentObject var reportsVM: ReportsViewModel
+    
+    var filteredReports: [Report] {
+        let reports = reportsVM.reports.filter { report in
+            if let reportType {
+                return report.reportType == reportType
+            } else {
+                return true
+            }
+        }.filter { report in
+            if let userLocation = CLLocationManager.shared.location, filterByUserLocation {
+                return report.location.location.distance(from: userLocation) <= nearbyDistance.distance
+            } else {
+                return true
+            }
+        }
+        
+        if search.isEmpty {
+            return reports
+        } else {
+            return reports.filter({ report in
+                let lowercasedSearch = search.lowercased()
+                let hasDetails = report.vehicleDetails.lowercased().contains(lowercasedSearch)
+                let hasLicense = report.vehicle.licensePlateString.lowercased().contains(lowercasedSearch)
+                let hasVin = report.vehicle.vinString.contains(lowercasedSearch)
+                let hasDescription = report.distinguishableDetails.contains(lowercasedSearch)
+                
+                return (hasDetails || hasLicense || hasVin || hasDescription)
+            })
+        }
+    }
     
     var body: some View {
         NavigationView {
@@ -27,11 +66,11 @@ struct FeedView: View {
                     case .loading:
                         ReportsSkeletonLoadingListView()
                     case .loaded:
-                        FeedListView(reports: $reportsVM.reports)
+                        FeedListView(reports: filteredReports)
                     case .empty:
                         NoReportsAvaliableView()
                     case .error:
-                        Color.orange
+                        ErrorView()
                     }
                 }
             }
@@ -45,20 +84,39 @@ struct FeedView: View {
             .task {
                 await onAppearFetchReports()
             }
+            .searchable(text: $search)
             .toolbar {
-                ToolbarItem(placement: .navigationBarTrailing) {
+                ToolbarItemGroup(placement: .navigationBarTrailing) {
+                    Button {
+                        isShowingReportTypeFilterView.toggle()
+                    } label: {
+                        Image(systemName: "line.3.horizontal.decrease.circle")
+                    }
                     Button {
                         isShowingNewReportView.toggle()
                     } label: {
                         Image(systemName: "plus")
                     }
                 }
+                ToolbarItem(placement: .navigationBarLeading) {
+                    Button {
+                        reportsVM.isShowingLicensePlateScannerView.toggle()
+                    } label: {
+                       Image(systemName: "camera.aperture")
+                    }
+                }
+            }
+            .onChange(of: nearbyDistance) { _ in
+                reportsVM.reports = reportsVM.reports
             }
         }
         .sheet(isPresented: $isShowingNewReportView) {
             NewReportView()
                 .environmentObject(reportsVM)
                 .environmentObject(userVM)
+        }
+        .customSheetView(isPresented: $isShowingReportTypeFilterView, showsIndicator: true, cornerRadius: 15) {
+            ReportFilterView(filterByUserLocation: $filterByUserLocation, nearbyDistance: $nearbyDistance, reportType: $reportType, reportRole: $reportRole)
         }
     }
     
@@ -75,5 +133,6 @@ struct FeedView_Previews: PreviewProvider {
             .environmentObject(UserViewModel())
             .environmentObject(ReportsViewModel())
             .tint(Color(uiColor: .label))
+            .preferredColorScheme(.dark)
     }
 }

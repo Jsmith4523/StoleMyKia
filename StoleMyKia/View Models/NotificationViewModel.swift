@@ -12,31 +12,28 @@ import MapKit
 import SwiftUI
 
 enum NotificationLoadStatus {
-    case loading, loaded
+    case loading, loaded, empty, error
 }
 
 final class NotificationViewModel: NSObject, ObservableObject {
     
-    enum NotificationError: Error {
-        case snapshotError
+    enum NotificationType {
+        case update(UUID)
+        case other(UUID)
     }
     
-    @Published private(set) var userNotifications: [FirebaseNotification] = []
+    @Published private(set) var notifications: [Notification] = [
+        .init(id: UUID(), dt: Date.now.epoch, title: "Update: Found", body: "A Update is available for your report regarding the Gray 2017 Hyundai Elantra", reportType: .stolen, reportId: UUID(), isRead: false, imageUrl: ""),
+        .init(id: UUID(), dt: Date.now.epoch, title: "Update: Found", body: "A Update is available for your report regarding the Gray 2017 Hyundai Elantra", reportType: .stolen, reportId: UUID(), isRead: true, imageUrl: ""),
+        .init(id: UUID(), dt: Date.now.epoch, title: "Update: Found", body: "A Update is available for your report regarding the Gray 2017 Hyundai Elantra", reportType: .stolen, reportId: UUID(), isRead: false, imageUrl: ""),
+        .init(id: UUID(), dt: Date.now.epoch, title: "Update: Found", body: "A Update is available for your report regarding the Gray 2017 Hyundai Elantra", reportType: .stolen, reportId: UUID(), isRead: false, imageUrl: ""),
+        .init(id: UUID(), dt: Date.now.epoch, title: "Update: Found", body: "A Update is available for your report regarding the Gray 2017 Hyundai Elantra", reportType: .stolen, reportId: UUID(), isRead: true, imageUrl: "")
+    ]
     @Published private(set) var notificationLoadStatus: NotificationLoadStatus = .loading
         
     weak private var firebaseUserDelegate: FirebaseUserDelegate?
     
     private let db = Database.database()
-    
-    private var reference: DatabaseReference {
-//        guard let uid = firebaseUserDelegate?.uid else { fatalError("FirebaseUserDelegate was not set!") }
-//        return db.reference(withPath: FirebaseDatabasesPaths.userNotificationDatabasePath).child(uid)
-        DatabaseReference()
-    }
-    
-    private var fcmTokenRef: DatabaseReference {
-        return db.reference(withPath: FirebaseDatabasesPaths.fcmTokenPath)
-    }
     
     override init() {
         print("Alive: NotificationViewModel")
@@ -47,12 +44,12 @@ final class NotificationViewModel: NSObject, ObservableObject {
     }
     
     func setDelegate(_ delegate: FirebaseUserDelegate) {
-//        self.firebaseUserDelegate = delegate
-        self.setFcmToken(firebaseUserDelegate?.uid)
+        self.firebaseUserDelegate = delegate
+        self.saveFCMToken(delegate.uid)
     }
-    
+   
     func requestNotificationAuthorization() {
-        UNUserNotificationCenter.current().requestAuthorization(options: [.alert, .sound, .badge, .carPlay]) { success, err in
+        UNUserNotificationCenter.current().requestAuthorization(options: [.alert, .sound, .badge, .criticalAlert]) { success, err in
             guard success, err == nil else {
                 return
             }
@@ -61,45 +58,12 @@ final class NotificationViewModel: NSObject, ObservableObject {
         UIApplication.shared.registerForRemoteNotifications()
     }
     
-    ///Begin observing when a notification object is added to the reference.
-    private func beginListeningForNotifications() {
-        reference.observe(.childAdded) { [weak self] snapshot in
-            //Fetching all notifications from reference...
-            self?.fetchFirebaseUserNotifications()
-        }
-    }
-    
-    ///Fetched the logged in Firebase User notifications
-    func fetchFirebaseUserNotifications() {
-        Task {
-            do {
-                let snapshot = try await self.reference.getData()
-                guard let data = snapshot.value else { throw NotificationError.snapshotError }
-//                let notifications = try JSONSerialization.objectsFromFoundationObjects(data, to: FirebaseNotification.self)
-//                DispatchQueue.main.async {
-//                    self.userNotifications = notifications
-//                    self.notificationLoadStatus = .loaded
-//                }
-            } catch {
-                DispatchQueue.main.async {
-                    self.userNotifications = .dummyNotifications()
-                    self.notificationLoadStatus = .loaded
-                }
-            }
-        }
-    }
-    
-    /// Updates the 'isRead' member value of a selected FirebaseNotification Object.
-    /// - Parameters:
-    ///   - id: The UUID of the objet.
-    ///   - didRead: The bool value.
-    func updateNotificationStatus(id: UUID, didRead: Bool = true) async {
-        do {
-            try await reference.updateChildValues([FirebaseNotification.isRead: didRead])
-            guard let index = userNotifications.firstIndex(where: {$0.id == id}) else { return }
-            userNotifications[index].isRead = didRead
-        } catch {
-            print(error.localizedDescription)
+    func deleteNotification(_ type: NotificationType) {
+        switch type {
+        case .update(let id):
+            notifications.removeAll(where: {$0.id == id})
+        case .other:
+            break
         }
     }
     
@@ -109,6 +73,7 @@ final class NotificationViewModel: NSObject, ObservableObject {
     }
 }
 
+//MARK: - UNUserNotificationCenterDelegate
 extension NotificationViewModel: UNUserNotificationCenterDelegate {
     //Foreground
     func userNotificationCenter(_ center: UNUserNotificationCenter, willPresent notification: UNNotification, withCompletionHandler completionHandler: @escaping (UNNotificationPresentationOptions) -> Void) {
@@ -119,12 +84,18 @@ extension NotificationViewModel: UNUserNotificationCenterDelegate {
         completionHandler()
     }
     
-    private func setFcmToken(_ uid: String?) {
+    private func saveFCMToken(_ uid: String?) {
         guard let uid else { return }
         guard let fcmToken = UserDefaults.standard.string(forKey: "fcmToken") else { return }
         var tokenDict = [String: Any]()
         tokenDict["token"] = fcmToken
         tokenDict["dt"] = Date.now.epoch
-        fcmTokenRef.child(uid).setValue(tokenDict)
+        db.reference(withPath: FirebaseDatabasesPaths.fcmTokenPath).child(uid).setValue(tokenDict)
+        setupCriticalAlerts()
+    }
+    
+    private func setupCriticalAlerts() {
+        let updateNotificationCategory = UNNotificationCategory(identifier: "Update", actions: [], intentIdentifiers: [], options: [])
+        UNUserNotificationCenter.current().setNotificationCategories([updateNotificationCategory])
     }
 }

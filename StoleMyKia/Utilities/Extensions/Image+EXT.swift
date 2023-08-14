@@ -12,6 +12,7 @@ extension Image {
     
     static let vehiclePlaceholder = Image("vehicle-placeholder")
     static let userPlaceholder = Image("user-placeholder")
+    static let updateImageIcon = Image(systemName: "arrow.2.squarepath")
     
     func floatingButtonStyle() -> some View {
         return self

@@ -51,7 +51,6 @@ extension JSONSerialization {
         }
         
         let data = try JSONSerialization.data(withJSONObject: jsonObjects)
-        print(data)
         let objects = try JSONDecoder().decode([[T]].self, from: data)
         return objects
     }

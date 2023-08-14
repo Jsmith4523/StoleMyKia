@@ -9,8 +9,8 @@ import SwiftUI
 
 struct ReportCellView: View {
     
-    @State private var presentAlertFalseReport = false
-        
+    @State private var presentAlertDeleteReport = false
+            
     @State private var vehicleImage: UIImage?
     
     @EnvironmentObject var userVM: UserViewModel
@@ -79,13 +79,7 @@ struct ReportCellView: View {
         .onAppear {
             getVehicleImage()
         }
-        .alert("False!", isPresented: $presentAlertFalseReport) {
-            Button("OK") {}
-        } message: {
-            Text(report.role.falseReportDescription)
-        }
     }
-    
     
     private func getVehicleImage() {
         ImageCache.shared.getImage(report.imageURL) { image in

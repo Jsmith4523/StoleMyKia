@@ -19,6 +19,11 @@ struct SelectedReportDetailView: View {
     let report: Report
     var timelineMapViewMode: TimelineMapViewMode = .presentWhenSelected
     
+    @State private var isDeleting = false
+    
+    @State private var presentDeleteAlert = false
+    @State private var presentFailedDeletingReportAlert = false
+    
     @State private var isShowingFalseReportView = false
     @State private var isShowingTimelineMapView = false
     @State private var isShowingUpdateReportView = false
@@ -100,32 +105,36 @@ struct SelectedReportDetailView: View {
             }
             .toolbar {
                 ToolbarItem(placement: .navigationBarLeading) {
-                    Button {
-                        isShowingUpdateReportView.toggle()
-                    } label: {
-                        Image(systemName: "arrow.2.squarepath")
+                    if !(isDeleting) {
+                        Button {
+                            isShowingUpdateReportView.toggle()
+                        } label: {
+                            Image(systemName: "arrow.2.squarepath")
+                        }
                     }
                 }
                 ToolbarItem(placement: .navigationBarTrailing) {
-                    Button {
-                        isShowingReportOptions.toggle()
-                    } label: {
-                        Image(systemName: "ellipsis")
+                    if !(isDeleting) {
+                        Button {
+                            isShowingReportOptions.toggle()
+                        } label: {
+                            Image(systemName: "ellipsis")
+                        }
+                    } else {
+                        ProgressView()
                     }
                 }
             }
             .tint(Color(uiColor: .label))
             .confirmationDialog("Options", isPresented: $isShowingReportOptions) {
                 Button("Directions") {
-                    URL.getDirectionsToLocation(coords: report.location.coordinates)
-                }
-                Button("Bookmark") {
-                    
+                    URL.getDirectionsToLocation(title: report.appleMapsAnnotationTitle,
+                                                coords: report.location.coordinates)
                 }
                 if let uid = userVM.uid {
                     if report.uid == uid {
                         Button("Delete", role: .destructive) {
-                            
+                            presentDeleteAlert.toggle()
                         }
                     } else {
                         Button("False Report") {
@@ -135,7 +144,7 @@ struct SelectedReportDetailView: View {
                 }
             }
             .sheet(isPresented: $isShowingTimelineMapView) {
-                TimelineMapView(report: report)
+                TimelineMapView(detailMode: .report(self.report))
                     .environmentObject(reportsVM)
             }
             .fullScreenCover(isPresented: $isShowingFalseReportView) {
@@ -147,11 +156,32 @@ struct SelectedReportDetailView: View {
                     .environmentObject(userVM)
                     .environmentObject(reportsVM)
             }
+            .alert("Delete Report?", isPresented: $presentDeleteAlert) {
+                Button("Yes", role: .destructive) {
+                    beginDeletingReport()
+                }
+            } message: {
+                Text(report.deletionBodyText)
+            }
+            .alert("Unable to delete", isPresented: $presentFailedDeletingReportAlert) {
+                Button("OK") {}
+            } message: {
+                Text("Something went wrong trying to delete this report. Please try again!")
+            }
         }
+        .interactiveDismissDisabled(isDeleting)
         .onAppear {
             getVehicleImage()
             UIImpactFeedbackGenerator(style: .medium).impactOccurred()
         }
+    }
+    
+    private var vehicleImageView: some View {
+        Image(uiImage: vehicleImage ?? .vehiclePlaceholder)
+            .resizable()
+            .scaledToFill()
+            .frame(width: UIScreen.main.bounds.width, height: 300)
+            .clipped()
     }
     
     private func presentTimelineMapView() {
@@ -165,12 +195,19 @@ struct SelectedReportDetailView: View {
         }
     }
     
-    private var vehicleImageView: some View {
-        Image(uiImage: vehicleImage ?? .vehiclePlaceholder)
-            .resizable()
-            .scaledToFill()
-            .frame(width: UIScreen.main.bounds.width, height: 300)
-            .clipped()
+    private func beginDeletingReport() {
+        Task {
+            isDeleting = true
+            do {
+                try await reportsVM.deleteReport(report: report)
+                UINotificationFeedbackGenerator().notificationOccurred(.success)
+                dismiss()
+            } catch {
+                UINotificationFeedbackGenerator().notificationOccurred(.error)
+                self.presentFailedDeletingReportAlert = true
+                self.isDeleting = false
+            }
+        }
     }
     
     private func getVehicleImage() {

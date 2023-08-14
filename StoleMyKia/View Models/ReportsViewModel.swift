@@ -33,7 +33,11 @@ final class ReportsViewModel: NSObject, ObservableObject {
     }
     
     @MainActor
-    func fetchReports() async {
+    func fetchReports(showProgressView: Bool = false) async {
+        if showProgressView {
+            self.feedLoadStatus = .loading
+        }
+        
         do {
             let fetchedReports = try await manager.fetch()
             self.reports = fetchedReports
@@ -43,7 +47,7 @@ final class ReportsViewModel: NSObject, ObservableObject {
             }
             self.feedLoadStatus = .loaded
         } catch {
-            self.feedLoadStatus = .loaded
+            self.feedLoadStatus = .error
         }
     }
     
@@ -58,7 +62,10 @@ final class ReportsViewModel: NSObject, ObservableObject {
     }
     
     func deleteReport(report: Report) async throws {
-        try await manager.delete(report.id, path: report.vehicleImagePath)
+        try await manager.delete(report)
+        Task {
+            await fetchReports()
+        }
     }
     
     /// Update a original report

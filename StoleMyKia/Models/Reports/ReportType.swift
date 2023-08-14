@@ -8,7 +8,7 @@
 import Foundation
 import UIKit
 
-enum ReportType: String, CaseIterable, Hashable, Identifiable, Codable {
+enum ReportType: String, CaseIterable, Hashable, Identifiable, Codable, Comparable {
     
     case attempt     = "Attempt"
     case carjacked   = "Car Jacking"
@@ -30,15 +30,34 @@ enum ReportType: String, CaseIterable, Hashable, Identifiable, Codable {
         case .found:
             return "checkmark.shield.fill"
         case .witnessed:
-            return "person.crop.circle.badge.exclamationmark.fill"
+            return "car.side.and.exclamationmark.fill"
         case .located:
             return "eye.fill"
         case .carjacked:
-            return "car.fill"
+            return "figure.run"
         case .attempt:
-            return "exclamation"
+            return "exclamationmark.triangle"
         case .breakIn:
             return "screwdriver.fill"
+        }
+    }
+    
+    var symbol: String {
+        switch self {
+        case .stolen:
+            return "car"
+        case .found:
+            return "checkmark.shield"
+        case .witnessed:
+            return "car.side.and.exclamationmark"
+        case .located:
+            return "eye"
+        case .carjacked:
+            return "figure.run"
+        case .attempt:
+            return "exclamationmark.triangle"
+        case .breakIn:
+            return "screwdriver"
         }
     }
     
@@ -173,5 +192,13 @@ enum ReportType: String, CaseIterable, Hashable, Identifiable, Codable {
     ///Enums avaliable when updating a report
     static var update: [ReportType] {
         [.carjacked, .stolen, .witnessed, .found, .located]
+    }
+    
+    static func < (lhs: ReportType, rhs: ReportType) -> Bool {
+        lhs.rawValue < rhs.rawValue
+    }
+    
+    static func > (lhs: ReportType, rhs: ReportType) -> Bool {
+        lhs.rawValue > rhs.rawValue
     }
 }

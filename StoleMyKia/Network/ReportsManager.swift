@@ -34,7 +34,7 @@ enum ReportNotation {
 }
 
 ///Manages uploading, retrieving, and delete reports.
-class ReportManager {
+public class ReportManager {
     
     ///Shared instance.
     static let manager = ReportManager()
@@ -61,7 +61,6 @@ class ReportManager {
     /// - Returns: Report that matches the UUID value.
     /// - Throws: Error if reports could not be retrieved or no longer exist.
     func fetchSingleReport(_ id: UUID, errorIfUnavaliable: Bool = true) async throws -> Report? {
-        
         let document = try await collection.document(id.uuidString).getDocument()
                 
         guard document.exists else {
@@ -99,7 +98,8 @@ class ReportManager {
         
         var reports = [Report?]()
         for id in reportIds {
-            let report = try await fetchSingleReport(id)
+            //Make sure the bool value is set to false in case firebase cannot retrieve the report.
+            let report = try await fetchSingleReport(id, errorIfUnavaliable: false)
             reports.append(report)
         }
         
@@ -164,12 +164,11 @@ class ReportManager {
     /// Deletes a report and associated vehicle image from Firestore Database and Firebase Storage.
     /// - Parameters:
     /// - id: The UUID value of a report.
-    /// - path: The absolute file path of the vehicle image in Storage.
+    /// - ImageId: The Image ID in Storage.
     /// - Throws: Error if either the report or it's vehicle image could not be deleted
-    func delete(_ id: UUID, path: String) async throws {
-        try await StorageManager.shared.deleteVehicleImage(path: path)
-        
-        try await self.collection.document(id.uuidString).delete()
+    func delete(_ report: Report) async throws {
+        try await StorageManager.shared.deleteVehicleImage(path: report.vehicleImagePath)
+        try await self.collection.document(report.id.uuidString).delete()
     }
     
     /// Checks the Firestore collection if a report still exists in the database.

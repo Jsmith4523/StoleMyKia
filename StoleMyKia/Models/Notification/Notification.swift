@@ -43,29 +43,24 @@ enum NotificationType: Codable, Identifiable {
     }
 }
 
-struct FirebaseNotification: Identifiable, Codable, Comparable {
-    
-    static func < (lhs: FirebaseNotification, rhs: FirebaseNotification) -> Bool {
-        lhs.report.dt < rhs.report.dt
-    }
-    
-    static func > (lhs: FirebaseNotification, rhs: FirebaseNotification) -> Bool {
-        lhs.report.dt > rhs.report.dt
-    }
-    
-    static let isRead = "isRead"
-    
-    var id = UUID()
-    ///The report of this notification
-    let report: Report
-    ///Whether the user did or did not read this notification
-    var isRead: Bool = false
-    var notificationType: NotificationType
+struct Notification: Identifiable, Decodable {
+    let id: UUID
+    let dt: TimeInterval
+    let title: String
+    let body: String
+    let reportType: ReportType
+    let reportId: UUID
+    var isRead: Bool
+    let imageUrl: String?
 }
 
-extension [FirebaseNotification] {
+extension Notification {
     
-    static func dummyNotifications() -> [FirebaseNotification] {
-        [FirebaseNotification]()
+    var hasImage: Bool {
+        !(imageUrl == nil)
+    }
+    
+    var timeAgoSince: String {
+        Date(timeIntervalSince1970: self.dt).timeAgoDisplay()
     }
 }

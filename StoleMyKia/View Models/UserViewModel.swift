@@ -28,7 +28,6 @@ final class UserViewModel: ObservableObject {
     weak var delegate: UserViewModelDelegate?
     
     init() {
-        print("Alive: UserViewModel")
         firebaseManager.setDelegate(self)
     }
     
@@ -51,6 +50,12 @@ final class UserViewModel: ObservableObject {
         self.userReports = reports
     }
     
+    @MainActor
+    func fetchUserBookmarks() async throws {
+        let reports = try await firebaseManager.getUserBookmarks()
+        self.userBookmarks = reports
+    }
+    
     func bookmarkReport(_ id: UUID) async throws {
         try await firebaseManager.addBookmark(reportId: id)
     }
@@ -70,21 +75,6 @@ final class UserViewModel: ObservableObject {
         
     deinit {
         print("Dead: UserViewModel")
-    }
-}
-
-//MARK: - FirebaseUserNotificationRadiusDelegate
-extension UserViewModel: FirebaseUserNotificationRadiusDelegate {
-    var usersRadius: Double? {
-        guard let firebaseUser else {
-            return nil
-        }
-        
-        return firebaseUser.notificationSettings.notificationRadius
-    }
-    
-    func setNewRadius(_ radius: Double, completion: @escaping (Bool) -> Void) {
-        
     }
 }
 

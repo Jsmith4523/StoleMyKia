@@ -37,7 +37,7 @@ struct UserView: View {
                             .environmentObject(userModel)
                             .environmentObject(reportsModel)
                     } label: {
-                        Image(systemName: "gear")
+                        Image(systemName: "line.3.horizontal")
                     }
                 }
             }

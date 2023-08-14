@@ -6,8 +6,7 @@
 //
 
 import Foundation
-import FirebaseAuth
-import FirebaseMessaging
+import Firebase
 
 enum LoginStatus {
     case signedOut, signedIn
@@ -22,16 +21,13 @@ class FirebaseAuthViewModel: ObservableObject {
     weak var firebaseAuthDelegate: FirebaseAuthDelegate?
     
     init() {
-        print("Alive: FirebaseAuthViewModel")
-        
         guard let user = Auth.auth().currentUser else {
             self.loginStatus = .signedOut
+            prepareForSignOut()
             return
         }
-        
         self.prepareForSignIn(uid: user.uid)
         self.loginStatus = .signedIn
-        //createAuthStateListener()
     }
     
     func setDelegate(_ delegate: FirebaseAuthDelegate) {
@@ -92,6 +88,7 @@ extension FirebaseAuthViewModel: UserViewModelDelegate {
         if Auth.auth().currentUser == nil {
             DispatchQueue.main.asyncAfter(deadline: .now() + 0.15) {
                 self.loginStatus = .signedOut
+                self.prepareForSignOut()
             }
         }
     }

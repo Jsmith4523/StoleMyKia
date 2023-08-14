@@ -7,11 +7,11 @@
 
 import SwiftUI
 
+enum UserReportsLoadStatus {
+    case loading, loaded, empty, error
+}
+
 struct UserReportsView: View {
-    
-    enum UserReportsLoadStatus {
-        case loading, loaded, empty, error
-    }
     
     @EnvironmentObject var reportsVM: ReportsViewModel
     @EnvironmentObject var userVM: UserViewModel
@@ -26,11 +26,11 @@ struct UserReportsView: View {
             case .loading:
                 ReportsSkeletonLoadingListView()
             case .loaded:
-                FeedListView(reports: $reports)
+                FeedListView(reports: reports)
             case .empty:
-                Text("Empty")
+                UserReportsEmptyView()
             case .error:
-                Text("Error")
+                ErrorView()
             }
         }
         .environmentObject(reportsVM)

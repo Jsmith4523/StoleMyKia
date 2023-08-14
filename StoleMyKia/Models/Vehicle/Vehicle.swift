@@ -47,11 +47,16 @@ extension Vehicle {
     
     ///Year, make, model, and color of the vehicle
     var details: String {
-        "\(vehicleYear) \(vehicleMake.rawValue) \(vehicleModel.rawValue) (\(vehicleColor.rawValue))"
+        "\(vehicleColor.rawValue) \(vehicleYear) \(vehicleMake.rawValue) \(vehicleModel.rawValue)"
     }
     
     ///Remote notification body content
     var vehicleNotificationDetails: String {
+        return "\(vehicleColor.rawValue) \(vehicleYear) \(vehicleMake.rawValue) \(vehicleModel.rawValue)"
+    }
+    
+    ///The title of the annotation in the Apple Maps app
+    var appleMapsAnnotationTitle: String {
         return "\(vehicleColor.rawValue) \(vehicleYear) \(vehicleMake.rawValue) \(vehicleModel.rawValue)"
     }
     

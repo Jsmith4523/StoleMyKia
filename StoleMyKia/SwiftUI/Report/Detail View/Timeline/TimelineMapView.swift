@@ -9,8 +9,13 @@ import SwiftUI
 import MapKit
 
 struct TimelineMapView: View {
+    
+    enum DetailMode {
+        case report(Report)
+        case reportId(UUID)
+    }
             
-    let report: Report
+    let detailMode: DetailMode
     
     @StateObject private var timelineMapCoordinator = TimelineMapViewCoordinator()
     @EnvironmentObject var reportsVM: ReportsViewModel
@@ -56,13 +61,12 @@ struct TimelineMapView: View {
         }
         .environmentObject(reportsVM)
         .onAppear {
+            UIImpactFeedbackGenerator(style: .medium).impactOccurred()
             timelineMapCoordinator.setDelegate(reportsVM)
+            fetchForUpdates()
         }
         .onDisappear {
             timelineMapCoordinator.suspendTask()
-        }
-        .task {
-            await timelineMapCoordinator.getUpdates(report)
         }
         .alert("Uh oh", isPresented: $timelineMapCoordinator.showAlert) {
             Button("Okay") { dismiss() }
@@ -81,6 +85,17 @@ struct TimelineMapView: View {
         }
     }
     
+    private func fetchForUpdates() {
+        Task {
+            switch detailMode {
+            case .report(let report):
+                await timelineMapCoordinator.getUpdates(report)
+            case .reportId(let uuid):
+                break
+            }
+        }
+    }
+    
     private func refresh() {
         Task {
             await timelineMapCoordinator.refreshForNewUpdates()
@@ -90,7 +105,7 @@ struct TimelineMapView: View {
 
 struct TimelineMapView_Previews: PreviewProvider {
     static var previews: some View {
-        TimelineMapView(report: [Report].testReports().first!)
+        TimelineMapView(detailMode: .report([Report].testReports().first!))
             .environmentObject(ReportsViewModel())
             .preferredColorScheme(.dark)
     }

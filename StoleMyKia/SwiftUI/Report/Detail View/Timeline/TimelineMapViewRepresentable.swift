@@ -100,8 +100,13 @@ final class TimelineMapViewCoordinator: NSObject, MKMapViewDelegate, ObservableO
             self.report = report
             self.reportId = report.id
             self.isOriginalReport = report.role.hasParent
+            
+            //Check if the selected report still exists
+            guard try await ReportManager.manager.reportDoesExist(report.id) else {
+                throw ReportManagerError.error
+            }
                                        
-            //Check if the report still exists in Firestore Database
+            //Check if the original report still exists
             guard try await ReportManager.manager.reportDoesExist(report.role.associatedValue) else {
                 throw ReportManagerError.doesNotExist
             }
@@ -133,7 +138,6 @@ final class TimelineMapViewCoordinator: NSObject, MKMapViewDelegate, ObservableO
             }
         }
         catch {
-            print(error.localizedDescription)
             DispatchQueue.main.async {
                 self.alertReportError = .error
             }
@@ -167,7 +171,7 @@ final class TimelineMapViewCoordinator: NSObject, MKMapViewDelegate, ObservableO
                 mapView.addOverlay(polyline)
                 mapView.setVisibleMapRect(polyline.boundingMapRect,
                                           edgePadding: .init(top: 65, left: 75, bottom: 65, right: 75),
-                                          animated: true)
+                                          animated: false)
                 mapView.isUserInteractionEnabled = true
             }
             self.isLoading = false

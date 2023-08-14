@@ -11,7 +11,7 @@ struct FeedListView: View {
     
     @State private var selectedReport: Report?
     
-    @Binding var reports: [Report]
+    var reports: [Report]
     
     @EnvironmentObject var reportsVM: ReportsViewModel
     @EnvironmentObject var userModel: UserViewModel
@@ -42,7 +42,7 @@ struct ReportsFeedView_Previews: PreviewProvider {
     static var previews: some View {
         NavigationView {
             ScrollView {
-                FeedListView(reports: .constant(.testReports()))
+                FeedListView(reports: .testReports())
                     .environmentObject(ReportsViewModel())
                     .environmentObject(UserViewModel())
                     .preferredColorScheme(.dark)

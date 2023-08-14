@@ -9,66 +9,73 @@ import SwiftUI
 
 struct SettingsView: View {
     
-    @EnvironmentObject var userModel: UserViewModel
-    @EnvironmentObject var reportsModel: ReportsViewModel
+    @EnvironmentObject var userVM: UserViewModel
     
     var body: some View {
-       // NavigationView {
-            Form {
-                Section("Account") {
-                    NavigationLink {
-                        UserAccountSettings()
-                    } label: {
-                        Label("My Account", systemImage: ApplicationTabViewSelection.user.symbol)
-                    }
+        List {
+            Section("Privacy & Safety") {
+                Button {
+                    
+                } label: {
+                    Label("About This App", systemImage: "info.circle")
                 }
-                
-                Section("Notifications") {
-                    NavigationLink {
-                        UserNotificationSettings()
-                    } label: {
-                        Label("Notifications", systemImage: ApplicationTabViewSelection.notification.symbol)
-                    }
+                Button {
+                    
+                } label: {
+                    Label("Protect Yourself", systemImage: "shield")
                 }
-                
-                Section("Support") {
-                    Button {
-                        
-                    } label: {
-                        Label("Twitter", systemImage: "bird")
-                    }
-                    Button {
-                        
-                    } label: {
-                        Label("Email", systemImage: "envelope")
-                    }
-                }
-                
-                Section("More") {
-                    NavigationLink {
-                        
-                    } label: {
-                        Label("About", systemImage: "app")
-                    }
-                    Button {
-                        URL.openApplicationSettings()
-                    } label: {
-                        Label("Open Application Settings", systemImage: "gearshape")
-                    }
+                Button {
+                    
+                } label: {
+                    Label("Privacy Policy", systemImage: "hand.raised")
                 }
             }
-            .navigationTitle("Settings")
-            .navigationBarTitleDisplayMode(.inline)
-        //}
-        .environmentObject(userModel)
-        .environmentObject(reportsModel)
+            Section("Support") {
+                Button {
+                    
+                } label: {
+                    Label("Email", systemImage: "envelope")
+                }
+                Button {
+                    
+                } label: {
+                    Label("Report A Problem", systemImage: "exclamationmark.bubble")
+                }
+                Button {
+                    
+                } label: {
+                    Label("Suggestion", systemImage: "lightbulb")
+                }
+            }
+            Section {
+                Button {
+                    
+                } label: {
+                    Label("Sign Out", systemImage: "key.horizontal")
+                }
+                Button {
+                    
+                } label: {
+                    Label("Delete My Account", systemImage: "trash")
+                        .foregroundColor(.red)
+                }
+            } header: {
+                Text("Authentication")
+            } footer: {
+                Text("Once you delete your account, all of your information and posts will be immediately removed..")
+            }
+        }
+        .environmentObject(userVM)
+        .navigationTitle("Settings")
+        .navigationBarTitleDisplayMode(.inline)
     }
 }
 
 struct SettingsView_Previews: PreviewProvider {
     static var previews: some View {
-        SettingsView()
-            .environmentObject(UserViewModel())
-            .environmentObject(ReportsViewModel())
+        NavigationView {
+            SettingsView()
+                .environmentObject(UserViewModel())
+        }
     }
 }
