@@ -10,10 +10,13 @@ import SwiftUI
 
 extension Image {
     
+    static let disclosedLocationIcon = Image(systemName: "location.slash.fill")
+    static let falseReportIcon       = Image(systemName: "exclamationmark.shield")
+    static let updateImageIcon       = Image(systemName: "arrow.2.squarepath")
+
     static let vehiclePlaceholder = Image("vehicle-placeholder")
     static let userPlaceholder = Image("user-placeholder")
-    static let updateImageIcon = Image(systemName: "arrow.2.squarepath")
-    
+
     func floatingButtonStyle() -> some View {
         return self
             .resizable()

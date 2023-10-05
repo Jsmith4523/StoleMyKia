@@ -39,25 +39,22 @@ class TimelineAnnotationViewCallout: UIView {
         button.setImage(UIImage(systemName: "info.circle"), for: .normal)
         return button
     }()
-    
-    weak private var timelineAnnotationCalloutDelegate: TimelineAnnotationViewCalloutDelegate?
-    
+        
     private var isSelectedReport: Bool
     private var report: Report
     
-    init(report: Report, selectedReportId: UUID) {
+    private var onSelect: (Report) -> Void
+    
+    init(report: Report, selectedReportId: UUID, onSelect: @escaping (Report) -> ()) {
         self.report                     = report
         self.isSelectedReport           = report.id == selectedReportId
+        self.onSelect                   = onSelect
         super.init(frame: .zero)
         setupViews()
     }
     
     required init?(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
-    }
-    
-    func setDelegate(_ delegate: TimelineAnnotationViewCalloutDelegate) {
-        self.timelineAnnotationCalloutDelegate = delegate
     }
     
     private func setupViews() {
@@ -128,10 +125,6 @@ class TimelineAnnotationViewCallout: UIView {
     }
     
     @objc private func presentReportDetailView() {
-        self.timelineAnnotationCalloutDelegate?.didSelectReport(report)
-    }
-    
-    deinit {
-        timelineAnnotationCalloutDelegate = nil
+        self.onSelect(report)
     }
 }

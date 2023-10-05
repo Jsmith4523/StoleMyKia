@@ -55,10 +55,10 @@ final class TimelineMapViewCoordinator: NSObject, MKMapViewDelegate, ObservableO
     }
     
     enum TimelineAlertMode: String, Error {
-        case error = "There was an error with that request. Please try again later."
-        case originalReportNoLongerExist = "Sorry, the original report is no longer avaliable."
-        case noLongerExist = "Sorry, this report no longer unavaliable."
-        case noUpdates = "Not updates have been made yet."
+        case error = "We weren't able to process that request. Please try again."
+        case originalReportNoLongerExist = "The initial report is no longer available."
+        case noLongerExist = "This report is no longer available."
+        case noUpdates = "Unfortunately, no updates have been made yet!"
     }
     
     @Published var isShowingTimelineListView = false
@@ -86,13 +86,6 @@ final class TimelineMapViewCoordinator: NSObject, MKMapViewDelegate, ObservableO
     
     weak var mapView: MKMapView?
     
-    weak private var timelineMapViewDelegate: TimelineMapViewDelegate?
-    private var loadingTask: Task<Void, Never>?
-        
-    func setDelegate(_ delegate: TimelineMapViewDelegate) {
-        self.timelineMapViewDelegate = delegate
-    }
-    
     @MainActor
     func getUpdates(_ report: Report) async {
         do {
@@ -115,7 +108,7 @@ final class TimelineMapViewCoordinator: NSObject, MKMapViewDelegate, ObservableO
                 throw ReportManagerError.error
             }
             
-            guard let updates = try await timelineMapViewDelegate?.getTimelineUpdates(for: originalReport), !(updates.isEmpty) else {
+            guard let updates = try? await ReportManager.manager.fetchUpdates(report.role.associatedValue), !(updates.isEmpty) else {
                 throw TimelineAlertMode.noUpdates
             }
             
@@ -144,11 +137,6 @@ final class TimelineMapViewCoordinator: NSObject, MKMapViewDelegate, ObservableO
         }
     }
     
-    func suspendTask() {
-        loadingTask?.cancel()
-        loadingTask = nil
-    }
-    
     func refreshForNewUpdates() async {
         guard let report else { return }
         await getUpdates(report)
@@ -162,7 +150,10 @@ final class TimelineMapViewCoordinator: NSObject, MKMapViewDelegate, ObservableO
                 mapView.removeOverlays(mapView.overlays)
                 
                 //Setting the index of reports that are updates
+                //Filtering out reports that are false and should not visible display location
                 let annotations = self.reports
+                    .filter({!($0.isFalseReport)})
+                    .filter({!($0.discloseLocation)})
                     .sorted(by: >)
                     .map({ReportAnnotation(report: $0)})
             
@@ -191,8 +182,7 @@ final class TimelineMapViewCoordinator: NSObject, MKMapViewDelegate, ObservableO
     func mapView(_ mapView: MKMapView, viewFor annotation: MKAnnotation) -> MKAnnotationView? {
         if let annotation = annotation as? ReportAnnotation {
             let reportAnnotationView = ReportTimelineAnnotationView(annotation: annotation)
-            let calloutView = TimelineAnnotationViewCallout(report: annotation.report, selectedReportId: reportId)
-            calloutView.setDelegate(self)
+            let calloutView = TimelineAnnotationViewCallout(report: annotation.report, selectedReportId: reportId, onSelect: didSelectReport(_:))
             reportAnnotationView.detailCalloutAccessoryView = calloutView
             reportAnnotationView.canShowCallout = true
             reportAnnotationView.displayPriority = .defaultHigh
@@ -213,20 +203,11 @@ final class TimelineMapViewCoordinator: NSObject, MKMapViewDelegate, ObservableO
         return MKOverlayRenderer()
     }
     
-    deinit {
-        timelineMapViewDelegate = nil
-        suspendTask()
-        print("Dead: TimelineMapViewCoordinator")
-    }
-}
-
-//MARK: - TimelineAnnotationViewCalloutDelegate
-extension TimelineMapViewCoordinator: TimelineAnnotationViewCalloutDelegate {
     func didSelectReport(_ report: Report) {
         self.mapViewSheetMode = .report(report)
     }
-}
-
-protocol TimelineMapViewDelegate: AnyObject {
-    func getTimelineUpdates(for report: Report) async throws -> [Report]
+    
+    deinit {
+        print("Dead: TimelineMapViewCoordinator")
+    }
 }

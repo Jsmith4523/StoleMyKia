@@ -10,7 +10,7 @@ import CoreLocation
 
 enum ApplicationTabViewSelection {
     
-    case feed, notification, search, user
+    case feed, notification, myStuff
     
     var title: String {
         switch self {
@@ -18,10 +18,8 @@ enum ApplicationTabViewSelection {
             return "Reports"
         case .notification:
             return "Notifications"
-        case .user:
-            return "My Account"
-        case .search:
-            return "Search"
+        case .myStuff:
+            return "My Stuff"
         }
     }
     
@@ -31,10 +29,8 @@ enum ApplicationTabViewSelection {
             return "menucard"
         case .notification:
             return "bell"
-        case .user:
+        case .myStuff:
             return "person.crop.circle"
-        case .search:
-            return "magnifyingglass"
         }
     }
     
@@ -45,7 +41,7 @@ enum ApplicationTabViewSelection {
 
 struct ApplicationTabView: View {
     
-    @State private var notificationCount = 0
+    @State private var notificationCount: Int?
     @State private var selection: ApplicationTabViewSelection = .feed
     
     @StateObject private var reportsVM = ReportsViewModel()
@@ -61,24 +57,27 @@ struct ApplicationTabView: View {
                 }
             NotificationView()
                 .tag(ApplicationTabViewSelection.notification)
-                .badge(notificationCount)
+                .badge(notificationCount ?? 0)
                 .tabItem {
                     ApplicationTabViewSelection.notification.tabItemLabel
                 }
-            UserView()
-                .tag(ApplicationTabViewSelection.user)
+            MyStuffView()
+                .tag(ApplicationTabViewSelection.myStuff)
                 .tabItem {
-                    ApplicationTabViewSelection.user.tabItemLabel
+                    ApplicationTabViewSelection.myStuff.tabItemLabel
                 }
         }
         .environmentObject(reportsVM)
         .environmentObject(userVM)
         .environmentObject(notificationVM)
         .tint(Color(uiColor: .label))
+        .onReceive(notificationVM.$notificationUnreadQuantity) { quantity in
+            self.notificationCount = quantity
+        }
         .onAppear {
-            reportsVM.setFirebaseUserDelegate(userVM)
-            notificationVM.setDelegate(userVM)
-            CLLocationManager().requestAlwaysAuthorization()
+            if !(notificationCount.isNil()) {
+                self.notificationVM.fetchNumberOfUnreadNotifications()
+            }
         }
     }
 }
@@ -88,5 +87,6 @@ struct ApplicationTabView_Previews: PreviewProvider {
         ApplicationTabView()
             .environmentObject(ReportsViewModel())
             .environmentObject(UserViewModel())
+            //.preferredColorScheme(.dark)
     }
 }

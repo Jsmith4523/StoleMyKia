@@ -28,7 +28,7 @@ struct FeedView: View {
     @EnvironmentObject var userVM: UserViewModel
     @EnvironmentObject var reportsVM: ReportsViewModel
     
-    var filteredReports: [Report] {
+    private var filteredReports: [Report] {
         let reports = reportsVM.reports.filter { report in
             if let reportType {
                 return report.reportType == reportType
@@ -56,6 +56,9 @@ struct FeedView: View {
                 return (hasDetails || hasLicense || hasVin || hasDescription)
             })
         }
+    }
+    private var isFiltering: Bool {
+        return !(reportType == nil) || filterByUserLocation
     }
     
     var body: some View {
@@ -90,19 +93,13 @@ struct FeedView: View {
                     Button {
                         isShowingReportTypeFilterView.toggle()
                     } label: {
-                        Image(systemName: "line.3.horizontal.decrease.circle")
+                        Image(systemName: isFiltering ? "line.3.horizontal.decrease.circle.fill" : "line.3.horizontal.decrease.circle")
+                            .foregroundColor(isFiltering ? .blue : Color(uiColor: .label))
                     }
                     Button {
                         isShowingNewReportView.toggle()
                     } label: {
                         Image(systemName: "plus")
-                    }
-                }
-                ToolbarItem(placement: .navigationBarLeading) {
-                    Button {
-                        reportsVM.isShowingLicensePlateScannerView.toggle()
-                    } label: {
-                       Image(systemName: "camera.aperture")
                     }
                 }
             }

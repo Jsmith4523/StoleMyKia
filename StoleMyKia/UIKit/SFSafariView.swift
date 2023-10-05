@@ -10,14 +10,21 @@ import SafariServices
 import UIKit
 import SwiftUI
 
+extension View {
+    
+    func safari(isPresented: Binding<Bool>, url: URL) -> some View {
+        return self
+            .sheet(isPresented: isPresented) { SafariView(url: url).ignoresSafeArea() }
+    }
+}
 
 struct SafariView: UIViewControllerRepresentable {
     
-    let url: URL
+    let url: URL?
     
     func makeUIViewController(context: Context) -> SFSafariViewController {
-        let safariView = SFSafariViewController(url: url)
-        safariView.preferredControlTintColor = .tintColor
+        let safariView = SFSafariViewController(url: url ?? URL(string: "www.google.com/StoleMyKia")!)
+        safariView.preferredControlTintColor = .systemBlue
         safariView.dismissButtonStyle = .close
         
         return safariView
@@ -26,5 +33,4 @@ struct SafariView: UIViewControllerRepresentable {
     func updateUIViewController(_ uiViewController: SFSafariViewController, context: Context) {}
     
     typealias UIViewControllerType = SFSafariViewController
-    
 }

@@ -19,7 +19,7 @@ class FirebaseAuthManager {
     
     private let auth = Auth.auth()
     
-    var verificationId: String?
+    private var verificationId: String?
     
     ///Shared instance
     static let manager = FirebaseAuthManager()

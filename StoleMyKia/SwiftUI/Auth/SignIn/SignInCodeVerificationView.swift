@@ -32,7 +32,7 @@ struct SignInCodeVerificationView: View {
                 VStack(spacing: 10) {
                     Text("Verification Code Sent!")
                         .font(.system(size: 21).weight(.heavy))
-                    Text("We just sent a verification code to \(phoneNumber). Check your messages.")
+                    Text("We just sent a verification code to \(ApplicationFormats.authPhoneNumberFormat(phoneNumber, parentheses: true) ?? "you"). Check your messages.")
                         .font(.system(size: 15))
                         .foregroundColor(.gray)
                 }
@@ -65,10 +65,10 @@ struct SignInCodeVerificationView: View {
             }
         }
         .disabled(isLoading)
-        .alert("Unable to verify SMS Code", isPresented: $alertErrorVerificationCode) {
+        .alert("Cannot verify SMS Code", isPresented: $alertErrorVerificationCode) {
             Button("OK") {}
         } message: {
-            Text("We ran into an issue trying to verify the SMS code. Make sure the code is valid and try again. You can always re-send another code.\n\nIf the issue persists, contact support")
+            Text("Unfortunately, we could not verify the provided SMS code. If the code has been sent too many times to the provided phone number, a cooldown of up to 30 minutes is applied. If this issue persist, please contact support.")
         }
     }
     

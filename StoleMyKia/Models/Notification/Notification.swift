@@ -8,47 +8,26 @@
 import Foundation
 import SwiftUI
 
-enum NotificationType: Codable, Identifiable {
-    case notification, update
+struct `Notification`: Identifiable, Codable {
     
-    var id: String {
-        return self.title
-    }
+    static let isReadKey = "isRead"
     
-    var title: String {
-        switch self {
-        case .notification:
-            return "Report"
-        case .update:
-            return "Update"
+    enum NotificationType: String, CaseIterable, Identifiable, Codable {
+        
+        case report      = "Report"
+        case update      = "Update"
+        case falseReport = "False Report"
+        
+        var id: Self {
+            return self
         }
     }
     
-    var symbol: String {
-        switch self {
-        case .notification:
-            return ApplicationTabViewSelection.notification.symbol
-        case .update:
-            return "arrow.triangle.swap"
-        }
-    }
-    
-    var color: Color {
-        switch self {
-        case .notification:
-            return .yellow
-        case .update:
-            return .brown
-        }
-    }
-}
-
-struct Notification: Identifiable, Decodable {
-    let id: UUID
+    var id = UUID()
     let dt: TimeInterval
     let title: String
     let body: String
-    let reportType: ReportType
+    let notificationType: NotificationType
     let reportId: UUID
     var isRead: Bool
     let imageUrl: String?
@@ -60,7 +39,7 @@ extension Notification {
         !(imageUrl == nil)
     }
     
-    var timeAgoSince: String {
-        Date(timeIntervalSince1970: self.dt).timeAgoDisplay()
+    var dateAndTime: String {
+        return ApplicationFormats.timeAgoFormat(self.dt)
     }
 }

@@ -33,7 +33,7 @@ struct SignInView: View {
                         .frame(height: 5)
                     Text("Welcome!")
                         .font(.system(size: 27).weight(.heavy))
-                    Text("Enter your phone number")
+                    Text("Please enter your phone number")
                         .font(.system(size: 17))
                         .foregroundColor(.gray)
                 }
@@ -73,7 +73,7 @@ struct SignInView: View {
         .alert("Unable to send verification code", isPresented: $alertErrorPhoneNumber) {
             Button("OK") {}
         } message: {
-            Text("We ran into an issue sending a verification code to \(phoneNumber). Make sure that phone number is a valid and try again.\n\nNote: Actions such as logging into too many devices at once with this phone number will cause an error. A cool-down of 10 minutes is applied to prevent spam.")
+            Text("An error occurred sending a verification code to \(ApplicationFormats.authPhoneNumberFormat(phoneNumber, parentheses: true) ?? "the provided phone number"). Check your network connection and try again. If attempted too many times, a cooldown of up to 30 minutes is applied to prevent spam./n/nIf this issue persist, please contact support")
         }
     }
     
@@ -100,7 +100,7 @@ extension View {
             .padding(15)
             .background(.ultraThinMaterial)
             .cornerRadius(15)
-            .keyboardType(.decimalPad)
+            .keyboardType(.numberPad)
     }
 }
 

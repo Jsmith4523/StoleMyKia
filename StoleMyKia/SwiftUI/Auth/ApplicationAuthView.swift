@@ -6,8 +6,11 @@
 //
 
 import SwiftUI
+import MessageUI
 
 struct ApplicationAuthView: View {
+    
+    @State private var isShowingEmailComposeView = false
             
     @EnvironmentObject var firebaseAuthVM: FirebaseAuthViewModel
     @Environment (\.colorScheme) var colorScheme
@@ -36,14 +39,46 @@ struct ApplicationAuthView: View {
                             Text("Join")
                                 .authButtonStyle()
                         }
+                        Spacer()
+                            .frame(height: 10)
+                        VStack(spacing: 15) {
+                            HStack {
+                                HStack {
+                                    Button {
+                                        isShowingEmailComposeView.toggle()
+                                    } label: {
+                                        Text("Need Help?")
+                                    }
+                                    Capsule()
+                                        .frame(width: 0.65, height: 15)
+                                }
+                                .canSendEmail()
+                            
+                                Button {
+                                    
+                                } label: {
+                                    Label("Safety", systemImage: "shield")
+                                }
+                                Capsule()
+                                    .frame(width: 0.65, height: 15)
+                                Button {
+                                    
+                                } label: {
+                                    Text("Privacy Policy")
+                                }
+                            }
+                            Text("Version 1.0")
+                        }
+                        .font(.system(size: 13))
+                        .multilineTextAlignment(.center)
+                        .foregroundColor(.gray)
                     }
-                    Spacer()
-                        .frame(height: 45)
                 }
                 .padding()
             }
             .navigationTitle("Welcome")
             .navigationBarTitleDisplayMode(.inline)
+            .emailComposerView(isPresented: $isShowingEmailComposeView)
             .toolbar {
                 ToolbarItem(placement: .principal) {
                     Text("")
@@ -56,12 +91,12 @@ struct ApplicationAuthView: View {
 }
 
 extension Text {
-    func authButtonStyle() -> some View {
+    func authButtonStyle(background: Color = .brand) -> some View {
         return self
             .padding()
             .frame(width: 310)
             .font(.system(size: 22).weight(.heavy))
-            .background(Color.brand)
+            .background(background)
             .foregroundColor(Color.white)
             .clipShape(RoundedRectangle(cornerRadius: 20))
     }

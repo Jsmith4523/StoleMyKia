@@ -23,7 +23,7 @@ class ReportAnnotation: NSObject, MKAnnotation {
     init(report: Report) {
         self.coordinate    = report.location.coordinates
         self.report        = report
-        self.subtitle      = "\(report.reportType.rawValue)\n\(report.dt.timeAgoDisplay())"
+        self.subtitle      = "\(report.reportType.rawValue)\n\(ApplicationFormats.dateFormat(report.dt))"
     }
     
     init(report: Report, index: Int?) {

@@ -23,10 +23,7 @@ class FalseReportManager {
     private let db = Firestore.firestore()
     
     func uploadFalseReport(_ falseReport: FalseReport) async throws {
-        //Check if the report still exist
-        guard try await ReportManager.manager.reportDoesExist(falseReport.report.id) else {
-            throw FalseReportManagerError.doesNotExist
-        }
+
         
         guard let jsonData = try falseReport.encodeForUpload() as? [String: Any] else {
             throw FalseReportManagerError.codableError

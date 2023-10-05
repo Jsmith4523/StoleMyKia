@@ -23,11 +23,9 @@ struct ApplicationRootView: View {
             }
         }
         .onAppear {
-            userVM.setDelegate(firebaseAuthModel)
             firebaseAuthModel.setDelegate(userVM)
         }
         .onDisappear {
-            userVM.delegate = nil
             firebaseAuthModel.firebaseAuthDelegate = nil
         }
     }

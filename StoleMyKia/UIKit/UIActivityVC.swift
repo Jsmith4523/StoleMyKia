@@ -8,22 +8,37 @@
 import UIKit
 import SwiftUI
 
+extension View {
+    
+    func activityController(isPresented: Binding<Bool>, activityItems items: [Any]) -> some View {
+        return self
+            .background {
+                ActivityController(isPresented: isPresented, items: items)
+            }
+    }
+}
 
-struct ActivityController: UIViewControllerRepresentable {
+fileprivate struct ActivityController: UIViewControllerRepresentable {
+    
+    @Binding var isPresented: Bool
     
     let items: [Any]
     
-    func makeUIViewController(context: Context) -> UIActivityViewController {
-        let ac = UIActivityVC(activityItems: items, applicationActivities: nil)
-        return ac
+    func makeUIViewController(context: Context) -> UIViewController {
+        return UIViewController()
     }
     
-    func updateUIViewController(_ uiViewController: UIActivityViewController, context: Context) {}
+    func updateUIViewController(_ uiViewController: UIViewController, context: Context) {
+        if isPresented {
+            let vc =  UIActivityVC(activityItems: items, applicationActivities: nil)
+            uiViewController.present(vc, animated: true)
+        }
+    }
     
-    typealias UIViewControllerType = UIActivityViewController
+    typealias UIViewControllerType = UIViewController
 }
 
-class UIActivityVC: UIActivityViewController {
+fileprivate final class UIActivityVC: UIActivityViewController {
         
     override init(activityItems: [Any], applicationActivities: [UIActivity]?) {
         super.init(activityItems: activityItems, applicationActivities: applicationActivities)
@@ -32,11 +47,10 @@ class UIActivityVC: UIActivityViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        
-        guard let currentViewController = UIWindow().rootViewController else {
-            return
+        if let sheetPresentationController {
+            sheetPresentationController.detents = [.medium(), .large()]
+            sheetPresentationController.prefersGrabberVisible = true
+            sheetPresentationController.preferredCornerRadius = 25
         }
-        
-        currentViewController.present(self, animated: true)
     }
 }

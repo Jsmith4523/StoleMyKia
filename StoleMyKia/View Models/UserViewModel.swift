@@ -14,94 +14,79 @@ enum RootViewLoadStatus {
     case loading, loaded
 }
 
-final class UserViewModel: ObservableObject {
-    
-    @Published private(set) var userReports = [Report]()
-    @Published private(set) var userBookmarks = [Report]()
+@MainActor final class UserViewModel: ObservableObject {
     
     @Published private(set) var rootViewLoadStatus: RootViewLoadStatus = .loading
-                
-    @Published private(set) var firebaseUser: FirebaseUser?
-    @Published private var userUid: String?
     
     private let firebaseManager = FirebaseUserManager()
-    weak var delegate: UserViewModelDelegate?
     
-    init() {
-        firebaseManager.setDelegate(self)
+    var uid: String? {
+        Auth.auth().currentUser?.uid
     }
     
-    func fetchUserInformation() async throws {
-        guard let userUid else { return }
-        self.firebaseUser = try await firebaseManager.fetchSignedInUserInformation(uid: userUid)
+    //MARK: - Reports Methods
+    
+    func fetchUserReports() async throws -> [Report] {
+        return try await firebaseManager.fetchUserReports()
     }
     
-    func fetchUsersReports() async throws -> [Report] {
-        return try await firebaseManager.getUserReports()
-    }
-    
-    func setDelegate(_ delegate: UserViewModelDelegate) {
-        self.delegate = delegate
-    }
-    
-    @MainActor
-    func fetchUserReports() async throws {
-        let reports = try await firebaseManager.getUserReports()
-        self.userReports = reports
-    }
-    
-    @MainActor
-    func fetchUserBookmarks() async throws {
-        let reports = try await firebaseManager.getUserBookmarks()
-        self.userBookmarks = reports
+    func fetchUserBookmarks() async throws -> [Report] {
+        return try await firebaseManager.fetchUserBookmarks()
     }
     
     func bookmarkReport(_ id: UUID) async throws {
-        try await firebaseManager.addBookmark(reportId: id)
+        
     }
     
-    func removeBookmark(_ id: UUID) async throws {
-        try await firebaseManager.removeBookmark(reportId: id)
+    func undoBookmark(_ id: UUID) async throws {
+        
+    }
+
+    //MARK: - User Settings Methods
+    
+    func fetchNotificationSettings() async throws -> UserNotificationSettings {
+        let settings = try await firebaseManager.fetchUserNotificationSettings()
+        return settings
     }
     
-    func reportIsBookmarked(_ id: UUID) async throws -> Bool {
-        return try await firebaseManager.isBookmarked(id)
+    func saveNotificationSettings(_ settings: UserNotificationSettings) async throws {
+        try await firebaseManager.saveUserNotificationSettings(settings)
+    }
+    
+    //MARK: - Auth Methods
+    
+    func getAuthUserPhoneNumber() -> String? {
+        return Auth.auth().currentUser?.phoneNumber
     }
     
     func signOut() {
-        try? Auth.auth().signOut()
-        delegate?.userDidSuccessfullySignOut()
+        do {
+            try Auth.auth().signOut()
+            notifyOfSignOut()
+        } catch {
+            print("Unable to sign user out!")
+        }
     }
-        
+    
+    func deleteUserAccount() async throws {
+        try await Auth.auth().currentUser?.delete()
+    }
+    
+    private func notifyOfSignOut() {
+        NotificationCenter.default.post(Notification.signOut)
+    }
+    
     deinit {
         print("Dead: UserViewModel")
     }
 }
 
-//MARK: - FirebaseAuthDelegate
 extension UserViewModel: FirebaseAuthDelegate {
-    @MainActor
     func userHasSignedIn(uid: String) async -> LoginStatus {
-        self.userUid = uid
         withAnimation {
             self.rootViewLoadStatus = .loaded
         }
+        
         return .signedIn
     }
-    
-    func userHasSignedOut() {
-        self.firebaseUser = nil
-    }
-}
-
-//MARK: - FirebaseUserDelegate
-extension UserViewModel: FirebaseUserDelegate {
-    var uid: String? {
-        return userUid
-    }
-}
-
-
-protocol UserViewModelDelegate: AnyObject {
-    func userDidSuccessfullySignOut()
 }

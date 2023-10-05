@@ -8,9 +8,19 @@
 import Foundation
 import SwiftUI
 import UIKit
+
+extension View {
+    
+    func customSheetView<Content: View>(isPresented: Binding<Bool>, detents: [UISheetPresentationController.Detent] = [.medium()], showsIndicator: Bool = false, cornerRadius: CGFloat = 15, @ViewBuilder child: @escaping ()->Content) -> some View {
+        return self
+            .background {
+                CustomSheetView(isPresented: isPresented, detents: detents, showsIndicator: showsIndicator, cornerRadius: cornerRadius, child: child)
+            }
+    }
+}
  
 ///Use View extension .customSheetView for SwiftUI views
-struct CustomSheetView<Content: View>: UIViewControllerRepresentable {
+fileprivate struct CustomSheetView<Content: View>: UIViewControllerRepresentable {
     
     @Binding var isPresented: Bool
     
@@ -66,10 +76,6 @@ struct CustomSheetView<Content: View>: UIViewControllerRepresentable {
                 sheetController.detents               = self.detents
                 sheetController.prefersGrabberVisible = self.showIndicator
                 sheetController.preferredCornerRadius = self.cornerRadius
-                
-                guard let containerView = sheetController.presentedView else {
-                    return
-                }
             }
         }
     }

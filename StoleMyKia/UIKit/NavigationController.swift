@@ -50,6 +50,7 @@ struct NavigationController<C: View>: UIViewControllerRepresentable {
             let appearance                 = UINavigationBarAppearance()
             appearance.backgroundColor     = backgroundColor
             appearance.titleTextAttributes = [.foregroundColor: UIColor.white]
+            appearance.shadowColor = .clear
             
             self.navigationBar.scrollEdgeAppearance        = appearance
             self.navigationBar.standardAppearance          = appearance

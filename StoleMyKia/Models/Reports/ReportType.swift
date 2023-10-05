@@ -10,13 +10,16 @@ import UIKit
 
 enum ReportType: String, CaseIterable, Hashable, Identifiable, Codable, Comparable {
     
+    static let updateCases: [Self] = [.found, .witnessed, .incident, .located]
+    
     case attempt     = "Attempt"
     case carjacked   = "Car Jacking"
     case stolen      = "Stolen"
-    case found       = "Found"
+    case found       = "Recovered"
     case witnessed   = "Witnessed"
-    case located     = "Seen"
+    case located     = "Located"
     case breakIn     = "Break-In"
+    case incident    = "Incident"
     
     ///Raw value
     var id: String {
@@ -30,35 +33,22 @@ enum ReportType: String, CaseIterable, Hashable, Identifiable, Codable, Comparab
         case .found:
             return "checkmark.shield.fill"
         case .witnessed:
-            return "car.side.and.exclamationmark.fill"
-        case .located:
             return "eye.fill"
+        case .located:
+            return "scope"
         case .carjacked:
-            return "figure.run"
+            return "sos"
         case .attempt:
             return "exclamationmark.triangle"
         case .breakIn:
             return "screwdriver.fill"
+        case .incident:
+            return "figure.run"
         }
     }
     
     var symbol: String {
-        switch self {
-        case .stolen:
-            return "car"
-        case .found:
-            return "checkmark.shield"
-        case .witnessed:
-            return "car.side.and.exclamationmark"
-        case .located:
-            return "eye"
-        case .carjacked:
-            return "figure.run"
-        case .attempt:
-            return "exclamationmark.triangle"
-        case .breakIn:
-            return "screwdriver"
-        }
+        self.annotationImage
     }
     
     ///The description of a new report type
@@ -67,15 +57,17 @@ enum ReportType: String, CaseIterable, Hashable, Identifiable, Codable, Comparab
         case .stolen:
             return "Your vehicle was stolen and you are reporting it."
         case .found:
-            return "You safely found a vehicle."
+            return "You safely located and/or recovered a vehicle."
         case .witnessed:
             return "You witnessed a vehicle being stolen."
         case .located:
             return "You located this vehicle."
         case .carjacked:
             return "Your vehicle was stolen by force."
+        case .incident:
+            return "An incident occurred with a vehicle."
         case .attempt:
-            return "Someone attempted to steal this vehicle"
+            return "Someone attempted to steal this vehicle."
         case .breakIn:
             return "Someone broke into this vehicle."
         }
@@ -98,26 +90,8 @@ enum ReportType: String, CaseIterable, Hashable, Identifiable, Codable, Comparab
             return .orange
         case .breakIn:
             return .systemOrange
-        }
-    }
-    
-    
-    var allowsForUpdates: Bool {
-        switch self {
-        case .carjacked:
-            return true
-        case .stolen:
-            return true
-        case .found:
-            return true
-        case .witnessed:
-            return true
-        case .located:
-            return false
-        case .attempt:
-            return false
-        case .breakIn:
-            return false
+        case .incident:
+            return .red
         }
     }
     
@@ -138,60 +112,9 @@ enum ReportType: String, CaseIterable, Hashable, Identifiable, Codable, Comparab
             return false
         case .breakIn:
             return false
+        case .incident:
+            return false
         }
-    }
-    
-    ///Disables the License Plate and Vin information section.
-    var disableLicenseAndVinInformation: Bool {
-//        switch self {
-//        case .attempt:
-//            return true
-//        case .carjacked:
-//            return false
-//        case .stolen:
-//            return false
-//        case .found:
-//            return false
-//        case .witnessed:
-//            return false
-//        case .located:
-//            return false
-//        case .breakIn:
-//            return true
-//        }
-        return false
-    }
-    
-    func generateNotificationBody(for vehicle: Vehicle) -> String {
-        let vehicleDetails = vehicle.vehicleNotificationDetails
-                
-        switch self {
-            
-        case .carjacked:
-            return "A \(vehicleDetails) has been reported in a carjacking. Do not approach the vehicle and call local authorities immediately once located."
-        case .stolen:
-            return "A \(vehicleDetails) has been reported stolen."
-        case .found:
-            return "A \(vehicleDetails) has been reported safely found."
-        case .witnessed:
-            return "Someone witnessed a \(vehicleDetails) being stolen."
-        case .located:
-            return "A \(vehicleDetails) has been seen."
-        case .attempt:
-            return "Someone attempted to steal a \(vehicleDetails)."
-        case .breakIn:
-            return "A report of a break-in occurred on a \(vehicleDetails) "
-        }
-    }
-    
-    ///Enums avaliable when creating a NEW report.
-    static var reports: [ReportType] {
-        [.carjacked, .stolen, .witnessed, .found, .attempt, .breakIn]
-    }
-    
-    ///Enums avaliable when updating a report
-    static var update: [ReportType] {
-        [.carjacked, .stolen, .witnessed, .found, .located]
     }
     
     static func < (lhs: ReportType, rhs: ReportType) -> Bool {

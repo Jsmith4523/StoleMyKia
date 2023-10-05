@@ -18,7 +18,7 @@ struct FeedListView: View {
         
     var body: some View {
         ZStack {
-            LazyVStack(spacing: 11) {
+            LazyVStack(spacing: 15) {
                 ForEach(reports.sorted(by: >)) { report in
                     ReportCellView(report: report)
                         .onTapGesture {
@@ -30,7 +30,7 @@ struct FeedListView: View {
         }
         .environmentObject(reportsVM)
         .environmentObject(userModel)
-        .sheet(item: $selectedReport) { report in
+        .fullScreenCover(item: $selectedReport) { report in
             SelectedReportDetailView(report: report)
                 .environmentObject(reportsVM)
                 .environmentObject(userModel)

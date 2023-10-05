@@ -12,8 +12,10 @@ import SwiftUI
 
 public struct Report: Identifiable, Codable, Comparable {
     
+    static let descriptionCharacterLimit = 500
+    
     ///init with requried details
-    init(uid: String, type: ReportType, Vehicle: Vehicle, details: String, location: Location) {
+    init(uid: String, type: ReportType, Vehicle: Vehicle, details: String, location: Location, discloseLocation: Bool) {
         let id = UUID()
         self.id = id
         self.dt = Date.now.epoch
@@ -23,10 +25,11 @@ public struct Report: Identifiable, Codable, Comparable {
         self.distinguishableDetails = details
         self.location = location
         self.role = .original(id)
+        self.discloseLocation = discloseLocation
     }
     
     ///Init with required detail and optional vehicle image url.
-    init(uid: String, type: ReportType, Vehicle: Vehicle, vehicleImageUrl: String?, details: String, location: Location) {
+    init(uid: String, type: ReportType, Vehicle: Vehicle, vehicleImageUrl: String?, details: String, location: Location, discloseLocation: Bool) {
         let id = UUID()
         self.id = id
         self.dt = Date.now.epoch
@@ -37,6 +40,7 @@ public struct Report: Identifiable, Codable, Comparable {
         self.distinguishableDetails = details
         self.location = location
         self.role = .original(id)
+        self.discloseLocation = discloseLocation
     }
 
     public var id: UUID
@@ -54,6 +58,7 @@ public struct Report: Identifiable, Codable, Comparable {
     var imageURL: String?
     ///The location of this report
     let location: Location
+    let discloseLocation: Bool
     ///The role of this report
     var role: ReportRole
     ///On the client side, the property is immutable.
@@ -102,6 +107,8 @@ public struct Report: Identifiable, Codable, Comparable {
             return "\(reportTypeRawValue)/\(idString)"
         case .breakIn:
             return "\(reportTypeRawValue)/\(idString)"
+        case .incident:
+            return "\(reportTypeRawValue)/\(idString)"
         }
     }
 }
@@ -119,11 +126,6 @@ extension Report {
         self.role = .update(parentId)
     }
     
-    ///Determines if the report can be updated
-    func allowsForUpdates() -> Bool {
-        return !(isFalseReport || self.reportType.allowsForUpdates && self.role.allowsForUpdates)
-    }
-    
     mutating func setLicensePlate(_ license: String) throws {
         guard !(license.isEmpty) else {
             try self.vehicle.licensePlateString(nil)
@@ -131,6 +133,16 @@ extension Report {
         }
         
        try self.vehicle.licensePlateString(license)
+    }
+    
+    var associatedImage: Image {
+        if self.isFalseReport {
+            return Image.falseReportIcon
+        } else if self.discloseLocation {
+            return Image.disclosedLocationIcon
+        } else {
+            return Image(systemName: self.reportType.annotationImage)
+        }
     }
     
     var type: String {
@@ -218,7 +230,7 @@ extension Report {
     }
     
     func timeSinceString() -> String {
-        self.dt.timeAgoDisplay()
+        return ApplicationFormats.timeAgoFormat(self.dt)
     }
 }
 
@@ -243,10 +255,12 @@ extension [Report] {
     }
     
     static func testReports() -> [Report] {
+        var falseReport: Report = .init(uid: "", type: .stolen, Vehicle: .init(year: 2017, make: .hyundai, model: .elantra, color: .red), vehicleImageUrl: "https://vehicle-images.dealerinspire.com/b181-110004081/thumbnails/large/5NPD74LF3LH542186/de26ac0d8c1e8517ff3223db441dee38.jpg", details: "My 2017 Hyundai Elantra was stolen outside of my home around 3AM last night. I am unsure where the vehicle is and I am in dire need for help locating it. It has a couple of dents on the driver side door, three stickers on the trunk, and has a matte black spoiler.PLEASE!!! I really need some help locating it. God bless 🙏🏽🙏🏽🙏🏽🙏🏽🙏🏽🙏🏽🙏🏽🙏🏽", location: .init(address: "123 Fun Street", name: "McDonald's", lat: 0, lon: 0), discloseLocation: true)
+        falseReport.isFalseReport = true
         return [
-            .init(uid: "", type: .stolen, Vehicle: .init(year: 2017, make: .hyundai, model: .elantra, color: .red), vehicleImageUrl: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQOSQgw1Nar0ReZayYVd1z5-0SCka8RzeW3ZbhMZe3mxZ1aQ_6eiq7Rgx-RLHDU4aHYp8k7QG2JZhY&s=3", details: "Testing this report as the text is truncating when within the scrollview. Not sure why! Help!", location: .init(address: "123 Fun Street", name: "McDonald's", lat: 0, lon: 0)),
-            .init(uid: "", type: .found, Vehicle: .init(year: 2021, make: .kia, model: .forte, color: .red), details: "", location: .init(coordinates: .init())),
-            .init(uid: "", type: .breakIn, Vehicle: .init(year: 2013, make: .hyundai, model: .elantra, color: .orange), details: "", location: .init(coordinates: .init()))
+            falseReport,
+            .init(uid: "", type: .found, Vehicle: .init(year: 2021, make: .kia, model: .forte, color: .red), details: "", location: .init(coordinates: .init()), discloseLocation: false),
+            .init(uid: "", type: .breakIn, Vehicle: .init(year: 2013, make: .hyundai, model: .elantra, color: .orange), details: "", location: .init(coordinates: .init()), discloseLocation: false)
         ]
     }
 }

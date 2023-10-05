@@ -15,14 +15,31 @@ struct NotificationView: View {
     
     var body: some View {
         NavigationView {
-            ZStack {
-                NotificationListView()
+            ScrollView {
+                ZStack(alignment: .center) {
+                    switch notificationVM.loadStatus {
+                    case .empty:
+                        NotificationEmptyView()
+                    case .loaded:
+                        NotificationListView()
+                    case .loading:
+                        NotificationSkeletonProgressView()
+                    }
+                }
             }
-            .navigationTitle("Notifications")
+            .navigationTitle(ApplicationTabViewSelection.notification.title)
             .navigationBarTitleDisplayMode(.inline)
             .environmentObject(notificationVM)
             .environmentObject(reportsVM)
             .environmentObject(userVM)
+            .onAppear {
+                if notificationVM.notifications.isEmpty {
+                    notificationVM.fetchNotifications()
+                }
+            }
+            .refreshable {
+                notificationVM.fetchNotifications()
+            }
         }
     }
 }

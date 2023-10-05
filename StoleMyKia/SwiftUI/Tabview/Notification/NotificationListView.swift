@@ -9,61 +9,26 @@ import SwiftUI
 
 struct NotificationListView: View {
     
-    @State private var reportId: UUID?
-    
-    @State private var presentNotificationsActionSheet = false
-    
+    @State private var notification: Notification?
+        
     @EnvironmentObject var notificationVM: NotificationViewModel
     @EnvironmentObject var reportsVM: ReportsViewModel
     @EnvironmentObject var userVM: UserViewModel
     
     var body: some View {
-        List {
-            ForEach(notificationVM.notifications) { notification in
-                Button {
-                    self.reportId = notification.reportId
-                } label: {
-                    NotificationCellView(notification: notification)
-                        .swipeActions(edge: .trailing) {
-                            Button(role: .destructive) {
-                                
-                            } label: {
-                                Label("Delete", systemImage: "trash")
-                            }
-                            .tint(.red)
-                        }
-                }
-            }
+        LazyVStack(spacing: 0) {
+           
         }
-        .listStyle(.plain)
-        .toolbar {
-            ToolbarItem(placement: .navigationBarTrailing) {
-                Button {
-                    presentNotificationsActionSheet.toggle()
-                } label: {
-                    Image(systemName: "gearshape")
-                }
-            }
-        }
-        .confirmationDialog("", isPresented: $presentNotificationsActionSheet) {
-            Button("Mark All Read") {
+        .fullScreenCover(item: $notification) { notification in
+            ZStack {
                 
             }
-            Button("Delete All", role: .destructive) {
-                
-            }
-        } message: {
-            Text("Notification Options")
-        }
-        .sheet(item: $reportId) { id in
-            TimelineMapView(detailMode: .reportId(id))
         }
     }
 }
 
 fileprivate struct NotificationCellView: View {
     
-    @State private var presentDeleteNotificationAlert = false
     @State private var vehicleImage: UIImage?
     
     let notification: Notification
@@ -71,52 +36,46 @@ fileprivate struct NotificationCellView: View {
     var body: some View {
         HStack {
             VStack(alignment: .leading) {
-                VStack(alignment: .leading, spacing: 7) {
-                    HStack(spacing: 4) {
-                        if !(notification.isRead) {
-                            Circle()
-                                .frame(width: 6, height: 6)
-                                .foregroundColor(.blue)
-                        }
-                        HStack(spacing: 2) {
-                            Image.updateImageIcon
-                            Text(notification.reportType.rawValue)
-                        }
+                VStack(alignment: .leading, spacing: 5) {
+                    HStack {
+                        Text(notification.title)
+                            .font(.system(size: 15.5).bold())
                     }
-                    .font(.system(size: 16).weight(.heavy))
                     Text(notification.body)
-                        .font(.system(size: 13))
+                        .font(.system(size: 14))
                 }
+                Spacer()
+                    .frame(height: 10)
+                Text(notification.dateAndTime)
+                    .font(.system(size: 14))
+                    .foregroundColor(.gray)
             }
             Spacer()
             if notification.hasImage {
-                Image(uiImage: vehicleImage ?? .vehiclePlaceholder)
-                    .resizable()
-                    .scaledToFill()
-                    .frame(width: 75, height: 75)
-                    .clipShape(RoundedRectangle(cornerRadius: 14))
+                imageView
             }
         }
-        .padding(4)
-        .multilineTextAlignment(.leading)
-        .foregroundColor(Color(uiColor: .label))
-        .onAppear {
-            getVehicleImage()
-        }
-        .alert("Delete Notification?", isPresented: $presentDeleteNotificationAlert) {
-            Button("Delete", role: .destructive) {
-                
+        .padding()
+        .background(!(notification.isRead) ? .blue.opacity(0.085) : .clear)
+    }
+    
+    var imageView: some View {
+        Image(uiImage: vehicleImage ?? .vehiclePlaceholder)
+            .resizable()
+            .scaledToFill()
+            .frame(width: 70, height: 70)
+            .clipShape(RoundedRectangle(cornerRadius: 2))
+            .redacted(reason: vehicleImage.isNil() ? .placeholder : [])
+            .onAppear {
+                getVehicleImage()
             }
-        }
     }
     
     private func getVehicleImage() {
-        guard let imageUrl = notification.imageUrl else {
-            return
-        }
-        
-        ImageCache.shared.getImage(imageUrl) { image in
-            self.vehicleImage = image
+        ImageCache.shared.getImage(notification.imageUrl) { image in
+            withAnimation {
+                self.vehicleImage = image
+            }
         }
     }
 }
@@ -129,13 +88,6 @@ extension UUID: Identifiable {
 
 struct NotificationListView_Previews: PreviewProvider {
     static var previews: some View {
-        NavigationView {
-            NotificationListView()
-                .environmentObject(NotificationViewModel())
-                .environmentObject(ReportsViewModel())
-                .environmentObject(UserViewModel())
-                .navigationTitle("Notifications")
-                .navigationBarTitleDisplayMode(.inline)
-        }
+        NotificationCellView(notification: .init(id: UUID(), dt: Date.now.addingTimeInterval(-86400).epoch, title: "Update: Stolen", body: "An Update is available to your report regarding the Red 2020 Hyundai Elantra", notificationType: .report, reportId: UUID(), isRead: false, imageUrl: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcT0GcDq4DYvOB86BmsxrxCp18U8T2ckXPBBqw&usqp=CAU"))
     }
 }

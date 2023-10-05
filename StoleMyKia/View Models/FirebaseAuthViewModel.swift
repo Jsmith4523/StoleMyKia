@@ -12,22 +12,19 @@ enum LoginStatus {
     case signedOut, signedIn
 }
 
-@MainActor
-class FirebaseAuthViewModel: ObservableObject {
+@MainActor class FirebaseAuthViewModel: ObservableObject {
     
     @Published private(set) var loginStatus: LoginStatus = .signedOut
-    
+        
     private let authManager = FirebaseAuthManager.manager
     weak var firebaseAuthDelegate: FirebaseAuthDelegate?
     
+    private var uid: String?
+    
     init() {
-        guard let user = Auth.auth().currentUser else {
-            self.loginStatus = .signedOut
-            prepareForSignOut()
-            return
-        }
-        self.prepareForSignIn(uid: user.uid)
-        self.loginStatus = .signedIn
+        checkForDeviceID()
+        checkForCurrentUser()
+        beginListeningForSignOut()
     }
     
     func setDelegate(_ delegate: FirebaseAuthDelegate) {
@@ -44,47 +41,27 @@ class FirebaseAuthViewModel: ObservableObject {
         guard let user = Auth.auth().currentUser else {
             return
         }
-        
         prepareForSignIn(uid: user.uid)
     }
     
     /// Begin setting up the application after successful sign in.
     /// - Parameter uid: The Firebase auth user uid.
     private func prepareForSignIn(uid: String) {
+        self.uid = uid
         self.loginStatus = .signedIn
         DispatchQueue.main.asyncAfter(deadline: .now() + 0.12) {
             Task {
                 guard let status = await self.firebaseAuthDelegate?.userHasSignedIn(uid: uid) else {
-                    self.loginStatus = .signedOut
+                    self.prepareForSignOut(shouldImmediatelySignOut: true)
                     return
                 }
                 self.loginStatus = status
+                self.beginListeningForFCMToken()
             }
         }
     }
     
-    ///Begin setting up the application for sign out.
-    private func prepareForSignOut() {
-        try? authManager.signOutUser()
-        
-        //self.firebaseAuthDelegate?.userHasSignedOut()
-        self.loginStatus = .signedOut
-        
-        //Removing notifications and resetting application badge...
-        UNUserNotificationCenter.current().removeAllDeliveredNotifications()
-        UNUserNotificationCenter.current().removeAllPendingNotificationRequests()
-        
-        if #available(iOS 17.0, *) {
-            UNUserNotificationCenter.current().setBadgeCount(0)
-        } else {
-            UIApplication.shared.applicationIconBadgeNumber = 0
-        }
-    }
-}
-
-//MARK: - UserViewModelDelegate
-extension FirebaseAuthViewModel: UserViewModelDelegate {
-    func userDidSuccessfullySignOut() {
+    @objc private func userHasSignedOut() {
         if Auth.auth().currentUser == nil {
             DispatchQueue.main.asyncAfter(deadline: .now() + 0.15) {
                 self.loginStatus = .signedOut
@@ -92,11 +69,85 @@ extension FirebaseAuthViewModel: UserViewModelDelegate {
             }
         }
     }
+    
+    @objc private func saveDeviceFCMToken(_ notification: NSNotification) {
+        if let userInfo = notification.userInfo, let deviceID = UserDefaults.standard.string(forKey: Constants.deviceIDKey) {
+            let deviceToken = userInfo[Constants.deviceToken] as! String
+            var info = [String: Any]()
+            info[Constants.deviceIDKey] = deviceID
+            info[Constants.deviceToken] = deviceToken
+            
+            FirebaseUserManager.saveFCMTOken(info: info)
+        }
+    }
+    
+    private func removeDeviceFCMToken() {
+        FirebaseUserManager.deleteFCMToken(uid)
+    }
+    
+    ///Begin setting up the application for sign out.
+    private func prepareForSignOut(shouldImmediatelySignOut: Bool = false) {
+        do {
+            if !(shouldImmediatelySignOut) {
+                try authManager.signOutUser()
+            }
+            
+            suspendListeningForFCMToken()
+            removeDeviceFCMToken()
+            NotificationManager.removeNotificationListener()
+            
+            //self.firebaseAuthDelegate?.userHasSignedOut()
+            self.loginStatus = .signedOut
+            
+            //Removing notifications and resetting application badge...
+            UNUserNotificationCenter.current().removeAllDeliveredNotifications()
+            UNUserNotificationCenter.current().removeAllPendingNotificationRequests()
+            
+            if #available(iOS 17.0, *) {
+                UNUserNotificationCenter.current().setBadgeCount(0)
+            } else {
+                UIApplication.shared.applicationIconBadgeNumber = 0
+            }
+        } catch {}
+    }
+    
+    private func checkForDeviceID() {
+        if (UserDefaults.standard.string(forKey: Constants.deviceIDKey) == nil) {
+            UserDefaults.standard.setValue(UUID().uuidString, forKey: Constants.deviceIDKey)
+        }
+    }
+    
+    private func checkForCurrentUser() {
+        guard let user = Auth.auth().currentUser else {
+            self.loginStatus = .signedOut
+            prepareForSignOut()
+            return
+        }
+        self.prepareForSignIn(uid: user.uid)
+        self.loginStatus = .signedIn
+    }
+    
+    
+    private func beginListeningForFCMToken() {
+        NotificationCenter.default.addObserver(self, selector: #selector(saveDeviceFCMToken(_:)), name: .deviceFCMToken, object: nil)
+    }
+    
+    private func suspendListeningForFCMToken() {
+        NotificationCenter.default.removeObserver(self, name: .deviceFCMToken, object: nil)
+    }
+    
+    private func beginListeningForSignOut() {
+        NotificationCenter.default.addObserver(self, selector: #selector(userHasSignedOut), name: .signOut, object: nil)
+    }
+    
+    deinit {
+        Task {
+            await suspendListeningForFCMToken()
+        }
+    }
 }
 
 protocol FirebaseAuthDelegate: AnyObject {
     ///Called when the Firebase Auth user has succesfully signed in.
     func userHasSignedIn(uid: String) async -> LoginStatus
-    ///Callled when the Firebase Auth user is signing out.
-    func userHasSignedOut()
 }

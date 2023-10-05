@@ -36,13 +36,21 @@ struct StoleMyKiaApp: App {
 
 class AppDelegate: UIScene, UIApplicationDelegate {
     
+    var window: UIWindow?
+    
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey : Any]? = nil) -> Bool {
         FirebaseApp.configure()
         
+        let settings = FirestoreSettings()
+        settings.isPersistenceEnabled = false
+        
+        Firestore.firestore().settings = settings
+        
+        setupUpdateCriticalAlert()
+                
         UITabBar.appearance().barTintColor = .systemBackground
         UINavigationBar.appearance().barTintColor = .systemBackground
         
-        Messaging.messaging().delegate = self
         UNUserNotificationCenter.current().delegate = self
                         
         return true
@@ -52,6 +60,19 @@ class AppDelegate: UIScene, UIApplicationDelegate {
         if Auth.auth().canHandleNotification(userInfo) {
             completionHandler(.noData)
         }
+        
+        guard Auth.auth().currentUser.isSignedIn else { return }
+        
+        if let rootVC = window?.rootViewController {
+            let vc = UIViewController()
+            vc.view.backgroundColor = .orange
+            rootVC.present(vc, animated: true)
+        }
+    }
+    
+    private func setupUpdateCriticalAlert() {
+        let updateNotificationCategory = UNNotificationCategory(identifier: "UPDATE", actions: [], intentIdentifiers: [], options: [])
+        UNUserNotificationCenter.current().setNotificationCategories([updateNotificationCategory])
     }
 }
 
@@ -62,13 +83,4 @@ extension AppDelegate: UNUserNotificationCenterDelegate {
         Messaging.messaging().apnsToken = deviceToken
     }
 }
-
-//MARK: - MessagingDelegate
-extension AppDelegate: MessagingDelegate {
-    func messaging(_ messaging: Messaging, didReceiveRegistrationToken fcmToken: String?) {
-        UserDefaults.standard.setValue(fcmToken, forKey: "fcmToken")
-        print("APNS Token saved for later")
-    }
-}
-
 

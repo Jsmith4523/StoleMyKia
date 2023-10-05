@@ -7,6 +7,7 @@
 
 import SwiftUI
 import CoreLocation
+import FirebaseAuth
 
 enum ImagePickerSource: String, Identifiable, CaseIterable {
     case camera = "Take Photo"
@@ -31,6 +32,7 @@ struct UpdateReportView: View {
     let originalReport: Report
     
     @State private var isUploading = false
+    @State private var isShowingDescriptionView = false
     @State private var isShowingLocationSearchView = false
     
     @State private var presentError = false
@@ -80,6 +82,7 @@ struct UpdateReportView: View {
                     HStack {
                         Text("Report Details: \n\n\(originalReport.distinguishableDetails)")
                             .font(.system(size: 17))
+                            .lineLimit(4)
                             .foregroundColor(.gray)
                     }
                 } header: {
@@ -101,12 +104,12 @@ struct UpdateReportView: View {
                         }
                     }
                     Picker("Update Type", selection: $updateReportType) {
-                        ForEach(ReportType.update) { type in
+                        ForEach(ReportType.updateCases) { type in
                             Text(type.rawValue)
                                 .tag(type)
                         }
                     }
-                    Menu("Include Image") {
+                    Menu("Vehicle Image") {
                         ForEach(ImagePickerSource.allCases) { source in
                             Button(source.rawValue) {
                                 self.photoPickerSourceType = source.sourceType
@@ -118,21 +121,13 @@ struct UpdateReportView: View {
                 }
                 
                 Section {
-                    TextEditor(text: $description)
-                } header: {
-                    Text("Update Description")
-                } footer: {
-                    Text("Include a description of this update")
-                }
-
-                Section {
-                    Button("Select Location") {
-                        isShowingLocationSearchView.toggle()
+                    Button("Add Description") {
+                        isShowingDescriptionView.toggle()
                     }
                 } header: {
-                    Text("Location")
+                    Text("Description")
                 } footer: {
-                    Text("Depending on your location services settings, your current location has been applied to this report.")
+                    Text("Please describe your update")
                 }
             }
             .navigationTitle("Update Report")
@@ -152,6 +147,9 @@ struct UpdateReportView: View {
             .sheet(isPresented: $isShowingLocationSearchView) {
                 NearbyLocationSearchView(location: $location)
             }
+            .customSheetView(isPresented: $isShowingDescriptionView, detents: [.large()], showsIndicator: true) {
+                ReportDescriptionView(description: $description)
+            }
             .imagePicker(source: $photoPickerSourceType, image: $vehicleImage)
         }
         .disabled(isUploading)
@@ -170,7 +168,7 @@ struct UpdateReportView: View {
         isUploading = true
         Task {
             do {
-                guard let uid = userVM.uid else {
+                guard let uid = Auth.auth().currentUser?.uid else {
                     throw NewReportError.userIdError
                 }
                 
@@ -178,7 +176,7 @@ struct UpdateReportView: View {
                     throw NewReportError.locationError
                 }
                 
-                var report = Report(uid: uid, type: updateReportType, Vehicle: self.originalReport.vehicle, details: self.description, location: location)
+                var report = Report(uid: uid, type: updateReportType, Vehicle: self.originalReport.vehicle, details: self.description, location: location, discloseLocation: false)
                 report.setAsUpdate(originalReport.role.associatedValue)
                 try await reportsVM.addUpdateToOriginalReport(originalReport: originalReport, report: report, vehicleImage: vehicleImage)
                 dismiss()
@@ -187,13 +185,5 @@ struct UpdateReportView: View {
                 isUploading = false
             }
         }
-    }
-}
-
-struct UpdateReportView_Previews: PreviewProvider {
-    static var previews: some View {
-        UpdateReportView(originalReport: .init(uid: "12345", type: .stolen, Vehicle: .init(year: 2017, make: .hyundai, model: .elantra, color: .red), details: "My 2017 Hyundai Elantra was stolen outside of my home", location: .init(coordinates: .init())))
-            .environmentObject(UserViewModel())
-            .environmentObject(ReportsViewModel())
     }
 }

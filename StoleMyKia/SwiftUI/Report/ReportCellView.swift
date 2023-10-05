@@ -9,8 +9,7 @@ import SwiftUI
 
 struct ReportCellView: View {
     
-    @State private var presentAlertDeleteReport = false
-            
+    @State private var isBookmarked: Bool = false
     @State private var vehicleImage: UIImage?
     
     @EnvironmentObject var userVM: UserViewModel
@@ -25,50 +24,61 @@ struct ReportCellView: View {
                     Image(uiImage: vehicleImage ?? .vehiclePlaceholder)
                         .resizable()
                         .scaledToFill()
-                        .frame(width: UIScreen.main.bounds.width, height: 300)
+                        .frame(width: UIScreen.main.bounds.width)
+                        .frame(height: 300)
                         .clipped()
                         .redacted(reason: vehicleImage == nil ? .placeholder : [])
+                        .onAppear {
+                            getVehicleImage()
+                        }
                 }
                 VStack(alignment: .leading, spacing: 20) {
-                    VStack {
+                    VStack(alignment: .leading, spacing: 10) {
                         VStack(alignment: .leading, spacing: 11) {
                             HStack {
                                 reportTypeLabelStyle(report: report)
                                 Spacer()
-                                VStack(alignment: .trailing) {
-                                    Text(report.timeSinceString())
-                                }
                             }
                             .font(.system(size: 14))
                             .foregroundColor(.gray)
-                            VStack(alignment: .leading, spacing: 5) {
+                            VStack(alignment: .leading, spacing: 8) {
                                 Text(report.vehicleDetails)
                                     .font(.system(size: 20).weight(.heavy))
                                     .foregroundColor(Color(uiColor: .label))
-                                    .lineLimit(2)
-                                    //.lineLimit(2)
-                                if let locationName = report.location.name {
-                                    Text(locationName)
-                                        .font(.system(size: 17))
-                                        .foregroundColor(.gray)
+                                    .lineLimit(1)
+                                if (report.hasVin || report.hasLicensePlate) {
+                                    HStack {
+                                        if report.hasLicensePlate {
+                                            Text(report.vehicle.licensePlateString)
+                                        }
+                                        if (report.hasLicensePlate && report.hasVin) {
+                                            Divider()
+                                                .frame(height: 10)
+                                        }
+                                        if report.hasVin {
+                                            if let formattedVin = ApplicationFormats.vinFormat(report.vehicle.vinString) {
+                                            Text("VIN: \(formattedVin)")
+                                            }
+                                        }
+                                    }
+                                    .font(.system(size: 15))
                                 }
                                 Text(report.distinguishableDetails)
                                     .font(.system(size: 15))
                                     .lineLimit(3)
                             }
                         }
-                    }
-                    
-                    HStack {
-                        Button {
-                            
-                        } label: {
-                            Image(systemName: "bookmark")
-                                .resizable()
-                                .scaledToFit()
-                                .frame(width: 20, height: 20)
-                                .foregroundColor(.gray)
+                        HStack {
+                            Text(report.timeSinceString())
+                            if !(report.location.distanceFromUser == "") {
+                                Divider()
+                                    .frame(height: 10)
+                                Text(report.location.distanceFromUser)
+                            }
+                            Spacer()
                         }
+                        .foregroundColor(.gray)
+                        .font(.system(size: 15))
                     }
                 }
                 .padding()
@@ -76,13 +86,31 @@ struct ReportCellView: View {
         }
         .background(Color(uiColor: .systemBackground))
         .multilineTextAlignment(.leading)
-        .onAppear {
-            getVehicleImage()
+    }
+    
+    private func setBookmark() {
+        UIImpactFeedbackGenerator(style: .medium).impactOccurred()
+        Task {
+            if isBookmarked {
+                self.isBookmarked = false
+                try! await FirebaseUserManager.undoBookmark(report.id)
+            } else {
+                do {
+                    self.isBookmarked = true
+                    try await FirebaseUserManager.bookmarkReport(report.id)
+                } catch {
+                    self.isBookmarked = false
+                }
+            }
         }
     }
     
     private func getVehicleImage() {
-        ImageCache.shared.getImage(report.imageURL) { image in
+        guard let imageUrl = report.imageURL else {
+            return
+        }
+        
+        ImageCache.shared.getImage(imageUrl) { image in
             guard let image else {
                 return
             }
@@ -96,12 +124,10 @@ extension View  {
     func reportTypeLabelStyle(report: Report) -> some View {
         HStack {
             if report.isFalseReport {
-                Image(systemName: "exclamationmark.shield")
-                    .resizable()
-                    .scaledToFit()
-                    .frame(width: 20, height: 20)
+                Image.falseReportIcon
+                    
             } else if report.role.isAnUpdate {
-                Image(systemName: "arrow.2.squarepath")
+                Image.updateImageIcon
                     .resizable()
                     .scaledToFit()
                     .frame(width: 20, height: 20)

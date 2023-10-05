@@ -168,7 +168,9 @@ public class ReportManager {
     /// - Throws: Error if either the report or it's vehicle image could not be deleted
     func delete(_ report: Report) async throws {
         try await StorageManager.shared.deleteVehicleImage(path: report.vehicleImagePath)
-        try await self.collection.document(report.id.uuidString).delete()
+        try await self.collection
+            .document(report.id.uuidString)
+            .delete()
     }
     
     /// Checks the Firestore collection if a report still exists in the database.
@@ -185,6 +187,18 @@ public class ReportManager {
         }
         
         return true
+    }
+    
+    func getNumberOfUpdates(_ report: Report) async -> Int {
+        do {
+            let count = try await collection.document(report.role.associatedValue.uuidString)
+                .collection("Updates")
+                .getDocuments()
+                .count
+            return count
+        } catch {
+            return 0
+        }
     }
 }
 

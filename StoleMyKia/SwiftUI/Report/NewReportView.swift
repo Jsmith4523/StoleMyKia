@@ -8,6 +8,7 @@
 import SwiftUI
 import UIKit
 import CoreLocation
+import FirebaseAuth
 
 //TODO: Picker: the selection "" is invalid and does not have an associated tag, this will give undefined results. Not sure how to fix...
 
@@ -31,21 +32,24 @@ struct NewReportView: View {
     @State private var vehicleMake: VehicleMake = .hyundai
     @State private var vehicleModel: VehicleModel = .elantra
     @State private var vehicleColor: VehicleColor = .gray
+    
     @State private var licensePlate: String = ""
+    @State private var vin: String = ""
     
     @State private var doesNotHaveVehicleIdentification = false
         
-    @State private var canUseUserLocation = true
-    @State private var useCurrentLocation = true
-    @State private var isShowingLocationView = false
+    @State private var discloseLocation = false
     @State private var disablesLicensePlateAndVinSection = false
     
+    @State private var isShowingReportDescriptionView = false
     @State private var isShowingImagePicker = false
     @State private var imagePickerSourceType: UIImagePickerController.SourceType = .photoLibrary {
         didSet {
             isShowingImagePicker.toggle()
         }
     }
+    
+    
     @State private var isShowingPhotoRemoveConfirmation = false
         
     @State private var isUploading = false
@@ -59,12 +63,12 @@ struct NewReportView: View {
     @Environment (\.dismiss) var dismiss
     
     var isNotSatisfied: Bool {
-        guard (licensePlate.range(of: ".*[^A-Za-z0-9].*", options: .regularExpression) == nil) else { return true }
+        guard (licensePlate.range(of: ".*[^A-Za-z0-9].*", options: .regularExpression) == nil), (vin.range(of: ".*[^A-Za-z0-9].*", options: .regularExpression) == nil)  else { return true }
         if (doesNotHaveVehicleIdentification) {
-            return (self.distinguishableDescription.isEmpty || self.distinguishableDescription.count < 19 || self.distinguishableDescription.count > 301)
+            return (self.distinguishableDescription.isEmpty || self.distinguishableDescription.count < 19 || self.distinguishableDescription.count > Report.descriptionCharacterLimit)
         } else {
-            return (self.licensePlate.isEmpty || self.licensePlate.count < 6)
-            || (self.distinguishableDescription.isEmpty || self.distinguishableDescription.count < 19 || self.distinguishableDescription.count > 301)
+            return (self.licensePlate.isEmpty && self.vin.isEmpty)
+            || (self.distinguishableDescription.isEmpty || self.distinguishableDescription.count < 19 || self.distinguishableDescription.count > Report.descriptionCharacterLimit)
         }
     }
     
@@ -86,7 +90,7 @@ struct NewReportView: View {
                 }
                 Section {
                     Picker("Type", selection: $reportType) {
-                        ForEach(ReportType.reports, id: \.rawValue) {
+                        ForEach(ReportType.allCases, id: \.rawValue) {
                             Text($0.rawValue)
                                 .tag($0)
                         }
@@ -131,9 +135,12 @@ struct NewReportView: View {
                     Section {
                         Toggle("Not avaliable", isOn: $doesNotHaveVehicleIdentification)
                             .disabled(self.reportType.requiresLicensePlateInformation)
-                            .tint(.brand)
+                            .tint(.green)
                         if !doesNotHaveVehicleIdentification {
                             TextField("License Plate", text: $licensePlate)
+                                .keyboardType(.alphabet)
+                                .submitLabel(.done)
+                            TextField("VIN", text: $vin)
                                 .keyboardType(.alphabet)
                                 .submitLabel(.done)
                         }
@@ -141,19 +148,21 @@ struct NewReportView: View {
                         Text("Vehicle Identification")
                     } footer: {
                         if doesNotHaveVehicleIdentification {
-                            Text("Note that the difficulty of identifying the vehicle may vary based on the information you have included with this report. Please make sure information is accurate.")
+                            Text("Difficulty identify this vehicle may vary!")
                         } else {
-                            Text("Please enter the vehicle's full license plate. Do not include any spaces or special characters. Maximum characters allowed is 8.")
+                            Text("Please enter the vehicles full license plate and/or VIN. Depending on the report type, at least one field is required. Do not include any spaces or special characters.")
                         }
                     }
                 }
                 
                 Section {
-                    TextEditor(text: $distinguishableDescription)
+                    Button("Add Description") {
+                        isShowingReportDescriptionView.toggle()
+                    }
                 } header: {
-                    Text("Distinguishable Details")
+                    Text("Description")
                 } footer: {
-                    Text("Describe the incident and include any distinguishable details of the vehicle in the field above. \n\nCharacter limit: 20-400 characters.")
+                    Text("Describe your situation.")
                 }
                 
                 Section {
@@ -171,13 +180,12 @@ struct NewReportView: View {
                 .disabled(!vehicleImage.isNil())
                 
                 Section {
-                    Button("Nearby Locations") {
-                        isShowingLocationView.toggle()
-                    }
+                    Toggle("Disclose Location", isOn: $discloseLocation)
+                        .tint(.green)
                 } header: {
                     Text("Report Location")
                 } footer: {
-                    Text("Depending on your location services settings, your current location has been applied to this report. You can select a nearby location if possible.")
+                    Text("Your current location is automatically applied with this report. You can disclose the location if you're at a personal location. When disclosed, the location is still attached with this report but not visible to other users")
                 }
             }
             .navigationTitle("New Report")
@@ -206,7 +214,7 @@ struct NewReportView: View {
                     }
                 }
             }
-            //Remedying the picker warning xcode throws when chaging either a vehicle make or year...
+            //Remedying the picker warning Xcode throws when changing either a vehicle make or year...
             .onChange(of: vehicleMake) { _ in
                 self.vehicleModel = vehicleModel.matches(make: self.vehicleMake, year: self.vehicleYear)
             }
@@ -218,18 +226,16 @@ struct NewReportView: View {
                     self.licensePlate = ""
                 }
             }
+            .onChange(of: vin) { _ in
+                if vin.count > 17 {
+                    self.vin = ""
+                }
+            }
             .onChange(of: doesNotHaveVehicleIdentification) { _ in
                 self.licensePlate = ""
+                self.vin = ""
             }
             .onChange(of: reportType) { type in
-                if type.disableLicenseAndVinInformation {
-                    self.disablesLicensePlateAndVinSection = true
-                    self.doesNotHaveVehicleIdentification = true
-                } else {
-                    self.disablesLicensePlateAndVinSection = false
-                    self.doesNotHaveVehicleIdentification = false
-                }
-                
                 if type.requiresLicensePlateInformation {
                     self.doesNotHaveVehicleIdentification = false
                 }
@@ -238,12 +244,12 @@ struct NewReportView: View {
         .interactiveDismissDisabled()
         .tint(Color(uiColor: .label))
         .disabled(isUploading)
-        .customSheetView(isPresented: $isShowingLocationView, detents: [.large()], showsIndicator: true) {
-            NearbyLocationSearchView(location: $location)
-        }
-        .sheet(isPresented: $isShowingImagePicker) {
+        .fullScreenCover(isPresented: $isShowingImagePicker) {
             PhotoPicker(selectedImage: $vehicleImage, source: imagePickerSourceType)
                 .ignoresSafeArea()
+        }
+        .sheet(isPresented: $isShowingReportDescriptionView) {
+            ReportDescriptionView(description: $distinguishableDescription)
         }
         .confirmationDialog("", isPresented: $isShowingPhotoRemoveConfirmation) {
             Button("Remove", role: .destructive) {
@@ -257,10 +263,10 @@ struct NewReportView: View {
         } message: {
             Text(alertReason?.rawValue ?? "We ran into a problem completing that request. Please try again")
         }
-        .alert("Location not selected", isPresented: $alertSelectLocation) {
-            Button("OK") { isShowingLocationView.toggle()}
+        .alert("Your location could not be retrieved at the moment", isPresented: $alertSelectLocation) {
+            Button("OK") { }
         } message: {
-            Text("Please select a location")
+            Text("Please try again once location services are enabled and your device connection is stable.")
         }
     }
     
@@ -279,7 +285,7 @@ struct NewReportView: View {
             do {
                 self.isUploading = true
                 
-                guard let uid = userVM.uid else {
+                guard let uid = Auth.auth().currentUser?.uid else {
                     throw NewReportError.userIdError
                 }
                 
@@ -287,13 +293,18 @@ struct NewReportView: View {
                     throw NewReportError.detailIsEmpty
                 }
                             
-                guard let location = usersLocation() ?? location else {
+                guard let location = usersLocation() else {
                     throw NewReportError.locationError
                 }
                 
                 var vehicle = Vehicle(year: vehicleYear, make: vehicleMake, model: vehicleModel, color: vehicleColor)
-                try vehicle.licensePlateString(licensePlate)
-                let report = Report(uid: uid, type: reportType, Vehicle: vehicle, details: distinguishableDescription, location: location)
+                if !(licensePlate.isEmpty) {
+                    try vehicle.licensePlateString(licensePlate)
+                }
+                if !(vin.isEmpty) {
+                    try vehicle.vinString(vin)
+                }
+                let report = Report(uid: uid, type: reportType, Vehicle: vehicle, details: distinguishableDescription, location: location, discloseLocation: discloseLocation)
                 
                 guard let _ = try? await reportsVM.uploadReport(report, image: vehicleImage) else {
                     throw NewReportError.error

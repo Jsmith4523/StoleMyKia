@@ -6,10 +6,8 @@
 	<dict>
 		<key>NSExtensionAttributes</key>
 		<dict>
-			<key>UNNotifcationExtensionDefalutContentHidden</key>
-			<true/>
 			<key>UNNotificationExtensionCategory</key>
-			<string>Update</string>
+			<string>UPDATE</string>
 			<key>UNNotificationExtensionUserInteractionEnabled</key>
 			<false/>
 			<key>UNNotificationExtensionInitialContentSizeRatio</key>

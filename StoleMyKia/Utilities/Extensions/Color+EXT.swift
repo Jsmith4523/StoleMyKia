@@ -10,6 +10,9 @@ import SwiftUI
 
 extension Color {
     
+    static let discloseLocationColor = Color.teal
+    static let falseReportColor = Color.orange
+    
     static let spottedGreen = Color("spotted-green")
     static let brand = Color("brand")
 }

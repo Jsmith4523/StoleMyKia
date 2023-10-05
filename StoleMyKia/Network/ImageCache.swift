@@ -14,7 +14,9 @@ class ImageCache {
     
     private var cache = NSCache<AnyObject, AnyObject>()
     
-    private init() {}
+    private init() {
+        listenForSignOut()
+    }
     
     func getImage(_ urlString: String?, completion: @escaping (UIImage?)->Void) {
         if let image = cache.object(forKey: urlString as AnyObject) as? UIImage {
@@ -44,7 +46,16 @@ class ImageCache {
         cache.removeObject(forKey: urlString as AnyObject)
     }
     
+    @objc private func removeAll() {
+        cache.removeAllObjects()
+    }
+    
+    ///Allows the ImageCache class to listen when the user has signed out the application
+    private func listenForSignOut() {
+        NotificationCenter.default.addObserver(self, selector: #selector(removeAll), name: .signOut, object: nil)
+    }
+        
     deinit {
-        print("Cache class is being destroyed!!")
+        NotificationCenter.default.removeObserver(self, name: .signOut, object: nil)
     }
 }

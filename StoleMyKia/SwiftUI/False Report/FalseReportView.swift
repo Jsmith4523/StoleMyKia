@@ -145,25 +145,25 @@ struct FalseReportView: View {
             isUploading = false
             return
         }
-        
-        guard let uid = userVM.uid else {
-            isUploading = false
-            presentError = true
-            return
-        }
-        
-        let falseReport = FalseReport(uid: uid, report: report, type: falseReportType, comments: comments)
-        
-        Task {
-            do {
-                try await FalseReportManager.shared.uploadFalseReport(falseReport)
-                isUploading = false
-                presentSuccessAlert = true
-            } catch {
-                isUploading = false
-                presentError = true
-            }
-        }
+//        
+//        guard let uid = userVM.uid else {
+//            isUploading = false
+//            presentError = true
+//            return
+//        }
+//        
+//        let falseReport = FalseReport(uid: uid, report: report, type: falseReportType, comments: comments)
+//        
+//        Task {
+//            do {
+//                try await FalseReportManager.shared.uploadFalseReport(falseReport)
+//                isUploading = false
+//                presentSuccessAlert = true
+//            } catch {
+//                isUploading = false
+//                presentError = true
+//            }
+//        }
     }
 }
 

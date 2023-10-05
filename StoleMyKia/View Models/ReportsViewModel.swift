@@ -7,6 +7,7 @@
 
 import Foundation
 import SwiftUI
+import FirebaseAuth
 import UIKit
 import MapKit
 
@@ -73,7 +74,7 @@ final class ReportsViewModel: NSObject, ObservableObject {
     ///   - originalReportId: The UUID of the original report
     ///   - update: The Update object
     func addUpdateToOriginalReport(originalReport: Report, report: Report, vehicleImage: UIImage? = nil) async throws {
-        guard let uid = firebaseUserDelegate?.uid else {
+        guard let uid = Auth.auth().currentUser?.uid else {
             throw ReportManagerError.error
         }
         
@@ -82,7 +83,8 @@ final class ReportsViewModel: NSObject, ObservableObject {
         }
         
         var report = report
-        let update = Update(uid: uid, authorUid: originalReport.uid, type: report.reportType, vehicle: report.vehicle, reportId: report.id, dt: report.dt)
+        
+        let update = Update(uid: uid, type: report.reportType, vehicle: report.vehicle, reportId: report.id, dt: report.dt)
         let updateId = try await manager.appendUpdateToReport(originalReport.role.associatedValue, update: update)
         
         report.updateId = updateId
@@ -90,19 +92,14 @@ final class ReportsViewModel: NSObject, ObservableObject {
         try await uploadReport(report, image: vehicleImage)
     }
     
+    func getNumberOfReportUpdates(report: Report) async -> Int {
+        return await manager.getNumberOfUpdates(report)
+    }
+    
     deinit {
         print("Dead: ReportsViewModel")
     }
 }
-
-//MARK: - TimelineMapViewDelegate
-extension ReportsViewModel: TimelineMapViewDelegate {
-    func getTimelineUpdates(for report: Report) async throws -> [Report] {
-        //Using the associated value for both original and update reports
-        try await manager.fetchUpdates(report.role.associatedValue)
-    }
-}
-
 
 //MARK: - LicensePlateCoordinatorDelegate
 extension ReportsViewModel: LicensePlateCoordinatorDelegate {

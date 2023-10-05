@@ -42,11 +42,7 @@ enum EDEncryptionStatus: Error {
 extension EncryptedData {
 
     func decode() -> String? {
-        let buffSize = self.data.count + kCCBlockSizeAES128
-                
-        let buffer = Data(count: buffSize)
-        
-        return nil
+        return try? Self.decryptData(encryptedDataString: data, key: self.key, iv: self.iv)
     }
 
     static func createEncryption(input: String) throws -> Data? {
@@ -105,5 +101,45 @@ extension EncryptedData {
         let jsonData = try JSONSerialization.data(withJSONObject: jsonObject)
         
         return jsonData
+    }
+    
+    static func decryptData(encryptedDataString: String, key: Data, iv: Data) throws -> String? {
+        guard let encryptedData = Data(base64Encoded: encryptedDataString) else {
+            return nil
+        }
+        
+        let bufferSize = encryptedData.count + kCCBlockSizeAES128
+        var buffer = [UInt8](repeating: 0, count: bufferSize)
+        var decryptSize = 0
+        
+        let status = key.withUnsafeBytes { kBytes in
+            iv.withUnsafeBytes { ivBytes in
+                encryptedData.withUnsafeBytes { encryptedBytes in
+                    CCCrypt(UInt32(kCCDecrypt),
+                            UInt32(kCCAlgorithmAES128),
+                            UInt32(kCCOptionPKCS7Padding),
+                            kBytes.baseAddress,
+                            key.count,
+                            ivBytes.baseAddress,
+                            encryptedBytes.baseAddress,
+                            encryptedData.count,
+                            &buffer,
+                            bufferSize,
+                            &decryptSize)
+                }
+            }
+        }
+        
+        guard status == kCCSuccess else {
+            throw EDEncryptionStatus.decryptError(Int(status))
+        }
+        
+        let decryptedData = Data(bytes: buffer, count: decryptSize)
+        
+        guard let decryptedString = String(data: decryptedData, encoding: .utf8) else {
+            throw EDEncryptionStatus.invalidData
+        }
+        
+        return decryptedString
     }
 }

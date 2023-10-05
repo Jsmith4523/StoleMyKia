@@ -16,7 +16,7 @@ struct TimelineMapView: View {
     }
             
     let detailMode: DetailMode
-    
+        
     @StateObject private var timelineMapCoordinator = TimelineMapViewCoordinator()
     @EnvironmentObject var reportsVM: ReportsViewModel
     
@@ -25,8 +25,18 @@ struct TimelineMapView: View {
     var body: some View {
         NavigationView {
             VStack {
-                TimelineMapViewRepresentabe(timelineMapCoordinator: timelineMapCoordinator)
-                    .edgesIgnoringSafeArea(.bottom)
+                ZStack(alignment: .top) {
+                    TimelineMapViewRepresentabe(timelineMapCoordinator: timelineMapCoordinator)
+                        .edgesIgnoringSafeArea(.bottom)
+                    if let report = timelineMapCoordinator.report {
+                        Text(report.vehicleDetails)
+                            .font(.system(size: 12.5).weight(.medium))
+                            .padding(10)
+                            .background(Color(uiColor: .systemBackground))
+                            .clipShape(Capsule())
+                            .padding()
+                    }
+                }
             }
             .navigationTitle("Timeline")
             .navigationBarTitleDisplayMode(.inline)
@@ -62,13 +72,9 @@ struct TimelineMapView: View {
         .environmentObject(reportsVM)
         .onAppear {
             UIImpactFeedbackGenerator(style: .medium).impactOccurred()
-            timelineMapCoordinator.setDelegate(reportsVM)
             fetchForUpdates()
         }
-        .onDisappear {
-            timelineMapCoordinator.suspendTask()
-        }
-        .alert("Uh oh", isPresented: $timelineMapCoordinator.showAlert) {
+        .alert("Alert", isPresented: $timelineMapCoordinator.showAlert) {
             Button("Okay") { dismiss() }
         } message: {
             Text(timelineMapCoordinator.alertReportError?.rawValue ?? "There was an error")
@@ -79,7 +85,7 @@ struct TimelineMapView: View {
                 TimelineListView()
                     .environmentObject(timelineMapCoordinator)
             case .report(let report):
-                SelectedReportDetailView(report: report, timelineMapViewMode: .dismissWhenSelected)
+                SelectedReportDetailView(report: report, timelineMapViewMode: .dismissWhenSelected, deleteCompletion: fetchForUpdates)
                     .environmentObject(reportsVM)
             }
         }
@@ -90,7 +96,7 @@ struct TimelineMapView: View {
             switch detailMode {
             case .report(let report):
                 await timelineMapCoordinator.getUpdates(report)
-            case .reportId(let uuid):
+            case .reportId(_):
                 break
             }
         }

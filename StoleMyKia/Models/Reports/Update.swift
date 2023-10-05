@@ -9,9 +9,8 @@ import Foundation
 
 struct Update: Identifiable, Codable {
     
-    init(uid: String, authorUid: String, type: ReportType, vehicle: Vehicle, reportId: UUID, dt: TimeInterval = Date.now.epoch) {
+    init(uid: String, type: ReportType, vehicle: Vehicle, reportId: UUID, dt: TimeInterval = Date.now.epoch) {
         self.uid              = uid
-        self.authorUid        = authorUid
         self.reportId         = reportId
         self.updateReportType = type
         self.vehicleDetails   = vehicle.vehicleNotificationDetails
@@ -22,9 +21,6 @@ struct Update: Identifiable, Codable {
     ///The uid of the user updating the report
     ///Both uids will be compared to make sure the original post user is not notified if matches.
     let uid: String
-    ///The original report author uid.
-    ///The uid is used to retrieve the FCM token from Firebase and send the remote notification to the user.
-    let authorUid: String
     ///The UUID of the update report.
     let reportId: UUID
     ///The report type of the update report

@@ -8,94 +8,124 @@
 import Foundation
 import NotificationCenter
 import Firebase
-import MapKit
 import SwiftUI
 
 enum NotificationLoadStatus {
-    case loading, loaded, empty, error
+    case loading, loaded, empty
 }
 
+@MainActor
 final class NotificationViewModel: NSObject, ObservableObject {
     
-    enum NotificationType {
+    fileprivate enum NotificationType {
         case update(UUID)
         case other(UUID)
     }
     
-    @Published private(set) var notifications: [Notification] = [
-        .init(id: UUID(), dt: Date.now.epoch, title: "Update: Found", body: "A Update is available for your report regarding the Gray 2017 Hyundai Elantra", reportType: .stolen, reportId: UUID(), isRead: false, imageUrl: ""),
-        .init(id: UUID(), dt: Date.now.epoch, title: "Update: Found", body: "A Update is available for your report regarding the Gray 2017 Hyundai Elantra", reportType: .stolen, reportId: UUID(), isRead: true, imageUrl: ""),
-        .init(id: UUID(), dt: Date.now.epoch, title: "Update: Found", body: "A Update is available for your report regarding the Gray 2017 Hyundai Elantra", reportType: .stolen, reportId: UUID(), isRead: false, imageUrl: ""),
-        .init(id: UUID(), dt: Date.now.epoch, title: "Update: Found", body: "A Update is available for your report regarding the Gray 2017 Hyundai Elantra", reportType: .stolen, reportId: UUID(), isRead: false, imageUrl: ""),
-        .init(id: UUID(), dt: Date.now.epoch, title: "Update: Found", body: "A Update is available for your report regarding the Gray 2017 Hyundai Elantra", reportType: .stolen, reportId: UUID(), isRead: true, imageUrl: "")
-    ]
-    @Published private(set) var notificationLoadStatus: NotificationLoadStatus = .loading
-        
-    weak private var firebaseUserDelegate: FirebaseUserDelegate?
+    @Published private(set) var notificationUnreadQuantity = 0 {
+        didSet {
+            self.setApplicationBadgeCount(notificationUnreadQuantity)
+        }
+    }
     
-    private let db = Database.database()
+    @Published private(set) var notifications: [Notification] = []
+    @Published private(set) var loadStatus: NotificationLoadStatus = .loading
+                    
+    private let notificationManager = NotificationManager()
     
     override init() {
-        print("Alive: NotificationViewModel")
         super.init()
         
-        UNUserNotificationCenter.current().delegate = self
-        requestNotificationAuthorization()
-    }
-    
-    func setDelegate(_ delegate: FirebaseUserDelegate) {
-        self.firebaseUserDelegate = delegate
-        self.saveFCMToken(delegate.uid)
+        Messaging.messaging().delegate = self
+        
+        self.requestNotificationAuthorization()
+        self.saveDeviceTokenToFirestore()
+        self.listenForNewNotifications()
     }
    
+    ///Request Notification Authorization from the user
     func requestNotificationAuthorization() {
         UNUserNotificationCenter.current().requestAuthorization(options: [.alert, .sound, .badge, .criticalAlert]) { success, err in
-            guard success, err == nil else {
-                return
-            }
-            print("APNS Registered!")
+            guard success, err == nil else { return }
         }
         UIApplication.shared.registerForRemoteNotifications()
     }
     
-    func deleteNotification(_ type: NotificationType) {
-        switch type {
-        case .update(let id):
-            notifications.removeAll(where: {$0.id == id})
-        case .other:
-            break
+    func userDidReadNotification(_ id: UUID) {
+        Task {
+            do {
+                try await notificationManager.updateNotificationReadStatus(id)
+                if let notificationIndex = notifications.firstIndex(where: {$0.id == id}) {
+                    notifications[notificationIndex].isRead = true
+                    if !(notificationUnreadQuantity == 0) {
+                        notificationUnreadQuantity = notificationUnreadQuantity - 1
+                    }
+                }
+            } catch {
+                //TODO: Toast Banner
+            }
+        }
+    }
+
+    private func listenForNewNotifications() {
+        notificationManager.listenForNotifications { [weak self] in
+            self?.fetchNumberOfUnreadNotifications()
         }
     }
     
+    func fetchNumberOfUnreadNotifications() {
+        Task {
+            let quantity = await notificationManager.fetchNumberOfUnreadNotifications()
+            self.notificationUnreadQuantity = quantity
+        }
+    }
+    
+    func fetchNotifications() {
+        Task {
+            do {
+                let notifications = try await self.notificationManager.fetchUserCurrentNotifications()
+                self.notifications = notifications
+                //Setting the application badge count to the number of unread notifications...
+                let unreadNotificationQuantity = notifications.map({!($0.isRead)}).count
+                self.notificationUnreadQuantity = unreadNotificationQuantity
+                if notifications.isEmpty {
+                    self.loadStatus = .empty
+                } else {
+                    self.loadStatus = .loaded
+                }
+            } catch {
+                //TODO: Toast Banner
+                if self.notifications.isEmpty {
+                    self.loadStatus = .empty
+                }
+                print("Unable to retrieve users notification: \(error.localizedDescription)")
+            }
+        }
+    }
+    
+    private func setApplicationBadgeCount(_ count: Int) {
+        UIApplication.shared.applicationIconBadgeNumber = count
+    }
+        
     deinit {
-        self.firebaseUserDelegate = nil
         print("Dead: NotificationViewModel")
     }
 }
 
-//MARK: - UNUserNotificationCenterDelegate
-extension NotificationViewModel: UNUserNotificationCenterDelegate {
-    //Foreground
-    func userNotificationCenter(_ center: UNUserNotificationCenter, willPresent notification: UNNotification, withCompletionHandler completionHandler: @escaping (UNNotificationPresentationOptions) -> Void) {
-        completionHandler([.badge, .banner, .list, .sound])
+//MARK: - MessagingDelegate
+extension NotificationViewModel: MessagingDelegate {
+    private func saveDeviceTokenToFirestore(token: String? = nil) {
+        Task {
+            let savedToken = UserDefaults.standard.string(forKey: Constants.deviceToken)
+            guard let token = token ?? savedToken, let _ = try? await UNUserNotificationCenter.current().requestAuthorization() else { return }
+            UserDefaults.standard.setValue(token, forKey: Constants.deviceToken)
+            let tokenDict = [Constants.deviceToken: token]
+            NotificationCenter.default.post(name: .deviceFCMToken, object: nil, userInfo: tokenDict)
+        }
     }
     
-    func userNotificationCenter(_ center: UNUserNotificationCenter, didReceive response: UNNotificationResponse, withCompletionHandler completionHandler: @escaping () -> Void) {
-        completionHandler()
-    }
     
-    private func saveFCMToken(_ uid: String?) {
-        guard let uid else { return }
-        guard let fcmToken = UserDefaults.standard.string(forKey: "fcmToken") else { return }
-        var tokenDict = [String: Any]()
-        tokenDict["token"] = fcmToken
-        tokenDict["dt"] = Date.now.epoch
-        db.reference(withPath: FirebaseDatabasesPaths.fcmTokenPath).child(uid).setValue(tokenDict)
-        setupCriticalAlerts()
-    }
-    
-    private func setupCriticalAlerts() {
-        let updateNotificationCategory = UNNotificationCategory(identifier: "Update", actions: [], intentIdentifiers: [], options: [])
-        UNUserNotificationCenter.current().setNotificationCategories([updateNotificationCategory])
+    func messaging(_ messaging: Messaging, didReceiveRegistrationToken fcmToken: String?) {
+        saveDeviceTokenToFirestore(token: fcmToken)
     }
 }

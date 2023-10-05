@@ -21,28 +21,20 @@ struct Vehicle: Codable {
     let vehicleMake: VehicleMake
     let vehicleModel: VehicleModel
     let vehicleColor: VehicleColor
-    private var licensePlate: Data?
-    private var vin: Data?
+    private var licensePlate: Data? = nil
+    private var vin: Data? = nil
 }
 
 extension Vehicle {
     
     ///This vehicle contains license plate information.
     var hasLicensePlate: Bool {
-        guard !(licensePlate == nil) else {
-            return false
-        }
-        
-        return true
+        licensePlate == nil ? false : true
     }
     
     ///This vehicle contains vin information.
     var hasVin: Bool {
-        guard !(licensePlate == nil) else {
-            return false
-        }
-        
-        return true
+        vin == nil ? false : true
     }
     
     ///Year, make, model, and color of the vehicle
@@ -66,6 +58,14 @@ extension Vehicle {
             return
         }
         self.licensePlate = try EncryptedData.createEncryption(input: licenseString)
+    }
+    
+    mutating func vinString(_ vinString: String?) throws {
+        guard let vinString else {
+            self.vin = nil
+            return
+        }
+        self.vin = try EncryptedData.createEncryption(input: vinString)
     }
     
     private var licenseEncryptedData: EncryptedData? {

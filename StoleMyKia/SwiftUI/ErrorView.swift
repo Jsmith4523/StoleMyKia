@@ -12,7 +12,7 @@ struct ErrorView: View {
         VStack {
             Spacer()
                 .frame(height: 250)
-            VStack(spacing: 8) {
+            VStack(spacing: 9) {
                 Image(systemName: "exclamationmark.circle")
                     .resizable()
                     .scaledToFit()
@@ -20,7 +20,7 @@ struct ErrorView: View {
                     .foregroundColor(.red)
                 Text("Sorry, we ran into an error. Refresh this screen to try again")
                     .font(.system(size: 18))
-                    .bold()
+                    .foregroundColor(.gray)
             }
             Spacer()
         }

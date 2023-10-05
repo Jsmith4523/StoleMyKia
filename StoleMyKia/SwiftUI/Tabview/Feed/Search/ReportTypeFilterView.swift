@@ -13,6 +13,7 @@ enum NearbyDistance: String, CaseIterable, Identifiable {
     case fiveMiles       = "5 Miles"
     case tenMiles        = "10 Miles"
     case twentyFiveMiles = "25 Miles"
+    case fiftyMiles      = "50 Miles"
     
     private static let oneMeter = 1609.35
     
@@ -30,6 +31,8 @@ enum NearbyDistance: String, CaseIterable, Identifiable {
            return Self.oneMeter * 10
         case .twentyFiveMiles:
            return Self.oneMeter * 25
+        case .fiftyMiles:
+            return Self.oneMeter * 50
         }
     }
 }
@@ -69,45 +72,10 @@ struct ReportFilterView: View {
                     Text("When enabled, you'll only see reports that are located nearby.")
                 }
                 Section("Reports") {
-                    NavigationLink {
-                        ScrollView {
-                            Spacer()
-                                .frame(height: 45)
-                            VStack(spacing: 10) {
-                                ForEach(ReportType.allCases.sorted(by: <)) { type in
-                                    HStack {
-                                        Image(systemName: type.symbol)
-                                            .font(.system(size: 17).weight(.medium))
-                                        Text(type.rawValue)
-                                            .font(.system(size: 16).bold())
-                                        Spacer()
-                                        if self.reportType == type {
-                                            Image(systemName: "checkmark")
-                                                .resizable()
-                                                .scaledToFit()
-                                                .frame(width: 15, height: 15)
-                                                .foregroundColor(.green)
-                                        }
-                                    }
-                                    .padding()
-                                    .background(.ultraThinMaterial)
-                                    .cornerRadius(15)
-                                    .padding(.horizontal)
-                                    .onTapGesture {
-                                        UIImpactFeedbackGenerator(style: .medium).impactOccurred()
-                                        reportType = type
-                                    }
-                                }
-                            }
-                        }
-                        .navigationBarTitle("Report Type")
-                    } label: {
-                        HStack {
-                            Text("Report Type")
-                            Spacer()
-                            Text(reportType?.rawValue ?? "")
-                                .font(.system(size: 16))
-                                .foregroundColor(.gray)
+                    Picker("Report Type", selection: $reportType) {
+                        ForEach(ReportType.allCases) {
+                            Text($0.rawValue)
+                                .tag($0)
                         }
                     }
                 }
