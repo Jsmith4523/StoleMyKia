@@ -30,9 +30,7 @@ final class NotificationViewModel: NSObject, ObservableObject {
     
     @Published private(set) var notifications: [Notification] = []
     @Published private(set) var loadStatus: NotificationLoadStatus = .loading
-                    
-    private let notificationManager = NotificationManager()
-    
+                        
     override init() {
         super.init()
         
@@ -54,7 +52,7 @@ final class NotificationViewModel: NSObject, ObservableObject {
     func userDidReadNotification(_ id: UUID) {
         Task {
             do {
-                try await notificationManager.updateNotificationReadStatus(id)
+                try await NotificationManager.shared.updateNotificationReadStatus(id)
                 if let notificationIndex = notifications.firstIndex(where: {$0.id == id}) {
                     notifications[notificationIndex].isRead = true
                     if !(notificationUnreadQuantity == 0) {
@@ -68,14 +66,14 @@ final class NotificationViewModel: NSObject, ObservableObject {
     }
 
     private func listenForNewNotifications() {
-        notificationManager.listenForNotifications { [weak self] in
+        NotificationManager.shared.listenForNotifications { [weak self] in
             self?.fetchNumberOfUnreadNotifications()
         }
     }
     
     func fetchNumberOfUnreadNotifications() {
         Task {
-            let quantity = await notificationManager.fetchNumberOfUnreadNotifications()
+            let quantity = await NotificationManager.shared.fetchNumberOfUnreadNotifications()
             self.notificationUnreadQuantity = quantity
         }
     }
@@ -83,7 +81,7 @@ final class NotificationViewModel: NSObject, ObservableObject {
     func fetchNotifications() {
         Task {
             do {
-                let notifications = try await self.notificationManager.fetchUserCurrentNotifications()
+                let notifications = try await NotificationManager.shared.fetchUserCurrentNotifications()
                 self.notifications = notifications
                 //Setting the application badge count to the number of unread notifications...
                 let unreadNotificationQuantity = notifications.map({!($0.isRead)}).count
@@ -104,7 +102,11 @@ final class NotificationViewModel: NSObject, ObservableObject {
     }
     
     private func setApplicationBadgeCount(_ count: Int) {
-        UIApplication.shared.applicationIconBadgeNumber = count
+        if #available(iOS 17.0, *) {
+            UNUserNotificationCenter.current().setBadgeCount(count)
+        } else {
+            UIApplication.shared.applicationIconBadgeNumber = count
+        }
     }
         
     deinit {

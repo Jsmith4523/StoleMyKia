@@ -31,6 +31,12 @@ struct TimelineMapViewRepresentabe: UIViewRepresentable {
         return mapView
     }
     
+    static func dismantleUIView(_ uiView: MKMapView, coordinator: TimelineMapViewCoordinator) {
+        uiView.removeAnnotations(uiView.annotations)
+        uiView.removeOverlays(uiView.overlays)
+        coordinator.mapView = nil
+    }
+    
     func makeCoordinator() -> TimelineMapViewCoordinator {
         timelineMapCoordinator
     }

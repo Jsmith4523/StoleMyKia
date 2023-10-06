@@ -15,6 +15,10 @@ final class UserReportsManager {
         case codableError
     }
     
+    static let shared = UserReportsManager()
+    
+    private init() {}
+    
     /// Retrieves reports from firebase created by the signed in user
     /// - Returns: Reports made by the user.
     func fetchUserReports() async throws -> [Report] {

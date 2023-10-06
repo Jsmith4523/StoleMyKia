@@ -77,10 +77,6 @@ struct LicensePlateCameraView: View {
             }
             .tint(Color(uiColor: .label))
         }
-        .onAppear {
-            scannerCoordinator.setDelegate(reportsVM)
-            scannerCoordinator.setupCamera()
-        }
     }
     
     func prepareToDismiss() {

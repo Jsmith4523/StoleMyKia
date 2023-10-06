@@ -16,7 +16,11 @@ final class NotificationManager {
         case codableError
     }
     
+    static let shared = NotificationManager()
+    
     private static var listener: ListenerRegistration?
+    
+    private init() {}
         
     //MARK: Firestore Notification Methods
     
@@ -75,7 +79,7 @@ final class NotificationManager {
             .document(currentUser.uid)
             .collection(FirebaseDatabasesPaths.userNotificationPath)
             .document(id.uuidString)
-            .updateData([Notification.is    ReadKey: true])
+            .updateData([Notification.isReadKey: true])
     }
     
     ///Checks firebase for number of unread notifications

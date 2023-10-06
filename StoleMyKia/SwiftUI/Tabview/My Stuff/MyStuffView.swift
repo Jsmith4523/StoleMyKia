@@ -44,7 +44,7 @@ struct MyStuffView: View {
     @EnvironmentObject var reportsVM: ReportsViewModel
         
     var body: some View {
-        NavigationController(title: ApplicationTabViewSelection.myStuff.title, statusBarColor: .lightContent, backgroundColor: .brand) {
+        //NavigationController(title: ApplicationTabViewSelection.myStuff.title, statusBarColor: .lightContent, backgroundColor: .brand) {
             ScrollView {
                 VStack(spacing: 0) {
                     header
@@ -56,7 +56,7 @@ struct MyStuffView: View {
                     Text("")
                 }
             }
-        }
+        //}
         .ignoresSafeArea()
         .accentColor(.white)
         .tint(.white)

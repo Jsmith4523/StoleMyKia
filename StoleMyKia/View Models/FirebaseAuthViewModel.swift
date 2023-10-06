@@ -9,26 +9,22 @@ import Foundation
 import Firebase
 
 enum LoginStatus {
-    case signedOut, signedIn
+    case signedOut, loading, signedIn
 }
 
-@MainActor class FirebaseAuthViewModel: ObservableObject {
+@MainActor class FirebaseAuthViewModel: NSObject, ObservableObject {
     
     @Published private(set) var loginStatus: LoginStatus = .signedOut
         
     private let authManager = FirebaseAuthManager.manager
-    weak var firebaseAuthDelegate: FirebaseAuthDelegate?
     
     private var uid: String?
     
-    init() {
+    override init() {
+        super.init()
         checkForDeviceID()
         checkForCurrentUser()
         beginListeningForSignOut()
-    }
-    
-    func setDelegate(_ delegate: FirebaseAuthDelegate) {
-        self.firebaseAuthDelegate = delegate
     }
     
     func authWithPhoneNumber(_ phoneNumber: String) async throws {
@@ -49,16 +45,7 @@ enum LoginStatus {
     private func prepareForSignIn(uid: String) {
         self.uid = uid
         self.loginStatus = .signedIn
-        DispatchQueue.main.asyncAfter(deadline: .now() + 0.12) {
-            Task {
-                guard let status = await self.firebaseAuthDelegate?.userHasSignedIn(uid: uid) else {
-                    self.prepareForSignOut(shouldImmediatelySignOut: true)
-                    return
-                }
-                self.loginStatus = status
-                self.beginListeningForFCMToken()
-            }
-        }
+        self.beginListeningForFCMToken()
     }
     
     @objc private func userHasSignedOut() {
@@ -145,9 +132,4 @@ enum LoginStatus {
             await suspendListeningForFCMToken()
         }
     }
-}
-
-protocol FirebaseAuthDelegate: AnyObject {
-    ///Called when the Firebase Auth user has succesfully signed in.
-    func userHasSignedIn(uid: String) async -> LoginStatus
 }

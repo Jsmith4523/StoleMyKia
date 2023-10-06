@@ -8,7 +8,7 @@
 import Foundation
 
 @MainActor
-final class UserReportsViewModel: ObservableObject {
+final class UserReportsViewModel: NSObject, ObservableObject {
     
     enum LoadStatus {
         case loading, loaded, empty, error
@@ -20,9 +20,10 @@ final class UserReportsViewModel: ObservableObject {
     @Published private(set) var bookmarks = [Report]()
     @Published private(set) var bookmarkLoadStatus: LoadStatus = .loading
     
-    private let manager = UserReportsManager()
+    private let manager = UserReportsManager.shared
     
-    init() {
+    override init() {
+        super.init()
         self.fetchInformation()
     }
     

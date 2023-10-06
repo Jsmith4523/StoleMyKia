@@ -6,6 +6,7 @@
 //
 
 import SwiftUI
+import FirebaseAuth
 import MapKit
 
 struct SelectedReportDetailView: View {
@@ -191,8 +192,8 @@ struct SelectedReportDetailView: View {
                                                 coords: report.location.coordinates)
                 }
             }
-            if let uid = userVM.uid {
-                if report.uid == uid {
+            if let currentUser = Auth.auth().currentUser {
+                if report.uid == currentUser.uid {
                     Button("Delete", role: .destructive) {
                         presentDeleteAlert.toggle()
                     }
@@ -365,8 +366,8 @@ struct SelectedReportDetailView: View {
     }
     
     private func getUpdateQuantity() async {
-        let quantity = await reportsVM.getNumberOfReportUpdates(report: report)
-        self.updateQuantity = quantity
+//        let quantity = await reportsVM.getNumberOfReportUpdates(report: report)
+//        self.updateQuantity = quantity
     }
 }
 

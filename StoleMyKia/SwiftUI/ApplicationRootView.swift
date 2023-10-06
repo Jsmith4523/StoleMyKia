@@ -23,10 +23,10 @@ struct ApplicationRootView: View {
             }
         }
         .onAppear {
-            firebaseAuthModel.setDelegate(userVM)
+            //firebaseAuthModel.setDelegate(userVM)
         }
         .onDisappear {
-            firebaseAuthModel.firebaseAuthDelegate = nil
+            //firebaseAuthModel.firebaseAuthDelegate = nil
         }
     }
 }

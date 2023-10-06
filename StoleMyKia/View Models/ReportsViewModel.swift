@@ -19,18 +19,9 @@ final class ReportsViewModel: NSObject, ObservableObject {
     @Published var feedLoadStatus: FeedLoadStatus = .loading
     @Published var reports: [Report] = []
     
-    private let manager = ReportManager()
-
-    weak private var delegate: ReportsDelegate?
-    weak private var firebaseUserDelegate: FirebaseUserDelegate?
-    
     override init() {
         print("Alive: ReportsViewModel")
         super.init()
-    }
-    
-    func setFirebaseUserDelegate(_ delegate: FirebaseUserDelegate) {
-        self.firebaseUserDelegate = delegate
     }
     
     @MainActor
@@ -40,7 +31,7 @@ final class ReportsViewModel: NSObject, ObservableObject {
         }
         
         do {
-            let fetchedReports = try await manager.fetch()
+            let fetchedReports = try await ReportManager.manager.fetch()
             self.reports = fetchedReports
             guard !(reports.isEmpty) else {
                 self.feedLoadStatus = .empty
@@ -57,13 +48,13 @@ final class ReportsViewModel: NSObject, ObservableObject {
     ///   - report: The report object to be encoded and uploaded.
     ///   - image: The optional image to be unwrapped and uploaded
     func uploadReport(_ report: Report, image: UIImage? = nil) async throws {
-        try await manager.upload(report, image: image)
+        try await ReportManager.manager.upload(report, image: image)
         await UINotificationFeedbackGenerator().notificationOccurred(.success)
         await fetchReports()
     }
     
     func deleteReport(report: Report) async throws {
-        try await manager.delete(report)
+        try await ReportManager.manager.delete(report)
         Task {
             await fetchReports()
         }
@@ -78,14 +69,14 @@ final class ReportsViewModel: NSObject, ObservableObject {
             throw ReportManagerError.error
         }
         
-        guard try await manager.reportDoesExist(originalReport.id) else {
+        guard try await ReportManager.manager.reportDoesExist(originalReport.id) else {
             throw ReportManagerError.doesNotExist
         }
         
         var report = report
         
         let update = Update(uid: uid, type: report.reportType, vehicle: report.vehicle, reportId: report.id, dt: report.dt)
-        let updateId = try await manager.appendUpdateToReport(originalReport.role.associatedValue, update: update)
+        let updateId = try await ReportManager.manager.appendUpdateToReport(originalReport.role.associatedValue, update: update)
         
         report.updateId = updateId
         
@@ -93,17 +84,10 @@ final class ReportsViewModel: NSObject, ObservableObject {
     }
     
     func getNumberOfReportUpdates(report: Report) async -> Int {
-        return await manager.getNumberOfUpdates(report)
+        return await ReportManager.manager.getNumberOfUpdates(report)
     }
     
     deinit {
         print("Dead: ReportsViewModel")
-    }
-}
-
-//MARK: - LicensePlateCoordinatorDelegate
-extension ReportsViewModel: LicensePlateCoordinatorDelegate {
-    func fetchReportsWithLicense(_ licenseString: String) async throws -> [Report] {
-        return [Report]()
     }
 }

@@ -77,6 +77,7 @@ struct SignInCodeVerificationView: View {
             isLoading = true
             do {
                 try await firebaseAuthVM.verifyCode(verificationCode)
+                self.isLoading = false
             } catch {
                 isLoading = false
                 alertErrorVerificationCode.toggle()

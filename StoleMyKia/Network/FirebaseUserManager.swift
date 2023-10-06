@@ -21,8 +21,12 @@ class FirebaseUserManager {
         case dataError
         case codableError
     }
+    
+    static let shared = FirebaseUserManager()
 
     private let collection = Firestore.firestore()
+    
+    private init() {}
         
     //MARK: - User Settings Methods
     

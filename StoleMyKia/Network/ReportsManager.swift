@@ -41,6 +41,8 @@ public class ReportManager {
         
     private let db = Firestore.firestore()
     
+    private init() {}
+    
     private var collection: CollectionReference {
         db.collection("Reports")
     }

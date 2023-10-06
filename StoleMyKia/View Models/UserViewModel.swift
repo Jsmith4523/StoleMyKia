@@ -14,43 +14,19 @@ enum RootViewLoadStatus {
     case loading, loaded
 }
 
-@MainActor final class UserViewModel: ObservableObject {
+@MainActor final class UserViewModel: NSObject, ObservableObject {
     
-    @Published private(set) var rootViewLoadStatus: RootViewLoadStatus = .loading
+    @Published private(set) var rootViewLoadStatus: RootViewLoadStatus = .loaded
     
-    private let firebaseManager = FirebaseUserManager()
-    
-    var uid: String? {
-        Auth.auth().currentUser?.uid
-    }
-    
-    //MARK: - Reports Methods
-    
-    func fetchUserReports() async throws -> [Report] {
-        return try await firebaseManager.fetchUserReports()
-    }
-    
-    func fetchUserBookmarks() async throws -> [Report] {
-        return try await firebaseManager.fetchUserBookmarks()
-    }
-    
-    func bookmarkReport(_ id: UUID) async throws {
-        
-    }
-    
-    func undoBookmark(_ id: UUID) async throws {
-        
-    }
-
     //MARK: - User Settings Methods
     
     func fetchNotificationSettings() async throws -> UserNotificationSettings {
-        let settings = try await firebaseManager.fetchUserNotificationSettings()
+        let settings = try await FirebaseUserManager.shared.fetchUserNotificationSettings()
         return settings
     }
     
     func saveNotificationSettings(_ settings: UserNotificationSettings) async throws {
-        try await firebaseManager.saveUserNotificationSettings(settings)
+        try await FirebaseUserManager.shared.saveUserNotificationSettings(settings)
     }
     
     //MARK: - Auth Methods
@@ -78,15 +54,5 @@ enum RootViewLoadStatus {
     
     deinit {
         print("Dead: UserViewModel")
-    }
-}
-
-extension UserViewModel: FirebaseAuthDelegate {
-    func userHasSignedIn(uid: String) async -> LoginStatus {
-        withAnimation {
-            self.rootViewLoadStatus = .loaded
-        }
-        
-        return .signedIn
     }
 }

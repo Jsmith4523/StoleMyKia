@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		20ED7B46DA18BFD717A86F8D /* Pods_StoleMyKia.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 197A31A21B533A0B83DC4715 /* Pods_StoleMyKia.framework */; };
 		240910C42A64639E00DC699A /* FirebaseAuthViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 240910C32A64639E00DC699A /* FirebaseAuthViewModel.swift */; };
 		240CD8C92A60A49800D04D1A /* FirebaseDatabasesPaths.swift in Sources */ = {isa = PBXBuildFile; fileRef = 240CD8C82A60A49800D04D1A /* FirebaseDatabasesPaths.swift */; };
 		240F22422A33F0020078F97E /* README.rtf in Resources */ = {isa = PBXBuildFile; fileRef = 240F22412A33F0020078F97E /* README.rtf */; };
@@ -61,7 +62,6 @@
 		248278D72A03054C00C1E99D /* UISheetPC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 248278D62A03054C00C1E99D /* UISheetPC.swift */; };
 		24848AB72A61E38E003E037E /* LicenseTextDetectionManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 24848AB62A61E38E003E037E /* LicenseTextDetectionManager.swift */; };
 		248636AC2A3BCBE90092E184 /* PartialSheet in Frameworks */ = {isa = PBXBuildFile; productRef = 248636AB2A3BCBE90092E184 /* PartialSheet */; };
-		248BD8B62A8605A80086CA42 /* Pods_StoleMyKia.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 197A31A21B533A0B83DC4715 /* Pods_StoleMyKia.framework */; };
 		249254A62A37CA590037C43C /* UIHostingController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 249254A52A37CA590037C43C /* UIHostingController.swift */; };
 		2495A02029CAC3DE00457CE7 /* Date+EXT.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2495A01F29CAC3DE00457CE7 /* Date+EXT.swift */; };
 		2495A02229CAC5DF00457CE7 /* String+EXT.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2495A02129CAC5DF00457CE7 /* String+EXT.swift */; };
@@ -331,6 +331,7 @@
 			files = (
 				248636AC2A3BCBE90092E184 /* PartialSheet in Frameworks */,
 				9A8DEA661C19F27F74C6B340 /* Pods_StoleMyKia.framework in Frameworks */,
+				20ED7B46DA18BFD717A86F8D /* Pods_StoleMyKia.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -338,7 +339,6 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				248BD8B62A8605A80086CA42 /* Pods_StoleMyKia.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -966,7 +966,7 @@
 			);
 			mainGroup = 24A5790729BC552C00495E6F;
 			packageReferences = (
-				248636AA2A3BCBE90092E184 /* XCRemoteSwiftPackageReference "PartialSheet" */,
+				248636AA2A3BCBE90092E184 /* XCRemoteSwiftPackageReference "PartialSheet.git" */,
 			);
 			productRefGroup = 24A5791129BC552C00495E6F /* Products */;
 			projectDirPath = "";
@@ -1576,7 +1576,7 @@
 /* End XCConfigurationList section */
 
 /* Begin XCRemoteSwiftPackageReference section */
-		248636AA2A3BCBE90092E184 /* XCRemoteSwiftPackageReference "PartialSheet" */ = {
+		248636AA2A3BCBE90092E184 /* XCRemoteSwiftPackageReference "PartialSheet.git" */ = {
 			isa = XCRemoteSwiftPackageReference;
 			repositoryURL = "https://github.com/Jsmith4523/PartialSheet.git";
 			requirement = {
@@ -1589,7 +1589,7 @@
 /* Begin XCSwiftPackageProductDependency section */
 		248636AB2A3BCBE90092E184 /* PartialSheet */ = {
 			isa = XCSwiftPackageProductDependency;
-			package = 248636AA2A3BCBE90092E184 /* XCRemoteSwiftPackageReference "PartialSheet" */;
+			package = 248636AA2A3BCBE90092E184 /* XCRemoteSwiftPackageReference "PartialSheet.git" */;
 			productName = PartialSheet;
 		};
 /* End XCSwiftPackageProductDependency section */

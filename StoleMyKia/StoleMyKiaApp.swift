@@ -27,6 +27,8 @@ struct StoleMyKiaApp: App {
                 case .signedIn:
                     ApplicationRootView()
                         .environmentObject(firebaseAuthModel)
+                case .loading:
+                    ApplicationProgressView()
                 }
             }
             .accentColor(Color(uiColor: .label))
