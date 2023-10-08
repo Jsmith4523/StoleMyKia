@@ -73,7 +73,11 @@ struct SignInView: View {
         .alert("Unable to send verification code", isPresented: $alertErrorPhoneNumber) {
             Button("OK") {}
         } message: {
-            Text("An error occurred sending a verification code to \(ApplicationFormats.authPhoneNumberFormat(phoneNumber, parentheses: true) ?? "the provided phone number"). Check your network connection and try again. If attempted too many times, a cooldown of up to 30 minutes is applied to prevent spam./n/nIf this issue persist, please contact support")
+            Text("""
+                 An error occurred sending a verification code to \(ApplicationFormats.authPhoneNumberFormat(phoneNumber, parentheses: true) ?? "the provided phone number"). Please try again.
+                 
+                 Note: If a verification code has been sent to a phone number too frequently, an indefinite cooldown period is imposed.
+                 """)
         }
     }
     

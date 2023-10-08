@@ -28,7 +28,7 @@ enum LoginStatus {
     }
     
     func authWithPhoneNumber(_ phoneNumber: String) async throws {
-        try await authManager.authWithPhoneNumber(phoneNumber)
+        try await self.authManager.authWithPhoneNumber(phoneNumber)
     }
     
     func verifyCode(_ code: String) async throws {
@@ -46,13 +46,13 @@ enum LoginStatus {
         self.uid = uid
         self.loginStatus = .signedIn
         self.beginListeningForFCMToken()
+        self.setupAccountDeletionListener()
     }
     
     @objc private func userHasSignedOut() {
         if Auth.auth().currentUser == nil {
-            DispatchQueue.main.asyncAfter(deadline: .now() + 0.15) {
-                self.loginStatus = .signedOut
-                self.prepareForSignOut()
+            DispatchQueue.main.asyncAfter(deadline: .now() + 0.15) { [weak self] in
+                self?.prepareForSignOut(fatal: true)
             }
         }
     }
@@ -73,18 +73,15 @@ enum LoginStatus {
     }
     
     ///Begin setting up the application for sign out.
-    private func prepareForSignOut(shouldImmediatelySignOut: Bool = false) {
+    private func prepareForSignOut(shouldImmediatelySignOut: Bool = false, fatal: Bool = false) {
         do {
             if !(shouldImmediatelySignOut) {
-                try authManager.signOutUser()
+                authManager.signOutUser()
             }
             
             suspendListeningForFCMToken()
             removeDeviceFCMToken()
             NotificationManager.removeNotificationListener()
-            
-            //self.firebaseAuthDelegate?.userHasSignedOut()
-            self.loginStatus = .signedOut
             
             //Removing notifications and resetting application badge...
             UNUserNotificationCenter.current().removeAllDeliveredNotifications()
@@ -95,7 +92,12 @@ enum LoginStatus {
             } else {
                 UIApplication.shared.applicationIconBadgeNumber = 0
             }
-        } catch {}
+            if fatal {
+                fatalError()
+            }
+        } catch {
+            fatalError()
+        }
     }
     
     private func checkForDeviceID() {
@@ -112,6 +114,22 @@ enum LoginStatus {
         }
         self.prepareForSignIn(uid: user.uid)
         self.loginStatus = .signedIn
+    }
+    
+    private func setupAccountDeletionListener() {
+        authManager.beginListeningForAccountDeletion {
+            notifyUserOfSignOut()
+        }
+        
+        func notifyUserOfSignOut() {
+            let ac = UIAlertController(title: "You have been signed out.", message: "Please sign in to continue using the application!", preferredStyle: .alert)
+            let action = UIAlertAction(title: "OK", style: .default) { [weak self] _ in
+                self?.prepareForSignOut(fatal: true)
+            }
+            ac.addAction(action)
+            
+            UIApplication.shared.windows.first?.rootViewController?.present(ac, animated: true)
+        }
     }
     
     

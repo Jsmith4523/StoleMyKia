@@ -7,7 +7,7 @@
 		<key>NSExtensionAttributes</key>
 		<dict>
 			<key>UNNotificationExtensionCategory</key>
-			<string>UPDATE</string>
+			<string>CONTENT</string>
 			<key>UNNotificationExtensionUserInteractionEnabled</key>
 			<false/>
 			<key>UNNotificationExtensionInitialContentSizeRatio</key>

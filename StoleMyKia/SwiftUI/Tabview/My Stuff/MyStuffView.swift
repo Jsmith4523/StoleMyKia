@@ -40,11 +40,11 @@ struct MyStuffView: View {
     
     @StateObject private var userReportsVM = UserReportsViewModel()
         
-    @EnvironmentObject var userVM: UserViewModel
-    @EnvironmentObject var reportsVM: ReportsViewModel
+    @ObservedObject var userVM: UserViewModel
+    @ObservedObject var reportsVM: ReportsViewModel
         
     var body: some View {
-        //NavigationController(title: ApplicationTabViewSelection.myStuff.title, statusBarColor: .lightContent, backgroundColor: .brand) {
+        NavigationController(title: ApplicationTabViewSelection.myStuff.title, statusBarColor: .lightContent, backgroundColor: .brand) {
             ScrollView {
                 VStack(spacing: 0) {
                     header
@@ -56,7 +56,7 @@ struct MyStuffView: View {
                     Text("")
                 }
             }
-        //}
+        }
         .ignoresSafeArea()
         .accentColor(.white)
         .tint(.white)
@@ -188,11 +188,11 @@ fileprivate struct MyStuffCellView: View {
         }
     }
 }
-
-struct MyStuffView_Previews: PreviewProvider {
-    static var previews: some View {
-        MyStuffView()
-            .environmentObject(UserViewModel())
-            .environmentObject(ReportsViewModel())
-    }
-}
+//
+//struct MyStuffView_Previews: PreviewProvider {
+//    static var previews: some View {
+//        MyStuffView()
+//            .environmentObject(UserViewModel())
+//            .environmentObject(ReportsViewModel())
+//    }
+//}

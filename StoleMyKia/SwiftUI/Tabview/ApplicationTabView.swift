@@ -42,34 +42,31 @@ enum ApplicationTabViewSelection {
 struct ApplicationTabView: View {
     
     @State private var notificationCount: Int?
-    @State private var selection: ApplicationTabViewSelection = .feed
+    @State private var selection: ApplicationTabViewSelection = .myStuff
     
     @StateObject private var reportsVM = ReportsViewModel()
     @StateObject private var notificationVM = NotificationViewModel()
     @EnvironmentObject var userVM: UserViewModel
-        
+    
     var body: some View {
         TabView(selection: $selection) {
-            FeedView()
+            FeedView(userVM: userVM, reportsVM: reportsVM)
                 .tag(ApplicationTabViewSelection.feed)
                 .tabItem {
                     ApplicationTabViewSelection.feed.tabItemLabel
                 }
-            NotificationView()
+            NotificationView(notificationVM: notificationVM, reportsVM: reportsVM, userVM: userVM)
                 .tag(ApplicationTabViewSelection.notification)
                 .badge(notificationCount ?? 0)
                 .tabItem {
                     ApplicationTabViewSelection.notification.tabItemLabel
                 }
-            MyStuffView()
+            MyStuffView(userVM: userVM, reportsVM: reportsVM)
                 .tag(ApplicationTabViewSelection.myStuff)
                 .tabItem {
                     ApplicationTabViewSelection.myStuff.tabItemLabel
                 }
         }
-        .environmentObject(reportsVM)
-        .environmentObject(userVM)
-        .environmentObject(notificationVM)
         .tint(Color(uiColor: .label))
         .onReceive(notificationVM.$notificationUnreadQuantity) { quantity in
             self.notificationCount = quantity
@@ -78,6 +75,9 @@ struct ApplicationTabView: View {
             if !(notificationCount.isNil()) {
                 self.notificationVM.fetchNumberOfUnreadNotifications()
             }
+        }
+        .onAppear {
+            CLLocationManager.shared.requestAlwaysAuthorization()
         }
     }
 }

@@ -47,7 +47,7 @@ class StorageManager {
         guard let url = try? await reference.child(stroagePath).downloadURL() else {
             throw StorageManagerError.imageUrlError
         }
-        
+                
         return url.absoluteString
     }
 }

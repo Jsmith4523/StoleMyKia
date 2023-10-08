@@ -143,16 +143,18 @@ public class ReportManager {
     /// - Parameters:
     /// - report: The report object to be encoded and uploaded to Firestore.
     /// - image: The optional image of a vehicle associated with a report and uploaded to Firebase Storage. nill by default.
-    /// - Throws: Error if either the report or its image could not be uploaded.
+    /// - Returns: The image url of the report if possibe.
     func upload(_ report: Report, image: UIImage? = nil) async throws {
         var report = report
         
-        //Saving the vehicle image to Firebase Storage...
-        let imageUrl = try await StorageManager.shared.saveVehicleImage(image,
-                                                                        reportType: report.reportType,
-                                                                        id: report.id)
-        //Retrieving the image url...
-        report.imageURL = imageUrl
+        if let image {
+            //Saving the vehicle image to Firebase Storage...
+            let imageUrl = try await StorageManager.shared.saveVehicleImage(image,
+                                                                            reportType: report.reportType,
+                                                                            id: report.id)
+            //Retrieving the image url...
+            report.imageURL = imageUrl
+        }
         
         //Then encoding the report...
         guard let jsonData = try report.encodeForUploading() as? [String: Any] else {

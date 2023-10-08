@@ -48,7 +48,7 @@ class AppDelegate: UIScene, UIApplicationDelegate {
         
         Firestore.firestore().settings = settings
         
-        setupUpdateCriticalAlert()
+        setContentNotificationCategory()
                 
         UITabBar.appearance().barTintColor = .systemBackground
         UINavigationBar.appearance().barTintColor = .systemBackground
@@ -72,8 +72,8 @@ class AppDelegate: UIScene, UIApplicationDelegate {
         }
     }
     
-    private func setupUpdateCriticalAlert() {
-        let updateNotificationCategory = UNNotificationCategory(identifier: "UPDATE", actions: [], intentIdentifiers: [], options: [])
+    private func setContentNotificationCategory() {
+        let updateNotificationCategory = UNNotificationCategory(identifier: "CONTENT", actions: [], intentIdentifiers: [], options: [])
         UNUserNotificationCenter.current().setNotificationCategories([updateNotificationCategory])
     }
 }

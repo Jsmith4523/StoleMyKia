@@ -9,9 +9,9 @@ import SwiftUI
 
 struct NotificationView: View {
     
-    @EnvironmentObject var notificationVM: NotificationViewModel
-    @EnvironmentObject var reportsVM: ReportsViewModel
-    @EnvironmentObject var userVM: UserViewModel
+    @ObservedObject var notificationVM: NotificationViewModel
+    @ObservedObject var reportsVM: ReportsViewModel
+    @ObservedObject var userVM: UserViewModel
     
     var body: some View {
         NavigationView {
@@ -43,12 +43,12 @@ struct NotificationView: View {
         }
     }
 }
-
-struct NotificationView_Previews: PreviewProvider {
-    static var previews: some View {
-        NotificationView()
-            .environmentObject(NotificationViewModel())
-            .environmentObject(ReportsViewModel())
-            .environmentObject(UserViewModel())
-    }
-}
+//
+//struct NotificationView_Previews: PreviewProvider {
+//    static var previews: some View {
+//        NotificationView()
+//            .environmentObject(NotificationViewModel())
+//            .environmentObject(ReportsViewModel())
+//            .environmentObject(UserViewModel())
+//    }
+//}

@@ -20,7 +20,7 @@ enum RootViewLoadStatus {
     
     //MARK: - User Settings Methods
     
-    func fetchNotificationSettings() async throws -> UserNotificationSettings {
+    func fetchNotificationSettings() async throws -> UserNotificationSettings? {
         let settings = try await FirebaseUserManager.shared.fetchUserNotificationSettings()
         return settings
     }
@@ -37,19 +37,14 @@ enum RootViewLoadStatus {
     
     func signOut() {
         do {
-            try Auth.auth().signOut()
-            notifyOfSignOut()
+            try FirebaseAuthManager.manager.signOutUser()
         } catch {
             print("Unable to sign user out!")
         }
     }
     
     func deleteUserAccount() async throws {
-        try await Auth.auth().currentUser?.delete()
-    }
-    
-    private func notifyOfSignOut() {
-        NotificationCenter.default.post(Notification.signOut)
+        try await FirebaseAuthManager.manager.permanentlyDeleteUser()
     }
     
     deinit {

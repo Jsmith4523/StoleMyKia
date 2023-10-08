@@ -32,30 +32,33 @@ class FirebaseUserManager {
     
     /// Retrieve the current logged in user notification settings
     /// - Returns: The users notification settings
-    func fetchUserNotificationSettings() async throws -> UserNotificationSettings {
+    func fetchUserNotificationSettings() async throws -> UserNotificationSettings? {
         guard let currentUser = Auth.auth().currentUser else {
             throw FirebaseUserManagerError.userError
         }
         
-        let value = try await Firestore.firestore()
+        let document = try await Firestore.firestore()
             .collection(FirebaseDatabasesPaths.usersDatabasePath)
             .document(currentUser.uid)
             .collection(FirebaseDatabasesPaths.userSettingsPath)
             .document(FirebaseDatabasesPaths.userNotificationSettings)
             .getDocument()
-            .data()
         
-        guard let value else {
-            throw FirebaseUserManagerError.userSettingsError
+        if document.exists {
+            guard let value = document.data() else {
+                throw FirebaseUserManagerError.userSettingsError
+            }
+            
+            do {
+                let data = try JSONSerialization.data(withJSONObject: value)
+                let settings = try JSONDecoder().decode(UserNotificationSettings.self, from: data)
+                return settings
+            } catch {
+                throw FirebaseUserManagerError.codableError
+            }
         }
         
-        do {
-            let data = try JSONSerialization.data(withJSONObject: value)
-            let settings = try JSONDecoder().decode(UserNotificationSettings.self, from: data)
-            return settings
-        } catch {
-            throw FirebaseUserManagerError.codableError
-        }
+        return nil
     }
     
     

@@ -8,22 +8,24 @@
 import SwiftUI
 
 struct NotificationListView: View {
-    
-    @State private var notification: Notification?
-        
+            
     @EnvironmentObject var notificationVM: NotificationViewModel
     @EnvironmentObject var reportsVM: ReportsViewModel
     @EnvironmentObject var userVM: UserViewModel
     
     var body: some View {
         LazyVStack(spacing: 0) {
-           
-        }
-        .fullScreenCover(item: $notification) { notification in
-            ZStack {
-                
+            ForEach(notificationVM.notifications) { notification in
+                NotificationCellView(notification: notification)
+                    .onTapGesture {
+                        notificationVM.userDidReadNotification(notification.id)
+                    }
+                Divider()
             }
         }
+        .environmentObject(notificationVM)
+        .environmentObject(userVM)
+        .environmentObject(reportsVM)
     }
 }
 
@@ -31,7 +33,7 @@ fileprivate struct NotificationCellView: View {
     
     @State private var vehicleImage: UIImage?
     
-    let notification: Notification
+    let notification: AppUserNotification
     
     var body: some View {
         HStack {
@@ -56,7 +58,7 @@ fileprivate struct NotificationCellView: View {
             }
         }
         .padding()
-        .background(!(notification.isRead) ? .blue.opacity(0.085) : .clear)
+        .background(!(notification.isRead) ? .blue.opacity(0.15) : .clear)
     }
     
     var imageView: some View {
@@ -85,9 +87,9 @@ extension UUID: Identifiable {
         return self
     }
 }
-
-struct NotificationListView_Previews: PreviewProvider {
-    static var previews: some View {
-        NotificationCellView(notification: .init(id: UUID(), dt: Date.now.addingTimeInterval(-86400).epoch, title: "Update: Stolen", body: "An Update is available to your report regarding the Red 2020 Hyundai Elantra", notificationType: .report, reportId: UUID(), isRead: false, imageUrl: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcT0GcDq4DYvOB86BmsxrxCp18U8T2ckXPBBqw&usqp=CAU"))
-    }
-}
+//
+//struct NotificationListView_Previews: PreviewProvider {
+//    static var previews: some View {
+//        NotificationCellView(notification: .init(id: UUID(), dt: Date.now.addingTimeInterval(-86400).epoch, title: "Update: Stolen", body: "An Update is available to your report regarding the Red 2020 Hyundai Elantra", notificationType: .report, reportId: UUID(), isRead: false, imageUrl: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcT0GcDq4DYvOB86BmsxrxCp18U8T2ckXPBBqw&usqp=CAU"))
+//    }
+//}

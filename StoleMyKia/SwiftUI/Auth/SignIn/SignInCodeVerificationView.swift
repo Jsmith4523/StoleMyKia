@@ -65,10 +65,10 @@ struct SignInCodeVerificationView: View {
             }
         }
         .disabled(isLoading)
-        .alert("Cannot verify SMS Code", isPresented: $alertErrorVerificationCode) {
+        .alert("Failed to verify code", isPresented: $alertErrorVerificationCode) {
             Button("OK") {}
         } message: {
-            Text("Unfortunately, we could not verify the provided SMS code. If the code has been sent too many times to the provided phone number, a cooldown of up to 30 minutes is applied. If this issue persist, please contact support.")
+            Text("There was an error with that request. Please try again.")
         }
     }
     

@@ -18,23 +18,13 @@ struct UserNotificationSettings: Codable {
     var location: UserNotificationLocation?
     
     var notifyAttempt = false
-    var notifyCarjacking = false
-    var notifyStolen = false
-    var notifyRecovered = false
-    var notifyWitnessed = false
-    var notifyLocated = false
     var notifyBreakIn = false
-    
-    ///Default notification settings
-    static func defaultSettings() -> Self {
-        return .init(notifyAttempt: true,
-                     notifyCarjacking: true,
-                     notifyStolen: true,
-                     notifyRecovered: true,
-                     notifyWitnessed: true,
-                     notifyLocated: true,
-                     notifyBreakIn: true)
-    }
+    var notifyCarjacking = false
+    var notifyRecovered = false
+    var notifyIncident = false
+    var notifyLocated = false
+    var notifyStolen = false
+    var notifyWitnessed = false
     
     struct UserNotificationLocation: Codable {
         var lat: Double

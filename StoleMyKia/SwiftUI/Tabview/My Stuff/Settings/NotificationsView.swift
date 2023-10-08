@@ -120,12 +120,13 @@ struct NotificationsView: View {
             let settings = UserNotificationSettings(
                 location: location,
                 notifyAttempt: notifyAttempt,
+                notifyBreakIn: notifyBreakIn, 
                 notifyCarjacking: notifyCarjacking,
-                notifyStolen: notifyStolen,
-                notifyRecovered: notifyRecovered,
-                notifyWitnessed: notifyRecovered,
+                notifyRecovered: notifyRecovered, 
+                notifyIncident: notifyIncident,
                 notifyLocated: notifyLocated,
-                notifyBreakIn: notifyBreakIn)
+                notifyStolen: notifyStolen,
+                notifyWitnessed: notifyWitnessed)
             
             do {
                 try await userVM.saveNotificationSettings(settings)
@@ -141,17 +142,21 @@ struct NotificationsView: View {
         isLoading = true
         do {
             let settings = try await userVM.fetchNotificationSettings()
-            self.settings = settings
             
-            self.notifyAttempt = settings.notifyAttempt
-            self.notifyCarjacking = settings.notifyCarjacking
-            self.notifyStolen = settings.notifyStolen
-            self.notifyRecovered = settings.notifyRecovered
-            self.notifyWitnessed = settings.notifyWitnessed
-            self.notifyLocated = settings.notifyLocated
-            self.notifyBreakIn = settings.notifyBreakIn
-            
-            self.location = settings.location
+            if let settings {
+                self.settings = settings
+                
+                self.notifyAttempt = settings.notifyAttempt
+                self.notifyBreakIn = settings.notifyBreakIn
+                self.notifyCarjacking = settings.notifyCarjacking
+                self.notifyRecovered = settings.notifyRecovered
+                self.notifyIncident = settings.notifyIncident
+                self.notifyLocated = settings.notifyLocated
+                self.notifyStolen = settings.notifyStolen
+                self.notifyWitnessed = settings.notifyWitnessed
+                
+                self.location = settings.location
+            }
             
             isLoading = false
         } catch {

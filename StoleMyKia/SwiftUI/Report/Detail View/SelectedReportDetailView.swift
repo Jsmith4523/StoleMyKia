@@ -366,8 +366,8 @@ struct SelectedReportDetailView: View {
     }
     
     private func getUpdateQuantity() async {
-//        let quantity = await reportsVM.getNumberOfReportUpdates(report: report)
-//        self.updateQuantity = quantity
+        let quantity = await reportsVM.getNumberOfReportUpdates(report: report)
+        self.updateQuantity = quantity
     }
 }
 

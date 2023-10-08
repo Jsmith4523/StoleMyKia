@@ -28,7 +28,7 @@ final class NotificationViewModel: NSObject, ObservableObject {
         }
     }
     
-    @Published private(set) var notifications: [Notification] = []
+    @Published private(set) var notifications: [AppUserNotification] = []
     @Published private(set) var loadStatus: NotificationLoadStatus = .loading
                         
     override init() {
@@ -49,7 +49,7 @@ final class NotificationViewModel: NSObject, ObservableObject {
         UIApplication.shared.registerForRemoteNotifications()
     }
     
-    func userDidReadNotification(_ id: UUID) {
+    func userDidReadNotification(_ id: String) {
         Task {
             do {
                 try await NotificationManager.shared.updateNotificationReadStatus(id)
@@ -84,7 +84,7 @@ final class NotificationViewModel: NSObject, ObservableObject {
                 let notifications = try await NotificationManager.shared.fetchUserCurrentNotifications()
                 self.notifications = notifications
                 //Setting the application badge count to the number of unread notifications...
-                let unreadNotificationQuantity = notifications.map({!($0.isRead)}).count
+                let unreadNotificationQuantity = notifications.filter({!($0.isRead)}).count
                 self.notificationUnreadQuantity = unreadNotificationQuantity
                 if notifications.isEmpty {
                     self.loadStatus = .empty

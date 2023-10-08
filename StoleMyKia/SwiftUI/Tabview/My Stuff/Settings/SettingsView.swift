@@ -31,6 +31,11 @@ struct SettingsView: View {
         }
     }
     
+    @State private var alertErrorDeletingAccount = false
+    @State private var isLoading = false
+    
+    @State private var alertUserDeletingAccount = false
+    
     @State private var isShowingNotificationSettingsView = false
     @State private var settingsRoute: SettingsRoutes?
     
@@ -52,7 +57,7 @@ struct SettingsView: View {
                 }
                 Section {
                     Button {
-                        
+                        alertUserDeletingAccount.toggle()
                     } label: {
                         Label("Delete My Account", systemImage: "hammer")
                             .foregroundColor(.red)
@@ -72,8 +77,45 @@ struct SettingsView: View {
                         .environmentObject(userVM)
                 }
             }
+            .toolbar {
+                ToolbarItem(placement: .navigationBarTrailing) {
+                    if isLoading {
+                        ProgressView()
+                    }
+                }
+            }
         }
+        .disabled(isLoading)
+        .interactiveDismissDisabled(isLoading)
         .tint(Color(uiColor: .label))
+        .alert("Delete Your Account?", isPresented: $alertUserDeletingAccount) {
+            Button("Yes, Delete My Account", role: .destructive) {
+                deleteAccount()
+            }
+        } message: {
+            Text("""
+                 When choosing to delete your account, any bookmarks, reports, and settings you have made will be permanently deleted.
+                 This decision cannot be reversed. Are you sure?
+                 """)
+        }
+        .alert("Error", isPresented: $alertErrorDeletingAccount) {
+            Button("OK") {}
+        } message: {
+            Text("An error occurred during the deletion process. Please try again.")
+        }
+    }
+    
+    private func deleteAccount() {
+        isLoading = true
+        Task {
+            do {
+                try await userVM.deleteUserAccount()
+                isLoading = false
+            } catch {
+                isLoading = false
+                alertErrorDeletingAccount = true
+            }
+        }
     }
 }
 

@@ -25,8 +25,8 @@ struct FeedView: View {
     @State private var reportType: ReportType?
     @State private var reportRole: ReportRole.Role?
     
-    @EnvironmentObject var userVM: UserViewModel
-    @EnvironmentObject var reportsVM: ReportsViewModel
+    @ObservedObject var userVM: UserViewModel
+    @ObservedObject var reportsVM: ReportsViewModel
     
     private var filteredReports: [Report] {
         let reports = reportsVM.reports.filter { report in
@@ -123,13 +123,11 @@ struct FeedView: View {
         await reportsVM.fetchReports()
     }
 }
-
-struct FeedView_Previews: PreviewProvider {
-    static var previews: some View {
-        FeedView()
-            .environmentObject(UserViewModel())
-            .environmentObject(ReportsViewModel())
-            .tint(Color(uiColor: .label))
-            .preferredColorScheme(.dark)
-    }
-}
+//
+//struct FeedView_Previews: PreviewProvider {
+//    static var previews: some View {
+//        FeedView()
+//            .tint(Color(uiColor: .label))
+//            .preferredColorScheme(.dark)
+//    }
+//}

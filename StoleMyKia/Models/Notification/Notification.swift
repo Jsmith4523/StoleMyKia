@@ -8,11 +8,11 @@
 import Foundation
 import SwiftUI
 
-struct `Notification`: Identifiable, Codable {
+struct AppUserNotification: Identifiable, Decodable {
     
     static let isReadKey = "isRead"
     
-    enum NotificationType: String, CaseIterable, Identifiable, Codable {
+    enum UserNotificationType: String, CaseIterable, Identifiable, Codable {
         
         case report      = "Report"
         case update      = "Update"
@@ -23,17 +23,18 @@ struct `Notification`: Identifiable, Codable {
         }
     }
     
-    var id = UUID()
+    //The id is applied through the firebase functions
+    var id: String
     let dt: TimeInterval
     let title: String
     let body: String
-    let notificationType: NotificationType
+    let notificationType: UserNotificationType
     let reportId: UUID
     var isRead: Bool
-    let imageUrl: String?
+    var imageUrl: String?
 }
 
-extension Notification {
+extension AppUserNotification {
     
     var hasImage: Bool {
         !(imageUrl == nil)

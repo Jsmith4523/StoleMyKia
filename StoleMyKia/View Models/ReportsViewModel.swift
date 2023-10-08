@@ -11,6 +11,7 @@ import FirebaseAuth
 import UIKit
 import MapKit
 
+@MainActor
 final class ReportsViewModel: NSObject, ObservableObject {
         
     @Published var isFetchingReports = false
@@ -24,7 +25,6 @@ final class ReportsViewModel: NSObject, ObservableObject {
         super.init()
     }
     
-    @MainActor
     func fetchReports(showProgressView: Bool = false) async {
         if showProgressView {
             self.feedLoadStatus = .loading
@@ -48,16 +48,9 @@ final class ReportsViewModel: NSObject, ObservableObject {
     ///   - report: The report object to be encoded and uploaded.
     ///   - image: The optional image to be unwrapped and uploaded
     func uploadReport(_ report: Report, image: UIImage? = nil) async throws {
+        try await FirebaseAuthManager.manager.userCanPerformAction()
         try await ReportManager.manager.upload(report, image: image)
-        await UINotificationFeedbackGenerator().notificationOccurred(.success)
         await fetchReports()
-    }
-    
-    func deleteReport(report: Report) async throws {
-        try await ReportManager.manager.delete(report)
-        Task {
-            await fetchReports()
-        }
     }
     
     /// Update a original report
@@ -65,6 +58,7 @@ final class ReportsViewModel: NSObject, ObservableObject {
     ///   - originalReportId: The UUID of the original report
     ///   - update: The Update object
     func addUpdateToOriginalReport(originalReport: Report, report: Report, vehicleImage: UIImage? = nil) async throws {
+        try await FirebaseAuthManager.manager.userCanPerformAction(uid: originalReport.uid)
         guard let uid = Auth.auth().currentUser?.uid else {
             throw ReportManagerError.error
         }
@@ -72,15 +66,24 @@ final class ReportsViewModel: NSObject, ObservableObject {
         guard try await ReportManager.manager.reportDoesExist(originalReport.id) else {
             throw ReportManagerError.doesNotExist
         }
-        
+                
         var report = report
+        report.imageURL = try await StorageManager.shared.saveVehicleImage(vehicleImage, reportType: report.reportType, id: report.id)
         
-        let update = Update(uid: uid, type: report.reportType, vehicle: report.vehicle, reportId: report.id, dt: report.dt)
+        let update = Update(uid: uid, type: report.reportType, vehicle: report.vehicle, reportId: report.id, dt: report.dt, vehicleImageUrl: report.imageURL)
         let updateId = try await ReportManager.manager.appendUpdateToReport(originalReport.role.associatedValue, update: update)
         
         report.updateId = updateId
         
-        try await uploadReport(report, image: vehicleImage)
+        try await uploadReport(report)
+    }
+    
+    func deleteReport(report: Report) async throws {
+        try await FirebaseAuthManager.manager.userCanPerformAction()
+        try await ReportManager.manager.delete(report)
+        Task {
+            await fetchReports()
+        }
     }
     
     func getNumberOfReportUpdates(report: Report) async -> Int {
