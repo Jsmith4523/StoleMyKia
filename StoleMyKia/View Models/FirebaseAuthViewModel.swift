@@ -31,12 +31,13 @@ enum LoginStatus {
         try await self.authManager.authWithPhoneNumber(phoneNumber)
     }
     
-    func verifyCode(_ code: String) async throws {
-        try await authManager.verifyCode(code)
+    func verifyCode(_ code: String, phoneNumber: String) async throws {
+        try await authManager.verifyCode(code, phoneNumber: phoneNumber)
         
         guard let user = Auth.auth().currentUser else {
-            return
+            throw FirebaseAuthManager.FirebaseAuthManagerError.userError
         }
+        
         prepareForSignIn(uid: user.uid)
     }
     
@@ -49,12 +50,9 @@ enum LoginStatus {
         self.setupAccountDeletionListener()
     }
     
-    @objc private func userHasSignedOut() {
-        if Auth.auth().currentUser == nil {
-            DispatchQueue.main.asyncAfter(deadline: .now() + 0.15) { [weak self] in
-                self?.prepareForSignOut(fatal: true)
-            }
-        }
+    @objc 
+    private func userHasSignedOut() {
+        self.prepareForSignOut(fatal: true)
     }
     
     @objc private func saveDeviceFCMToken(_ notification: NSNotification) {
@@ -68,35 +66,40 @@ enum LoginStatus {
         }
     }
     
-    private func removeDeviceFCMToken() {
-        FirebaseUserManager.deleteFCMToken(uid)
+    private func removeDeviceFCMToken() async throws {
+        try await FirebaseUserManager.deleteFCMToken(uid)
     }
     
     ///Begin setting up the application for sign out.
     private func prepareForSignOut(shouldImmediatelySignOut: Bool = false, fatal: Bool = false) {
-        do {
-            if !(shouldImmediatelySignOut) {
-                authManager.signOutUser()
-            }
-            
-            suspendListeningForFCMToken()
-            removeDeviceFCMToken()
-            NotificationManager.removeNotificationListener()
-            
-            //Removing notifications and resetting application badge...
-            UNUserNotificationCenter.current().removeAllDeliveredNotifications()
-            UNUserNotificationCenter.current().removeAllPendingNotificationRequests()
-            
-            if #available(iOS 17.0, *) {
-                UNUserNotificationCenter.current().setBadgeCount(0)
-            } else {
-                UIApplication.shared.applicationIconBadgeNumber = 0
-            }
-            if fatal {
+        Task {
+            do {
+                if shouldImmediatelySignOut {
+                    authManager.signOutUser()
+                }
+                
+                suspendListeningForFCMToken()
+                if fatal {
+                    self.loginStatus = .loading
+                }
+                try await removeDeviceFCMToken()
+                NotificationManager.removeNotificationListener()
+                
+                //Removing notifications and resetting application badge...
+                UNUserNotificationCenter.current().removeAllDeliveredNotifications()
+                UNUserNotificationCenter.current().removeAllPendingNotificationRequests()
+                
+                if #available(iOS 17.0, *) {
+                    try await UNUserNotificationCenter.current().setBadgeCount(0)
+                } else {
+                    UIApplication.shared.applicationIconBadgeNumber = 0
+                }
+                if fatal {
+                    fatalError()
+                }
+            } catch {
                 fatalError()
             }
-        } catch {
-            fatalError()
         }
     }
     
@@ -109,11 +112,11 @@ enum LoginStatus {
     private func checkForCurrentUser() {
         guard let user = Auth.auth().currentUser else {
             self.loginStatus = .signedOut
-            prepareForSignOut()
+            prepareForSignOut(fatal: false)
             return
         }
+        
         self.prepareForSignIn(uid: user.uid)
-        self.loginStatus = .signedIn
     }
     
     private func setupAccountDeletionListener() {
@@ -128,7 +131,7 @@ enum LoginStatus {
             }
             ac.addAction(action)
             
-            UIApplication.shared.windows.first?.rootViewController?.present(ac, animated: true)
+            UIApplication.shared.windows.first?.rootViewController?.show(ac, sender: nil)
         }
     }
     

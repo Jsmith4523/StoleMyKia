@@ -47,7 +47,7 @@ final class NotificationManager {
             
             for value in values {
                 let data = try JSONSerialization.data(withJSONObject: value)
-                var notification = try JSONDecoder().decode(AppUserNotification.self, from: data)
+                let notification = try JSONDecoder().decode(AppUserNotification.self, from: data)
                 notifications.append(notification)
             }
             

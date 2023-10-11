@@ -62,14 +62,31 @@ class AppDelegate: UIScene, UIApplicationDelegate {
         if Auth.auth().canHandleNotification(userInfo) {
             completionHandler(.noData)
         }
-        
+    }
+    
+    //Called when user selects a notification
+    func userNotificationCenter(_ center: UNUserNotificationCenter, didReceive response: UNNotificationResponse, withCompletionHandler completionHandler: @escaping () -> Void) {
         guard Auth.auth().currentUser.isSignedIn else { return }
         
-        if let rootVC = window?.rootViewController {
-            let vc = UIViewController()
-            vc.view.backgroundColor = .orange
-            rootVC.present(vc, animated: true)
+        let userInfo = response.notification.request.content.userInfo
+        
+        let rootVC = UIApplication.shared.windows.first?.rootViewController
+        
+        if let type = userInfo["notificationType"] as? String, let notificationType = AppUserNotification.UserNotificationType(rawValue: type)  {
+            print(notificationType)
+//            switch notificationType {
+//            case .report:
+//
+//            case .update:
+//                
+//            case .falseReport:
+//                
+//            }
         }
+    }
+    
+    func userNotificationCenter(_ center: UNUserNotificationCenter, willPresent notification: UNNotification, withCompletionHandler completionHandler: @escaping (UNNotificationPresentationOptions) -> Void) {
+        completionHandler([.badge, .banner, .sound, .list])
     }
     
     private func setContentNotificationCategory() {

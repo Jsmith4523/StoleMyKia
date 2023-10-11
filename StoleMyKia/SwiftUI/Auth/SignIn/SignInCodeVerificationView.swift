@@ -9,6 +9,8 @@ import SwiftUI
 
 struct SignInCodeVerificationView: View {
     
+    @State private var didResendVerificationCode = false
+    
     @State private var isLoading = false
     @State private var alertErrorVerificationCode = false
     @State private var verificationCode = ""
@@ -32,7 +34,7 @@ struct SignInCodeVerificationView: View {
                 VStack(spacing: 10) {
                     Text("Verification Code Sent!")
                         .font(.system(size: 21).weight(.heavy))
-                    Text("We just sent a verification code to \(ApplicationFormats.authPhoneNumberFormat(phoneNumber, parentheses: true) ?? "you"). Check your messages.")
+                    Text("\(didResendVerificationCode ? "A new verification code has been sent to" : "We just sent a verification code to") \(ApplicationFormats.authPhoneNumberFormat(phoneNumber, parentheses: true) ?? "you"). Check your messages.")
                         .font(.system(size: 15))
                         .foregroundColor(.gray)
                 }
@@ -65,7 +67,12 @@ struct SignInCodeVerificationView: View {
             }
         }
         .disabled(isLoading)
-        .alert("Failed to verify code", isPresented: $alertErrorVerificationCode) {
+        .alert("Verification Error", isPresented: $alertErrorVerificationCode) {
+//            if !didResendVerificationCode {
+//                Button("Resend Code") {
+//                    resendVerificationCode()
+//                }
+//            }
             Button("OK") {}
         } message: {
             Text("There was an error with that request. Please try again.")
@@ -76,7 +83,21 @@ struct SignInCodeVerificationView: View {
         Task {
             isLoading = true
             do {
-                try await firebaseAuthVM.verifyCode(verificationCode)
+                try await firebaseAuthVM.verifyCode(verificationCode, phoneNumber: phoneNumber)
+                self.isLoading = false
+            } catch {
+                isLoading = false
+                alertErrorVerificationCode.toggle()
+            }
+        }
+    }
+    
+    private func resendVerificationCode() {
+        Task {
+            do {
+                isLoading = true
+                didResendVerificationCode = false
+                try await firebaseAuthVM.authWithPhoneNumber(phoneNumber)
                 self.isLoading = false
             } catch {
                 isLoading = false

@@ -58,6 +58,7 @@ struct SignInView: View {
             } label: {}
                 .disabled(true)
         }
+        .disabled(isLoading)
         .navigationTitle("Phone Number")
         .navigationBarTitleDisplayMode(.inline)
         .toolbar {

@@ -64,7 +64,6 @@
 		2473A8FD2AD12817008EAE20 /* ApplicationTabBarView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2473A8FC2AD12817008EAE20 /* ApplicationTabBarView.swift */; };
 		248278D72A03054C00C1E99D /* UISheetPC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 248278D62A03054C00C1E99D /* UISheetPC.swift */; };
 		24848AB72A61E38E003E037E /* LicenseTextDetectionManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 24848AB62A61E38E003E037E /* LicenseTextDetectionManager.swift */; };
-		248636AC2A3BCBE90092E184 /* PartialSheet in Frameworks */ = {isa = PBXBuildFile; productRef = 248636AB2A3BCBE90092E184 /* PartialSheet */; };
 		249254A62A37CA590037C43C /* UIHostingController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 249254A52A37CA590037C43C /* UIHostingController.swift */; };
 		2495A02029CAC3DE00457CE7 /* Date+EXT.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2495A01F29CAC3DE00457CE7 /* Date+EXT.swift */; };
 		2495A02229CAC5DF00457CE7 /* String+EXT.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2495A02129CAC5DF00457CE7 /* String+EXT.swift */; };
@@ -335,7 +334,6 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				248636AC2A3BCBE90092E184 /* PartialSheet in Frameworks */,
 				9A8DEA661C19F27F74C6B340 /* Pods_StoleMyKia.framework in Frameworks */,
 				20ED7B46DA18BFD717A86F8D /* Pods_StoleMyKia.framework in Frameworks */,
 			);
@@ -921,7 +919,6 @@
 			);
 			name = StoleMyKia;
 			packageProductDependencies = (
-				248636AB2A3BCBE90092E184 /* PartialSheet */,
 			);
 			productName = StoleMyKia;
 			productReference = 24A5791029BC552C00495E6F /* StoleMyKia.app */;
@@ -1597,14 +1594,6 @@
 			};
 		};
 /* End XCRemoteSwiftPackageReference section */
-
-/* Begin XCSwiftPackageProductDependency section */
-		248636AB2A3BCBE90092E184 /* PartialSheet */ = {
-			isa = XCSwiftPackageProductDependency;
-			package = 248636AA2A3BCBE90092E184 /* XCRemoteSwiftPackageReference "PartialSheet" */;
-			productName = PartialSheet;
-		};
-/* End XCSwiftPackageProductDependency section */
 	};
 	rootObject = 24A5790829BC552C00495E6F /* Project object */;
 }

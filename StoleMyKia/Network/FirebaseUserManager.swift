@@ -197,16 +197,25 @@ class FirebaseUserManager {
     //MARK: - FCM Token Methods
     
     ///Deletes the messaging token for the current users device that they are signing out of.
-    static func deleteFCMToken(_ uid: String?) {
+    static func deleteFCMToken(_ uid: String?) async throws {
         guard let uid else { return }
         
         if let deviceID = UserDefaults.standard.string(forKey: Constants.deviceIDKey) {
-            Firestore.firestore()
+            let deviceTokenDocument = try await Firestore.firestore()
                 .collection(FirebaseDatabasesPaths.usersDatabasePath)
                 .document(uid)
                 .collection(FirebaseDatabasesPaths.fcmTokenPath)
                 .document(deviceID)
-                .delete()
+                .getDocument()
+            
+            if deviceTokenDocument.exists {
+                try await Firestore.firestore()
+                    .collection(FirebaseDatabasesPaths.usersDatabasePath)
+                    .document(uid)
+                    .collection(FirebaseDatabasesPaths.fcmTokenPath)
+                    .document(deviceID)
+                    .delete()
+            }
         }
     }
     

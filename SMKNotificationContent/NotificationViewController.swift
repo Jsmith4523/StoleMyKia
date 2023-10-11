@@ -21,12 +21,12 @@ class NotificationViewController: UIViewController, UNNotificationContentExtensi
         let userInfo = notification.request.content.userInfo
         
         if let vehicleImageString = userInfo["imageUrl"] as? String {
-            self.downloadVehicleImage(urlString: vehicleImageString)
+            self.getVehicleImage(urlString: vehicleImageString)
         }
     }
     
     ///Download the vehicle image from firebase
-    private func downloadVehicleImage(urlString: String) {
+    private func getVehicleImage(urlString: String) {
         guard let url = URL(string: urlString) else { return }
         
         Task {

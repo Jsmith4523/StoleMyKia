@@ -14,7 +14,7 @@ import FirebaseAuth
 
 enum NewReportError: String, Error {
     case locationError = "Please select a location"
-    case userIdError = "Something went wrong. You do not appear to be signed in. Please contact the developer!"
+    case userIdError = "You are not signed in. Please sign in to continue"
     case error = "We ran into an error when completing your request. Please try again."
     case detailIsEmpty = "Please enter details regarding your vehicle and the incident you are reporting"
 }

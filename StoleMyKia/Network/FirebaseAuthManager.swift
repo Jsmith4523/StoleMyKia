@@ -12,6 +12,7 @@ class FirebaseAuthManager {
     
     enum FirebaseAuthManagerError: Error {
         case verificationIdError
+        case userError
         case userDoesNotExist
         case userAlreadyExist
         case userBanned
@@ -19,9 +20,7 @@ class FirebaseAuthManager {
         case userStatusError(String)
         case error
     }
-    
-    private let auth = Auth.auth()
-    
+        
     private var verificationId: String?
     
     private var accountDeletionListener: ListenerRegistration?
@@ -38,62 +37,62 @@ class FirebaseAuthManager {
         self.verificationId = verificationId
     }
     
-    func verifyCode(_ code: String) async throws {
+    func verifyCode(_ code: String, phoneNumber: String) async throws {
         guard let verificationId else {
             throw FirebaseAuthManagerError.verificationIdError
-        }
-        
-        let credential = PhoneAuthProvider.provider().credential(withVerificationID: verificationId, verificationCode: code)
-        try await auth.signIn(with: credential)
-        
-        guard let currentUser = Auth.auth().currentUser else {
-            throw FirebaseAuthManagerError.error
         }
         
         do {
             let userDocument = try await Firestore.firestore()
                 .collection(FirebaseDatabasesPaths.usersDatabasePath)
-                .document(currentUser.uid)
-                .getDocument()
+                .whereField(AppUser.CodingKeys.phoneNumber.rawValue, isEqualTo: phoneNumber)
+                .getDocuments()
+                .documents
+                .first
             
-            if userDocument.exists {
+            if let userDocument, userDocument.exists {
                 try await checkUserStatus(userDoc: userDocument)
-            } else {
-                try await saveNewUser()
             }
-                    
+            
+            let credential = PhoneAuthProvider.provider().credential(withVerificationID: verificationId, verificationCode: code)
+            try await Auth.auth().signIn(with: credential)
+            try await saveNewUser(phoneNumber: phoneNumber, userDocument: userDocument)
+            
+            self.verificationId = nil
         } catch {
+            print(error)
+            self.verificationId = nil
+            try? Auth.auth().signOut()
             throw FirebaseAuthManagerError.error
         }
         
         func checkUserStatus(userDoc: DocumentSnapshot) async throws {
             guard let rawValue = userDoc.get(AppUser.statusKey) as? String else {
-                try? Auth.auth().signOut()
                 throw FirebaseAuthManagerError.userStatusError("Status field is missing!")
             }
             
             guard let userStatus = AppUser.Status(rawValue: rawValue) else {
-                try? Auth.auth().signOut()
                 throw FirebaseAuthManagerError.userStatusError("Invalid user status!")
             }
             
             guard !(userStatus == .banned) else {
-                try? Auth.auth().signOut()
                 throw FirebaseAuthManagerError.userBanned
             }
             
             guard !(userStatus == .disabled) else {
-                try? Auth.auth().signOut()
                 throw FirebaseAuthManagerError.userDisabled
             }
         }
         
-        func saveNewUser() async throws {
+        func saveNewUser(phoneNumber: String, userDocument: DocumentSnapshot?) async throws {
+            let userData = try AppUser(status: .active, phoneNumber: phoneNumber)
+                .encodeForUpload()
+            
             guard let currentUser = Auth.auth().currentUser else {
-                throw FirebaseAuthManagerError.error
+                throw FirebaseAuthManagerError.userError
             }
             
-            let userData = try AppUser(status: .active).encodeForUpload()
+            guard (userDocument == nil) else { return }
             
             try await Firestore.firestore()
                 .collection(FirebaseDatabasesPaths.usersDatabasePath)
@@ -130,7 +129,7 @@ class FirebaseAuthManager {
     
     ///Determines if another user can have actions performed to their account such as having a report updated by another user
     func userCanPerformAction(uid: String) async throws {
-        guard !(Auth.auth().currentUser == nil) else {
+        guard Auth.auth().currentUser.isSignedIn else {
             throw FirebaseAuthManagerError.error
         }
         
@@ -139,6 +138,8 @@ class FirebaseAuthManager {
             .document(uid)
             .getDocument()
         
+        //If the parameter uid passed through does not have a document at the collection, or the status is not "Active"
+        //Then we cannot perform an action for that user
         guard let rawValue = userSnapshot.get(AppUser.statusKey) as? String  else {
             throw FirebaseAuthManagerError.userStatusError("Status Field is missing!")
         }
@@ -163,7 +164,6 @@ class FirebaseAuthManager {
         guard let rawValue = userSnapshot.get(AppUser.statusKey) as? String  else {
             throw FirebaseAuthManagerError.userStatusError("Status Field is missing!")
         }
-        
         
         guard let userStatus = AppUser.Status(rawValue: rawValue), (userStatus == .active || userStatus == .disabled) else {
             throw FirebaseAuthManagerError.userBanned
@@ -208,7 +208,7 @@ class FirebaseAuthManager {
     }
     
     func signOutUser() {
-        try? auth.signOut()
+        try? Auth.auth().signOut()
         notifyOfSignOut()
     }
         

@@ -12,6 +12,7 @@ struct AppUser: Codable {
     static let statusKey = Self.CodingKeys.status.rawValue
     
     let status: Status
+    let phoneNumber: String
     
     enum Status: String, Codable {
         case disabled = "Disabled"
@@ -32,6 +33,7 @@ struct AppUser: Codable {
         
     enum CodingKeys: String, CodingKey {
         case status = "status"
+        case phoneNumber = "phone_number"
     }
     
     func encodeForUpload() throws -> [String: Any] {
