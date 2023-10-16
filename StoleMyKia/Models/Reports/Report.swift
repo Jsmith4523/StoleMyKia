@@ -80,6 +80,9 @@ public struct Report: Identifiable, Codable, Comparable {
     public static func > (lhs: Report, rhs: Report) -> Bool {
         lhs.dt > rhs.dt
     }
+}
+
+extension Report {
     
     func encodeForUploading() throws -> Any? {
         try JSONSerialization.createJsonFromObject(self)
@@ -111,9 +114,6 @@ public struct Report: Identifiable, Codable, Comparable {
             return "\(reportTypeRawValue)/\(idString)"
         }
     }
-}
-
-extension Report {
     
     private func setAsOriginal() -> ReportRole {
         return .original(self.id)

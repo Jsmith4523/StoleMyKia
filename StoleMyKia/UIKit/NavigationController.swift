@@ -65,24 +65,5 @@ struct NavigationController<C: View>: UIViewControllerRepresentable {
         override var preferredStatusBarStyle: UIStatusBarStyle {
             return statusBarColor
         }
-        
-        override func viewDidLoad() {
-           print("I'm loaded")
-           //super.viewDidLoad()
-        }
-        
-        override func viewDidAppear(_ animated: Bool) {
-            print("I'm appeared")
-            super.viewDidAppear(animated)
-        }
-        
-        override func viewDidDisappear(_ animated: Bool) {
-            print("I disapeared")
-            super.viewDidDisappear(animated)
-        }
-        
-        deinit {
-            print("I'm dead")
-        }
     }
 }

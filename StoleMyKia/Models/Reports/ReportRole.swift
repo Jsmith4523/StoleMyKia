@@ -12,7 +12,7 @@ enum ReportRole: Identifiable, Codable, Equatable, Comparable {
     
     enum Role: String, Identifiable, Comparable, CaseIterable {
         
-        case original = "Original"
+        case original = "Initial Report"
         case update = "Update"
         
         var id: String {
@@ -32,6 +32,10 @@ enum ReportRole: Identifiable, Codable, Equatable, Comparable {
     case original(UUID)
     ///This is an update report. The enum holds the UUID value of the original report it's updating.
     case update(UUID)
+    
+    var id: String {
+        self.title
+    }
     
     ///The associated value with this role.
     var associatedValue: UUID {
@@ -115,8 +119,13 @@ enum ReportRole: Identifiable, Codable, Equatable, Comparable {
         }
     }
     
-    var id: String {
-        self.title
+    var discloseRadiusSize: CGFloat {
+        switch self.role {
+        case .original:
+            return 1250
+        case .update:
+            return 450
+        }
     }
     
     static func < (lhs: ReportRole, rhs: ReportRole) -> Bool {

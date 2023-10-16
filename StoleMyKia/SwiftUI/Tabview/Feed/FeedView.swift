@@ -22,15 +22,16 @@ struct FeedView: View {
     @State private var filterByUserLocation = false
     @State private var nearbyDistance: NearbyDistance = .fiveMiles
     @State private var search = ""
-    @State private var reportType: ReportType?
-    @State private var reportRole: ReportRole.Role?
+    
+    @State private var filterByReportType = false
+    @State private var reportType: ReportType = .stolen
     
     @ObservedObject var userVM: UserViewModel
     @ObservedObject var reportsVM: ReportsViewModel
     
     private var filteredReports: [Report] {
         let reports = reportsVM.reports.filter { report in
-            if let reportType {
+            if filterByReportType {
                 return report.reportType == reportType
             } else {
                 return true
@@ -57,8 +58,9 @@ struct FeedView: View {
             })
         }
     }
+    
     private var isFiltering: Bool {
-        return !(reportType == nil) || filterByUserLocation
+        return filterByReportType || filterByUserLocation
     }
     
     var body: some View {
@@ -112,8 +114,9 @@ struct FeedView: View {
                 .environmentObject(reportsVM)
                 .environmentObject(userVM)
         }
-        .customSheetView(isPresented: $isShowingReportTypeFilterView, showsIndicator: true, cornerRadius: 15) {
-            ReportFilterView(filterByUserLocation: $filterByUserLocation, nearbyDistance: $nearbyDistance, reportType: $reportType, reportRole: $reportRole)
+        .sheet(isPresented: $isShowingReportTypeFilterView) {
+            ReportFilterView(filterByUserLocation: $filterByUserLocation, filterByReportType: $filterByReportType, nearbyDistance: $nearbyDistance, reportType: $reportType)
+                .presentationDetents([.medium, .large])
         }
     }
     
@@ -123,11 +126,9 @@ struct FeedView: View {
         await reportsVM.fetchReports()
     }
 }
-//
-//struct FeedView_Previews: PreviewProvider {
-//    static var previews: some View {
-//        FeedView()
-//            .tint(Color(uiColor: .label))
-//            .preferredColorScheme(.dark)
-//    }
+
+//#Preview {
+//    FeedView(userVM: UserViewModel(), reportsVM: ReportsViewModel())
+//        .tint(Color(uiColor: .label))
+//        .preferredColorScheme(.dark)
 //}

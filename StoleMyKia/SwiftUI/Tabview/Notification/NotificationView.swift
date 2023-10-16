@@ -43,12 +43,9 @@ struct NotificationView: View {
         }
     }
 }
-//
-//struct NotificationView_Previews: PreviewProvider {
-//    static var previews: some View {
-//        NotificationView()
-//            .environmentObject(NotificationViewModel())
-//            .environmentObject(ReportsViewModel())
-//            .environmentObject(UserViewModel())
-//    }
-//}
+
+struct NotificationView_Previews: PreviewProvider {
+    static var previews: some View {
+        NotificationView(notificationVM: NotificationViewModel(), reportsVM: ReportsViewModel(), userVM: UserViewModel())
+    }
+}

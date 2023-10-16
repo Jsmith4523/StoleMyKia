@@ -10,109 +10,110 @@ import MapKit
 
 struct TimelineMapView: View {
     
-    enum DetailMode {
-        case report(Report)
-        case reportId(UUID)
-    }
-            
-    let detailMode: DetailMode
+    enum DismissButtonStyle {
+        case navigation, dismiss
         
-    @StateObject private var timelineMapCoordinator = TimelineMapViewCoordinator()
-    @EnvironmentObject var reportsVM: ReportsViewModel
+        var symbol: String {
+            switch self {
+            case .dismiss:
+                return "xmark"
+            case .navigation:
+                return "arrow.left"
+            }
+        }
+    }
+    
+    let reportAssociatedId: UUID
+    var dismissStyle: DismissButtonStyle = .navigation
+            
+    @StateObject private var timelineMapVM = TimelineMapViewModel()
     
     @Environment (\.dismiss) var dismiss
     
     var body: some View {
-        NavigationView {
-            VStack {
-                ZStack(alignment: .top) {
-                    TimelineMapViewRepresentabe(timelineMapCoordinator: timelineMapCoordinator)
-                        .edgesIgnoringSafeArea(.bottom)
-                    if let report = timelineMapCoordinator.report {
-                        Text(report.vehicleDetails)
-                            .font(.system(size: 12.5).weight(.medium))
-                            .padding(10)
-                            .background(Color(uiColor: .systemBackground))
-                            .clipShape(Capsule())
-                            .padding()
-                    }
-                }
+        ZStack(alignment: .leading) {
+            ZStack(alignment: .topLeading) {
+                TimelineMap(viewModel: timelineMapVM)
+                header
             }
-            .navigationTitle("Timeline")
-            .navigationBarTitleDisplayMode(.inline)
-            .toolbar {
-                ToolbarItem(placement: .navigationBarLeading) {
-                    Button {
-                        dismiss()
-                    } label: {
-                        Image(systemName: "xmark")
-                    }
-                }
-                ToolbarItemGroup(placement: .navigationBarTrailing) {
-                    if timelineMapCoordinator.isLoading {
-                        ProgressView()
-                    } else {
-                        Button {
-                            refresh()
-                        } label: {
-                            Image(systemName: "arrow.clockwise")
-                        }
-                    }
-                    
-                    if !(timelineMapCoordinator.isLoading) {
-                        Button {
-                            timelineMapCoordinator.mapViewSheetMode = .list
-                        } label: {
-                            Image(systemName: "list.dash")
-                        }
-                    }
-                }
+            HStack {
+                Rectangle()
+                    .fill(.clear)
+                    .frame(width: 15)
+                    .ignoresSafeArea()
             }
         }
-        .environmentObject(reportsVM)
-        .onAppear {
-            UIImpactFeedbackGenerator(style: .medium).impactOccurred()
-            fetchForUpdates()
+        .navigationTitle("Timeline")
+        .navigationBarHidden(true)
+        .navigationBarTitleDisplayMode(.inline)
+        .environmentObject(timelineMapVM)
+        .task {
+            try? await timelineMapVM.getUpdatesForReport(reportAssociatedId)
         }
-        .alert("Alert", isPresented: $timelineMapCoordinator.showAlert) {
-            Button("Okay") { dismiss() }
-        } message: {
-            Text(timelineMapCoordinator.alertReportError?.rawValue ?? "There was an error")
+        .customSheetView(isPresented: $timelineMapVM.isShowingListView, detents: .timelineMapListDetents, showsIndicator: true, cornerRadius: 30) {
+            TimelineMapListView()
+                .environmentObject(timelineMapVM)
         }
-        .sheet(item: $timelineMapCoordinator.mapViewSheetMode) { mode in
-            switch mode {
-            case .list:
-                TimelineListView()
-                    .environmentObject(timelineMapCoordinator)
-            case .report(let report):
-                SelectedReportDetailView(report: report, timelineMapViewMode: .dismissWhenSelected, deleteCompletion: fetchForUpdates)
-                    .environmentObject(reportsVM)
-            }
+        .sheet(item: $timelineMapVM.selectedReport) { report in
+            TimelineReportDetailView(report: report)
+                .presentationDragIndicator(.visible)
+                .presentationDetents([.height(250), .height(750)])
         }
     }
     
-    private func fetchForUpdates() {
-        Task {
-            switch detailMode {
-            case .report(let report):
-                await timelineMapCoordinator.getUpdates(report)
-            case .reportId(_):
-                break
+    var header: some View {
+        HStack {
+            Button {
+               dismiss()
+            } label: {
+                Image(systemName: dismissStyle.symbol)
+                    .resizable()
+                    .scaledToFit()
+                    .frame(width: 20, height: 20)
+                    .foregroundColor(Color(uiColor: .systemBackground))
+                    .padding(10)
+                    .background(Color(uiColor: .label))
+                    .clipShape(Circle())
+            }
+            Spacer()
+            Button {
+                timelineMapVM.isShowingListView.toggle()
+            } label: {
+                Image(systemName: "line.3.horizontal.decrease")
+                    .resizable()
+                    .scaledToFit()
+                    .frame(width: 20, height: 20)
+                    .foregroundColor(Color(uiColor: .systemBackground))
+                    .padding(10)
+                    .background(Color(uiColor: .label))
+                    .clipShape(Circle())
             }
         }
-    }
-    
-    private func refresh() {
-        Task {
-            await timelineMapCoordinator.refreshForNewUpdates()
-        }
+        .padding()
     }
 }
 
 struct TimelineMapView_Previews: PreviewProvider {
     static var previews: some View {
-        TimelineMapView(detailMode: .report([Report].testReports().first!))
-            .environmentObject(ReportsViewModel())
-            .preferredColorScheme(.dark)
+        NavigationView {
+            TimelineMapView(reportAssociatedId: [Report].testReports().first!.role.associatedValue)
+                .environmentObject(ReportsViewModel())
+        }
+    }
+}
+
+extension [UISheetPresentationController.Detent] {
+    
+    static var timelineMapDetailDetents: Self {
+        return [
+            .custom(resolver: {_ in return CGFloat(200) }),
+            .custom(resolver: {_ in return CGFloat(500) }),
+        ]
+    }
+    
+    static var timelineMapListDetents: Self {
+        return [
+            .custom(resolver: {_ in return CGFloat(750) }),
+        ]
     }
 }

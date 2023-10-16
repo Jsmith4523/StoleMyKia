@@ -26,7 +26,7 @@ enum ApplicationTabViewSelection {
     var symbol: String {
         switch self {
         case .feed:
-            return "menucard"
+            return .reportSymbolName
         case .notification:
             return "bell"
         case .myStuff:
@@ -42,7 +42,7 @@ enum ApplicationTabViewSelection {
 struct ApplicationTabView: View {
     
     @State private var notificationCount: Int?
-    @State private var selection: ApplicationTabViewSelection = .myStuff
+    @State private var selection: ApplicationTabViewSelection = .feed
     
     @StateObject private var reportsVM = ReportsViewModel()
     @StateObject private var notificationVM = NotificationViewModel()
@@ -87,6 +87,5 @@ struct ApplicationTabView_Previews: PreviewProvider {
         ApplicationTabView()
             .environmentObject(ReportsViewModel())
             .environmentObject(UserViewModel())
-            //.preferredColorScheme(.dark)
     }
 }

@@ -72,17 +72,41 @@ class AppDelegate: UIScene, UIApplicationDelegate {
         
         let rootVC = UIApplication.shared.windows.first?.rootViewController
         
-        if let type = userInfo["notificationType"] as? String, let notificationType = AppUserNotification.UserNotificationType(rawValue: type)  {
-            print(notificationType)
-//            switch notificationType {
-//            case .report:
-//
-//            case .update:
-//                
-//            case .falseReport:
-//                
-//            }
+        if let type = userInfo["notificationType"] as? String, let notificationType = AppUserNotification.UserNotificationType(rawValue: type), let id = userInfo["reportId"] as? String, let reportId = UUID.ID(uuidString: id) {
+            
+            var report: Report?
+            
+            Task {
+                do {
+                    let fetchedReport = try await ReportManager.manager.fetchSingleReport(reportId)
+                    report = fetchedReport
+                } catch {
+                    let ac = UIAlertController(title: "Error", message: "There was an error presenting information for that notification.", preferredStyle: .alert)
+                    ac.addAction(.init(title: "OK", style: .default))
+                    ac.modalPresentationStyle = .overFullScreen
+                    rootVC?.show(ac, sender: nil)
+                }
+                
+                DispatchQueue.main.async {
+                    if let report {
+                        switch notificationType {
+                        case .report:
+                            let hostingController = UIHostingController(rootView: SelectedReportDetailView(reportId: report.id).environmentObject(ReportsViewModel()))
+                            hostingController.modalPresentationStyle = .fullScreen
+                            rootVC?.show(hostingController, sender: nil)
+                        case .update:
+                            let hostingController = UIHostingController(rootView: TimelineMapView(reportAssociatedId: report.role.associatedValue, dismissStyle: .dismiss))
+                            hostingController.modalPresentationStyle = .fullScreen
+                            rootVC?.show(hostingController, sender: nil)
+                        case .falseReport:
+                            //TODO: Show False Report Detail View
+                            return
+                        }
+                    }
+                }
+            }
         }
+        completionHandler()
     }
     
     func userNotificationCenter(_ center: UNUserNotificationCenter, willPresent notification: UNNotification, withCompletionHandler completionHandler: @escaping (UNNotificationPresentationOptions) -> Void) {

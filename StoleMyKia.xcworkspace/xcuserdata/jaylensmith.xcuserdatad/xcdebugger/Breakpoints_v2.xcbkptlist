@@ -1,85 +1,158 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <Bucket
-   uuid = "625344CA-C728-470F-823C-855AD33E90D3"
+   uuid = "E4A0998F-428E-4F6B-B456-A3C59C7B6E37"
    type = "0"
    version = "2.0">
    <Breakpoints>
       <BreakpointProxy
          BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
          <BreakpointContent
-            uuid = "8810C9A2-319D-4300-A9F1-B101E89AE9CB"
+            uuid = "415B3FFC-266C-4D81-8436-A93E83727874"
             shouldBeEnabled = "Yes"
             ignoreCount = "0"
             continueAfterRunningActions = "No"
-            filePath = "StoleMyKia/SwiftUI/Report/Update/UpdateReportView.swift"
+            filePath = "StoleMyKia/StoleMyKiaApp.swift"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "172"
-            endingLineNumber = "172"
-            landmarkName = "prepareForUpload()"
-            landmarkType = "7">
-         </BreakpointContent>
-      </BreakpointProxy>
-      <BreakpointProxy
-         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
-         <BreakpointContent
-            uuid = "E1B9EF04-B976-4C7D-A4FE-9B2CA5DD057F"
-            shouldBeEnabled = "Yes"
-            ignoreCount = "0"
-            continueAfterRunningActions = "No"
-            filePath = "StoleMyKia/SwiftUI/Report/Update/UpdateReportView.swift"
-            startingColumnNumber = "9223372036854775807"
-            endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "176"
-            endingLineNumber = "176"
-            landmarkName = "prepareForUpload()"
-            landmarkType = "7">
-         </BreakpointContent>
-      </BreakpointProxy>
-      <BreakpointProxy
-         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
-         <BreakpointContent
-            uuid = "65BA9806-9EB0-4A3C-AE3E-73AD767CF602"
-            shouldBeEnabled = "Yes"
-            ignoreCount = "0"
-            continueAfterRunningActions = "No"
-            filePath = "StoleMyKia/Network/FirebaseAuthManager.swift"
-            startingColumnNumber = "9223372036854775807"
-            endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "133"
-            endingLineNumber = "133"
-            landmarkName = "userCanPerformAction(uid:)"
+            startingLineNumber = "80"
+            endingLineNumber = "80"
+            landmarkName = "userNotificationCenter(_:didReceive:withCompletionHandler:)"
             landmarkType = "7">
             <Locations>
                <Location
-                  uuid = "65BA9806-9EB0-4A3C-AE3E-73AD767CF602 - bcd7eb79e29bde5b"
+                  uuid = "415B3FFC-266C-4D81-8436-A93E83727874 - 4e79953f2f4d487"
                   shouldBeEnabled = "Yes"
                   ignoreCount = "0"
                   continueAfterRunningActions = "No"
-                  symbolName = "(1) suspend resume partial function for StoleMyKia.FirebaseAuthManager.userCanPerformAction(uid: Swift.String) async throws -&gt; ()"
+                  symbolName = "(1) suspend resume partial function for closure #1 @Sendable () async throws -&gt; () in StoleMyKia.AppDelegate.userNotificationCenter(_: __C.UNUserNotificationCenter, didReceive: __C.UNNotificationResponse, withCompletionHandler: () -&gt; ()) -&gt; ()"
                   moduleName = "StoleMyKia"
                   usesParentBreakpointCondition = "Yes"
-                  urlString = "file:///Users/jaylensmith/Library/Mobile%20Documents/com~apple~CloudDocs/Mac%20Mini%20Xcode/StoleMyKia/StoleMyKia/Network/FirebaseAuthManager.swift"
+                  urlString = "file:///Users/jaylensmith/Documents/Macbook%20Pro%20Xcode/StoleMyKia/StoleMyKia/StoleMyKiaApp.swift"
                   startingColumnNumber = "9223372036854775807"
                   endingColumnNumber = "9223372036854775807"
-                  startingLineNumber = "133"
-                  endingLineNumber = "133"
-                  offsetFromSymbolStart = "708">
+                  startingLineNumber = "80"
+                  endingLineNumber = "80"
+                  offsetFromSymbolStart = "64">
                </Location>
                <Location
-                  uuid = "65BA9806-9EB0-4A3C-AE3E-73AD767CF602 - bcd7eb79e29bde5b"
+                  uuid = "415B3FFC-266C-4D81-8436-A93E83727874 - 4894d4366a588e70"
                   shouldBeEnabled = "Yes"
                   ignoreCount = "0"
                   continueAfterRunningActions = "No"
-                  symbolName = "(1) suspend resume partial function for StoleMyKia.FirebaseAuthManager.userCanPerformAction(uid: Swift.String) async throws -&gt; ()"
+                  symbolName = "(2) await resume partial function for closure #1 @Sendable () async throws -&gt; () in StoleMyKia.AppDelegate.userNotificationCenter(_: __C.UNUserNotificationCenter, didReceive: __C.UNNotificationResponse, withCompletionHandler: () -&gt; ()) -&gt; ()"
                   moduleName = "StoleMyKia"
                   usesParentBreakpointCondition = "Yes"
-                  urlString = "file:///Users/jaylensmith/Library/Mobile%20Documents/com~apple~CloudDocs/Mac%20Mini%20Xcode/StoleMyKia/StoleMyKia/Network/FirebaseAuthManager.swift"
+                  urlString = "file:///Users/jaylensmith/Documents/Macbook%20Pro%20Xcode/StoleMyKia/StoleMyKia/StoleMyKiaApp.swift"
                   startingColumnNumber = "9223372036854775807"
                   endingColumnNumber = "9223372036854775807"
-                  startingLineNumber = "133"
-                  endingLineNumber = "133"
-                  offsetFromSymbolStart = "616">
+                  startingLineNumber = "80"
+                  endingLineNumber = "80"
+                  offsetFromSymbolStart = "36">
+               </Location>
+               <Location
+                  uuid = "415B3FFC-266C-4D81-8436-A93E83727874 - 1e4b6cfd3f2d98e0"
+                  shouldBeEnabled = "Yes"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "(3) suspend resume partial function for closure #1 @Sendable () async throws -&gt; () in StoleMyKia.AppDelegate.userNotificationCenter(_: __C.UNUserNotificationCenter, didReceive: __C.UNNotificationResponse, withCompletionHandler: () -&gt; ()) -&gt; ()"
+                  moduleName = "StoleMyKia"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/jaylensmith/Documents/Macbook%20Pro%20Xcode/StoleMyKia/StoleMyKia/StoleMyKiaApp.swift"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "77"
+                  endingLineNumber = "77"
+                  offsetFromSymbolStart = "44">
+               </Location>
+               <Location
+                  uuid = "415B3FFC-266C-4D81-8436-A93E83727874 - 1e4b6cfd3f2d9885"
+                  shouldBeEnabled = "Yes"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "(3) suspend resume partial function for closure #1 @Sendable () async throws -&gt; () in StoleMyKia.AppDelegate.userNotificationCenter(_: __C.UNUserNotificationCenter, didReceive: __C.UNNotificationResponse, withCompletionHandler: () -&gt; ()) -&gt; ()"
+                  moduleName = "StoleMyKia"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/jaylensmith/Documents/Macbook%20Pro%20Xcode/StoleMyKia/StoleMyKia/StoleMyKiaApp.swift"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "80"
+                  endingLineNumber = "80"
+                  offsetFromSymbolStart = "84">
+               </Location>
+               <Location
+                  uuid = "415B3FFC-266C-4D81-8436-A93E83727874 - 12f94549da413a8a"
+                  shouldBeEnabled = "Yes"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "(4) suspend resume partial function for closure #1 @Sendable () async throws -&gt; () in StoleMyKia.AppDelegate.userNotificationCenter(_: __C.UNUserNotificationCenter, didReceive: __C.UNNotificationResponse, withCompletionHandler: () -&gt; ()) -&gt; ()"
+                  moduleName = "StoleMyKia"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/jaylensmith/Documents/Macbook%20Pro%20Xcode/StoleMyKia/StoleMyKia/StoleMyKiaApp.swift"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "80"
+                  endingLineNumber = "80"
+                  offsetFromSymbolStart = "72">
+               </Location>
+               <Location
+                  uuid = "415B3FFC-266C-4D81-8436-A93E83727874 - 4e79953f2f4d487"
+                  shouldBeEnabled = "Yes"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "(1) suspend resume partial function for closure #1 @Sendable () async throws -&gt; () in StoleMyKia.AppDelegate.userNotificationCenter(_: __C.UNUserNotificationCenter, didReceive: __C.UNNotificationResponse, withCompletionHandler: () -&gt; ()) -&gt; ()"
+                  moduleName = "StoleMyKia"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/jaylensmith/Documents/Macbook%20Pro%20Xcode/StoleMyKia/StoleMyKia/StoleMyKiaApp.swift"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "80"
+                  endingLineNumber = "80"
+                  offsetFromSymbolStart = "80">
+               </Location>
+               <Location
+                  uuid = "415B3FFC-266C-4D81-8436-A93E83727874 - 1e4b6cfd3f2d98e0"
+                  shouldBeEnabled = "Yes"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "(3) suspend resume partial function for closure #1 @Sendable () async throws -&gt; () in StoleMyKia.AppDelegate.userNotificationCenter(_: __C.UNUserNotificationCenter, didReceive: __C.UNNotificationResponse, withCompletionHandler: () -&gt; ()) -&gt; ()"
+                  moduleName = "StoleMyKia"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/jaylensmith/Documents/Macbook%20Pro%20Xcode/StoleMyKia/StoleMyKia/StoleMyKiaApp.swift"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "77"
+                  endingLineNumber = "77"
+                  offsetFromSymbolStart = "108">
+               </Location>
+               <Location
+                  uuid = "415B3FFC-266C-4D81-8436-A93E83727874 - 1e4b6cfd3f2d9885"
+                  shouldBeEnabled = "Yes"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "(3) suspend resume partial function for closure #1 @Sendable () async throws -&gt; () in StoleMyKia.AppDelegate.userNotificationCenter(_: __C.UNUserNotificationCenter, didReceive: __C.UNNotificationResponse, withCompletionHandler: () -&gt; ()) -&gt; ()"
+                  moduleName = "StoleMyKia"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/jaylensmith/Documents/Macbook%20Pro%20Xcode/StoleMyKia/StoleMyKia/StoleMyKiaApp.swift"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "80"
+                  endingLineNumber = "80"
+                  offsetFromSymbolStart = "164">
+               </Location>
+               <Location
+                  uuid = "415B3FFC-266C-4D81-8436-A93E83727874 - 12f94549da413a8a"
+                  shouldBeEnabled = "Yes"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "(4) suspend resume partial function for closure #1 @Sendable () async throws -&gt; () in StoleMyKia.AppDelegate.userNotificationCenter(_: __C.UNUserNotificationCenter, didReceive: __C.UNNotificationResponse, withCompletionHandler: () -&gt; ()) -&gt; ()"
+                  moduleName = "StoleMyKia"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/jaylensmith/Documents/Macbook%20Pro%20Xcode/StoleMyKia/StoleMyKia/StoleMyKiaApp.swift"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "80"
+                  endingLineNumber = "80"
+                  offsetFromSymbolStart = "152">
                </Location>
             </Locations>
          </BreakpointContent>
@@ -87,460 +160,79 @@
       <BreakpointProxy
          BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
          <BreakpointContent
-            uuid = "32E98CF5-BE5C-4A3E-93FE-6554A1C4CC7E"
+            uuid = "88C7D20F-4F56-4EDA-8786-3B7E49097749"
             shouldBeEnabled = "Yes"
             ignoreCount = "0"
             continueAfterRunningActions = "No"
-            filePath = "StoleMyKia/Network/FirebaseAuthManager.swift"
+            filePath = "StoleMyKia/StoleMyKiaApp.swift"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "144"
-            endingLineNumber = "144"
-            landmarkName = "userCanPerformAction(uid:)"
+            startingLineNumber = "77"
+            endingLineNumber = "77"
+            landmarkName = "userNotificationCenter(_:didReceive:withCompletionHandler:)"
             landmarkType = "7">
             <Locations>
                <Location
-                  uuid = "32E98CF5-BE5C-4A3E-93FE-6554A1C4CC7E - 25b89e93f007d435"
+                  uuid = "88C7D20F-4F56-4EDA-8786-3B7E49097749 - a0e3e9504da9bd86"
                   shouldBeEnabled = "Yes"
                   ignoreCount = "0"
                   continueAfterRunningActions = "No"
-                  symbolName = "(3) suspend resume partial function for StoleMyKia.FirebaseAuthManager.userCanPerformAction(uid: Swift.String) async throws -&gt; ()"
+                  symbolName = "closure #1 @Sendable () async throws -&gt; () in StoleMyKia.AppDelegate.userNotificationCenter(_: __C.UNUserNotificationCenter, didReceive: __C.UNNotificationResponse, withCompletionHandler: () -&gt; ()) -&gt; ()"
                   moduleName = "StoleMyKia"
                   usesParentBreakpointCondition = "Yes"
-                  urlString = "file:///Users/jaylensmith/Library/Mobile%20Documents/com~apple~CloudDocs/Mac%20Mini%20Xcode/StoleMyKia/StoleMyKia/Network/FirebaseAuthManager.swift"
+                  urlString = "file:///Users/jaylensmith/Documents/Macbook%20Pro%20Xcode/StoleMyKia/StoleMyKia/StoleMyKiaApp.swift"
                   startingColumnNumber = "9223372036854775807"
                   endingColumnNumber = "9223372036854775807"
-                  startingLineNumber = "145"
-                  endingLineNumber = "145"
-                  offsetFromSymbolStart = "664">
+                  startingLineNumber = "77"
+                  endingLineNumber = "77"
+                  offsetFromSymbolStart = "144">
                </Location>
                <Location
-                  uuid = "32E98CF5-BE5C-4A3E-93FE-6554A1C4CC7E - 25b89e93f007d435"
+                  uuid = "88C7D20F-4F56-4EDA-8786-3B7E49097749 - 1e4b6cfd3f2d98e0"
                   shouldBeEnabled = "Yes"
                   ignoreCount = "0"
                   continueAfterRunningActions = "No"
-                  symbolName = "(3) suspend resume partial function for StoleMyKia.FirebaseAuthManager.userCanPerformAction(uid: Swift.String) async throws -&gt; ()"
+                  symbolName = "(3) suspend resume partial function for closure #1 @Sendable () async throws -&gt; () in StoleMyKia.AppDelegate.userNotificationCenter(_: __C.UNUserNotificationCenter, didReceive: __C.UNNotificationResponse, withCompletionHandler: () -&gt; ()) -&gt; ()"
                   moduleName = "StoleMyKia"
                   usesParentBreakpointCondition = "Yes"
-                  urlString = "file:///Users/jaylensmith/Library/Mobile%20Documents/com~apple~CloudDocs/Mac%20Mini%20Xcode/StoleMyKia/StoleMyKia/Network/FirebaseAuthManager.swift"
+                  urlString = "file:///Users/jaylensmith/Documents/Macbook%20Pro%20Xcode/StoleMyKia/StoleMyKia/StoleMyKiaApp.swift"
                   startingColumnNumber = "9223372036854775807"
                   endingColumnNumber = "9223372036854775807"
-                  startingLineNumber = "145"
-                  endingLineNumber = "145"
-                  offsetFromSymbolStart = "764">
+                  startingLineNumber = "77"
+                  endingLineNumber = "77"
+                  offsetFromSymbolStart = "44">
                </Location>
                <Location
-                  uuid = "32E98CF5-BE5C-4A3E-93FE-6554A1C4CC7E - 25b89e93f007d4da"
+                  uuid = "88C7D20F-4F56-4EDA-8786-3B7E49097749 - a0e3e9504da9bd86"
                   shouldBeEnabled = "Yes"
                   ignoreCount = "0"
                   continueAfterRunningActions = "No"
-                  symbolName = "(3) suspend resume partial function for StoleMyKia.FirebaseAuthManager.userCanPerformAction(uid: Swift.String) async throws -&gt; ()"
+                  symbolName = "closure #1 @Sendable () async throws -&gt; () in StoleMyKia.AppDelegate.userNotificationCenter(_: __C.UNUserNotificationCenter, didReceive: __C.UNNotificationResponse, withCompletionHandler: () -&gt; ()) -&gt; ()"
                   moduleName = "StoleMyKia"
                   usesParentBreakpointCondition = "Yes"
-                  urlString = "file:///Users/jaylensmith/Library/Mobile%20Documents/com~apple~CloudDocs/Mac%20Mini%20Xcode/StoleMyKia/StoleMyKia/Network/FirebaseAuthManager.swift"
+                  urlString = "file:///Users/jaylensmith/Documents/Macbook%20Pro%20Xcode/StoleMyKia/StoleMyKia/StoleMyKiaApp.swift"
                   startingColumnNumber = "9223372036854775807"
                   endingColumnNumber = "9223372036854775807"
-                  startingLineNumber = "144"
-                  endingLineNumber = "144"
-                  offsetFromSymbolStart = "1120">
+                  startingLineNumber = "77"
+                  endingLineNumber = "77"
+                  offsetFromSymbolStart = "484">
+               </Location>
+               <Location
+                  uuid = "88C7D20F-4F56-4EDA-8786-3B7E49097749 - 1e4b6cfd3f2d98e0"
+                  shouldBeEnabled = "Yes"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "(3) suspend resume partial function for closure #1 @Sendable () async throws -&gt; () in StoleMyKia.AppDelegate.userNotificationCenter(_: __C.UNUserNotificationCenter, didReceive: __C.UNNotificationResponse, withCompletionHandler: () -&gt; ()) -&gt; ()"
+                  moduleName = "StoleMyKia"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/jaylensmith/Documents/Macbook%20Pro%20Xcode/StoleMyKia/StoleMyKia/StoleMyKiaApp.swift"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "77"
+                  endingLineNumber = "77"
+                  offsetFromSymbolStart = "108">
                </Location>
             </Locations>
-         </BreakpointContent>
-      </BreakpointProxy>
-      <BreakpointProxy
-         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
-         <BreakpointContent
-            uuid = "5418758F-0239-49CA-8673-EDB7821432E3"
-            shouldBeEnabled = "Yes"
-            ignoreCount = "0"
-            continueAfterRunningActions = "No"
-            filePath = "StoleMyKia/Network/FirebaseAuthManager.swift"
-            startingColumnNumber = "9223372036854775807"
-            endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "148"
-            endingLineNumber = "148"
-            landmarkName = "userCanPerformAction(uid:)"
-            landmarkType = "7">
-            <Locations>
-               <Location
-                  uuid = "5418758F-0239-49CA-8673-EDB7821432E3 - bcd7eb79e29b204c"
-                  shouldBeEnabled = "Yes"
-                  ignoreCount = "0"
-                  continueAfterRunningActions = "No"
-                  symbolName = "(1) suspend resume partial function for StoleMyKia.FirebaseAuthManager.userCanPerformAction(uid: Swift.String) async throws -&gt; ()"
-                  moduleName = "StoleMyKia"
-                  usesParentBreakpointCondition = "Yes"
-                  urlString = "file:///Users/jaylensmith/Library/Mobile%20Documents/com~apple~CloudDocs/Mac%20Mini%20Xcode/StoleMyKia/StoleMyKia/Network/FirebaseAuthManager.swift"
-                  startingColumnNumber = "9223372036854775807"
-                  endingColumnNumber = "9223372036854775807"
-                  startingLineNumber = "148"
-                  endingLineNumber = "148"
-                  offsetFromSymbolStart = "792">
-               </Location>
-               <Location
-                  uuid = "5418758F-0239-49CA-8673-EDB7821432E3 - 25b89e93f007d456"
-                  shouldBeEnabled = "Yes"
-                  ignoreCount = "0"
-                  continueAfterRunningActions = "No"
-                  symbolName = "(3) suspend resume partial function for StoleMyKia.FirebaseAuthManager.userCanPerformAction(uid: Swift.String) async throws -&gt; ()"
-                  moduleName = "StoleMyKia"
-                  usesParentBreakpointCondition = "Yes"
-                  urlString = "file:///Users/jaylensmith/Library/Mobile%20Documents/com~apple~CloudDocs/Mac%20Mini%20Xcode/StoleMyKia/StoleMyKia/Network/FirebaseAuthManager.swift"
-                  startingColumnNumber = "9223372036854775807"
-                  endingColumnNumber = "9223372036854775807"
-                  startingLineNumber = "148"
-                  endingLineNumber = "148"
-                  offsetFromSymbolStart = "852">
-               </Location>
-               <Location
-                  uuid = "5418758F-0239-49CA-8673-EDB7821432E3 - e60f14de88c9f253"
-                  shouldBeEnabled = "Yes"
-                  ignoreCount = "0"
-                  continueAfterRunningActions = "No"
-                  symbolName = "(4) suspend resume partial function for StoleMyKia.FirebaseAuthManager.userCanPerformAction(uid: Swift.String) async throws -&gt; ()"
-                  moduleName = "StoleMyKia"
-                  usesParentBreakpointCondition = "Yes"
-                  urlString = "file:///Users/jaylensmith/Library/Mobile%20Documents/com~apple~CloudDocs/Mac%20Mini%20Xcode/StoleMyKia/StoleMyKia/Network/FirebaseAuthManager.swift"
-                  startingColumnNumber = "9223372036854775807"
-                  endingColumnNumber = "9223372036854775807"
-                  startingLineNumber = "148"
-                  endingLineNumber = "148"
-                  offsetFromSymbolStart = "96">
-               </Location>
-               <Location
-                  uuid = "5418758F-0239-49CA-8673-EDB7821432E3 - 25b89e93f007d456"
-                  shouldBeEnabled = "Yes"
-                  ignoreCount = "0"
-                  continueAfterRunningActions = "No"
-                  symbolName = "(3) suspend resume partial function for StoleMyKia.FirebaseAuthManager.userCanPerformAction(uid: Swift.String) async throws -&gt; ()"
-                  moduleName = "StoleMyKia"
-                  usesParentBreakpointCondition = "Yes"
-                  urlString = "file:///Users/jaylensmith/Library/Mobile%20Documents/com~apple~CloudDocs/Mac%20Mini%20Xcode/StoleMyKia/StoleMyKia/Network/FirebaseAuthManager.swift"
-                  startingColumnNumber = "9223372036854775807"
-                  endingColumnNumber = "9223372036854775807"
-                  startingLineNumber = "148"
-                  endingLineNumber = "148"
-                  offsetFromSymbolStart = "952">
-               </Location>
-            </Locations>
-         </BreakpointContent>
-      </BreakpointProxy>
-      <BreakpointProxy
-         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
-         <BreakpointContent
-            uuid = "C6D0318B-FB42-44D4-8E82-E5BA69C850FE"
-            shouldBeEnabled = "No"
-            ignoreCount = "0"
-            continueAfterRunningActions = "No"
-            filePath = "StoleMyKia/Network/FirebaseAuthManager.swift"
-            startingColumnNumber = "9223372036854775807"
-            endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "46"
-            endingLineNumber = "46"
-            landmarkName = "verifyCode(_:phoneNumber:)"
-            landmarkType = "7">
-         </BreakpointContent>
-      </BreakpointProxy>
-      <BreakpointProxy
-         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
-         <BreakpointContent
-            uuid = "5CB4136B-9E18-4ABB-8675-7CA9ECBF77B1"
-            shouldBeEnabled = "No"
-            ignoreCount = "0"
-            continueAfterRunningActions = "No"
-            filePath = "StoleMyKia/Network/FirebaseAuthManager.swift"
-            startingColumnNumber = "9223372036854775807"
-            endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "42"
-            endingLineNumber = "42"
-            landmarkName = "verifyCode(_:phoneNumber:)"
-            landmarkType = "7">
-         </BreakpointContent>
-      </BreakpointProxy>
-      <BreakpointProxy
-         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
-         <BreakpointContent
-            uuid = "7525CC95-5F7C-4743-8DF8-F5F7D662B622"
-            shouldBeEnabled = "No"
-            ignoreCount = "0"
-            continueAfterRunningActions = "No"
-            filePath = "StoleMyKia/Network/FirebaseAuthManager.swift"
-            startingColumnNumber = "9223372036854775807"
-            endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "40"
-            endingLineNumber = "40"
-            landmarkName = "verifyCode(_:phoneNumber:)"
-            landmarkType = "7">
-            <Locations>
-               <Location
-                  uuid = "7525CC95-5F7C-4743-8DF8-F5F7D662B622 - c52324cf8810b8a5"
-                  shouldBeEnabled = "Yes"
-                  ignoreCount = "0"
-                  continueAfterRunningActions = "No"
-                  symbolName = "StoleMyKia.FirebaseAuthManager.verifyCode(_: Swift.String, phoneNumber: Swift.String) async throws -&gt; ()"
-                  moduleName = "StoleMyKia"
-                  usesParentBreakpointCondition = "Yes"
-                  urlString = "file:///Users/jaylensmith/Library/Mobile%20Documents/com~apple~CloudDocs/Mac%20Mini%20Xcode/StoleMyKia/StoleMyKia/Network/FirebaseAuthManager.swift"
-                  startingColumnNumber = "9223372036854775807"
-                  endingColumnNumber = "9223372036854775807"
-                  startingLineNumber = "53"
-                  endingLineNumber = "53"
-                  offsetFromSymbolStart = "24">
-               </Location>
-               <Location
-                  uuid = "7525CC95-5F7C-4743-8DF8-F5F7D662B622 - 3b6a1727107a6ba6"
-                  shouldBeEnabled = "Yes"
-                  ignoreCount = "0"
-                  continueAfterRunningActions = "No"
-                  symbolName = "(1) suspend resume partial function for StoleMyKia.FirebaseAuthManager.verifyCode(_: Swift.String, phoneNumber: Swift.String) async throws -&gt; ()"
-                  moduleName = "StoleMyKia"
-                  usesParentBreakpointCondition = "Yes"
-                  urlString = "file:///Users/jaylensmith/Library/Mobile%20Documents/com~apple~CloudDocs/Mac%20Mini%20Xcode/StoleMyKia/StoleMyKia/Network/FirebaseAuthManager.swift"
-                  startingColumnNumber = "9223372036854775807"
-                  endingColumnNumber = "9223372036854775807"
-                  startingLineNumber = "53"
-                  endingLineNumber = "53"
-                  offsetFromSymbolStart = "28">
-               </Location>
-            </Locations>
-         </BreakpointContent>
-      </BreakpointProxy>
-      <BreakpointProxy
-         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
-         <BreakpointContent
-            uuid = "F304B343-63A4-4515-BB20-1DFF6AFB0F28"
-            shouldBeEnabled = "Yes"
-            ignoreCount = "0"
-            continueAfterRunningActions = "No"
-            filePath = "StoleMyKia/Network/FirebaseAuthManager.swift"
-            startingColumnNumber = "9223372036854775807"
-            endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "65"
-            endingLineNumber = "65"
-            landmarkName = "verifyCode(_:phoneNumber:)"
-            landmarkType = "7">
-            <Locations>
-               <Location
-                  uuid = "F304B343-63A4-4515-BB20-1DFF6AFB0F28 - a889fc8b0011e348"
-                  shouldBeEnabled = "Yes"
-                  ignoreCount = "0"
-                  continueAfterRunningActions = "No"
-                  symbolName = "(10) suspend resume partial function for StoleMyKia.FirebaseAuthManager.verifyCode(_: Swift.String, phoneNumber: Swift.String) async throws -&gt; ()"
-                  moduleName = "StoleMyKia"
-                  usesParentBreakpointCondition = "Yes"
-                  urlString = "file:///Users/jaylensmith/Library/Mobile%20Documents/com~apple~CloudDocs/Mac%20Mini%20Xcode/StoleMyKia/StoleMyKia/Network/FirebaseAuthManager.swift"
-                  startingColumnNumber = "9223372036854775807"
-                  endingColumnNumber = "9223372036854775807"
-                  startingLineNumber = "65"
-                  endingLineNumber = "65"
-                  offsetFromSymbolStart = "460">
-               </Location>
-               <Location
-                  uuid = "F304B343-63A4-4515-BB20-1DFF6AFB0F28 - b1960c00b3590049"
-                  shouldBeEnabled = "Yes"
-                  ignoreCount = "0"
-                  continueAfterRunningActions = "No"
-                  symbolName = "(11) suspend resume partial function for StoleMyKia.FirebaseAuthManager.verifyCode(_: Swift.String, phoneNumber: Swift.String) async throws -&gt; ()"
-                  moduleName = "StoleMyKia"
-                  usesParentBreakpointCondition = "Yes"
-                  urlString = "file:///Users/jaylensmith/Library/Mobile%20Documents/com~apple~CloudDocs/Mac%20Mini%20Xcode/StoleMyKia/StoleMyKia/Network/FirebaseAuthManager.swift"
-                  startingColumnNumber = "9223372036854775807"
-                  endingColumnNumber = "9223372036854775807"
-                  startingLineNumber = "65"
-                  endingLineNumber = "65"
-                  offsetFromSymbolStart = "488">
-               </Location>
-               <Location
-                  uuid = "F304B343-63A4-4515-BB20-1DFF6AFB0F28 - 969ea3f8e282a54a"
-                  shouldBeEnabled = "Yes"
-                  ignoreCount = "0"
-                  continueAfterRunningActions = "No"
-                  symbolName = "(12) suspend resume partial function for StoleMyKia.FirebaseAuthManager.verifyCode(_: Swift.String, phoneNumber: Swift.String) async throws -&gt; ()"
-                  moduleName = "StoleMyKia"
-                  usesParentBreakpointCondition = "Yes"
-                  urlString = "file:///Users/jaylensmith/Library/Mobile%20Documents/com~apple~CloudDocs/Mac%20Mini%20Xcode/StoleMyKia/StoleMyKia/Network/FirebaseAuthManager.swift"
-                  startingColumnNumber = "9223372036854775807"
-                  endingColumnNumber = "9223372036854775807"
-                  startingLineNumber = "65"
-                  endingLineNumber = "65"
-                  offsetFromSymbolStart = "516">
-               </Location>
-               <Location
-                  uuid = "F304B343-63A4-4515-BB20-1DFF6AFB0F28 - 7f67f3702dcaca4b"
-                  shouldBeEnabled = "Yes"
-                  ignoreCount = "0"
-                  continueAfterRunningActions = "No"
-                  symbolName = "(13) suspend resume partial function for StoleMyKia.FirebaseAuthManager.verifyCode(_: Swift.String, phoneNumber: Swift.String) async throws -&gt; ()"
-                  moduleName = "StoleMyKia"
-                  usesParentBreakpointCondition = "Yes"
-                  urlString = "file:///Users/jaylensmith/Library/Mobile%20Documents/com~apple~CloudDocs/Mac%20Mini%20Xcode/StoleMyKia/StoleMyKia/Network/FirebaseAuthManager.swift"
-                  startingColumnNumber = "9223372036854775807"
-                  endingColumnNumber = "9223372036854775807"
-                  startingLineNumber = "65"
-                  endingLineNumber = "65"
-                  offsetFromSymbolStart = "512">
-               </Location>
-            </Locations>
-         </BreakpointContent>
-      </BreakpointProxy>
-      <BreakpointProxy
-         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
-         <BreakpointContent
-            uuid = "3C6C5AA9-F5DC-433E-9296-DD4C6468B2F3"
-            shouldBeEnabled = "No"
-            ignoreCount = "0"
-            continueAfterRunningActions = "No"
-            filePath = "StoleMyKia/Network/FirebaseAuthManager.swift"
-            startingColumnNumber = "9223372036854775807"
-            endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "210"
-            endingLineNumber = "210"
-            landmarkName = "signOutUser()"
-            landmarkType = "7">
-         </BreakpointContent>
-      </BreakpointProxy>
-      <BreakpointProxy
-         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
-         <BreakpointContent
-            uuid = "D205FDFF-A1C2-4A47-9CD9-97CB7CC97FC9"
-            shouldBeEnabled = "Yes"
-            ignoreCount = "0"
-            continueAfterRunningActions = "No"
-            filePath = "StoleMyKia/Network/FirebaseAuthManager.swift"
-            startingColumnNumber = "9223372036854775807"
-            endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "212"
-            endingLineNumber = "212"
-            landmarkName = "signOutUser()"
-            landmarkType = "7">
-         </BreakpointContent>
-      </BreakpointProxy>
-      <BreakpointProxy
-         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
-         <BreakpointContent
-            uuid = "82C0482B-6E01-4848-A137-25DD946FC994"
-            shouldBeEnabled = "Yes"
-            ignoreCount = "0"
-            continueAfterRunningActions = "No"
-            filePath = "StoleMyKia/View Models/FirebaseAuthViewModel.swift"
-            startingColumnNumber = "9223372036854775807"
-            endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "55"
-            endingLineNumber = "55"
-            landmarkName = "userHasSignedOut()"
-            landmarkType = "7">
-            <Locations>
-               <Location
-                  uuid = "82C0482B-6E01-4848-A137-25DD946FC994 - f2e487b6ccc8f277"
-                  shouldBeEnabled = "Yes"
-                  ignoreCount = "0"
-                  continueAfterRunningActions = "No"
-                  symbolName = "StoleMyKia.FirebaseAuthViewModel.userHasSignedOut(fatal: Swift.Bool) -&gt; ()"
-                  moduleName = "StoleMyKia"
-                  usesParentBreakpointCondition = "Yes"
-                  urlString = "file:///Users/jaylensmith/Library/Mobile%20Documents/com~apple~CloudDocs/Mac%20Mini%20Xcode/StoleMyKia/StoleMyKia/View%20Models/FirebaseAuthViewModel.swift"
-                  startingColumnNumber = "9223372036854775807"
-                  endingColumnNumber = "9223372036854775807"
-                  startingLineNumber = "55"
-                  endingLineNumber = "55"
-                  offsetFromSymbolStart = "52">
-               </Location>
-               <Location
-                  uuid = "82C0482B-6E01-4848-A137-25DD946FC994 - e58923ca8cf1a9ad"
-                  shouldBeEnabled = "Yes"
-                  ignoreCount = "0"
-                  continueAfterRunningActions = "No"
-                  symbolName = "StoleMyKia.FirebaseAuthViewModel.userHasSignedOut() -&gt; ()"
-                  moduleName = "StoleMyKia"
-                  usesParentBreakpointCondition = "Yes"
-                  urlString = "file:///Users/jaylensmith/Library/Mobile%20Documents/com~apple~CloudDocs/Mac%20Mini%20Xcode/StoleMyKia/StoleMyKia/View%20Models/FirebaseAuthViewModel.swift"
-                  startingColumnNumber = "9223372036854775807"
-                  endingColumnNumber = "9223372036854775807"
-                  startingLineNumber = "55"
-                  endingLineNumber = "55"
-                  offsetFromSymbolStart = "24">
-               </Location>
-            </Locations>
-         </BreakpointContent>
-      </BreakpointProxy>
-      <BreakpointProxy
-         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
-         <BreakpointContent
-            uuid = "60CECE1F-329C-4FB3-B96B-26BC76385F0D"
-            shouldBeEnabled = "Yes"
-            ignoreCount = "0"
-            continueAfterRunningActions = "No"
-            filePath = "StoleMyKia/Network/FirebaseAuthManager.swift"
-            startingColumnNumber = "9223372036854775807"
-            endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "216"
-            endingLineNumber = "216"
-            landmarkName = "notifyOfSignOut()"
-            landmarkType = "7">
-         </BreakpointContent>
-      </BreakpointProxy>
-      <BreakpointProxy
-         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
-         <BreakpointContent
-            uuid = "1A1856F3-D617-4F1E-9A5C-846D28AB2378"
-            shouldBeEnabled = "Yes"
-            ignoreCount = "0"
-            continueAfterRunningActions = "No"
-            filePath = "StoleMyKia/View Models/FirebaseAuthViewModel.swift"
-            startingColumnNumber = "9223372036854775807"
-            endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "83"
-            endingLineNumber = "83"
-            landmarkName = "prepareForSignOut(shouldImmediatelySignOut:fatal:)"
-            landmarkType = "7">
-         </BreakpointContent>
-      </BreakpointProxy>
-      <BreakpointProxy
-         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
-         <BreakpointContent
-            uuid = "353A9CE7-5753-4286-9A6E-54FAD7884F02"
-            shouldBeEnabled = "Yes"
-            ignoreCount = "0"
-            continueAfterRunningActions = "No"
-            filePath = "StoleMyKia/View Models/FirebaseAuthViewModel.swift"
-            startingColumnNumber = "9223372036854775807"
-            endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "88"
-            endingLineNumber = "88"
-            landmarkName = "prepareForSignOut(shouldImmediatelySignOut:fatal:)"
-            landmarkType = "7">
-         </BreakpointContent>
-      </BreakpointProxy>
-      <BreakpointProxy
-         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
-         <BreakpointContent
-            uuid = "7672BACD-8D7F-4676-BBDC-F363647D6DD8"
-            shouldBeEnabled = "Yes"
-            ignoreCount = "0"
-            continueAfterRunningActions = "No"
-            filePath = "StoleMyKia/View Models/FirebaseAuthViewModel.swift"
-            startingColumnNumber = "9223372036854775807"
-            endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "89"
-            endingLineNumber = "89"
-            landmarkName = "prepareForSignOut(shouldImmediatelySignOut:fatal:)"
-            landmarkType = "7">
-         </BreakpointContent>
-      </BreakpointProxy>
-      <BreakpointProxy
-         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
-         <BreakpointContent
-            uuid = "AB9258E7-2963-43C0-B9FA-F6ECAC24E94C"
-            shouldBeEnabled = "Yes"
-            ignoreCount = "0"
-            continueAfterRunningActions = "No"
-            filePath = "StoleMyKia/View Models/FirebaseAuthViewModel.swift"
-            startingColumnNumber = "9223372036854775807"
-            endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "90"
-            endingLineNumber = "90"
-            landmarkName = "prepareForSignOut(shouldImmediatelySignOut:fatal:)"
-            landmarkType = "7">
          </BreakpointContent>
       </BreakpointProxy>
    </Breakpoints>

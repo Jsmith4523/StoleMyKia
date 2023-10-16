@@ -110,6 +110,7 @@ struct SettingsView: View {
         Task {
             do {
                 try await userVM.deleteUserAccount()
+                dismiss()
                 isLoading = false
             } catch {
                 isLoading = false

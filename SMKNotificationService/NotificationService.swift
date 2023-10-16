@@ -31,8 +31,4 @@ class NotificationService: UNNotificationServiceExtension {
             contentHandler(bestAttemptContent)
         }
     }
-    
-    private func getImageFromUrl(_ url: URL) async throws {
-        
-    }
 }

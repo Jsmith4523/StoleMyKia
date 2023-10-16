@@ -23,14 +23,7 @@ class ReportAnnotation: NSObject, MKAnnotation {
     init(report: Report) {
         self.coordinate    = report.location.coordinates
         self.report        = report
-        self.subtitle      = "\(report.reportType.rawValue)\n\(ApplicationFormats.dateFormat(report.dt))"
-    }
-    
-    init(report: Report, index: Int?) {
-        self.coordinate    = report.location.coordinates
-        self.report        = report
-        self.subtitle      = "\(report.reportType.rawValue)\n\(report.dt.timeAgoDisplay())"
-        self.index         = index
+        self.subtitle      = "\(report.reportType.rawValue)\n\(ApplicationFormats.timeAgoFormat(report.dt))"
     }
 }
 
@@ -39,15 +32,17 @@ extension ReportAnnotation {
     var region: MKCoordinateRegion {
         MKCoordinateRegion(center: self.coordinate, span: .init(latitudeDelta: 0.007, longitudeDelta: 0.007))
     }
+    
+    var selectedRegion: MKCoordinateRegion {
+        MKCoordinateRegion(center: self.coordinate, span: .init(latitudeDelta: 0.020, longitudeDelta: 0.020))
+    }
 }
 
 class ReportAnnotationView: MKMarkerAnnotationView {
     
     private var reportAnnotation: ReportAnnotation
     private var report: Report
-    
-    weak var calloutDelegate: AnnotationCalloutDelegate?
-    
+        
     init(annotation: ReportAnnotation) {
         self.report           = annotation.report
         self.reportAnnotation = annotation
@@ -59,10 +54,6 @@ class ReportAnnotationView: MKMarkerAnnotationView {
     
     required init?(coder aDecoder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
-    }
-    
-    func setCalloutDelegate(_ delegate: AnnotationCalloutDelegate) {
-        self.calloutDelegate = delegate
     }
     
     override func prepareForDisplay() {

@@ -63,3 +63,17 @@ extension MKCoordinateSpan {
         return MKCoordinateSpan(latitudeDelta: 0.007236, longitudeDelta: 0.007236)
     }
 }
+
+extension MKCircle {
+    
+    static let discloseLocationFillColor: UIColor = .systemBlue.withAlphaComponent(0.25)
+    static let discloseLocationRadius: Double = 1250
+    static let discloseLocationEdgePadding: UIEdgeInsets = .init(top: 200, left: 100, bottom: 150, right: 200)
+}
+
+extension MKPolyline {
+    
+    var timelineEdgePadding: UIEdgeInsets {
+        return .init(top: 50, left: 50, bottom: 50, right: 50)
+    }
+}

@@ -6,7 +6,7 @@
 //
 
 import Foundation
-import FirebaseFirestore
+import Firebase
 
 class FalseReportManager {
     
@@ -19,20 +19,27 @@ class FalseReportManager {
         case uploadError  = "Something went wrong uploading your false report. Please try again."
         case doesNotExist = "That report no longer exists."
     }
-    
-    private let db = Firestore.firestore()
-    
-    func uploadFalseReport(_ falseReport: FalseReport) async throws {
-
         
-        guard let jsonData = try falseReport.encodeForUpload() as? [String: Any] else {
+    func uploadFalseReport(_ falseReport: FalseReport) async throws {
+        guard let currentUser = Auth.auth().currentUser else {
+            throw FirebaseAuthManager.FirebaseAuthManagerError.userError
+        }
+        
+        try await FirebaseAuthManager.manager.userCanPerformAction()
+        
+        guard try await ReportManager.manager.reportDoesExist(falseReport.report.id) else {
+            throw FalseReportManagerError.doesNotExist
+        }
+        
+        guard let data = try falseReport.encodeForUpload() as? [String: Any] else {
             throw FalseReportManagerError.codableError
         }
         
-        do {
-            try await db.collection("\(FirebaseDatabasesPaths.falseReportsPath)").document(falseReport.uid).collection("Reports").document(falseReport.id.uuidString).setData(jsonData)
-        } catch {
-            throw FalseReportManagerError.uploadError
-        }
+        try await Firestore.firestore()
+            .collection(FirebaseDatabasesPaths.falseReportsPath)
+            .document(currentUser.uid)
+            .collection(FirebaseDatabasesPaths.userOpenFalseReports)
+            .document(falseReport.id.uuidString)
+            .setData(data)
     }
 }

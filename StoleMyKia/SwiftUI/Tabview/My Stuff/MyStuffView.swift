@@ -10,7 +10,7 @@ import SwiftUI
 struct MyStuffView: View {
     
     enum MyStuffRoute: CaseIterable, Identifiable {
-        case reports, bookmarks
+        case reports, bookmarks, settings
         
         var id: Self {
             return self
@@ -22,6 +22,8 @@ struct MyStuffView: View {
                 return "Bookmarks"
             case .reports:
                 return "Reports"
+            case .settings:
+                return "Settings"
             }
         }
         
@@ -31,15 +33,16 @@ struct MyStuffView: View {
                 return "bookmark"
             case.reports:
                 return ApplicationTabViewSelection.feed.symbol
+            case .settings:
+                return "gear"
             }
         }
     }
     
     @State private var alertSignOut = false
-    @State private var isShowingSettingsView = false
     
-    @StateObject private var userReportsVM = UserReportsViewModel()
-        
+    @State private var route: MyStuffRoute?
+            
     @ObservedObject var userVM: UserViewModel
     @ObservedObject var reportsVM: ReportsViewModel
         
@@ -51,11 +54,7 @@ struct MyStuffView: View {
                     buttons
                 }
             }
-            .toolbar {
-                ToolbarItem(placement: .principal) {
-                    Text("")
-                }
-            }
+            .hideNavigationTitle()
         }
         .ignoresSafeArea()
         .accentColor(.white)
@@ -67,6 +66,20 @@ struct MyStuffView: View {
             }
         } message: {
             Text("You'll be signed out of \(userVM.getAuthUserPhoneNumber() ?? "the application"). Are you sure?")
+        }
+        .sheet(item: $route) { route in
+            switch route {
+            case .reports:
+                UserReportsView()
+                    .environmentObject(userVM)
+                    .environmentObject(reportsVM)
+            case .bookmarks:
+                EmptyView()
+            case .settings:
+                SettingsView()
+                    .presentationDragIndicator(.visible)
+                    .environmentObject(userVM)
+            }
         }
     }
     
@@ -91,61 +104,28 @@ struct MyStuffView: View {
             .padding(.horizontal)
         }
         .frame(height: 125)
-        .customSheetView(isPresented: $isShowingSettingsView, detents: [.large()], showsIndicator: true, cornerRadius: 25) {
-            SettingsView()
-                .environmentObject(userVM)
-        }
     }
     
     var buttons: some View {
         ZStack {
             VStack {
-                VStack(spacing: 15) {
-                    VStack(spacing: 0) {
-                        ForEach(MyStuffRoute.allCases) { route in
-                            Divider()
-                            NavigationLink {
-                                ZStack {
-                                    switch route {
-                                    case .reports:
-                                        UserReportsView()
-                                            .environmentObject(userVM)
-                                            .environmentObject(userReportsVM)
-                                            .environmentObject(reportsVM)
-                                    case .bookmarks:
-                                        EmptyView()
-                                            .environmentObject(userVM)
-                                            .environmentObject(userReportsVM)
-                                            .environmentObject(reportsVM)
-                                    }
-                                }
-                                .toolbar {
-                                    ToolbarItem(placement: .principal) {
-                                        Text(route.title)
-                                            .font(.system(size: 15).weight(.medium))
-                                            .foregroundColor(.white)
-                                    }
-                                }
-                            } label: {
-                                MyStuffCellView(symbol: route.symbol, title: route.title, isNavigationLabel: true)
-                            }
-                        }
-                    }
-                    VStack(spacing: 0) {
-                        Button {
-                            self.isShowingSettingsView.toggle()
-                        } label: {
-                            MyStuffCellView(symbol: "gear", title: "Settings")
-                        }
+                VStack(spacing: 0) {
+                    ForEach(MyStuffRoute.allCases) { route in
                         Divider()
                         Button {
-                            self.alertSignOut.toggle()
+                            self.route = route
                         } label: {
-                            MyStuffCellView(symbol: "key", title: "Sign Out")
+                            MyStuffCellView(symbol: route.symbol, title: route.title)
                         }
                     }
+                    Divider()
+                    Button {
+                        self.alertSignOut.toggle()
+                    } label: {
+                        MyStuffCellView(symbol: "key", title: "Sign Out")
+                    }
                 }
-                .background(.gray.opacity(0.10))
+                
                 Spacer()
             }
         }
@@ -188,11 +168,10 @@ fileprivate struct MyStuffCellView: View {
         }
     }
 }
-//
-//struct MyStuffView_Previews: PreviewProvider {
-//    static var previews: some View {
-//        MyStuffView()
-//            .environmentObject(UserViewModel())
-//            .environmentObject(ReportsViewModel())
-//    }
-//}
+
+struct MyStuffView_Previews: PreviewProvider {
+    static var previews: some View {
+        MyStuffView(userVM: UserViewModel(), reportsVM: ReportsViewModel())
+            .preferredColorScheme(.dark)
+    }
+}

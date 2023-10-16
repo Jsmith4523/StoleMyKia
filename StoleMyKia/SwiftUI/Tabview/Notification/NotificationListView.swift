@@ -8,6 +8,8 @@
 import SwiftUI
 
 struct NotificationListView: View {
+    
+    @State private var notification: AppUserNotification?
             
     @EnvironmentObject var notificationVM: NotificationViewModel
     @EnvironmentObject var reportsVM: ReportsViewModel
@@ -15,7 +17,7 @@ struct NotificationListView: View {
     
     var body: some View {
         LazyVStack(spacing: 0) {
-            ForEach(notificationVM.notifications) { notification in
+            ForEach(notificationVM.notifications.sorted(by: >)) { notification in
                 NotificationCellView(notification: notification)
                     .onTapGesture {
                         notificationVM.userDidReadNotification(notification.id)
@@ -26,6 +28,9 @@ struct NotificationListView: View {
         .environmentObject(notificationVM)
         .environmentObject(userVM)
         .environmentObject(reportsVM)
+        .fullScreenCover(item: $notification) { notification in
+            
+        }
     }
 }
 
@@ -36,29 +41,46 @@ fileprivate struct NotificationCellView: View {
     let notification: AppUserNotification
     
     var body: some View {
-        HStack {
-            VStack(alignment: .leading) {
-                VStack(alignment: .leading, spacing: 5) {
-                    HStack {
-                        Text(notification.title)
-                            .font(.system(size: 15.5).bold())
+        VStack(alignment: .leading, spacing: 0) {
+            HStack {
+                VStack {
+                    if !notification.isRead {
+                        Circle()
+                            .fill(Color.blue)
+                            .frame(width: 10, height: 10)
                     }
-                    Text(notification.body)
-                        .font(.system(size: 14))
+                    Image(systemName: notification.notificationType.symbol)
+                        .resizable()
+                        .scaledToFit()
+                        .frame(width: 16, height: 16)
+                }
+                VStack(alignment: .leading) {
+                    HStack(alignment: .top) {
+                        VStack(alignment: .leading, spacing: 2) {
+                            HStack {
+                                Text(notification.title)
+                                    .font(.system(size: 13).weight(.heavy))
+                                    .lineLimit(2)
+                            }
+                            Text(notification.body)
+                                .font(.system(size: 13.5))
+                                .foregroundColor(.gray)
+                                .lineLimit(3)
+                            Text(notification.dateAndTime)
+                                .font(.system(size: 12.5))
+                                .foregroundColor(.gray)
+                        }
+                        Spacer()
+                        if notification.hasImage {
+                            imageView
+                        }
+                    }
                 }
                 Spacer()
-                    .frame(height: 10)
-                Text(notification.dateAndTime)
-                    .font(.system(size: 14))
-                    .foregroundColor(.gray)
-            }
-            Spacer()
-            if notification.hasImage {
-                imageView
             }
         }
         .padding()
-        .background(!(notification.isRead) ? .blue.opacity(0.15) : .clear)
+        .multilineTextAlignment(.leading)
     }
     
     var imageView: some View {
@@ -66,16 +88,16 @@ fileprivate struct NotificationCellView: View {
             .resizable()
             .scaledToFill()
             .frame(width: 70, height: 70)
-            .clipShape(RoundedRectangle(cornerRadius: 2))
+            .clipped()
             .redacted(reason: vehicleImage.isNil() ? .placeholder : [])
             .onAppear {
                 getVehicleImage()
             }
     }
     
-    private func getVehicleImage() {
+    func getVehicleImage() {
         ImageCache.shared.getImage(notification.imageUrl) { image in
-            withAnimation {
+            DispatchQueue.main.async {
                 self.vehicleImage = image
             }
         }
@@ -87,9 +109,9 @@ extension UUID: Identifiable {
         return self
     }
 }
-//
-//struct NotificationListView_Previews: PreviewProvider {
-//    static var previews: some View {
-//        NotificationCellView(notification: .init(id: UUID(), dt: Date.now.addingTimeInterval(-86400).epoch, title: "Update: Stolen", body: "An Update is available to your report regarding the Red 2020 Hyundai Elantra", notificationType: .report, reportId: UUID(), isRead: false, imageUrl: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcT0GcDq4DYvOB86BmsxrxCp18U8T2ckXPBBqw&usqp=CAU"))
-//    }
-//}
+
+struct NotificationListView_Previews: PreviewProvider {
+    static var previews: some View {
+        NotificationCellView(notification: .init(id: "", dt: Date.now.addingTimeInterval(-86400*9).epoch, title: "Stolen - 2017 Hyundai Elanta", body: "The 2020 Red Hyundai Elantra report has received an update.", notificationType: .report, reportId: UUID(), isRead: false, imageUrl: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcT0GcDq4DYvOB86BmsxrxCp18U8T2ckXPBBqw&usqp=CAU"))
+    }
+}

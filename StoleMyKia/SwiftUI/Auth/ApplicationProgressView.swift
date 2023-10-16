@@ -10,18 +10,29 @@ import SwiftUI
 struct ApplicationProgressView: View {
     var body: some View {
         ZStack {
-            Color.brand.ignoresSafeArea()
-            VStack(spacing: 20 ) {
-                Image(systemName: "car.fill")
-                    .resizable()
-                    .scaledToFit()
-                    .frame(width: 100, height: 100)
-                    .foregroundColor(.white)
-                ProgressView()
-                    .tint(.white)
-            }
+            ApplicationLauchScreen()
+                .ignoresSafeArea()
+                .statusBarHidden()
         }
     }
+}
+
+fileprivate struct ApplicationLauchScreen: UIViewControllerRepresentable {
+    func makeUIViewController(context: Context) -> UIViewController {
+        let storyboard = UIStoryboard(name: "Launch Screen", bundle: .main)
+        if let vc = storyboard.instantiateInitialViewController() {
+            return vc
+        }
+        
+        return UIViewController()
+    }
+    
+    func updateUIViewController(_ uiViewController: UIViewController, context: Context) {
+        
+    }
+    
+    typealias UIViewControllerType = UIViewController
+
 }
 
 struct MyPreviewProvider69Nice_Previews: PreviewProvider {

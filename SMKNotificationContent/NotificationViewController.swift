@@ -27,12 +27,6 @@ class NotificationViewController: UIViewController, UNNotificationContentExtensi
     
     ///Download the vehicle image from firebase
     private func getVehicleImage(urlString: String) {
-        guard let url = URL(string: urlString) else { return }
         
-        Task {
-            let (data, _) = try await URLSession.shared.data(from: url)
-            guard let image = UIImage(data: data) else { return }
-            imageView.image = image
-        }
     }
 }

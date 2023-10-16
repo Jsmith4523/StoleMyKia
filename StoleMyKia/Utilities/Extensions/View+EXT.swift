@@ -36,6 +36,15 @@ extension Text {
 
 extension View {
     
+    func hideNavigationTitle() -> some View {
+        return self
+            .toolbar {
+                ToolbarItem(placement: .principal) {
+                    Text("")
+                }
+            }
+    }
+    
     func loginTextFieldStyle() -> some View {
         return self
             .padding()

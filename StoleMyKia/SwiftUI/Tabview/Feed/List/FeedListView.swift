@@ -31,7 +31,7 @@ struct FeedListView: View {
         .environmentObject(reportsVM)
         .environmentObject(userModel)
         .fullScreenCover(item: $selectedReport) { report in
-            SelectedReportDetailView(report: report)
+            SelectedReportDetailView(reportId: report.id)
                 .environmentObject(reportsVM)
                 .environmentObject(userModel)
         }

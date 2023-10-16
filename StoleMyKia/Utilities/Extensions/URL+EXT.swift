@@ -36,7 +36,7 @@ extension URL {
 }
 
 extension URLSession {
-    func getData(_ url: URL, completion: @escaping ((Data?)->Void)) {
+    open func getData(_ url: URL, completion: @escaping ((Data?)->Void)) {
         self.dataTask(with: url) { data, response, err in
             guard let data = data, err == nil else {
                 completion(nil)

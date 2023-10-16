@@ -24,17 +24,23 @@ struct HostingView<C: View>: UIViewControllerRepresentable {
     
     func updateUIViewController(_ uiViewController: UIViewController, context: Context) {}
         
-    final private class HostingController<C: View>: UIHostingController<C> {
+    final private class HostingController: UIHostingController<C> {
         
         var statusBarStyle: UIStatusBarStyle
         
         init(statusBarStyle: UIStatusBarStyle, rootView: @escaping () -> C) {
             self.statusBarStyle = statusBarStyle
             super.init(rootView: rootView())
+            setupSheetInteraction()
         }
         
         @MainActor required dynamic init?(coder aDecoder: NSCoder) {
             fatalError("init(coder:) has not been implemented")
+        }
+        
+        private func setupSheetInteraction() {
+            self.sheetPresentationController?.largestUndimmedDetentIdentifier = .medium
+            self.sheetPresentationController?.detents = [.medium(), .large()]
         }
         
         override var preferredStatusBarStyle: UIStatusBarStyle {

@@ -8,7 +8,7 @@
 import Foundation
 import UIKit
 
-class ImageCache {
+open class ImageCache {
     
     static let shared = ImageCache()
     
@@ -18,7 +18,7 @@ class ImageCache {
         listenForSignOut()
     }
     
-    func getImage(_ urlString: String?, completion: @escaping (UIImage?)->Void) {
+    open func getImage(_ urlString: String?, completion: @escaping (UIImage?)->Void) {
         if let image = cache.object(forKey: urlString as AnyObject) as? UIImage {
             completion(image)
             return
@@ -46,7 +46,8 @@ class ImageCache {
         cache.removeObject(forKey: urlString as AnyObject)
     }
     
-    @objc private func removeAll() {
+    @objc
+    private func removeAll() {
         cache.removeAllObjects()
     }
     

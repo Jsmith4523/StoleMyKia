@@ -13,12 +13,14 @@ class FirebaseAuthManager {
     enum FirebaseAuthManagerError: Error {
         case verificationIdError
         case userError
+        case userSignedOut
         case userDoesNotExist
         case userAlreadyExist
         case userBanned
         case userDisabled
         case userStatusError(String)
         case error
+        case specificError(String)
     }
         
     private var verificationId: String?
@@ -111,8 +113,7 @@ class FirebaseAuthManager {
         let deletionListener = userDocument.addSnapshotListener { snapshot, err in
             guard let snapshot, err == nil else { return }
             
-            guard let rawValue = snapshot.get(AppUser.statusKey) as? String  else {
-                deleteCompletion()
+            guard let rawValue = snapshot.get(AppUser.statusKey) as? String else {
                 return
             }
             
@@ -172,8 +173,16 @@ class FirebaseAuthManager {
     
     ///The logged in user can perform actions such as uploading or updating a report
     func userCanPerformAction() async throws {
+        let (user, _) = try await fetchCurrentUserDocument()
+        
+        guard (user.status == .active) else {
+            throw FirebaseAuthManagerError.userStatusError("User account is either disabled, banned, has been deleted, or has another label.")
+        }
+    }
+    
+    func fetchCurrentUserDocument() async throws -> (AppUser, String) {
         guard let currentUser = Auth.auth().currentUser else {
-            throw FirebaseAuthManagerError.error
+            throw FirebaseAuthManagerError.userSignedOut
         }
         
         let userSnapshot = try await Firestore.firestore()
@@ -181,16 +190,20 @@ class FirebaseAuthManager {
             .document(currentUser.uid)
             .getDocument()
         
-        guard let rawValue = userSnapshot.get(AppUser.statusKey) as? String  else {
-            throw FirebaseAuthManagerError.userStatusError("Status Field is missing!")
+        guard let userData = userSnapshot.data() else {
+            throw FirebaseAuthManagerError.error
         }
         
-        guard let userStatus = AppUser.Status(rawValue: rawValue), (userStatus == .active) else {
-            throw FirebaseAuthManagerError.userStatusError("User account is either disabled, banned, or has another label.")
+        do {
+            let data = try JSONSerialization.data(withJSONObject: userData)
+            let user = try JSONDecoder().decode(AppUser.self, from: data)
+            return (user, currentUser.uid)
+        } catch {
+            throw FirebaseAuthManagerError.specificError("User Decoding Error")
         }
     }
     
-    ///Deletes a users existence!!!
+    ///Deletes signed in users information (reports, device tokens, notifications, etc.)
     func permanentlyDeleteUser() async throws {
         guard let currentUser = Auth.auth().currentUser else {
             throw FirebaseAuthManagerError.error
@@ -198,10 +211,75 @@ class FirebaseAuthManager {
         
         try await userCanPerformDestructiveAction()
         
-        try await Firestore.firestore()
+        let reportsCollection = Firestore.firestore()
+            .collection(FirebaseDatabasesPaths.reportsDatabasePath)
+            
+        //Delete reports...
+        try await reportsCollection
+            .whereFilter(.whereField("uid", isEqualTo: currentUser.uid))
+            .getDocuments()
+            .documents
+            .forEach { doc in
+                reportsCollection
+                    .document(doc.documentID)
+                    .delete()
+            }
+        
+        let userDocumentRef = try await Firestore.firestore()
             .collection(FirebaseDatabasesPaths.usersDatabasePath)
             .document(currentUser.uid)
-            .delete()
+            .getDocument()
+            .reference
+        
+        //Delete bookmarks
+        try await userDocumentRef
+            .collection(FirebaseDatabasesPaths.userBookmarksPath)
+            .getDocuments()
+            .documents
+            .forEach { doc in
+                userDocumentRef
+                    .collection(FirebaseDatabasesPaths.userBookmarksPath)
+                    .document(doc.documentID)
+                    .delete()
+            }
+        
+        //Delete Notifications
+        try await userDocumentRef
+            .collection(FirebaseDatabasesPaths.userNotificationPath)
+            .getDocuments()
+            .documents
+            .forEach { doc in
+                userDocumentRef
+                    .collection(FirebaseDatabasesPaths.userNotificationPath)
+                    .document(doc.documentID)
+                    .delete()
+            }
+        
+        //Delete device tokens
+        try await userDocumentRef
+            .collection(FirebaseDatabasesPaths.fcmTokenPath)
+            .getDocuments()
+            .documents
+            .forEach { doc in
+                userDocumentRef
+                    .collection(FirebaseDatabasesPaths.fcmTokenPath)
+                    .document(doc.documentID)
+                    .delete()
+            }
+        
+        //Delete settings
+        try await userDocumentRef
+            .collection(FirebaseDatabasesPaths.userSettingsPath)
+            .getDocuments()
+            .documents
+            .forEach { doc in
+                userDocumentRef
+                    .collection(FirebaseDatabasesPaths.userSettingsPath)
+                    .document(doc.documentID)
+                    .delete()
+            }
+        
+        try await userDocumentRef.delete()
         
         try? await Auth.auth().currentUser?.delete()
         notifyOfSignOut()

@@ -7,7 +7,7 @@
 
 import Foundation
 
-enum FalseReportType: String, Identifiable, CaseIterable, Encodable {
+enum FalseReportType: String, Identifiable, CaseIterable, Codable {
     
     var id: String {
         return self.rawValue
@@ -35,7 +35,7 @@ enum FalseReportType: String, Identifiable, CaseIterable, Encodable {
 
 struct FalseReport: Identifiable, Encodable {
     
-    private enum Status: Encodable {
+    enum Status: Encodable {
         case open, close
     }
     
@@ -44,7 +44,7 @@ struct FalseReport: Identifiable, Encodable {
         self.dt = Date.now.epoch
         self.report = report
         self.falseReportType = type
-        self.reason = comments
+        self.comments = comments
         self.status = .open
     }
     
@@ -56,9 +56,10 @@ struct FalseReport: Identifiable, Encodable {
     ///The type of false report
     let falseReportType: FalseReportType
     ///The users description on why this report is false
-    let reason: String
-    private var status: Status
-    private var adminReason: String?
+    let comments: String
+    var status: Status = .open
+    var isPunishableOffense: Bool = false
+    var adminComments: String?
     
     ///Encodes THIS false report for uploading to firebase
     func encodeForUpload() throws -> Any? {

@@ -18,6 +18,6 @@ struct ApplicationTabBarView: View {
     }
 }
 
-#Preview {
-    ApplicationTabBarView(selection: .constant(.notification))
-}
+//#Preview {
+//    ApplicationTabBarView(selection: .constant(.notification))
+//}

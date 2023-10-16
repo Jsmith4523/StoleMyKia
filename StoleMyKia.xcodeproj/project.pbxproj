@@ -24,6 +24,8 @@
 		2426A61B2A23461300E78647 /* ReportsDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2426A61A2A23461300E78647 /* ReportsDelegate.swift */; };
 		2426A6202A23475A00E78647 /* ReportClusterAnnotationView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2426A61F2A23475A00E78647 /* ReportClusterAnnotationView.swift */; };
 		2426A62A2A243F0E00E78647 /* AnnotationCalloutDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2426A6292A243F0E00E78647 /* AnnotationCalloutDelegate.swift */; };
+		242AA7972ADBABFA007BAE30 /* UserBookmarksView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 242AA7962ADBABFA007BAE30 /* UserBookmarksView.swift */; };
+		242AA7992ADD0994007BAE30 /* InteractiveSheet.swift in Sources */ = {isa = PBXBuildFile; fileRef = 242AA7982ADD0994007BAE30 /* InteractiveSheet.swift */; };
 		24334CFB29C0E0130084B8EC /* UIImage+EXT.swift in Sources */ = {isa = PBXBuildFile; fileRef = 24334CFA29C0E0130084B8EC /* UIImage+EXT.swift */; };
 		24334CFD29C1846C0084B8EC /* Image+EXT.swift in Sources */ = {isa = PBXBuildFile; fileRef = 24334CFC29C1846C0084B8EC /* Image+EXT.swift */; };
 		24334D0429C19E100084B8EC /* UIImagePicker.swift in Sources */ = {isa = PBXBuildFile; fileRef = 24334D0329C19E100084B8EC /* UIImagePicker.swift */; };
@@ -36,7 +38,6 @@
 		243CE82B2A84978100E5A727 /* MainInterface.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 243CE8292A84978100E5A727 /* MainInterface.storyboard */; };
 		243CE82F2A84978100E5A727 /* SMKNotificationContent.appex in Embed Foundation Extensions */ = {isa = PBXBuildFile; fileRef = 243CE8212A84978100E5A727 /* SMKNotificationContent.appex */; settings = {ATTRIBUTES = (RemoveHeadersOnCopy, ); }; };
 		243EAD872ACCAEA2001454B5 /* UserReportsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 243EAD862ACCAEA2001454B5 /* UserReportsView.swift */; };
-		243EAD892ACCAF47001454B5 /* UserReportsViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 243EAD882ACCAF47001454B5 /* UserReportsViewModel.swift */; };
 		243EAD8C2ACCC324001454B5 /* UserReportManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 243EAD8B2ACCC324001454B5 /* UserReportManager.swift */; };
 		243EAD8E2ACCE8B1001454B5 /* UserReportsEmptyView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 243EAD8D2ACCE8B1001454B5 /* UserReportsEmptyView.swift */; };
 		243EAD902ACDDEB6001454B5 /* NotificationEmptyView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 243EAD8F2ACDDEB6001454B5 /* NotificationEmptyView.swift */; };
@@ -51,7 +52,6 @@
 		244BD4032ABAD42700192AD1 /* NotificationRadiusMapView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 244BD4022ABAD42700192AD1 /* NotificationRadiusMapView.swift */; };
 		244BD4052ABB669900192AD1 /* NotificationMapView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 244BD4042ABB669900192AD1 /* NotificationMapView.swift */; };
 		244BD4072ABBA59500192AD1 /* ReportDescriptionView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 244BD4062ABBA59500192AD1 /* ReportDescriptionView.swift */; };
-		244BF51929D33F4E00951765 /* ImageCache.swift in Sources */ = {isa = PBXBuildFile; fileRef = 244BF51829D33F4E00951765 /* ImageCache.swift */; };
 		245B391729E39159001DD213 /* Color+EXT.swift in Sources */ = {isa = PBXBuildFile; fileRef = 245B391629E39159001DD213 /* Color+EXT.swift */; };
 		245B391D29E39E49001DD213 /* VehicleMake.swift in Sources */ = {isa = PBXBuildFile; fileRef = 245B391C29E39E49001DD213 /* VehicleMake.swift */; };
 		245B391F29E39E55001DD213 /* VehicleModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 245B391E29E39E55001DD213 /* VehicleModel.swift */; };
@@ -62,6 +62,10 @@
 		2461D7502AC4ABEF002B9E51 /* ReportSkeletonView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2461D74F2AC4ABEF002B9E51 /* ReportSkeletonView.swift */; };
 		2473A8FB2AD1236F008EAE20 /* notification_update.caf in Resources */ = {isa = PBXBuildFile; fileRef = 2473A8FA2AD1236F008EAE20 /* notification_update.caf */; };
 		2473A8FD2AD12817008EAE20 /* ApplicationTabBarView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2473A8FC2AD12817008EAE20 /* ApplicationTabBarView.swift */; };
+		2476E0DA2AD9362700892A76 /* TimelineMapListView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2476E0D92AD9362700892A76 /* TimelineMapListView.swift */; };
+		2476E0DC2AD9478300892A76 /* ReportTimelineCircleOverlay.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2476E0DB2AD9478300892A76 /* ReportTimelineCircleOverlay.swift */; };
+		2476E0DE2AD9524300892A76 /* TimelineListView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2476E0DD2AD9524300892A76 /* TimelineListView.swift */; };
+		2476E0E02AD9CF1E00892A76 /* TimelineMapListSkeletonView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2476E0DF2AD9CF1E00892A76 /* TimelineMapListSkeletonView.swift */; };
 		248278D72A03054C00C1E99D /* UISheetPC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 248278D62A03054C00C1E99D /* UISheetPC.swift */; };
 		24848AB72A61E38E003E037E /* LicenseTextDetectionManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 24848AB62A61E38E003E037E /* LicenseTextDetectionManager.swift */; };
 		249254A62A37CA590037C43C /* UIHostingController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 249254A52A37CA590037C43C /* UIHostingController.swift */; };
@@ -88,6 +92,7 @@
 		24BAC6112A8B034200E42BC6 /* MFMailComposeViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 24BAC6102A8B034200E42BC6 /* MFMailComposeViewController.swift */; };
 		24BAC6182A8F20E700E42BC6 /* NSNotificationCenter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 24BAC6172A8F20E700E42BC6 /* NSNotificationCenter.swift */; };
 		24BAC61A2A8F404A00E42BC6 /* NotificationSkeletonProgressView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 24BAC6192A8F404A00E42BC6 /* NotificationSkeletonProgressView.swift */; };
+		24BE3D8B2ADB78E9006988AB /* FalseReportDetailView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 24BE3D8A2ADB78E9006988AB /* FalseReportDetailView.swift */; };
 		24BFA1802A8047240049F306 /* SMKLicensePlateScanner.mlmodel in Sources */ = {isa = PBXBuildFile; fileRef = 24BFA17F2A8047240049F306 /* SMKLicensePlateScanner.mlmodel */; };
 		24BFA1822A81AC030049F306 /* Prediction.swift in Sources */ = {isa = PBXBuildFile; fileRef = 24BFA1812A81AC030049F306 /* Prediction.swift */; };
 		24BFA1862A8338580049F306 /* ErrorView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 24BFA1852A8338580049F306 /* ErrorView.swift */; };
@@ -118,8 +123,7 @@
 		24CC5F392A745DE70078C921 /* SelectedReportDetailViewMap.swift in Sources */ = {isa = PBXBuildFile; fileRef = 24CC5F092A745DE70078C921 /* SelectedReportDetailViewMap.swift */; };
 		24CC5F3A2A745DE70078C921 /* SelectedReportDetailView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 24CC5F0A2A745DE70078C921 /* SelectedReportDetailView.swift */; };
 		24CC5F3B2A745DE70078C921 /* TimelineMapView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 24CC5F0C2A745DE70078C921 /* TimelineMapView.swift */; };
-		24CC5F3C2A745DE70078C921 /* TimelineMapViewRepresentable.swift in Sources */ = {isa = PBXBuildFile; fileRef = 24CC5F0D2A745DE70078C921 /* TimelineMapViewRepresentable.swift */; };
-		24CC5F3D2A745DE70078C921 /* TimelineListView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 24CC5F0E2A745DE70078C921 /* TimelineListView.swift */; };
+		24CC5F3C2A745DE70078C921 /* TimelineMKMapView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 24CC5F0D2A745DE70078C921 /* TimelineMKMapView.swift */; };
 		24CC5F3E2A745DE70078C921 /* TimelineAnnotationViewCallout.swift in Sources */ = {isa = PBXBuildFile; fileRef = 24CC5F0F2A745DE70078C921 /* TimelineAnnotationViewCallout.swift */; };
 		24CC5F3F2A745DE70078C921 /* ApplicationRootView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 24CC5F102A745DE70078C921 /* ApplicationRootView.swift */; };
 		24CC5F4B2A74E0870078C921 /* NotificationService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 24CC5F4A2A74E0870078C921 /* NotificationService.swift */; };
@@ -136,10 +140,13 @@
 		24EE41142A59E0FD00AF2A11 /* LicensePlateDetectionManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 24EE41132A59E0FD00AF2A11 /* LicensePlateDetectionManager.swift */; };
 		24EE41162A5A84FB00AF2A11 /* StorageManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 24EE41152A5A84FB00AF2A11 /* StorageManager.swift */; };
 		24EE41182A5BB42D00AF2A11 /* QuerySnapshot.swift in Sources */ = {isa = PBXBuildFile; fileRef = 24EE41172A5BB42D00AF2A11 /* QuerySnapshot.swift */; };
+		24EF2B332ADDA71400FB211A /* TimelineReportDetailView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 24EF2B322ADDA71400FB211A /* TimelineReportDetailView.swift */; };
+		24EF2B392ADDC01800FB211A /* ImageCache.swift in Sources */ = {isa = PBXBuildFile; fileRef = 244BF51829D33F4E00951765 /* ImageCache.swift */; };
 		24F7902F2A8866B600E51794 /* NotificationView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 24F7902E2A8866B600E51794 /* NotificationView.swift */; };
 		24F790312A8868C900E51794 /* NotificationListView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 24F790302A8868C900E51794 /* NotificationListView.swift */; };
 		24F790332A88CFB300E51794 /* UserDefaults.swift in Sources */ = {isa = PBXBuildFile; fileRef = 24F790322A88CFB300E51794 /* UserDefaults.swift */; };
 		24F790362A88DC2400E51794 /* ReportTypeFilterView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 24F790352A88DC2400E51794 /* ReportTypeFilterView.swift */; };
+		24FA315D2AD92D17007BDE5A /* TimelineMapViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 24FA315C2AD92D17007BDE5A /* TimelineMapViewModel.swift */; };
 		24FA56BA2A29284D0074149B /* UIActivityVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 24FA56B92A29284D0074149B /* UIActivityVC.swift */; };
 		9A8DEA661C19F27F74C6B340 /* Pods_StoleMyKia.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 197A31A21B533A0B83DC4715 /* Pods_StoleMyKia.framework */; };
 /* End PBXBuildFile section */
@@ -194,6 +201,8 @@
 		2426A61A2A23461300E78647 /* ReportsDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReportsDelegate.swift; sourceTree = "<group>"; };
 		2426A61F2A23475A00E78647 /* ReportClusterAnnotationView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReportClusterAnnotationView.swift; sourceTree = "<group>"; };
 		2426A6292A243F0E00E78647 /* AnnotationCalloutDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AnnotationCalloutDelegate.swift; sourceTree = "<group>"; };
+		242AA7962ADBABFA007BAE30 /* UserBookmarksView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserBookmarksView.swift; sourceTree = "<group>"; };
+		242AA7982ADD0994007BAE30 /* InteractiveSheet.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InteractiveSheet.swift; sourceTree = "<group>"; };
 		24334CFA29C0E0130084B8EC /* UIImage+EXT.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIImage+EXT.swift"; sourceTree = "<group>"; };
 		24334CFC29C1846C0084B8EC /* Image+EXT.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Image+EXT.swift"; sourceTree = "<group>"; };
 		24334D0329C19E100084B8EC /* UIImagePicker.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UIImagePicker.swift; sourceTree = "<group>"; };
@@ -207,7 +216,6 @@
 		243CE82A2A84978100E5A727 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/MainInterface.storyboard; sourceTree = "<group>"; };
 		243CE82C2A84978100E5A727 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		243EAD862ACCAEA2001454B5 /* UserReportsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserReportsView.swift; sourceTree = "<group>"; };
-		243EAD882ACCAF47001454B5 /* UserReportsViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserReportsViewModel.swift; sourceTree = "<group>"; };
 		243EAD8B2ACCC324001454B5 /* UserReportManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserReportManager.swift; sourceTree = "<group>"; };
 		243EAD8D2ACCE8B1001454B5 /* UserReportsEmptyView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserReportsEmptyView.swift; sourceTree = "<group>"; };
 		243EAD8F2ACDDEB6001454B5 /* NotificationEmptyView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NotificationEmptyView.swift; sourceTree = "<group>"; };
@@ -231,6 +239,10 @@
 		2461D74F2AC4ABEF002B9E51 /* ReportSkeletonView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = ReportSkeletonView.swift; path = ../Report/ReportSkeletonView.swift; sourceTree = "<group>"; };
 		2473A8FA2AD1236F008EAE20 /* notification_update.caf */ = {isa = PBXFileReference; lastKnownFileType = file; path = notification_update.caf; sourceTree = "<group>"; };
 		2473A8FC2AD12817008EAE20 /* ApplicationTabBarView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ApplicationTabBarView.swift; sourceTree = "<group>"; };
+		2476E0D92AD9362700892A76 /* TimelineMapListView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TimelineMapListView.swift; sourceTree = "<group>"; };
+		2476E0DB2AD9478300892A76 /* ReportTimelineCircleOverlay.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReportTimelineCircleOverlay.swift; sourceTree = "<group>"; };
+		2476E0DD2AD9524300892A76 /* TimelineListView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TimelineListView.swift; sourceTree = "<group>"; };
+		2476E0DF2AD9CF1E00892A76 /* TimelineMapListSkeletonView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TimelineMapListSkeletonView.swift; sourceTree = "<group>"; };
 		248278D62A03054C00C1E99D /* UISheetPC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UISheetPC.swift; sourceTree = "<group>"; };
 		24848AB62A61E38E003E037E /* LicenseTextDetectionManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LicenseTextDetectionManager.swift; sourceTree = "<group>"; };
 		248BD8B72A8605E70086CA42 /* FirebaseCore.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; path = FirebaseCore.framework; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -262,6 +274,7 @@
 		24BAC6102A8B034200E42BC6 /* MFMailComposeViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MFMailComposeViewController.swift; sourceTree = "<group>"; };
 		24BAC6172A8F20E700E42BC6 /* NSNotificationCenter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NSNotificationCenter.swift; sourceTree = "<group>"; };
 		24BAC6192A8F404A00E42BC6 /* NotificationSkeletonProgressView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NotificationSkeletonProgressView.swift; sourceTree = "<group>"; };
+		24BE3D8A2ADB78E9006988AB /* FalseReportDetailView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FalseReportDetailView.swift; sourceTree = "<group>"; };
 		24BFA17F2A8047240049F306 /* SMKLicensePlateScanner.mlmodel */ = {isa = PBXFileReference; lastKnownFileType = file.mlmodel; path = SMKLicensePlateScanner.mlmodel; sourceTree = "<group>"; };
 		24BFA1812A81AC030049F306 /* Prediction.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Prediction.swift; sourceTree = "<group>"; };
 		24BFA1852A8338580049F306 /* ErrorView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ErrorView.swift; sourceTree = "<group>"; };
@@ -292,8 +305,7 @@
 		24CC5F092A745DE70078C921 /* SelectedReportDetailViewMap.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SelectedReportDetailViewMap.swift; sourceTree = "<group>"; };
 		24CC5F0A2A745DE70078C921 /* SelectedReportDetailView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SelectedReportDetailView.swift; sourceTree = "<group>"; };
 		24CC5F0C2A745DE70078C921 /* TimelineMapView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TimelineMapView.swift; sourceTree = "<group>"; };
-		24CC5F0D2A745DE70078C921 /* TimelineMapViewRepresentable.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TimelineMapViewRepresentable.swift; sourceTree = "<group>"; };
-		24CC5F0E2A745DE70078C921 /* TimelineListView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TimelineListView.swift; sourceTree = "<group>"; };
+		24CC5F0D2A745DE70078C921 /* TimelineMKMapView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TimelineMKMapView.swift; sourceTree = "<group>"; };
 		24CC5F0F2A745DE70078C921 /* TimelineAnnotationViewCallout.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TimelineAnnotationViewCallout.swift; sourceTree = "<group>"; };
 		24CC5F102A745DE70078C921 /* ApplicationRootView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ApplicationRootView.swift; sourceTree = "<group>"; };
 		24CC5F412A747E9B0078C921 /* notification_report.caf */ = {isa = PBXFileReference; lastKnownFileType = file; path = notification_report.caf; sourceTree = "<group>"; };
@@ -311,10 +323,12 @@
 		24EE41132A59E0FD00AF2A11 /* LicensePlateDetectionManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LicensePlateDetectionManager.swift; sourceTree = "<group>"; };
 		24EE41152A5A84FB00AF2A11 /* StorageManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StorageManager.swift; sourceTree = "<group>"; };
 		24EE41172A5BB42D00AF2A11 /* QuerySnapshot.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = QuerySnapshot.swift; sourceTree = "<group>"; };
+		24EF2B322ADDA71400FB211A /* TimelineReportDetailView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TimelineReportDetailView.swift; sourceTree = "<group>"; };
 		24F7902E2A8866B600E51794 /* NotificationView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NotificationView.swift; sourceTree = "<group>"; };
 		24F790302A8868C900E51794 /* NotificationListView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NotificationListView.swift; sourceTree = "<group>"; };
 		24F790322A88CFB300E51794 /* UserDefaults.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserDefaults.swift; sourceTree = "<group>"; };
 		24F790352A88DC2400E51794 /* ReportTypeFilterView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReportTypeFilterView.swift; sourceTree = "<group>"; };
+		24FA315C2AD92D17007BDE5A /* TimelineMapViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TimelineMapViewModel.swift; sourceTree = "<group>"; };
 		24FA56B92A29284D0074149B /* UIActivityVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UIActivityVC.swift; sourceTree = "<group>"; };
 		562368835F2B675102514EA4 /* Pods-StoleMyKia.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-StoleMyKia.release.xcconfig"; path = "Target Support Files/Pods-StoleMyKia/Pods-StoleMyKia.release.xcconfig"; sourceTree = "<group>"; };
 		CB1F3C6B9B65B1A9366554C7 /* Pods-StoleMyKia.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-StoleMyKia.debug.xcconfig"; path = "Target Support Files/Pods-StoleMyKia/Pods-StoleMyKia.debug.xcconfig"; sourceTree = "<group>"; };
@@ -360,6 +374,7 @@
 		241D2FFE29BFF88D00E78792 /* Annotations */ = {
 			isa = PBXGroup;
 			children = (
+				24CC5F0F2A745DE70078C921 /* TimelineAnnotationViewCallout.swift */,
 				2426A6212A23494000E78647 /* Report */,
 				2426A61E2A23474D00E78647 /* Cluster */,
 			);
@@ -418,6 +433,7 @@
 			children = (
 				24A5792829BC567F00495E6F /* ReportAnnotation.swift */,
 				24B071A02A363E30000C6B75 /* ReportTimelimeAnnotationView.swift */,
+				2476E0DB2AD9478300892A76 /* ReportTimelineCircleOverlay.swift */,
 				24A4CEE629C04CBA00B856BC /* ReportAnnotationCallout.swift */,
 			);
 			path = Report;
@@ -431,6 +447,7 @@
 				24334D0329C19E100084B8EC /* UIImagePicker.swift */,
 				24EAF11629C2A02900B4CBFE /* SFSafariView.swift */,
 				248278D62A03054C00C1E99D /* UISheetPC.swift */,
+				242AA7982ADD0994007BAE30 /* InteractiveSheet.swift */,
 				24FA56B92A29284D0074149B /* UIActivityVC.swift */,
 				249254A52A37CA590037C43C /* UIHostingController.swift */,
 				24BAC6102A8B034200E42BC6 /* MFMailComposeViewController.swift */,
@@ -448,20 +465,12 @@
 			path = SMKNotificationContent;
 			sourceTree = "<group>";
 		};
-		243EAD8A2ACCBC45001454B5 /* User Reports */ = {
-			isa = PBXGroup;
-			children = (
-				243EAD882ACCAF47001454B5 /* UserReportsViewModel.swift */,
-				243EAD862ACCAEA2001454B5 /* UserReportsView.swift */,
-			);
-			path = "User Reports";
-			sourceTree = "<group>";
-		};
 		244BD3F92AB954FA00192AD1 /* My Stuff */ = {
 			isa = PBXGroup;
 			children = (
 				244BD3FA2AB9550A00192AD1 /* MyStuffView.swift */,
-				243EAD8A2ACCBC45001454B5 /* User Reports */,
+				243EAD862ACCAEA2001454B5 /* UserReportsView.swift */,
+				242AA7962ADBABFA007BAE30 /* UserBookmarksView.swift */,
 				244BD3FC2ABAC4DD00192AD1 /* Settings */,
 			);
 			path = "My Stuff";
@@ -800,9 +809,12 @@
 			isa = PBXGroup;
 			children = (
 				24CC5F0C2A745DE70078C921 /* TimelineMapView.swift */,
-				24CC5F0D2A745DE70078C921 /* TimelineMapViewRepresentable.swift */,
-				24CC5F0E2A745DE70078C921 /* TimelineListView.swift */,
-				24CC5F0F2A745DE70078C921 /* TimelineAnnotationViewCallout.swift */,
+				2476E0D92AD9362700892A76 /* TimelineMapListView.swift */,
+				2476E0DF2AD9CF1E00892A76 /* TimelineMapListSkeletonView.swift */,
+				2476E0DD2AD9524300892A76 /* TimelineListView.swift */,
+				24CC5F0D2A745DE70078C921 /* TimelineMKMapView.swift */,
+				24FA315C2AD92D17007BDE5A /* TimelineMapViewModel.swift */,
+				24EF2B322ADDA71400FB211A /* TimelineReportDetailView.swift */,
 			);
 			path = Timeline;
 			sourceTree = "<group>";
@@ -829,6 +841,7 @@
 			isa = PBXGroup;
 			children = (
 				24CC5F552A75B8DB0078C921 /* FalseReportView.swift */,
+				24BE3D8A2ADB78E9006988AB /* FalseReportDetailView.swift */,
 			);
 			path = "False Report";
 			sourceTree = "<group>";
@@ -1094,7 +1107,7 @@
 				24EE41182A5BB42D00AF2A11 /* QuerySnapshot.swift in Sources */,
 				24334D0429C19E100084B8EC /* UIImagePicker.swift in Sources */,
 				245B392329E39EC1001DD213 /* VehicleColor.swift in Sources */,
-				244BF51929D33F4E00951765 /* ImageCache.swift in Sources */,
+				2476E0DA2AD9362700892A76 /* TimelineMapListView.swift in Sources */,
 				24A4CEE429BFAC7100B856BC /* CLLocation+EXT.swift in Sources */,
 				24B897EC29CF5A3B0003BCC8 /* UserViewModel.swift in Sources */,
 				24EAF11729C2A02900B4CBFE /* SFSafariView.swift in Sources */,
@@ -1104,6 +1117,7 @@
 				24CC5F3E2A745DE70078C921 /* TimelineAnnotationViewCallout.swift in Sources */,
 				24A206952A08334400F5DC0C /* Location.swift in Sources */,
 				24CC5F1A2A745DE70078C921 /* LicensePlateScannerView.swift in Sources */,
+				2476E0DE2AD9524300892A76 /* TimelineListView.swift in Sources */,
 				24CC5F392A745DE70078C921 /* SelectedReportDetailViewMap.swift in Sources */,
 				240F22452A33F10A0078F97E /* Notification.swift in Sources */,
 				24CC5F2F2A745DE70078C921 /* ReportCellView.swift in Sources */,
@@ -1117,6 +1131,7 @@
 				243EAD872ACCAEA2001454B5 /* UserReportsView.swift in Sources */,
 				24A5791429BC552C00495E6F /* StoleMyKiaApp.swift in Sources */,
 				2437328029BEF8FC008F4C4E /* NotificationViewModel.swift in Sources */,
+				242AA7972ADBABFA007BAE30 /* UserBookmarksView.swift in Sources */,
 				24EE41162A5A84FB00AF2A11 /* StorageManager.swift in Sources */,
 				245B391729E39159001DD213 /* Color+EXT.swift in Sources */,
 				24CC5F342A745DE70078C921 /* NearbySearchLocationServicesView.swift in Sources */,
@@ -1125,6 +1140,7 @@
 				244BD4032ABAD42700192AD1 /* NotificationRadiusMapView.swift in Sources */,
 				24A4CEE729C04CBA00B856BC /* ReportAnnotationCallout.swift in Sources */,
 				2461D7502AC4ABEF002B9E51 /* ReportSkeletonView.swift in Sources */,
+				242AA7992ADD0994007BAE30 /* InteractiveSheet.swift in Sources */,
 				24CC5F382A745DE70078C921 /* NearbySearchUserLocationErrorView.swift in Sources */,
 				2423702E2A7DBFE000795C87 /* SignInCodeVerificationView.swift in Sources */,
 				2423702C2A7DA65800795C87 /* ApplicationFormats.swift in Sources */,
@@ -1140,8 +1156,11 @@
 				245B391F29E39E55001DD213 /* VehicleModel.swift in Sources */,
 				24CC5F302A745DE70078C921 /* UpdateReportView.swift in Sources */,
 				2426A62A2A243F0E00E78647 /* AnnotationCalloutDelegate.swift in Sources */,
+				24FA315D2AD92D17007BDE5A /* TimelineMapViewModel.swift in Sources */,
+				2476E0E02AD9CF1E00892A76 /* TimelineMapListSkeletonView.swift in Sources */,
 				243EAD902ACDDEB6001454B5 /* NotificationEmptyView.swift in Sources */,
 				24CC5F562A75B8DB0078C921 /* FalseReportView.swift in Sources */,
+				24EF2B332ADDA71400FB211A /* TimelineReportDetailView.swift in Sources */,
 				244BD3FB2AB9550A00192AD1 /* MyStuffView.swift in Sources */,
 				240910C42A64639E00DC699A /* FirebaseAuthViewModel.swift in Sources */,
 				240F22492A350AD30078F97E /* LicenseScannerDelegate.swift in Sources */,
@@ -1149,11 +1168,12 @@
 				24A206922A08270300F5DC0C /* Vehicle.swift in Sources */,
 				2473A8FD2AD12817008EAE20 /* ApplicationTabBarView.swift in Sources */,
 				244BD3D32AABF12300192AD1 /* Int+EXT.swift in Sources */,
-				24CC5F3D2A745DE70078C921 /* TimelineListView.swift in Sources */,
 				242370332A7EF5A300795C87 /* SkeletonLoadingCellView.swift in Sources */,
 				24848AB72A61E38E003E037E /* LicenseTextDetectionManager.swift in Sources */,
 				24CC5F372A745DE70078C921 /* LocationSearchCellView.swift in Sources */,
+				2476E0DC2AD9478300892A76 /* ReportTimelineCircleOverlay.swift in Sources */,
 				24CC5F592A75BAB50078C921 /* FalseReport.swift in Sources */,
+				24EF2B392ADDC01800FB211A /* ImageCache.swift in Sources */,
 				24C6983A2A402ECD003A1DE6 /* ReportRole.swift in Sources */,
 				2425EAF92A003CDE00CC886F /* NavigationController.swift in Sources */,
 				24BFA1802A8047240049F306 /* SMKLicensePlateScanner.mlmodel in Sources */,
@@ -1167,7 +1187,7 @@
 				24CC5F362A745DE70078C921 /* NearbyLocationSearchView.swift in Sources */,
 				24334CFB29C0E0130084B8EC /* UIImage+EXT.swift in Sources */,
 				24CC5F2E2A745DE70078C921 /* ApplicationTabView.swift in Sources */,
-				24CC5F3C2A745DE70078C921 /* TimelineMapViewRepresentable.swift in Sources */,
+				24CC5F3C2A745DE70078C921 /* TimelineMKMapView.swift in Sources */,
 				24BFA1862A8338580049F306 /* ErrorView.swift in Sources */,
 				24D58FCA2AC733EB00CFA553 /* FilmProgressView.swift in Sources */,
 				2461D74E2AC3688A002B9E51 /* NotificationManager.swift in Sources */,
@@ -1187,8 +1207,8 @@
 				24BAC6112A8B034200E42BC6 /* MFMailComposeViewController.swift in Sources */,
 				2495A02029CAC3DE00457CE7 /* Date+EXT.swift in Sources */,
 				24A662F729C2F45B00AD784F /* ReportsManager.swift in Sources */,
-				243EAD892ACCAF47001454B5 /* UserReportsViewModel.swift in Sources */,
 				2448C3A52A2A3B1800A72D9F /* JSONSerial+EXT.swift in Sources */,
+				24BE3D8B2ADB78E9006988AB /* FalseReportDetailView.swift in Sources */,
 				242370352A7EF5B300795C87 /* ReportsSkeletonLoadingListView.swift in Sources */,
 				24A2068E2A07A18B00F5DC0C /* UserSettings.swift in Sources */,
 			);

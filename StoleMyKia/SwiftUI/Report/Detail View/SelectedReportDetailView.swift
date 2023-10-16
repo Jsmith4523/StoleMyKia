@@ -21,6 +21,8 @@ struct SelectedReportDetailView: View {
         case presentWhenSelected
     }
     
+    @State private var report: Report!
+    
     @State private var isBookmarked: Bool = false
     @State private var updateQuantity: Int?
     
@@ -44,7 +46,7 @@ struct SelectedReportDetailView: View {
     
     @Environment (\.dismiss) var dismiss
     
-    let report: Report
+    let reportId: UUID
     var timelineMapViewMode: TimelineMapViewMode = .presentWhenSelected
     
     var deleteCompletion: (() -> Void)? = nil
@@ -52,6 +54,12 @@ struct SelectedReportDetailView: View {
     var body: some View {
         NavigationView {
             ZStack(alignment: .bottomTrailing) {
+                if let report {
+                    NavigationLink("", isActive: $isShowingTimelineMapView) {
+                        TimelineMapView(reportAssociatedId: report.role.associatedValue)
+                            .environmentObject(reportsVM)
+                    }
+                }
                 ScrollView {
                     ZStack {
                         switch loadStatus {
@@ -66,12 +74,13 @@ struct SelectedReportDetailView: View {
                 }
                 buttonsView
             }
+            .navigationBarTitleDisplayMode(.inline)
             .refreshable {
-                await checkIfReportIsAvaliable(checkForMoreInfo: true)
+                await fetchReportDetails(checkForMoreInfo: true)
             }
             .onAppear {
                 Task {
-                    await checkIfReportIsAvaliable(checkForMoreInfo: false)
+                    await fetchReportDetails(checkForMoreInfo: false)
                 }
             }
             .toolbar {
@@ -115,53 +124,72 @@ struct SelectedReportDetailView: View {
             VStack {
                 VStack(spacing: 20) {
                     VStack(alignment: .leading) {
-                        if (report.hasVehicleImage || !(report.discloseLocation)) {
-                            ZStack {
-                                if report.hasVehicleImage {
-                                    vehicleImageView
-                                } else {
-                                    if !(report.discloseLocation) {
-                                        SelectedReportDetailMapView(report: report)
+                        TabView {
+                            if report.hasVehicleImage {
+                                Image(uiImage: vehicleImage ?? .vehiclePlaceholder)
+                                    .resizable()
+                                    .scaledToFill()
+                                    .redacted(reason: vehicleImage.isNil() ? .placeholder : [])
+                                    .onTapGesture {
+                                        self.isShowingVehicleImageView.toggle()
                                     }
-                                }
+                                    .onAppear {
+                                        getVehicleImage()
+                                    }
                             }
-                            .frame(width: UIScreen.main.bounds.width, height: 300)
-                            .clipped()
-                        }
-                        VStack(spacing: 30) {
-                            VStack(alignment: .leading) {
-                                HStack {
-                                    reportTypeLabelStyle(report: report)
-                                    Spacer()
+                            SelectedReportDetailMapView(report: report)
+                                .onTapGesture {
+                                    presentTimelineMapView()
                                 }
-                                VStack(alignment: .leading, spacing: 10) {
-                                    VStack(alignment: .leading, spacing: 7) {
-                                        Text(report.vehicleDetails)
-                                            .font(.system(size: 25).weight(.heavy))
-                                        HStack {
-                                            Text(report.timeSinceString())
-                                            Divider()
-                                            Label("\(updateQuantity ?? 0)", systemImage: "arrow.2.squarepath")
-                                            Divider()
-                                            Text(report.location.distanceFromUser)
-                                        }
-                                        .frame(height: 15)
-                                        .font(.system(size: 16.5))
-                                        .foregroundColor(.gray)
-                                        VStack(alignment: .leading) {
-                                            if report.hasLicensePlate {
-                                                Text(report.vehicle.licensePlateString)
+                        }
+                        .tabViewStyle(.page(indexDisplayMode: .always))
+                        .frame(width: UIScreen.main.bounds.width, height: 300)
+                        .clipped()
+                        VStack {
+                            VStack(spacing: 30) {
+                                VStack(alignment: .leading) {
+                                    HStack {
+                                        reportTypeLabelStyle(report: report)
+                                        Spacer()
+                                    }
+                                    VStack(alignment: .leading, spacing: 10) {
+                                        VStack(alignment: .leading, spacing: 18) {
+                                            VStack(alignment: .leading, spacing: 7) {
+                                                Text(report.vehicleDetails)
+                                                    .font(.system(size: 25).weight(.heavy))
+                                                HStack {
+                                                    if report.hasLicensePlate {
+                                                        Text(report.vehicle.licensePlateString)
+                                                    }
+                                                    if (report.hasVin && report.hasLicensePlate) {
+                                                        Divider()
+                                                            .frame(height: 15)
+                                                    }
+                                                    if report.hasVin {
+                                                        Text("VIN: \(ApplicationFormats.vinFormat(report.vehicle.vinString) ?? "")")
+                                                    }
+                                                }
+                                                .font(.system(size: 18).bold())
                                             }
+                                            HStack {
+                                                Text(report.timeSinceString())
+                                                Divider()
+                                                Label("\(updateQuantity ?? 0)", systemImage: "arrow.2.squarepath")
+                                                Divider()
+                                                Text(report.location.distanceFromUser)
+                                            }
+                                            .frame(height: 15)
+                                            .font(.system(size: 16.5))
+                                            .foregroundColor(.gray)
                                         }
-                                        .font(.system(size: 17))
+                                        Text(report.distinguishableDetails)
+                                            .font(.system(size: 18))
+                                            .lineSpacing(2)
                                     }
-                                    Text(report.distinguishableDetails)
-                                        .font(.system(size: 16))
-                                        .lineSpacing(2)
                                 }
                             }
+                            .padding()
                         }
-                        .padding()
                     }
                 }
                 Spacer()
@@ -186,7 +214,7 @@ struct SelectedReportDetailView: View {
             Button(isBookmarked ? "Undo Bookmark" : "Bookmark") {
                 setBookmark()
             }
-            if !(report.isFalseReport || report.discloseLocation) {
+            if !(report.isFalseReport && report.discloseLocation) {
                 Button("Directions") {
                     URL.getDirectionsToLocation(title: report.appleMapsAnnotationTitle,
                                                 coords: report.location.coordinates)
@@ -203,10 +231,6 @@ struct SelectedReportDetailView: View {
                     }
                 }
             }
-        }
-        .sheet(isPresented: $isShowingTimelineMapView) {
-            TimelineMapView(detailMode: .report(self.report))
-                .environmentObject(reportsVM)
         }
         .fullScreenCover(isPresented: $isShowingFalseReportView) {
             FalseReportView(report: report)
@@ -274,30 +298,6 @@ struct SelectedReportDetailView: View {
         }
     }
     
-    private var vehicleImageView: some View {
-        TabView {
-            Image(uiImage: vehicleImage ?? .vehiclePlaceholder)
-                .resizable()
-                .scaledToFill()
-                .redacted(reason: vehicleImage == nil ? .placeholder : [])
-                .onAppear {
-                    if (vehicleImage == nil) {
-                        getVehicleImage()
-                    }
-                }
-                .onTapGesture {
-                    isShowingVehicleImageView.toggle()
-                }
-            if !(report.discloseLocation) {
-                SelectedReportDetailMapView(report: report)
-                    .onTapGesture {
-                        presentTimelineMapView()
-                    }
-            }
-        }
-        .tabViewStyle(.page(indexDisplayMode: .automatic))
-    }
-    
     private func presentTimelineMapView() {
         //Prevents allocating a new MKMapView in cases where the detail view
         //is presented within the TimelineMapView
@@ -326,7 +326,7 @@ struct SelectedReportDetailView: View {
     }
     
     private func checkIfBookmarked() async {
-        self.isBookmarked = await FirebaseUserManager.userHasBookmarkedReport(report.id)
+        self.isBookmarked = await FirebaseUserManager.userHasBookmarkedReport(reportId)
     }
     
     private func setBookmark() {
@@ -345,11 +345,13 @@ struct SelectedReportDetailView: View {
         }
     }
     
-    private func checkIfReportIsAvaliable(checkForMoreInfo: Bool = true) async {
-        guard let doesExist = try? await ReportManager.manager.reportDoesExist(report.id), doesExist else {
+    private func fetchReportDetails(checkForMoreInfo: Bool = true) async {
+        guard let report = try? await ReportManager.manager.fetchSingleReport(reportId) else {
             self.loadStatus = .error
             return
         }
+        
+        self.report = report
         
         if checkForMoreInfo {
             await getUpdateQuantity()
@@ -373,7 +375,7 @@ struct SelectedReportDetailView: View {
 
 struct SelectedReportDetailView_Previews: PreviewProvider {
     static var previews: some View {
-        SelectedReportDetailView(report: [Report].testReports().first!)
+        SelectedReportDetailView(reportId: [Report].testReports().first!.id)
             .environmentObject(ReportsViewModel())
             .environmentObject(UserViewModel())
     }

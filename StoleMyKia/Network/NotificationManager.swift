@@ -98,6 +98,7 @@ final class NotificationManager {
                 .collection(FirebaseDatabasesPaths.userNotificationPath)
                 .whereFilter(.whereField(AppUserNotification.isReadKey, isEqualTo: false))
                 .getDocuments()
+                .documents
             
             return documents.count
         } catch {

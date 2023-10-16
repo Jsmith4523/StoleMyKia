@@ -11,6 +11,10 @@ import SwiftUI
 
 extension String {
     
+    static let reportSymbolName = "newspaper.fill"
+    static let updateSymbolName = "arrow.2.squarepath"
+    static let falseReportSymbolName = "exclamationmark.shield"
+    
     func createHash() -> String {
         let data = Data(self.utf8)
         let hash = SHA256.hash(data: data)

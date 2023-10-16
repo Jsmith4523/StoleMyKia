@@ -38,7 +38,7 @@ struct Location: Codable, Identifiable, Hashable, Comparable {
 }
 
 extension Location {
-    
+        
     private static func userLocation() -> CLLocation? {
         guard let userLocation = CLLocationManager.shared.location else { return nil}
         return userLocation

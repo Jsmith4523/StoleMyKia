@@ -40,15 +40,12 @@ class TimelineAnnotationViewCallout: UIView {
         return button
     }()
         
-    private var isSelectedReport: Bool
     private var report: Report
     
-    private var onSelect: (Report) -> Void
+    var didSelect: ((Report) -> Void)?
     
-    init(report: Report, selectedReportId: UUID, onSelect: @escaping (Report) -> ()) {
-        self.report                     = report
-        self.isSelectedReport           = report.id == selectedReportId
-        self.onSelect                   = onSelect
+    init(report: Report) {
+        self.report = report
         super.init(frame: .zero)
         setupViews()
     }
@@ -59,8 +56,8 @@ class TimelineAnnotationViewCallout: UIView {
     
     private func setupViews() {
         reportTypeLabel.text = report.reportType.rawValue
-        reportDateTimeLabel.text = report.dt.full
-        reportRoleLabel.text = "Type: \(report.role.title)"
+        reportDateTimeLabel.text = ApplicationFormats.timeAgoFormat(report.dt)
+        reportRoleLabel.text = "\(report.role.title)"
         
         detailButton.addTarget(self, action: #selector(presentReportDetailView), for: .touchUpInside)
         
@@ -72,14 +69,15 @@ class TimelineAnnotationViewCallout: UIView {
     }
     
     private func setupConstraints() {
+        self.widthAnchor.constraint(equalToConstant: 100).isActive = true
         reportTypeLabel.translatesAutoresizingMaskIntoConstraints     = false
         reportDateTimeLabel.translatesAutoresizingMaskIntoConstraints = false
         reportRoleLabel.translatesAutoresizingMaskIntoConstraints     = false
         
-        if !isSelectedReport {
-            setupWithButton()
-        } else {
+        if (didSelect == nil) {
             setupWithoutButton()
+        } else {
+            setupWithButton()
         }
         
         func setupWithoutButton() {
@@ -125,6 +123,6 @@ class TimelineAnnotationViewCallout: UIView {
     }
     
     @objc private func presentReportDetailView() {
-        self.onSelect(report)
+        self.didSelect?(report)
     }
 }

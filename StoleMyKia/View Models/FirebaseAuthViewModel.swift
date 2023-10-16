@@ -14,7 +14,7 @@ enum LoginStatus {
 
 @MainActor class FirebaseAuthViewModel: NSObject, ObservableObject {
     
-    @Published private(set) var loginStatus: LoginStatus = .signedOut
+    @Published private(set) var loginStatus: LoginStatus = .loading
         
     private let authManager = FirebaseAuthManager.manager
     
@@ -71,12 +71,10 @@ enum LoginStatus {
     }
     
     ///Begin setting up the application for sign out.
-    private func prepareForSignOut(shouldImmediatelySignOut: Bool = false, fatal: Bool = false) {
+    private func prepareForSignOut(fatal: Bool = false) {
         Task {
             do {
-                if shouldImmediatelySignOut {
-                    authManager.signOutUser()
-                }
+                try? Auth.auth().signOut()
                 
                 suspendListeningForFCMToken()
                 if fatal {
@@ -96,6 +94,8 @@ enum LoginStatus {
                 }
                 if fatal {
                     fatalError()
+                } else {
+                    self.loginStatus = .signedOut
                 }
             } catch {
                 fatalError()
@@ -110,13 +110,15 @@ enum LoginStatus {
     }
     
     private func checkForCurrentUser() {
-        guard let user = Auth.auth().currentUser else {
-            self.loginStatus = .signedOut
-            prepareForSignOut(fatal: false)
-            return
+        Task {
+            self.loginStatus = .loading
+            do {
+                let (_, uid) = try await authManager.fetchCurrentUserDocument()
+                self.prepareForSignIn(uid: uid)
+            } catch {
+                prepareForSignOut(fatal: false)
+            }
         }
-        
-        self.prepareForSignIn(uid: user.uid)
     }
     
     private func setupAccountDeletionListener() {

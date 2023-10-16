@@ -8,7 +8,7 @@
 import Foundation
 import SwiftUI
 
-struct AppUserNotification: Identifiable, Decodable {
+struct AppUserNotification: Identifiable, Decodable, Comparable {
     
     static let isReadKey = "isRead"
     
@@ -21,6 +21,28 @@ struct AppUserNotification: Identifiable, Decodable {
         var id: Self {
             return self
         }
+        
+        var symbol: String {
+            switch self {
+            case .report:
+                return .reportSymbolName
+            case .update:
+                return .updateSymbolName
+            case .falseReport:
+                return .falseReportSymbolName
+            }
+        }
+        
+        var color: Color {
+            switch self {
+            case .report:
+                return .report
+            case .update:
+                return .update
+            case .falseReport:
+                return .falseReport
+            }
+        }
     }
     
     //The id is applied through the firebase functions
@@ -32,6 +54,14 @@ struct AppUserNotification: Identifiable, Decodable {
     let reportId: UUID
     var isRead: Bool
     var imageUrl: String?
+    
+    static func < (lhs: AppUserNotification, rhs: AppUserNotification) -> Bool {
+        lhs.dt < rhs.dt
+    }
+    
+    static func > (lhs: AppUserNotification, rhs: AppUserNotification) -> Bool {
+        lhs.dt > rhs.dt
+    }
 }
 
 extension AppUserNotification {

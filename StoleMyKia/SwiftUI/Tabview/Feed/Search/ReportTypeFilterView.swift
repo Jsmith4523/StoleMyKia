@@ -42,9 +42,9 @@ struct ReportFilterView: View {
     @State private var disableNearbyFilter = false
     
     @Binding var filterByUserLocation: Bool
+    @Binding var filterByReportType: Bool
     @Binding var nearbyDistance: NearbyDistance
-    @Binding var reportType: ReportType?
-    @Binding var reportRole: ReportRole.Role?
+    @Binding var reportType: ReportType
     
     @Environment (\.dismiss) var dismiss
     
@@ -53,7 +53,7 @@ struct ReportFilterView: View {
             List {
                 Section {
                     Group {
-                        Toggle("Show Nearby", isOn: $filterByUserLocation)
+                        Toggle("Location", isOn: $filterByUserLocation)
                             .tint(.green)
                         if filterByUserLocation {
                             Picker("", selection: $nearbyDistance) {
@@ -72,10 +72,14 @@ struct ReportFilterView: View {
                     Text("When enabled, you'll only see reports that are located nearby.")
                 }
                 Section("Reports") {
-                    Picker("Report Type", selection: $reportType) {
-                        ForEach(ReportType.allCases) {
-                            Text($0.rawValue)
-                                .tag($0)
+                    Toggle("Report Type", isOn: $filterByReportType)
+                        .tint(.green)
+                    if filterByReportType {
+                        Picker("Type", selection: $reportType) {
+                            ForEach(ReportType.allCases) {
+                                Text($0.rawValue)
+                                    .tag($0)
+                            }
                         }
                     }
                 }
@@ -101,12 +105,11 @@ struct ReportFilterView: View {
                 self.disableNearbyFilter = false
             }
         }
-        .tint(Color(uiColor: .label))
     }
 }
 
 struct ReportTypeFilterView_Previews: PreviewProvider {
     static var previews: some View {
-        ReportFilterView(filterByUserLocation: .constant(true), nearbyDistance: .constant(.fiveMiles),reportType: .constant(.attempt), reportRole: .constant(.original))
+        ReportFilterView(filterByUserLocation: .constant(true), filterByReportType: .constant(true), nearbyDistance: .constant(.fiveMiles),reportType: .constant(.attempt))
     }
 }

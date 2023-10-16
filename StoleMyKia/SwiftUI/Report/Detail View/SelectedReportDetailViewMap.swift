@@ -20,14 +20,23 @@ struct SelectedReportDetailMapView: UIViewRepresentable {
         let mapView = MKMapView()
         mapView.delegate = context.coordinator
         mapView.mapType = .mutedStandard
-        mapView.showsUserLocation = false
+        mapView.showsUserLocation = true
         mapView.isUserInteractionEnabled = false
         
-        let annotation = ReportAnnotation(report: report)
-   
-        mapView.addAnnotation(annotation)
-        mapView.setRegion(report.location.region, animated: true)
+        if report.discloseLocation {
+            let circle = MKCircle(center: report.location.coordinates, radius: 1250)
+            mapView.addOverlay(circle)
+            mapView.setVisibleMapRect(circle.boundingMapRect, edgePadding: MKCircle.discloseLocationEdgePadding, animated: false)
+        } else {
+            let annotation = ReportAnnotation(report: report)
+       
+            mapView.addAnnotation(annotation)
+            mapView.setRegion(report.location.region, animated: true)
+
+        }
+        
         mapView.register(ReportTimelineAnnotationView.self, forAnnotationViewWithReuseIdentifier: ReportAnnotation.reusableID)
+        mapView.register(ReportTimelineCircleOverlay.self, forAnnotationViewWithReuseIdentifier: MKMapViewDefaultAnnotationViewReuseIdentifier)
         
         return mapView
     }
@@ -44,13 +53,20 @@ struct SelectedReportDetailMapView: UIViewRepresentable {
         func mapView(_ mapView: MKMapView, viewFor annotation: MKAnnotation) -> MKAnnotationView? {
             if let annotation = annotation as? ReportAnnotation {
                 let annotationView = ReportTimelineAnnotationView(annotation: annotation)
-                annotationView.subtitleVisibility = .hidden
-                annotationView.titleVisibility = .hidden
-                
                 return annotationView
             }
             
             return nil
+        }
+        
+        func mapView(_ mapView: MKMapView, rendererFor overlay: MKOverlay) -> MKOverlayRenderer {
+            if let circleOverlay = overlay as? MKCircle {
+                let overlayRenderer = MKCircleRenderer(overlay: circleOverlay)
+                overlayRenderer.fillColor = MKCircle.discloseLocationFillColor
+                return overlayRenderer
+            }
+            
+            return MKOverlayRenderer()
         }
         
         deinit {
