@@ -87,12 +87,12 @@ class FirebaseAuthManager {
         }
         
         func saveNewUser(phoneNumber: String, userDocument: DocumentSnapshot?) async throws {
-            let userData = try AppUser(status: .active, phoneNumber: phoneNumber)
-                .encodeForUpload()
-            
             guard let currentUser = Auth.auth().currentUser else {
                 throw FirebaseAuthManagerError.userError
             }
+            
+            let userData = try AppUser(uid: currentUser.uid, status: .active, phoneNumber: phoneNumber)
+                .encodeForUpload()
             
             guard (userDocument == nil) else { return }
             

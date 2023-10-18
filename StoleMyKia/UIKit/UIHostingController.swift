@@ -12,17 +12,21 @@ import UIKit
 ///Enables status bar style changes to the swiftui view for deployments targets lower than iOS 16.0
 struct HostingView<C: View>: UIViewControllerRepresentable {
     
-    private let hostingController: UIHostingController<C>
+    private let rootView: () -> C
     
     init(statusBarStyle: UIStatusBarStyle = .default, @ViewBuilder rootView: @escaping () -> C) {
-        self.hostingController = HostingController(statusBarStyle: statusBarStyle) { rootView() }
+        self.rootView = rootView
     }
     
     func makeUIViewController(context: Context) -> UIViewController {
-        hostingController
+        let hostingController = UIHostingController(rootView: rootView())
+        hostingController.navigationController?.navigationBar.barTintColor = .green
+        return hostingController
     }
     
-    func updateUIViewController(_ uiViewController: UIViewController, context: Context) {}
+    func updateUIViewController(_ uiViewController: UIViewController, context: Context) {
+       
+    }
         
     final private class HostingController: UIHostingController<C> {
         
@@ -31,16 +35,17 @@ struct HostingView<C: View>: UIViewControllerRepresentable {
         init(statusBarStyle: UIStatusBarStyle, rootView: @escaping () -> C) {
             self.statusBarStyle = statusBarStyle
             super.init(rootView: rootView())
-            setupSheetInteraction()
+            //setupNavigationTitle()
         }
         
         @MainActor required dynamic init?(coder aDecoder: NSCoder) {
             fatalError("init(coder:) has not been implemented")
         }
         
-        private func setupSheetInteraction() {
-            self.sheetPresentationController?.largestUndimmedDetentIdentifier = .medium
-            self.sheetPresentationController?.detents = [.medium(), .large()]
+        private func setupNavigationTitle() {
+            let appearance = UINavigationBarAppearance()
+            appearance.backgroundColor = .black
+            self.navigationController?.navigationBar.standardAppearance = appearance
         }
         
         override var preferredStatusBarStyle: UIStatusBarStyle {

@@ -39,6 +39,9 @@ struct NewReportView: View {
     @State private var doesNotHaveVehicleIdentification = false
         
     @State private var discloseLocation = false
+    @State private var allowsForUpdates = true
+    @State private var allowsForContact = false
+    
     @State private var disablesLicensePlateAndVinSection = false
     
     @State private var isShowingReportDescriptionView = false
@@ -65,10 +68,10 @@ struct NewReportView: View {
     var isNotSatisfied: Bool {
         guard (licensePlate.range(of: ".*[^A-Za-z0-9].*", options: .regularExpression) == nil), (vin.range(of: ".*[^A-Za-z0-9].*", options: .regularExpression) == nil)  else { return true }
         if (doesNotHaveVehicleIdentification) {
-            return (self.distinguishableDescription.isEmpty || self.distinguishableDescription.count < 19 || self.distinguishableDescription.count > Report.descriptionCharacterLimit)
+            return (self.distinguishableDescription.isEmpty || self.distinguishableDescription.count < Int.descriptionMinCharacterCount || self.distinguishableDescription.count > Int.descriptionMaxCharacterCount)
         } else {
             return (self.licensePlate.isEmpty && self.vin.isEmpty)
-            || (self.distinguishableDescription.isEmpty || self.distinguishableDescription.count < 19 || self.distinguishableDescription.count > Report.descriptionCharacterLimit)
+            || (self.distinguishableDescription.isEmpty || self.distinguishableDescription.count < Int.descriptionMinCharacterCount || self.distinguishableDescription.count > Int.descriptionMaxCharacterCount)
         }
     }
     
@@ -99,6 +102,16 @@ struct NewReportView: View {
                     Text("Report Type")
                 } footer: {
                     Text(reportType.description)
+                }
+                
+                Section {
+                    Toggle("Hide Location", isOn: $discloseLocation)
+                        .tint(.green)
+                    Toggle("Allow For Updates", isOn: $allowsForUpdates)
+                        .tint(.green)
+                    Toggle("Contact Me", isOn: $allowsForContact)
+                } header: {
+                    Text("Options")
                 }
                 
                 Section {
@@ -178,15 +191,6 @@ struct NewReportView: View {
                     Text("Include an image you have of the vehicle that would properly distinguish it from others.")
                 }
                 .disabled(!vehicleImage.isNil())
-                
-                Section {
-                    Toggle("Disclose Location", isOn: $discloseLocation)
-                        .tint(.green)
-                } header: {
-                    Text("Report Location")
-                } footer: {
-                    Text("Your current location is automatically applied with this report. You can disclose the location if you're at a personal location. When disclosed, the location is still attached with this report but not visible to other users")
-                }
             }
             .navigationTitle("New Report")
             .navigationBarTitleDisplayMode(.inline)
@@ -270,15 +274,6 @@ struct NewReportView: View {
         }
     }
     
-    ///Retrieves the current location of the user
-    private func usersLocation() -> Location? {
-        guard let userLocation = CLLocationManager.shared.usersCurrentLocation, (self.location == nil) else {
-            return nil
-        }
-        
-        return Location(coordinates: userLocation)
-    }
-    
     @MainActor
     private func upload() {
         Task {
@@ -292,9 +287,17 @@ struct NewReportView: View {
                 guard !(distinguishableDescription.isEmpty) else {
                     throw NewReportError.detailIsEmpty
                 }
+                
+                var location: Location
                             
-                guard let location = usersLocation() else {
+                guard let userLocation = CLLocationManager.shared.usersCurrentLocation else {
                     throw NewReportError.locationError
+                }
+                
+                if discloseLocation {
+                    location = Location.disclose(lat: userLocation.latitude, long: userLocation.longitude)
+                } else {
+                    location = Location(coordinate: userLocation)
                 }
                 
                 var vehicle = Vehicle(year: vehicleYear, make: vehicleMake, model: vehicleModel, color: vehicleColor)
@@ -304,7 +307,10 @@ struct NewReportView: View {
                 if !(vin.isEmpty) {
                     try vehicle.vinString(vin)
                 }
-                let report = Report(uid: uid, type: reportType, Vehicle: vehicle, details: distinguishableDescription, location: location, discloseLocation: discloseLocation)
+                var report = Report(uid: uid, type: reportType, Vehicle: vehicle, details: distinguishableDescription, location: location, discloseLocation: discloseLocation)
+                
+                report.allowsForUpdates = allowsForUpdates
+                report.allowsForContact = allowsForContact
                 
                 guard let _ = try? await reportsVM.uploadReport(report, image: vehicleImage) else {
                     throw NewReportError.error

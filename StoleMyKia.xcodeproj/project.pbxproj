@@ -26,6 +26,7 @@
 		2426A62A2A243F0E00E78647 /* AnnotationCalloutDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2426A6292A243F0E00E78647 /* AnnotationCalloutDelegate.swift */; };
 		242AA7972ADBABFA007BAE30 /* UserBookmarksView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 242AA7962ADBABFA007BAE30 /* UserBookmarksView.swift */; };
 		242AA7992ADD0994007BAE30 /* InteractiveSheet.swift in Sources */ = {isa = PBXBuildFile; fileRef = 242AA7982ADD0994007BAE30 /* InteractiveSheet.swift */; };
+		243084012ADE584D008C3C15 /* InfiniteScrollButtonView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 243084002ADE584D008C3C15 /* InfiniteScrollButtonView.swift */; };
 		24334CFB29C0E0130084B8EC /* UIImage+EXT.swift in Sources */ = {isa = PBXBuildFile; fileRef = 24334CFA29C0E0130084B8EC /* UIImage+EXT.swift */; };
 		24334CFD29C1846C0084B8EC /* Image+EXT.swift in Sources */ = {isa = PBXBuildFile; fileRef = 24334CFC29C1846C0084B8EC /* Image+EXT.swift */; };
 		24334D0429C19E100084B8EC /* UIImagePicker.swift in Sources */ = {isa = PBXBuildFile; fileRef = 24334D0329C19E100084B8EC /* UIImagePicker.swift */; };
@@ -61,13 +62,15 @@
 		2461D74E2AC3688A002B9E51 /* NotificationManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2461D74D2AC3688A002B9E51 /* NotificationManager.swift */; };
 		2461D7502AC4ABEF002B9E51 /* ReportSkeletonView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2461D74F2AC4ABEF002B9E51 /* ReportSkeletonView.swift */; };
 		2473A8FB2AD1236F008EAE20 /* notification_update.caf in Resources */ = {isa = PBXBuildFile; fileRef = 2473A8FA2AD1236F008EAE20 /* notification_update.caf */; };
-		2473A8FD2AD12817008EAE20 /* ApplicationTabBarView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2473A8FC2AD12817008EAE20 /* ApplicationTabBarView.swift */; };
 		2476E0DA2AD9362700892A76 /* TimelineMapListView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2476E0D92AD9362700892A76 /* TimelineMapListView.swift */; };
 		2476E0DC2AD9478300892A76 /* ReportTimelineCircleOverlay.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2476E0DB2AD9478300892A76 /* ReportTimelineCircleOverlay.swift */; };
 		2476E0DE2AD9524300892A76 /* TimelineListView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2476E0DD2AD9524300892A76 /* TimelineListView.swift */; };
 		2476E0E02AD9CF1E00892A76 /* TimelineMapListSkeletonView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2476E0DF2AD9CF1E00892A76 /* TimelineMapListSkeletonView.swift */; };
 		248278D72A03054C00C1E99D /* UISheetPC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 248278D62A03054C00C1E99D /* UISheetPC.swift */; };
 		24848AB72A61E38E003E037E /* LicenseTextDetectionManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 24848AB62A61E38E003E037E /* LicenseTextDetectionManager.swift */; };
+		248E13AB2ADF92BD003414EC /* UIApplication.swift in Sources */ = {isa = PBXBuildFile; fileRef = 248E13AA2ADF92BD003414EC /* UIApplication.swift */; };
+		248E13AE2ADF942D003414EC /* PrivacyPolicyView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 248E13AD2ADF942D003414EC /* PrivacyPolicyView.swift */; };
+		248E13B02ADF9539003414EC /* SafetyView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 248E13AF2ADF9539003414EC /* SafetyView.swift */; };
 		249254A62A37CA590037C43C /* UIHostingController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 249254A52A37CA590037C43C /* UIHostingController.swift */; };
 		2495A02029CAC3DE00457CE7 /* Date+EXT.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2495A01F29CAC3DE00457CE7 /* Date+EXT.swift */; };
 		2495A02229CAC5DF00457CE7 /* String+EXT.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2495A02129CAC5DF00457CE7 /* String+EXT.swift */; };
@@ -203,6 +206,7 @@
 		2426A6292A243F0E00E78647 /* AnnotationCalloutDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AnnotationCalloutDelegate.swift; sourceTree = "<group>"; };
 		242AA7962ADBABFA007BAE30 /* UserBookmarksView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserBookmarksView.swift; sourceTree = "<group>"; };
 		242AA7982ADD0994007BAE30 /* InteractiveSheet.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InteractiveSheet.swift; sourceTree = "<group>"; };
+		243084002ADE584D008C3C15 /* InfiniteScrollButtonView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InfiniteScrollButtonView.swift; sourceTree = "<group>"; };
 		24334CFA29C0E0130084B8EC /* UIImage+EXT.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIImage+EXT.swift"; sourceTree = "<group>"; };
 		24334CFC29C1846C0084B8EC /* Image+EXT.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Image+EXT.swift"; sourceTree = "<group>"; };
 		24334D0329C19E100084B8EC /* UIImagePicker.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UIImagePicker.swift; sourceTree = "<group>"; };
@@ -238,7 +242,6 @@
 		2461D74D2AC3688A002B9E51 /* NotificationManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NotificationManager.swift; sourceTree = "<group>"; };
 		2461D74F2AC4ABEF002B9E51 /* ReportSkeletonView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = ReportSkeletonView.swift; path = ../Report/ReportSkeletonView.swift; sourceTree = "<group>"; };
 		2473A8FA2AD1236F008EAE20 /* notification_update.caf */ = {isa = PBXFileReference; lastKnownFileType = file; path = notification_update.caf; sourceTree = "<group>"; };
-		2473A8FC2AD12817008EAE20 /* ApplicationTabBarView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ApplicationTabBarView.swift; sourceTree = "<group>"; };
 		2476E0D92AD9362700892A76 /* TimelineMapListView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TimelineMapListView.swift; sourceTree = "<group>"; };
 		2476E0DB2AD9478300892A76 /* ReportTimelineCircleOverlay.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReportTimelineCircleOverlay.swift; sourceTree = "<group>"; };
 		2476E0DD2AD9524300892A76 /* TimelineListView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TimelineListView.swift; sourceTree = "<group>"; };
@@ -248,6 +251,9 @@
 		248BD8B72A8605E70086CA42 /* FirebaseCore.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; path = FirebaseCore.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		248BD8B92A8605F20086CA42 /* FirebaseCore.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; path = FirebaseCore.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		248BD8BB2A8606870086CA42 /* FirebaseInstallations.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; path = FirebaseInstallations.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		248E13AA2ADF92BD003414EC /* UIApplication.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UIApplication.swift; sourceTree = "<group>"; };
+		248E13AD2ADF942D003414EC /* PrivacyPolicyView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PrivacyPolicyView.swift; sourceTree = "<group>"; };
+		248E13AF2ADF9539003414EC /* SafetyView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SafetyView.swift; sourceTree = "<group>"; };
 		249254A52A37CA590037C43C /* UIHostingController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UIHostingController.swift; sourceTree = "<group>"; };
 		2495A01F29CAC3DE00457CE7 /* Date+EXT.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Date+EXT.swift"; sourceTree = "<group>"; };
 		2495A02129CAC5DF00457CE7 /* String+EXT.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "String+EXT.swift"; sourceTree = "<group>"; };
@@ -401,6 +407,7 @@
 		2426A6162A2345CB00E78647 /* Utilities */ = {
 			isa = PBXGroup;
 			children = (
+				248E13AC2ADF9422003414EC /* Policies */,
 				2423702A2A7DA64D00795C87 /* Helpers */,
 				24EE41102A59E01F00AF2A11 /* CoreML */,
 				24A4CEDC29BFA2C100B856BC /* Extensions */,
@@ -506,6 +513,15 @@
 			path = Reports;
 			sourceTree = "<group>";
 		};
+		248E13AC2ADF9422003414EC /* Policies */ = {
+			isa = PBXGroup;
+			children = (
+				248E13AD2ADF942D003414EC /* PrivacyPolicyView.swift */,
+				248E13AF2ADF9539003414EC /* SafetyView.swift */,
+			);
+			path = Policies;
+			sourceTree = "<group>";
+		};
 		24A206932A08310300F5DC0C /* Vehicle */ = {
 			isa = PBXGroup;
 			children = (
@@ -535,6 +551,7 @@
 				24EE41172A5BB42D00AF2A11 /* QuerySnapshot.swift */,
 				24F790322A88CFB300E51794 /* UserDefaults.swift */,
 				24BAC6172A8F20E700E42BC6 /* NSNotificationCenter.swift */,
+				248E13AA2ADF92BD003414EC /* UIApplication.swift */,
 			);
 			path = Extensions;
 			sourceTree = "<group>";
@@ -719,7 +736,6 @@
 			isa = PBXGroup;
 			children = (
 				24CC5EFA2A745DE70078C921 /* ApplicationTabView.swift */,
-				2473A8FC2AD12817008EAE20 /* ApplicationTabBarView.swift */,
 				24CC5EF52A745DE70078C921 /* Feed */,
 				24CC5EDF2A745DE70078C921 /* Notification */,
 				244BD3F92AB954FA00192AD1 /* My Stuff */,
@@ -746,6 +762,7 @@
 				24CC5EF62A745DE70078C921 /* List */,
 				24CC5EF82A745DE70078C921 /* NoReportsAvaliableView.swift */,
 				24CC5EF92A745DE70078C921 /* FeedView.swift */,
+				243084002ADE584D008C3C15 /* InfiniteScrollButtonView.swift */,
 			);
 			path = Feed;
 			sourceTree = "<group>";
@@ -1144,6 +1161,7 @@
 				24CC5F382A745DE70078C921 /* NearbySearchUserLocationErrorView.swift in Sources */,
 				2423702E2A7DBFE000795C87 /* SignInCodeVerificationView.swift in Sources */,
 				2423702C2A7DA65800795C87 /* ApplicationFormats.swift in Sources */,
+				248E13AE2ADF942D003414EC /* PrivacyPolicyView.swift in Sources */,
 				24F7902F2A8866B600E51794 /* NotificationView.swift in Sources */,
 				24CC5F2B2A745DE70078C921 /* FeedListView.swift in Sources */,
 				245B392129E39E90001DD213 /* ReportType.swift in Sources */,
@@ -1152,6 +1170,7 @@
 				24CC5F2D2A745DE70078C921 /* FeedView.swift in Sources */,
 				249254A62A37CA590037C43C /* UIHostingController.swift in Sources */,
 				24BFA1822A81AC030049F306 /* Prediction.swift in Sources */,
+				243084012ADE584D008C3C15 /* InfiniteScrollButtonView.swift in Sources */,
 				24A5792C29BC56B000495E6F /* Report.swift in Sources */,
 				245B391F29E39E55001DD213 /* VehicleModel.swift in Sources */,
 				24CC5F302A745DE70078C921 /* UpdateReportView.swift in Sources */,
@@ -1164,9 +1183,9 @@
 				244BD3FB2AB9550A00192AD1 /* MyStuffView.swift in Sources */,
 				240910C42A64639E00DC699A /* FirebaseAuthViewModel.swift in Sources */,
 				240F22492A350AD30078F97E /* LicenseScannerDelegate.swift in Sources */,
+				248E13AB2ADF92BD003414EC /* UIApplication.swift in Sources */,
 				24F790332A88CFB300E51794 /* UserDefaults.swift in Sources */,
 				24A206922A08270300F5DC0C /* Vehicle.swift in Sources */,
-				2473A8FD2AD12817008EAE20 /* ApplicationTabBarView.swift in Sources */,
 				244BD3D32AABF12300192AD1 /* Int+EXT.swift in Sources */,
 				242370332A7EF5A300795C87 /* SkeletonLoadingCellView.swift in Sources */,
 				24848AB72A61E38E003E037E /* LicenseTextDetectionManager.swift in Sources */,
@@ -1177,6 +1196,7 @@
 				24C6983A2A402ECD003A1DE6 /* ReportRole.swift in Sources */,
 				2425EAF92A003CDE00CC886F /* NavigationController.swift in Sources */,
 				24BFA1802A8047240049F306 /* SMKLicensePlateScanner.mlmodel in Sources */,
+				248E13B02ADF9539003414EC /* SafetyView.swift in Sources */,
 				24CC5F3A2A745DE70078C921 /* SelectedReportDetailView.swift in Sources */,
 				2495A02229CAC5DF00457CE7 /* String+EXT.swift in Sources */,
 				24CC5F192A745DE70078C921 /* LicensePlateCameraView.swift in Sources */,
@@ -1435,11 +1455,11 @@
 				INFOPLIST_FILE = StoleMyKia/Info.plist;
 				INFOPLIST_KEY_CFBundleDisplayName = StoleMyKia;
 				INFOPLIST_KEY_LSApplicationCategoryType = "public.app-category.utilities";
-				INFOPLIST_KEY_NSCameraUsageDescription = "Your devices camera will be used to capture images of vehicles.";
-				INFOPLIST_KEY_NSLocationAlwaysAndWhenInUseUsageDescription = "Your location is used when creating a report or update. With you report, you can either disclose or disable location accuracy for safety reasons. Your location is also used for filtering for local reports. ";
-				INFOPLIST_KEY_NSLocationAlwaysUsageDescription = "Your location is used when creating a report or update. With you report, you can either disclose or disable location accuracy for safety reasons. Your location is also used for filtering for local reports. ";
-				INFOPLIST_KEY_NSLocationWhenInUseUsageDescription = "Your location is used when creating a report or update. With you report, you can either disclose or disable location accuracy for safety reasons. Your location is also used for filtering for local reports. ";
-				INFOPLIST_KEY_NSPhotoLibraryUsageDescription = "Your photo library will be used to attach images with reports and updates";
+				INFOPLIST_KEY_NSCameraUsageDescription = "Your device's camera will be utilized to capture vehicle images.";
+				INFOPLIST_KEY_NSLocationAlwaysAndWhenInUseUsageDescription = "Your location is utilized when creating a report or update. We provide options such as hiding your location for privacy reasons. When filtering reports, your location is used to display reports that are relevant to your current location.";
+				INFOPLIST_KEY_NSLocationAlwaysUsageDescription = "Your location is utilized when creating a report or update. We provide options such as hiding your location for privacy reasons. When filtering reports, your location is used to display reports that are relevant to your current location.";
+				INFOPLIST_KEY_NSLocationWhenInUseUsageDescription = "Your location is utilized when creating a report or update. We provide options such as hiding your location for privacy reasons. When filtering reports, your location is used to display reports that are relevant to your current location.";
+				INFOPLIST_KEY_NSPhotoLibraryUsageDescription = "We will access your photo library to allow you to attach images to your reports and updates.";
 				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchScreen_Generation = YES;
@@ -1482,11 +1502,11 @@
 				INFOPLIST_FILE = StoleMyKia/Info.plist;
 				INFOPLIST_KEY_CFBundleDisplayName = StoleMyKia;
 				INFOPLIST_KEY_LSApplicationCategoryType = "public.app-category.utilities";
-				INFOPLIST_KEY_NSCameraUsageDescription = "Your devices camera will be used to capture images of vehicles.";
-				INFOPLIST_KEY_NSLocationAlwaysAndWhenInUseUsageDescription = "Your location is used when creating a report or update. With you report, you can either disclose or disable location accuracy for safety reasons. Your location is also used for filtering for local reports. ";
-				INFOPLIST_KEY_NSLocationAlwaysUsageDescription = "Your location is used when creating a report or update. With you report, you can either disclose or disable location accuracy for safety reasons. Your location is also used for filtering for local reports. ";
-				INFOPLIST_KEY_NSLocationWhenInUseUsageDescription = "Your location is used when creating a report or update. With you report, you can either disclose or disable location accuracy for safety reasons. Your location is also used for filtering for local reports. ";
-				INFOPLIST_KEY_NSPhotoLibraryUsageDescription = "Your photo library will be used to attach images with reports and updates";
+				INFOPLIST_KEY_NSCameraUsageDescription = "Your device's camera will be utilized to capture vehicle images.";
+				INFOPLIST_KEY_NSLocationAlwaysAndWhenInUseUsageDescription = "Your location is utilized when creating a report or update. We provide options such as hiding your location for privacy reasons. When filtering reports, your location is used to display reports that are relevant to your current location.";
+				INFOPLIST_KEY_NSLocationAlwaysUsageDescription = "Your location is utilized when creating a report or update. We provide options such as hiding your location for privacy reasons. When filtering reports, your location is used to display reports that are relevant to your current location.";
+				INFOPLIST_KEY_NSLocationWhenInUseUsageDescription = "Your location is utilized when creating a report or update. We provide options such as hiding your location for privacy reasons. When filtering reports, your location is used to display reports that are relevant to your current location.";
+				INFOPLIST_KEY_NSPhotoLibraryUsageDescription = "We will access your photo library to allow you to attach images to your reports and updates.";
 				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchScreen_Generation = YES;

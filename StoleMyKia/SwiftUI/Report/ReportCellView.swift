@@ -35,12 +35,7 @@ struct ReportCellView: View {
                 VStack(alignment: .leading, spacing: 20) {
                     VStack(alignment: .leading, spacing: 10) {
                         VStack(alignment: .leading, spacing: 11) {
-                            HStack {
-                                reportTypeLabelStyle(report: report)
-                                Spacer()
-                            }
-                            .font(.system(size: 14))
-                            .foregroundColor(.gray)
+                            ReportLabelView(report: report)
                             VStack(alignment: .leading, spacing: 8) {
                                 Text(report.vehicleDetails)
                                     .font(.system(size: 20).weight(.heavy))
@@ -119,8 +114,47 @@ struct ReportCellView: View {
     }
 }
 
+struct ReportLabelView: View {
+    
+    let report: Report
+    
+    var body: some View {
+        HStack(spacing: 4) {
+            reportTypeLabelStyle(report: report)
+            if report.hasBeenResolved {
+                reportResolvedLabel()
+            }
+            if report.discloseLocation {
+                reportDiscloseLocationLabel()
+            }
+            if report.belongsToUser {
+                reportCurrentUserLabel()
+            }
+        }
+    }
+}
+
 extension View  {
     
+    func reportLabelsView(report: Report) -> some View {
+        HStack(spacing: 4) {
+            reportTypeLabelStyle(report: report)
+            if report.hasBeenResolved {
+                reportResolvedLabel()
+            }
+            if report.discloseLocation {
+                reportDiscloseLocationLabel()
+            }
+            if report.belongsToUser {
+                reportCurrentUserLabel()
+            }
+            Spacer()
+        }
+        .font(.system(size: 14))
+        .foregroundColor(.gray)
+    }
+    
+    @ViewBuilder
     func reportTypeLabelStyle(report: Report) -> some View {
         HStack {
             if report.isFalseReport {
@@ -139,6 +173,37 @@ extension View  {
         .font(.system(size: 16).weight(.heavy))
         .foregroundColor(.white)
         .cornerRadius(10)
+    }
+    
+    @ViewBuilder
+    func reportResolvedLabel() -> some View {
+        Image(systemName: "checkmark.seal.fill")
+            .font(.system(size: 16).weight(.heavy))
+            .padding(4)
+            .foregroundColor(.white)
+            .background(Color.green)
+            .clipShape(RoundedRectangle(cornerRadius: 5))
+    }
+    
+    @ViewBuilder
+    func reportCurrentUserLabel() -> some View {
+        Image(systemName: "person.crop.circle.fill")
+            .font(.system(size: 16.5).weight(.heavy))
+            .padding(4)
+            .foregroundColor(.white)
+            .background(Color.gray)
+            .clipShape(RoundedRectangle(cornerRadius: 5))
+    }
+    
+    @ViewBuilder
+    func reportDiscloseLocationLabel() -> some View {
+        Image(systemName: "mappin.slash.circle")
+            .font(.system(size: 18).weight(.heavy))
+            .padding(4)
+            .background(Color.blue)
+            .clipShape(RoundedRectangle(cornerRadius: 5))
+            .frame(width: 40, height: 40)
+            .foregroundColor(.white)
     }
 }
 

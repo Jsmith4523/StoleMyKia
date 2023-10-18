@@ -14,19 +14,8 @@ struct ApplicationRootView: View {
     
     var body: some View {
         ZStack {
-            switch userVM.rootViewLoadStatus {
-            case .loading:
-                ApplicationProgressView()
-            case .loaded:
-                ApplicationTabView()
-                    .environmentObject(userVM)
-            }
-        }
-        .onAppear {
-            //firebaseAuthModel.setDelegate(userVM)
-        }
-        .onDisappear {
-            //firebaseAuthModel.firebaseAuthDelegate = nil
+            ApplicationTabView()
+                .environmentObject(userVM)
         }
     }
 }

@@ -23,12 +23,15 @@ struct StoleMyKiaApp: App {
                 switch firebaseAuthModel.loginStatus {
                 case .signedOut:
                     ApplicationAuthView()
+                        .tag("Auth")
                         .environmentObject(firebaseAuthModel)
                 case .signedIn:
                     ApplicationRootView()
+                        .tag("Signed In")
                         .environmentObject(firebaseAuthModel)
                 case .loading:
                     ApplicationProgressView()
+                        .tag("Loading")
                 }
             }
             .accentColor(Color(uiColor: .label))

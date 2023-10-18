@@ -15,6 +15,7 @@ extension View {
         return self
             .sheet(isPresented: isPresented) {
                 EmailComposeView(composeMode: composeMode)
+                    .edgesIgnoringSafeArea(.bottom)
             }
     }
     
@@ -53,9 +54,9 @@ enum ComposeMode: Identifiable {
     var placeholderBody: String {
         switch self {
         case .feature:
-            return "**Remove this text and tell us what new things you would like to see!**"
+            return "**Remove this text and tell us what new features and/or improve you would like to see!**"
         case .issue:
-            return "**Remove this text and tell us what issues you're encountering!**"
+            return "**Remove this text and tell us what issues you're encountering! Please include your phone number if necessary.**"
         }
     }
 }

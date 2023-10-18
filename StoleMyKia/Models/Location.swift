@@ -23,6 +23,11 @@ struct Location: Codable, Identifiable, Hashable, Comparable {
         self.lon = coordinate.longitude
     }
     
+    init(coordinate: CLLocationCoordinate2D) {
+        self.lat = coordinate.latitude
+        self.lon = coordinate.longitude
+    }
+    
     init(address: String?, name: String?, lat: Double, lon: Double) {
         self.address = address
         self.name = name
@@ -33,11 +38,24 @@ struct Location: Codable, Identifiable, Hashable, Comparable {
     var id = UUID()
     var address: String? = nil
     var name: String? =  nil
-    let lat: Double
-    let lon: Double
+    private var lat: Double
+    private var lon: Double
 }
 
 extension Location {
+    
+    static func disclose(lat: Double, long: Double) -> Self {
+        var discloseCoordinates: CLLocationCoordinate2D
+        
+        repeat {
+            let latitudeOffset = Double.random(in: (lat < 0 ? -0 : 0)...0.005)
+            let longitudeOffset = Double.random(in: (long < 0 ? -0 : 0)...0.005)
+            
+            discloseCoordinates = CLLocationCoordinate2D(latitude: lat + latitudeOffset, longitude: long + longitudeOffset)
+        } while discloseCoordinates == CLLocationCoordinate2D(latitude: lat, longitude: long)
+        
+        return Location(coordinate: discloseCoordinates)
+    }
         
     private static func userLocation() -> CLLocation? {
         guard let userLocation = CLLocationManager.shared.location else { return nil}

@@ -35,6 +35,9 @@ struct UpdateReportView: View {
     @State private var isShowingDescriptionView = false
     @State private var isShowingLocationSearchView = false
     
+    @State private var discloseLocation = false
+    
+    @State private var alertPresentLocationServicesDenied = false
     @State private var presentError = false
     
     @State private var vehicleImage: UIImage?
@@ -49,6 +52,10 @@ struct UpdateReportView: View {
     @EnvironmentObject var reportsVM: ReportsViewModel
     
     @Environment (\.dismiss) var dismiss
+    
+    var isSatisfied: Bool {
+        !(self.description.count >= Int.descriptionMinCharacterCount && self.description.count <= Int.descriptionMaxCharacterCount + 1)
+    }
         
     var body: some View {
         NavigationView {
@@ -74,7 +81,7 @@ struct UpdateReportView: View {
                         HStack {
                             Text("VIN")
                             Spacer()
-                            Text(originalReport.vehicle.vinString)
+                            Text("\(ApplicationFormats.vinFormat(originalReport.vehicle.vinString) ?? "")")
                                 .font(.system(size: 17))
                                 .foregroundColor(.gray)
                         }
@@ -87,8 +94,6 @@ struct UpdateReportView: View {
                     }
                 } header: {
                     Text("Vehicle Details")
-                } footer: {
-                    Text("Make sure you're updating the correct report. You can take actions such as matching the license plate, vin, or details that would ensure you have the correct vehicle.")
                 }
                 
                 Section {
@@ -127,7 +132,13 @@ struct UpdateReportView: View {
                 } header: {
                     Text("Description")
                 } footer: {
-                    Text("Please describe your update")
+                    Text("Describe your situation with the \(originalReport.vehicleDetails)")
+                }
+                
+                Section {
+                    Toggle("Hide Location", isOn: $discloseLocation)
+                } header: {
+                    Text("Options")
                 }
             }
             .navigationTitle("Update Report")
@@ -142,7 +153,18 @@ struct UpdateReportView: View {
                     Button("Update") {
                         prepareForUpload()
                     }
+                    .disabled(isSatisfied)
                 }
+            }
+            .alert("Unable to update report", isPresented: $presentError) {
+                Button("OK") {}
+            } message: {
+                Text("The initial report is either no longer available, deleted, or had an issue receiving updates.")
+            }
+            .alert("Unable to retrieve your current location", isPresented: $alertPresentLocationServicesDenied) {
+                Button("OK") {}
+            } message: {
+                Text("Please check your location services settings and/or network connectivity and try again.")
             }
             .sheet(isPresented: $isShowingLocationSearchView) {
                 NearbyLocationSearchView(location: $location)
@@ -153,14 +175,7 @@ struct UpdateReportView: View {
             .imagePicker(source: $photoPickerSourceType, image: $vehicleImage)
         }
         .disabled(isUploading)
-    }
-    
-    private func getUsersLocation() -> Location? {
-        guard let location = CLLocationManager.shared.usersCurrentLocation, self.location == nil else {
-            return nil
-        }
-        
-        return Location(coordinates: location)
+        .interactiveDismissDisabled()
     }
     
     @MainActor
@@ -172,18 +187,32 @@ struct UpdateReportView: View {
                     throw NewReportError.userIdError
                 }
                 
-                guard let location = getUsersLocation() ?? location else {
-                    throw NewReportError.locationError
+                guard let userLocation = CLLocationManager.shared.usersCurrentLocation else {
+                    self.alertPresentLocationServicesDenied.toggle()
+                    return
                 }
                 
-                var report = Report(uid: uid, type: updateReportType, Vehicle: self.originalReport.vehicle, details: self.description, location: location, discloseLocation: false)
+                var location: Location
+                
+                if discloseLocation {
+                    location = Location.disclose(lat: userLocation.latitude, long: userLocation.longitude)
+                } else {
+                    location = Location(coordinate: userLocation)
+                }
+                
+                var report = Report(uid: uid, type: updateReportType, Vehicle: self.originalReport.vehicle, details: self.description, location: location, discloseLocation: self.discloseLocation)
                 report.setAsUpdate(originalReport.role.associatedValue)
                 try await reportsVM.addUpdateToOriginalReport(originalReport: originalReport, report: report, vehicleImage: vehicleImage)
                 dismiss()
             } catch {
-                print(error.localizedDescription)
                 isUploading = false
+                self.presentError.toggle()
             }
         }
     }
+}
+
+
+#Preview {
+    UpdateReportView(originalReport: [Report].testReports().first!)
 }

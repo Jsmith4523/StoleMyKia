@@ -8,7 +8,16 @@
 import SwiftUI
 import MessageUI
 
+enum ApplicationPolicyViewMode: CaseIterable, Identifiable {
+    
+    var id: Self { self }
+    
+    case safety, privacyPolicy
+}
+
 struct ApplicationAuthView: View {
+    
+    @State private var policyViewMode: ApplicationPolicyViewMode?
     
     @State private var isShowingEmailComposeView = false
             
@@ -16,7 +25,7 @@ struct ApplicationAuthView: View {
     @Environment (\.colorScheme) var colorScheme
     
     var body: some View {
-        NavigationView {
+        NavigationStack {
             ZStack {
                 VStack {
                     Spacer()
@@ -55,19 +64,21 @@ struct ApplicationAuthView: View {
                                 .canSendEmail()
                             
                                 Button {
-                                    
+                                    self.policyViewMode = .safety
                                 } label: {
                                     Label("Safety", systemImage: "shield")
                                 }
                                 Capsule()
                                     .frame(width: 0.65, height: 15)
                                 Button {
-                                    
+                                    self.policyViewMode = .privacyPolicy
                                 } label: {
                                     Text("Privacy Policy")
                                 }
                             }
-                            Text("Version 1.0")
+                            if let applicationVersion = UIApplication.appVersion {
+                                Text("Version \(applicationVersion)")
+                            }
                         }
                         .font(.system(size: 13))
                         .multilineTextAlignment(.center)
@@ -76,12 +87,16 @@ struct ApplicationAuthView: View {
                 }
                 .padding()
             }
-            .navigationTitle("Welcome")
+            .navigationTitle("Start")
             .navigationBarTitleDisplayMode(.inline)
             .emailComposerView(isPresented: $isShowingEmailComposeView)
-            .toolbar {
-                ToolbarItem(placement: .principal) {
-                    Text("")
+            .hideNavigationTitle()
+            .fullScreenCover(item: self.$policyViewMode) { mode in
+                switch mode {
+                case .privacyPolicy:
+                    PrivacyPolicyView()
+                case .safety:
+                    SafetyView()
                 }
             }
         }
@@ -90,24 +105,10 @@ struct ApplicationAuthView: View {
     }
 }
 
-extension Text {
-    func authButtonStyle(background: Color = .brand) -> some View {
-        return self
-            .padding()
-            .frame(width: 310)
-            .font(.system(size: 22).weight(.heavy))
-            .background(background)
-            .foregroundColor(Color.white)
-            .clipShape(RoundedRectangle(cornerRadius: 20))
-    }
-}
-
-
 struct MyPreviewProvider_Previews: PreviewProvider {
     static var previews: some View {
         ApplicationAuthView()
             .environmentObject(FirebaseAuthViewModel())
-            .preferredColorScheme(.dark)
     }
 }
 

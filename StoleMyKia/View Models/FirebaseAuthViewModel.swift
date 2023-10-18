@@ -55,7 +55,8 @@ enum LoginStatus {
         self.prepareForSignOut(fatal: true)
     }
     
-    @objc private func saveDeviceFCMToken(_ notification: NSNotification) {
+    @objc 
+    private func saveDeviceFCMToken(_ notification: NSNotification) {
         if let userInfo = notification.userInfo, let deviceID = UserDefaults.standard.string(forKey: Constants.deviceIDKey) {
             let deviceToken = userInfo[Constants.deviceToken] as! String
             var info = [String: Any]()
@@ -92,11 +93,8 @@ enum LoginStatus {
                 } else {
                     UIApplication.shared.applicationIconBadgeNumber = 0
                 }
-                if fatal {
-                    fatalError()
-                } else {
-                    self.loginStatus = .signedOut
-                }
+                
+                self.loginStatus = .signedOut
             } catch {
                 fatalError()
             }

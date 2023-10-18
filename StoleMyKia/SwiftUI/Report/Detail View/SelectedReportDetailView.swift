@@ -26,9 +26,13 @@ struct SelectedReportDetailView: View {
     @State private var isBookmarked: Bool = false
     @State private var updateQuantity: Int?
     
-    @State private var isDeleting = false
+    @State private var isLoading = false
     
     @State private var loadStatus: ReportLoadStatus = .loading
+    
+    @State private var presentDisableUpdatesAlert = false
+    @State private var presentResolveReportsAlert = false
+    @State private var presentGenericErrorAlert = false
     @State private var presentDeleteAlert = false
     @State private var presentFailedDeletingReportAlert = false
     
@@ -80,7 +84,9 @@ struct SelectedReportDetailView: View {
             }
             .onAppear {
                 Task {
-                    await fetchReportDetails(checkForMoreInfo: false)
+                    if (report == nil) {
+                        await fetchReportDetails(checkForMoreInfo: false)
+                    }
                 }
             }
             .toolbar {
@@ -149,7 +155,7 @@ struct SelectedReportDetailView: View {
                             VStack(spacing: 30) {
                                 VStack(alignment: .leading) {
                                     HStack {
-                                        reportTypeLabelStyle(report: report)
+                                        ReportLabelView(report: report)
                                         Spacer()
                                     }
                                     VStack(alignment: .leading, spacing: 10) {
@@ -198,7 +204,7 @@ struct SelectedReportDetailView: View {
         }
         .toolbar {
             ToolbarItem(placement: .navigationBarTrailing) {
-                if !(isDeleting) {
+                if !(isLoading) {
                     Button {
                         isShowingReportOptions.toggle()
                     } label: {
@@ -214,21 +220,34 @@ struct SelectedReportDetailView: View {
             Button(isBookmarked ? "Undo Bookmark" : "Bookmark") {
                 setBookmark()
             }
-            if !(report.isFalseReport && report.discloseLocation) {
-                Button("Directions") {
-                    URL.getDirectionsToLocation(title: report.appleMapsAnnotationTitle,
-                                                coords: report.location.coordinates)
-                }
+            Button("Directions") {
+                URL.getDirectionsToLocation(title: report.appleMapsAnnotationTitle,
+                                            coords: report.location.coordinates)
             }
-            if let currentUser = Auth.auth().currentUser {
-                if report.uid == currentUser.uid {
-                    Button("Delete", role: .destructive) {
-                        presentDeleteAlert.toggle()
+            if report.belongsToUser {
+                if !(report.role.isAnUpdate) {
+                    if (report.allowsForUpdates && !(report.hasBeenResolved)) {
+                        Button("Disable Updates") {
+                            presentDisableUpdatesAlert.toggle()
+                        }
                     }
-                } else {
-                    Button("False Report") {
-                        self.isShowingFalseReportView.toggle()
+                    if !(report.hasBeenResolved) {
+                        Button("Resolved!") {
+                            presentResolveReportsAlert.toggle()
+                        }
                     }
+                }
+                Button("Delete", role: .destructive) {
+                    presentDeleteAlert.toggle()
+                }
+            } else {
+                if (report.allowsForUpdates && !(report.hasBeenResolved && report.belongsToUser)) {
+                    Button("Contact User") {
+                        
+                    }
+                }
+                Button("False Report") {
+                    self.isShowingFalseReportView.toggle()
                 }
             }
         }
@@ -256,7 +275,22 @@ struct SelectedReportDetailView: View {
         } message: {
             Text("Something went wrong trying to delete this report. Please try again!")
         }
-        .interactiveDismissDisabled(isDeleting)
+        .alert("Resolve Report", isPresented: $presentResolveReportsAlert) {
+            Button("Yes") { resolveReport() }
+            Button("Never mind"){}
+        } message: {
+            Text("When resolving a report, it will no longer receive updates and users can no longer contact you (if enabled). Once resolved, it CANNOT be reversed. Do you wish to continue?")
+        }
+        .alert("Disable Updates", isPresented: $presentDisableUpdatesAlert) {
+            Button("Yes", role: .destructive) { disableUpdates() }
+        } message: {
+            Text("When disabling updates, users can no longer update your report, but can still contact you (if enabled) Once disabled, it CANNOT be re-enabled. Do you wish to continue?")
+        }
+        .alert("There was an error completing that request", isPresented: $presentGenericErrorAlert) {
+            Button("OK") {}
+        } message: {
+            Text("An error occurred attempting to process that request. Please try again.")
+        }
         .task {
             if updateQuantity.isNil() {
                 await getUpdateQuantity()
@@ -268,11 +302,14 @@ struct SelectedReportDetailView: View {
         VStack(spacing: 5) {
             if loadStatus == .loaded {
                 Menu {
+                    //As long as the report is not false, allows for updates, and has not been resolved, then it can be updated
                     if !(report.isFalseReport) {
-                        Button {
-                            isShowingUpdateReportView.toggle()
-                        } label: {
-                            Label("Update Report", systemImage: "arrow.2.squarepath")
+                        if (report.allowsForUpdates && !report.hasBeenResolved) {
+                            Button {
+                                isShowingUpdateReportView.toggle()
+                            } label: {
+                                Label("Update Report", systemImage: "arrow.2.squarepath")
+                            }
                         }
                     }
                     Button {
@@ -311,7 +348,7 @@ struct SelectedReportDetailView: View {
     
     private func beginDeletingReport() {
         Task {
-            isDeleting = true
+            isLoading = true
             do {
                 try await reportsVM.deleteReport(report: report)
                 UINotificationFeedbackGenerator().notificationOccurred(.success)
@@ -320,7 +357,7 @@ struct SelectedReportDetailView: View {
             } catch {
                 UINotificationFeedbackGenerator().notificationOccurred(.error)
                 self.presentFailedDeletingReportAlert = true
-                self.isDeleting = false
+                self.isLoading = false
             }
         }
     }
@@ -346,11 +383,17 @@ struct SelectedReportDetailView: View {
     }
     
     private func fetchReportDetails(checkForMoreInfo: Bool = true) async {
+        self.loadStatus = .loading
         guard let report = try? await ReportManager.manager.fetchSingleReport(reportId) else {
-            self.loadStatus = .error
+            if !(report == nil) {
+                self.loadStatus = .error
+            } else {
+                self.loadStatus = .loaded
+            }
             return
         }
         
+        self.report = nil
         self.report = report
         
         if checkForMoreInfo {
@@ -359,6 +402,41 @@ struct SelectedReportDetailView: View {
         }
         
         self.loadStatus = .loaded
+    }
+    
+    private func disableUpdates() {
+        isLoading = true
+        self.loadStatus = .loading
+        Task {
+            do {
+                try await ReportManager.manager.disableUpdates(reportId)
+                await fetchReportDetails()
+                isLoading = false
+            } catch {
+                isLoading = false
+                presentGenericErrorAlert.toggle()
+            }
+        }
+    }
+    
+    private func resolveReport() {
+        isLoading = true
+        self.loadStatus = .loading
+        Task {
+            do {
+                try await ReportManager.manager.setAsResolved(reportId)
+                await fetchReportDetails()
+                isLoading = false
+            } catch {
+                isLoading = false
+                if (report == nil) {
+                    self.loadStatus = .error
+                } else {
+                    self.loadStatus = .loaded
+                }
+                presentGenericErrorAlert.toggle()
+            }
+        }
     }
     
     private func getVehicleImage() {
@@ -375,7 +453,7 @@ struct SelectedReportDetailView: View {
 
 struct SelectedReportDetailView_Previews: PreviewProvider {
     static var previews: some View {
-        SelectedReportDetailView(reportId: [Report].testReports().first!.id)
+        SelectedReportDetailView(reportId: UUID.ID(uuidString: "1B5F8667-4638-4535-86C6-233D63CE5A5D")!)
             .environmentObject(ReportsViewModel())
             .environmentObject(UserViewModel())
     }

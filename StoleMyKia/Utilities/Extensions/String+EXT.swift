@@ -22,3 +22,16 @@ extension String {
         return hash.compactMap{String(format: "%02x", $0)}.joined()
     }
 }
+
+extension Text {
+    func authButtonStyle(background: Color = .brand) -> some View {
+        return self
+            .padding()
+            .frame(width: 310)
+            .font(.system(size: 22).weight(.heavy))
+            .background(background)
+            .foregroundColor(Color.white)
+            .clipShape(RoundedRectangle(cornerRadius: 20))
+    }
+}
+

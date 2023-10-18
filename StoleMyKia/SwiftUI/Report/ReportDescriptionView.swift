@@ -15,6 +15,19 @@ struct ReportDescriptionView: View {
     
     @Environment (\.dismiss) var dismiss
     
+    var characterCountColor: Color {
+        if description.count < Int.descriptionMinCharacterCount {
+            return .orange
+        } else if description.count >= Int.descriptionMinCharacterCount && description.count <= Int.descriptionWarningCharacterCount {
+            return Color(uiColor: .label)
+        } else if description.count > Int.descriptionWarningCharacterCount && description.count < Int.descriptionMaxCharacterCount {
+            return .orange
+        }  else if description.count >= Int.descriptionMaxCharacterCount {
+            return .red
+        }
+        return Color(uiColor: .label)
+    }
+    
     var body: some View {
         NavigationView {
             VStack(spacing: 0) {
@@ -34,13 +47,17 @@ struct ReportDescriptionView: View {
                 }
                 .padding()
             }
-            .navigationTitle("Report Description")
+            .navigationTitle("Description")
             .navigationBarTitleDisplayMode(.inline)
             .toolbar {
                 ToolbarItem(placement: .navigationBarLeading) {
                     Button("Done") {
                         dismiss()
                     }
+                }
+                ToolbarItem(placement: .navigationBarTrailing) {
+                    Text("\(Int.descriptionMaxCharacterCount - description.count)")
+                        .foregroundColor(characterCountColor)
                 }
             }
         }
@@ -55,6 +72,6 @@ struct ReportDescriptionView: View {
 
 struct ReportDescriptionView_Previews: PreviewProvider {
     static var previews: some View {
-        ReportDescriptionView(description: .constant(""))
+        ReportDescriptionView(description: .constant("Int.descriptionMaxCharacterCountInt.descriptionMaxCharacterCountInt.descriptionMaxCharacterCountInt.descriptionMaxCharacterCountInt.descriptionMaxCharacterCountInt.descriptionMaxCharacterCountInt.descriptionMaxCharacterCountInt.descriptionMaxCharacterCountInt.descriptionMaxCharacterCountInt.descriptionMaxCharacterCountInt.descriptionMaxCharacterCountInt.descriptionMaxCharacterCountInt.descriptionMaxCharacterCountInt.descriptionMaxCharacterCountInt.descriptionMaxCharacterCountInt"))
     }
 }

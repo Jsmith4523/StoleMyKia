@@ -18,15 +18,22 @@ struct FeedListView: View {
         
     var body: some View {
         ZStack {
-            LazyVStack(spacing: 15) {
-                ForEach(reports.sorted(by: >)) { report in
-                    ReportCellView(report: report)
-                        .onTapGesture {
-                            self.selectedReport = report
-                        }
+            LazyVStack(spacing: 25) {
+                LazyVStack(spacing: 15) {
+                    ForEach(reports.sorted(by: >)) { report in
+                        ReportCellView(report: report)
+                            .onTapGesture {
+                                self.selectedReport = report
+                            }
+                    }
                 }
+                .background(Color(uiColor: .opaqueSeparator).opacity(0.16))
+//                InfiniteScrollButtonView()
+//                    .padding()
+//                    .onTapGesture {
+//                        fetchMoreReports()
+//                    }
             }
-            .background(Color(uiColor: .opaqueSeparator).opacity(0.16))
         }
         .environmentObject(reportsVM)
         .environmentObject(userModel)
@@ -34,6 +41,23 @@ struct FeedListView: View {
             SelectedReportDetailView(reportId: report.id)
                 .environmentObject(reportsVM)
                 .environmentObject(userModel)
+        }
+    }
+    
+    func fetchMoreReports() {
+        if let lastReport = reports.last {
+            Task {
+                switch reportsVM.infiniteScrollStatus {
+                case .idle:
+                    UIImpactFeedbackGenerator(style: .medium).impactOccurred()
+                    await reportsVM.fetchMoreReports(lastReport)
+                case .loading:
+                    return
+                case .error:
+                    UIImpactFeedbackGenerator(style: .medium).impactOccurred()
+                    await reportsVM.fetchMoreReports(lastReport)
+                }
+            }
         }
     }
 }

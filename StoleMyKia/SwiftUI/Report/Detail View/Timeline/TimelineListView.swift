@@ -41,16 +41,7 @@ fileprivate struct TimelineListCellView: View {
             VStack(alignment: .leading, spacing: 5) {
                 VStack(alignment: .leading) {
                     HStack(spacing: 0) {
-                        reportTypeLabelStyle(report: report)
-                        if report.discloseLocation {
-                            Image(systemName: "mappin.slash.circle")
-                                .font(.system(size: 18).weight(.heavy))
-                                .padding(4)
-                                .background(Color.blue)
-                                .cornerRadius(10)
-                                .frame(width: 40, height: 40)
-                                .foregroundColor(.white)
-                        }
+                        reportLabelsView(report: report)
                     }
                     Text(report.distinguishableDetails)
                         .font(.system(size: 14))

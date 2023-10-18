@@ -11,6 +11,7 @@ struct AppUser: Codable {
     
     static let statusKey = Self.CodingKeys.status.rawValue
     
+    let uid: String
     let status: Status
     let phoneNumber: String
     
@@ -32,6 +33,7 @@ struct AppUser: Codable {
     }
         
     enum CodingKeys: String, CodingKey {
+        case uid = "uid"
         case status = "status"
         case phoneNumber = "phone_number"
     }

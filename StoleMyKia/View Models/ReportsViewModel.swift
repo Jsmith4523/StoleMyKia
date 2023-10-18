@@ -11,12 +11,28 @@ import FirebaseAuth
 import UIKit
 import MapKit
 
+enum InfiniteScrollStatus {
+    case idle, loading, error
+    
+    var title: String {
+        switch self {
+        case .idle:
+            return "More"
+        case .loading:
+            return "Loading..."
+        case .error:
+            return "Failed To Reload"
+        }
+    }
+}
+
 @MainActor
 final class ReportsViewModel: NSObject, ObservableObject {
         
     @Published var isFetchingReports = false
     @Published var isShowingLicensePlateScannerView = false
 
+    @Published private(set) var infiniteScrollStatus: InfiniteScrollStatus = .idle
     @Published var feedLoadStatus: FeedLoadStatus = .loading
     @Published var reports: [Report] = []
     
@@ -41,6 +57,17 @@ final class ReportsViewModel: NSObject, ObservableObject {
         } catch {
             self.feedLoadStatus = .error
         }
+    }
+    
+    func fetchMoreReports(_ report: Report) async {
+//        self.infiniteScrollStatus = .loading
+//        do {
+//            let reports = try await ReportManager.manager.fetchMoreAfterReport(report)
+//            self.reports.append(contentsOf: reports)
+//            self.infiniteScrollStatus = .idle
+//        } catch {
+//            self.infiniteScrollStatus = .error
+//        }
     }
     
     /// Asynchronously upload a report and its vehicle image to Google Firestore and Firebase Storage

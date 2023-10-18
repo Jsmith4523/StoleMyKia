@@ -119,10 +119,11 @@ enum ReportRole: Identifiable, Codable, Equatable, Comparable {
         }
     }
     
+    ///The size of the timeline circle depending on the role of the report.
     var discloseRadiusSize: CGFloat {
         switch self.role {
         case .original:
-            return 1250
+            return 875
         case .update:
             return 450
         }

@@ -8,14 +8,13 @@
 import Foundation
 import UIKit
 import MapKit
+import FirebaseAuth
 import SwiftUI
 
 public struct Report: Identifiable, Codable, Comparable {
     
-    static let descriptionCharacterLimit = 500
-    
     ///init with requried details
-    init(uid: String, type: ReportType, Vehicle: Vehicle, details: String, location: Location, discloseLocation: Bool) {
+    init(uid: String, type: ReportType, Vehicle: Vehicle, details: String, location: Location, discloseLocation: Bool, allowsForUpdates: Bool = true, allowsForContact: Bool = false, hasBeenResolved: Bool = false) {
         let id = UUID()
         self.id = id
         self.dt = Date.now.epoch
@@ -26,10 +25,13 @@ public struct Report: Identifiable, Codable, Comparable {
         self.location = location
         self.role = .original(id)
         self.discloseLocation = discloseLocation
+        self.allowsForUpdates = allowsForUpdates
+        self.allowsForContact = allowsForContact
+        self.hasBeenResolved = hasBeenResolved
     }
     
     ///Init with required detail and optional vehicle image url.
-    init(uid: String, type: ReportType, Vehicle: Vehicle, vehicleImageUrl: String?, details: String, location: Location, discloseLocation: Bool) {
+    init(uid: String, type: ReportType, Vehicle: Vehicle, vehicleImageUrl: String?, details: String, location: Location, discloseLocation: Bool, allowsForUpdates: Bool = true, allowsForContact: Bool = false, hasBeenResolved: Bool = false) {
         let id = UUID()
         self.id = id
         self.dt = Date.now.epoch
@@ -41,6 +43,9 @@ public struct Report: Identifiable, Codable, Comparable {
         self.location = location
         self.role = .original(id)
         self.discloseLocation = discloseLocation
+        self.allowsForUpdates = allowsForUpdates
+        self.allowsForContact = allowsForContact
+        self.hasBeenResolved = hasBeenResolved
     }
 
     public var id: UUID
@@ -68,6 +73,9 @@ public struct Report: Identifiable, Codable, Comparable {
     ///This is useful when wanting to delete a report if it's an update.
     ///Firebase functions will handle the rest after this report has been deleted.
     var updateId: String?
+    var allowsForUpdates: Bool = true
+    var allowsForContact: Bool = false
+    var hasBeenResolved: Bool = false
     
     public static func == (lhs: Report, rhs: Report) -> Bool {
         return true
@@ -83,6 +91,15 @@ public struct Report: Identifiable, Codable, Comparable {
 }
 
 extension Report {
+    
+    ///Checks if the report belongs to the current signed in user.
+    var belongsToUser: Bool {
+        guard let currentUser = Auth.auth().currentUser, self.uid == currentUser.uid else {
+            return false
+        }
+        
+        return true
+    }
     
     func encodeForUploading() throws -> Any? {
         try JSONSerialization.createJsonFromObject(self)
@@ -123,6 +140,7 @@ extension Report {
     /// - Parameter parentId: The parent report UUID.
     /// - Returns: self
     mutating func setAsUpdate(_ parentId: UUID) {
+        self.allowsForUpdates = false
         self.role = .update(parentId)
     }
     

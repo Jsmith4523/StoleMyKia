@@ -225,13 +225,32 @@ class FirebaseUserManager {
         let deviceID = info[Constants.deviceIDKey] as! String
         
         guard let user = Auth.auth().currentUser else { return }
+        
         let uid = user.uid
-        Firestore.firestore()
-            .collection(FirebaseDatabasesPaths.usersDatabasePath)
-            .document(uid)
-            .collection(FirebaseDatabasesPaths.fcmTokenPath)
-            .document(deviceID)
-            .setData(info)
+        
+        Task {
+            try? await Firestore.firestore()
+                .collection(FirebaseDatabasesPaths.usersDatabasePath)
+                .document(uid)
+                .collection(FirebaseDatabasesPaths.fcmTokenPath)
+                .document(deviceID)
+                .setData(info)
+            
+            //Deleting any user documents that may contain the device token
+            try? await Firestore.firestore()
+                .collection(FirebaseDatabasesPaths.usersDatabasePath)
+                .whereField(AppUser.CodingKeys.uid.rawValue, isNotEqualTo: uid)
+                .getDocuments()
+                .documents
+                .forEach { doc in
+                    doc
+                        .reference
+                        .collection(FirebaseDatabasesPaths.fcmTokenPath)
+                        .document(deviceID)
+                        .delete()
+                }
+                
+        }
     }
         
     deinit {

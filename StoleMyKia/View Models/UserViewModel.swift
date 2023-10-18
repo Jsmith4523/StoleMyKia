@@ -15,9 +15,7 @@ enum RootViewLoadStatus {
 }
 
 @MainActor final class UserViewModel: NSObject, ObservableObject {
-    
-    @Published private(set) var rootViewLoadStatus: RootViewLoadStatus = .loaded
-    
+        
     //MARK: - User Settings Methods
     
     func fetchNotificationSettings() async throws -> UserNotificationSettings? {

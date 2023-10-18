@@ -15,6 +15,10 @@ extension CGFloat {
 
 extension Int {
     
+    static let descriptionMinCharacterCount = 25
+    static let descriptionWarningCharacterCount = Self.descriptionMaxCharacterCount - 75
+    static let descriptionMaxCharacterCount = 600
+    
     ///Returns a string value of this number with "10+" if n > 10
     var limitToTen: String {
         if self > 10 {

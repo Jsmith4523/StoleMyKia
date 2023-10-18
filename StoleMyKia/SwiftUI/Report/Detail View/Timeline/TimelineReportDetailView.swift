@@ -27,7 +27,7 @@ struct TimelineReportDetailView: View {
                                     imageView
                                 }
                                 VStack(alignment: .leading, spacing: 2) {
-                                    reportTypeLabelStyle(report: report)
+                                    reportLabelsView(report: report)
                                     Text(report.vehicleDetails)
                                         .font(.system(size: 19).weight(.heavy))
                                         .lineLimit(2)

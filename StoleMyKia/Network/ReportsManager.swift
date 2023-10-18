@@ -12,7 +12,7 @@ import CoreLocation
 
 enum ReportManagerError: String, Error {
     case imageUrlError = "Image URL Error."
-    case doesNotExist = "Report Does Not Exist."
+    case doesNotExist = "The initial report no longer exists"
     case dataError = "Data Error"
     case codableError = "Codable Protocol Error"
     case locationServicesDenied = "User Location Services Denied"
@@ -63,7 +63,9 @@ public class ReportManager {
     /// - Returns: Report that matches the UUID value.
     /// - Throws: Error if reports could not be retrieved or no longer exist.
     func fetchSingleReport(_ id: UUID, errorIfUnavaliable: Bool = true) async throws -> Report? {
-        let document = try await collection.document(id.uuidString).getDocument()
+        let document = try await collection
+            .document(id.uuidString)
+            .getDocument()
                 
         guard document.exists else {
             if errorIfUnavaliable {
@@ -88,7 +90,10 @@ public class ReportManager {
     /// - Parameter reportId: The UUID of the original report
     /// - Returns: An array of reports that are updates
     func fetchUpdates(_ reportId: UUID) async throws -> [Report] {
-        let collection = collection.document(reportId.uuidString).collection("Updates")
+        let collection = collection
+            .document(reportId.uuidString)
+            .collection("Updates")
+        
         let documents = try await collection.getDocuments().documents
                
         let documentData = documents.map({$0.data()})
@@ -193,6 +198,10 @@ public class ReportManager {
         return true
     }
     
+    
+    /// Retrieves the current number of updates a report has
+    /// - Parameter report: The report to check for number of updates based upon it's role associated UUID value.
+    /// - Returns: The int quantity of updates
     func getNumberOfUpdates(_ report: Report) async -> Int {
         do {
             let count = try await collection.document(report.role.associatedValue.uuidString)
@@ -203,6 +212,42 @@ public class ReportManager {
         } catch {
             return 0
         }
+    }
+    
+    /// Disables updates for a report
+    /// - Parameter id: The UUID of the report to disable updates for.
+    func disableUpdates(_ id: UUID) async throws {
+        try await FirebaseAuthManager.manager.userCanPerformAction()
+        
+        guard try await self.reportDoesExist(id) else {
+            throw ReportManagerError.doesNotExist
+        }
+        
+        try await Firestore.firestore()
+            .collection(FirebaseDatabasesPaths.reportsDatabasePath)
+            .document(id.uuidString)
+            .updateData(["allowsForUpdates": false])
+    }
+    
+    
+    /// Updates a report document in firebase as resolved.
+    /// - Parameter id: The UUID of the report to set as resolved.
+    func setAsResolved(_ id: UUID) async throws {
+        try await FirebaseAuthManager.manager.userCanPerformAction()
+        
+        guard try await self.reportDoesExist(id) else {
+            throw ReportManagerError.doesNotExist
+        }
+        
+        try await Firestore.firestore()
+            .collection(FirebaseDatabasesPaths.reportsDatabasePath)
+            .document(id.uuidString)
+            .updateData(["allowsForUpdates": false])
+        
+        try await Firestore.firestore()
+            .collection(FirebaseDatabasesPaths.reportsDatabasePath)
+            .document(id.uuidString)
+            .updateData(["hasBeenResolved": true])
     }
 }
 
