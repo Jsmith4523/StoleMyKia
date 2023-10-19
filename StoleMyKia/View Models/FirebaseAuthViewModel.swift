@@ -9,7 +9,7 @@ import Foundation
 import Firebase
 
 enum LoginStatus {
-    case signedOut, loading, signedIn
+    case signedOut, loading, onboarding, signedIn
 }
 
 @MainActor class FirebaseAuthViewModel: NSObject, ObservableObject {
@@ -32,11 +32,15 @@ enum LoginStatus {
     }
     
     func verifyCode(_ code: String, phoneNumber: String) async throws {
-        try await authManager.verifyCode(code, phoneNumber: phoneNumber)
+        guard let loginStatus = try? await authManager.verifyCode(code, phoneNumber: phoneNumber) else {
+            throw FirebaseAuthManager.FirebaseAuthManagerError.userError
+        }
         
         guard let user = Auth.auth().currentUser else {
             throw FirebaseAuthManager.FirebaseAuthManagerError.userError
         }
+        
+        self.loginStatus = loginStatus
         
         prepareForSignIn(uid: user.uid)
     }
@@ -45,7 +49,6 @@ enum LoginStatus {
     /// - Parameter uid: The Firebase auth user uid.
     private func prepareForSignIn(uid: String) {
         self.uid = uid
-        self.loginStatus = .signedIn
         self.beginListeningForFCMToken()
         self.setupAccountDeletionListener()
     }
@@ -74,30 +77,24 @@ enum LoginStatus {
     ///Begin setting up the application for sign out.
     private func prepareForSignOut(fatal: Bool = false) {
         Task {
-            do {
-                try? Auth.auth().signOut()
-                
-                suspendListeningForFCMToken()
-                if fatal {
-                    self.loginStatus = .loading
-                }
-                try await removeDeviceFCMToken()
-                NotificationManager.removeNotificationListener()
-                
-                //Removing notifications and resetting application badge...
-                UNUserNotificationCenter.current().removeAllDeliveredNotifications()
-                UNUserNotificationCenter.current().removeAllPendingNotificationRequests()
-                
-                if #available(iOS 17.0, *) {
-                    try await UNUserNotificationCenter.current().setBadgeCount(0)
-                } else {
-                    UIApplication.shared.applicationIconBadgeNumber = 0
-                }
-                
-                self.loginStatus = .signedOut
-            } catch {
-                fatalError()
+            try? Auth.auth().signOut()
+            
+            suspendListeningForFCMToken()
+            self.loginStatus = .loading
+            try? await removeDeviceFCMToken()
+            NotificationManager.removeNotificationListener()
+            
+            //Removing notifications and resetting application badge...
+            UNUserNotificationCenter.current().removeAllDeliveredNotifications()
+            UNUserNotificationCenter.current().removeAllPendingNotificationRequests()
+            
+            if #available(iOS 17.0, *) {
+                try await UNUserNotificationCenter.current().setBadgeCount(0)
+            } else {
+                UIApplication.shared.applicationIconBadgeNumber = 0
             }
+            
+            self.loginStatus = .signedOut
         }
     }
     

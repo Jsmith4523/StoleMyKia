@@ -14,24 +14,28 @@ import MapKit
 @main
 struct StoleMyKiaApp: App {
     
-    @StateObject private var firebaseAuthModel = FirebaseAuthViewModel()
+    @StateObject private var firebaseAuthVM = FirebaseAuthViewModel()
     @UIApplicationDelegateAdaptor (AppDelegate.self) var appDelegate
     
     var body: some Scene {
         WindowGroup {
             ZStack {
-                switch firebaseAuthModel.loginStatus {
+                switch firebaseAuthVM.loginStatus {
                 case .signedOut:
                     ApplicationAuthView()
                         .tag("Auth")
-                        .environmentObject(firebaseAuthModel)
+                        .environmentObject(firebaseAuthVM)
                 case .signedIn:
                     ApplicationRootView()
                         .tag("Signed In")
-                        .environmentObject(firebaseAuthModel)
+                        .environmentObject(firebaseAuthVM)
                 case .loading:
                     ApplicationProgressView()
                         .tag("Loading")
+                case .onboarding:
+                    OnboardingView()
+                        .tag("Onboarding")
+                        .environmentObject(firebaseAuthVM)
                 }
             }
             .accentColor(Color(uiColor: .label))
@@ -82,6 +86,11 @@ class AppDelegate: UIScene, UIApplicationDelegate {
             Task {
                 do {
                     let fetchedReport = try await ReportManager.manager.fetchSingleReport(reportId)
+                    
+                    guard let fetchedReport, fetchedReport.belongsToUser else {
+                        throw FirebaseAuthManager.FirebaseAuthManagerError.specificError("Notification does not belong to current logged in user")
+                    }
+                    
                     report = fetchedReport
                 } catch {
                     let ac = UIAlertController(title: "Error", message: "There was an error presenting information for that notification.", preferredStyle: .alert)

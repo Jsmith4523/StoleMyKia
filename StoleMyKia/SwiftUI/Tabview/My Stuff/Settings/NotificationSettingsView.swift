@@ -8,7 +8,7 @@
 import SwiftUI
 import MapKit
 
-struct NotificationsView: View {
+struct NotificationSettingsView: View {
     
     
     @State private var settings: UserNotificationSettings?
@@ -97,8 +97,8 @@ struct NotificationsView: View {
             .customSheetView(isPresented: $isShowingNotificationMapView, detents: [.large()], showsIndicator: true) {
                 NotificationMapView(location: $location)
             }
-            .task {
-                await getUserSettings()
+            .onAppear {
+                getUserSettings()
             }
         }
         .tint(Color(uiColor: .label))
@@ -138,36 +138,40 @@ struct NotificationsView: View {
         }
     }
     
-    func getUserSettings() async {
+    func getUserSettings() {
         isLoading = true
-        do {
-            let settings = try await userVM.fetchNotificationSettings()
-            
-            if let settings {
-                self.settings = settings
-                
-                self.notifyAttempt = settings.notifyAttempt
-                self.notifyBreakIn = settings.notifyBreakIn
-                self.notifyCarjacking = settings.notifyCarjacking
-                self.notifyRecovered = settings.notifyRecovered
-                self.notifyIncident = settings.notifyIncident
-                self.notifyLocated = settings.notifyLocated
-                self.notifyStolen = settings.notifyStolen
-                self.notifyWitnessed = settings.notifyWitnessed
-                
-                self.location = settings.location
+        DispatchQueue.main.asyncAfter(deadline: .now() + 0.75) {
+            Task {
+                do {
+                    let settings = try await userVM.fetchNotificationSettings()
+                    
+                    if let settings {
+                        self.settings = settings
+                        
+                        self.notifyAttempt = settings.notifyAttempt
+                        self.notifyBreakIn = settings.notifyBreakIn
+                        self.notifyCarjacking = settings.notifyCarjacking
+                        self.notifyRecovered = settings.notifyRecovered
+                        self.notifyIncident = settings.notifyIncident
+                        self.notifyLocated = settings.notifyLocated
+                        self.notifyStolen = settings.notifyStolen
+                        self.notifyWitnessed = settings.notifyWitnessed
+                        
+                        self.location = settings.location
+                    }
+                    
+                    isLoading = false
+                } catch {
+                    self.alertErrorFetchingSettings.toggle()
+                }
             }
-            
-            isLoading = false
-        } catch {
-            self.alertErrorFetchingSettings.toggle()
         }
     }
 }
 
 struct NotificationsView_Previews: PreviewProvider {
     static var previews: some View {
-        NotificationsView()
+        NotificationSettingsView()
             .environmentObject(UserViewModel())
     }
 }

@@ -35,7 +35,7 @@ enum ReportType: String, CaseIterable, Hashable, Identifiable, Codable, Comparab
         case .witnessed:
             return "eye.fill"
         case .located:
-            return "mappin.and.ellipse"
+            return "mappin"
         case .carjacked:
             return "sos"
         case .attempt:

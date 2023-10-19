@@ -38,6 +38,7 @@ extension View {
     
     func hideNavigationTitle() -> some View {
         return self
+            .navigationBarTitleDisplayMode(.inline)
             .toolbar {
                 ToolbarItem(placement: .principal) {
                     Text("")

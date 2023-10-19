@@ -71,6 +71,6 @@ struct SafetyView: View {
     }
 }
 
-#Preview {
-    SafetyView()
-}
+//#Preview {
+//    SafetyView()
+//}

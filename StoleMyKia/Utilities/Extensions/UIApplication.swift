@@ -12,11 +12,17 @@ extension UIApplication {
     
     ///The version of this application
     static var appVersion: String? {
-        return Bundle.main.object(forInfoDictionaryKey: "CFBundleShortVersionString") as? String
+        guard let appVersion = Bundle.main.object(forInfoDictionaryKey: "CFBundleShortVersionString") as? String else {
+            return "N/A"
+        }
+        return appVersion
     }
     
     ///The name of the application (subject to change LOL)
     static var appName: String? {
-        return Bundle.main.object(forInfoDictionaryKey: "CFBundleName") as? String
+        guard let appName = Bundle.main.object(forInfoDictionaryKey: "CFBundleName") as? String else {
+            return "application"
+        }
+        return appName
     }
 }

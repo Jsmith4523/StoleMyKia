@@ -200,7 +200,7 @@ struct UpdateReportView: View {
                     location = Location(coordinate: userLocation)
                 }
                 
-                var report = Report(uid: uid, type: updateReportType, Vehicle: self.originalReport.vehicle, details: self.description, location: location, discloseLocation: self.discloseLocation)
+                var report = Report(uid: uid, type: updateReportType, Vehicle: self.originalReport.vehicle, details: self.description, location: location, discloseLocation: self.discloseLocation, allowsForUpdates: true)
                 report.setAsUpdate(originalReport.role.associatedValue)
                 try await reportsVM.addUpdateToOriginalReport(originalReport: originalReport, report: report, vehicleImage: vehicleImage)
                 dismiss()
@@ -212,7 +212,7 @@ struct UpdateReportView: View {
     }
 }
 
-
-#Preview {
-    UpdateReportView(originalReport: [Report].testReports().first!)
-}
+//
+//#Preview {
+//    UpdateReportView(originalReport: [Report].testReports().first!)
+//}

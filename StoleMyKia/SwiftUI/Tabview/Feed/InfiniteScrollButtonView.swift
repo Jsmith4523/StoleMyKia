@@ -30,8 +30,8 @@ struct InfiniteScrollButtonView: View {
         }
     }
 }
-
-#Preview {
-    InfiniteScrollButtonView()
-        .environmentObject(ReportsViewModel())
-}
+//
+//#Preview {
+//    InfiniteScrollButtonView()
+//        .environmentObject(ReportsViewModel())
+//}

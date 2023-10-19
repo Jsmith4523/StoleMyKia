@@ -39,7 +39,7 @@ class FirebaseAuthManager {
         self.verificationId = verificationId
     }
     
-    func verifyCode(_ code: String, phoneNumber: String) async throws {
+    func verifyCode(_ code: String, phoneNumber: String) async throws -> LoginStatus {
         guard let verificationId else {
             throw FirebaseAuthManagerError.verificationIdError
         }
@@ -58,9 +58,9 @@ class FirebaseAuthManager {
             
             let credential = PhoneAuthProvider.provider().credential(withVerificationID: verificationId, verificationCode: code)
             try await Auth.auth().signIn(with: credential)
-            try await saveNewUser(phoneNumber: phoneNumber, userDocument: userDocument)
-            
             self.verificationId = nil
+            
+            return try await saveNewUser(phoneNumber: phoneNumber, userDocument: userDocument)
         } catch {
             print(error)
             self.verificationId = nil
@@ -86,7 +86,7 @@ class FirebaseAuthManager {
             }
         }
         
-        func saveNewUser(phoneNumber: String, userDocument: DocumentSnapshot?) async throws {
+        func saveNewUser(phoneNumber: String, userDocument: DocumentSnapshot?) async throws -> LoginStatus {
             guard let currentUser = Auth.auth().currentUser else {
                 throw FirebaseAuthManagerError.userError
             }
@@ -94,12 +94,16 @@ class FirebaseAuthManager {
             let userData = try AppUser(uid: currentUser.uid, status: .active, phoneNumber: phoneNumber)
                 .encodeForUpload()
             
-            guard (userDocument == nil) else { return }
+            guard (userDocument == nil) else {
+                return .signedIn
+            }
             
             try await Firestore.firestore()
                 .collection(FirebaseDatabasesPaths.usersDatabasePath)
                 .document(currentUser.uid)
                 .setData(userData)
+            
+8            return .onboarding
         }
     }
     

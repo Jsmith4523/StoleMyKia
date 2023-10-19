@@ -73,7 +73,7 @@ struct SettingsView: View {
             .sheet(item: $settingsRoute) { route in
                 switch route {
                 case .notifications:
-                    NotificationsView()
+                    NotificationSettingsView()
                         .environmentObject(userVM)
                 }
             }
