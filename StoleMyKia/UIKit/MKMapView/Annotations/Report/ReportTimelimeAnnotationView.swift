@@ -25,6 +25,7 @@ class ReportTimelineAnnotationView: MKMarkerAnnotationView {
     override var annotation: MKAnnotation? {
         willSet {
             self.displayPriority = .required
+            self.zPriority = .defaultSelected
         }
     }
     
@@ -33,8 +34,8 @@ class ReportTimelineAnnotationView: MKMarkerAnnotationView {
     }
    
     private func createAnnotationView() {
+        self.titleVisibility = .visible
         self.animatesWhenAdded = true
-        self.canShowCallout = true
         self.glyphImage = UIImage(systemName: report.reportType.annotationImage)
         self.markerTintColor = report.reportType.annotationColor
     }

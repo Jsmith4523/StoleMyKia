@@ -26,6 +26,21 @@ struct OnboardingNotificationView: View {
                 Text("When enabling notifications, you'll be receiving instant alerts about reports, updates, and more.")
             }
             Spacer()
+            Group {
+                switch onboardingVM.notificationAuthStatus {
+                case .authorized:
+                    Text("Notifications Enabled!")
+                case .disabled:
+                    Text("Notifications Disabled!")
+                case .notDetermined:
+                    Text("Requesting...")
+                case .error:
+                    Text("There was an error requesting notification authorization")
+                }
+            }
+            .font(.system(size: 16))
+            .foregroundColor(.gray)
+            Spacer()
             NavigationLink {
                 OnboardingLocationView()
                     .environmentObject(firebaseAuthVM)

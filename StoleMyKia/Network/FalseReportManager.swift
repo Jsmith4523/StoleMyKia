@@ -37,9 +37,35 @@ class FalseReportManager {
         
         try await Firestore.firestore()
             .collection(FirebaseDatabasesPaths.falseReportsPath)
-            .document(currentUser.uid)
+            .document(falseReport.authorUid)
             .collection(FirebaseDatabasesPaths.userOpenFalseReports)
             .document(falseReport.id.uuidString)
             .setData(data)
+    }
+    
+    func fetchFalseReportDetails(_ reportId: UUID) async throws -> FalseReport {
+        guard let currentUser = Auth.auth().currentUser else {
+            throw FirebaseAuthManager.FirebaseAuthManagerError.userError
+        }
+        
+        let documentData = try await Firestore.firestore()
+            .collection(FirebaseDatabasesPaths.usersDatabasePath)
+            .document(currentUser.uid)
+            .collection(FirebaseDatabasesPaths.userClosedFalseReports)
+            .document(reportId.uuidString)
+            .getDocument()
+            .data()
+        
+        do {
+            guard let documentData else {
+                throw FalseReportManagerError.codableError
+            }
+            
+            let data = try JSONSerialization.data(withJSONObject: documentData)
+            let falseReport = try JSONDecoder().decode(FalseReport.self, from: data)
+            return falseReport
+        } catch {
+            throw FalseReportManagerError.codableError
+        }
     }
 }

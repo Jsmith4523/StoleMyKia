@@ -56,19 +56,6 @@ struct SafetyView: View {
             }
         }
     }
-    
-    func titleBodyLabel(_ title: String, body: String) -> some View {
-        HStack {
-            VStack(alignment: .leading, spacing: 5) {
-                Text(title)
-                    .font(.system(size: 18).weight(.heavy))
-                Text(body)
-                    .font(.system(size: 14.5))
-            }
-            .multilineTextAlignment(.leading)
-            Spacer()
-        }
-    }
 }
 
 //#Preview {

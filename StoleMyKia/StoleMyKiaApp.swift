@@ -9,7 +9,7 @@ import SwiftUI
 import Firebase
 import UserNotifications
 import FirebaseMessaging
-import MapKit
+import CoreLocation
 
 @main
 struct StoleMyKiaApp: App {
@@ -59,7 +59,7 @@ class AppDelegate: UIScene, UIApplicationDelegate {
                 
         UITabBar.appearance().barTintColor = .systemBackground
         UINavigationBar.appearance().barTintColor = .systemBackground
-        
+
         UNUserNotificationCenter.current().delegate = self
                         
         return true
@@ -71,54 +71,52 @@ class AppDelegate: UIScene, UIApplicationDelegate {
         }
     }
     
-    //Called when user selects a notification
-    func userNotificationCenter(_ center: UNUserNotificationCenter, didReceive response: UNNotificationResponse, withCompletionHandler completionHandler: @escaping () -> Void) {
+    func application(_ application: UIApplication, didRegisterForRemoteNotificationsWithDeviceToken deviceToken: Data) {
+        print("Registered for remote notifications: \(deviceToken)")
+        Messaging.messaging().apnsToken = deviceToken
+    }
+}
+
+//MARK: - UNUserNotificationCenterDelegate
+extension AppDelegate: UNUserNotificationCenterDelegate {
+    
+    func userNotificationCenter(_ center: UNUserNotificationCenter, didReceive response: UNNotificationResponse) async {
         guard Auth.auth().currentUser.isSignedIn else { return }
         
         let userInfo = response.notification.request.content.userInfo
+        let rootVC = window?.rootViewController
         
-        let rootVC = UIApplication.shared.windows.first?.rootViewController
-        
-        if let type = userInfo["notificationType"] as? String, let notificationType = AppUserNotification.UserNotificationType(rawValue: type), let id = userInfo["reportId"] as? String, let reportId = UUID.ID(uuidString: id) {
-            
-            var report: Report?
-            
-            Task {
-                do {
-                    let fetchedReport = try await ReportManager.manager.fetchSingleReport(reportId)
-                    
-                    guard let fetchedReport, fetchedReport.belongsToUser else {
-                        throw FirebaseAuthManager.FirebaseAuthManagerError.specificError("Notification does not belong to current logged in user")
-                    }
-                    
-                    report = fetchedReport
-                } catch {
-                    let ac = UIAlertController(title: "Error", message: "There was an error presenting information for that notification.", preferredStyle: .alert)
-                    ac.addAction(.init(title: "OK", style: .default))
-                    ac.modalPresentationStyle = .overFullScreen
-                    rootVC?.show(ac, sender: nil)
-                }
-                
-                DispatchQueue.main.async {
-                    if let report {
-                        switch notificationType {
-                        case .report:
-                            let hostingController = UIHostingController(rootView: SelectedReportDetailView(reportId: report.id).environmentObject(ReportsViewModel()))
-                            hostingController.modalPresentationStyle = .fullScreen
-                            rootVC?.show(hostingController, sender: nil)
-                        case .update:
-                            let hostingController = UIHostingController(rootView: TimelineMapView(reportAssociatedId: report.role.associatedValue, dismissStyle: .dismiss))
-                            hostingController.modalPresentationStyle = .fullScreen
-                            rootVC?.show(hostingController, sender: nil)
-                        case .falseReport:
-                            //TODO: Show False Report Detail View
-                            return
-                        }
-                    }
+        do {
+            guard let notificationType = AppUserNotification.UserNotificationType(rawValue: userInfo["notificationType"] as! String), let reportId = UUID.ID(uuidString: userInfo["reportId"] as! String), let report = try await ReportManager.manager.fetchSingleReport(reportId), report.belongsToUser else {
+                throw FirebaseAuthManager.FirebaseAuthManagerError.specificError("Notification does not belong to current logged in user")
+            }
+                        
+            DispatchQueue.main.async {
+                switch notificationType {
+                case .report:
+                    let hostingController = UIHostingController(rootView: SelectedReportDetailView(reportId: report.id).environmentObject(ReportsViewModel()))
+                    hostingController.modalPresentationStyle = .fullScreen
+                    rootVC?.show(hostingController, sender: nil)
+                case .update:
+                    let hostingController = UIHostingController(rootView: TimelineMapView(reportAssociatedId: report.role.associatedValue, dismissStyle: .dismiss))
+                    hostingController.modalPresentationStyle = .fullScreen
+                    rootVC?.show(hostingController, sender: nil)
+                case .falseReport:
+                    let hostingController = UIHostingController(rootView: FalseReportDetailView(reportId: report.id))
+                    hostingController.modalPresentationStyle = .fullScreen
+                    rootVC?.show(hostingController, sender: nil)
                 }
             }
+        } catch {
+            presentNotificationError()
         }
-        completionHandler()
+        
+        func presentNotificationError() {
+            let ac = UIAlertController(title: "Error", message: "There was an error presenting information for that notification.", preferredStyle: .alert)
+            ac.addAction(.init(title: "OK", style: .default))
+            ac.modalPresentationStyle = .overFullScreen
+            rootVC?.show(ac, sender: nil)
+        }
     }
     
     func userNotificationCenter(_ center: UNUserNotificationCenter, willPresent notification: UNNotification, withCompletionHandler completionHandler: @escaping (UNNotificationPresentationOptions) -> Void) {
@@ -128,14 +126,6 @@ class AppDelegate: UIScene, UIApplicationDelegate {
     private func setContentNotificationCategory() {
         let updateNotificationCategory = UNNotificationCategory(identifier: "CONTENT", actions: [], intentIdentifiers: [], options: [])
         UNUserNotificationCenter.current().setNotificationCategories([updateNotificationCategory])
-    }
-}
-
-//MARK: - UNUserNotificationCenterDelegate
-extension AppDelegate: UNUserNotificationCenterDelegate {
-    func application(_ application: UIApplication, didRegisterForRemoteNotificationsWithDeviceToken deviceToken: Data) {
-        print("Registered for remote notifications: \(deviceToken)")
-        Messaging.messaging().apnsToken = deviceToken
     }
 }
 

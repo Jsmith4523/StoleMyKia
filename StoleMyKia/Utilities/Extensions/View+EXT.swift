@@ -36,6 +36,27 @@ extension Text {
 
 extension View {
     
+    func titleBodyLabel(_ title: String, body: String, symbol: String? = nil, symbolForegroundColor symbolColor: Color = Color(uiColor: .label)) -> some View {
+        HStack {
+            if let symbol {
+                Image(systemName: symbol)
+                    .resizable()
+                    .scaledToFit()
+                    .frame(width: 25, height: 25)
+                    .foregroundColor(symbolColor)
+                    .padding(.trailing, 10)
+            }
+            VStack(alignment: .leading, spacing: 5) {
+                Text(title)
+                    .font(.system(size: 18).weight(.heavy))
+                Text(body)
+                    .font(.system(size: 14.5))
+            }
+            .multilineTextAlignment(.leading)
+            Spacer()
+        }
+    }
+    
     func hideNavigationTitle() -> some View {
         return self
             .navigationBarTitleDisplayMode(.inline)

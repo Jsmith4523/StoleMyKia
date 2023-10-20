@@ -101,6 +101,15 @@ enum ReportRole: Identifiable, Codable, Equatable, Comparable {
         }
     }
     
+    var isInitial: Bool {
+        switch self {
+        case .original(_):
+            return true
+        case .update(_):
+            return false
+        }
+    }
+    
     var role: Self.Role {
         switch self {
         case .original:

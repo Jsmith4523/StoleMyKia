@@ -16,7 +16,7 @@ struct AppUserNotification: Identifiable, Decodable, Comparable {
         
         case report      = "Report"
         case update      = "Update"
-        case falseReport = "False Report"
+        case falseReport = "False_Report"
         
         var id: Self {
             return self
@@ -51,9 +51,10 @@ struct AppUserNotification: Identifiable, Decodable, Comparable {
     let title: String
     let body: String
     let notificationType: UserNotificationType
-    let reportId: UUID
     var isRead: Bool
+    let reportId: UUID?
     var imageUrl: String?
+    var falseReportId: UUID?
     
     static func < (lhs: AppUserNotification, rhs: AppUserNotification) -> Bool {
         lhs.dt < rhs.dt

@@ -9,6 +9,9 @@ import SwiftUI
 
 struct OnboardingNotificationSettingsView: View {
     
+    @State private var isLoading = false
+    @State private var alertErrorOnboarding = false
+    
     @State private var isShowingNotificationSettingsView = false
     
     @EnvironmentObject var firebaseAuthVM: FirebaseAuthViewModel
@@ -23,17 +26,25 @@ struct OnboardingNotificationSettingsView: View {
                     .resizable()
                     .scaledToFit()
                     .frame(width: 45, height: 45)
-                Text("Location-based notificaitons")
+                Text("Location-Based Notifications and Reports Configuration")
                     .font(.system(size: 25).weight(.heavy))
-                Text("Setup where and what you would like to receive notifications on.")
+                Text("Specify your preferred location for receiving notifications and reports from.")
             }
             Spacer()
-            
-            VStack(spacing: 10) {
+            VStack(spacing: 6) {
                 Button {
                     isShowingNotificationSettingsView.toggle()
                 } label: {
                     Text("Configure")
+                        .buttonStyle()
+                }
+                NavigationLink {
+                    OnboardingInstructionsView()
+                        .onDisappear {
+                            dismissOnboarding()
+                        }
+                } label: {
+                    Text("Continue")
                         .authButtonStyle(background: .blue)
                 }
             }
@@ -41,24 +52,34 @@ struct OnboardingNotificationSettingsView: View {
         }
         .padding()
         .multilineTextAlignment(.center)
-        .toolbar {
-            ToolbarItem(placement: .navigationBarTrailing) {
-                NavigationLink("Skip") {
-                    
-                }
-            }
-        }
         .sheet(isPresented: $isShowingNotificationSettingsView) {
             NotificationSettingsView()
                 .environmentObject(UserViewModel())
         }
+        .overlay {
+            if isLoading {
+                FilmProgressView()
+            }
+        }
+        .alert("Verification Error", isPresented: $alertErrorOnboarding) {
+            Button("OK") {}
+        } message: {
+            Text("Sorry, we ran into an issue verifying your account. Try again.")
+        }
     }
-}
-
-struct OnboardingNotificationSettingsView_Previews: PreviewProvider {
-    static var previews: some View {
-        NavigationView {
-            OnboardingNotificationSettingsView()
+    
+    private func dismissOnboarding() {
+        isLoading = true
+        DispatchQueue.main.asyncAfter(wallDeadline: .now() + 0.5) {
+            Task {
+                do {
+                    try await firebaseAuthVM.completeOnboarding()
+                    isLoading = false
+                } catch {
+                    isLoading = false
+                    alertErrorOnboarding.toggle()
+                }
+            }
         }
     }
 }

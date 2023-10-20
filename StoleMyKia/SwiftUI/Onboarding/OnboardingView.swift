@@ -27,7 +27,7 @@ struct OnboardingView: View {
                             .frame(width: 75, height: 75)
                         Text("Thanks for using \(UIApplication.appName ?? "the application")!")
                             .font(.system(size: 25).weight(.heavy))
-                        Text("Before you begin using the application, we would like customize your experience; as well show how the application works. If you think you are comfortable using the application, you can skip this introduction")
+                        Text("Before you begin, we want to ensure you're receiving the best experience when using the application.")
                             .font(.system(size: 17))
                     }
                     Spacer()
@@ -52,13 +52,6 @@ struct OnboardingView: View {
                 Button("Cancel") { }
             } message: {
                 Text("We want to ensure you're receiving the best experience with \(UIApplication.appName ?? "using the application"). Are you sure?")
-            }
-            .toolbar {
-                ToolbarItem(placement: .navigationBarTrailing) {
-                    Button("Skip") {
-                        alertSkippingOnboarding.toggle()
-                    }
-                }
             }
         }
     }

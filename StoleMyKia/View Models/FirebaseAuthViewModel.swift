@@ -39,16 +39,15 @@ enum LoginStatus {
         guard let user = Auth.auth().currentUser else {
             throw FirebaseAuthManager.FirebaseAuthManagerError.userError
         }
-        
-        self.loginStatus = loginStatus
-        
-        prepareForSignIn(uid: user.uid)
+                
+        prepareForSignIn(uid: user.uid, loginStatus: loginStatus)
     }
     
     /// Begin setting up the application after successful sign in.
     /// - Parameter uid: The Firebase auth user uid.
-    private func prepareForSignIn(uid: String) {
+    private func prepareForSignIn(uid: String, loginStatus: LoginStatus = .signedIn) {
         self.uid = uid
+        self.loginStatus = loginStatus
         self.beginListeningForFCMToken()
         self.setupAccountDeletionListener()
     }
@@ -130,6 +129,11 @@ enum LoginStatus {
             
             UIApplication.shared.windows.first?.rootViewController?.show(ac, sender: nil)
         }
+    }
+    
+    func completeOnboarding() async throws {
+        let (_, _) = try await  authManager.fetchCurrentUserDocument()
+        self.loginStatus = .signedIn
     }
     
     

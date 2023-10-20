@@ -26,6 +26,7 @@
 		2426A62A2A243F0E00E78647 /* AnnotationCalloutDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2426A6292A243F0E00E78647 /* AnnotationCalloutDelegate.swift */; };
 		242AA7972ADBABFA007BAE30 /* UserBookmarksView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 242AA7962ADBABFA007BAE30 /* UserBookmarksView.swift */; };
 		242AA7992ADD0994007BAE30 /* InteractiveSheet.swift in Sources */ = {isa = PBXBuildFile; fileRef = 242AA7982ADD0994007BAE30 /* InteractiveSheet.swift */; };
+		242EEDCC2AE2097400D93B3D /* OnboardingInstructionsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 242EEDCB2AE2097300D93B3D /* OnboardingInstructionsView.swift */; };
 		243084012ADE584D008C3C15 /* InfiniteScrollButtonView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 243084002ADE584D008C3C15 /* InfiniteScrollButtonView.swift */; };
 		24334CFB29C0E0130084B8EC /* UIImage+EXT.swift in Sources */ = {isa = PBXBuildFile; fileRef = 24334CFA29C0E0130084B8EC /* UIImage+EXT.swift */; };
 		24334CFD29C1846C0084B8EC /* Image+EXT.swift in Sources */ = {isa = PBXBuildFile; fileRef = 24334CFC29C1846C0084B8EC /* Image+EXT.swift */; };
@@ -66,6 +67,7 @@
 		2461D74A2ABDE34F002B9E51 /* VehicleImageView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2461D7492ABDE34F002B9E51 /* VehicleImageView.swift */; };
 		2461D74E2AC3688A002B9E51 /* NotificationManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2461D74D2AC3688A002B9E51 /* NotificationManager.swift */; };
 		2461D7502AC4ABEF002B9E51 /* ReportSkeletonView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2461D74F2AC4ABEF002B9E51 /* ReportSkeletonView.swift */; };
+		246D501B2AE2450800C1F888 /* TimelinePolyline.swift in Sources */ = {isa = PBXBuildFile; fileRef = 246D501A2AE2450800C1F888 /* TimelinePolyline.swift */; };
 		2473A8FB2AD1236F008EAE20 /* notification_update.caf in Resources */ = {isa = PBXBuildFile; fileRef = 2473A8FA2AD1236F008EAE20 /* notification_update.caf */; };
 		2476E0DA2AD9362700892A76 /* TimelineMapListView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2476E0D92AD9362700892A76 /* TimelineMapListView.swift */; };
 		2476E0DC2AD9478300892A76 /* ReportTimelineCircleOverlay.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2476E0DB2AD9478300892A76 /* ReportTimelineCircleOverlay.swift */; };
@@ -211,6 +213,7 @@
 		2426A6292A243F0E00E78647 /* AnnotationCalloutDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AnnotationCalloutDelegate.swift; sourceTree = "<group>"; };
 		242AA7962ADBABFA007BAE30 /* UserBookmarksView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserBookmarksView.swift; sourceTree = "<group>"; };
 		242AA7982ADD0994007BAE30 /* InteractiveSheet.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InteractiveSheet.swift; sourceTree = "<group>"; };
+		242EEDCB2AE2097300D93B3D /* OnboardingInstructionsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OnboardingInstructionsView.swift; sourceTree = "<group>"; };
 		243084002ADE584D008C3C15 /* InfiniteScrollButtonView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InfiniteScrollButtonView.swift; sourceTree = "<group>"; };
 		24334CFA29C0E0130084B8EC /* UIImage+EXT.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIImage+EXT.swift"; sourceTree = "<group>"; };
 		24334CFC29C1846C0084B8EC /* Image+EXT.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Image+EXT.swift"; sourceTree = "<group>"; };
@@ -251,6 +254,7 @@
 		2461D7492ABDE34F002B9E51 /* VehicleImageView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VehicleImageView.swift; sourceTree = "<group>"; };
 		2461D74D2AC3688A002B9E51 /* NotificationManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NotificationManager.swift; sourceTree = "<group>"; };
 		2461D74F2AC4ABEF002B9E51 /* ReportSkeletonView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = ReportSkeletonView.swift; path = ../Report/ReportSkeletonView.swift; sourceTree = "<group>"; };
+		246D501A2AE2450800C1F888 /* TimelinePolyline.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TimelinePolyline.swift; sourceTree = "<group>"; };
 		2473A8FA2AD1236F008EAE20 /* notification_update.caf */ = {isa = PBXFileReference; lastKnownFileType = file; path = notification_update.caf; sourceTree = "<group>"; };
 		2476E0D92AD9362700892A76 /* TimelineMapListView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TimelineMapListView.swift; sourceTree = "<group>"; };
 		2476E0DB2AD9478300892A76 /* ReportTimelineCircleOverlay.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReportTimelineCircleOverlay.swift; sourceTree = "<group>"; };
@@ -519,6 +523,7 @@
 				244CE78E2AE053C400BC594E /* OnboardingNotificationView.swift */,
 				244CE7922AE058ED00BC594E /* OnboardingNotificationSettingsView.swift */,
 				244CE7902AE0561000BC594E /* OnboardingLocationView.swift */,
+				242EEDCB2AE2097300D93B3D /* OnboardingInstructionsView.swift */,
 				244CE78C2AE04C0700BC594E /* OnboardingViewModel.swift */,
 			);
 			path = Onboarding;
@@ -533,6 +538,14 @@
 				24CC5F5C2A761B120078C921 /* Update.swift */,
 			);
 			path = Reports;
+			sourceTree = "<group>";
+		};
+		246D50192AE244EE00C1F888 /* Overlay */ = {
+			isa = PBXGroup;
+			children = (
+				246D501A2AE2450800C1F888 /* TimelinePolyline.swift */,
+			);
+			path = Overlay;
 			sourceTree = "<group>";
 		};
 		248E13AC2ADF9422003414EC /* Policies */ = {
@@ -678,6 +691,7 @@
 		24A662F829C592CA00AD784F /* MKMapView */ = {
 			isa = PBXGroup;
 			children = (
+				246D50192AE244EE00C1F888 /* Overlay */,
 				241D2FFE29BFF88D00E78792 /* Annotations */,
 			);
 			path = MKMapView;
@@ -1161,6 +1175,7 @@
 				24CC5F1A2A745DE70078C921 /* LicensePlateScannerView.swift in Sources */,
 				2476E0DE2AD9524300892A76 /* TimelineListView.swift in Sources */,
 				24CC5F392A745DE70078C921 /* SelectedReportDetailViewMap.swift in Sources */,
+				246D501B2AE2450800C1F888 /* TimelinePolyline.swift in Sources */,
 				240F22452A33F10A0078F97E /* Notification.swift in Sources */,
 				24CC5F2F2A745DE70078C921 /* ReportCellView.swift in Sources */,
 				244BD3D52AAC034300192AD1 /* Constant.swift in Sources */,
@@ -1251,6 +1266,7 @@
 				24CC5F182A745DE70078C921 /* LicenseCameraViewRepresentable.swift in Sources */,
 				24FA56BA2A29284D0074149B /* UIActivityVC.swift in Sources */,
 				24BAC6182A8F20E700E42BC6 /* NSNotificationCenter.swift in Sources */,
+				242EEDCC2AE2097400D93B3D /* OnboardingInstructionsView.swift in Sources */,
 				24CC5F312A745DE70078C921 /* NewReportView.swift in Sources */,
 				24BAC6112A8B034200E42BC6 /* MFMailComposeViewController.swift in Sources */,
 				2495A02029CAC3DE00457CE7 /* Date+EXT.swift in Sources */,

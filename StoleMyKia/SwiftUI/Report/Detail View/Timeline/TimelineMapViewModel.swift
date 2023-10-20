@@ -111,10 +111,11 @@ extension TimelineMapViewModel: MKMapViewDelegate {
     func mapView(_ mapView: MKMapView, rendererFor overlay: MKOverlay) -> MKOverlayRenderer {
         var overlayRenderer: MKOverlayRenderer!
         
-        if let polyline = overlay as? MKPolyline {
-            let polylineRenderer = MKPolylineRenderer(polyline: polyline)
-            polylineRenderer.strokeColor = .systemBlue
+        if let timelinePolyline = overlay as? TimelinePolyline {
+            let polylineRenderer = MKPolylineRenderer(polyline: timelinePolyline)
+            polylineRenderer.strokeColor = timelinePolyline.strokeColor
             polylineRenderer.lineWidth = 2.5
+            polylineRenderer.lineDashPattern = timelinePolyline.dashPattern
             polylineRenderer.lineJoin = .miter
             overlayRenderer = polylineRenderer
         }
@@ -143,20 +144,18 @@ extension TimelineMapViewModel: MKMapViewDelegate {
                 .filter({$0.discloseLocation})
                 .map({MKCircle(center: $0.location.coordinates, radius: $0.role.discloseRadiusSize)})
             
-            let coordinates = reports
-                .filter({!$0.isFalseReport})
-                .map({$0.location.coordinates})
+            mapView.addOverlays(circleOverlays)
+            mapView.addAnnotations(annotations)
             
-            let polyline = MKPolyline(coordinates: coordinates, count: coordinates.count)
-            
-            if (annotations.count == 1 && circleOverlays.isEmpty) {
-                let annotation = annotations.first!
-                mapView.setRegion(annotation.region, animated: false)
-            } else {
-                mapView.addAnnotations(annotations)
-                mapView.addOverlays(circleOverlays)
-                mapView.addOverlay(polyline)
-                mapView.setVisibleMapRect(polyline.boundingMapRect, edgePadding: .init(top: 100, left: 100, bottom: 100, right: 100),animated: false)
+            for i in 0..<reports.count-1 {
+                print(i)
+                print(i+1)
+                let firstReport = reports[i]
+                let secondReport = reports[i+1]
+                let reports = [firstReport, secondReport]
+                let timelinePolyline = TimelinePolyline(coordinates: reports.map({$0.location.coordinates}), count: reports.count)
+                timelinePolyline.reports = reports
+                mapView.addOverlay(timelinePolyline)
             }
         }
     }

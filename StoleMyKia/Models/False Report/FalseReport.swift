@@ -33,14 +33,15 @@ enum FalseReportType: String, Identifiable, CaseIterable, Codable {
 }
 
 
-struct FalseReport: Identifiable, Encodable {
+struct FalseReport: Identifiable, Codable {
     
-    enum Status: Encodable {
+    enum Status: Codable {
         case open, close
     }
     
-    init(uid: String, report: Report, type: FalseReportType, comments: String) {
-        self.uid = uid
+    init(authorUid: String, reporterUid: String, report: Report, type: FalseReportType, comments: String) {
+        self.authorUid = authorUid
+        self.reporterUid = reporterUid
         self.dt = Date.now.epoch
         self.report = report
         self.falseReportType = type
@@ -49,7 +50,8 @@ struct FalseReport: Identifiable, Encodable {
     }
     
     var id = UUID()
-    let uid: String
+    let authorUid: String
+    let reporterUid: String
     let dt: TimeInterval
     ///The report associated with this false report
     let report: Report

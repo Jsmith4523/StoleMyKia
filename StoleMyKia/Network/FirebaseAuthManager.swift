@@ -103,7 +103,7 @@ class FirebaseAuthManager {
                 .document(currentUser.uid)
                 .setData(userData)
             
-8            return .onboarding
+            return .onboarding
         }
     }
     

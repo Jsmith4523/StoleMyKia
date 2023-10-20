@@ -32,7 +32,7 @@ struct FirebaseDatabasesPaths {
     ///Path to set a false report so admins can review it
     
     //MARK: False Reports
-    static let falseReportsPath              = "FalseReports/"
+    static let falseReportsPath              = "False_Reports/"
     static let userOpenFalseReports          = "Opened"
     static let userClosedFalseReports        = "Closed"
 }

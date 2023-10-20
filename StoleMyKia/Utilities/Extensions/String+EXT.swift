@@ -11,7 +11,7 @@ import SwiftUI
 
 extension String {
     
-    static let reportSymbolName = "newspaper.fill"
+    static let reportSymbolName = "newspaper"
     static let updateSymbolName = "arrow.2.squarepath"
     static let falseReportSymbolName = "exclamationmark.shield"
     

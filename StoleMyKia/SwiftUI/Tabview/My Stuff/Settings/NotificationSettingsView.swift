@@ -34,7 +34,7 @@ struct NotificationSettingsView: View {
     @EnvironmentObject var userVM: UserViewModel
     
     @Environment (\.dismiss) var dismiss
-    
+        
     var locationIsNotSet: Bool {
         return (settings?.location == nil && location == nil)
     }

@@ -15,14 +15,21 @@ struct FalseReportDetailView: View {
     
     @State private var loadingStatus: LoadingStatus = .loading
     
-    let falseReportId: UUID
+    let reportId: UUID
     
     @Environment (\.dismiss) var dismiss
     
     var body: some View {
         NavigationView {
             ScrollView {
-                
+                switch loadingStatus {
+                case .loading:
+                    loadingView
+                case .loaded(let falseReport):
+                    Text("")
+                case .error:
+                    ErrorView()
+                }
             }
             .toolbar {
                 ToolbarItem(placement: .navigationBarLeading) {
@@ -43,6 +50,13 @@ struct FalseReportDetailView: View {
         }
     }
     
+    private var loadingView: some View {
+        VStack {
+            Spacer()
+                .frame(height: 120)
+            ProgressView()
+        }
+    }
     
     private func fetchFalseReportDetails() async {
         

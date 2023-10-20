@@ -23,8 +23,23 @@ struct OnboardingLocationView: View {
                     .frame(width: 45, height: 45)
                 Text("Enable Location Services")
                     .font(.system(size: 25).weight(.heavy))
-                Text("When enabling notifications, you'll be receiving instant alerts about reports, updates, and more.")
+                Text("Please enable notification services.")
             }
+            Spacer()
+            Group {
+                switch onboardingVM.userLocationAuthStatus {
+                case .authorized:
+                    Text("Location Services Enabled!")
+                case .disabled:
+                    Text("Location Services Disabled!")
+                case .notDetermined:
+                    Text("Requesting...")
+                case .error:
+                    Text("There was an error location services authorization.")
+                }
+            }
+            .font(.system(size: 16))
+            .foregroundColor(.gray)
             Spacer()
             NavigationLink {
                 OnboardingNotificationSettingsView()
