@@ -163,19 +163,21 @@ struct SelectedReportDetailView: View {
                                             VStack(alignment: .leading, spacing: 7) {
                                                 Text(report.vehicleDetails)
                                                     .font(.system(size: 25).weight(.heavy))
-                                                HStack {
-                                                    if report.hasLicensePlate {
-                                                        Text(report.vehicle.licensePlateString)
+                                                if report.hasLicensePlateOrVin {
+                                                    HStack {
+                                                        if report.hasLicensePlate {
+                                                            Text(report.vehicle.licensePlateString)
+                                                        }
+                                                        if (report.hasLicensePlateAndVin) {
+                                                            Divider()
+                                                                .frame(height: 15)
+                                                        }
+                                                        if report.hasVin {
+                                                            Text("VIN: \(report.vehicle.hiddenVinString)")
+                                                        }
                                                     }
-                                                    if (report.hasVin && report.hasLicensePlate) {
-                                                        Divider()
-                                                            .frame(height: 15)
-                                                    }
-                                                    if report.hasVin {
-                                                        Text("VIN: \(ApplicationFormats.vinFormat(report.vehicle.vinString) ?? "")")
-                                                    }
+                                                    .font(.system(size: 18).bold())
                                                 }
-                                                .font(.system(size: 18).bold())
                                             }
                                             HStack {
                                                 Text(report.timeSinceString())

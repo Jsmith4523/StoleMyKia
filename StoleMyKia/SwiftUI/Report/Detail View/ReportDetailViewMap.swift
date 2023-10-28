@@ -24,7 +24,7 @@ struct SelectedReportDetailMapView: UIViewRepresentable {
         mapView.isUserInteractionEnabled = false
         
         if report.discloseLocation {
-            let circle = MKCircle(center: report.location.coordinates, radius: 1250)
+            let circle = TimelineDiscloseCircle(center: report.location.coordinates, radius: report.role.discloseRadiusSize)
             mapView.addOverlay(circle)
             mapView.setVisibleMapRect(circle.boundingMapRect, edgePadding: MKCircle.discloseLocationEdgePadding, animated: false)
         } else {
@@ -34,9 +34,6 @@ struct SelectedReportDetailMapView: UIViewRepresentable {
             mapView.setRegion(report.location.region, animated: true)
 
         }
-        
-        mapView.register(ReportTimelineAnnotationView.self, forAnnotationViewWithReuseIdentifier: ReportAnnotation.reusableID)
-        mapView.register(ReportTimelineCircleOverlay.self, forAnnotationViewWithReuseIdentifier: MKMapViewDefaultAnnotationViewReuseIdentifier)
         
         return mapView
     }

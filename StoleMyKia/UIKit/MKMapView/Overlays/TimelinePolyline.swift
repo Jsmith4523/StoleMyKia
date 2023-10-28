@@ -11,7 +11,6 @@ import MapKit
 class TimelinePolyline: MKPolyline {
     
     var reports: [Report]!
-
 }
 
 extension TimelinePolyline {
@@ -23,12 +22,12 @@ extension TimelinePolyline {
     var mustDiscloseLocation: Bool {
         return !(self.reports.filter({$0.discloseLocation}).count == 0)
     }
-    var dashPattern: [NSNumber] {
+    var dashPattern: [NSNumber]? {
         if (mustDiscloseLocation || containsInitialReport) {
             return [8, 8, 8]
-        } else {
-            return [0]
         }
+        
+        return nil
     }
     
     var strokeColor: UIColor {
@@ -44,6 +43,23 @@ extension TimelinePolyline {
             }
         } else {
             return .systemBlue
+        }
+    }
+}
+
+extension [TimelinePolyline] {
+    
+    ///Retrieves the best bounding map rect of multiple polylines.
+    func getBestRect() {
+        guard !(self.isEmpty) else {
+            return
+        }
+        
+        guard self.count > 1 else {
+            if let first {
+                return
+            }
+            return
         }
     }
 }
