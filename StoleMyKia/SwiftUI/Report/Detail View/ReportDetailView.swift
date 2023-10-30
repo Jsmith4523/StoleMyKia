@@ -9,7 +9,7 @@ import SwiftUI
 import FirebaseAuth
 import MapKit
 
-struct SelectedReportDetailView: View {
+struct ReportDetailView: View {
     
     private enum ReportLoadStatus {
         case loading, loaded, error
@@ -143,7 +143,7 @@ struct SelectedReportDetailView: View {
                                         getVehicleImage()
                                     }
                             }
-                            SelectedReportDetailMapView(report: report)
+                            ReportDetailMapView(report: report)
                                 .onTapGesture {
                                     presentTimelineMapView()
                                 }
@@ -455,7 +455,7 @@ struct SelectedReportDetailView: View {
 
 struct SelectedReportDetailView_Previews: PreviewProvider {
     static var previews: some View {
-        SelectedReportDetailView(reportId: UUID.ID(uuidString: "1B5F8667-4638-4535-86C6-233D63CE5A5D")!)
+        ReportDetailView(reportId: UUID.ID(uuidString: "1B5F8667-4638-4535-86C6-233D63CE5A5D")!)
             .environmentObject(ReportsViewModel())
             .environmentObject(UserViewModel())
     }

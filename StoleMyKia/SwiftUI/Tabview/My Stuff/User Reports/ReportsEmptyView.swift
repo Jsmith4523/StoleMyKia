@@ -9,7 +9,13 @@ import SwiftUI
 
 struct ReportsEmptyView: View {
     var body: some View {
-        Text(/*@START_MENU_TOKEN@*/"Hello, World!"/*@END_MENU_TOKEN@*/)
+        VStack {
+            Spacer()
+                .frame(height: 120)
+            Text("Nothing available at the moment.")
+                .font(.system(size: 17))
+                .foregroundColor(.gray)
+        }
     }
 }
 

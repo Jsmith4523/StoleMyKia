@@ -44,11 +44,11 @@ struct NotificationSettingsView: View {
             VStack(spacing: 0) {
                 Form {
                     Section {
-                        Button(locationIsNotSet ? "Add Notification Region" : "Change Notification Region") {
+                        Button(locationIsNotSet ? "Add Location" : "Change Location") {
                             isShowingNotificationMapView.toggle()
                         }
                     } footer: {
-                        Text(locationIsNotSet ? "Specify an area of the world you would like to receive report-based notifications from." : "Modify the region to receive report-based notifications from.")
+                        Text(locationIsNotSet ? "Specify where to receive location based notifications and reports from." : "Modify where to receive location based notifications and reports from.")
                     }
                     Section {
                         Toggle("Attempt", isOn: $notifyAttempt)

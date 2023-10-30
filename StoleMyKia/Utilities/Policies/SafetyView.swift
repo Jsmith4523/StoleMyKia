@@ -27,37 +27,35 @@ struct SafetyView: View {
                             Text("Be Safe")
                                 .font(.system(size: 21).weight(.heavy))
                         }
-                        Text("Safety comes first when using \(UIApplication.appName ?? "this application")! Please read through how you can stay safe whilst using this application:")
+                        Text("Safety comes first when using \(UIApplication.appName ?? "this application")! Please read through how you can stay safe when using this application:")
                             .multilineTextAlignment(.center)
                         
                         HStack {
                             VStack(spacing: 40) {
-                                titleBodyLabel("1) Do not use this application whilst driving.", body: "If you are in the event of an emergency with a vehicle, safely pull over your vehicle and operate as such.")
-                                titleBodyLabel("3) Never approach a potentially dangerous situation.", body: "If you believe someone is attempting to break in or steal a vehicle, do not approach or engage with the individual. Stay a safe distance and contact local authorities.")
+                                titleBodyLabel("Local Authorities do not actively monitor this application.", body: "If the event of an emergency, your report will not be sent to any authority. We advise that you contact authorities before using this application.")
+                                titleBodyLabel("Do not use this application whilst driving.", body: "If you are in the event of an emergency with a vehicle, safely pull over, and report the vehicle.")
+                                titleBodyLabel("Never approach a potentially dangerous situation.", body: "If you believe someone is attempting to break in or steal a vehicle, or see a vehicle traveling, never approach or engage with the individual(s). Stay a safe distance and contact local authorities before using this application.")
+                                titleBodyLabel("Never visit a location alone.", body: "If you are deciding to travel to the location of a report, proceed with caution. We advise that you inform local authorities of your visit or travel with an additional person to the location.")
+                                titleBodyLabel("Remember, you are anonymous.", body: "Other users cannot see any personal information besides your included phone number within a report you made (if enabled). Try to limit the amount of personal information within your reports.")
                             }
                             Spacer()
                         }
                     }
-                }
-                .padding()
-            }
-            .toolbar {
-                ToolbarItem(placement: .navigationBarLeading) {
+                    Spacer()
+                        .frame(height: 50)
                     Button {
                         dismiss()
                     } label: {
-                        Image(systemName: "xmark.circle.fill")
-                            .resizable()
-                            .scaledToFit()
-                            .frame(width: 30, height: 30)
-                            .foregroundColor(.gray)
+                        Text("Done")
+                            .authButtonStyle(background: .green)
                     }
                 }
+                .padding()
             }
         }
     }
 }
 
-//#Preview {
-//    SafetyView()
-//}
+#Preview {
+    SafetyView()
+}

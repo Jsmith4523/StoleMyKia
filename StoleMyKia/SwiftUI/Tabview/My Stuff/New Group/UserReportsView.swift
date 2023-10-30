@@ -14,18 +14,22 @@ struct UserReportsView: View {
     @EnvironmentObject var userVM: UserViewModel
     @EnvironmentObject var reportsVM: ReportsViewModel
     
+    @Environment (\.dismiss) var dismiss
+    
     var body: some View {
         NavigationView {
             ScrollView {
                 switch reportsLoadStatus {
                 case .loading:
-                    
+                    UserReportsSkeletonView()
                 case .loaded(let reports):
-                    
+                    UserReportsListView(reports: reports, deleteCompletion: reportDeleted)
+                        .environmentObject(userVM)
+                        .environmentObject(reportsVM)
                 case .empty:
-                    
+                    ReportsEmptyView()
                 case .error:
-                    
+                    ErrorView()
                 }
             }
             .navigationTitle(MyStuffView.MyStuffRoute.reports.title)
@@ -33,18 +37,32 @@ struct UserReportsView: View {
             .toolbar {
                 ToolbarItem(placement: .navigationBarLeading) {
                     Button("Close") {
-                        
+                        dismiss()
                     }
                 }
             }
             .refreshable {
-                
+                await fetchUserReports()
+            }
+            .task {
+                await fetchUserReports()
             }
         }
     }
     
     private func fetchUserReports() async {
-        self.reportsLoadStatus = await userVM.getUserReports()
+        DispatchQueue.main.asyncAfter(deadline: .now() + 0.85) {
+            Task {
+                self.reportsLoadStatus = await userVM.getUserReports()
+            }
+        }
+    }
+    
+    private func reportDeleted() {
+        self.reportsLoadStatus = .loading
+        Task {
+            await fetchUserReports()
+        }
     }
 }
 

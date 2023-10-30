@@ -34,7 +34,6 @@ class ReportTimelineAnnotationView: MKMarkerAnnotationView {
     }
    
     private func createAnnotationView() {
-        self.titleVisibility = .visible
         self.animatesWhenAdded = true
         self.glyphImage = UIImage(systemName: report.reportType.annotationImage)
         self.markerTintColor = report.reportType.annotationColor

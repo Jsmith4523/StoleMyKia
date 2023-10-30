@@ -7,7 +7,38 @@
 
 import SwiftUI
 
+enum NearbyDistance: String, CaseIterable, Identifiable {
+    case oneMile         = "1 Mile"
+    case fiveMiles       = "5 Miles"
+    case tenMiles        = "10 Miles"
+    case twentyFiveMiles = "25 Miles"
+    case fiftyMiles      = "50 Miles"
+    
+    private static let oneMeter = 1609.35
+    
+    var id: String {
+        self.rawValue
+    }
+    
+    var distance: Double {
+        switch self {
+        case .oneMile:
+            return Self.oneMeter
+        case .fiveMiles:
+           return Self.oneMeter * 5
+        case .tenMiles:
+           return Self.oneMeter * 10
+        case .twentyFiveMiles:
+           return Self.oneMeter * 25
+        case .fiftyMiles:
+            return Self.oneMeter * 50
+        }
+    }
+}
+
 struct NotificationMapView: View {
+    
+    @State private var showInfoAlert = false
     
     @State private var radiusAmount: Double = NearbyDistance.oneMile.distance
     
@@ -20,13 +51,16 @@ struct NotificationMapView: View {
     var body: some View {
         NavigationView {
             VStack {
-                ZStack(alignment: .center) {
-                    NotificationRadiusMapView(location: $location, radiusMapViewCoordinator: radiusMapViewCoordinator)
-                    Image(systemName: "plus")
-                        .resizable()
-                        .scaledToFit()
-                        .frame(width: 30, height: 30)
-                        .foregroundColor(.white)
+                ZStack(alignment: .top) {
+                    ZStack(alignment: .center) {
+                        NotificationRadiusMapView(location: $location, radiusMapViewCoordinator: radiusMapViewCoordinator)
+                        Image(systemName: "plus")
+                            .resizable()
+                            .scaledToFit()
+                            .frame(width: 30, height: 30)
+                            .foregroundColor(.white)
+                            .shadow(radius: 2)
+                    }
                 }
                 VStack {
                     Slider(value: $radiusAmount, in: NearbyDistance.oneMile.distance...NearbyDistance.allCases.last!.distance) { _ in
@@ -61,7 +95,7 @@ struct NotificationMapView: View {
                 }
                 .padding()
             }
-            .navigationTitle("Notification Region")
+            .navigationTitle("Configure Location")
             .navigationBarTitleDisplayMode(.inline)
             .toolbar {
                 ToolbarItem(placement: .navigationBarLeading) {
@@ -69,6 +103,16 @@ struct NotificationMapView: View {
                         dismiss()
                     }
                 }
+                ToolbarItem(placement: .navigationBarTrailing) {
+                    Button {
+                        self.showInfoAlert.toggle()
+                    } label: {
+                        Image(systemName: "info.circle")
+                    }
+                }
+            }
+            .alert("Navigate to your desired location on the map. Once located and set, you'll receive reports and notifications within that area.", isPresented: $showInfoAlert) {
+                Button("OK") {}
             }
         }
         .onAppear {

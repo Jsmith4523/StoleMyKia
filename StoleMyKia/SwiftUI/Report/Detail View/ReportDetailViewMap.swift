@@ -11,7 +11,7 @@ import SwiftUI
 
 
 ///Represents a single report for SelectedReportDetailView
-struct SelectedReportDetailMapView: UIViewRepresentable {
+struct ReportDetailMapView: UIViewRepresentable {
     
     var selectAnnotation = false
     let report: Report

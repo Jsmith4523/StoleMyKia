@@ -61,7 +61,6 @@ class FirebaseUserManager {
         return nil
     }
     
-    
     func saveUserNotificationSettings(_ settings: UserNotificationSettings) async throws {
         guard let currentUser = Auth.auth().currentUser else {
             throw FirebaseUserManagerError.userError
@@ -84,6 +83,28 @@ class FirebaseUserManager {
             
         } catch {
             throw FirebaseUserManagerError.codableError
+        }
+    }
+    
+    func getUserAccountStatus() async  -> String  {
+        do {
+            guard let currentUser = Auth.auth().currentUser else {
+                throw FirebaseUserManagerError.userError
+            }
+            
+            let statusData = try await Firestore.firestore()
+                .collection(FirebaseDatabasesPaths.usersDatabasePath)
+                .document(currentUser.uid)
+                .getDocument()
+                .get(AppUser.statusKey)
+            
+            guard let statusData = statusData as? String else {
+                throw FirebaseUserManagerError.codableError
+            }
+            
+            return statusData
+        } catch {
+            return "Unknown"
         }
     }
     
@@ -221,7 +242,7 @@ class FirebaseUserManager {
     
     /// Saves the device FCM Token
     /// - Parameter info: Information regarding the device the user has signed into or enabled push notifications for.
-    static func saveFCMTOken(info: [String: Any]) {
+    static func saveFCMToken(info: [String: Any]) {
         let deviceID = info[Constants.deviceIDKey] as! String
         
         guard let user = Auth.auth().currentUser else { return }
@@ -250,6 +271,28 @@ class FirebaseUserManager {
                         .delete()
                 }
                 
+        }
+    }
+    
+    func getUserLocationConfiguration() async -> UserNotificationSettings.UserNotificationLocation? {
+        guard let currentUser = Auth.auth().currentUser else { return nil }
+        
+        do {
+            let jsonData = try await Firestore.firestore()
+                .collection(FirebaseDatabasesPaths.usersDatabasePath)
+                .document(currentUser.uid)
+                .collection(FirebaseDatabasesPaths.userSettingsPath)
+                .document(FirebaseDatabasesPaths.userNotificationSettings)
+                .getDocument()
+                .data()
+            
+            guard let jsonData else { return nil }
+            
+            let data = try JSONSerialization.data(withJSONObject: jsonData)
+            let settings = try JSONDecoder().decode(UserNotificationSettings.self, from: data)
+            return settings.location
+        } catch {
+            return nil
         }
     }
         

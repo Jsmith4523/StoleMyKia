@@ -44,6 +44,7 @@ struct NewReportView: View {
     
     @State private var disablesLicensePlateAndVinSection = false
     
+    @State private var isShowingWarningView = false
     @State private var isShowingReportDescriptionView = false
     @State private var isShowingImagePicker = false
     @State private var imagePickerSourceType: UIImagePickerController.SourceType = .photoLibrary {
@@ -67,11 +68,24 @@ struct NewReportView: View {
     
     var isNotSatisfied: Bool {
         guard (licensePlate.range(of: ".*[^A-Za-z0-9].*", options: .regularExpression) == nil), (vin.range(of: ".*[^A-Za-z0-9].*", options: .regularExpression) == nil)  else { return true }
-        if (doesNotHaveVehicleIdentification) {
-            return (self.distinguishableDescription.isEmpty || self.distinguishableDescription.count < Int.descriptionMinCharacterCount || self.distinguishableDescription.count > Int.descriptionMaxCharacterCount)
+        if !(self.vin.isEmpty) {
+            if (self.vin.count >= 17) {
+                if (doesNotHaveVehicleIdentification) {
+                    return (self.distinguishableDescription.isEmpty || self.distinguishableDescription.count < Int.descriptionMinCharacterCount || self.distinguishableDescription.count > Int.descriptionMaxCharacterCount)
+                } else {
+                    return (self.licensePlate.isEmpty && self.vin.isEmpty)
+                    || (self.distinguishableDescription.isEmpty || self.distinguishableDescription.count < Int.descriptionMinCharacterCount || self.distinguishableDescription.count > Int.descriptionMaxCharacterCount)
+                }
+            } else {
+                return true
+            }
         } else {
-            return (self.licensePlate.isEmpty && self.vin.isEmpty)
-            || (self.distinguishableDescription.isEmpty || self.distinguishableDescription.count < Int.descriptionMinCharacterCount || self.distinguishableDescription.count > Int.descriptionMaxCharacterCount)
+            if (doesNotHaveVehicleIdentification) {
+                return (self.distinguishableDescription.isEmpty || self.distinguishableDescription.count < Int.descriptionMinCharacterCount || self.distinguishableDescription.count > Int.descriptionMaxCharacterCount)
+            } else {
+                return (self.licensePlate.isEmpty && self.vin.isEmpty)
+                || (self.distinguishableDescription.isEmpty || self.distinguishableDescription.count < Int.descriptionMinCharacterCount || self.distinguishableDescription.count > Int.descriptionMaxCharacterCount)
+            }
         }
     }
     
@@ -110,6 +124,7 @@ struct NewReportView: View {
                     Toggle("Allow For Updates", isOn: $allowsForUpdates)
                         .tint(.green)
                     Toggle("Contact Me", isOn: $allowsForContact)
+                        .tint(.green)
                 } header: {
                     Text("Options")
                 }
@@ -209,7 +224,7 @@ struct NewReportView: View {
                         ProgressView()
                     } else {
                         Button {
-                            upload()
+                            isShowingWarningView.toggle()
                         } label: {
                             Text("Upload")
                                 .bold()
@@ -255,6 +270,9 @@ struct NewReportView: View {
         .sheet(isPresented: $isShowingReportDescriptionView) {
             ReportDescriptionView(description: $distinguishableDescription)
         }
+        .sheet(isPresented: $isShowingWarningView) {
+            NewReportReminderView(postCompletion: upload)
+        }
         .confirmationDialog("", isPresented: $isShowingPhotoRemoveConfirmation) {
             Button("Remove", role: .destructive) {
                 vehicleImage = nil
@@ -274,59 +292,59 @@ struct NewReportView: View {
         }
     }
     
-    @MainActor
     private func upload() {
-        Task {
-            do {
-                self.isUploading = true
-                
-                guard let uid = Auth.auth().currentUser?.uid else {
-                    throw NewReportError.userIdError
+        self.isUploading = true
+        DispatchQueue.main.asyncAfter(deadline: .now() + 0.65) {
+            Task {
+                do {
+                    guard let uid = Auth.auth().currentUser?.uid else {
+                        throw NewReportError.userIdError
+                    }
+                    
+                    guard !(distinguishableDescription.isEmpty) else {
+                        throw NewReportError.detailIsEmpty
+                    }
+                    
+                    var location: Location
+                                
+                    guard let userLocation = CLLocationManager.shared.usersCurrentLocation else {
+                        throw NewReportError.locationError
+                    }
+                    
+                    if discloseLocation {
+                        location = Location.disclose(lat: userLocation.latitude, long: userLocation.longitude)
+                    } else {
+                        location = Location(coordinate: userLocation)
+                    }
+                    
+                    var vehicle = Vehicle(year: vehicleYear, make: vehicleMake, model: vehicleModel, color: vehicleColor)
+                    if !(licensePlate.isEmpty) {
+                        try vehicle.licensePlateString(licensePlate)
+                    }
+                    if !(vin.isEmpty) {
+                        try vehicle.vinString(vin)
+                    }
+                    var report = Report(uid: uid, type: reportType, Vehicle: vehicle, details: distinguishableDescription, location: location, discloseLocation: discloseLocation)
+                    
+                    report.allowsForUpdates = allowsForUpdates
+                    report.allowsForContact = allowsForContact
+                    
+                    guard let _ = try? await reportsVM.uploadReport(report, image: vehicleImage) else {
+                        throw NewReportError.error
+                    }
+                    
+                    dismiss()
+                    
+                } catch NewReportError.locationError {
+                    self.isUploading = false
+                    self.alertSelectLocation.toggle()
+                } catch {
+                    if let error = error as? NewReportError {
+                        self.alertReason = error
+                    }
+                    self.isUploading = false
+                    self.alertErrorUploading = true
                 }
-                
-                guard !(distinguishableDescription.isEmpty) else {
-                    throw NewReportError.detailIsEmpty
-                }
-                
-                var location: Location
-                            
-                guard let userLocation = CLLocationManager.shared.usersCurrentLocation else {
-                    throw NewReportError.locationError
-                }
-                
-                if discloseLocation {
-                    location = Location.disclose(lat: userLocation.latitude, long: userLocation.longitude)
-                } else {
-                    location = Location(coordinate: userLocation)
-                }
-                
-                var vehicle = Vehicle(year: vehicleYear, make: vehicleMake, model: vehicleModel, color: vehicleColor)
-                if !(licensePlate.isEmpty) {
-                    try vehicle.licensePlateString(licensePlate)
-                }
-                if !(vin.isEmpty) {
-                    try vehicle.vinString(vin)
-                }
-                var report = Report(uid: uid, type: reportType, Vehicle: vehicle, details: distinguishableDescription, location: location, discloseLocation: discloseLocation)
-                
-                report.allowsForUpdates = allowsForUpdates
-                report.allowsForContact = allowsForContact
-                
-                guard let _ = try? await reportsVM.uploadReport(report, image: vehicleImage) else {
-                    throw NewReportError.error
-                }
-                
-                dismiss()
-                
-            } catch NewReportError.locationError {
-                self.isUploading = false
-                self.alertSelectLocation.toggle()
-            } catch {
-                if let error = error as? NewReportError {
-                    self.alertReason = error
-                }
-                self.isUploading = false
-                self.alertErrorUploading = true
             }
         }
     }

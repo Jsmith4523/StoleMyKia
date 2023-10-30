@@ -21,11 +21,11 @@ struct OnboardingInstructionsView: View {
                         Text("How the application works!")
                             .font(.system(size: 30).weight(.heavy))
                         VStack(spacing: 30) {
-                            titleBodyLabel("Reports", body: "Each report offers vital details about the vehicle incident, including vehicle identification (make, model, color, license plate, and VIN), incident type (e.g., stolen, carjacking), and location information. Additional relevant details are also included for a comprehensive overview.", symbol: String.reportSymbolName)
-                            titleBodyLabel("Updates", body: "If someone possesses information about a vehicle you've reported, they can contribute to your report by providing details such as the type of update, location, and additional information relevant to the update. This collaborative feature allows for more comprehensive reporting on the vehicle in question.", symbol: String.updateSymbolName)
-                            titleBodyLabel("Timeline Map", body: "The timeline map visually illustrates the progression of updates to an initial report using an interactive graphical map interface. It includes annotations and circles (when location information is disclosed) to indicate the geographical context of each update, whether it pertains to the initial report or a subsequent event.", symbol: "map")
-                            titleBodyLabel("Notifications", body: "Your notification settings dictate that you will receive notifications for reports within your specified notification radius. These notifications are limited to reports you've subscribed to.", symbol: "app.badge")
-                            titleBodyLabel("Critical Notifications", body: "Critical notifications will be sent only when your report receives updates.", symbol: "exclamationmark.triangle.fill", symbolForegroundColor: .red)
+                            titleBodyLabel("Reports", body: "You can include essential information about your report, such as its type, details, vehicle information (license number, VIN, etc.), location, and more.", symbol: String.reportSymbolName)
+                            titleBodyLabel("Notification", body: "When posting a report or update, users subscribed to the report type within your location will receive notifications, and vice versa.", symbol: "antenna.radiowaves.left.and.right")
+                            titleBodyLabel("Updates", body: "You'll receive notifications if someone updates an initial report you uploaded. An update may include information such as the incident type, details, location, and more.", symbol: String.updateSymbolName)
+                            titleBodyLabel("Timeline Map", body: "The map graphically displays location information about the initial report and any associated updates (if available).", symbol: "map")
+                            titleBodyLabel("Critical Alerts", body: "Critical alerts are only sent when updates are made to your initial report. If enabled, this setting overrides focus modes and other mute settings.", symbol: "exclamationmark.triangle.fill", symbolForegroundColor: .red)
                         }
                     }
                 }

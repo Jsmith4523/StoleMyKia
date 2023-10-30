@@ -15,6 +15,7 @@ enum ReportManagerError: String, Error {
     case doesNotExist = "The initial report no longer exists"
     case dataError = "Data Error"
     case codableError = "Codable Protocol Error"
+    case updatesDisable = "Updates Disabled for this report."
     case locationServicesDenied = "User Location Services Denied"
     case error = "Generic Error"
 }
@@ -47,14 +48,42 @@ public class ReportManager {
         db.collection("Reports")
     }
     
-    /// Retrieves the latest reports from Firestore Database.
-    /// - Returns: An array of reports.
+    /// Retrieves the latest reports from Firestore Database that are within the users desired location.
+    /// - Returns: An array of reports ascending within the desired location or latest.
     /// - Throws: Error if the user location settings are not enabled or documents could not be retrieved.
     func fetch() async throws -> [Report] {
-        let documents = try await self.collection.getDocuments()
-        let reports = documents.reportsFromSnapshot()
+        let desiredLocation = await FirebaseUserManager.shared.getUserLocationConfiguration()?.coordinate
         
+        let reports = try await fetchReports()
+        
+        if let desiredLocation {
+            return reports.filterBasedUponLocation(desiredLocation)
+        } else {
+            return reports.sorted(by: >)
+        }
+    }
+    
+    ///Fetch reports from Firestore.
+    func fetchReports() async throws -> [Report] {
+        let documents = try await self
+            .collection
+            .getDocuments()
+        let reports = documents.reportsFromSnapshot()
         return reports
+    }
+    
+    /// Fetch reports filtered and based upon the users current location
+    /// - Returns: An array of reports ascending by closest to current user
+    func fetchLocalReports() async throws -> [Report] {
+        let userLocation = CLLocationManager.shared.usersCurrentLocation
+        
+        let reports = try await fetchReports()
+        
+        if let userLocation {
+            return reports.filterBasedUponLocation(userLocation)
+        } else {
+            throw ReportManagerError.locationServicesDenied
+        }
     }
     
     ///Retrieves a single report from Firestore Database.
@@ -92,7 +121,7 @@ public class ReportManager {
     func fetchUpdates(_ reportId: UUID) async throws -> [Report] {
         let collection = collection
             .document(reportId.uuidString)
-            .collection("Updates")
+            .collection(FirebaseDatabasesPaths.reportUpdatesPath)
         
         let documents = try await collection.getDocuments().documents
                
@@ -135,8 +164,9 @@ public class ReportManager {
             throw ReportManagerError.codableError
         }
         
-        try await db.document("\(FirebaseDatabasesPaths.reportsDatabasePath)\(originalReportId.uuidString)")
-            .collection("Updates")
+        try await db
+            .document("\(FirebaseDatabasesPaths.reportsDatabasePath)\(originalReportId.uuidString)")
+            .collection(FirebaseDatabasesPaths.reportUpdatesPath)
             .document(update.id.uuidString)
             .setData(jsonData)
         
@@ -180,6 +210,8 @@ public class ReportManager {
         try await self.collection
             .document(report.id.uuidString)
             .delete()
+        
+        ImageCache.shared.removeFromCache(report.imageURL)
     }
     
     /// Checks the Firestore collection if a report still exists in the database.
@@ -199,13 +231,25 @@ public class ReportManager {
     }
     
     
+    /// Determines if an initial
+    /// - Parameter id: The id of the report
+    func allowsForUpdates(id: UUID) async throws  {
+        guard let initialReport = try await fetchSingleReport(id) else {
+            throw ReportManagerError.error
+        }
+        
+        guard (initialReport.allowsForUpdates && !initialReport.hasBeenResolved) else {
+            throw ReportManagerError.updatesDisable
+        }
+    }
+    
     /// Retrieves the current number of updates a report has
     /// - Parameter report: The report to check for number of updates based upon it's role associated UUID value.
     /// - Returns: The int quantity of updates
     func getNumberOfUpdates(_ report: Report) async -> Int {
         do {
             let count = try await collection.document(report.role.associatedValue.uuidString)
-                .collection("Updates")
+                .collection(FirebaseDatabasesPaths.reportUpdatesPath)
                 .getDocuments()
                 .count
             return count

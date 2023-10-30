@@ -65,7 +65,7 @@ enum LoginStatus {
             info[Constants.deviceIDKey] = deviceID
             info[Constants.deviceToken] = deviceToken
             
-            FirebaseUserManager.saveFCMTOken(info: info)
+            FirebaseUserManager.saveFCMToken(info: info)
         }
     }
     

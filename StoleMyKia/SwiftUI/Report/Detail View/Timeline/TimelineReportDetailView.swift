@@ -49,7 +49,7 @@ struct TimelineReportDetailView: View {
                                                 .frame(height: 10)
                                         }
                                         if report.hasVin {
-                                            Text("VIN: \(report.vehicle.vinString)")
+                                            Text("VIN: \(report.vehicle.hiddenVinString)")
                                         }
                                     }
                                     .font(.system(size: 17).bold())
@@ -75,6 +75,13 @@ struct TimelineReportDetailView: View {
                             .scaledToFit()
                             .frame(width: 25, height: 25)
                             .foregroundColor(.gray)
+                    }
+                }
+                ToolbarItem(placement: .navigationBarTrailing) {
+                    Button {
+                        URL.getDirectionsToLocation(title: report.vehicle.appleMapsAnnotationTitle, coords: report.location.coordinates)
+                    } label: {
+                        Image(systemName: "arrow.triangle.pull")
                     }
                 }
             }

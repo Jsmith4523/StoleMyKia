@@ -13,7 +13,9 @@ extension View {
     func activityController(isPresented: Binding<Bool>, activityItems items: [Any]) -> some View {
         return self
             .background {
-                ActivityController(isPresented: isPresented, items: items)
+                if isPresented.wrappedValue {
+                    ActivityController(isPresented: isPresented, items: items)
+                }
             }
     }
 }
@@ -31,7 +33,11 @@ fileprivate struct ActivityController: UIViewControllerRepresentable {
     func updateUIViewController(_ uiViewController: UIViewController, context: Context) {
         if isPresented {
             let vc =  UIActivityVC(activityItems: items, applicationActivities: nil)
-            uiViewController.present(vc, animated: true)
+            uiViewController.present(vc, animated: true) {
+                DispatchQueue.main.async {
+                    isPresented = false
+                }
+            }
         }
     }
     

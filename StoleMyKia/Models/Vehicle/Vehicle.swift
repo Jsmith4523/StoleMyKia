@@ -8,7 +8,7 @@
 import Foundation
 
 ///Associated with either the users current vehicle or reported vehicle
-struct Vehicle: Codable {
+struct Vehicle: Codable, Hashable {
     
     init(year: Int, make: VehicleMake, model: VehicleModel, color: VehicleColor) {
         self.vehicleYear = year
@@ -21,6 +21,8 @@ struct Vehicle: Codable {
     let vehicleMake: VehicleMake
     let vehicleModel: VehicleModel
     let vehicleColor: VehicleColor
+    var hasLicenseNum: Bool = false
+    var hasVinNum: Bool = false
     private var licensePlate: Data? = nil
     private var vin: Data? = nil
 }
@@ -35,6 +37,10 @@ extension Vehicle {
     ///This vehicle contains vin information.
     var hasVin: Bool {
         vin == nil ? false : true
+    }
+    
+    var hasLicenseOrVin: Bool {
+        hasLicensePlate || hasVin
     }
     
     ///Year, make, model, and color of the vehicle
@@ -58,6 +64,7 @@ extension Vehicle {
             return
         }
         self.licensePlate = try EncryptedData.createEncryption(input: licenseString)
+        self.hasLicenseNum = true
     }
     
     mutating func vinString(_ vinString: String?) throws {
@@ -66,6 +73,7 @@ extension Vehicle {
             return
         }
         self.vin = try EncryptedData.createEncryption(input: vinString)
+        self.hasVinNum = true
     }
     
     private var licenseEncryptedData: EncryptedData? {
@@ -104,7 +112,13 @@ extension Vehicle {
         guard let vinData = vinEncryptedData, let vinString = vinData.decode() else {
             return ""
         }
-        
-        return vinString.uppercased()
+        return vinString
+    }
+    
+    var hiddenVinString: String {
+        guard let vinData = vinEncryptedData, let vinString = vinData.decode(), let hiddenVinString = ApplicationFormats.vinFormat(vinString) else {
+            return ""
+        }
+        return hiddenVinString.uppercased()
     }
 }

@@ -9,6 +9,7 @@ import Foundation
 import CoreLocation
 import NotificationCenter
 
+@MainActor
 final class OnboardingViewModel: NSObject, ObservableObject {
     
     enum OnboardingFeatureStatus {

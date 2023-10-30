@@ -7,13 +7,18 @@
 
 import SwiftUI
 
+enum CellViewImageMode {
+    case large, thumbnail
+}
+
 struct FeedListView: View {
             
-    @State private var reports = [Report]()
+    @Binding var reports: [Report]
     @State private var report: Report?
     
-    @State private var isShowingFilterView = false
-            
+    var cellImageMode: CellViewImageMode = .large
+    var onDeleteCompletion: (() -> ())? = nil
+                
     @EnvironmentObject var reportsVM: ReportsViewModel
     @EnvironmentObject var userVM: UserViewModel
       
@@ -23,7 +28,7 @@ struct FeedListView: View {
                 LazyVStack(spacing: 25) {
                     LazyVStack(spacing: 15) {
                         ForEach(reports) { report in
-                            ReportCellView(report: report)
+                            ReportCellView(report: report, imageMode: cellImageMode)
                                 .onTapGesture {
                                     self.report = report
                                 }
@@ -38,21 +43,9 @@ struct FeedListView: View {
         .environmentObject(reportsVM)
         .environmentObject(userVM)
         .fullScreenCover(item: $report) { report in
-            ReportDetailView(reportId: report.id)
+            ReportDetailView(reportId: report.id, deleteCompletion: onDeleteCompletion)
                 .environmentObject(reportsVM)
                 .environmentObject(userVM)
-        }
-        .toolbar {
-            ToolbarItem(placement: .navigationBarTrailing) {
-                Button {
-                    self.isShowingFilterView.toggle()
-                } label: {
-                    Image(systemName: "line.3.horizontal.decrease.circle")
-                }
-            }
-        }
-        .onReceive(reportsVM.$reports) { reports in
-            self.reports = reports
         }
     }
 }

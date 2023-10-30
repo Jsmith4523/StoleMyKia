@@ -10,7 +10,7 @@ import SwiftUI
 struct MyStuffView: View {
     
     enum MyStuffRoute: CaseIterable, Identifiable {
-        case reports, bookmarks, settings
+        case reports, bookmarks
         
         var id: Self {
             return self
@@ -21,9 +21,7 @@ struct MyStuffView: View {
             case .bookmarks:
                 return "Bookmarks"
             case .reports:
-                return "Reports"
-            case .settings:
-                return "Settings"
+                return "My Reports"
             }
         }
         
@@ -33,12 +31,11 @@ struct MyStuffView: View {
                 return "bookmark"
             case.reports:
                 return ApplicationTabViewSelection.feed.symbol
-            case .settings:
-                return "gear"
             }
         }
     }
     
+    @State private var isShowingSettingsView = false
     @State private var alertSignOut = false
     
     @State private var route: MyStuffRoute?
@@ -67,19 +64,22 @@ struct MyStuffView: View {
         } message: {
             Text("You'll be signed out of \(userVM.getAuthUserPhoneNumber() ?? "the application"). Are you sure?")
         }
-        .sheet(item: $route) { route in
+        .fullScreenCover(item: $route) { route in
             switch route {
             case .reports:
                 UserReportsView()
                     .environmentObject(userVM)
                     .environmentObject(reportsVM)
             case .bookmarks:
-                EmptyView()
-            case .settings:
-                SettingsView()
-                    .presentationDragIndicator(.visible)
+                UserBookmarksView()
                     .environmentObject(userVM)
+                    .environmentObject(reportsVM)
             }
+        }
+        .sheet(isPresented: $isShowingSettingsView) {
+            SettingsView()
+                .presentationDragIndicator(.visible)
+                .environmentObject(userVM)
         }
     }
     
@@ -117,6 +117,12 @@ struct MyStuffView: View {
                         } label: {
                             MyStuffCellView(symbol: route.symbol, title: route.title)
                         }
+                    }
+                    Divider()
+                    Button {
+                        self.isShowingSettingsView.toggle()
+                    } label: {
+                        MyStuffCellView(symbol: "gear", title: "Settings")
                     }
                     Divider()
                     Button {
@@ -172,6 +178,5 @@ fileprivate struct MyStuffCellView: View {
 struct MyStuffView_Previews: PreviewProvider {
     static var previews: some View {
         MyStuffView(userVM: UserViewModel(), reportsVM: ReportsViewModel())
-            .preferredColorScheme(.dark)
     }
 }

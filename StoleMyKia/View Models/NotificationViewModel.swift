@@ -17,20 +17,16 @@ enum NotificationLoadStatus {
 @MainActor
 final class NotificationViewModel: NSObject, ObservableObject {
     
-    fileprivate enum NotificationType {
-        case update(UUID)
-        case other(UUID)
-    }
-    
+    @Published var notification: AppUserNotification?
+    @Published private(set) var notifications: [AppUserNotification] = []
+    @Published private(set) var loadStatus: NotificationLoadStatus = .loading
+                        
     @Published private(set) var notificationUnreadQuantity = 0 {
         didSet {
             self.setApplicationBadgeCount(notificationUnreadQuantity)
         }
     }
     
-    @Published private(set) var notifications: [AppUserNotification] = []
-    @Published private(set) var loadStatus: NotificationLoadStatus = .loading
-                        
     override init() {
         super.init()
         
@@ -49,20 +45,15 @@ final class NotificationViewModel: NSObject, ObservableObject {
         UIApplication.shared.registerForRemoteNotifications()
     }
     
-    func userDidReadNotification(_ id: String) {
-        Task {
-            do {
-                try await NotificationManager.shared.updateNotificationReadStatus(id)
-                if let notificationIndex = notifications.firstIndex(where: {$0.id == id}) {
-                    notifications[notificationIndex].isRead = true
-                    if !(notificationUnreadQuantity == 0) {
-                        notificationUnreadQuantity = notificationUnreadQuantity - 1
-                    }
-                }
-            } catch {
-                //TODO: Toast Banner
+    func userDidReadNotification(_ notification: AppUserNotification) {
+        if let notificationIndex = notifications.firstIndex(where: {$0.id == notification.id}) {
+            notifications[notificationIndex].isRead = true
+            if !(notificationUnreadQuantity == 0) {
+                notificationUnreadQuantity = notificationUnreadQuantity - 1
             }
+            self.notification = notification
         }
+        NotificationManager.shared.updateNotificationReadStatus(notification.id)
     }
 
     private func listenForNewNotifications() {
@@ -81,11 +72,8 @@ final class NotificationViewModel: NSObject, ObservableObject {
     func fetchNotifications() {
         Task {
             do {
-                let notifications = try await NotificationManager.shared.fetchUserCurrentNotifications()
+                let notifications = try await NotificationManager.shared.fetchUserCurrentNotifications(notifications: notifications)
                 self.notifications = notifications
-                //Setting the application badge count to the number of unread notifications...
-                let unreadNotificationQuantity = notifications.filter({!($0.isRead)}).count
-                self.notificationUnreadQuantity = unreadNotificationQuantity
                 if notifications.isEmpty {
                     self.loadStatus = .empty
                 } else {
@@ -97,6 +85,22 @@ final class NotificationViewModel: NSObject, ObservableObject {
                     self.loadStatus = .empty
                 }
                 print("Unable to retrieve users notification: \(error.localizedDescription)")
+            }
+        }
+    }
+    
+    func fetchMoreNotifications(after notification: AppUserNotification) {
+        //Checking if the notification is the last notification in the array once loaded
+        guard let lastNotification = self.notifications.last, lastNotification.id == notification.id else {
+            return
+        }
+        
+        Task {
+            do {
+                let notifications = try await NotificationManager.shared.fetchMoreNotifications(after: notification)
+                self.notifications.append(contentsOf: notifications)
+            } catch {
+                print("Unable to retrieve more notifications from user \(error.localizedDescription)")
             }
         }
     }

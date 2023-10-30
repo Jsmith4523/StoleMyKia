@@ -10,7 +10,7 @@ import CoreLocation
 
 enum ApplicationTabViewSelection {
     
-    case feed, notification, myStuff
+    case feed, notification, myStuff, search
     
     var title: String {
         switch self {
@@ -20,6 +20,8 @@ enum ApplicationTabViewSelection {
             return "Notifications"
         case .myStuff:
             return "My Stuff"
+        case .search:
+            return "Search"
         }
     }
     
@@ -31,6 +33,8 @@ enum ApplicationTabViewSelection {
             return "bell"
         case .myStuff:
             return "person.crop.circle"
+        case .search:
+            return "magnifyingglass"
         }
     }
     
@@ -55,6 +59,11 @@ struct ApplicationTabView: View {
                 .tabItem {
                     ApplicationTabViewSelection.feed.tabItemLabel
                 }
+            SearchView(reportsVM: reportsVM, userVM: userVM)
+                .tag(ApplicationTabViewSelection.search)
+                .tabItem {
+                    ApplicationTabViewSelection.search.tabItemLabel
+                }
             NotificationView(notificationVM: notificationVM, reportsVM: reportsVM, userVM: userVM)
                 .tag(ApplicationTabViewSelection.notification)
                 .badge(notificationCount ?? 0)
@@ -78,6 +87,7 @@ struct ApplicationTabView: View {
         }
         .onAppear {
             CLLocationManager.shared.requestAlwaysAuthorization()
+            UNUserNotificationCenter.current().requestAuthorization { _, _ in }
         }
     }
 }

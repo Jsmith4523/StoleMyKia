@@ -50,7 +50,3 @@ struct TimelineMKMapView: UIViewRepresentable {
     
     func updateUIView(_ uiView: MKMapView, context: Context) {}
 }
-//
-//#Preview {
-//    TimelineMap(viewModel: TimelineMapViewModel())
-//}

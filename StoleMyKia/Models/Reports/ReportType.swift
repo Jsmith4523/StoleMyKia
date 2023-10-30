@@ -29,15 +29,15 @@ enum ReportType: String, CaseIterable, Hashable, Identifiable, Codable, Comparab
     var annotationImage: String {
         switch self {
         case .stolen:
-            return "car.fill"
+            return "light.beacon.max.fill"
         case .found:
             return "checkmark.shield.fill"
         case .witnessed:
             return "eye.fill"
         case .located:
-            return "mappin"
+            return "car.fill"
         case .carjacked:
-            return "sos"
+            return "light.beacon.max.fill"
         case .attempt:
             return "exclamationmark.triangle"
         case .breakIn:

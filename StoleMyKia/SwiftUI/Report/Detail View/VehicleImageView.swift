@@ -16,7 +16,7 @@ struct VehicleImageView: View {
     @State private var proxyX: CGFloat = 0
     @State private var proxyY: CGFloat = 0
     
-    @State private var isShowingImagePickerController = false
+    @State private var isShowingActivityController = false
     
     @Binding var vehicleImage: UIImage?
     
@@ -25,8 +25,8 @@ struct VehicleImageView: View {
     var body: some View {
         NavigationView {
             ZStack {
-                Color.black.ignoresSafeArea()
                 activityController
+                Color.black.ignoresSafeArea()
                 GeometryReader { proxy in
                     Image(uiImage: vehicleImage ?? .vehiclePlaceholder)
                         .resizable()
@@ -86,6 +86,17 @@ struct VehicleImageView: View {
                     .foregroundColor(.white)
                     .shadow(radius: 4)
                 }
+                ToolbarItem(placement: .navigationBarTrailing) {
+                    Button {
+                        isShowingActivityController.toggle()
+                    } label: {
+                        Image(systemName: "square.and.arrow.up")
+                            .font(.system(size: 18).bold())
+                            .foregroundColor(.white)
+                            .shadow(radius: 4)
+                    }
+                    .disabled(vehicleImage.isNil())
+                }
             }
             .onTapGesture(count: 2) {
                 resetGestures()
@@ -96,11 +107,11 @@ struct VehicleImageView: View {
     
     private var activityController: some View {
         ZStack {
-            if !(vehicleImage.isNil()) {
+            if let vehicleImage {
                 ZStack {
                     
                 }
-                .activityController(isPresented: $isShowingImagePickerController, activityItems: [UIImage.vehiclePlaceholder])
+                .activityController(isPresented: $isShowingActivityController, activityItems: [vehicleImage])
             }
         }
     }

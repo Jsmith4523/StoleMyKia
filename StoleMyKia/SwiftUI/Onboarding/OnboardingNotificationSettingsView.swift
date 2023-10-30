@@ -22,24 +22,26 @@ struct OnboardingNotificationSettingsView: View {
             Spacer()
                 .frame(height: 85)
             VStack(spacing: 12) {
-                Image(systemName: "mappin.and.ellipse")
+                Image(systemName: "globe.americas.fill")
                     .resizable()
                     .scaledToFit()
                     .frame(width: 45, height: 45)
-                Text("Location-Based Notifications and Reports Configuration")
+                Text("Set Your Desired Location")
                     .font(.system(size: 25).weight(.heavy))
-                Text("Specify your preferred location for receiving notifications and reports from.")
+                Text("Locate and set where you would like to receive location-based reports and notifications. You can modify what type of reports you would like to receive frequent notifications for.")
+                    .font(.system(size: 17))
             }
             Spacer()
-            VStack(spacing: 6) {
+            VStack(spacing: 12) {
                 Button {
                     isShowingNotificationSettingsView.toggle()
                 } label: {
                     Text("Configure")
-                        .buttonStyle()
+                        .font(.system(size: 18.35).bold())
+                        .padding()
                 }
                 NavigationLink {
-                    OnboardingInstructionsView()
+                    OnboardingFinalView()
                         .onDisappear {
                             dismissOnboarding()
                         }
@@ -51,15 +53,20 @@ struct OnboardingNotificationSettingsView: View {
             Spacer()
         }
         .padding()
-        .multilineTextAlignment(.center)
-        .sheet(isPresented: $isShowingNotificationSettingsView) {
-            NotificationSettingsView()
-                .environmentObject(UserViewModel())
-        }
         .overlay {
             if isLoading {
                 FilmProgressView()
+                    .ignoresSafeArea()
             }
+        }
+        .multilineTextAlignment(.center)
+        .navigationTitle("Desired Location")
+        .navigationBarTitleDisplayMode(.inline)
+        .navigationBarBackButtonHidden(isLoading)
+        .hideNavigationTitle()
+        .sheet(isPresented: $isShowingNotificationSettingsView) {
+            NotificationSettingsView()
+                .environmentObject(UserViewModel())
         }
         .alert("Verification Error", isPresented: $alertErrorOnboarding) {
             Button("OK") {}

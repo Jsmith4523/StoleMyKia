@@ -8,9 +8,7 @@
 import SwiftUI
 
 struct NotificationListView: View {
-    
-    @State private var notification: AppUserNotification?
-            
+                
     @EnvironmentObject var notificationVM: NotificationViewModel
     @EnvironmentObject var reportsVM: ReportsViewModel
     @EnvironmentObject var userVM: UserViewModel
@@ -20,7 +18,10 @@ struct NotificationListView: View {
             ForEach(notificationVM.notifications.sorted(by: >)) { notification in
                 NotificationCellView(notification: notification)
                     .onTapGesture {
-                        notificationVM.userDidReadNotification(notification.id)
+                        notificationVM.userDidReadNotification(notification)
+                    }
+                    .onAppear {
+                        notificationVM.fetchMoreNotifications(after: notification)
                     }
                 Divider()
             }
@@ -28,8 +29,16 @@ struct NotificationListView: View {
         .environmentObject(notificationVM)
         .environmentObject(userVM)
         .environmentObject(reportsVM)
-        .fullScreenCover(item: $notification) { notification in
-            
+        .fullScreenCover(item: $notificationVM.notification) { notification in
+            switch notification.notificationType {
+            case .report:
+                ReportDetailView(reportId: notification.reportId!)
+                    .environmentObject(reportsVM)
+            case .update:
+                TimelineMapView(reportAssociatedId: notification.reportId!, dismissStyle: .dismiss)
+            case .falseReport:
+                FalseReportDetailView(reportId: notification.reportId!)
+            }
         }
     }
 }

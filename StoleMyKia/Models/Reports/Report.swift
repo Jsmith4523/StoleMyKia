@@ -11,7 +11,7 @@ import MapKit
 import FirebaseAuth
 import SwiftUI
 
-public struct Report: Identifiable, Codable, Comparable {
+public struct Report: Identifiable, Codable, Comparable, Hashable {
     
     ///init with requried details
     init(uid: String, type: ReportType, Vehicle: Vehicle, details: String, location: Location, discloseLocation: Bool, allowsForUpdates: Bool = true, allowsForContact: Bool = false, hasBeenResolved: Bool = false) {
@@ -140,8 +140,9 @@ extension Report {
     /// - Parameter parentId: The parent report UUID.
     /// - Returns: self
     mutating func setAsUpdate(_ parentId: UUID) {
-        self.allowsForUpdates = false
         self.role = .update(parentId)
+        self.allowsForContact = false
+        self.allowsForUpdates = true
     }
     
     mutating func setLicensePlate(_ license: String) throws {
@@ -195,6 +196,14 @@ extension Report {
         return true
     }
     
+    var hasLicensePlateAndVin: Bool {
+        self.vehicle.hasLicensePlate && self.vehicle.hasVin
+    }
+    
+    var hasLicensePlateOrVin: Bool {
+        self.hasLicensePlate || self.hasVin
+    }
+    
     var hasLicensePlate: Bool {
         self.vehicle.hasLicensePlate
     }
@@ -215,36 +224,10 @@ extension Report {
         Date(timeIntervalSince1970: dt).formatted(.dateTime.month().day().year())
     }
     
-    func verifyLicensePlate(_ inputLicense: String) -> Bool {
-        guard !(inputLicense.isEmpty), !(vehicle.licensePlateString.isEmpty) else {
-            return false
-        }
-        
-        return (inputLicense == vehicle.licensePlateString || vehicle.licensePlateString.contains(inputLicense))
-    }
-    
-    func verifyDescription(_ input: String) -> Bool {
-        guard !(input.isEmpty), !(distinguishableDetails.isEmpty) else {
-            return false
-        }
-        
-        return (input == distinguishableDetails || distinguishableDetails.contains(input))
-    }
-    
     func vehicleImage(completion: @escaping (UIImage?)->Void) {
         ImageCache.shared.getImage(self.imageURL) { image in
             completion(image)
         }
-    }
-    
-    func matches(year: Int?,
-                 type: ReportType?,
-                 make: VehicleMake?,
-                 model: VehicleModel?,
-                 color: VehicleColor?,
-                 input: String
-    ) -> Bool {
-        (self.vehicle.vehicleYear == year || self.reportType == reportType || self.vehicle.vehicleMake == make || self.vehicle.vehicleModel == model || self.verifyLicensePlate(input) || self.verifyDescription(input))
     }
     
     func timeSinceString() -> String {
@@ -254,24 +237,6 @@ extension Report {
 
 extension [Report] {
     
-    
-    mutating func removeReport(_ deletedReport: Report) {
-        self.removeAll { report in
-            deletedReport.id == report.id
-        }
-    }
-    
-    mutating func including(with reports: [Report]) {
-        let currentIds = Set(self.map({$0.id}))
-        let filterReports = reports.filter {!currentIds.contains($0.id)}
-        
-        self.append(contentsOf: filterReports)
-    }
-    
-    func matchesLicensePlate(_ licensePlateString: String) -> [Report] {
-        self.filter({$0.verifyLicensePlate(licensePlateString)})
-    }
-    
     static func testReports() -> [Report] {
         var falseReport: Report = .init(uid: "", type: .stolen, Vehicle: .init(year: 2017, make: .hyundai, model: .elantra, color: .red), vehicleImageUrl: "https://vehicle-images.dealerinspire.com/b181-110004081/thumbnails/large/5NPD74LF3LH542186/de26ac0d8c1e8517ff3223db441dee38.jpg", details: "My 2017 Hyundai Elantra was stolen outside of my home around 3AM last night. I am unsure where the vehicle is and I am in dire need for help locating it. It has a couple of dents on the driver side door, three stickers on the trunk, and has a matte black spoiler.PLEASE!!! I really need some help locating it. God bless 🙏🏽🙏🏽🙏🏽🙏🏽🙏🏽🙏🏽🙏🏽🙏🏽", location: .init(address: "123 Fun Street", name: "McDonald's", lat: 0, lon: 0), discloseLocation: true)
         falseReport.isFalseReport = true
@@ -280,5 +245,51 @@ extension [Report] {
             .init(uid: "", type: .found, Vehicle: .init(year: 2021, make: .kia, model: .forte, color: .red), details: "", location: .init(coordinates: .init()), discloseLocation: false),
             .init(uid: "", type: .breakIn, Vehicle: .init(year: 2013, make: .hyundai, model: .elantra, color: .orange), details: "", location: .init(coordinates: .init()), discloseLocation: false)
         ]
+    }
+    
+    func filter(_ reportType: ReportType, text: String) -> [Report] {
+        let text = text.lowercased()
+        return self.filter { report in
+            let hasReportType = report.reportType == reportType
+            let hasDescription = text.isEmpty ? true : report.distinguishableDetails.lowercased().contains(text)
+            let hasLicense = text.isEmpty ? true : report.vehicle.licensePlateString.lowercased().contains(text)
+            let hasVin = text.isEmpty ? true : report.vehicle.vinString.lowercased().contains(text)
+            
+            return (hasReportType || hasDescription || hasLicense || hasVin)
+        }
+    }
+    
+    func textFilter(_ text: String) -> [Report] {
+        let searchText = text.lowercased().components(separatedBy: " ")
+        
+        var reports = [Report]()
+        
+        searchText.forEach {
+            let char = "\($0)"
+            self.forEach { report in
+                let hasReportType = "\(report.reportType.rawValue.lowercased())".contains(char)
+                let hasYear = "\(report.vehicle.vehicleYear)".contains(char)
+                let hasMake = "\(report.vehicle.vehicleMake.rawValue.lowercased())".contains(char)
+                let hasModel = "\(report.vehicle.vehicleModel.rawValue.lowercased())".contains(char)
+                let hasColor = "\(report.vehicle.vehicleColor.rawValue.lowercased())".contains(char)
+                let hasVin = "\(report.vehicle.vinString.lowercased())".contains(char)
+                let hasLicense = "\(report.vehicle.licensePlateString.lowercased())".contains(char)
+                let hasDescription = "\(report.distinguishableDetails.lowercased())".contains(char)
+                
+                if (hasYear || hasMake || hasModel || hasColor || hasVin || hasLicense || hasDescription || hasReportType) && !(reports.contains(where: {$0.id == report.id})) {
+                    reports.append(report)
+                }
+            }
+        }
+        
+        return reports
+    }
+    
+    func filterBasedUponLocation(_ location: CLLocationCoordinate2D) -> [Report] {
+        return self.sorted { lhs, rhs in
+            let distanceOne = pow(Double(lhs.location.coordinates.latitude - location.latitude), 2) + pow(Double(lhs.location.coordinates.longitude - location.longitude), 2)
+            let distanceTwo = pow(Double(rhs.location.coordinates.latitude - location.latitude), 2) + pow(Double(rhs.location.coordinates.longitude - location.longitude), 2)
+            return distanceOne < distanceTwo
+        }
     }
 }

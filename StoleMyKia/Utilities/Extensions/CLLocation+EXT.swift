@@ -68,7 +68,7 @@ extension MKCircle {
     
     static let discloseLocationFillColor: UIColor = .systemBlue.withAlphaComponent(0.25)
     static let discloseLocationRadius: Double = 1250
-    static let discloseLocationEdgePadding: UIEdgeInsets = .init(top: 200, left: 100, bottom: 150, right: 200)
+    static let discloseLocationEdgePadding: UIEdgeInsets = .init(top: 65, left: 70, bottom: 70, right: 85)
 }
 
 extension MKPolyline {

@@ -10,11 +10,37 @@ import FirebaseAuth
 import Firebase
 import SwiftUI
 
-enum RootViewLoadStatus {
-    case loading, loaded
+enum UserReportsLoadStatus {
+    case loading, loaded([Report]), empty, error
 }
 
-@MainActor final class UserViewModel: NSObject, ObservableObject {
+@MainActor 
+final class UserViewModel: NSObject, ObservableObject {
+    
+    //MARK: - User Report and Bookmarks Methods
+    func getUserReports() async -> UserReportsLoadStatus {
+        do {
+            let reports = try await UserReportsManager.shared.fetchUserReports()
+            guard !(reports.isEmpty) else {
+                return .empty
+            }
+            return .loaded(reports)
+        } catch {
+            return .error
+        }
+    }
+    
+    func getUserBookmarks() async -> UserReportsLoadStatus {
+        do {
+            let reports = try await UserReportsManager.shared.fetchUserBookmarks()
+            guard !(reports.isEmpty) else {
+                return .empty
+            }
+            return .loaded(reports)
+        } catch {
+            return .error
+        }
+    }
         
     //MARK: - User Settings Methods
     
@@ -33,12 +59,12 @@ enum RootViewLoadStatus {
         return Auth.auth().currentUser?.phoneNumber
     }
     
+    func getUserAccountStatus() async -> String {
+        return await FirebaseUserManager.shared.getUserAccountStatus()
+    }
+    
     func signOut() {
-        do {
-            try FirebaseAuthManager.manager.signOutUser()
-        } catch {
-            print("Unable to sign user out!")
-        }
+        FirebaseAuthManager.manager.signOutUser()
     }
     
     func deleteUserAccount() async throws {

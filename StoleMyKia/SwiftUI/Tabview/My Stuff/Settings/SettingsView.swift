@@ -8,9 +8,16 @@
 import SwiftUI
 
 struct SettingsView: View {
-    
+            
     enum SettingsRoutes: Identifiable, CaseIterable {
+        static let preferencesRoutes: [Self] = [.notifications]
+        
+        static let supportRoutes: [Self] = [.email, .privacyPolicy, .appIntroduction]
+        
         case notifications
+        case email
+        case appIntroduction
+        case privacyPolicy
         
         var id: Self {
             return self
@@ -19,23 +26,38 @@ struct SettingsView: View {
         var title: String {
             switch self {
             case .notifications:
-                return "Notifications"
+                return "Desired Location"
+            case .email:
+                return "Email Us"
+            case .privacyPolicy:
+                return "Privacy Policy"
+            case .appIntroduction:
+                return "How It Works"
             }
         }
         
         var symbol: String {
             switch self {
             case .notifications:
-                return ApplicationTabViewSelection.notification.symbol
+                return "globe.americas.fill"
+            case .email:
+                return "envelope"
+            case .privacyPolicy:
+                return "hand.raised"
+            case .appIntroduction:
+                return "book"
             }
         }
     }
+    
+    @State private var accountStatus = "Loading..."
     
     @State private var alertErrorDeletingAccount = false
     @State private var isLoading = false
     
     @State private var alertUserDeletingAccount = false
     
+    @State private var isShowingBeSafeView = false
     @State private var isShowingNotificationSettingsView = false
     @State private var settingsRoute: SettingsRoutes?
     
@@ -46,26 +68,53 @@ struct SettingsView: View {
     var body: some View {
         NavigationView {
             Form {
+                Section("Profile Details") {
+                    LabeledContent("Phone Number", value: userVM.getAuthUserPhoneNumber() ?? "N/A")
+                    LabeledContent("Account Status", value: self.accountStatus)
+                }
+                
+                Section("About This App") {
+                    LabeledContent("Name", value: UIApplication.appName ?? "N/A")
+                    LabeledContent("Version No.", value: UIApplication.appVersion ?? "N/A")
+                }
+                
                 Section("Preferences") {
-                    ForEach(SettingsRoutes.allCases) { route in
+                    ForEach(SettingsRoutes.preferencesRoutes) { route in
                         Button {
                             self.settingsRoute = route
                         } label: {
                             Label(route.title, systemImage: route.symbol)
                         }
                     }
+                    Button {
+                        URL.openApplicationSettings()
+                    } label: {
+                        Label("App Settings", systemImage: "iphone")
+                    }
                 }
+                Section {
+                    ForEach(SettingsRoutes.supportRoutes) { route in
+                        Button {
+                            self.settingsRoute = route
+                        } label: {
+                            Label(route.title, systemImage: route.symbol)
+                        }
+                    }
+                } header: {
+                    Text("Support")
+                }
+
                 Section {
                     Button {
                         alertUserDeletingAccount.toggle()
                     } label: {
-                        Label("Delete My Account", systemImage: "hammer")
+                        Label("Delete My Account", systemImage: "trash")
                             .foregroundColor(.red)
                     }
                 } header: {
                     Text("Permanent Actions")
                 } footer: {
-                    Text("All of your reports, updates, and settings will be removed once your account has been deleted. This is a permanent action and cannot be reversed.")
+                    Text("All of your information will be permanently deleted once approved. This is a permanent action and cannot be reversed. Continue at your own risk!")
                 }
             }
             .navigationTitle("Settings")
@@ -75,12 +124,34 @@ struct SettingsView: View {
                 case .notifications:
                     NotificationSettingsView()
                         .environmentObject(userVM)
+                case .email:
+                    EmailComposeView(composeMode: .feature)
+                        .canSendEmail()
+                case .privacyPolicy:
+                    PrivacyPolicyView()
+                case .appIntroduction:
+                    OnboardingInstructionsView()
                 }
             }
+            .fullScreenCover(isPresented: $isShowingBeSafeView) {
+                SafetyView()
+            }
             .toolbar {
+                ToolbarItem(placement: .navigationBarLeading) {
+                    Button("Close") {
+                        dismiss()
+                    }
+                }
                 ToolbarItem(placement: .navigationBarTrailing) {
                     if isLoading {
                         ProgressView()
+                    } else {
+                        Button {
+                            isShowingBeSafeView.toggle()
+                        } label: {
+                            Image(systemName: "checkerboard.shield")
+                                .foregroundColor(.green)
+                        }
                     }
                 }
             }
@@ -102,6 +173,16 @@ struct SettingsView: View {
             Button("OK") {}
         } message: {
             Text("An error occurred during the deletion process. Please try again.")
+        }
+        .onAppear {
+            getUserAccountStatus()
+        }
+    }
+    
+    private func getUserAccountStatus() {
+        Task {
+            let status = await userVM.getUserAccountStatus()
+            self.accountStatus = status
         }
     }
     

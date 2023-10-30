@@ -23,7 +23,7 @@ struct OnboardingLocationView: View {
                     .frame(width: 45, height: 45)
                 Text("Enable Location Services")
                     .font(.system(size: 25).weight(.heavy))
-                Text("Please enable notification services.")
+                Text("When enabling location services, your location will be used within reports, updates, and other setting configuration. Your location within reports and updates can be disclosed for your safety.")
             }
             Spacer()
             Group {
@@ -52,6 +52,9 @@ struct OnboardingLocationView: View {
             Spacer()
         }
         .padding()
+        .navigationTitle("Location")
+        .navigationBarTitleDisplayMode(.inline)
+        .hideNavigationTitle()
         .onAppear {
             onboardingVM.requestLocationServicesAccess()
         }

@@ -28,7 +28,7 @@ struct FirebaseDatabasesPaths {
     ///Path to Firebase users FCM tokens
     static let fcmTokenPath                  = "FcmTokens"
     ///Path to the updates of a report
-    static let reportUpdatesPath             = "Reports/Updates/"
+    static let reportUpdatesPath             = "Updates"
     ///Path to set a false report so admins can review it
     
     //MARK: False Reports

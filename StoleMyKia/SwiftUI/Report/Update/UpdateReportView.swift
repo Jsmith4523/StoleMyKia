@@ -31,6 +31,7 @@ struct UpdateReportView: View {
     
     let originalReport: Report
     
+    @State private var isShowingWarningView = false
     @State private var isUploading = false
     @State private var isShowingDescriptionView = false
     @State private var isShowingLocationSearchView = false
@@ -81,7 +82,7 @@ struct UpdateReportView: View {
                         HStack {
                             Text("VIN")
                             Spacer()
-                            Text("\(ApplicationFormats.vinFormat(originalReport.vehicle.vinString) ?? "")")
+                            Text(originalReport.vehicle.hiddenVinString)
                                 .font(.system(size: 17))
                                 .foregroundColor(.gray)
                         }
@@ -137,6 +138,7 @@ struct UpdateReportView: View {
                 
                 Section {
                     Toggle("Hide Location", isOn: $discloseLocation)
+                        .tint(.green)
                 } header: {
                     Text("Options")
                 }
@@ -150,16 +152,20 @@ struct UpdateReportView: View {
                     }
                 }
                 ToolbarItem(placement: .navigationBarTrailing) {
-                    Button("Update") {
-                        prepareForUpload()
+                    if isUploading {
+                        ProgressView()
+                    } else {
+                        Button("Update") {
+                            prepareForUpload()
+                        }
+                        .disabled(isSatisfied)
                     }
-                    .disabled(isSatisfied)
                 }
             }
             .alert("Unable to update report", isPresented: $presentError) {
                 Button("OK") {}
             } message: {
-                Text("The initial report is either no longer available, deleted, or had an issue receiving updates.")
+                Text("The initial cannot receive updates at the moment")
             }
             .alert("Unable to retrieve your current location", isPresented: $alertPresentLocationServicesDenied) {
                 Button("OK") {}
@@ -168,6 +174,9 @@ struct UpdateReportView: View {
             }
             .sheet(isPresented: $isShowingLocationSearchView) {
                 NearbyLocationSearchView(location: $location)
+            }
+            .sheet(isPresented: $isShowingWarningView) {
+                NewReportReminderView(postCompletion: prepareForUpload)
             }
             .customSheetView(isPresented: $isShowingDescriptionView, detents: [.large()], showsIndicator: true) {
                 ReportDescriptionView(description: $description)
@@ -178,35 +187,37 @@ struct UpdateReportView: View {
         .interactiveDismissDisabled()
     }
     
-    @MainActor
     private func prepareForUpload() {
         isUploading = true
-        Task {
-            do {
-                guard let uid = Auth.auth().currentUser?.uid else {
-                    throw NewReportError.userIdError
+        DispatchQueue.main.asyncAfter(deadline: .now() + 0.60) {
+            Task {
+                do {
+                    guard let uid = Auth.auth().currentUser?.uid else {
+                        throw NewReportError.userIdError
+                    }
+                    
+                    guard let userLocation = CLLocationManager.shared.usersCurrentLocation else {
+                        self.alertPresentLocationServicesDenied.toggle()
+                        self.isUploading = false
+                        return
+                    }
+                    
+                    var location: Location
+                    
+                    if discloseLocation {
+                        location = Location.disclose(lat: userLocation.latitude, long: userLocation.longitude)
+                    } else {
+                        location = Location(coordinate: userLocation)
+                    }
+                    
+                    var report = Report(uid: uid, type: updateReportType, Vehicle: self.originalReport.vehicle, details: self.description, location: location, discloseLocation: self.discloseLocation)
+                    report.setAsUpdate(originalReport.role.associatedValue)
+                    try await reportsVM.addUpdateToOriginalReport(originalReport: originalReport, report: report, vehicleImage: vehicleImage)
+                    dismiss()
+                } catch {
+                    isUploading = false
+                    self.presentError.toggle()
                 }
-                
-                guard let userLocation = CLLocationManager.shared.usersCurrentLocation else {
-                    self.alertPresentLocationServicesDenied.toggle()
-                    return
-                }
-                
-                var location: Location
-                
-                if discloseLocation {
-                    location = Location.disclose(lat: userLocation.latitude, long: userLocation.longitude)
-                } else {
-                    location = Location(coordinate: userLocation)
-                }
-                
-                var report = Report(uid: uid, type: updateReportType, Vehicle: self.originalReport.vehicle, details: self.description, location: location, discloseLocation: self.discloseLocation, allowsForUpdates: true)
-                report.setAsUpdate(originalReport.role.associatedValue)
-                try await reportsVM.addUpdateToOriginalReport(originalReport: originalReport, report: report, vehicleImage: vehicleImage)
-                dismiss()
-            } catch {
-                isUploading = false
-                self.presentError.toggle()
             }
         }
     }

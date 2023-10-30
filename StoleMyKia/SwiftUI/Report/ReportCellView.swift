@@ -16,11 +16,14 @@ struct ReportCellView: View {
     @EnvironmentObject var reportsVM: ReportsViewModel
     
     let report: Report
+    var imageMode: CellViewImageMode = .large
+    
+    @Environment (\.colorScheme) var colorScheme
     
     var body: some View {
         VStack {
             VStack(spacing: 0) {
-                if report.hasVehicleImage {
+                if (report.hasVehicleImage && imageMode == .large) {
                     Image(uiImage: vehicleImage ?? .vehiclePlaceholder)
                         .resizable()
                         .scaledToFill()
@@ -32,54 +35,67 @@ struct ReportCellView: View {
                             getVehicleImage()
                         }
                 }
-                VStack(alignment: .leading, spacing: 20) {
-                    VStack(alignment: .leading, spacing: 10) {
-                        VStack(alignment: .leading, spacing: 11) {
-                            ReportLabelView(report: report)
-                            VStack(alignment: .leading, spacing: 8) {
-                                Text(report.vehicleDetails)
-                                    .font(.system(size: 20).weight(.heavy))
-                                    .foregroundColor(Color(uiColor: .label))
-                                    .lineLimit(1)
-                                if (report.hasVin || report.hasLicensePlate) {
-                                    HStack {
-                                        if report.hasLicensePlate {
-                                            Text(report.vehicle.licensePlateString)
-                                        }
-                                        if (report.hasLicensePlate && report.hasVin) {
-                                            Divider()
-                                                .frame(height: 10)
-                                        }
-                                        if report.hasVin {
-                                            if let formattedVin = ApplicationFormats.vinFormat(report.vehicle.vinString) {
-                                            Text("VIN: \(formattedVin)")
+                HStack(alignment: .center) {
+                    VStack(alignment: .leading, spacing: 20) {
+                        VStack(alignment: .leading, spacing: 10) {
+                            VStack(alignment: .leading, spacing: 11) {
+                                ReportLabelView(report: report)
+                                VStack(alignment: .leading, spacing: 8) {
+                                    Text(report.vehicleDetails)
+                                        .font(.system(size: 20).weight(.heavy))
+                                        .foregroundColor(Color(uiColor: .label))
+                                        .lineLimit(imageMode == .thumbnail ? 2 : 1)
+                                    if (report.hasVin || report.hasLicensePlate) {
+                                        HStack {
+                                            if report.hasLicensePlate {
+                                                Text(report.vehicle.licensePlateString)
+                                            }
+                                            if report.hasLicensePlateAndVin {
+                                                Divider()
+                                                    .frame(height: 10)
+                                            }
+                                            if report.hasVin {
+                                                Text("VIN: \(report.vehicle.hiddenVinString)")
                                             }
                                         }
+                                        .font(.system(size: 15))
                                     }
-                                    .font(.system(size: 15))
+                                    Text(report.distinguishableDetails)
+                                        .font(.system(size: 15))
+                                        .lineLimit(3)
                                 }
-                                Text(report.distinguishableDetails)
-                                    .font(.system(size: 15))
-                                    .lineLimit(3)
                             }
+                            HStack {
+                                Text(report.timeSinceString())
+                                if !(report.location.distanceFromUser == "") {
+                                    Divider()
+                                        .frame(height: 10)
+                                    Text(report.location.distanceFromUser)
+                                }
+                                Spacer()
+                            }
+                            .foregroundColor(.gray)
+                            .font(.system(size: 15))
                         }
+                    }
+                    if (report.hasVehicleImage && imageMode == .thumbnail) {
                         HStack {
-                            Text(report.timeSinceString())
-                            if !(report.location.distanceFromUser == "") {
-                                Divider()
-                                    .frame(height: 10)
-                                Text(report.location.distanceFromUser)
-                            }
-                            Spacer()
+                            Image(uiImage: vehicleImage ?? .vehiclePlaceholder)
+                                .resizable()
+                                .scaledToFill()
+                                .frame(width: 100, height: 100)
+                                .clipShape(RoundedRectangle(cornerRadius: 15))
+                                .redacted(reason: vehicleImage == nil ? .placeholder : [])
+                                .onAppear {
+                                    getVehicleImage()
+                                }
                         }
-                        .foregroundColor(.gray)
-                        .font(.system(size: 15))
                     }
                 }
                 .padding()
             }
         }
-        .background(Color(uiColor: .systemBackground))
+        .background(colorScheme == .dark ? .black : .white)
         .multilineTextAlignment(.leading)
     }
     
@@ -156,7 +172,7 @@ extension View  {
     
     @ViewBuilder
     func reportTypeLabelStyle(report: Report) -> some View {
-        HStack {
+        HStack(spacing: 4) {
             if report.isFalseReport {
                 Image.falseReportIcon
                     
@@ -178,38 +194,40 @@ extension View  {
     @ViewBuilder
     func reportResolvedLabel() -> some View {
         Image(systemName: "checkmark.seal.fill")
-            .font(.system(size: 16).weight(.heavy))
-            .padding(4)
-            .foregroundColor(.white)
-            .background(Color.green)
-            .clipShape(RoundedRectangle(cornerRadius: 5))
+            .reportLabelStyle(backgroundColor: .green)
     }
     
     @ViewBuilder
     func reportCurrentUserLabel() -> some View {
         Image(systemName: "person.crop.circle.fill")
-            .font(.system(size: 16.5).weight(.heavy))
-            .padding(4)
-            .foregroundColor(.white)
-            .background(Color.gray)
-            .clipShape(RoundedRectangle(cornerRadius: 5))
+            .reportLabelStyle(backgroundColor: .gray)
     }
     
     @ViewBuilder
     func reportDiscloseLocationLabel() -> some View {
         Image(systemName: "mappin.slash.circle")
-            .font(.system(size: 18).weight(.heavy))
+            .reportLabelStyle(backgroundColor: .blue)
+    }
+}
+
+private extension Image {
+    
+    func reportLabelStyle(backgroundColor: Color) -> some View {
+        return self
+            .resizable()
+            .scaledToFit()
+            .frame(width: 20, height: 20)
             .padding(4)
-            .background(Color.blue)
-            .clipShape(RoundedRectangle(cornerRadius: 5))
-            .frame(width: 40, height: 40)
             .foregroundColor(.white)
+            .background(backgroundColor)
+            .clipShape(RoundedRectangle(cornerRadius: 5))
+            .fontWeight(.bold)
     }
 }
 
 struct ReportCellView_Previews: PreviewProvider {
     static var previews: some View {
-        ReportCellView(report: [Report].testReports().first!)
+        ReportCellView(report: [Report].testReports().first!, imageMode: .thumbnail)
             .environmentObject(ReportsViewModel())
             .environmentObject(UserViewModel())
     }

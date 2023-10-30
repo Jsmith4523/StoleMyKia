@@ -8,7 +8,7 @@
 import Foundation
 
 
-enum ReportRole: Identifiable, Codable, Equatable, Comparable {
+enum ReportRole: Identifiable, Codable, Equatable, Comparable, Hashable {
     
     enum Role: String, Identifiable, Comparable, CaseIterable {
         
@@ -132,9 +132,9 @@ enum ReportRole: Identifiable, Codable, Equatable, Comparable {
     var discloseRadiusSize: CGFloat {
         switch self.role {
         case .original:
-            return 875
+            return 925
         case .update:
-            return 450
+            return 515
         }
     }
     

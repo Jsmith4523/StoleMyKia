@@ -7,18 +7,54 @@
 
 import SwiftUI
 
-struct Search: View {
+struct SearchView: View {
     
-    @EnvironmentObject var reportsVM: ReportsViewModel
-    @EnvironmentObject var userVM: UserViewModel
+    @State private var pushToResultsView = false
+    
+    @StateObject private var searchVM = SearchViewModel()
+    @ObservedObject var reportsVM: ReportsViewModel
+    @ObservedObject var userVM: UserViewModel
 
     var body: some View {
         NavigationStack {
-            
+            ZStack {
+                ZStack {
+                    VStack {
+                        Image(systemName: ApplicationTabViewSelection.search.symbol)
+                            .resizable()
+                            .scaledToFit()
+                            .frame(width: 35, height: 35)
+                        VStack(spacing: 4) {
+                            Text("Search")
+                                .font(.system(size: 25).weight(.heavy))
+                            Text("Start searching for reports or information you have regarding a vehicle.")
+                                .font(.system(size: 16))
+                                .foregroundColor(.gray)
+                        }
+                        .multilineTextAlignment(.center)
+                        Spacer()
+                            .frame(height: 100)
+                    }
+                }
+                .padding()
+                NavigationLink("", isActive: $pushToResultsView) {
+                    SearchResultsView()
+                        .environmentObject(searchVM)
+                        .environmentObject(reportsVM)
+                        .environmentObject(userVM)
+                }
+            }
+            .navigationTitle("Search")
+            .navigationBarTitleDisplayMode(.inline)
+            .searchable(text: $searchVM.search, placement: .automatic, prompt: "License Plate, VIN, Description, etc.")
+            .onSubmit(of: .search) {
+                guard !(searchVM.search.allSatisfy({$0.isWhitespace})) else { return }
+                pushToResultsView.toggle()
+            }
         }
     }
 }
 
 #Preview {
-    Search()
+    SearchView(reportsVM: ReportsViewModel(), userVM: UserViewModel())
 }

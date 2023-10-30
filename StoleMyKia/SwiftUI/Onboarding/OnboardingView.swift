@@ -21,10 +21,10 @@ struct OnboardingView: View {
                     .frame(height: 85)
                 VStack {
                     VStack(spacing: 10) {
-                        Image(systemName: "person.3.fill")
+                        Image(systemName: "car.fill")
                             .resizable()
                             .scaledToFit()
-                            .frame(width: 75, height: 75)
+                            .frame(width: 55, height: 55)
                         Text("Thanks for using \(UIApplication.appName ?? "the application")!")
                             .font(.system(size: 25).weight(.heavy))
                         Text("Before you begin, we want to ensure you're receiving the best experience when using the application.")
@@ -46,6 +46,9 @@ struct OnboardingView: View {
                 .padding()
             }
             .multilineTextAlignment(.center)
+            .navigationTitle("Start")
+            .navigationBarTitleDisplayMode(.inline)
+            .hideNavigationTitle()
             .navigationBarBackButtonHidden(true)
             .alert("Skip Onboarding?", isPresented: $alertSkippingOnboarding) {
                 Button("Skip") { }

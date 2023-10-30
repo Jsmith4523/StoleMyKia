@@ -26,35 +26,45 @@ final class NotificationManager {
     
     /// Retrieve the current signed in users notifications
     /// - Returns: The users notifications.
-    func fetchUserCurrentNotifications() async throws -> [AppUserNotification] {
+    func fetchUserCurrentNotifications(notifications: [AppUserNotification]) async throws -> [AppUserNotification] {
         guard let currentUser = Auth.auth().currentUser else {
             throw NotificationManagerError.userError
         }
         
-        let documents = try await Firestore.firestore()
+        let notifications = try await Firestore.firestore()
             .collection(FirebaseDatabasesPaths.usersDatabasePath)
             .document(currentUser.uid)
             .collection(FirebaseDatabasesPaths.userNotificationPath)
-            .limit(to: 10)
+            .order(by: "dt", descending: true)
+            .limit(to: notifications.isEmpty ? 5 : notifications.count)
             .getDocuments()
             .documents
-            
-        do {
-            let values = documents
-                .map({$0.data()})
-            
-            var notifications = [AppUserNotification]()
-            
-            for value in values {
-                let data = try JSONSerialization.data(withJSONObject: value)
-                let notification = try JSONDecoder().decode(AppUserNotification.self, from: data)
-                notifications.append(notification)
-            }
-            
-            return notifications
-        } catch {
-            throw NotificationManagerError.codableError
+            .map({$0.data()})
+            .map({try JSONSerialization.data(withJSONObject: $0)})
+            .map({try JSONDecoder().decode(AppUserNotification.self, from: $0)})
+        
+        return notifications
+    }
+    
+    func fetchMoreNotifications(after notification: AppUserNotification) async throws -> [AppUserNotification] {
+        guard let currentUser = Auth.auth().currentUser else {
+            throw NotificationManagerError.userError
         }
+        
+        let notifications = try await Firestore.firestore()
+            .collection(FirebaseDatabasesPaths.usersDatabasePath)
+            .document(currentUser.uid)
+            .collection(FirebaseDatabasesPaths.userNotificationPath)
+            .order(by: "dt", descending: true)
+            .start(after: [notification.dt])
+            .limit(to: 5)
+            .getDocuments()
+            .documents
+            .map({$0.data()})
+            .map({try JSONSerialization.data(withJSONObject: $0)})
+            .map({try JSONDecoder().decode(AppUserNotification.self, from: $0)})
+        
+        return notifications
     }
     
     ///Start listening for notifications for the current signed in user. Completion is fired when a new document is added, deleted, or modified.
@@ -76,15 +86,17 @@ final class NotificationManager {
     
     /// Updates a notification document that a user has read.
     /// - Parameter id: The UUID of the notification
-    func updateNotificationReadStatus(_ id: String) async throws {
-        guard let currentUser = Auth.auth().currentUser else { return }
-        
-        try await Firestore.firestore()
-            .collection(FirebaseDatabasesPaths.usersDatabasePath)
-            .document(currentUser.uid)
-            .collection(FirebaseDatabasesPaths.userNotificationPath)
-            .document(id)
-            .updateData([AppUserNotification.isReadKey: true])
+    func updateNotificationReadStatus(_ id: String) {
+        Task {
+            guard let currentUser = Auth.auth().currentUser else { return }
+            
+            try? await Firestore.firestore()
+                .collection(FirebaseDatabasesPaths.usersDatabasePath)
+                .document(currentUser.uid)
+                .collection(FirebaseDatabasesPaths.userNotificationPath)
+                .document(id)
+                .updateData([AppUserNotification.isReadKey: true])
+        }
     }
     
     ///Checks firebase for number of unread notifications
@@ -92,15 +104,16 @@ final class NotificationManager {
         guard let currentUser = Auth.auth().currentUser else { return 0 }
         
         do {
-            let documents = try await Firestore.firestore()
+            let queryCount = try await Firestore.firestore()
                 .collection(FirebaseDatabasesPaths.usersDatabasePath)
                 .document(currentUser.uid)
                 .collection(FirebaseDatabasesPaths.userNotificationPath)
-                .whereFilter(.whereField(AppUserNotification.isReadKey, isEqualTo: false))
+                .whereField("isRead", isEqualTo: false)
                 .getDocuments()
                 .documents
-            
-            return documents.count
+                .count
+                        
+            return queryCount
         } catch {
             return 0
         }

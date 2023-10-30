@@ -14,6 +14,10 @@ class TimelinePolyline: MKPolyline {
 }
 
 extension TimelinePolyline {
+
+    static var edgePadding: UIEdgeInsets {
+        return .init(top: 100, left: 100, bottom: 100, right: 100)
+    }
     
     var containsInitialReport: Bool {
         return (self.reports.filter({$0.role.isInitial}).count == 1)
@@ -31,10 +35,6 @@ extension TimelinePolyline {
     }
     
     var strokeColor: UIColor {
-        if containsInitialReport && mustDiscloseLocation {
-            return .gray.withAlphaComponent(0.75)
-        }
-        
         if containsInitialReport {
             if let initialReport = reports.filter({$0.role.isInitial}).first {
                 return initialReport.reportType.annotationColor
@@ -45,21 +45,23 @@ extension TimelinePolyline {
             return .systemBlue
         }
     }
+    
+    var strokeWidth: CGFloat {
+        switch mustDiscloseLocation {
+        case true:
+            return 1.75
+        case false:
+            return 2.5
+        }
+    }
 }
 
 extension [TimelinePolyline] {
     
-    ///Retrieves the best bounding map rect of multiple polylines.
-    func getBestRect() {
-        guard !(self.isEmpty) else {
-            return
-        }
-        
-        guard self.count > 1 else {
-            if let first {
-                return
-            }
-            return
-        }
+    ///Retrieves the last timeline bounding map rect.
+    func latestTimelineRect() -> MKMapRect? {
+        guard !isEmpty else { return nil }
+        let boundingMapRect = self.sorted(by: {$0.reports.sorted(by: >).first!.dt > $1.reports.sorted(by: >).first!.dt}).first!.boundingMapRect
+        return boundingMapRect
     }
 }

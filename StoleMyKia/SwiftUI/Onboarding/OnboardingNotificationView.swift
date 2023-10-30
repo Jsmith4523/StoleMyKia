@@ -29,9 +29,9 @@ struct OnboardingNotificationView: View {
             Group {
                 switch onboardingVM.notificationAuthStatus {
                 case .authorized:
-                    Text("Notifications Enabled!")
+                    Text("Notifications Enabled")
                 case .disabled:
-                    Text("Notifications Disabled!")
+                    Text("Notifications Disabled")
                 case .notDetermined:
                     Text("Requesting...")
                 case .error:
@@ -52,6 +52,9 @@ struct OnboardingNotificationView: View {
             Spacer()
         }
         .padding()
+        .navigationTitle("Notifications")
+        .navigationBarTitleDisplayMode(.inline)
+        .hideNavigationTitle()
         .multilineTextAlignment(.center)
         .onAppear {
             onboardingVM.requestNotificationAccess()
