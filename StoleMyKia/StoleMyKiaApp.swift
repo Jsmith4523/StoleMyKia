@@ -17,10 +17,6 @@ struct StoleMyKiaApp: App {
     @StateObject private var firebaseAuthVM = FirebaseAuthViewModel()
     @UIApplicationDelegateAdaptor (AppDelegate.self) var appDelegate
     
-    init() {
-        
-    }
-    
     var body: some Scene {
         WindowGroup {
             ZStack {

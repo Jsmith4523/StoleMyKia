@@ -38,12 +38,13 @@ struct NewReportView: View {
     
     @State private var doesNotHaveVehicleIdentification = false
         
-    @State private var discloseLocation = false
+    @State private var discloseLocation = true
     @State private var allowsForUpdates = true
     @State private var allowsForContact = false
     
     @State private var disablesLicensePlateAndVinSection = false
     
+    @State private var isShowingBeSafeView = false
     @State private var isShowingWarningView = false
     @State private var isShowingReportDescriptionView = false
     @State private var isShowingImagePicker = false
@@ -176,9 +177,9 @@ struct NewReportView: View {
                         Text("Vehicle Identification")
                     } footer: {
                         if doesNotHaveVehicleIdentification {
-                            Text("Difficulty identify this vehicle may vary!")
+                            Text("Difficulty identifying the vehicle and the likelihood of receiving a 'False Report' increases.")
                         } else {
-                            Text("Please enter the vehicles full license plate and/or VIN. Depending on the report type, at least one field is required. Do not include any spaces or special characters.")
+                            Text("Please enter the vehicles full license plate and/or VIN. Depending on the report type, at least one field is required. When including a VIN, it decreases the likelihood of receiving a 'False Report'. Do not include any spaces and/or special characters.")
                         }
                     }
                 }
@@ -190,7 +191,7 @@ struct NewReportView: View {
                 } header: {
                     Text("Description")
                 } footer: {
-                    Text("Describe your situation.")
+                    Text("Please describe your situation.")
                 }
                 
                 Section {
@@ -203,7 +204,7 @@ struct NewReportView: View {
                 } header: {
                     Text("Photo")
                 } footer: {
-                    Text("Include an image you have of the vehicle that would properly distinguish it from others.")
+                    Text("Please include an appropriate and identifiable image of the vehicle.")
                 }
                 .disabled(!vehicleImage.isNil())
             }
@@ -219,7 +220,14 @@ struct NewReportView: View {
                             .bold()
                     }
                 }
-                ToolbarItem(placement: .navigationBarTrailing) {
+                ToolbarItemGroup(placement: .navigationBarTrailing) {
+                    Button {
+                        isShowingBeSafeView.toggle()
+                    } label: {
+                        Image(systemName: "checkerboard.shield")
+                            .foregroundColor(.green)
+                    }
+
                     if isUploading {
                         ProgressView()
                     } else {
@@ -273,6 +281,9 @@ struct NewReportView: View {
         .sheet(isPresented: $isShowingWarningView) {
             NewReportReminderView(postCompletion: upload)
         }
+        .fullScreenCover(isPresented: $isShowingBeSafeView) {
+            SafetyView()
+        }
         .confirmationDialog("", isPresented: $isShowingPhotoRemoveConfirmation) {
             Button("Remove", role: .destructive) {
                 vehicleImage = nil
@@ -286,6 +297,7 @@ struct NewReportView: View {
             Text(alertReason?.rawValue ?? "We ran into a problem completing that request. Please try again")
         }
         .alert("Your location could not be retrieved at the moment", isPresented: $alertSelectLocation) {
+            Button("Location Settings") { URL.openApplicationSettings() }
             Button("OK") { }
         } message: {
             Text("Please try again once location services are enabled and your device connection is stable.")

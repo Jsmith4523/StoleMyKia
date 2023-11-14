@@ -16,10 +16,12 @@ class FirebaseUserManager {
         case userError
         case userSettingsError
         case doesNotExist
+        case reportDoesNotAllowContact
         case reportDoesNotExist
         case bookmarksError
         case dataError
         case codableError
+        case contactNumberError
     }
     
     static let shared = FirebaseUserManager()
@@ -294,6 +296,55 @@ class FirebaseUserManager {
         } catch {
             return nil
         }
+    }
+    
+    private static func reportAllowsForContact(report: Report) async throws {
+        
+        if report.role.isAnUpdate {
+            //Checking if the initial report exist and has not been resolved...
+            let initialReport = try await Firestore.firestore()
+                .collection(FirebaseDatabasesPaths.reportsDatabasePath)
+                .document(report.role.associatedValue.uuidString)
+                .getDocument()
+            
+            guard initialReport.exists else {
+                throw ReportManagerError.doesNotExist
+            }
+            
+            guard let resolvedValue = initialReport.get("hasBeenResolved") as? Bool, !(resolvedValue) else {
+                throw FirebaseUserManagerError.reportDoesNotAllowContact
+            }
+        } else {
+            let report = try await Firestore.firestore()
+                .collection(FirebaseDatabasesPaths.reportsDatabasePath)
+                .document(report.id.uuidString)
+                .getDocument()
+            
+            guard let allowsForContact = report.get("allowsForContact") as? Bool, let hasBeenResolved = report.get("hasBeenResolved") as? Bool, allowsForContact, !(hasBeenResolved) else {
+                throw FirebaseUserManagerError.reportDoesNotAllowContact
+            }
+        }
+    }
+
+    /// Contact a user via phone call
+    /// - Parameter uid: The uid of the user to contact
+    static func contactUser(report: Report?, for uid: String) async throws {
+        
+        if let report {
+            try await self.reportAllowsForContact(report: report)
+        }
+        
+        let phoneNumber = try await Firestore.firestore()
+            .collection(FirebaseDatabasesPaths.usersDatabasePath)
+            .document(uid)
+            .getDocument()
+            .get(AppUser.CodingKeys.phoneNumber.rawValue)
+        
+        guard let phoneNumber = phoneNumber as? String, let url = URL(string: "tel://\(phoneNumber)"), UIApplication.shared.canOpenURL(url) else {
+            throw FirebaseUserManagerError.contactNumberError
+        }
+        
+        await UIApplication.shared.open(url)
     }
         
     deinit {

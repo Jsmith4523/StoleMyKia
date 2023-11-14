@@ -21,7 +21,7 @@ class FalseReportManager {
     }
         
     func uploadFalseReport(_ falseReport: FalseReport) async throws {
-        guard let currentUser = Auth.auth().currentUser else {
+        guard Auth.auth().currentUser.isSignedIn else {
             throw FirebaseAuthManager.FirebaseAuthManagerError.userError
         }
         

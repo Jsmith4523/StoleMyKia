@@ -56,7 +56,7 @@ enum ComposeMode: Identifiable {
         case .feature:
             return "**Remove this text and tell us what new features and/or improve you would like to see!**"
         case .issue:
-            return "**Remove this text and tell us what issues you're encountering! Please include your phone number if necessary.**"
+            return "**Remove this text and include your iOS version, phone number, and anything else that is happening...**"
         }
     }
 }

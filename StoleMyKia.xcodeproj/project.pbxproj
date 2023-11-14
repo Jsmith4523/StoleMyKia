@@ -758,9 +758,9 @@
 			children = (
 				24CC5EFA2A745DE70078C921 /* ApplicationTabView.swift */,
 				24CC5EF52A745DE70078C921 /* Feed */,
+				24E8C7E82AEA246900830AF2 /* Search */,
 				24CC5EDF2A745DE70078C921 /* Notification */,
 				244BD3F92AB954FA00192AD1 /* My Stuff */,
-				24E8C7E82AEA246900830AF2 /* Search */,
 			);
 			path = Tabview;
 			sourceTree = "<group>";
@@ -1531,7 +1531,7 @@
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				MARKETING_VERSION = 1.0;
+				MARKETING_VERSION = 0.1.0;
 				PRODUCT_BUNDLE_IDENTIFIER = JaylenKSmith.StoleMyKia;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE_SPECIFIER = "";
@@ -1578,7 +1578,7 @@
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				MARKETING_VERSION = 1.0;
+				MARKETING_VERSION = 0.1.0;
 				PRODUCT_BUNDLE_IDENTIFIER = JaylenKSmith.StoleMyKia;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE_SPECIFIER = "";

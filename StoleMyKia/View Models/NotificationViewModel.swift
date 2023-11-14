@@ -132,6 +132,7 @@ extension NotificationViewModel: MessagingDelegate {
     
     
     func messaging(_ messaging: Messaging, didReceiveRegistrationToken fcmToken: String?) {
+        //Updates device token in UserDefaults and Firestore
         saveDeviceTokenToFirestore(token: fcmToken)
     }
 }

@@ -39,7 +39,7 @@ class ApplicationFormats {
             .map({"\($0)"})
             .joined()
         if parentheses {
-            formattedNumber.append(contentsOf: "+1"+" (\(left))-"+middle+right)
+            formattedNumber.append(contentsOf: "+1"+" (\(left)) "+middle+right)
         } else {
             formattedNumber.append(contentsOf: "+1"+"\(left)-"+middle+right)
         }

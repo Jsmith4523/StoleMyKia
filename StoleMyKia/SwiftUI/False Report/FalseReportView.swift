@@ -6,6 +6,7 @@
 //
 
 import SwiftUI
+import FirebaseAuth
 
 struct FalseReportView: View {
     
@@ -79,6 +80,7 @@ struct FalseReportView: View {
                     } label: {
                         Image(systemName: "xmark")
                     }
+                    .disabled(falseReportType == nil)
                 }
                 ToolbarItem(placement: .navigationBarTrailing) {
                     if !(falseReportType == nil) {
@@ -103,9 +105,9 @@ struct FalseReportView: View {
             Text("Sorry, we were unable to complete that request. Please try again later")
         }
         .alert("Thank you! Your complaint has been sent", isPresented: $presentSuccessAlert) {
-            Button("Great") { dismiss() }
+            Button("OK") { dismiss() }
         } message: {
-            Text("Once received, we will review and determine a decision.")
+            Text("Once received, we will review your submission and determine the best decision.")
         }
     }
     
@@ -141,29 +143,22 @@ struct FalseReportView: View {
     private func uploadFalseReport() {
         isUploading = true
         
-        guard let falseReportType else {
-            isUploading = false
+        guard let currentUser = Auth.auth().currentUser else {
             return
         }
-//        
-//        guard let uid = userVM.uid else {
-//            isUploading = false
-//            presentError = true
-//            return
-//        }
-//        
-//        let falseReport = FalseReport(uid: uid, report: report, type: falseReportType, comments: comments)
-//        
-//        Task {
-//            do {
-//                try await FalseReportManager.shared.uploadFalseReport(falseReport)
-//                isUploading = false
-//                presentSuccessAlert = true
-//            } catch {
-//                isUploading = false
-//                presentError = true
-//            }
-//        }
+        
+        let falseReport = FalseReport(authorUid: report.uid, reporterUid: currentUser.uid, report: report, type: falseReportType!, comments: comments)
+        
+        Task {
+            do {
+                try await FalseReportManager.shared.uploadFalseReport(falseReport)
+                isUploading = false
+                presentSuccessAlert.toggle()
+            } catch {
+                isUploading = false
+                presentError.toggle()
+            }
+        }
     }
 }
 

@@ -66,7 +66,7 @@ final class UserReportsManager {
         var reports = [Report]()
         
         for id in reportIds {
-            if let uuid = UUID.ID(uuidString: id), let report = try await ReportManager.manager.fetchSingleReport(uuid) {
+            if let uuid = UUID.ID(uuidString: id), let report = try await ReportManager.manager.fetchSingleReport(uuid, errorIfUnavaliable: false) {
                 reports.append(report)
             }
         }

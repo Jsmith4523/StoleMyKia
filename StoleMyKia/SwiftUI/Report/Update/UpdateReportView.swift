@@ -31,12 +31,14 @@ struct UpdateReportView: View {
     
     let originalReport: Report
     
+    @State private var isShowingBeSafeView = false
     @State private var isShowingWarningView = false
     @State private var isUploading = false
     @State private var isShowingDescriptionView = false
     @State private var isShowingLocationSearchView = false
     
     @State private var discloseLocation = false
+    @State private var allowsForContact = false
     
     @State private var alertPresentLocationServicesDenied = false
     @State private var presentError = false
@@ -139,8 +141,12 @@ struct UpdateReportView: View {
                 Section {
                     Toggle("Hide Location", isOn: $discloseLocation)
                         .tint(.green)
+                    Toggle("Contact Me", isOn: $allowsForContact)
+                        .tint(.green)
                 } header: {
                     Text("Options")
+                } footer: {
+                    Text("The 'Contact User' option is visible to other users, but is disabled if the initial report is deleted or has been resolved. You can manually disable contacting as well.")
                 }
             }
             .navigationTitle("Update Report")
@@ -151,7 +157,13 @@ struct UpdateReportView: View {
                         dismiss()
                     }
                 }
-                ToolbarItem(placement: .navigationBarTrailing) {
+                ToolbarItemGroup(placement: .navigationBarTrailing) {
+                    Button {
+                        isShowingBeSafeView.toggle()
+                    } label: {
+                        Image(systemName: "checkerboard.shield")
+                            .foregroundColor(.green)
+                    }
                     if isUploading {
                         ProgressView()
                     } else {
@@ -165,9 +177,10 @@ struct UpdateReportView: View {
             .alert("Unable to update report", isPresented: $presentError) {
                 Button("OK") {}
             } message: {
-                Text("The initial cannot receive updates at the moment")
+                Text("The initial report cannot receive updates at the moment")
             }
-            .alert("Unable to retrieve your current location", isPresented: $alertPresentLocationServicesDenied) {
+            .alert("Unable to retrieve current location", isPresented: $alertPresentLocationServicesDenied) {
+                Button("Location Settings") { URL.openApplicationSettings() }
                 Button("OK") {}
             } message: {
                 Text("Please check your location services settings and/or network connectivity and try again.")
@@ -182,6 +195,9 @@ struct UpdateReportView: View {
                 ReportDescriptionView(description: $description)
             }
             .imagePicker(source: $photoPickerSourceType, image: $vehicleImage)
+            .fullScreenCover(isPresented: $isShowingBeSafeView) {
+                SafetyView()
+            }
         }
         .disabled(isUploading)
         .interactiveDismissDisabled()
@@ -211,6 +227,7 @@ struct UpdateReportView: View {
                     }
                     
                     var report = Report(uid: uid, type: updateReportType, Vehicle: self.originalReport.vehicle, details: self.description, location: location, discloseLocation: self.discloseLocation)
+                    report.allowsForContact = allowsForContact
                     report.setAsUpdate(originalReport.role.associatedValue)
                     try await reportsVM.addUpdateToOriginalReport(originalReport: originalReport, report: report, vehicleImage: vehicleImage)
                     dismiss()
@@ -223,7 +240,7 @@ struct UpdateReportView: View {
     }
 }
 
-//
-//#Preview {
-//    UpdateReportView(originalReport: [Report].testReports().first!)
-//}
+
+#Preview {
+    UpdateReportView(originalReport: [Report].testReports().first!)
+}

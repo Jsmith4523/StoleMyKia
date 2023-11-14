@@ -21,17 +21,21 @@ struct ReportDetailView: View {
         case presentWhenSelected
     }
     
+    @State private var vehicleVin = ""
+    
     @State private var report: Report!
     
     @State private var isBookmarked: Bool = false
     @State private var updateQuantity: Int?
     
+    @State private var showProgressView = false
     @State private var isLoading = false
-    
     @State private var loadStatus: ReportLoadStatus = .loading
     
+    @State private var presentVinVerificationView = false
     @State private var presentDisableUpdatesAlert = false
     @State private var presentResolveReportsAlert = false
+    @State private var presentVinInvalidAlert = false
     @State private var presentGenericErrorAlert = false
     @State private var presentDeleteAlert = false
     @State private var presentFailedDeletingReportAlert = false
@@ -98,6 +102,13 @@ struct ReportDetailView: View {
                             .foregroundColor(Color(uiColor: .label))
                     }
                 }
+            }
+        }
+        
+        .overlay {
+            if showProgressView {
+                FilmProgressView()
+                    .ignoresSafeArea()
             }
         }
     }
@@ -239,13 +250,18 @@ struct ReportDetailView: View {
                         }
                     }
                 }
+                if (report.allowsForContact) {
+                    Button("Disable Contacting") {
+                        disableContacting()
+                    }
+                }
                 Button("Delete", role: .destructive) {
                     presentDeleteAlert.toggle()
                 }
             } else {
-                if (report.allowsForUpdates && !(report.hasBeenResolved && report.belongsToUser)) {
+                if (report.allowsForContact && !(report.hasBeenResolved && report.belongsToUser)) {
                     Button("Contact User") {
-                        
+                        contactUser()
                     }
                 }
                 Button("False Report") {
@@ -293,6 +309,23 @@ struct ReportDetailView: View {
         } message: {
             Text("An error occurred attempting to process that request. Please try again.")
         }
+        .alert("Please Verify VIN", isPresented: $presentVinVerificationView) {
+            TextField("VIN", text: $vehicleVin)
+            Button("Cancel") {}
+            Button("Verify", action: verifyVin)
+        } message: {
+            Text("This report includes a Vehicle Identification Number (VIN). Pleas enter the full VIN to continue")
+        }
+        .alert("Verification Error", isPresented: $presentVinInvalidAlert) {
+            Button("OK") {}
+        } message: {
+            Text("Sorry, that VIN does not match.")
+        }
+        .onChange(of: vehicleVin) { _ in
+            if vehicleVin.count > 17 {
+                self.vehicleVin = ""
+            }
+        }
         .task {
             if updateQuantity.isNil() {
                 await getUpdateQuantity()
@@ -308,7 +341,7 @@ struct ReportDetailView: View {
                     if !(report.isFalseReport) {
                         if (report.allowsForUpdates && !report.hasBeenResolved) {
                             Button {
-                                isShowingUpdateReportView.toggle()
+                                presentUpdateReportView()
                             } label: {
                                 Label("Update Report", systemImage: "arrow.2.squarepath")
                             }
@@ -421,6 +454,21 @@ struct ReportDetailView: View {
         }
     }
     
+    private func disableContacting() {
+        isLoading = true
+        self.loadStatus = .loading
+        Task {
+            do {
+                try await ReportManager.manager.disableContacting(reportId)
+                await fetchReportDetails()
+                isLoading = false
+            } catch {
+                isLoading = false
+                presentGenericErrorAlert.toggle()
+            }
+        }
+    }
+    
     private func resolveReport() {
         isLoading = true
         self.loadStatus = .loading
@@ -450,6 +498,36 @@ struct ReportDetailView: View {
     private func getUpdateQuantity() async {
         let quantity = await reportsVM.getNumberOfReportUpdates(report: report)
         self.updateQuantity = quantity
+    }
+    
+    private func contactUser() {
+        showProgressView = true
+        
+        Task {
+            do {
+                try await FirebaseUserManager.contactUser(report: report, for: report.uid)
+                showProgressView = false
+            } catch {
+                showProgressView = false
+                presentGenericErrorAlert.toggle()
+            }
+        }
+    }
+    
+    private func verifyVin() {
+        guard vehicleVin == report.vehicle.vinString else {
+            presentVinInvalidAlert.toggle()
+            return
+        }
+        isShowingUpdateReportView.toggle()
+    }
+    
+    private func presentUpdateReportView() {
+        if report.hasVin && !(report.belongsToUser) {
+            presentVinVerificationView.toggle()
+        } else {
+            isShowingUpdateReportView.toggle()
+        }
     }
 }
 

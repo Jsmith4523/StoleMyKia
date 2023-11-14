@@ -31,28 +31,18 @@ struct SearchResultsView: View {
                     FeedListView(reports: $reports, cellImageMode: .thumbnail, onDeleteCompletion: refresh)
                         .environmentObject(reportsVM)
                         .environmentObject(userVM)
-                    
-                    /*Devices before iOS 17.0 are having issues where this view does the following:
-                     
-                     1) Does not update color scheme unless the view is dismissed and re-presented.
-                     2) ScrollView and UITabBar issue where the UITabBar visibly shows tab items over cell views.
-                     
-                     Making a small spacer below the list view to present the awkward UITabBar overlay. Still cannot figure out color scheme issue
-                     
-                     */
-                    
-                    if #available(iOS 17.0, *) {
-                        
-                    } else {
-                        Spacer()
-                            .frame(height: 5)
-                    }
                 case .empty:
                     SearchResultsEmptyView()
                 case .error:
                     ErrorView()
                 }
             }
+            /*Devices before iOS 17.0 are having issues where this view does the following:
+             
+             1) Does not update color scheme unless the view is dismissed and re-presented.
+             2) ScrollView and UITabBar issue where the UITabBar visibly shows tab items over cell views.
+             
+             */
         }
         .navigationTitle("Results")
         .navigationBarTitleDisplayMode(.inline)

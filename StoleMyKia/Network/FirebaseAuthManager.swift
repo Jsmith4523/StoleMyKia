@@ -73,16 +73,8 @@ class FirebaseAuthManager {
                 throw FirebaseAuthManagerError.userStatusError("Status field is missing!")
             }
             
-            guard let userStatus = AppUser.Status(rawValue: rawValue) else {
+            guard !(AppUser.Status(rawValue: rawValue) == nil) else {
                 throw FirebaseAuthManagerError.userStatusError("Invalid user status!")
-            }
-            
-            guard !(userStatus == .banned) else {
-                throw FirebaseAuthManagerError.userBanned
-            }
-            
-            guard !(userStatus == .disabled) else {
-                throw FirebaseAuthManagerError.userDisabled
             }
         }
         

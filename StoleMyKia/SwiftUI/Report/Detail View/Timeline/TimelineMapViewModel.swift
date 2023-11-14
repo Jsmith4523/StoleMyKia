@@ -54,6 +54,7 @@ final class TimelineMapViewModel: NSObject, ObservableObject {
         do {
             guard try await ReportManager.manager.reportDoesExist(id) else {
                 self.timelineListMode = .noLongerAvaliable
+                self.isLoading = false
                 return
             }
             
@@ -95,13 +96,25 @@ final class TimelineMapViewModel: NSObject, ObservableObject {
         }
     }
     
-    func deselectAnnotation() {
+    private func deselectAnnotation() {
         if let mapView {
             if let selectedAnnotation = mapView.selectedAnnotations.first {
                 mapView.deselectAnnotation(selectedAnnotation, animated: true)
             }
         }
     }
+    
+    func moveToUsersLocation() {
+        guard let userLocation = CLLocationManager.shared.usersCurrentLocation else {
+            UINotificationFeedbackGenerator().notificationOccurred(.error)
+            return
+        }
+        
+        let userLocationRegion = MKCoordinateRegion(center: userLocation, span: .init(latitudeDelta: 0.0010, longitudeDelta: 0.010))
+        mapView?.setRegion(userLocationRegion, animated: false)
+    }
+    
+    
         
     deinit {
         mapView = nil

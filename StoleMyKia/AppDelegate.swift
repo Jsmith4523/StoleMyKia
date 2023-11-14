@@ -20,6 +20,7 @@ class AppDelegate: UIScene, UIApplicationDelegate {
         settings.isPersistenceEnabled = false
         
         Firestore.firestore().settings = settings
+        Messaging.messaging().delegate = self
         
         setContentNotificationCategory()
                 
@@ -51,6 +52,9 @@ extension AppDelegate: UNUserNotificationCenterDelegate {
         guard Auth.auth().currentUser.isSignedIn else { return }
         
         let userInfo = response.notification.request.content.userInfo
+        
+        //Accessing the top view controller and dismissing.
+        //This is to ensure we do not present another map view which will can high memory consumption
         let rootVC = UIApplication.shared.windows.first?.rootViewController
         
         rootVC?.dismiss(animated: true)
@@ -60,7 +64,10 @@ extension AppDelegate: UNUserNotificationCenterDelegate {
                 throw FirebaseAuthManager.FirebaseAuthManagerError.specificError("Notification does not belong to current logged in user")
             }
                         
-            DispatchQueue.main.async {
+            DispatchQueue.main.asyncAfter(deadline: .now() + 1) {
+                
+                let rootVC = UIApplication.shared.windows.first?.rootViewController
+                
                 switch notificationType {
                 case .report:
                     let hostingController = UIHostingController(rootView: ReportDetailView(reportId: report.id).environmentObject(ReportsViewModel()))
@@ -95,5 +102,15 @@ extension AppDelegate: UNUserNotificationCenterDelegate {
     private func setContentNotificationCategory() {
         let updateNotificationCategory = UNNotificationCategory(identifier: "CONTENT", actions: [], intentIdentifiers: [], options: [])
         UNUserNotificationCenter.current().setNotificationCategories([updateNotificationCategory])
+    }
+}
+
+extension AppDelegate: MessagingDelegate {
+    
+    func messaging(_ messaging: Messaging, didReceiveRegistrationToken fcmToken: String?) {
+        //Saving the device token for later...
+        if let fcmToken {
+            UserDefaults.standard.set(fcmToken, forKey: Constants.deviceToken)
+        }
     }
 }

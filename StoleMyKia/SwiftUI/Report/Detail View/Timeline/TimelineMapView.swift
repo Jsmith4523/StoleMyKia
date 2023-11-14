@@ -32,15 +32,11 @@ struct TimelineMapView: View {
     
     var body: some View {
         ZStack(alignment: .leading) {
-            ZStack(alignment: .topLeading) {
-                TimelineMap(viewModel: timelineMapVM)
-                header
-            }
-            HStack {
-                Rectangle()
-                    .fill(.clear)
-                    .frame(width: 15)
-                    .ignoresSafeArea()
+            ZStack(alignment: .bottomTrailing) {
+                ZStack(alignment: .topLeading) {
+                    TimelineMap(viewModel: timelineMapVM)
+                    header
+                }
             }
         }
         .navigationTitle("Timeline")
@@ -62,7 +58,7 @@ struct TimelineMapView: View {
     }
     
     var header: some View {
-        HStack {
+        HStack(alignment: .top) {
             Button {
                dismiss()
             } label: {
@@ -77,19 +73,52 @@ struct TimelineMapView: View {
             }
             Spacer()
             Button {
-                timelineMapVM.isShowingListView.toggle()
+                refreshTimeline()
             } label: {
-                Image(systemName: "line.3.horizontal.decrease")
-                    .resizable()
-                    .scaledToFit()
-                    .frame(width: 20, height: 20)
+                Text(timelineMapVM.isLoading ? "Loading..." : "Refresh")
+                    .font(.system(size: 16).weight(.heavy))
                     .foregroundColor(Color(uiColor: .systemBackground))
                     .padding(10)
                     .background(Color(uiColor: .label))
-                    .clipShape(Circle())
+                    .clipShape(RoundedRectangle(cornerRadius: 15))
+            }
+            .disabled(timelineMapVM.isLoading)
+            Spacer()
+            VStack(spacing: 18) {
+                Button {
+                    timelineMapVM.isShowingListView.toggle()
+                } label: {
+                    Image(systemName: "line.3.horizontal.decrease")
+                        .resizable()
+                        .scaledToFit()
+                        .frame(width: 20, height: 20)
+                        .foregroundColor(Color(uiColor: .systemBackground))
+                        .padding(10)
+                        .background(Color(uiColor: .label))
+                        .clipShape(Circle())
+                }
+                Button {
+                    timelineMapVM.moveToUsersLocation()
+                } label: {
+                    Image(systemName: "location")
+                        .resizable()
+                        .scaledToFit()
+                        .frame(width: 20, height: 20)
+                        .foregroundColor(.white)
+                        .padding(10)
+                        .background(.blue)
+                        .clipShape(Circle())
+                }
             }
         }
         .padding()
+    }
+    
+    private func refreshTimeline() {
+        UIImpactFeedbackGenerator(style: .medium).impactOccurred()
+        Task {
+            try? await timelineMapVM.getUpdatesForReport(reportAssociatedId)
+        }
     }
 }
 
@@ -99,21 +128,5 @@ struct TimelineMapView_Previews: PreviewProvider {
             TimelineMapView(reportAssociatedId: [Report].testReports().first!.role.associatedValue)
                 .environmentObject(ReportsViewModel())
         }
-    }
-}
-
-extension [UISheetPresentationController.Detent] {
-    
-    static var timelineMapDetailDetents: Self {
-        return [
-            .custom(resolver: {_ in return CGFloat(200) }),
-            .custom(resolver: {_ in return CGFloat(500) }),
-        ]
-    }
-    
-    static var timelineMapListDetents: Self {
-        return [
-            .custom(resolver: {_ in return CGFloat(750) }),
-        ]
     }
 }

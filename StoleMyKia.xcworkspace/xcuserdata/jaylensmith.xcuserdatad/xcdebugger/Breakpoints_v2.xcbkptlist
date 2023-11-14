@@ -7,93 +7,62 @@
       <BreakpointProxy
          BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
          <BreakpointContent
-            uuid = "B1A0B7A4-1C47-45CF-A193-0A840BA014F1"
+            uuid = "64A053D3-92BC-4733-98C7-38C74F72E671"
             shouldBeEnabled = "Yes"
             ignoreCount = "0"
             continueAfterRunningActions = "No"
-            filePath = "StoleMyKia/Network/ReportsManager.swift"
+            filePath = "StoleMyKia/Network/FirebaseUserManager.swift"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "83"
-            endingLineNumber = "83"
-            landmarkName = "fetchLocalReports()"
+            startingLineNumber = "343"
+            endingLineNumber = "343"
+            landmarkName = "contactUser(report:for:)"
             landmarkType = "7">
-         </BreakpointContent>
-      </BreakpointProxy>
-      <BreakpointProxy
-         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
-         <BreakpointContent
-            uuid = "7BEB0BD6-784E-4A49-83E1-BAC26814CB58"
-            shouldBeEnabled = "Yes"
-            ignoreCount = "0"
-            continueAfterRunningActions = "No"
-            filePath = "StoleMyKia/SwiftUI/Tabview/Search/SearchView.swift"
-            startingColumnNumber = "9223372036854775807"
-            endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "51"
-            endingLineNumber = "51"
-            landmarkName = "body"
-            landmarkType = "24">
             <Locations>
                <Location
-                  uuid = "7BEB0BD6-784E-4A49-83E1-BAC26814CB58 - 7be09c1b2ea9e7a0"
+                  uuid = "64A053D3-92BC-4733-98C7-38C74F72E671 - 542629cda849e4d4"
                   shouldBeEnabled = "Yes"
                   ignoreCount = "0"
                   continueAfterRunningActions = "No"
-                  symbolName = "closure #2 () -&gt; () in closure #1 () -&gt; &lt;&lt;opaque return type of SwiftUI.View.onSubmit(of: SwiftUI.SubmitTriggers, _: () -&gt; ()) -&gt; some&gt;&gt;.0 in StoleMyKia.SearchView.body.getter : some"
+                  symbolName = "(5) suspend resume partial function for static StoleMyKia.FirebaseUserManager.contactUser(report: Swift.Optional&lt;StoleMyKia.Report&gt;, for: Swift.String) async throws -&gt; ()"
                   moduleName = "StoleMyKia"
                   usesParentBreakpointCondition = "Yes"
-                  urlString = "file:///Users/jaylensmith/Library/Mobile%20Documents/com~apple~CloudDocs/Mac%20Mini%20Xcode/StoleMyKia/StoleMyKia/SwiftUI/Tabview/Search/SearchView.swift"
+                  urlString = "file:///Users/jaylensmith/Library/Mobile%20Documents/com~apple~CloudDocs/Mac%20Mini%20Xcode/StoleMyKia/StoleMyKia/Network/FirebaseUserManager.swift"
                   startingColumnNumber = "9223372036854775807"
                   endingColumnNumber = "9223372036854775807"
-                  startingLineNumber = "44"
-                  endingLineNumber = "44"
-                  offsetFromSymbolStart = "48">
+                  startingLineNumber = "343"
+                  endingLineNumber = "343"
+                  offsetFromSymbolStart = "412">
                </Location>
                <Location
-                  uuid = "7BEB0BD6-784E-4A49-83E1-BAC26814CB58 - 282f5935812fa271"
+                  uuid = "64A053D3-92BC-4733-98C7-38C74F72E671 - 542629cda849e4d4"
                   shouldBeEnabled = "Yes"
                   ignoreCount = "0"
                   continueAfterRunningActions = "No"
-                  symbolName = "closure #1 (Swift.Character) -&gt; Swift.Bool in closure #2 () -&gt; () in closure #1 () -&gt; &lt;&lt;opaque return type of SwiftUI.View.onSubmit(of: SwiftUI.SubmitTriggers, _: () -&gt; ()) -&gt; some&gt;&gt;.0 in StoleMyKia.SearchView.body.getter : some"
+                  symbolName = "(5) suspend resume partial function for static StoleMyKia.FirebaseUserManager.contactUser(report: Swift.Optional&lt;StoleMyKia.Report&gt;, for: Swift.String) async throws -&gt; ()"
                   moduleName = "StoleMyKia"
                   usesParentBreakpointCondition = "Yes"
-                  urlString = "file:///Users/jaylensmith/Library/Mobile%20Documents/com~apple~CloudDocs/Mac%20Mini%20Xcode/StoleMyKia/StoleMyKia/SwiftUI/Tabview/Search/SearchView.swift"
+                  urlString = "file:///Users/jaylensmith/Library/Mobile%20Documents/com~apple~CloudDocs/Mac%20Mini%20Xcode/StoleMyKia/StoleMyKia/Network/FirebaseUserManager.swift"
                   startingColumnNumber = "9223372036854775807"
                   endingColumnNumber = "9223372036854775807"
-                  startingLineNumber = "44"
-                  endingLineNumber = "44"
-                  offsetFromSymbolStart = "44">
+                  startingLineNumber = "343"
+                  endingLineNumber = "343"
+                  offsetFromSymbolStart = "732">
                </Location>
                <Location
-                  uuid = "7BEB0BD6-784E-4A49-83E1-BAC26814CB58 - 7be09c1b2ea9e71d"
+                  uuid = "64A053D3-92BC-4733-98C7-38C74F72E671 - 542629cda849e4d4"
                   shouldBeEnabled = "Yes"
                   ignoreCount = "0"
                   continueAfterRunningActions = "No"
-                  symbolName = "closure #2 () -&gt; () in closure #1 () -&gt; &lt;&lt;opaque return type of SwiftUI.View.onSubmit(of: SwiftUI.SubmitTriggers, _: () -&gt; ()) -&gt; some&gt;&gt;.0 in StoleMyKia.SearchView.body.getter : some"
+                  symbolName = "(5) suspend resume partial function for static StoleMyKia.FirebaseUserManager.contactUser(report: Swift.Optional&lt;StoleMyKia.Report&gt;, for: Swift.String) async throws -&gt; ()"
                   moduleName = "StoleMyKia"
                   usesParentBreakpointCondition = "Yes"
-                  urlString = "file:///Users/jaylensmith/Library/Mobile%20Documents/com~apple~CloudDocs/Mac%20Mini%20Xcode/StoleMyKia/StoleMyKia/SwiftUI/Tabview/Search/SearchView.swift"
+                  urlString = "file:///Users/jaylensmith/Library/Mobile%20Documents/com~apple~CloudDocs/Mac%20Mini%20Xcode/StoleMyKia/StoleMyKia/Network/FirebaseUserManager.swift"
                   startingColumnNumber = "9223372036854775807"
                   endingColumnNumber = "9223372036854775807"
-                  startingLineNumber = "47"
-                  endingLineNumber = "47"
-                  offsetFromSymbolStart = "48">
-               </Location>
-               <Location
-                  uuid = "7BEB0BD6-784E-4A49-83E1-BAC26814CB58 - 282f5935812fa2cc"
-                  shouldBeEnabled = "Yes"
-                  ignoreCount = "0"
-                  continueAfterRunningActions = "No"
-                  symbolName = "closure #1 (Swift.Character) -&gt; Swift.Bool in closure #2 () -&gt; () in closure #1 () -&gt; &lt;&lt;opaque return type of SwiftUI.View.onSubmit(of: SwiftUI.SubmitTriggers, _: () -&gt; ()) -&gt; some&gt;&gt;.0 in StoleMyKia.SearchView.body.getter : some"
-                  moduleName = "StoleMyKia"
-                  usesParentBreakpointCondition = "Yes"
-                  urlString = "file:///Users/jaylensmith/Library/Mobile%20Documents/com~apple~CloudDocs/Mac%20Mini%20Xcode/StoleMyKia/StoleMyKia/SwiftUI/Tabview/Search/SearchView.swift"
-                  startingColumnNumber = "9223372036854775807"
-                  endingColumnNumber = "9223372036854775807"
-                  startingLineNumber = "47"
-                  endingLineNumber = "47"
-                  offsetFromSymbolStart = "44">
+                  startingLineNumber = "343"
+                  endingLineNumber = "343"
+                  offsetFromSymbolStart = "1120">
                </Location>
             </Locations>
          </BreakpointContent>
@@ -101,80 +70,48 @@
       <BreakpointProxy
          BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
          <BreakpointContent
-            uuid = "E482F6BF-0D6E-49FC-B946-B23841F52E9B"
+            uuid = "9733A145-ECEC-423A-99CF-9E1A0BCCFA4F"
             shouldBeEnabled = "Yes"
             ignoreCount = "0"
             continueAfterRunningActions = "No"
-            filePath = "StoleMyKia/SwiftUI/Tabview/Search/SearchView.swift"
+            filePath = "StoleMyKia/Network/FirebaseUserManager.swift"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "52"
-            endingLineNumber = "52"
-            landmarkName = "body"
-            landmarkType = "24">
-            <Locations>
-               <Location
-                  uuid = "E482F6BF-0D6E-49FC-B946-B23841F52E9B - 7be09c1b2ea9e7c3"
-                  shouldBeEnabled = "Yes"
-                  ignoreCount = "0"
-                  continueAfterRunningActions = "No"
-                  symbolName = "closure #2 () -&gt; () in closure #1 () -&gt; &lt;&lt;opaque return type of SwiftUI.View.onSubmit(of: SwiftUI.SubmitTriggers, _: () -&gt; ()) -&gt; some&gt;&gt;.0 in StoleMyKia.SearchView.body.getter : some"
-                  moduleName = "StoleMyKia"
-                  usesParentBreakpointCondition = "Yes"
-                  urlString = "file:///Users/jaylensmith/Library/Mobile%20Documents/com~apple~CloudDocs/Mac%20Mini%20Xcode/StoleMyKia/StoleMyKia/SwiftUI/Tabview/Search/SearchView.swift"
-                  startingColumnNumber = "9223372036854775807"
-                  endingColumnNumber = "9223372036854775807"
-                  startingLineNumber = "45"
-                  endingLineNumber = "45"
-                  offsetFromSymbolStart = "396">
-               </Location>
-               <Location
-                  uuid = "E482F6BF-0D6E-49FC-B946-B23841F52E9B - 7be09c1b2ea9e73c"
-                  shouldBeEnabled = "Yes"
-                  ignoreCount = "0"
-                  continueAfterRunningActions = "No"
-                  symbolName = "closure #2 () -&gt; () in closure #1 () -&gt; &lt;&lt;opaque return type of SwiftUI.View.onSubmit(of: SwiftUI.SubmitTriggers, _: () -&gt; ()) -&gt; some&gt;&gt;.0 in StoleMyKia.SearchView.body.getter : some"
-                  moduleName = "StoleMyKia"
-                  usesParentBreakpointCondition = "Yes"
-                  urlString = "file:///Users/jaylensmith/Library/Mobile%20Documents/com~apple~CloudDocs/Mac%20Mini%20Xcode/StoleMyKia/StoleMyKia/SwiftUI/Tabview/Search/SearchView.swift"
-                  startingColumnNumber = "9223372036854775807"
-                  endingColumnNumber = "9223372036854775807"
-                  startingLineNumber = "48"
-                  endingLineNumber = "48"
-                  offsetFromSymbolStart = "396">
-               </Location>
-            </Locations>
-         </BreakpointContent>
-      </BreakpointProxy>
-      <BreakpointProxy
-         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
-         <BreakpointContent
-            uuid = "47E48189-DAAE-43B4-A84F-C47AFB01E4CC"
-            shouldBeEnabled = "Yes"
-            ignoreCount = "0"
-            continueAfterRunningActions = "No"
-            filePath = "StoleMyKia/SwiftUI/Tabview/Search/SearchViewModel.swift"
-            startingColumnNumber = "9223372036854775807"
-            endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "28"
-            endingLineNumber = "28"
-            landmarkName = "fetchReportsForSearch()"
+            startingLineNumber = "344"
+            endingLineNumber = "344"
+            landmarkName = "contactUser(report:for:)"
             landmarkType = "7">
          </BreakpointContent>
       </BreakpointProxy>
       <BreakpointProxy
          BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
          <BreakpointContent
-            uuid = "CB48B36E-5281-4D07-AC5D-7C9FD3568727"
+            uuid = "32597E3D-D08B-45D9-B0E8-816FF1D1E4B8"
             shouldBeEnabled = "Yes"
             ignoreCount = "0"
             continueAfterRunningActions = "No"
-            filePath = "StoleMyKia/SwiftUI/Tabview/Search/SearchViewModel.swift"
+            filePath = "StoleMyKia/Network/FirebaseUserManager.swift"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "32"
-            endingLineNumber = "32"
-            landmarkName = "fetchReportsForSearch()"
+            startingLineNumber = "315"
+            endingLineNumber = "315"
+            landmarkName = "reportAllowsForContact(report:)"
+            landmarkType = "7">
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            uuid = "6DE6F480-336E-4124-90E2-CD8C97380C29"
+            shouldBeEnabled = "Yes"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "StoleMyKia/Network/FirebaseUserManager.swift"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "311"
+            endingLineNumber = "311"
+            landmarkName = "reportAllowsForContact(report:)"
             landmarkType = "7">
          </BreakpointContent>
       </BreakpointProxy>

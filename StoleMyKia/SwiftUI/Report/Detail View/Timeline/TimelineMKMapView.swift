@@ -31,11 +31,25 @@ struct TimelineMKMapView: UIViewRepresentable {
         viewModel.mapView = mapView
         mapView.delegate = context.coordinator
         mapView.showsUserLocation = true
+        mapView.showsCompass = false
+        mapView.isRotateEnabled = true
         mapView.isPitchEnabled = false
         mapView.mapType = .mutedStandard
         mapView.tintColor = .systemBlue
         
         mapView.register(ReportTimelineAnnotationView.self, forAnnotationViewWithReuseIdentifier: ReportAnnotation.reusableID)
+        
+        //Relocating MKCompass
+        let compass = MKCompassButton(mapView: mapView)
+        compass.compassVisibility = .adaptive
+        mapView.addSubview(compass)
+        
+        compass.translatesAutoresizingMaskIntoConstraints = false
+        
+        NSLayoutConstraint.activate([
+            compass.trailingAnchor.constraint(equalTo: mapView.trailingAnchor, constant: -10),
+            compass.bottomAnchor.constraint(equalTo: mapView.bottomAnchor, constant: -55)
+        ])
     
         return mapView
     }

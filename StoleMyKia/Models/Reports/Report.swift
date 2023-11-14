@@ -141,7 +141,6 @@ extension Report {
     /// - Returns: self
     mutating func setAsUpdate(_ parentId: UUID) {
         self.role = .update(parentId)
-        self.allowsForContact = false
         self.allowsForUpdates = true
     }
     

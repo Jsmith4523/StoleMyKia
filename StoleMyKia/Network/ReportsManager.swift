@@ -57,7 +57,7 @@ public class ReportManager {
         let reports = try await fetchReports()
         
         if let desiredLocation {
-            return reports.filterBasedUponLocation(desiredLocation)
+            return reports.filterBasedUponLocation(desiredLocation).sorted(by: >)
         } else {
             return reports.sorted(by: >)
         }
@@ -80,7 +80,7 @@ public class ReportManager {
         let reports = try await fetchReports()
         
         if let userLocation {
-            return reports.filterBasedUponLocation(userLocation)
+            return reports.filterBasedUponLocation(userLocation).sorted(by: >)
         } else {
             throw ReportManagerError.locationServicesDenied
         }
@@ -271,6 +271,19 @@ public class ReportManager {
             .collection(FirebaseDatabasesPaths.reportsDatabasePath)
             .document(id.uuidString)
             .updateData(["allowsForUpdates": false])
+    }
+    
+    /// Disables contacting for a report
+    /// - Parameter id: The UUID of the report to disable contacting for.
+    func disableContacting(_ id: UUID) async throws {
+        guard try await self.reportDoesExist(id) else {
+            throw ReportManagerError.doesNotExist
+        }
+        
+        try await Firestore.firestore()
+            .collection(FirebaseDatabasesPaths.reportsDatabasePath)
+            .document(id.uuidString)
+            .updateData(["allowsForContact": false])
     }
     
     

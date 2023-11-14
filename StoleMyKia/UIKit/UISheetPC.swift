@@ -9,6 +9,22 @@ import Foundation
 import SwiftUI
 import UIKit
 
+extension [UISheetPresentationController.Detent] {
+    
+    static var timelineMapDetailDetents: Self {
+        return [
+            .custom(resolver: {_ in return CGFloat(200) }),
+            .custom(resolver: {_ in return CGFloat(500) }),
+        ]
+    }
+    
+    static var timelineMapListDetents: Self {
+        return [
+            .custom(resolver: {_ in return CGFloat(750) }),
+        ]
+    }
+}
+
 extension View {
     
     func customSheetView<Content: View>(isPresented: Binding<Bool>, detents: [UISheetPresentationController.Detent] = [.medium()], showsIndicator: Bool = false, cornerRadius: CGFloat = 15, @ViewBuilder child: @escaping ()->Content) -> some View {
