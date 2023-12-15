@@ -64,6 +64,51 @@
                   endingLineNumber = "343"
                   offsetFromSymbolStart = "1120">
                </Location>
+               <Location
+                  uuid = "64A053D3-92BC-4733-98C7-38C74F72E671 - 633b45f70d88725e"
+                  shouldBeEnabled = "Yes"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "(5) suspend resume partial function for static StoleMyKia.FirebaseUserManager.contactUser(report: Swift.Optional&lt;StoleMyKia.Report&gt;, for: Swift.String) async throws -&gt; ()"
+                  moduleName = "StoleMyKia"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/jaylensmith/Desktop/Xcode/StoleMyKia/StoleMyKia/Network/FirebaseUserManager.swift"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "343"
+                  endingLineNumber = "343"
+                  offsetFromSymbolStart = "412">
+               </Location>
+               <Location
+                  uuid = "64A053D3-92BC-4733-98C7-38C74F72E671 - 633b45f70d88725e"
+                  shouldBeEnabled = "Yes"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "(5) suspend resume partial function for static StoleMyKia.FirebaseUserManager.contactUser(report: Swift.Optional&lt;StoleMyKia.Report&gt;, for: Swift.String) async throws -&gt; ()"
+                  moduleName = "StoleMyKia"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/jaylensmith/Desktop/Xcode/StoleMyKia/StoleMyKia/Network/FirebaseUserManager.swift"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "343"
+                  endingLineNumber = "343"
+                  offsetFromSymbolStart = "732">
+               </Location>
+               <Location
+                  uuid = "64A053D3-92BC-4733-98C7-38C74F72E671 - 633b45f70d88725e"
+                  shouldBeEnabled = "Yes"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "(5) suspend resume partial function for static StoleMyKia.FirebaseUserManager.contactUser(report: Swift.Optional&lt;StoleMyKia.Report&gt;, for: Swift.String) async throws -&gt; ()"
+                  moduleName = "StoleMyKia"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/jaylensmith/Desktop/Xcode/StoleMyKia/StoleMyKia/Network/FirebaseUserManager.swift"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "343"
+                  endingLineNumber = "343"
+                  offsetFromSymbolStart = "1120">
+               </Location>
             </Locations>
          </BreakpointContent>
       </BreakpointProxy>
@@ -112,6 +157,22 @@
             startingLineNumber = "311"
             endingLineNumber = "311"
             landmarkName = "reportAllowsForContact(report:)"
+            landmarkType = "7">
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            uuid = "2B837685-7DBA-47B8-BE4B-95F3AE7AAF25"
+            shouldBeEnabled = "Yes"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "SMKNotificationService/NotificationService.swift"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "17"
+            endingLineNumber = "17"
+            landmarkName = "didReceive(_:withContentHandler:)"
             landmarkType = "7">
          </BreakpointContent>
       </BreakpointProxy>

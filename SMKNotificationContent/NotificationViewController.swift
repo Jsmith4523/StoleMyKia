@@ -10,7 +10,7 @@ import UserNotifications
 import UserNotificationsUI
 
 class NotificationViewController: UIViewController, UNNotificationContentExtension {
-            
+                
     @IBOutlet weak var imageView: UIImageView!
     
     override func viewDidLoad() {
@@ -20,13 +20,22 @@ class NotificationViewController: UIViewController, UNNotificationContentExtensi
     func didReceive(_ notification: UNNotification) {
         let userInfo = notification.request.content.userInfo
         
-        if let vehicleImageString = userInfo["imageUrl"] as? String {
-            self.getVehicleImage(urlString: vehicleImageString)
-        }
+        let progressView = self.presentProgressView()
     }
     
-    ///Download the vehicle image from firebase
-    private func getVehicleImage(urlString: String) {
+    private func presentProgressView() -> UIActivityIndicatorView {
+        let progressView = UIActivityIndicatorView(style: .large)
+        progressView.tintColor = .white
+        progressView.startAnimating()
         
+        imageView.addSubview(progressView)
+        progressView.translatesAutoresizingMaskIntoConstraints = false
+        
+        NSLayoutConstraint.activate([
+            progressView.centerXAnchor.constraint(equalTo: imageView.centerXAnchor),
+            progressView.centerYAnchor.constraint(equalTo: imageView.centerYAnchor)
+        ])
+        
+        return progressView
     }
 }

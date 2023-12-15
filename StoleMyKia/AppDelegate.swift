@@ -50,49 +50,8 @@ extension AppDelegate: UNUserNotificationCenterDelegate {
     
     func userNotificationCenter(_ center: UNUserNotificationCenter, didReceive response: UNNotificationResponse) async {
         guard Auth.auth().currentUser.isSignedIn else { return }
-        
-        let userInfo = response.notification.request.content.userInfo
-        
-        //Accessing the top view controller and dismissing.
-        //This is to ensure we do not present another map view which will can high memory consumption
-        let rootVC = UIApplication.shared.windows.first?.rootViewController
-        
-        rootVC?.dismiss(animated: true)
-        
-        do {
-            guard let notificationType = AppUserNotification.UserNotificationType(rawValue: userInfo["notificationType"] as! String), let reportId = UUID.ID(uuidString: userInfo["reportId"] as! String), let report = try await ReportManager.manager.fetchSingleReport(reportId), report.belongsToUser else {
-                throw FirebaseAuthManager.FirebaseAuthManagerError.specificError("Notification does not belong to current logged in user")
-            }
-                        
-            DispatchQueue.main.asyncAfter(deadline: .now() + 1) {
-                
-                let rootVC = UIApplication.shared.windows.first?.rootViewController
-                
-                switch notificationType {
-                case .report:
-                    let hostingController = UIHostingController(rootView: ReportDetailView(reportId: report.id).environmentObject(ReportsViewModel()))
-                    hostingController.modalPresentationStyle = .fullScreen
-                    rootVC?.show(hostingController, sender: nil)
-                case .update:
-                    let hostingController = UIHostingController(rootView: TimelineMapView(reportAssociatedId: report.role.associatedValue, dismissStyle: .dismiss))
-                    hostingController.modalPresentationStyle = .fullScreen
-                    rootVC?.show(hostingController, sender: nil)
-                case .falseReport:
-                    let hostingController = UIHostingController(rootView: FalseReportDetailView(reportId: report.id))
-                    hostingController.modalPresentationStyle = .fullScreen
-                    rootVC?.show(hostingController, sender: nil)
-                }
-            }
-        } catch {
-            presentNotificationError()
-        }
-        
-        func presentNotificationError() {
-            let ac = UIAlertController(title: "Error", message: "There was an error presenting information for that notification.", preferredStyle: .alert)
-            ac.addAction(.init(title: "OK", style: .default))
-            ac.modalPresentationStyle = .overFullScreen
-            rootVC?.show(ac, sender: nil)
-        }
+        let payload = response.notification.request.content.userInfo
+        await handleNotificationPayload(for: payload)
     }
     
     func userNotificationCenter(_ center: UNUserNotificationCenter, willPresent notification: UNNotification, withCompletionHandler completionHandler: @escaping (UNNotificationPresentationOptions) -> Void) {
@@ -105,6 +64,7 @@ extension AppDelegate: UNUserNotificationCenterDelegate {
     }
 }
 
+//MARK: - Messaging Delegate
 extension AppDelegate: MessagingDelegate {
     
     func messaging(_ messaging: Messaging, didReceiveRegistrationToken fcmToken: String?) {
@@ -112,5 +72,72 @@ extension AppDelegate: MessagingDelegate {
         if let fcmToken {
             UserDefaults.standard.set(fcmToken, forKey: Constants.deviceToken)
         }
+    }
+}
+
+extension AppDelegate {
+    
+    private func handleNotificationPayload(for payload: [AnyHashable: Any]) async {
+        guard let success = try? await FirebaseAuthManager.manager.userCanHandleNotification(), success else {
+            return
+        }
+        
+        let progressView = Self.createProgressView()
+        let rootViewController = Self.rootViewController()
+        rootViewController?.present(progressView, animated: true) {
+            do {
+                let data = try JSONSerialization.data(withJSONObject: payload)
+                let notification = try JSONDecoder().decode(AppUserNotification.self, from: data)
+            } catch {
+                progressView.dismiss(animated: true) {
+                    self.presentNotificationErrorAlert(on: rootViewController)
+                }
+            }
+        }
+    }
+    
+    private static func createProgressView() -> UIViewController {
+        let viewController = UIViewController()
+        let activityIndicator = UIActivityIndicatorView(style: .large)
+        
+        activityIndicator.color = .white
+        activityIndicator.startAnimating()
+        
+        viewController.view.backgroundColor = .black.withAlphaComponent(0.65)
+        
+        viewController.view.addSubview(activityIndicator)
+        activityIndicator.translatesAutoresizingMaskIntoConstraints = false
+        
+        NSLayoutConstraint.activate([
+            activityIndicator.centerXAnchor.constraint(equalTo: viewController.view.centerXAnchor),
+            activityIndicator.centerYAnchor.constraint(equalTo: viewController.view.centerYAnchor)
+        ])
+        
+        viewController.modalPresentationStyle = .overCurrentContext
+        return viewController
+    }
+    
+    private func presentNotificationErrorAlert(on viewController: UIViewController? = nil) {
+        let ac = UIAlertController(title: "Error", message: "Sorry, we ran into a problem with this notification", preferredStyle: .alert)
+        let primaryAction = UIAlertAction(title: "OK", style: .default)
+        ac.addAction(primaryAction)
+        
+        guard let viewController = viewController ?? Self.rootViewController() else {
+            return
+        }
+        
+        viewController.present(ac, animated: true)
+    }
+    
+    ///Access and returns the current root view controller
+    static func rootViewController() -> UIViewController? {
+        let keyWindow = (UIApplication.shared.connectedScenes.first as? UIWindowScene)?.keyWindow
+        
+        //Cheking if the view has a view controller presented
+        //If not, immediately fall back to the root view controller
+        guard let keyWindow, let viewController = keyWindow.rootViewController?.presentedViewController ?? keyWindow.rootViewController else {
+            return nil
+        }
+        return viewController
     }
 }

@@ -40,11 +40,12 @@ class StorageManager {
             throw StorageManagerError.imageDataError
         }
         
-        let stroagePath = "\(reportType.rawValue)/\(id.uuidString)"
+        let storagePath = "\(reportType.rawValue)/\(id.uuidString)"
         
-        let _ = try await reference.child(stroagePath).putDataAsync(imageData)
+        let _ = try await reference.child(storagePath).putDataAsync(imageData)
         
-        guard let url = try? await reference.child(stroagePath).downloadURL() else {
+        guard let url = try? await reference.child(storagePath).downloadURL() else {
+            try? await deleteVehicleImage(path: storagePath)
             throw StorageManagerError.imageUrlError
         }
                 

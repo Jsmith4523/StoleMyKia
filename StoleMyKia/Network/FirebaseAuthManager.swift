@@ -285,6 +285,21 @@ class FirebaseAuthManager {
         try? Auth.auth().signOut()
         notifyOfSignOut()
     }
+    
+    func userCanHandleNotification() async throws -> Bool {
+        guard let currentUser = Auth.auth().currentUser else {
+            return false
+        }
+        
+        let status = try await Firestore
+            .firestore()
+            .collection(FirebaseDatabasesPaths.usersDatabasePath)
+            .document(currentUser.uid)
+            .getDocument()
+            .exists
+        
+        return status
+    }
         
     private func notifyOfSignOut() {
         NotificationCenter.default.post(Notification.signOut)

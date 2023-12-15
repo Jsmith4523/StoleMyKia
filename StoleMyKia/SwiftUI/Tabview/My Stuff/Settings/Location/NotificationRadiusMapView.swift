@@ -68,6 +68,8 @@ final class NotificationRadiusMapViewCoordinator: NSObject, MKMapViewDelegate, O
         if let circleOverlay = overlay as? MKCircle {
             let overlayRenderer = MKCircleRenderer(overlay: circleOverlay)
             overlayRenderer.fillColor = .systemBlue.withAlphaComponent(0.40)
+            overlayRenderer.strokeColor = .systemBlue
+            overlayRenderer.lineWidth = 1.65
             return overlayRenderer
         }
         
