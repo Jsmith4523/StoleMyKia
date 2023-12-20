@@ -54,6 +54,7 @@ struct TimelineMapView: View {
             TimelineReportDetailView(report: report)
                 .presentationDragIndicator(.visible)
                 .presentationDetents([.height(250), .height(750)])
+                .environmentObject(timelineMapVM)
         }
     }
     
@@ -72,17 +73,16 @@ struct TimelineMapView: View {
                     .clipShape(Circle())
             }
             Spacer()
-            Button {
-                refreshTimeline()
-            } label: {
-                Text(timelineMapVM.isLoading ? "Loading..." : "Refresh")
-                    .font(.system(size: 16).weight(.heavy))
-                    .foregroundColor(Color(uiColor: .systemBackground))
-                    .padding(10)
-                    .background(Color(uiColor: .label))
-                    .clipShape(RoundedRectangle(cornerRadius: 15))
-            }
-            .disabled(timelineMapVM.isLoading)
+            Text(timelineMapVM.isLoading ? "Loading..." : "Refresh")
+                .font(.system(size: 16).weight(.heavy))
+                .foregroundColor(Color(uiColor: .systemBackground))
+                .padding(10)
+                .background(Color(uiColor: .label))
+                .clipShape(RoundedRectangle(cornerRadius: 15))
+                .onTapGesture {
+                    refreshTimeline()
+                }
+                .disabled(timelineMapVM.isLoading)
             Spacer()
             VStack(spacing: 18) {
                 Button {

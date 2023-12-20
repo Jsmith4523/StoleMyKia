@@ -48,8 +48,8 @@ extension Location {
         var discloseCoordinates: CLLocationCoordinate2D
         
         repeat {
-            let latitudeOffset = Double.random(in: (lat < 0 ? -0.0030 : 0.0030)...0.0075)
-            let longitudeOffset = Double.random(in: (long < 0 ? -0.0030 : 0.0030)...0.0075)
+            let latitudeOffset = Double.random(in: (lat < 0 ? -0.0020 : 0.0020)...0.0025)
+            let longitudeOffset = Double.random(in: (long < 0 ? -0.0020 : 0.0020)...0.0025)
             
             discloseCoordinates = CLLocationCoordinate2D(latitude: lat + latitudeOffset, longitude: long + longitudeOffset)
         } while discloseCoordinates == CLLocationCoordinate2D(latitude: lat, longitude: long)

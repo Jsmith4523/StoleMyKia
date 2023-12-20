@@ -14,6 +14,7 @@ class ReportAnnotation: NSObject, MKAnnotation {
     
     static var reusableID = "reportAnnotation"
     
+    var title: String?
     var subtitle: String?
     var coordinate: CLLocationCoordinate2D
     var report: Report
@@ -23,7 +24,10 @@ class ReportAnnotation: NSObject, MKAnnotation {
     init(report: Report) {
         self.coordinate    = report.location.coordinates
         self.report        = report
-        self.subtitle      = "\(report.reportType.rawValue)\n\(ApplicationFormats.timeAgoFormat(report.dt))"
+        if report.role.isInitial {
+            self.title = "Initial Report"
+            self.subtitle = "\(report.postDate) \(report.postTime)"
+        }
     }
 }
 

@@ -55,10 +55,12 @@ final class TimelineMapViewModel: NSObject, ObservableObject {
             guard try await ReportManager.manager.reportDoesExist(id) else {
                 self.timelineListMode = .noLongerAvaliable
                 self.isLoading = false
+                self.removeAllAnnotations()
                 return
             }
             
             guard let initialReport = try await ReportManager.manager.fetchSingleReport(id) else {
+                self.removeAllAnnotations()
                 throw TimelineMapViewError.fetchError
             }
             
@@ -94,6 +96,12 @@ final class TimelineMapViewModel: NSObject, ObservableObject {
                 }
             }
         }
+    }
+    
+    private func removeAllAnnotations() {
+        guard let mapView else { return }
+        mapView.removeAnnotations(mapView.annotations)
+        mapView.removeOverlays(mapView.overlays)
     }
     
     private func deselectAnnotation() {

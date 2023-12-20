@@ -176,5 +176,131 @@
             landmarkType = "7">
          </BreakpointContent>
       </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            uuid = "495343D2-0B16-4287-B061-85FB1D8A17ED"
+            shouldBeEnabled = "Yes"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "StoleMyKia/SwiftUI/Report/Detail View/Timeline/TimelineReportDetailView.swift"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "132"
+            endingLineNumber = "132"
+            landmarkName = "onDelete()"
+            landmarkType = "7">
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            uuid = "105FB9B5-2A63-412F-A86C-BB0A49E7F868"
+            shouldBeEnabled = "Yes"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "StoleMyKia/SwiftUI/Report/Detail View/Timeline/TimelineReportDetailView.swift"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "137"
+            endingLineNumber = "137"
+            landmarkName = "onDelete()"
+            landmarkType = "7">
+            <Locations>
+               <Location
+                  uuid = "105FB9B5-2A63-412F-A86C-BB0A49E7F868 - 14e865255ff0d802"
+                  shouldBeEnabled = "Yes"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "(1) suspend resume partial function for closure #1 @Sendable () async -&gt; Swift.Optional&lt;()&gt; in StoleMyKia.TimelineReportDetailView.onDelete() -&gt; ()"
+                  moduleName = "StoleMyKia"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/jaylensmith/Desktop/Xcode/StoleMyKia/StoleMyKia/SwiftUI/Report/Detail%20View/Timeline/TimelineReportDetailView.swift"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "137"
+                  endingLineNumber = "137"
+                  offsetFromSymbolStart = "88">
+               </Location>
+               <Location
+                  uuid = "105FB9B5-2A63-412F-A86C-BB0A49E7F868 - 4c303530cded6274"
+                  shouldBeEnabled = "Yes"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "(2) await resume partial function for closure #1 @Sendable () async -&gt; Swift.Optional&lt;()&gt; in StoleMyKia.TimelineReportDetailView.onDelete() -&gt; ()"
+                  moduleName = "StoleMyKia"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/jaylensmith/Desktop/Xcode/StoleMyKia/StoleMyKia/SwiftUI/Report/Detail%20View/Timeline/TimelineReportDetailView.swift"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "137"
+                  endingLineNumber = "137"
+                  offsetFromSymbolStart = "36">
+               </Location>
+               <Location
+                  uuid = "105FB9B5-2A63-412F-A86C-BB0A49E7F868 - 384524e1a079c04"
+                  shouldBeEnabled = "Yes"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "(3) suspend resume partial function for closure #1 @Sendable () async -&gt; Swift.Optional&lt;()&gt; in StoleMyKia.TimelineReportDetailView.onDelete() -&gt; ()"
+                  moduleName = "StoleMyKia"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/jaylensmith/Desktop/Xcode/StoleMyKia/StoleMyKia/SwiftUI/Report/Detail%20View/Timeline/TimelineReportDetailView.swift"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "137"
+                  endingLineNumber = "137"
+                  offsetFromSymbolStart = "36">
+               </Location>
+               <Location
+                  uuid = "105FB9B5-2A63-412F-A86C-BB0A49E7F868 - 6d23922a722f205"
+                  shouldBeEnabled = "Yes"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "(4) suspend resume partial function for closure #1 @Sendable () async -&gt; Swift.Optional&lt;()&gt; in StoleMyKia.TimelineReportDetailView.onDelete() -&gt; ()"
+                  moduleName = "StoleMyKia"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/jaylensmith/Desktop/Xcode/StoleMyKia/StoleMyKia/SwiftUI/Report/Detail%20View/Timeline/TimelineReportDetailView.swift"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "137"
+                  endingLineNumber = "137"
+                  offsetFromSymbolStart = "36">
+               </Location>
+            </Locations>
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            uuid = "254CC6A1-42EF-4C68-963A-273FC3F1D9F2"
+            shouldBeEnabled = "Yes"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "StoleMyKia/SwiftUI/Report/Detail View/Timeline/TimelineMapViewModel.swift"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "57"
+            endingLineNumber = "57"
+            landmarkName = "getUpdatesForReport(_:)"
+            landmarkType = "7">
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            uuid = "9B65CE46-176E-4449-88B1-445C0BEAEE69"
+            shouldBeEnabled = "Yes"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "StoleMyKia/SwiftUI/Report/Detail View/Timeline/TimelineMapViewModel.swift"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "56"
+            endingLineNumber = "56"
+            landmarkName = "getUpdatesForReport(_:)"
+            landmarkType = "7">
+         </BreakpointContent>
+      </BreakpointProxy>
    </Breakpoints>
 </Bucket>

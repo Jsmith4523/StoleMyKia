@@ -9,6 +9,7 @@ import SwiftUI
 
 struct TimelineReportDetailView: View {
     
+    @State private var isShowingReportDetailView = false
     @State private var isShowingImageView = false
     @State private var vehicleImage: UIImage?
     
@@ -16,52 +17,58 @@ struct TimelineReportDetailView: View {
     
     @Environment (\.dismiss) var dismiss
     
+    @EnvironmentObject var timelineVM: TimelineMapViewModel
+    @EnvironmentObject var reportsVM: ReportsViewModel
+    @EnvironmentObject var userVM: UserViewModel
+    
     var body: some View {
         NavigationView {
-            ScrollView {
-                VStack {
-                    HStack(alignment: .top) {
-                        VStack(alignment: .leading, spacing: 20) {
-                            HStack(alignment: .top) {
-                                if report.hasVehicleImage {
-                                    imageView
-                                }
-                                VStack(alignment: .leading, spacing: 2) {
-                                    reportLabelsView(report: report)
-                                    Text(report.vehicleDetails)
-                                        .font(.system(size: 19).weight(.heavy))
-                                        .lineLimit(2)
-                                    Text(report.timeSinceString())
-                                        .font(.system(size: 15))
-                                    Text(report.location.distanceFromUser)
-                                        .font(.system(size: 15))
-                                        .foregroundColor(.gray)
-                                }
-                            }
-                            VStack(alignment: .leading) {
-                                if (report.hasVin || report.hasLicensePlate) {
-                                    HStack {
-                                        if report.hasLicensePlate {
-                                            Text(report.vehicle.licensePlateString)
-                                        }
-                                        if (report.hasLicensePlate && report.hasVin) {
-                                            Divider()
-                                                .frame(height: 10)
-                                        }
-                                        if report.hasVin {
-                                            Text("VIN: \(report.vehicle.hiddenVinString)")
-                                        }
+            ZStack(alignment: .bottomTrailing) {
+                ScrollView {
+                    VStack {
+                        HStack(alignment: .top) {
+                            VStack(alignment: .leading, spacing: 20) {
+                                HStack(alignment: .top) {
+                                    if report.hasVehicleImage {
+                                        imageView
                                     }
-                                    .font(.system(size: 17).bold())
+                                    VStack(alignment: .leading, spacing: 2) {
+                                        reportLabelsView(report: report)
+                                        Text(report.vehicleDetails)
+                                            .font(.system(size: 19).weight(.heavy))
+                                            .lineLimit(2)
+                                        Text(report.timeSinceString())
+                                            .font(.system(size: 15))
+                                        Text(report.location.distanceFromUser)
+                                            .font(.system(size: 15))
+                                            .foregroundColor(.gray)
+                                    }
                                 }
-                                Text(report.distinguishableDetails)
-                                    .font(.system(size: 16))
+                                VStack(alignment: .leading) {
+                                    if (report.hasVin || report.hasLicensePlate) {
+                                        HStack {
+                                            if report.hasLicensePlate {
+                                                Text(report.vehicle.licensePlateString)
+                                            }
+                                            if (report.hasLicensePlate && report.hasVin) {
+                                                Divider()
+                                                    .frame(height: 10)
+                                            }
+                                            if report.hasVin {
+                                                Text("VIN: \(report.vehicle.hiddenVinString)")
+                                            }
+                                        }
+                                        .font(.system(size: 17).bold())
+                                    }
+                                    Text(report.distinguishableDetails)
+                                        .font(.system(size: 16))
+                                }
                             }
+                            Spacer()
                         }
-                        Spacer()
                     }
+                    .padding()
                 }
-                .padding()
             }
             .multilineTextAlignment(.leading)
             .navigationBarTitleDisplayMode(.inline)
@@ -70,24 +77,30 @@ struct TimelineReportDetailView: View {
                     Button {
                         dismiss()
                     } label: {
-                        Image(systemName: "xmark.circle.fill")
-                            .resizable()
-                            .scaledToFit()
-                            .frame(width: 25, height: 25)
-                            .foregroundColor(.gray)
+                        Text("Close")
                     }
                 }
-                ToolbarItem(placement: .navigationBarTrailing) {
+                ToolbarItemGroup(placement: .navigationBarTrailing) {
                     Button {
                         URL.getDirectionsToLocation(title: report.vehicle.appleMapsAnnotationTitle, coords: report.location.coordinates)
                     } label: {
-                        Image(systemName: "arrow.triangle.pull")
+                        Image(systemName: "arrow.turn.up.right")
+                    }
+                    Button {
+                        isShowingReportDetailView.toggle()
+                    } label: {
+                        Image(systemName: "info.circle")
                     }
                 }
             }
         }
         .fullScreenCover(isPresented: $isShowingImageView) {
             VehicleImageView(vehicleImage: $vehicleImage)
+        }
+        .fullScreenCover(isPresented: $isShowingReportDetailView) {
+            ReportDetailView(reportId: report.id, timelineMapViewMode: .dismissWhenSelected, deleteCompletion: onDelete)
+                .environmentObject(reportsVM)
+                .environmentObject(userVM)
         }
     }
     
@@ -112,6 +125,18 @@ struct TimelineReportDetailView: View {
                 self.vehicleImage = image
             }
         }
+    }
+    
+    private func onDelete() {
+        guard let reportId = timelineVM.reportId else {
+            dismiss()
+            return
+        }
+        
+        Task {
+            try? await timelineVM.getUpdatesForReport(reportId)
+        }
+        dismiss()
     }
 }
 

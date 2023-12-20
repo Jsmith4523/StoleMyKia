@@ -138,81 +138,83 @@ struct ReportDetailView: View {
     
     private var detailView: some View {
         ZStack(alignment: .bottomTrailing) {
-            VStack {
-                VStack(spacing: 20) {
-                    VStack(alignment: .leading) {
-                        TabView {
-                            if report.hasVehicleImage {
-                                Image(uiImage: vehicleImage ?? .vehiclePlaceholder)
-                                    .resizable()
-                                    .scaledToFill()
-                                    .redacted(reason: vehicleImage.isNil() ? .placeholder : [])
-                                    .onTapGesture {
-                                        self.isShowingVehicleImageView.toggle()
-                                    }
-                                    .onAppear {
-                                        getVehicleImage()
-                                    }
-                            }
-                            ReportDetailMapView(report: report)
-                                .onTapGesture {
-                                    presentTimelineMapView()
-                                }
-                        }
-                        .tabViewStyle(.page(indexDisplayMode: .always))
-                        .frame(width: UIScreen.main.bounds.width, height: 300)
-                        .clipped()
-                        VStack {
-                            VStack(spacing: 30) {
-                                VStack(alignment: .leading) {
-                                    HStack {
-                                        ReportLabelView(report: report)
-                                        Spacer()
-                                    }
-                                    VStack(alignment: .leading, spacing: 10) {
-                                        VStack(alignment: .leading, spacing: 18) {
-                                            VStack(alignment: .leading, spacing: 7) {
-                                                Text(report.vehicleDetails)
-                                                    .font(.system(size: 25).weight(.heavy))
-                                                if report.hasLicensePlateOrVin {
-                                                    HStack {
-                                                        if report.hasLicensePlate {
-                                                            Text(report.vehicle.licensePlateString)
-                                                        }
-                                                        if (report.hasLicensePlateAndVin) {
-                                                            Divider()
-                                                                .frame(height: 15)
-                                                        }
-                                                        if report.hasVin {
-                                                            Text("VIN: \(report.vehicle.hiddenVinString)")
-                                                        }
-                                                    }
-                                                    .font(.system(size: 18).bold())
-                                                }
-                                            }
-                                            HStack {
-                                                Text(report.timeSinceString())
-                                                Divider()
-                                                Label("\(updateQuantity ?? 0)", systemImage: "arrow.2.squarepath")
-                                                Divider()
-                                                Text(report.location.distanceFromUser)
-                                            }
-                                            .frame(height: 15)
-                                            .font(.system(size: 16.5))
-                                            .foregroundColor(.gray)
+            if let report {
+                VStack {
+                    VStack(spacing: 20) {
+                        VStack(alignment: .leading) {
+                            TabView {
+                                if report.hasVehicleImage {
+                                    Image(uiImage: vehicleImage ?? .vehiclePlaceholder)
+                                        .resizable()
+                                        .scaledToFill()
+                                        .redacted(reason: vehicleImage.isNil() ? .placeholder : [])
+                                        .onTapGesture {
+                                            self.isShowingVehicleImageView.toggle()
                                         }
-                                        Text(report.distinguishableDetails)
-                                            .font(.system(size: 18))
-                                            .lineSpacing(2)
+                                        .onAppear {
+                                            getVehicleImage()
+                                        }
+                                }
+                                ReportDetailMapView(report: report)
+                                    .onTapGesture {
+                                        presentTimelineMapView()
+                                    }
+                            }
+                            .tabViewStyle(.page(indexDisplayMode: .always))
+                            .frame(width: UIScreen.main.bounds.width, height: 300)
+                            .clipped()
+                            VStack {
+                                VStack(spacing: 30) {
+                                    VStack(alignment: .leading) {
+                                        HStack {
+                                            ReportLabelView(report: report)
+                                            Spacer()
+                                        }
+                                        VStack(alignment: .leading, spacing: 10) {
+                                            VStack(alignment: .leading, spacing: 18) {
+                                                VStack(alignment: .leading, spacing: 7) {
+                                                    Text(report.vehicleDetails)
+                                                        .font(.system(size: 25).weight(.heavy))
+                                                    if report.hasLicensePlateOrVin {
+                                                        HStack {
+                                                            if report.hasLicensePlate {
+                                                                Text(report.vehicle.licensePlateString)
+                                                            }
+                                                            if (report.hasLicensePlateAndVin) {
+                                                                Divider()
+                                                                    .frame(height: 15)
+                                                            }
+                                                            if report.hasVin {
+                                                                Text("VIN: \(report.vehicle.hiddenVinString)")
+                                                            }
+                                                        }
+                                                        .font(.system(size: 18).bold())
+                                                    }
+                                                }
+                                                HStack {
+                                                    Text(report.timeSinceString())
+                                                    Divider()
+                                                    Label("\(updateQuantity ?? 0)", systemImage: "arrow.2.squarepath")
+                                                    Divider()
+                                                    Text(report.location.distanceFromUser)
+                                                }
+                                                .frame(height: 15)
+                                                .font(.system(size: 16.5))
+                                                .foregroundColor(.gray)
+                                            }
+                                            Text(report.distinguishableDetails)
+                                                .font(.system(size: 18))
+                                                .lineSpacing(2)
+                                        }
                                     }
                                 }
+                                .padding()
                             }
-                            .padding()
                         }
                     }
+                    Spacer()
+                        .frame(height: 100)
                 }
-                Spacer()
-                    .frame(height: 100)
             }
         }
         .toolbar {
@@ -230,42 +232,44 @@ struct ReportDetailView: View {
         }
         .tint(Color(uiColor: .label))
         .confirmationDialog("Options", isPresented: $isShowingReportOptions) {
-            Button(isBookmarked ? "Undo Bookmark" : "Bookmark") {
-                setBookmark()
-            }
-            Button("Directions") {
-                URL.getDirectionsToLocation(title: report.appleMapsAnnotationTitle,
-                                            coords: report.location.coordinates)
-            }
-            if report.belongsToUser {
-                if !(report.role.isAnUpdate) {
-                    if (report.allowsForUpdates && !(report.hasBeenResolved)) {
-                        Button("Disable Updates") {
-                            presentDisableUpdatesAlert.toggle()
+            if let report {
+                Button(isBookmarked ? "Undo Bookmark" : "Bookmark") {
+                    setBookmark()
+                }
+                Button("Directions") {
+                    URL.getDirectionsToLocation(title: report.appleMapsAnnotationTitle,
+                                                coords: report.location.coordinates)
+                }
+                if report.belongsToUser {
+                    if !(report.role.isAnUpdate) {
+                        if (report.allowsForUpdates && !(report.hasBeenResolved)) {
+                            Button("Disable Updates") {
+                                presentDisableUpdatesAlert.toggle()
+                            }
+                        }
+                        if !(report.hasBeenResolved) {
+                            Button("Resolved!") {
+                                presentResolveReportsAlert.toggle()
+                            }
                         }
                     }
-                    if !(report.hasBeenResolved) {
-                        Button("Resolved!") {
-                            presentResolveReportsAlert.toggle()
+                    if (report.allowsForContact) {
+                        Button("Disable Contacting") {
+                            disableContacting()
                         }
                     }
-                }
-                if (report.allowsForContact) {
-                    Button("Disable Contacting") {
-                        disableContacting()
+                    Button("Delete", role: .destructive) {
+                        presentDeleteAlert.toggle()
                     }
-                }
-                Button("Delete", role: .destructive) {
-                    presentDeleteAlert.toggle()
-                }
-            } else {
-                if (report.allowsForContact && !(report.hasBeenResolved && report.belongsToUser)) {
-                    Button("Contact User") {
-                        contactUser()
+                } else {
+                    if (report.allowsForContact && !(report.hasBeenResolved && report.belongsToUser)) {
+                        Button("Contact User") {
+                            contactUser()
+                        }
                     }
-                }
-                Button("False Report") {
-                    self.isShowingFalseReportView.toggle()
+                    Button("False Report") {
+                        self.isShowingFalseReportView.toggle()
+                    }
                 }
             }
         }
@@ -286,7 +290,7 @@ struct ReportDetailView: View {
                 beginDeletingReport()
             }
         } message: {
-            Text(report.deletionBodyText)
+            Text(report?.deletionBodyText ?? "This change cannot be undo!")
         }
         .alert("Unable to delete", isPresented: $presentFailedDeletingReportAlert) {
             Button("OK") {}
@@ -338,12 +342,14 @@ struct ReportDetailView: View {
             if loadStatus == .loaded {
                 Menu {
                     //As long as the report is not false, allows for updates, and has not been resolved, then it can be updated
-                    if !(report.isFalseReport) {
-                        if (report.allowsForUpdates && !report.hasBeenResolved) {
-                            Button {
-                                presentUpdateReportView()
-                            } label: {
-                                Label("Update Report", systemImage: "arrow.2.squarepath")
+                    if let report {
+                        if !(report.isFalseReport) {
+                            if (report.allowsForUpdates && !report.hasBeenResolved) {
+                                Button {
+                                    presentUpdateReportView()
+                                } label: {
+                                    Label("Update Report", systemImage: "arrow.2.squarepath")
+                                }
                             }
                         }
                     }
@@ -403,15 +409,17 @@ struct ReportDetailView: View {
     
     private func setBookmark() {
         Task {
-            if isBookmarked {
-                self.isBookmarked = false
-                try! await FirebaseUserManager.undoBookmark(report.id)
-            } else {
-                do {
-                    self.isBookmarked = true
-                    try await FirebaseUserManager.bookmarkReport(report.id)
-                } catch {
+            if let report {
+                if isBookmarked {
                     self.isBookmarked = false
+                    try! await FirebaseUserManager.undoBookmark(report.id)
+                } else {
+                    do {
+                        self.isBookmarked = true
+                        try await FirebaseUserManager.bookmarkReport(report.id)
+                    } catch {
+                        self.isBookmarked = false
+                    }
                 }
             }
         }
@@ -420,11 +428,7 @@ struct ReportDetailView: View {
     private func fetchReportDetails(checkForMoreInfo: Bool = true) async {
         self.loadStatus = .loading
         guard let report = try? await ReportManager.manager.fetchSingleReport(reportId) else {
-            if !(report == nil) {
-                self.loadStatus = .error
-            } else {
-                self.loadStatus = .loaded
-            }
+            self.loadStatus = .error
             return
         }
         
@@ -440,82 +444,94 @@ struct ReportDetailView: View {
     }
     
     private func disableUpdates() {
-        isLoading = true
-        self.loadStatus = .loading
-        Task {
-            do {
-                try await ReportManager.manager.disableUpdates(reportId)
-                await fetchReportDetails()
-                isLoading = false
-            } catch {
-                isLoading = false
-                presentGenericErrorAlert.toggle()
+        if let report {
+            isLoading = true
+            self.loadStatus = .loading
+            Task {
+                do {
+                    try await ReportManager.manager.disableUpdates(reportId)
+                    await fetchReportDetails()
+                    isLoading = false
+                } catch {
+                    isLoading = false
+                    presentGenericErrorAlert.toggle()
+                }
             }
         }
     }
     
     private func disableContacting() {
-        isLoading = true
-        self.loadStatus = .loading
-        Task {
-            do {
-                try await ReportManager.manager.disableContacting(reportId)
-                await fetchReportDetails()
-                isLoading = false
-            } catch {
-                isLoading = false
-                presentGenericErrorAlert.toggle()
+        if let report {
+            isLoading = true
+            self.loadStatus = .loading
+            Task {
+                do {
+                    try await ReportManager.manager.disableContacting(reportId)
+                    await fetchReportDetails()
+                    isLoading = false
+                } catch {
+                    isLoading = false
+                    presentGenericErrorAlert.toggle()
+                }
             }
         }
     }
     
     private func resolveReport() {
-        isLoading = true
-        self.loadStatus = .loading
-        Task {
-            do {
-                try await ReportManager.manager.setAsResolved(reportId)
-                await fetchReportDetails()
-                isLoading = false
-            } catch {
-                isLoading = false
-                if (report == nil) {
-                    self.loadStatus = .error
-                } else {
-                    self.loadStatus = .loaded
+        if let report {
+            isLoading = true
+            self.loadStatus = .loading
+            Task {
+                do {
+                    try await ReportManager.manager.setAsResolved(reportId)
+                    await fetchReportDetails()
+                    isLoading = false
+                } catch {
+                    isLoading = false
+                    if (report == nil) {
+                        self.loadStatus = .error
+                    } else {
+                        self.loadStatus = .loaded
+                    }
+                    presentGenericErrorAlert.toggle()
                 }
-                presentGenericErrorAlert.toggle()
             }
         }
     }
     
     private func getVehicleImage() {
-        ImageCache.shared.getImage(report.imageURL) { image in
-            self.vehicleImage = image
+        if let report {
+            ImageCache.shared.getImage(report.imageURL) { image in
+                self.vehicleImage = image
+            }
         }
     }
     
     private func getUpdateQuantity() async {
-        let quantity = await reportsVM.getNumberOfReportUpdates(report: report)
-        self.updateQuantity = quantity
+        if let report {
+            let quantity = await reportsVM.getNumberOfReportUpdates(report: report)
+            self.updateQuantity = quantity
+        }
     }
     
     private func contactUser() {
-        showProgressView = true
-        
-        Task {
-            do {
-                try await FirebaseUserManager.contactUser(report: report, for: report.uid)
-                showProgressView = false
-            } catch {
-                showProgressView = false
-                presentGenericErrorAlert.toggle()
+        if let report {
+            showProgressView = true
+            
+            Task {
+                do {
+                    try await FirebaseUserManager.contactUser(report: report, for: report.uid)
+                    showProgressView = false
+                } catch {
+                    showProgressView = false
+                    presentGenericErrorAlert.toggle()
+                }
             }
         }
     }
     
     private func verifyVin() {
-        guard vehicleVin == report.vehicle.vinString else {
+        guard let report, vehicleVin == report.vehicle.vinString else {
             presentVinInvalidAlert.toggle()
             return
         }
@@ -523,10 +539,12 @@ struct ReportDetailView: View {
     }
     
     private func presentUpdateReportView() {
-        if report.hasVin && !(report.belongsToUser) {
-            presentVinVerificationView.toggle()
-        } else {
-            isShowingUpdateReportView.toggle()
+        if let report {
+            if report.hasVin && !(report.belongsToUser) {
+                presentVinVerificationView.toggle()
+            } else {
+                isShowingUpdateReportView.toggle()
+            }
         }
     }
 }

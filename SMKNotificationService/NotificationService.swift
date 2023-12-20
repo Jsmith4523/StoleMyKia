@@ -7,7 +7,7 @@
 
 import UserNotifications
 
-class NotificationService: UNNotificationServiceExtension {
+class NotificationService: UNNotificationServiceExtension { 
 
     var contentHandler: ((UNNotificationContent) -> Void)?
     var bestAttemptContent: UNMutableNotificationContent?
