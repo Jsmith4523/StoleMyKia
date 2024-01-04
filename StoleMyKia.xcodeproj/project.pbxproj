@@ -51,21 +51,28 @@
 		244BD4012ABACA7D00192AD1 /* NotificationSettingsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 244BD4002ABACA7D00192AD1 /* NotificationSettingsView.swift */; };
 		244BD4032ABAD42700192AD1 /* NotificationRadiusMapView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 244BD4022ABAD42700192AD1 /* NotificationRadiusMapView.swift */; };
 		244BD4052ABB669900192AD1 /* NotificationMapView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 244BD4042ABB669900192AD1 /* NotificationMapView.swift */; };
-		244BD4072ABBA59500192AD1 /* ReportDescriptionView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 244BD4062ABBA59500192AD1 /* ReportDescriptionView.swift */; };
+		244BD4072ABBA59500192AD1 /* ReportComposeDescriptionView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 244BD4062ABBA59500192AD1 /* ReportComposeDescriptionView.swift */; };
 		244CE78B2AE04B8C00BC594E /* OnboardingView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 244CE78A2AE04B8C00BC594E /* OnboardingView.swift */; };
 		244CE78D2AE04C0700BC594E /* OnboardingViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 244CE78C2AE04C0700BC594E /* OnboardingViewModel.swift */; };
 		244CE78F2AE053C400BC594E /* OnboardingNotificationView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 244CE78E2AE053C400BC594E /* OnboardingNotificationView.swift */; };
 		244CE7912AE0561000BC594E /* OnboardingLocationView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 244CE7902AE0561000BC594E /* OnboardingLocationView.swift */; };
 		244CE7932AE058ED00BC594E /* OnboardingNotificationSettingsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 244CE7922AE058ED00BC594E /* OnboardingNotificationSettingsView.swift */; };
+		2450A70F2B454A13003D64FF /* CarLicenseScannerCameraFeedView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2450A70E2B454A13003D64FF /* CarLicenseScannerCameraFeedView.swift */; };
+		2450A7132B4553AD003D64FF /* CarLicensePlateModel.mlpackage in Sources */ = {isa = PBXBuildFile; fileRef = 2450A7122B4553AD003D64FF /* CarLicensePlateModel.mlpackage */; };
+		2450A7152B465916003D64FF /* PayloadData.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2450A7142B465916003D64FF /* PayloadData.swift */; };
+		2450A7182B467EDB003D64FF /* CustomTabViewPicker.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2450A7172B467EDB003D64FF /* CustomTabViewPicker.swift */; };
+		2450A71A2B468AFE003D64FF /* ReportComposeVehicleMakeView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2450A7192B468AFE003D64FF /* ReportComposeVehicleMakeView.swift */; };
+		2450A71C2B468CCC003D64FF /* ReportComposeVehicleModelView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2450A71B2B468CCC003D64FF /* ReportComposeVehicleModelView.swift */; };
+		2450A71E2B468F1D003D64FF /* ReportComposeVehicleYearView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2450A71D2B468F1D003D64FF /* ReportComposeVehicleYearView.swift */; };
+		2450A7202B469465003D64FF /* ReportComposeVehicleColorView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2450A71F2B469465003D64FF /* ReportComposeVehicleColorView.swift */; };
 		245B391729E39159001DD213 /* Color+EXT.swift in Sources */ = {isa = PBXBuildFile; fileRef = 245B391629E39159001DD213 /* Color+EXT.swift */; };
 		245B391D29E39E49001DD213 /* VehicleMake.swift in Sources */ = {isa = PBXBuildFile; fileRef = 245B391C29E39E49001DD213 /* VehicleMake.swift */; };
 		245B391F29E39E55001DD213 /* VehicleModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 245B391E29E39E55001DD213 /* VehicleModel.swift */; };
-		245B392129E39E90001DD213 /* ReportType.swift in Sources */ = {isa = PBXBuildFile; fileRef = 245B392029E39E90001DD213 /* ReportType.swift */; };
 		245B392329E39EC1001DD213 /* VehicleColor.swift in Sources */ = {isa = PBXBuildFile; fileRef = 245B392229E39EC1001DD213 /* VehicleColor.swift */; };
 		2461D74A2ABDE34F002B9E51 /* VehicleImageView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2461D7492ABDE34F002B9E51 /* VehicleImageView.swift */; };
 		2461D74E2AC3688A002B9E51 /* NotificationManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2461D74D2AC3688A002B9E51 /* NotificationManager.swift */; };
 		2461D7502AC4ABEF002B9E51 /* ReportSkeletonView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2461D74F2AC4ABEF002B9E51 /* ReportSkeletonView.swift */; };
-		24631C722AE4BBA1007940C4 /* NewReportReminderView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 24631C712AE4BBA1007940C4 /* NewReportReminderView.swift */; };
+		24631C722AE4BBA1007940C4 /* ReportComposeReminderView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 24631C712AE4BBA1007940C4 /* ReportComposeReminderView.swift */; };
 		24631C742AE4F5D3007940C4 /* TimelineDiscloseCircle.swift in Sources */ = {isa = PBXBuildFile; fileRef = 24631C732AE4F5D3007940C4 /* TimelineDiscloseCircle.swift */; };
 		246D501B2AE2450800C1F888 /* TimelinePolyline.swift in Sources */ = {isa = PBXBuildFile; fileRef = 246D501A2AE2450800C1F888 /* TimelinePolyline.swift */; };
 		246E213A2AEF715000872CCC /* OnboardingFinalView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 246E21392AEF715000872CCC /* OnboardingFinalView.swift */; };
@@ -79,11 +86,14 @@
 		248E13AE2ADF942D003414EC /* PrivacyPolicyView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 248E13AD2ADF942D003414EC /* PrivacyPolicyView.swift */; };
 		248E13B02ADF9539003414EC /* SafetyView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 248E13AF2ADF9539003414EC /* SafetyView.swift */; };
 		249254A62A37CA590037C43C /* UIHostingController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 249254A52A37CA590037C43C /* UIHostingController.swift */; };
+		24956B832B33B4D6001A4E91 /* ReportComposeReportTypeView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 24956B822B33B4D6001A4E91 /* ReportComposeReportTypeView.swift */; };
+		24956B862B33B5F7001A4E91 /* ReportComposeViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 24956B852B33B5F7001A4E91 /* ReportComposeViewModel.swift */; };
+		24956B8A2B33C1BF001A4E91 /* UpdateReportTypeView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 24956B892B33C1BF001A4E91 /* UpdateReportTypeView.swift */; };
 		2495A02029CAC3DE00457CE7 /* Date+EXT.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2495A01F29CAC3DE00457CE7 /* Date+EXT.swift */; };
 		2495A02229CAC5DF00457CE7 /* String+EXT.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2495A02129CAC5DF00457CE7 /* String+EXT.swift */; };
 		249E9E5E2AE3477D00CEA545 /* UserReportsListView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 249E9E5D2AE3477D00CEA545 /* UserReportsListView.swift */; };
 		249E9E602AE3653900CEA545 /* UserReportsSkeletonView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 249E9E5F2AE3653900CEA545 /* UserReportsSkeletonView.swift */; };
-		249E9E622AE36A8D00CEA545 /* ReportsEmptyView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 249E9E612AE36A8D00CEA545 /* ReportsEmptyView.swift */; };
+		249E9E622AE36A8D00CEA545 /* MyStuffUserReportsEmptyView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 249E9E612AE36A8D00CEA545 /* MyStuffUserReportsEmptyView.swift */; };
 		24A2068E2A07A18B00F5DC0C /* UserSettings.swift in Sources */ = {isa = PBXBuildFile; fileRef = 24A2068D2A07A18B00F5DC0C /* UserSettings.swift */; };
 		24A206902A0826BE00F5DC0C /* FirebaseUserManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 24A2068F2A0826BE00F5DC0C /* FirebaseUserManager.swift */; };
 		24A206922A08270300F5DC0C /* Vehicle.swift in Sources */ = {isa = PBXBuildFile; fileRef = 24A206912A08270300F5DC0C /* Vehicle.swift */; };
@@ -105,6 +115,8 @@
 		24AA66242AEDB2370058099A /* SearchReportTypeFilterView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 24AA66232AEDB2370058099A /* SearchReportTypeFilterView.swift */; };
 		24AAC49A29CC1A6400125196 /* AES+EXT.swift in Sources */ = {isa = PBXBuildFile; fileRef = 24AAC49929CC1A6400125196 /* AES+EXT.swift */; };
 		24B071A12A363E30000C6B75 /* ReportTimelimeAnnotationView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 24B071A02A363E30000C6B75 /* ReportTimelimeAnnotationView.swift */; };
+		24B16B162B44F2E2003E09DB /* CarLicenseScannerView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 24B16B152B44F2E2003E09DB /* CarLicenseScannerView.swift */; };
+		24B16B182B44F34C003E09DB /* CarLicenseScannerViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 24B16B172B44F34C003E09DB /* CarLicenseScannerViewModel.swift */; };
 		24B897EC29CF5A3B0003BCC8 /* UserViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 24B897EB29CF5A3B0003BCC8 /* UserViewModel.swift */; };
 		24BAC6112A8B034200E42BC6 /* MFMailComposeViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 24BAC6102A8B034200E42BC6 /* MFMailComposeViewController.swift */; };
 		24BAC6182A8F20E700E42BC6 /* NSNotificationCenter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 24BAC6172A8F20E700E42BC6 /* NSNotificationCenter.swift */; };
@@ -122,7 +134,7 @@
 		24CC5F2E2A745DE70078C921 /* ApplicationTabView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 24CC5EFA2A745DE70078C921 /* ApplicationTabView.swift */; };
 		24CC5F2F2A745DE70078C921 /* ReportCellView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 24CC5EFC2A745DE70078C921 /* ReportCellView.swift */; };
 		24CC5F302A745DE70078C921 /* UpdateReportView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 24CC5EFE2A745DE70078C921 /* UpdateReportView.swift */; };
-		24CC5F312A745DE70078C921 /* NewReportView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 24CC5EFF2A745DE70078C921 /* NewReportView.swift */; };
+		24CC5F312A745DE70078C921 /* ReportComposeView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 24CC5EFF2A745DE70078C921 /* ReportComposeView.swift */; };
 		24CC5F322A745DE70078C921 /* NearbySearchNoResultsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 24CC5F012A745DE70078C921 /* NearbySearchNoResultsView.swift */; };
 		24CC5F332A745DE70078C921 /* NearbySearchIdleView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 24CC5F022A745DE70078C921 /* NearbySearchIdleView.swift */; };
 		24CC5F342A745DE70078C921 /* NearbySearchLocationServicesView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 24CC5F032A745DE70078C921 /* NearbySearchLocationServicesView.swift */; };
@@ -144,6 +156,15 @@
 		24CC5F5D2A761B120078C921 /* Update.swift in Sources */ = {isa = PBXBuildFile; fileRef = 24CC5F5C2A761B120078C921 /* Update.swift */; };
 		24CC5F6A2A7B84BB0078C921 /* notification_report.caf in Resources */ = {isa = PBXBuildFile; fileRef = 24CC5F412A747E9B0078C921 /* notification_report.caf */; };
 		24CC5F6E2A7CD8FF0078C921 /* FirebaseAuthManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 24CC5F6D2A7CD8FE0078C921 /* FirebaseAuthManager.swift */; };
+		24CDE0B02B4226A90075DADE /* UserNotifications.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 243CE8222A84978100E5A727 /* UserNotifications.framework */; };
+		24CDE0B12B4226A90075DADE /* UserNotificationsUI.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 243CE8242A84978100E5A727 /* UserNotificationsUI.framework */; };
+		24CDE0B42B4226A90075DADE /* NotificationViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 24CDE0B32B4226A90075DADE /* NotificationViewController.swift */; };
+		24CDE0B72B4226A90075DADE /* MainInterface.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 24CDE0B52B4226A90075DADE /* MainInterface.storyboard */; };
+		24CDE0BB2B4226A90075DADE /* SMKNotificationMapContent.appex in Embed Foundation Extensions */ = {isa = PBXBuildFile; fileRef = 24CDE0AF2B4226A90075DADE /* SMKNotificationMapContent.appex */; settings = {ATTRIBUTES = (RemoveHeadersOnCopy, ); }; };
+		24CDE0C32B4237870075DADE /* ReportType.swift in Sources */ = {isa = PBXBuildFile; fileRef = 245B392029E39E90001DD213 /* ReportType.swift */; };
+		24CDE0C62B4237E50075DADE /* ReportType.swift in Sources */ = {isa = PBXBuildFile; fileRef = 24CDE0C52B4237E50075DADE /* ReportType.swift */; };
+		24CDE0CA2B42392B0075DADE /* ReportAnnotation.swift in Sources */ = {isa = PBXBuildFile; fileRef = 24CDE0C92B42392B0075DADE /* ReportAnnotation.swift */; };
+		24CDE0CD2B42405F0075DADE /* ReportOverlay.swift in Sources */ = {isa = PBXBuildFile; fileRef = 24CDE0CC2B42405F0075DADE /* ReportOverlay.swift */; };
 		24D58FCA2AC733EB00CFA553 /* FilmProgressView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 24D58FC92AC733EB00CFA553 /* FilmProgressView.swift */; };
 		24DDD9382AE62B4F0010A1F2 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 24DDD9372AE62B4F0010A1F2 /* AppDelegate.swift */; };
 		24E7FE052AECD259006219F2 /* FeedDesiredView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 24E7FE042AECD259006219F2 /* FeedDesiredView.swift */; };
@@ -181,6 +202,13 @@
 			remoteGlobalIDString = 24CC5F472A74E0870078C921;
 			remoteInfo = SMKNotificationService;
 		};
+		24CDE0B92B4226A90075DADE /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 24A5790829BC552C00495E6F /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = 24CDE0AE2B4226A90075DADE;
+			remoteInfo = SMKNotificationMapContent;
+		};
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXCopyFilesBuildPhase section */
@@ -192,6 +220,7 @@
 			files = (
 				24CC5F4F2A74E0870078C921 /* SMKNotificationService.appex in Embed Foundation Extensions */,
 				243CE82F2A84978100E5A727 /* SMKNotificationContent.appex in Embed Foundation Extensions */,
+				24CDE0BB2B4226A90075DADE /* SMKNotificationMapContent.appex in Embed Foundation Extensions */,
 			);
 			name = "Embed Foundation Extensions";
 			runOnlyForDeploymentPostprocessing = 0;
@@ -243,13 +272,21 @@
 		244BD4002ABACA7D00192AD1 /* NotificationSettingsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = NotificationSettingsView.swift; path = "StoleMyKia/SwiftUI/Tabview/My Stuff/Settings/NotificationSettingsView.swift"; sourceTree = SOURCE_ROOT; };
 		244BD4022ABAD42700192AD1 /* NotificationRadiusMapView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NotificationRadiusMapView.swift; sourceTree = "<group>"; };
 		244BD4042ABB669900192AD1 /* NotificationMapView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NotificationMapView.swift; sourceTree = "<group>"; };
-		244BD4062ABBA59500192AD1 /* ReportDescriptionView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReportDescriptionView.swift; sourceTree = "<group>"; };
+		244BD4062ABBA59500192AD1 /* ReportComposeDescriptionView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReportComposeDescriptionView.swift; sourceTree = "<group>"; };
 		244BF51829D33F4E00951765 /* ImageCache.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImageCache.swift; sourceTree = "<group>"; };
 		244CE78A2AE04B8C00BC594E /* OnboardingView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OnboardingView.swift; sourceTree = "<group>"; };
 		244CE78C2AE04C0700BC594E /* OnboardingViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OnboardingViewModel.swift; sourceTree = "<group>"; };
 		244CE78E2AE053C400BC594E /* OnboardingNotificationView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OnboardingNotificationView.swift; sourceTree = "<group>"; };
 		244CE7902AE0561000BC594E /* OnboardingLocationView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OnboardingLocationView.swift; sourceTree = "<group>"; };
 		244CE7922AE058ED00BC594E /* OnboardingNotificationSettingsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OnboardingNotificationSettingsView.swift; sourceTree = "<group>"; };
+		2450A70E2B454A13003D64FF /* CarLicenseScannerCameraFeedView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CarLicenseScannerCameraFeedView.swift; sourceTree = "<group>"; };
+		2450A7122B4553AD003D64FF /* CarLicensePlateModel.mlpackage */ = {isa = PBXFileReference; lastKnownFileType = folder.mlpackage; name = CarLicensePlateModel.mlpackage; path = "../../../../../Library/Mobile Documents/com~apple~CloudDocs/Mac Mini Xcode/car-license-plate-detection/CarLicense/CarLicensePlateModel.mlpackage"; sourceTree = "<group>"; };
+		2450A7142B465916003D64FF /* PayloadData.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PayloadData.swift; sourceTree = "<group>"; };
+		2450A7172B467EDB003D64FF /* CustomTabViewPicker.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomTabViewPicker.swift; sourceTree = "<group>"; };
+		2450A7192B468AFE003D64FF /* ReportComposeVehicleMakeView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReportComposeVehicleMakeView.swift; sourceTree = "<group>"; };
+		2450A71B2B468CCC003D64FF /* ReportComposeVehicleModelView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReportComposeVehicleModelView.swift; sourceTree = "<group>"; };
+		2450A71D2B468F1D003D64FF /* ReportComposeVehicleYearView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReportComposeVehicleYearView.swift; sourceTree = "<group>"; };
+		2450A71F2B469465003D64FF /* ReportComposeVehicleColorView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReportComposeVehicleColorView.swift; sourceTree = "<group>"; };
 		245B391629E39159001DD213 /* Color+EXT.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Color+EXT.swift"; sourceTree = "<group>"; };
 		245B391C29E39E49001DD213 /* VehicleMake.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VehicleMake.swift; sourceTree = "<group>"; };
 		245B391E29E39E55001DD213 /* VehicleModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VehicleModel.swift; sourceTree = "<group>"; };
@@ -258,7 +295,7 @@
 		2461D7492ABDE34F002B9E51 /* VehicleImageView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VehicleImageView.swift; sourceTree = "<group>"; };
 		2461D74D2AC3688A002B9E51 /* NotificationManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NotificationManager.swift; sourceTree = "<group>"; };
 		2461D74F2AC4ABEF002B9E51 /* ReportSkeletonView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = ReportSkeletonView.swift; path = ../Report/ReportSkeletonView.swift; sourceTree = "<group>"; };
-		24631C712AE4BBA1007940C4 /* NewReportReminderView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NewReportReminderView.swift; sourceTree = "<group>"; };
+		24631C712AE4BBA1007940C4 /* ReportComposeReminderView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReportComposeReminderView.swift; sourceTree = "<group>"; };
 		24631C732AE4F5D3007940C4 /* TimelineDiscloseCircle.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TimelineDiscloseCircle.swift; sourceTree = "<group>"; };
 		246D501A2AE2450800C1F888 /* TimelinePolyline.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TimelinePolyline.swift; sourceTree = "<group>"; };
 		246E21392AEF715000872CCC /* OnboardingFinalView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OnboardingFinalView.swift; sourceTree = "<group>"; };
@@ -275,11 +312,14 @@
 		248E13AD2ADF942D003414EC /* PrivacyPolicyView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PrivacyPolicyView.swift; sourceTree = "<group>"; };
 		248E13AF2ADF9539003414EC /* SafetyView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SafetyView.swift; sourceTree = "<group>"; };
 		249254A52A37CA590037C43C /* UIHostingController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UIHostingController.swift; sourceTree = "<group>"; };
+		24956B822B33B4D6001A4E91 /* ReportComposeReportTypeView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReportComposeReportTypeView.swift; sourceTree = "<group>"; };
+		24956B852B33B5F7001A4E91 /* ReportComposeViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReportComposeViewModel.swift; sourceTree = "<group>"; };
+		24956B892B33C1BF001A4E91 /* UpdateReportTypeView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UpdateReportTypeView.swift; sourceTree = "<group>"; };
 		2495A01F29CAC3DE00457CE7 /* Date+EXT.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Date+EXT.swift"; sourceTree = "<group>"; };
 		2495A02129CAC5DF00457CE7 /* String+EXT.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "String+EXT.swift"; sourceTree = "<group>"; };
 		249E9E5D2AE3477D00CEA545 /* UserReportsListView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserReportsListView.swift; sourceTree = "<group>"; };
 		249E9E5F2AE3653900CEA545 /* UserReportsSkeletonView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserReportsSkeletonView.swift; sourceTree = "<group>"; };
-		249E9E612AE36A8D00CEA545 /* ReportsEmptyView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReportsEmptyView.swift; sourceTree = "<group>"; };
+		249E9E612AE36A8D00CEA545 /* MyStuffUserReportsEmptyView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MyStuffUserReportsEmptyView.swift; sourceTree = "<group>"; };
 		24A2068D2A07A18B00F5DC0C /* UserSettings.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserSettings.swift; sourceTree = "<group>"; };
 		24A2068F2A0826BE00F5DC0C /* FirebaseUserManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FirebaseUserManager.swift; sourceTree = "<group>"; };
 		24A206912A08270300F5DC0C /* Vehicle.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Vehicle.swift; sourceTree = "<group>"; };
@@ -303,6 +343,8 @@
 		24AA66232AEDB2370058099A /* SearchReportTypeFilterView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchReportTypeFilterView.swift; sourceTree = "<group>"; };
 		24AAC49929CC1A6400125196 /* AES+EXT.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "AES+EXT.swift"; sourceTree = "<group>"; };
 		24B071A02A363E30000C6B75 /* ReportTimelimeAnnotationView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReportTimelimeAnnotationView.swift; sourceTree = "<group>"; };
+		24B16B152B44F2E2003E09DB /* CarLicenseScannerView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CarLicenseScannerView.swift; sourceTree = "<group>"; };
+		24B16B172B44F34C003E09DB /* CarLicenseScannerViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CarLicenseScannerViewModel.swift; sourceTree = "<group>"; };
 		24B897EB29CF5A3B0003BCC8 /* UserViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserViewModel.swift; sourceTree = "<group>"; };
 		24BAC6102A8B034200E42BC6 /* MFMailComposeViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MFMailComposeViewController.swift; sourceTree = "<group>"; };
 		24BAC6172A8F20E700E42BC6 /* NSNotificationCenter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NSNotificationCenter.swift; sourceTree = "<group>"; };
@@ -320,7 +362,7 @@
 		24CC5EFA2A745DE70078C921 /* ApplicationTabView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ApplicationTabView.swift; sourceTree = "<group>"; };
 		24CC5EFC2A745DE70078C921 /* ReportCellView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ReportCellView.swift; sourceTree = "<group>"; };
 		24CC5EFE2A745DE70078C921 /* UpdateReportView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UpdateReportView.swift; sourceTree = "<group>"; };
-		24CC5EFF2A745DE70078C921 /* NewReportView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NewReportView.swift; sourceTree = "<group>"; };
+		24CC5EFF2A745DE70078C921 /* ReportComposeView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ReportComposeView.swift; sourceTree = "<group>"; };
 		24CC5F012A745DE70078C921 /* NearbySearchNoResultsView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NearbySearchNoResultsView.swift; sourceTree = "<group>"; };
 		24CC5F022A745DE70078C921 /* NearbySearchIdleView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NearbySearchIdleView.swift; sourceTree = "<group>"; };
 		24CC5F032A745DE70078C921 /* NearbySearchLocationServicesView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NearbySearchLocationServicesView.swift; sourceTree = "<group>"; };
@@ -343,6 +385,15 @@
 		24CC5F5A2A75BEA20078C921 /* FalseReportManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FalseReportManager.swift; sourceTree = "<group>"; };
 		24CC5F5C2A761B120078C921 /* Update.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Update.swift; sourceTree = "<group>"; };
 		24CC5F6D2A7CD8FE0078C921 /* FirebaseAuthManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FirebaseAuthManager.swift; sourceTree = "<group>"; };
+		24CDE0A42B4172510075DADE /* FirebaseFirestore.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; path = FirebaseFirestore.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		24CDE0AF2B4226A90075DADE /* SMKNotificationMapContent.appex */ = {isa = PBXFileReference; explicitFileType = "wrapper.app-extension"; includeInIndex = 0; path = SMKNotificationMapContent.appex; sourceTree = BUILT_PRODUCTS_DIR; };
+		24CDE0B32B4226A90075DADE /* NotificationViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NotificationViewController.swift; sourceTree = "<group>"; };
+		24CDE0B62B4226A90075DADE /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/MainInterface.storyboard; sourceTree = "<group>"; };
+		24CDE0B82B4226A90075DADE /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		24CDE0C52B4237E50075DADE /* ReportType.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReportType.swift; sourceTree = "<group>"; };
+		24CDE0C92B42392B0075DADE /* ReportAnnotation.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReportAnnotation.swift; sourceTree = "<group>"; };
+		24CDE0CC2B42405F0075DADE /* ReportOverlay.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReportOverlay.swift; sourceTree = "<group>"; };
+		24CDE0CE2B435D220075DADE /* SMKNotificationService.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = SMKNotificationService.entitlements; sourceTree = "<group>"; };
 		24D58FC92AC733EB00CFA553 /* FilmProgressView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FilmProgressView.swift; sourceTree = "<group>"; };
 		24DDD9372AE62B4F0010A1F2 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		24E7FE042AECD259006219F2 /* FeedDesiredView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FeedDesiredView.swift; sourceTree = "<group>"; };
@@ -390,6 +441,15 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
+		24CDE0AC2B4226A90075DADE /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				24CDE0B12B4226A90075DADE /* UserNotificationsUI.framework in Frameworks */,
+				24CDE0B02B4226A90075DADE /* UserNotifications.framework in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
@@ -431,9 +491,9 @@
 		2426A6162A2345CB00E78647 /* Utilities */ = {
 			isa = PBXGroup;
 			children = (
+				2450A7122B4553AD003D64FF /* CarLicensePlateModel.mlpackage */,
 				248E13AC2ADF9422003414EC /* Policies */,
 				2423702A2A7DA64D00795C87 /* Helpers */,
-				24EE41102A59E01F00AF2A11 /* CoreML */,
 				24A4CEDC29BFA2C100B856BC /* Extensions */,
 			);
 			path = Utilities;
@@ -472,6 +532,7 @@
 		24334D0229C19DF70084B8EC /* UIKit */ = {
 			isa = PBXGroup;
 			children = (
+				24A662F829C592CA00AD784F /* MKMapView */,
 				2425EAF82A003CDE00CC886F /* NavigationController.swift */,
 				24334D0329C19E100084B8EC /* UIImagePicker.swift */,
 				24EAF11629C2A02900B4CBFE /* SFSafariView.swift */,
@@ -480,7 +541,6 @@
 				24FA56B92A29284D0074149B /* UIActivityVC.swift */,
 				249254A52A37CA590037C43C /* UIHostingController.swift */,
 				24BAC6102A8B034200E42BC6 /* MFMailComposeViewController.swift */,
-				24A662F829C592CA00AD784F /* MKMapView */,
 			);
 			path = UIKit;
 			sourceTree = "<group>";
@@ -498,10 +558,11 @@
 		244BD3F92AB954FA00192AD1 /* My Stuff */ = {
 			isa = PBXGroup;
 			children = (
-				244BD3FA2AB9550A00192AD1 /* MyStuffView.swift */,
-				24CD2D342AE4A31E004EF548 /* User Bookmarks */,
 				249E9E5C2AE3476A00CEA545 /* User Reports */,
+				24CD2D342AE4A31E004EF548 /* User Bookmarks */,
 				244BD3FC2ABAC4DD00192AD1 /* Settings */,
+				244BD3FA2AB9550A00192AD1 /* MyStuffView.swift */,
+				249E9E612AE36A8D00CEA545 /* MyStuffUserReportsEmptyView.swift */,
 			);
 			path = "My Stuff";
 			sourceTree = "<group>";
@@ -539,6 +600,14 @@
 			path = Onboarding;
 			sourceTree = "<group>";
 		};
+		2450A7162B467EAF003D64FF /* Misc */ = {
+			isa = PBXGroup;
+			children = (
+				2450A7172B467EDB003D64FF /* CustomTabViewPicker.swift */,
+			);
+			path = Misc;
+			sourceTree = "<group>";
+		};
 		245B391B29E39E2C001DD213 /* Reports */ = {
 			isa = PBXGroup;
 			children = (
@@ -568,11 +637,26 @@
 			path = Policies;
 			sourceTree = "<group>";
 		};
+		24956B842B33B4DD001A4E91 /* Compose */ = {
+			isa = PBXGroup;
+			children = (
+				24CC5EFF2A745DE70078C921 /* ReportComposeView.swift */,
+				24956B822B33B4D6001A4E91 /* ReportComposeReportTypeView.swift */,
+				2450A71F2B469465003D64FF /* ReportComposeVehicleColorView.swift */,
+				2450A7192B468AFE003D64FF /* ReportComposeVehicleMakeView.swift */,
+				2450A71B2B468CCC003D64FF /* ReportComposeVehicleModelView.swift */,
+				2450A71D2B468F1D003D64FF /* ReportComposeVehicleYearView.swift */,
+				244BD4062ABBA59500192AD1 /* ReportComposeDescriptionView.swift */,
+				24631C712AE4BBA1007940C4 /* ReportComposeReminderView.swift */,
+				24956B852B33B5F7001A4E91 /* ReportComposeViewModel.swift */,
+			);
+			path = Compose;
+			sourceTree = "<group>";
+		};
 		249E9E5C2AE3476A00CEA545 /* User Reports */ = {
 			isa = PBXGroup;
 			children = (
 				243EAD862ACCAEA2001454B5 /* UserReportsView.swift */,
-				249E9E612AE36A8D00CEA545 /* ReportsEmptyView.swift */,
 				249E9E5D2AE3477D00CEA545 /* UserReportsListView.swift */,
 				249E9E5F2AE3653900CEA545 /* UserReportsSkeletonView.swift */,
 			);
@@ -621,6 +705,7 @@
 				24A5791229BC552C00495E6F /* StoleMyKia */,
 				24CC5F492A74E0870078C921 /* SMKNotificationService */,
 				243CE8262A84978100E5A727 /* SMKNotificationContent */,
+				24CDE0B22B4226A90075DADE /* SMKNotificationMapContent */,
 				24A5791129BC552C00495E6F /* Products */,
 				6038246990B0B9DAE005F8EA /* Pods */,
 				D5F7A8C256A07441AB8A53B9 /* Frameworks */,
@@ -633,6 +718,7 @@
 				24A5791029BC552C00495E6F /* StoleMyKia.app */,
 				24CC5F482A74E0870078C921 /* SMKNotificationService.appex */,
 				243CE8212A84978100E5A727 /* SMKNotificationContent.appex */,
+				24CDE0AF2B4226A90075DADE /* SMKNotificationMapContent.appex */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -719,9 +805,31 @@
 			path = MKMapView;
 			sourceTree = "<group>";
 		};
+		24B16B132B44F2C2003E09DB /* Scanner */ = {
+			isa = PBXGroup;
+			children = (
+				24EE41102A59E01F00AF2A11 /* CoreML */,
+				24B16B152B44F2E2003E09DB /* CarLicenseScannerView.swift */,
+				2450A70E2B454A13003D64FF /* CarLicenseScannerCameraFeedView.swift */,
+				24B16B172B44F34C003E09DB /* CarLicenseScannerViewModel.swift */,
+			);
+			path = Scanner;
+			sourceTree = "<group>";
+		};
+		24B16B142B44F2C8003E09DB /* Results */ = {
+			isa = PBXGroup;
+			children = (
+				24AA66232AEDB2370058099A /* SearchReportTypeFilterView.swift */,
+				24AA661F2AEDA3B20058099A /* SearchResultsView.swift */,
+				24AA66212AEDA5010058099A /* SearchResultsEmptyView.swift */,
+			);
+			path = Results;
+			sourceTree = "<group>";
+		};
 		24CC5ECB2A745DE70078C921 /* SwiftUI */ = {
 			isa = PBXGroup;
 			children = (
+				2450A7162B467EAF003D64FF /* Misc */,
 				24BFA1852A8338580049F306 /* ErrorView.swift */,
 				24CC5F102A745DE70078C921 /* ApplicationRootView.swift */,
 				244CE7892AE04B4200BC594E /* Onboarding */,
@@ -793,14 +901,12 @@
 		24CC5EFB2A745DE70078C921 /* Report */ = {
 			isa = PBXGroup;
 			children = (
-				243EAD8D2ACCE8B1001454B5 /* UserReportsEmptyView.swift */,
-				24CC5EFC2A745DE70078C921 /* ReportCellView.swift */,
-				24CC5EFF2A745DE70078C921 /* NewReportView.swift */,
-				24631C712AE4BBA1007940C4 /* NewReportReminderView.swift */,
-				244BD4062ABBA59500192AD1 /* ReportDescriptionView.swift */,
+				24956B842B33B4DD001A4E91 /* Compose */,
 				24CC5EFD2A745DE70078C921 /* Update */,
 				24CC5F002A745DE70078C921 /* Nearby Locations */,
 				24CC5F082A745DE70078C921 /* Detail View */,
+				243EAD8D2ACCE8B1001454B5 /* UserReportsEmptyView.swift */,
+				24CC5EFC2A745DE70078C921 /* ReportCellView.swift */,
 			);
 			path = Report;
 			sourceTree = "<group>";
@@ -809,6 +915,7 @@
 			isa = PBXGroup;
 			children = (
 				24CC5EFE2A745DE70078C921 /* UpdateReportView.swift */,
+				24956B892B33C1BF001A4E91 /* UpdateReportTypeView.swift */,
 			);
 			path = Update;
 			sourceTree = "<group>";
@@ -830,10 +937,10 @@
 		24CC5F082A745DE70078C921 /* Detail View */ = {
 			isa = PBXGroup;
 			children = (
+				24CC5F0B2A745DE70078C921 /* Timeline */,
 				2461D7492ABDE34F002B9E51 /* VehicleImageView.swift */,
 				24CC5F092A745DE70078C921 /* ReportDetailViewMap.swift */,
 				24CC5F0A2A745DE70078C921 /* ReportDetailView.swift */,
-				24CC5F0B2A745DE70078C921 /* Timeline */,
 			);
 			path = "Detail View";
 			sourceTree = "<group>";
@@ -864,6 +971,7 @@
 		24CC5F492A74E0870078C921 /* SMKNotificationService */ = {
 			isa = PBXGroup;
 			children = (
+				24CDE0CE2B435D220075DADE /* SMKNotificationService.entitlements */,
 				24CC5F4A2A74E0870078C921 /* NotificationService.swift */,
 				24CC5F4C2A74E0870078C921 /* Info.plist */,
 			);
@@ -895,6 +1003,52 @@
 			path = "User Bookmarks";
 			sourceTree = "<group>";
 		};
+		24CDE0B22B4226A90075DADE /* SMKNotificationMapContent */ = {
+			isa = PBXGroup;
+			children = (
+				24CDE0C72B42386B0075DADE /* MKMapView */,
+				24CDE0C42B4237DB0075DADE /* Reports */,
+				24CDE0B32B4226A90075DADE /* NotificationViewController.swift */,
+				24CDE0B52B4226A90075DADE /* MainInterface.storyboard */,
+				24CDE0B82B4226A90075DADE /* Info.plist */,
+			);
+			path = SMKNotificationMapContent;
+			sourceTree = "<group>";
+		};
+		24CDE0C42B4237DB0075DADE /* Reports */ = {
+			isa = PBXGroup;
+			children = (
+				24CDE0C52B4237E50075DADE /* ReportType.swift */,
+				2450A7142B465916003D64FF /* PayloadData.swift */,
+			);
+			path = Reports;
+			sourceTree = "<group>";
+		};
+		24CDE0C72B42386B0075DADE /* MKMapView */ = {
+			isa = PBXGroup;
+			children = (
+				24CDE0CB2B423FB10075DADE /* Overlay */,
+				24CDE0C82B4239000075DADE /* Annotation */,
+			);
+			path = MKMapView;
+			sourceTree = "<group>";
+		};
+		24CDE0C82B4239000075DADE /* Annotation */ = {
+			isa = PBXGroup;
+			children = (
+				24CDE0C92B42392B0075DADE /* ReportAnnotation.swift */,
+			);
+			path = Annotation;
+			sourceTree = "<group>";
+		};
+		24CDE0CB2B423FB10075DADE /* Overlay */ = {
+			isa = PBXGroup;
+			children = (
+				24CDE0CC2B42405F0075DADE /* ReportOverlay.swift */,
+			);
+			path = Overlay;
+			sourceTree = "<group>";
+		};
 		24E7FE022AECD1B7006219F2 /* Desired */ = {
 			isa = PBXGroup;
 			children = (
@@ -915,11 +1069,10 @@
 		24E8C7E82AEA246900830AF2 /* Search */ = {
 			isa = PBXGroup;
 			children = (
+				24B16B142B44F2C8003E09DB /* Results */,
+				24B16B132B44F2C2003E09DB /* Scanner */,
 				24E8C7E92AEA24B300830AF2 /* SearchView.swift */,
-				24AA661F2AEDA3B20058099A /* SearchResultsView.swift */,
-				24AA66212AEDA5010058099A /* SearchResultsEmptyView.swift */,
 				24AA661D2AED8EC30058099A /* SearchViewModel.swift */,
-				24AA66232AEDB2370058099A /* SearchReportTypeFilterView.swift */,
 			);
 			path = Search;
 			sourceTree = "<group>";
@@ -945,6 +1098,7 @@
 		D5F7A8C256A07441AB8A53B9 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				24CDE0A42B4172510075DADE /* FirebaseFirestore.framework */,
 				248BD8BB2A8606870086CA42 /* FirebaseInstallations.framework */,
 				248BD8B92A8605F20086CA42 /* FirebaseCore.framework */,
 				248BD8B72A8605E70086CA42 /* FirebaseCore.framework */,
@@ -991,6 +1145,7 @@
 			dependencies = (
 				24CC5F4E2A74E0870078C921 /* PBXTargetDependency */,
 				243CE82E2A84978100E5A727 /* PBXTargetDependency */,
+				24CDE0BA2B4226A90075DADE /* PBXTargetDependency */,
 			);
 			name = StoleMyKia;
 			packageProductDependencies = (
@@ -1016,6 +1171,23 @@
 			productReference = 24CC5F482A74E0870078C921 /* SMKNotificationService.appex */;
 			productType = "com.apple.product-type.app-extension";
 		};
+		24CDE0AE2B4226A90075DADE /* SMKNotificationMapContent */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 24CDE0BC2B4226A90075DADE /* Build configuration list for PBXNativeTarget "SMKNotificationMapContent" */;
+			buildPhases = (
+				24CDE0AB2B4226A90075DADE /* Sources */,
+				24CDE0AC2B4226A90075DADE /* Frameworks */,
+				24CDE0AD2B4226A90075DADE /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = SMKNotificationMapContent;
+			productName = SMKNotificationMapContent;
+			productReference = 24CDE0AF2B4226A90075DADE /* SMKNotificationMapContent.appex */;
+			productType = "com.apple.product-type.app-extension";
+		};
 /* End PBXNativeTarget section */
 
 /* Begin PBXProject section */
@@ -1023,7 +1195,7 @@
 			isa = PBXProject;
 			attributes = {
 				BuildIndependentTargetsInParallel = 1;
-				LastSwiftUpdateCheck = 1430;
+				LastSwiftUpdateCheck = 1510;
 				LastUpgradeCheck = 1500;
 				TargetAttributes = {
 					243CE8202A84978100E5A727 = {
@@ -1034,6 +1206,9 @@
 					};
 					24CC5F472A74E0870078C921 = {
 						CreatedOnToolsVersion = 14.3.1;
+					};
+					24CDE0AE2B4226A90075DADE = {
+						CreatedOnToolsVersion = 15.1;
 					};
 				};
 			};
@@ -1047,7 +1222,6 @@
 			);
 			mainGroup = 24A5790729BC552C00495E6F;
 			packageReferences = (
-				248636AA2A3BCBE90092E184 /* XCRemoteSwiftPackageReference "PartialSheet" */,
 			);
 			productRefGroup = 24A5791129BC552C00495E6F /* Products */;
 			projectDirPath = "";
@@ -1056,6 +1230,7 @@
 				24A5790F29BC552C00495E6F /* StoleMyKia */,
 				24CC5F472A74E0870078C921 /* SMKNotificationService */,
 				243CE8202A84978100E5A727 /* SMKNotificationContent */,
+				24CDE0AE2B4226A90075DADE /* SMKNotificationMapContent */,
 			);
 		};
 /* End PBXProject section */
@@ -1089,6 +1264,14 @@
 			buildActionMask = 2147483647;
 			files = (
 				244BD3D72AAD812A00192AD1 /* Assets.xcassets in Resources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		24CDE0AD2B4226A90075DADE /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				24CDE0B72B4226A90075DADE /* MainInterface.storyboard in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1159,15 +1342,18 @@
 				24A206902A0826BE00F5DC0C /* FirebaseUserManager.swift in Sources */,
 				24A5792929BC567F00495E6F /* ReportAnnotation.swift in Sources */,
 				2426A61B2A23461300E78647 /* ReportsDelegate.swift in Sources */,
+				2450A7202B469465003D64FF /* ReportComposeVehicleColorView.swift in Sources */,
 				24EE41142A59E0FD00AF2A11 /* LicensePlateDetectionManager.swift in Sources */,
 				24F790312A8868C900E51794 /* NotificationListView.swift in Sources */,
+				24CDE0C32B4237870075DADE /* ReportType.swift in Sources */,
 				24CC5F6E2A7CD8FF0078C921 /* FirebaseAuthManager.swift in Sources */,
 				24E7FE092AECDBBE006219F2 /* FeedLocationServicesDisabledView.swift in Sources */,
 				244CE78B2AE04B8C00BC594E /* OnboardingView.swift in Sources */,
 				24CC5F2C2A745DE70078C921 /* NoReportsAvaliableView.swift in Sources */,
 				246E213A2AEF715000872CCC /* OnboardingFinalView.swift in Sources */,
 				2426A6202A23475A00E78647 /* ReportClusterAnnotationView.swift in Sources */,
-				24631C722AE4BBA1007940C4 /* NewReportReminderView.swift in Sources */,
+				24956B8A2B33C1BF001A4E91 /* UpdateReportTypeView.swift in Sources */,
+				24631C722AE4BBA1007940C4 /* ReportComposeReminderView.swift in Sources */,
 				240F22472A34FEF70078F97E /* FirebaseAuth.swift in Sources */,
 				24E8C7E72AE8E74800830AF2 /* FeedNewReportButtonView.swift in Sources */,
 				24CC5F132A745DE70078C921 /* ApplicationAuthView.swift in Sources */,
@@ -1187,7 +1373,7 @@
 				2476E0DE2AD9524300892A76 /* TimelineListView.swift in Sources */,
 				24CC5F392A745DE70078C921 /* ReportDetailViewMap.swift in Sources */,
 				246D501B2AE2450800C1F888 /* TimelinePolyline.swift in Sources */,
-				249E9E622AE36A8D00CEA545 /* ReportsEmptyView.swift in Sources */,
+				249E9E622AE36A8D00CEA545 /* MyStuffUserReportsEmptyView.swift in Sources */,
 				240F22452A33F10A0078F97E /* Notification.swift in Sources */,
 				24CC5F2F2A745DE70078C921 /* ReportCellView.swift in Sources */,
 				244BD3D52AAC034300192AD1 /* Constant.swift in Sources */,
@@ -1195,7 +1381,7 @@
 				24334D0629C1A0E10084B8EC /* View+EXT.swift in Sources */,
 				24CC5F322A745DE70078C921 /* NearbySearchNoResultsView.swift in Sources */,
 				2461D74A2ABDE34F002B9E51 /* VehicleImageView.swift in Sources */,
-				244BD4072ABBA59500192AD1 /* ReportDescriptionView.swift in Sources */,
+				244BD4072ABBA59500192AD1 /* ReportComposeDescriptionView.swift in Sources */,
 				243EAD872ACCAEA2001454B5 /* UserReportsView.swift in Sources */,
 				24A5791429BC552C00495E6F /* StoleMyKiaApp.swift in Sources */,
 				2437328029BEF8FC008F4C4E /* NotificationViewModel.swift in Sources */,
@@ -1215,7 +1401,6 @@
 				248E13AE2ADF942D003414EC /* PrivacyPolicyView.swift in Sources */,
 				24F7902F2A8866B600E51794 /* NotificationView.swift in Sources */,
 				24CC5F2B2A745DE70078C921 /* FeedListView.swift in Sources */,
-				245B392129E39E90001DD213 /* ReportType.swift in Sources */,
 				24CC5F332A745DE70078C921 /* NearbySearchIdleView.swift in Sources */,
 				2426A6192A2345EF00E78647 /* FirebaseUserDelegate.swift in Sources */,
 				249E9E5E2AE3477D00CEA545 /* UserReportsListView.swift in Sources */,
@@ -1225,12 +1410,15 @@
 				24A5792C29BC56B000495E6F /* Report.swift in Sources */,
 				24E7FE052AECD259006219F2 /* FeedDesiredView.swift in Sources */,
 				245B391F29E39E55001DD213 /* VehicleModel.swift in Sources */,
+				2450A71A2B468AFE003D64FF /* ReportComposeVehicleMakeView.swift in Sources */,
 				24E7FE072AECD263006219F2 /* FeedLocalView.swift in Sources */,
 				24CC5F302A745DE70078C921 /* UpdateReportView.swift in Sources */,
 				2426A62A2A243F0E00E78647 /* AnnotationCalloutDelegate.swift in Sources */,
 				24FA315D2AD92D17007BDE5A /* TimelineMapViewModel.swift in Sources */,
+				2450A71E2B468F1D003D64FF /* ReportComposeVehicleYearView.swift in Sources */,
 				2476E0E02AD9CF1E00892A76 /* TimelineMapListSkeletonView.swift in Sources */,
 				244CE78F2AE053C400BC594E /* OnboardingNotificationView.swift in Sources */,
+				2450A70F2B454A13003D64FF /* CarLicenseScannerCameraFeedView.swift in Sources */,
 				243EAD902ACDDEB6001454B5 /* NotificationEmptyView.swift in Sources */,
 				24CC5F562A75B8DB0078C921 /* FalseReportView.swift in Sources */,
 				24EF2B332ADDA71400FB211A /* TimelineReportDetailView.swift in Sources */,
@@ -1243,14 +1431,18 @@
 				24F790332A88CFB300E51794 /* UserDefaults.swift in Sources */,
 				24A206922A08270300F5DC0C /* Vehicle.swift in Sources */,
 				244BD3D32AABF12300192AD1 /* Int+EXT.swift in Sources */,
+				2450A7132B4553AD003D64FF /* CarLicensePlateModel.mlpackage in Sources */,
 				242370332A7EF5A300795C87 /* SkeletonLoadingCellView.swift in Sources */,
 				24848AB72A61E38E003E037E /* LicenseTextDetectionManager.swift in Sources */,
 				24CC5F372A745DE70078C921 /* LocationSearchCellView.swift in Sources */,
+				24B16B162B44F2E2003E09DB /* CarLicenseScannerView.swift in Sources */,
 				24CC5F592A75BAB50078C921 /* FalseReport.swift in Sources */,
 				24E8C7EA2AEA24B300830AF2 /* SearchView.swift in Sources */,
+				2450A7182B467EDB003D64FF /* CustomTabViewPicker.swift in Sources */,
 				249E9E602AE3653900CEA545 /* UserReportsSkeletonView.swift in Sources */,
 				24EF2B392ADDC01800FB211A /* ImageCache.swift in Sources */,
 				24C6983A2A402ECD003A1DE6 /* ReportRole.swift in Sources */,
+				24B16B182B44F34C003E09DB /* CarLicenseScannerViewModel.swift in Sources */,
 				24AA66242AEDB2370058099A /* SearchReportTypeFilterView.swift in Sources */,
 				2425EAF92A003CDE00CC886F /* NavigationController.swift in Sources */,
 				248E13B02ADF9539003414EC /* SafetyView.swift in Sources */,
@@ -1267,12 +1459,14 @@
 				24CC5F3C2A745DE70078C921 /* TimelineMKMapView.swift in Sources */,
 				24BFA1862A8338580049F306 /* ErrorView.swift in Sources */,
 				24D58FCA2AC733EB00CFA553 /* FilmProgressView.swift in Sources */,
+				24956B832B33B4D6001A4E91 /* ReportComposeReportTypeView.swift in Sources */,
 				24DDD9382AE62B4F0010A1F2 /* AppDelegate.swift in Sources */,
 				244CE7912AE0561000BC594E /* OnboardingLocationView.swift in Sources */,
 				2461D74E2AC3688A002B9E51 /* NotificationManager.swift in Sources */,
 				24CC5F162A745DE70078C921 /* SignInView.swift in Sources */,
 				244BD4012ABACA7D00192AD1 /* NotificationSettingsView.swift in Sources */,
 				24334CFD29C1846C0084B8EC /* Image+EXT.swift in Sources */,
+				2450A71C2B468CCC003D64FF /* ReportComposeVehicleModelView.swift in Sources */,
 				24CC5F142A745DE70078C921 /* ApplicationProgressView.swift in Sources */,
 				24CC5F3B2A745DE70078C921 /* TimelineMapView.swift in Sources */,
 				243EAD8E2ACCE8B1001454B5 /* UserReportsEmptyView.swift in Sources */,
@@ -1281,7 +1475,8 @@
 				24FA56BA2A29284D0074149B /* UIActivityVC.swift in Sources */,
 				24BAC6182A8F20E700E42BC6 /* NSNotificationCenter.swift in Sources */,
 				242EEDCC2AE2097400D93B3D /* OnboardingInstructionsView.swift in Sources */,
-				24CC5F312A745DE70078C921 /* NewReportView.swift in Sources */,
+				24956B862B33B5F7001A4E91 /* ReportComposeViewModel.swift in Sources */,
+				24CC5F312A745DE70078C921 /* ReportComposeView.swift in Sources */,
 				24BAC6112A8B034200E42BC6 /* MFMailComposeViewController.swift in Sources */,
 				2495A02029CAC3DE00457CE7 /* Date+EXT.swift in Sources */,
 				24A662F729C2F45B00AD784F /* ReportsManager.swift in Sources */,
@@ -1300,6 +1495,18 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
+		24CDE0AB2B4226A90075DADE /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				2450A7152B465916003D64FF /* PayloadData.swift in Sources */,
+				24CDE0CD2B42405F0075DADE /* ReportOverlay.swift in Sources */,
+				24CDE0CA2B42392B0075DADE /* ReportAnnotation.swift in Sources */,
+				24CDE0B42B4226A90075DADE /* NotificationViewController.swift in Sources */,
+				24CDE0C62B4237E50075DADE /* ReportType.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 /* End PBXSourcesBuildPhase section */
 
 /* Begin PBXTargetDependency section */
@@ -1313,6 +1520,11 @@
 			target = 24CC5F472A74E0870078C921 /* SMKNotificationService */;
 			targetProxy = 24CC5F4D2A74E0870078C921 /* PBXContainerItemProxy */;
 		};
+		24CDE0BA2B4226A90075DADE /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = 24CDE0AE2B4226A90075DADE /* SMKNotificationMapContent */;
+			targetProxy = 24CDE0B92B4226A90075DADE /* PBXContainerItemProxy */;
+		};
 /* End PBXTargetDependency section */
 
 /* Begin PBXVariantGroup section */
@@ -1320,6 +1532,14 @@
 			isa = PBXVariantGroup;
 			children = (
 				243CE82A2A84978100E5A727 /* Base */,
+			);
+			name = MainInterface.storyboard;
+			sourceTree = "<group>";
+		};
+		24CDE0B52B4226A90075DADE /* MainInterface.storyboard */ = {
+			isa = PBXVariantGroup;
+			children = (
+				24CDE0B62B4226A90075DADE /* Base */,
 			);
 			name = MainInterface.storyboard;
 			sourceTree = "<group>";
@@ -1338,7 +1558,7 @@
 				INFOPLIST_FILE = SMKNotificationContent/Info.plist;
 				INFOPLIST_KEY_CFBundleDisplayName = SMKNotificationContent;
 				INFOPLIST_KEY_NSHumanReadableCopyright = "";
-				IPHONEOS_DEPLOYMENT_TARGET = 16.4;
+				IPHONEOS_DEPLOYMENT_TARGET = 16.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
@@ -1348,6 +1568,9 @@
 				PRODUCT_BUNDLE_IDENTIFIER = JaylenKSmith.StoleMyKia.SMKNotificationContent;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SKIP_INSTALL = YES;
+				SUPPORTED_PLATFORMS = "iphoneos iphonesimulator";
+				SUPPORTS_MACCATALYST = NO;
+				SUPPORTS_XR_DESIGNED_FOR_IPHONE_IPAD = NO;
 				SWIFT_EMIT_LOC_STRINGS = YES;
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
@@ -1365,7 +1588,7 @@
 				INFOPLIST_FILE = SMKNotificationContent/Info.plist;
 				INFOPLIST_KEY_CFBundleDisplayName = SMKNotificationContent;
 				INFOPLIST_KEY_NSHumanReadableCopyright = "";
-				IPHONEOS_DEPLOYMENT_TARGET = 16.4;
+				IPHONEOS_DEPLOYMENT_TARGET = 16.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
@@ -1375,6 +1598,9 @@
 				PRODUCT_BUNDLE_IDENTIFIER = JaylenKSmith.StoleMyKia.SMKNotificationContent;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SKIP_INSTALL = YES;
+				SUPPORTED_PLATFORMS = "iphoneos iphonesimulator";
+				SUPPORTS_MACCATALYST = NO;
+				SUPPORTS_XR_DESIGNED_FOR_IPHONE_IPAD = NO;
 				SWIFT_EMIT_LOC_STRINGS = YES;
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
@@ -1531,13 +1757,14 @@
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				MARKETING_VERSION = 0.1.0;
+				MARKETING_VERSION = 0.2.0;
 				PRODUCT_BUNDLE_IDENTIFIER = JaylenKSmith.StoleMyKia;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE_SPECIFIER = "";
 				SUPPORTED_PLATFORMS = "iphoneos iphonesimulator";
 				SUPPORTS_MACCATALYST = NO;
 				SUPPORTS_MAC_DESIGNED_FOR_IPHONE_IPAD = NO;
+				SUPPORTS_XR_DESIGNED_FOR_IPHONE_IPAD = NO;
 				SWIFT_EMIT_LOC_STRINGS = YES;
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = 1;
@@ -1578,13 +1805,14 @@
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				MARKETING_VERSION = 0.1.0;
+				MARKETING_VERSION = 0.2.0;
 				PRODUCT_BUNDLE_IDENTIFIER = JaylenKSmith.StoleMyKia;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE_SPECIFIER = "";
 				SUPPORTED_PLATFORMS = "iphoneos iphonesimulator";
 				SUPPORTS_MACCATALYST = NO;
 				SUPPORTS_MAC_DESIGNED_FOR_IPHONE_IPAD = NO;
+				SUPPORTS_XR_DESIGNED_FOR_IPHONE_IPAD = NO;
 				SWIFT_EMIT_LOC_STRINGS = YES;
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = 1;
@@ -1594,6 +1822,7 @@
 		24CC5F512A74E0870078C921 /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				CODE_SIGN_ENTITLEMENTS = SMKNotificationService/SMKNotificationService.entitlements;
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_TEAM = H5L7QT5U7B;
@@ -1601,7 +1830,7 @@
 				INFOPLIST_FILE = SMKNotificationService/Info.plist;
 				INFOPLIST_KEY_CFBundleDisplayName = SMKNotificationService;
 				INFOPLIST_KEY_NSHumanReadableCopyright = "";
-				IPHONEOS_DEPLOYMENT_TARGET = 16.4;
+				IPHONEOS_DEPLOYMENT_TARGET = 16.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
@@ -1620,6 +1849,7 @@
 		24CC5F522A74E0870078C921 /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				CODE_SIGN_ENTITLEMENTS = SMKNotificationService/SMKNotificationService.entitlements;
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_TEAM = H5L7QT5U7B;
@@ -1627,7 +1857,7 @@
 				INFOPLIST_FILE = SMKNotificationService/Info.plist;
 				INFOPLIST_KEY_CFBundleDisplayName = SMKNotificationService;
 				INFOPLIST_KEY_NSHumanReadableCopyright = "";
-				IPHONEOS_DEPLOYMENT_TARGET = 16.4;
+				IPHONEOS_DEPLOYMENT_TARGET = 16.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
@@ -1640,6 +1870,77 @@
 				SWIFT_EMIT_LOC_STRINGS = YES;
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = 1;
+			};
+			name = Release;
+		};
+		24CDE0BD2B4226A90075DADE /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_GENERATE_SWIFT_ASSET_SYMBOL_EXTENSIONS = YES;
+				CODE_SIGN_IDENTITY = "Apple Development";
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_TEAM = H5L7QT5U7B;
+				ENABLE_USER_SCRIPT_SANDBOXING = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu17;
+				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_FILE = SMKNotificationMapContent/Info.plist;
+				INFOPLIST_KEY_CFBundleDisplayName = SMKNotificationMapContent;
+				INFOPLIST_KEY_NSHumanReadableCopyright = "";
+				IPHONEOS_DEPLOYMENT_TARGET = 16.0;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+					"@executable_path/../../Frameworks",
+				);
+				LOCALIZATION_PREFERS_STRING_CATALOGS = YES;
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = JaylenKSmith.StoleMyKia.SMKNotificationMapContent;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SKIP_INSTALL = YES;
+				SUPPORTED_PLATFORMS = "iphoneos iphonesimulator";
+				SUPPORTS_MACCATALYST = NO;
+				SUPPORTS_MAC_DESIGNED_FOR_IPHONE_IPAD = NO;
+				SUPPORTS_XR_DESIGNED_FOR_IPHONE_IPAD = NO;
+				SWIFT_ACTIVE_COMPILATION_CONDITIONS = "DEBUG $(inherited)";
+				SWIFT_EMIT_LOC_STRINGS = YES;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+			};
+			name = Debug;
+		};
+		24CDE0BE2B4226A90075DADE /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_GENERATE_SWIFT_ASSET_SYMBOL_EXTENSIONS = YES;
+				CODE_SIGN_IDENTITY = "Apple Development";
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_TEAM = H5L7QT5U7B;
+				ENABLE_USER_SCRIPT_SANDBOXING = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu17;
+				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_FILE = SMKNotificationMapContent/Info.plist;
+				INFOPLIST_KEY_CFBundleDisplayName = SMKNotificationMapContent;
+				INFOPLIST_KEY_NSHumanReadableCopyright = "";
+				IPHONEOS_DEPLOYMENT_TARGET = 16.0;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+					"@executable_path/../../Frameworks",
+				);
+				LOCALIZATION_PREFERS_STRING_CATALOGS = YES;
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = JaylenKSmith.StoleMyKia.SMKNotificationMapContent;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SKIP_INSTALL = YES;
+				SUPPORTED_PLATFORMS = "iphoneos iphonesimulator";
+				SUPPORTS_MACCATALYST = NO;
+				SUPPORTS_MAC_DESIGNED_FOR_IPHONE_IPAD = NO;
+				SUPPORTS_XR_DESIGNED_FOR_IPHONE_IPAD = NO;
+				SWIFT_EMIT_LOC_STRINGS = YES;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
 			};
 			name = Release;
 		};
@@ -1682,18 +1983,16 @@
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
 		};
-/* End XCConfigurationList section */
-
-/* Begin XCRemoteSwiftPackageReference section */
-		248636AA2A3BCBE90092E184 /* XCRemoteSwiftPackageReference "PartialSheet" */ = {
-			isa = XCRemoteSwiftPackageReference;
-			repositoryURL = "https://github.com/Jsmith4523/PartialSheet.git";
-			requirement = {
-				branch = master;
-				kind = branch;
-			};
+		24CDE0BC2B4226A90075DADE /* Build configuration list for PBXNativeTarget "SMKNotificationMapContent" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				24CDE0BD2B4226A90075DADE /* Debug */,
+				24CDE0BE2B4226A90075DADE /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
-/* End XCRemoteSwiftPackageReference section */
+/* End XCConfigurationList section */
 	};
 	rootObject = 24A5790829BC552C00495E6F /* Project object */;
 }

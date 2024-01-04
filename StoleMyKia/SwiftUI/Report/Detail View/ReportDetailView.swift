@@ -278,7 +278,7 @@ struct ReportDetailView: View {
                 .environmentObject(userVM)
         }
         .sheet(isPresented: $isShowingUpdateReportView) {
-            UpdateReportView(originalReport: report)
+            UpdateReportTypeView(report: report)
                 .environmentObject(userVM)
                 .environmentObject(reportsVM)
         }

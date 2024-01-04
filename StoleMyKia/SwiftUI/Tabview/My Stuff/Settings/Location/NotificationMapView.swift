@@ -63,6 +63,7 @@ struct NotificationMapView: View {
                     }
                 }
                 VStack {
+                    //Text("\(radiusAmount)")
                     Slider(value: $radiusAmount, in: NearbyDistance.oneMile.distance...NearbyDistance.allCases.last!.distance) { _ in
                         radiusMapViewCoordinator.setNotificationRegion(center: self.location?.coordinate, radius: radiusAmount)
                     }

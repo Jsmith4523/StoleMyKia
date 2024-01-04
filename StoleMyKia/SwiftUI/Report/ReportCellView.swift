@@ -80,6 +80,8 @@ struct ReportCellView: View {
                     }
                     if (report.hasVehicleImage && imageMode == .thumbnail) {
                         HStack {
+                            Spacer()
+                                .frame(width: 15)
                             Image(uiImage: vehicleImage ?? .vehiclePlaceholder)
                                 .resizable()
                                 .scaledToFill()

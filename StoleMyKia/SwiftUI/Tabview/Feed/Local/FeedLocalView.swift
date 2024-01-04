@@ -24,7 +24,7 @@ struct FeedLocalView: View {
             case .loaded:
                 FeedListView(reports: $reportsVM.localReports)
             case .empty:
-                ReportsEmptyView()
+                UserReportsEmptyView()
             case .error:
                 ErrorView()
             case .locationDisabled:

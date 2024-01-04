@@ -9,6 +9,8 @@ import SwiftUI
 
 struct FeedNewReportButtonView: View {
     
+    var backgroundColor: Color = .brand
+    
     @State private var isShowingNewReportView = false
     
     @EnvironmentObject var userVM: UserViewModel
@@ -27,14 +29,14 @@ struct FeedNewReportButtonView: View {
                         .scaledToFit()
                         .frame(width: 18, height: 18)
                         .padding()
-                        .background(Color.brand)
+                        .background(backgroundColor)
                         .foregroundColor(.white)
                         .clipShape(Circle())
                         .padding()
                 }
             }
             .sheet(isPresented: $isShowingNewReportView) {
-                NewReportView()
+                ReportComposeReportTypeView()
                     .environmentObject(reportsVM)
                     .environmentObject(userVM)
             }

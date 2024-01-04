@@ -24,7 +24,7 @@ import UIKit
 //2015-2021 Kia Soul
 //2015-2021 Kia Sportage
 
-enum VehicleModel: String, CaseIterable, Codable, Comparable, Hashable {
+enum VehicleModel: String, CaseIterable, Codable, Comparable, Hashable, Identifiable {
     
     //MARK: - Hyundai Vehicles
     case accent   = "Accent"
@@ -46,6 +46,8 @@ enum VehicleModel: String, CaseIterable, Codable, Comparable, Hashable {
     case sorento  = "Sorento"
     case seltos   = "Seltos"
     case k5       = "K5"
+    
+    var id: Self { self }
     
     ///Manufacturer
     var make: VehicleMake {
@@ -128,6 +130,10 @@ enum VehicleModel: String, CaseIterable, Codable, Comparable, Hashable {
         }
     }
     
+    var yearRangeLabel: String {
+        return "\(self.year.lowerBound) through \(self.year.upperBound)"
+    }
+    
     ///This is the final year both Hyundai and Kia vehicles are affected by the anti-theft vulnerability. Subject to change
     static var lastAffectedYear: Int {
         2022
@@ -168,8 +174,8 @@ extension [VehicleModel] {
         self.sorted(by: <).manufacturer(make).year(year)
     }
     
-    private func manufacturer(_ make: VehicleMake) -> Self {
-        self.filter({$0.make == make})
+    func manufacturer(_ make: VehicleMake) -> Self {
+        self.filter({$0.make == make}).sorted(by: <)
     }
     
     private func year(_ year: Int) -> Self {

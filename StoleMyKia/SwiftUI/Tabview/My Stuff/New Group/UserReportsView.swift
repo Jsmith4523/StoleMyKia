@@ -17,36 +17,26 @@ struct UserReportsView: View {
     @Environment (\.dismiss) var dismiss
     
     var body: some View {
-        NavigationView {
-            ScrollView {
-                switch reportsLoadStatus {
-                case .loading:
-                    UserReportsSkeletonView()
-                case .loaded(let reports):
-                    UserReportsListView(reports: reports, deleteCompletion: reportDeleted)
-                        .environmentObject(userVM)
-                        .environmentObject(reportsVM)
-                case .empty:
-                    ReportsEmptyView()
-                case .error:
-                    ErrorView()
-                }
+        ScrollView {
+            switch reportsLoadStatus {
+            case .loading:
+                UserReportsSkeletonView()
+            case .loaded(let reports):
+                UserReportsListView(reports: reports, deleteCompletion: reportDeleted)
+                    .environmentObject(userVM)
+                    .environmentObject(reportsVM)
+            case .empty:
+                MyStuffUserReportsEmptyView(selection: .myReports)
+            case .error:
+                ErrorView()
             }
-            .navigationTitle(MyStuffView.MyStuffRoute.reports.title)
-            .navigationBarTitleDisplayMode(.inline)
-            .toolbar {
-                ToolbarItem(placement: .navigationBarLeading) {
-                    Button("Close") {
-                        dismiss()
-                    }
-                }
-            }
-            .refreshable {
-                await fetchUserReports()
-            }
-            .task {
-                await fetchUserReports()
-            }
+        }
+        .navigationTitle(MyStuffView.MyStuffRoute.reports.title)
+        .refreshable {
+            await fetchUserReports()
+        }
+        .task {
+            await fetchUserReports()
         }
     }
     
@@ -72,6 +62,7 @@ struct UserReportsView_Previews: PreviewProvider {
             UserReportsView()
                 .tint(Color(uiColor: .label))
                 .environmentObject(ReportsViewModel())
+                .environmentObject(UserViewModel())
         }
     }
 }

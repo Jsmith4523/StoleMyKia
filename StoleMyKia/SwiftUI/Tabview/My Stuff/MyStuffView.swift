@@ -37,25 +37,35 @@ struct MyStuffView: View {
     
     @State private var isShowingSettingsView = false
     @State private var alertSignOut = false
-    
-    @State private var route: MyStuffRoute?
-            
+                
     @ObservedObject var userVM: UserViewModel
     @ObservedObject var reportsVM: ReportsViewModel
         
     var body: some View {
-        NavigationController(title: ApplicationTabViewSelection.myStuff.title, statusBarColor: .lightContent, backgroundColor: .brand) {
-            ScrollView {
-                VStack(spacing: 0) {
-                    header
-                    buttons
+        NavigationStack {
+            VStack(spacing: 0) {
+                Color.brand
+                    .frame(height: 100)
+                ScrollView {
+                    VStack(spacing: 0) {
+                        header
+                        buttons
+                    }
                 }
             }
-            .hideNavigationTitle()
+            .navigationBarHidden(true)
+            .navigationTitle(ApplicationTabViewSelection.myStuff.title)
+            .edgesIgnoringSafeArea(.top)
+            .background {
+                HostingView(statusBarStyle: .darkContent) {
+                    EmptyView()
+                        .disabled(true)
+                }
+            }
         }
         .ignoresSafeArea()
         .accentColor(.white)
-        .tint(.white)
+        .tint(Color(uiColor: .label))
         .alert("Sign Out", isPresented: $alertSignOut) {
             Button("Cancel") {}
             Button("Yes") {
@@ -63,18 +73,6 @@ struct MyStuffView: View {
             }
         } message: {
             Text("You'll be signed out of \(userVM.getAuthUserPhoneNumber() ?? "the application"). Are you sure?")
-        }
-        .fullScreenCover(item: $route) { route in
-            switch route {
-            case .reports:
-                UserReportsView()
-                    .environmentObject(userVM)
-                    .environmentObject(reportsVM)
-            case .bookmarks:
-                UserBookmarksView()
-                    .environmentObject(userVM)
-                    .environmentObject(reportsVM)
-            }
         }
         .sheet(isPresented: $isShowingSettingsView) {
             SettingsView()
@@ -112,10 +110,19 @@ struct MyStuffView: View {
                 VStack(spacing: 0) {
                     ForEach(MyStuffRoute.allCases) { route in
                         Divider()
-                        Button {
-                            self.route = route
+                        NavigationLink {
+                            switch route {
+                            case .reports:
+                                UserReportsView()
+                                    .environmentObject(userVM)
+                                    .environmentObject(reportsVM)
+                            case .bookmarks:
+                                UserBookmarksView()
+                                    .environmentObject(userVM)
+                                    .environmentObject(reportsVM)
+                            }
                         } label: {
-                            MyStuffCellView(symbol: route.symbol, title: route.title)
+                            MyStuffCellView(symbol: route.symbol, title: route.title, isNavigationLabel: true)
                         }
                     }
                     Divider()

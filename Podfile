@@ -12,3 +12,7 @@ target 'StoleMyKia' do
   pod 'Firebase/Database'
 
 end
+
+target 'SMKNotificationContent' do
+  pod 'Firebase/Firestore'
+end

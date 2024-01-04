@@ -7,7 +7,7 @@
 
 import SwiftUI
 
-struct NewReportReminderView: View {
+struct ReportComposeReminderView: View {
     
     var postCompletion: (()->())? = nil
     
@@ -80,5 +80,5 @@ struct NewReportReminderView: View {
 }
 
 #Preview {
-    NewReportReminderView()
+    ReportComposeReminderView()
 }

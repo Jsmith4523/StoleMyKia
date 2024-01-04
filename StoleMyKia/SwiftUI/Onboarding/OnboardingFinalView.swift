@@ -67,12 +67,12 @@ struct OnboardingFinalView: View {
                 case .instructionsView:
                     OnboardingInstructionsView()
                         .onDisappear {
-                            didReadHowTo.toggle()
+                            didReadHowTo = true
                         }
                 case .safetyView:
                     SafetyView()
                         .onDisappear {
-                            didReadSafety.toggle()
+                            didReadSafety = true
                         }
                 }
             }

@@ -39,14 +39,14 @@ final class NotificationViewModel: NSObject, ObservableObject {
    
     ///Request Notification Authorization from the user
     func requestNotificationAuthorization() {
-        UNUserNotificationCenter.current().requestAuthorization(options: [.alert, .sound, .badge, .criticalAlert]) { success, err in
+        UNUserNotificationCenter.current().requestAuthorization(options: [.alert, .sound, .badge, .criticalAlert, .carPlay]) { success, err in
             guard success, err == nil else { return }
         }
         UIApplication.shared.registerForRemoteNotifications()
     }
     
     func userDidReadNotification(_ notification: AppUserNotification) {
-        if let notificationIndex = notifications.firstIndex(where: {$0.id == notification.id}) {
+        if let notificationIndex = notifications.firstIndex(where: {$0.id == notification.id}), !(notification.isRead) {
             notifications[notificationIndex].isRead = true
             if !(notificationUnreadQuantity == 0) {
                 notificationUnreadQuantity = notificationUnreadQuantity - 1

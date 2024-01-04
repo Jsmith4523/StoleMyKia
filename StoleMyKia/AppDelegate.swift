@@ -23,10 +23,10 @@ class AppDelegate: UIScene, UIApplicationDelegate {
         Messaging.messaging().delegate = self
         
         setContentNotificationCategory()
-                
+                        
         UITabBar.appearance().barTintColor = .systemBackground
+        UITabBar.appearance().shadowImage = nil
         UINavigationBar.appearance().barTintColor = .systemBackground
-        UITabBarItem.appearance().badgeColor = UIColor(Color.brand)
 
         UNUserNotificationCenter.current().delegate = self
                         
@@ -59,8 +59,12 @@ extension AppDelegate: UNUserNotificationCenterDelegate {
     }
     
     private func setContentNotificationCategory() {
-        let updateNotificationCategory = UNNotificationCategory(identifier: "CONTENT", actions: [], intentIdentifiers: [], options: [])
-        UNUserNotificationCenter.current().setNotificationCategories([updateNotificationCategory])
+        let updateNotificationCategory = UNNotificationCategory(identifier: "MEDIA", actions: [], intentIdentifiers: [], options: [])
+        
+        let mapNotificationAction      = UNNotificationAction(identifier: "change_notification_settiongs", title: "Modify Desired Location")
+        let mapNotificationCategory    = UNNotificationCategory(identifier: "MAP", actions: [mapNotificationAction], intentIdentifiers: [], options: [])
+        
+        UNUserNotificationCenter.current().setNotificationCategories([updateNotificationCategory, mapNotificationCategory])
     }
 }
 
@@ -70,6 +74,7 @@ extension AppDelegate: MessagingDelegate {
     func messaging(_ messaging: Messaging, didReceiveRegistrationToken fcmToken: String?) {
         //Saving the device token for later...
         if let fcmToken {
+            print(fcmToken)
             UserDefaults.standard.set(fcmToken, forKey: Constants.deviceToken)
         }
     }

@@ -13,14 +13,15 @@ import UIKit
 struct HostingView<C: View>: UIViewControllerRepresentable {
     
     private let rootView: () -> C
+    private var statusBarStyle: UIStatusBarStyle
     
     init(statusBarStyle: UIStatusBarStyle = .default, @ViewBuilder rootView: @escaping () -> C) {
+        self.statusBarStyle = statusBarStyle
         self.rootView = rootView
     }
     
     func makeUIViewController(context: Context) -> UIViewController {
-        let hostingController = UIHostingController(rootView: rootView())
-        hostingController.navigationController?.navigationBar.barTintColor = .green
+        let hostingController = HostingController(statusBarStyle: statusBarStyle, rootView: rootView)
         return hostingController
     }
     
@@ -49,7 +50,7 @@ struct HostingView<C: View>: UIViewControllerRepresentable {
         }
         
         override var preferredStatusBarStyle: UIStatusBarStyle {
-            return statusBarStyle
+            return .lightContent
         }
         
         deinit {

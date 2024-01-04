@@ -17,36 +17,26 @@ struct UserBookmarksView: View {
     @Environment (\.dismiss) var dismiss
     
     var body: some View {
-        NavigationView {
-            ScrollView {
-                switch bookmarksLoadStatus {
-                case .loading:
-                    UserReportsSkeletonView()
-                case .loaded(let reports):
-                    UserReportsListView(reports: reports, deleteCompletion: reportDeleted)
-                        .environmentObject(userVM)
-                        .environmentObject(reportsVM)
-                case .empty:
-                    ReportsEmptyView()
-                case .error:
-                    ErrorView()
-                }
+        ScrollView {
+            switch bookmarksLoadStatus {
+            case .loading:
+                UserReportsSkeletonView()
+            case .loaded(let reports):
+                UserReportsListView(reports: reports, deleteCompletion: reportDeleted)
+                    .environmentObject(userVM)
+                    .environmentObject(reportsVM)
+            case .empty:
+                MyStuffUserReportsEmptyView(selection: .bookmarks)
+            case .error:
+                ErrorView()
             }
-            .navigationTitle(MyStuffView.MyStuffRoute.bookmarks.title)
-            .navigationBarTitleDisplayMode(.inline)
-            .toolbar {
-                ToolbarItem(placement: .navigationBarLeading) {
-                    Button("Close") {
-                        dismiss()
-                    }
-                }
-            }
-            .task {
-                await fetchUserBookmarks()
-            }
-            .refreshable {
-                await fetchUserBookmarks()
-            }
+        }
+        .navigationTitle(MyStuffView.MyStuffRoute.bookmarks.title)
+        .task {
+            await fetchUserBookmarks()
+        }
+        .refreshable {
+            await fetchUserBookmarks()
         }
     }
     

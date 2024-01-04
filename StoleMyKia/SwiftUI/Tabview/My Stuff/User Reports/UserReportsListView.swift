@@ -21,7 +21,7 @@ struct UserReportsListView: View {
     var body: some View {
         VStack {
             ForEach(reports.sorted(by: >)) { report in
-                ReportThumbnailCellView(report: report)
+                ReportCellView(report: report, imageMode: .thumbnail)
                     .onTapGesture {
                         self.report = report
                     }

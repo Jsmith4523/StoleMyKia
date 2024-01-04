@@ -45,7 +45,7 @@ struct UpdateReportView: View {
     
     @State private var vehicleImage: UIImage?
     @State private var description: String = ""
-    @State private var updateReportType: ReportType = .found
+    @Binding var updateReportType: ReportType
     
     @State private var photoPickerSourceType: UIImagePickerController.SourceType?
     
@@ -53,153 +53,142 @@ struct UpdateReportView: View {
     
     @EnvironmentObject var userVM: UserViewModel
     @EnvironmentObject var reportsVM: ReportsViewModel
-    
-    @Environment (\.dismiss) var dismiss
-    
+        
     var isSatisfied: Bool {
         !(self.description.count >= Int.descriptionMinCharacterCount && self.description.count <= Int.descriptionMaxCharacterCount + 1)
     }
         
     var body: some View {
-        NavigationView {
-            List {
-                Section {
+        List {
+            Section {
+                HStack {
+                    Text("Vehicle")
+                    Spacer()
+                    Text(originalReport.vehicleDetails)
+                        .font(.system(size: 17))
+                        .foregroundColor(.gray)
+                }
+                if originalReport.hasLicensePlate {
                     HStack {
-                        Text("Vehicle")
+                        Text("License")
                         Spacer()
-                        Text(originalReport.vehicleDetails)
+                        Text(originalReport.vehicle.licensePlateString)
                             .font(.system(size: 17))
                             .foregroundColor(.gray)
                     }
-                    if originalReport.hasLicensePlate {
-                        HStack {
-                            Text("License")
-                            Spacer()
-                            Text(originalReport.vehicle.licensePlateString)
-                                .font(.system(size: 17))
-                                .foregroundColor(.gray)
-                        }
-                    }
-                    if originalReport.hasVin {
-                        HStack {
-                            Text("VIN")
-                            Spacer()
-                            Text(originalReport.vehicle.hiddenVinString)
-                                .font(.system(size: 17))
-                                .foregroundColor(.gray)
-                        }
-                    }
+                }
+                if originalReport.hasVin {
                     HStack {
-                        Text("Report Details: \n\n\(originalReport.distinguishableDetails)")
+                        Text("VIN")
+                        Spacer()
+                        Text(originalReport.vehicle.hiddenVinString)
                             .font(.system(size: 17))
-                            .lineLimit(4)
                             .foregroundColor(.gray)
                     }
-                } header: {
-                    Text("Vehicle Details")
                 }
-                
-                Section {
-                    if let vehicleImage {
-                        HStack {
-                            Spacer()
-                            Image(uiImage: vehicleImage)
-                                .resizable()
-                                .scaledToFill()
-                                .frame(width: 125, height: 125)
-                                .clipped()
-                            Spacer()
+                HStack {
+                    Text("Report Details: \n\n\(originalReport.distinguishableDetails)")
+                        .font(.system(size: 17))
+                        .lineLimit(4)
+                        .foregroundColor(.gray)
+                }
+            } header: {
+                Text("Vehicle Details")
+            }
+            
+            Section {
+                if let vehicleImage {
+                    HStack {
+                        Spacer()
+                        Image(uiImage: vehicleImage)
+                            .resizable()
+                            .scaledToFill()
+                            .frame(width: 125, height: 125)
+                            .clipped()
+                        Spacer()
+                    }
+                }
+                LabeledContent("Update Type") {
+                    Text(updateReportType.rawValue)
+                }
+                Menu("Vehicle Image") {
+                    ForEach(ImagePickerSource.allCases) { source in
+                        Button(source.rawValue) {
+                            self.photoPickerSourceType = source.sourceType
                         }
                     }
-                    Picker("Update Type", selection: $updateReportType) {
-                        ForEach(ReportType.updateCases) { type in
-                            Text(type.rawValue)
-                                .tag(type)
-                        }
-                    }
-                    Menu("Vehicle Image") {
-                        ForEach(ImagePickerSource.allCases) { source in
-                            Button(source.rawValue) {
-                                self.photoPickerSourceType = source.sourceType
-                            }
-                        }
-                    }
-                } header: {
-                    Text("Update Details")
                 }
-                
-                Section {
-                    Button("Add Description") {
-                        isShowingDescriptionView.toggle()
-                    }
-                } header: {
-                    Text("Description")
-                } footer: {
-                    Text("Describe your situation with the \(originalReport.vehicleDetails)")
+            } header: {
+                Text("Update Details")
+            }
+            
+            Section {
+                Button("Add Description") {
+                    isShowingDescriptionView.toggle()
                 }
-                
-                Section {
-                    Toggle("Hide Location", isOn: $discloseLocation)
-                        .tint(.green)
-                    Toggle("Contact Me", isOn: $allowsForContact)
-                        .tint(.green)
-                } header: {
-                    Text("Options")
-                } footer: {
-                    Text("The 'Contact User' option is visible to other users, but is disabled if the initial report is deleted or has been resolved. You can manually disable contacting as well.")
-                }
+            } header: {
+                Text("Description")
+            } footer: {
+                Text("Describe your situation with the \(originalReport.vehicleDetails)")
             }
-            .navigationTitle("Update Report")
-            .navigationBarTitleDisplayMode(.inline)
-            .toolbar {
-                ToolbarItem(placement: .navigationBarLeading) {
-                    Button("Cancel") {
-                        dismiss()
-                    }
-                }
-                ToolbarItemGroup(placement: .navigationBarTrailing) {
-                    Button {
-                        isShowingBeSafeView.toggle()
-                    } label: {
-                        Image(systemName: "checkerboard.shield")
-                            .foregroundColor(.green)
-                    }
-                    if isUploading {
-                        ProgressView()
-                    } else {
-                        Button("Update") {
-                            prepareForUpload()
-                        }
-                        .disabled(isSatisfied)
-                    }
-                }
-            }
-            .alert("Unable to update report", isPresented: $presentError) {
-                Button("OK") {}
-            } message: {
-                Text("The initial report cannot receive updates at the moment")
-            }
-            .alert("Unable to retrieve current location", isPresented: $alertPresentLocationServicesDenied) {
-                Button("Location Settings") { URL.openApplicationSettings() }
-                Button("OK") {}
-            } message: {
-                Text("Please check your location services settings and/or network connectivity and try again.")
-            }
-            .sheet(isPresented: $isShowingLocationSearchView) {
-                NearbyLocationSearchView(location: $location)
-            }
-            .sheet(isPresented: $isShowingWarningView) {
-                NewReportReminderView(postCompletion: prepareForUpload)
-            }
-            .customSheetView(isPresented: $isShowingDescriptionView, detents: [.large()], showsIndicator: true) {
-                ReportDescriptionView(description: $description)
-            }
-            .imagePicker(source: $photoPickerSourceType, image: $vehicleImage)
-            .fullScreenCover(isPresented: $isShowingBeSafeView) {
-                SafetyView()
+            
+            Section {
+                Toggle("Hide Location", isOn: $discloseLocation)
+                    .tint(.green)
+                Toggle("Contact Me", isOn: $allowsForContact)
+                    .tint(.green)
+            } header: {
+                Text("Options")
+            } footer: {
+                Text("The 'Contact User' option is visible to other users, but is disabled if the initial report is deleted or has been resolved. You can manually disable contacting as well.")
             }
         }
+        .navigationTitle("Update Report")
+        .navigationBarTitleDisplayMode(.inline)
+        .toolbar {
+            ToolbarItemGroup(placement: .navigationBarTrailing) {
+                Button {
+                    isShowingBeSafeView.toggle()
+                } label: {
+                    Image(systemName: "checkerboard.shield")
+                        .foregroundColor(.green)
+                }
+                if isUploading {
+                    ProgressView()
+                } else {
+                    Button("Update") {
+                        prepareForUpload()
+                    }
+                    .disabled(isSatisfied)
+                }
+            }
+        }
+        .alert("Unable to update report", isPresented: $presentError) {
+            Button("OK") {}
+        } message: {
+            Text("The initial report cannot receive updates at the moment")
+        }
+        .alert("Unable to retrieve current location", isPresented: $alertPresentLocationServicesDenied) {
+            Button("Location Settings") { URL.openApplicationSettings() }
+            Button("OK") {}
+        } message: {
+            Text("Please check your location services settings and/or network connectivity and try again.")
+        }
+        .sheet(isPresented: $isShowingLocationSearchView) {
+            NearbyLocationSearchView(location: $location)
+        }
+        .sheet(isPresented: $isShowingWarningView) {
+            ReportComposeReminderView(postCompletion: prepareForUpload)
+        }
+        .customSheetView(isPresented: $isShowingDescriptionView, detents: [.large()], showsIndicator: true) {
+            ReportComposeDescriptionView(description: $description)
+        }
+        .imagePicker(source: $photoPickerSourceType, image: $vehicleImage)
+        .fullScreenCover(isPresented: $isShowingBeSafeView) {
+            SafetyView()
+        }
         .disabled(isUploading)
+        .navigationBarBackButtonHidden(isUploading)
         .interactiveDismissDisabled()
     }
     
@@ -230,7 +219,6 @@ struct UpdateReportView: View {
                     report.allowsForContact = allowsForContact
                     report.setAsUpdate(originalReport.role.associatedValue)
                     try await reportsVM.addUpdateToOriginalReport(originalReport: originalReport, report: report, vehicleImage: vehicleImage)
-                    dismiss()
                 } catch {
                     isUploading = false
                     self.presentError.toggle()
@@ -242,5 +230,5 @@ struct UpdateReportView: View {
 
 
 #Preview {
-    UpdateReportView(originalReport: [Report].testReports().first!)
+    UpdateReportView(originalReport: [Report].testReports().first!, updateReportType: .constant(.stolen))
 }

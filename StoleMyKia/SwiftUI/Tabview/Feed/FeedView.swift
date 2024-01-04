@@ -10,7 +10,7 @@ import CoreLocation
 
 struct FeedView: View {
     
-    private enum FeedTabSelection: Identifiable, CaseIterable {
+    private enum FeedTabSelection: CustomTabViewPickerSource {
         case desired, local
         
         var id: Self { return self }
@@ -24,12 +24,12 @@ struct FeedView: View {
             }
         }
         
-        var symbol: String {
+        var composeButtonColor: Color {
             switch self {
             case .desired:
-                return "line.3.horizontal"
+                return .brand
             case .local:
-                return "location"
+                return .blue
             }
         }
     }
@@ -41,45 +41,33 @@ struct FeedView: View {
     
     var body: some View {
         NavigationStack {
-            ZStack {
-                TabView(selection: $tabViewSelection) {
-                    FeedDesiredView()
-                        .tag(FeedTabSelection.desired)
-                        .environmentObject(userVM)
-                        .environmentObject(reportsVM)
-                    FeedLocalView()
-                        .tag(FeedTabSelection.local)
+            VStack(spacing: 0) {
+                CustomTabViewPicker(selection: $tabViewSelection, sources: FeedTabSelection.allCases)
+                ZStack {
+                    TabView(selection: $tabViewSelection) {
+                        FeedDesiredView()
+                            .tag(FeedTabSelection.desired)
+                            .environmentObject(userVM)
+                            .environmentObject(reportsVM)
+                        FeedLocalView()
+                            .tag(FeedTabSelection.local)
+                            .environmentObject(userVM)
+                            .environmentObject(reportsVM)
+                    }
+                    .tabViewStyle(.page(indexDisplayMode: .never))
+                    FeedNewReportButtonView()
                         .environmentObject(userVM)
                         .environmentObject(reportsVM)
                 }
-                .tabViewStyle(.page(indexDisplayMode: .never))
-                FeedNewReportButtonView()
-                    .environmentObject(userVM)
-                    .environmentObject(reportsVM)
             }
             .environmentObject(userVM)
             .environmentObject(reportsVM)
             .navigationTitle(ApplicationTabViewSelection.feed.title)
             .navigationBarTitleDisplayMode(.inline)
-            .toolbar {
-                ToolbarItem(placement: .navigationBarLeading) {
-                    Text(ApplicationTabViewSelection.feed.title)
-                        .font(.system(size: 20).weight(.heavy))
-                }
-                ToolbarItem(placement: .principal) {
-                    Picker("", selection: $tabViewSelection) {
-                        ForEach(FeedTabSelection.allCases) { selection in
-                            Image(systemName: selection.symbol)
-                                .tag(selection)
-                        }
-                    }
-                    .frame(width: 140)
-                    .pickerStyle(.segmented)
-                }
-            }
-            .onChange(of: tabViewSelection) { _ in
-                UIImpactFeedbackGenerator(style: .light).impactOccurred()
-            }
         }
     }
+}
+
+#Preview {
+    FeedView(userVM: UserViewModel(), reportsVM: ReportsViewModel())
 }

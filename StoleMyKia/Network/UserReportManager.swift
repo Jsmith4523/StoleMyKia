@@ -42,6 +42,7 @@ final class UserReportsManager {
                 .map({try JSONDecoder().decode(Report.self, from: $0)})
             return reports
         } catch {
+            print(error.localizedDescription)
             throw UserReportsManagerError.codableError
         }
     }

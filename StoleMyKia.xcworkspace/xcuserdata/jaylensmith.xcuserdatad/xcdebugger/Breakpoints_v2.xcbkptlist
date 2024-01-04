@@ -163,22 +163,6 @@
       <BreakpointProxy
          BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
          <BreakpointContent
-            uuid = "2B837685-7DBA-47B8-BE4B-95F3AE7AAF25"
-            shouldBeEnabled = "Yes"
-            ignoreCount = "0"
-            continueAfterRunningActions = "No"
-            filePath = "SMKNotificationService/NotificationService.swift"
-            startingColumnNumber = "9223372036854775807"
-            endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "17"
-            endingLineNumber = "17"
-            landmarkName = "didReceive(_:withContentHandler:)"
-            landmarkType = "7">
-         </BreakpointContent>
-      </BreakpointProxy>
-      <BreakpointProxy
-         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
-         <BreakpointContent
             uuid = "495343D2-0B16-4287-B061-85FB1D8A17ED"
             shouldBeEnabled = "Yes"
             ignoreCount = "0"
@@ -190,6 +174,38 @@
             endingLineNumber = "132"
             landmarkName = "onDelete()"
             landmarkType = "7">
+            <Locations>
+               <Location
+                  uuid = "495343D2-0B16-4287-B061-85FB1D8A17ED - 4c5ff0316c227ca3"
+                  shouldBeEnabled = "Yes"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "StoleMyKia.TimelineReportDetailView.onDelete() -&gt; ()"
+                  moduleName = "StoleMyKia"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/jaylensmith/Desktop/Xcode/StoleMyKia/StoleMyKia/SwiftUI/Report/Detail%20View/Timeline/TimelineReportDetailView.swift"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "132"
+                  endingLineNumber = "132"
+                  offsetFromSymbolStart = "840">
+               </Location>
+               <Location
+                  uuid = "495343D2-0B16-4287-B061-85FB1D8A17ED - 4c5ff0316c227ca3"
+                  shouldBeEnabled = "Yes"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "StoleMyKia.TimelineReportDetailView.onDelete() -&gt; ()"
+                  moduleName = "StoleMyKia"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/jaylensmith/Desktop/Xcode/StoleMyKia/StoleMyKia/SwiftUI/Report/Detail%20View/Timeline/TimelineReportDetailView.swift"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "132"
+                  endingLineNumber = "132"
+                  offsetFromSymbolStart = "980">
+               </Location>
+            </Locations>
          </BreakpointContent>
       </BreakpointProxy>
       <BreakpointProxy
@@ -300,6 +316,84 @@
             endingLineNumber = "56"
             landmarkName = "getUpdatesForReport(_:)"
             landmarkType = "7">
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            uuid = "1118E528-E576-4DB9-BC0C-1528DCA548AA"
+            shouldBeEnabled = "Yes"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "StoleMyKia/Network/UserReportManager.swift"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "46"
+            endingLineNumber = "46"
+            landmarkName = "fetchUserReports()"
+            landmarkType = "7">
+            <Locations>
+               <Location
+                  uuid = "1118E528-E576-4DB9-BC0C-1528DCA548AA - 37e56b8a088bba53"
+                  shouldBeEnabled = "Yes"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "(1) suspend resume partial function for StoleMyKia.UserReportsManager.fetchUserReports() async throws -&gt; Swift.Array&lt;StoleMyKia.Report&gt;"
+                  moduleName = "StoleMyKia"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/jaylensmith/Desktop/Xcode/StoleMyKia/StoleMyKia/Network/UserReportManager.swift"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "47"
+                  endingLineNumber = "47"
+                  offsetFromSymbolStart = "764">
+               </Location>
+               <Location
+                  uuid = "1118E528-E576-4DB9-BC0C-1528DCA548AA - 632a7e5a9d76e551"
+                  shouldBeEnabled = "Yes"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "(3) suspend resume partial function for StoleMyKia.UserReportsManager.fetchUserReports() async throws -&gt; Swift.Array&lt;StoleMyKia.Report&gt;"
+                  moduleName = "StoleMyKia"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/jaylensmith/Desktop/Xcode/StoleMyKia/StoleMyKia/Network/UserReportManager.swift"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "47"
+                  endingLineNumber = "47"
+                  offsetFromSymbolStart = "1032">
+               </Location>
+               <Location
+                  uuid = "1118E528-E576-4DB9-BC0C-1528DCA548AA - 8a8ef742e434862e"
+                  shouldBeEnabled = "Yes"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "(4) suspend resume partial function for StoleMyKia.UserReportsManager.fetchUserReports() async throws -&gt; Swift.Array&lt;StoleMyKia.Report&gt;"
+                  moduleName = "StoleMyKia"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/jaylensmith/Desktop/Xcode/StoleMyKia/StoleMyKia/Network/UserReportManager.swift"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "47"
+                  endingLineNumber = "47"
+                  offsetFromSymbolStart = "112">
+               </Location>
+               <Location
+                  uuid = "1118E528-E576-4DB9-BC0C-1528DCA548AA - 632a7e5a9d76e532"
+                  shouldBeEnabled = "Yes"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "(3) suspend resume partial function for StoleMyKia.UserReportsManager.fetchUserReports() async throws -&gt; Swift.Array&lt;StoleMyKia.Report&gt;"
+                  moduleName = "StoleMyKia"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/jaylensmith/Desktop/Xcode/StoleMyKia/StoleMyKia/Network/UserReportManager.swift"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "46"
+                  endingLineNumber = "46"
+                  offsetFromSymbolStart = "1216">
+               </Location>
+            </Locations>
          </BreakpointContent>
       </BreakpointProxy>
    </Breakpoints>

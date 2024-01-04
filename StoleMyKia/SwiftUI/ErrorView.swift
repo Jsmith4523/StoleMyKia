@@ -13,14 +13,8 @@ struct ErrorView: View {
             Spacer()
                 .frame(height: 250)
             VStack(spacing: 9) {
-                Image(systemName: "exclamationmark.circle")
-                    .resizable()
-                    .scaledToFit()
-                    .frame(width: 35, height: 35)
-                    .foregroundColor(.red)
-                Text("Sorry, we ran into an error. Refresh this screen to try again")
-                    .font(.system(size: 18))
-                    .foregroundColor(.gray)
+                Text("Whoops, an issue occurred. Refresh to try again")
+                    .font(.system(size: 19).bold())
             }
             Spacer()
         }

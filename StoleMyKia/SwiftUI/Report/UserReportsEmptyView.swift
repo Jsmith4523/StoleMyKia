@@ -11,7 +11,7 @@ struct UserReportsEmptyView: View {
     var body: some View {
         VStack {
             Spacer()
-                .frame(height: UIScreen.main.bounds.height/2-200)
+                .frame(height: 200)
             VStack(spacing: 10) {
                 Image(systemName: ApplicationTabViewSelection.feed.symbol)
                     .resizable()

@@ -7,7 +7,7 @@
 
 import SwiftUI
 
-struct ReportDescriptionView: View {
+struct ReportComposeDescriptionView: View {
     
     @Binding var description: String
     
@@ -72,6 +72,6 @@ struct ReportDescriptionView: View {
 
 struct ReportDescriptionView_Previews: PreviewProvider {
     static var previews: some View {
-        ReportDescriptionView(description: .constant("Int.descriptionMaxCharacterCountInt.descriptionMaxCharacterCountInt.descriptionMaxCharacterCountInt.descriptionMaxCharacterCountInt.descriptionMaxCharacterCountInt.descriptionMaxCharacterCountInt.descriptionMaxCharacterCountInt.descriptionMaxCharacterCountInt.descriptionMaxCharacterCountInt.descriptionMaxCharacterCountInt.descriptionMaxCharacterCountInt.descriptionMaxCharacterCountInt.descriptionMaxCharacterCountInt.descriptionMaxCharacterCountInt.descriptionMaxCharacterCountInt"))
+        ReportComposeDescriptionView(description: .constant("Int.descriptionMaxCharacterCountInt.descriptionMaxCharacterCountInt.descriptionMaxCharacterCountInt.descriptionMaxCharacterCountInt.descriptionMaxCharacterCountInt.descriptionMaxCharacterCountInt.descriptionMaxCharacterCountInt.descriptionMaxCharacterCountInt.descriptionMaxCharacterCountInt.descriptionMaxCharacterCountInt.descriptionMaxCharacterCountInt.descriptionMaxCharacterCountInt.descriptionMaxCharacterCountInt.descriptionMaxCharacterCountInt.descriptionMaxCharacterCountInt"))
     }
 }
