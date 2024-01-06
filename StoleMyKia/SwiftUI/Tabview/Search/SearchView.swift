@@ -9,6 +9,7 @@ import SwiftUI
 
 struct SearchView: View {
     
+    @State private var isShowingScannerView = false
     @State private var pushToResultsView = false
     
     @StateObject private var searchVM = SearchViewModel()
@@ -18,22 +19,20 @@ struct SearchView: View {
     var body: some View {
         NavigationStack {
             ZStack {
-                ZStack {
+                ZStack(alignment: .bottomTrailing) {
                     VStack {
-                        Image(systemName: ApplicationTabViewSelection.search.symbol)
-                            .resizable()
-                            .scaledToFit()
-                            .frame(width: 35, height: 35)
-                        VStack(spacing: 4) {
-                            Text("Search")
-                                .font(.system(size: 25).weight(.heavy))
+                        Spacer()
+                        VStack(spacing: 25) {
+                            Image(systemName: ApplicationTabViewSelection.search.symbol)
+                                .resizable()
+                                .scaledToFit()
+                                .frame(width: 35, height: 35)
                             Text("Start searching for reports or information you have regarding a vehicle.")
-                                .font(.system(size: 16))
+                                .font(.system(size: 18))
                                 .foregroundColor(.gray)
                         }
                         .multilineTextAlignment(.center)
                         Spacer()
-                            .frame(height: 100)
                     }
                 }
                 .padding()

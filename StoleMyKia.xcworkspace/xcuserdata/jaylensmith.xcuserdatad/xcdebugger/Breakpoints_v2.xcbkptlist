@@ -396,5 +396,133 @@
             </Locations>
          </BreakpointContent>
       </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            uuid = "0D0B0A9C-5C02-40FB-807F-5073C6AAE3B5"
+            shouldBeEnabled = "Yes"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "StoleMyKia/SwiftUI/Report/Compose/ReportComposeViewModel.swift"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "36"
+            endingLineNumber = "36"
+            landmarkName = "vehicleMake"
+            landmarkType = "24">
+            <Locations>
+               <Location
+                  uuid = "0D0B0A9C-5C02-40FB-807F-5073C6AAE3B5 - e31f4bea0349d0b6"
+                  shouldBeEnabled = "Yes"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "StoleMyKia.ReportComposeViewModel.vehicleMake.didset : StoleMyKia.VehicleMake"
+                  moduleName = "StoleMyKia"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/jaylensmith/Desktop/Xcode/StoleMyKia/StoleMyKia/SwiftUI/Report/Compose/ReportComposeViewModel.swift"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "36"
+                  endingLineNumber = "36"
+                  offsetFromSymbolStart = "188">
+               </Location>
+               <Location
+                  uuid = "0D0B0A9C-5C02-40FB-807F-5073C6AAE3B5 - 11b81449eb363ae8"
+                  shouldBeEnabled = "Yes"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "closure #1 (StoleMyKia.VehicleModel) -&gt; Swift.Bool in StoleMyKia.ReportComposeViewModel.vehicleMake.didset : StoleMyKia.VehicleMake"
+                  moduleName = "StoleMyKia"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/jaylensmith/Desktop/Xcode/StoleMyKia/StoleMyKia/SwiftUI/Report/Compose/ReportComposeViewModel.swift"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "36"
+                  endingLineNumber = "36"
+                  offsetFromSymbolStart = "48">
+               </Location>
+            </Locations>
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            uuid = "4A3E59E1-6420-4EA5-872A-21C09429D95D"
+            shouldBeEnabled = "Yes"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "StoleMyKia/SwiftUI/Report/Compose/ReportComposeViewModel.swift"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "44"
+            endingLineNumber = "44"
+            landmarkName = "vehicleModel"
+            landmarkType = "24">
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            uuid = "EE6D9ADF-4A2B-422F-A5BB-66B64520B3C3"
+            shouldBeEnabled = "Yes"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "StoleMyKia/AppDelegate.swift"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "95"
+            endingLineNumber = "95"
+            landmarkName = "handleNotificationPayload(for:)"
+            landmarkType = "7">
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            uuid = "919494B4-36B0-401E-82F9-C15DF286426A"
+            shouldBeEnabled = "Yes"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "StoleMyKia/View Models/FirebaseAuthViewModel.swift"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "137"
+            endingLineNumber = "137"
+            landmarkName = "notifyUserOfSignOut()"
+            landmarkType = "9">
+            <Locations>
+               <Location
+                  uuid = "919494B4-36B0-401E-82F9-C15DF286426A - d2e847676e1f6b74"
+                  shouldBeEnabled = "Yes"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "closure #1 (__C.UIAlertAction) -&gt; () in notifyUserOfSignOut() -&gt; ()"
+                  moduleName = "StoleMyKia"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/jaylensmith/Desktop/Xcode/StoleMyKia/StoleMyKia/View%20Models/FirebaseAuthViewModel.swift"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "137"
+                  endingLineNumber = "137"
+                  offsetFromSymbolStart = "180">
+               </Location>
+               <Location
+                  uuid = "919494B4-36B0-401E-82F9-C15DF286426A - b023cd870407fa05"
+                  shouldBeEnabled = "Yes"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "notifyUserOfSignOut() -&gt; ()"
+                  moduleName = "StoleMyKia"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/jaylensmith/Desktop/Xcode/StoleMyKia/StoleMyKia/View%20Models/FirebaseAuthViewModel.swift"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "138"
+                  endingLineNumber = "138"
+                  offsetFromSymbolStart = "56">
+               </Location>
+            </Locations>
+         </BreakpointContent>
+      </BreakpointProxy>
    </Breakpoints>
 </Bucket>

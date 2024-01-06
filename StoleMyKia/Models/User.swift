@@ -19,6 +19,7 @@ struct AppUser: Codable {
         case disabled = "Disabled"
         case banned   = "Banned"
         case active   = "Active"
+        case newUser  = "New User"
         
         var description: String {
             switch self {
@@ -26,7 +27,7 @@ struct AppUser: Codable {
                 return "Your account has been disabled. Please contact support."
             case .banned:
                 return "Your account has been banned. Please contact support for more information."
-            case .active:
+            default:
                 return ""
             }
         }

@@ -11,21 +11,26 @@ struct ReportComposeVehicleModelView: View {
     
     @EnvironmentObject var composeVM: ReportComposeViewModel
     
+    var canPushToNextView = true
+    
     var body: some View {
         Form {
             ForEach(VehicleModel.allCases.manufacturer(composeVM.vehicleMake)) { model in
                 vehicleModelCellView(model)
                     .onTapGesture {
+                        UIImpactFeedbackGenerator(style: .medium).impactOccurred()
                         composeVM.vehicleModel = model
                     }
             }
         }
         .navigationTitle("Vehicle Model")
         .toolbar {
-            ToolbarItem(placement: .navigationBarTrailing) {
-                NavigationLink("Next") {
-                    ReportComposeVehicleYearView()
-                        .environmentObject(composeVM)
+            if canPushToNextView {
+                ToolbarItem(placement: .navigationBarTrailing) {
+                    NavigationLink("Next") {
+                        ReportComposeVehicleYearView()
+                            .environmentObject(composeVM)
+                    }
                 }
             }
         }

@@ -36,9 +36,10 @@ struct FeedNewReportButtonView: View {
                 }
             }
             .sheet(isPresented: $isShowingNewReportView) {
-                ReportComposeReportTypeView()
+                ReportComposeReportTypeView(isPresented: $isShowingNewReportView)
                     .environmentObject(reportsVM)
                     .environmentObject(userVM)
+                    .environmentObject(ReportComposeViewModel())
             }
         }
     }

@@ -83,7 +83,7 @@ class FirebaseAuthManager {
                 throw FirebaseAuthManagerError.userError
             }
             
-            let userData = try AppUser(uid: currentUser.uid, status: .active, phoneNumber: phoneNumber)
+            let userData = try AppUser(uid: currentUser.uid, status: .newUser, phoneNumber: phoneNumber)
                 .encodeForUpload()
             
             guard (userDocument == nil) else {
@@ -115,7 +115,7 @@ class FirebaseAuthManager {
             
             let userStatus = AppUser.Status(rawValue: rawValue)
             
-            guard let userStatus, (userStatus == .active || userStatus == .disabled) else {
+            guard let userStatus, (userStatus == .active || userStatus == .disabled || userStatus == .newUser) else {
                 deleteCompletion()
                 return
             }
@@ -197,6 +197,27 @@ class FirebaseAuthManager {
         } catch {
             throw FirebaseAuthManagerError.specificError("User Decoding Error")
         }
+    }
+    
+    ///Sets the current signed in user docu
+    func setCurrentUserToActive() async throws {
+        guard let currentUser = Auth.auth().currentUser else {
+            throw FirebaseAuthManagerError.userSignedOut
+        }
+        
+        let userDocument = try await Firestore.firestore()
+            .collection(FirebaseDatabasesPaths.usersDatabasePath)
+            .document(currentUser.uid)
+            .getDocument()
+        
+        guard userDocument.exists else {
+            throw FirebaseAuthManagerError.userDoesNotExist
+        }
+        
+        try await Firestore.firestore()
+            .collection(FirebaseDatabasesPaths.usersDatabasePath)
+            .document(currentUser.uid)
+            .updateData([AppUser.CodingKeys.status.rawValue: AppUser.Status.active.rawValue])
     }
     
     ///Deletes signed in users information (reports, device tokens, notifications, etc.)

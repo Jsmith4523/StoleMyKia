@@ -21,6 +21,9 @@ struct CustomTabViewPicker<S: CustomTabViewPickerSource>: View {
         HStack(alignment: .bottom, spacing: 0) {
             ForEach(sources) { source in
                 pickerSourceCellView(source)
+                    .onTapGesture {
+                        self.selection = source
+                    }
             }
         }
         .frame(height: 50)

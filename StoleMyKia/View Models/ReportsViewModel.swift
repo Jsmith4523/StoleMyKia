@@ -23,8 +23,11 @@ final class ReportsViewModel: NSObject, ObservableObject {
     @Published var localReports = [Report]()
     
     ///Fetch reports locale to the user desired location configuration. Returns latest reports if location is not available.
-    func fetchReports() async {
+    func fetchReports(showProgress: Bool = false) async {
         do {
+            if showProgress {
+                self.feedLoadStatus = .loading
+            }
             let fetchedReports = try await ReportManager.manager.fetch()
             self.reports = fetchedReports
             

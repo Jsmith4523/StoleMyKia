@@ -63,33 +63,45 @@ struct NotificationMapView: View {
                     }
                 }
                 VStack {
-                    //Text("\(radiusAmount)")
-                    Slider(value: $radiusAmount, in: NearbyDistance.oneMile.distance...NearbyDistance.allCases.last!.distance) { _ in
-                        radiusMapViewCoordinator.setNotificationRegion(center: self.location?.coordinate, radius: radiusAmount)
-                    }
+                    Text("Increasing the size of the circle will result in the increase of notifications and reports.")
+                        .multilineTextAlignment(.center)
+                        .font(.system(size: 12))
+                        .foregroundColor(.gray)
+                    Slider(value: $radiusAmount, in: NearbyDistance.oneMile.distance...NearbyDistance.allCases.last!.distance)
                     .disabled(location == nil)
-                    HStack {
-                        Button {
-                            radiusMapViewCoordinator.setNotificationRegion(radius: radiusAmount)
-                        } label: {
-                            Image(systemName: "mappin.and.ellipse")
+                    .onChange(of: radiusAmount) { amount in
+                        radiusMapViewCoordinator.setNotificationRegion(center: self.location?.coordinate, radius: amount)
+                    }
+                    VStack {
+                        HStack {
+                            Button {
+                                radiusMapViewCoordinator.setNotificationRegion(radius: radiusAmount)
+                            } label: {
+                                HStack {
+                                    Image(systemName: "mappin.and.ellipse")
+                                    Text("Set")
+                                }
                                 .font(.system(size: 19).bold())
                                 .padding()
                                 .frame(width: UIScreen.main.bounds.width/2-20)
                                 .foregroundColor(Color(uiColor: .systemBackground))
                                 .background(Color(uiColor: .label))
                                 .clipShape(RoundedRectangle(cornerRadius: 15))
-                        }
-                        Button {
-                            radiusMapViewCoordinator.setNotificationRegionToUserCurrentLocation(radius: radiusAmount)
-                        } label: {
-                            Image(systemName: "location.fill")
+                            }
+                            Button {
+                                radiusMapViewCoordinator.setNotificationRegionToUserCurrentLocation(radius: radiusAmount)
+                            } label: {
+                                HStack {
+                                    Image(systemName: "location.fill")
+                                    Text("Current")
+                                }
                                 .font(.system(size: 19).bold())
                                 .padding()
                                 .frame(width: UIScreen.main.bounds.width/2-20)
                                 .foregroundColor(.white)
                                 .background(.blue)
                                 .clipShape(RoundedRectangle(cornerRadius: 15))
+                            }
                         }
                     }
                     .padding(.horizontal)
@@ -112,7 +124,7 @@ struct NotificationMapView: View {
                     }
                 }
             }
-            .alert("Navigate to your desired location on the map. Once located and set, you'll receive reports and notifications within that area.", isPresented: $showInfoAlert) {
+            .alert("Navigate to your desired location on the map. Once located, press the 'Set' button to receive reports and notifications within that area.", isPresented: $showInfoAlert) {
                 Button("OK") {}
             }
         }

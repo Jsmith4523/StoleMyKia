@@ -49,44 +49,61 @@ fileprivate struct NotificationCellView: View {
     
     let notification: AppUserNotification
     
+    @EnvironmentObject var notificationVM: NotificationViewModel
+    
     var body: some View {
-        VStack(alignment: .leading, spacing: 0) {
-            HStack {
-                VStack {
+        HStack {
+            VStack(alignment: .leading, spacing: 7) {
+                HStack(alignment: .top) {
+                    VStack(alignment: .leading) {
+                        HStack {
+                            Text(notification.title)
+                                .font(.system(size: 15).bold())
+                        }
+                        HStack {
+                            Text(notification.body)
+                                .font(.system(size: 13))
+                                .foregroundColor(.gray)
+                        }
+                    }
+                    Spacer()
+                    if notification.hasImage {
+                        imageView
+                    }
+                }
+                
+                HStack(alignment: .center) {
                     if !notification.isRead {
                         Circle()
-                            .fill(Color.blue)
-                            .frame(width: 10, height: 10)
+                            .foregroundColor(.red)
+                            .frame(width: 8, height: 8)
                     }
-                    Image(systemName: notification.notificationType.symbol)
-                        .resizable()
-                        .scaledToFit()
-                        .frame(width: 16, height: 16)
-                }
-                VStack(alignment: .leading) {
-                    HStack(alignment: .top) {
-                        VStack(alignment: .leading, spacing: 2) {
-                            HStack {
-                                Text(notification.title)
-                                    .font(.system(size: 13).weight(.heavy))
-                                    .lineLimit(2)
-                            }
-                            Text(notification.body)
-                                .font(.system(size: 13.5))
-                                .foregroundColor(.gray)
-                                .lineLimit(3)
-                            Text(notification.dateAndTime)
-                                .font(.system(size: 12.5))
-                                .foregroundColor(.gray)
+                    HStack(spacing: 5) {
+                        Image(systemName: notification.notificationType.symbol)
+                            .resizable()
+                            .scaledToFit()
+                            .frame(width: 14, height: 14)
+                        Text(notification.dateAndTime)
+                            .font(.system(size: 13))
+                    }
+                    Spacer()
+                    Menu {
+                        Button(role: .destructive) {
+                            notificationVM.deleteNotification(notification)
+                        } label: {
+                            Label("Delete", systemImage: "trash")
                         }
-                        Spacer()
-                        if notification.hasImage {
-                            imageView
-                        }
+                    } label: {
+                        Image(systemName: "ellipsis")
+                            .resizable()
+                            .scaledToFit()
+                            .frame(width: 15, height: 15)
+                            .padding(.horizontal, 4)
                     }
                 }
-                Spacer()
+                .foregroundColor(.gray)
             }
+            Spacer()
         }
         .padding()
         .multilineTextAlignment(.leading)
@@ -97,10 +114,14 @@ fileprivate struct NotificationCellView: View {
             .resizable()
             .scaledToFill()
             .frame(width: 70, height: 70)
-            .clipped()
+            .clipShape(RoundedRectangle(cornerRadius: 5))
             .redacted(reason: vehicleImage.isNil() ? .placeholder : [])
             .onAppear {
                 getVehicleImage()
+            }
+            .overlay {
+                RoundedRectangle(cornerRadius: 5)
+                    .stroke(Color.gray.opacity(0.2), lineWidth: 1)
             }
     }
     

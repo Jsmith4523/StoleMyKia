@@ -42,6 +42,7 @@
 		243EAD8E2ACCE8B1001454B5 /* UserReportsEmptyView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 243EAD8D2ACCE8B1001454B5 /* UserReportsEmptyView.swift */; };
 		243EAD902ACDDEB6001454B5 /* NotificationEmptyView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 243EAD8F2ACDDEB6001454B5 /* NotificationEmptyView.swift */; };
 		2448C3A52A2A3B1800A72D9F /* JSONSerial+EXT.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2448C3A42A2A3B1800A72D9F /* JSONSerial+EXT.swift */; };
+		244A1D542B4916A1001F3F35 /* ReportComposeEditVehicleView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 244A1D532B4916A1001F3F35 /* ReportComposeEditVehicleView.swift */; };
 		244BD3D32AABF12300192AD1 /* Int+EXT.swift in Sources */ = {isa = PBXBuildFile; fileRef = 244BD3D22AABF12300192AD1 /* Int+EXT.swift */; };
 		244BD3D52AAC034300192AD1 /* Constant.swift in Sources */ = {isa = PBXBuildFile; fileRef = 244BD3D42AAC034300192AD1 /* Constant.swift */; };
 		244BD3D62AAD812700192AD1 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 24A5791729BC552E00495E6F /* Assets.xcassets */; };
@@ -265,6 +266,7 @@
 		243EAD8D2ACCE8B1001454B5 /* UserReportsEmptyView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserReportsEmptyView.swift; sourceTree = "<group>"; };
 		243EAD8F2ACDDEB6001454B5 /* NotificationEmptyView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NotificationEmptyView.swift; sourceTree = "<group>"; };
 		2448C3A42A2A3B1800A72D9F /* JSONSerial+EXT.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "JSONSerial+EXT.swift"; sourceTree = "<group>"; };
+		244A1D532B4916A1001F3F35 /* ReportComposeEditVehicleView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReportComposeEditVehicleView.swift; sourceTree = "<group>"; };
 		244BD3D22AABF12300192AD1 /* Int+EXT.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Int+EXT.swift"; sourceTree = "<group>"; };
 		244BD3D42AAC034300192AD1 /* Constant.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Constant.swift; sourceTree = "<group>"; };
 		244BD3FA2AB9550A00192AD1 /* MyStuffView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MyStuffView.swift; sourceTree = "<group>"; };
@@ -641,6 +643,7 @@
 			isa = PBXGroup;
 			children = (
 				24CC5EFF2A745DE70078C921 /* ReportComposeView.swift */,
+				244A1D532B4916A1001F3F35 /* ReportComposeEditVehicleView.swift */,
 				24956B822B33B4D6001A4E91 /* ReportComposeReportTypeView.swift */,
 				2450A71F2B469465003D64FF /* ReportComposeVehicleColorView.swift */,
 				2450A7192B468AFE003D64FF /* ReportComposeVehicleMakeView.swift */,
@@ -1339,6 +1342,7 @@
 				244BD4052ABB669900192AD1 /* NotificationMapView.swift in Sources */,
 				244CE7932AE058ED00BC594E /* OnboardingNotificationSettingsView.swift in Sources */,
 				24B071A12A363E30000C6B75 /* ReportTimelimeAnnotationView.swift in Sources */,
+				244A1D542B4916A1001F3F35 /* ReportComposeEditVehicleView.swift in Sources */,
 				24A206902A0826BE00F5DC0C /* FirebaseUserManager.swift in Sources */,
 				24A5792929BC567F00495E6F /* ReportAnnotation.swift in Sources */,
 				2426A61B2A23461300E78647 /* ReportsDelegate.swift in Sources */,

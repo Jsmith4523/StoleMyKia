@@ -39,6 +39,8 @@ struct NotificationSettingsView: View {
         return (settings?.location == nil && location == nil)
     }
     
+    var completion: (()->())? = nil
+    
     var body: some View {
         NavigationView {
             VStack(spacing: 0) {
@@ -64,7 +66,7 @@ struct NotificationSettingsView: View {
                     } footer: {
                         Text("When receiving notifications regarding updates to a report you've made, these settings are ignored.")
                     }
-                    .tint(.green)
+                    .tint(.blue)
                     .disabled(locationIsNotSet)
                 }
                 .disabled(isLoading)
@@ -82,7 +84,7 @@ struct NotificationSettingsView: View {
                     Button {
                         dismiss()
                     } label: {
-                        Image(systemName: "xmark")
+                        Text("Cancel")
                     }
                 }
                 ToolbarItem(placement: .navigationBarTrailing) {
@@ -130,6 +132,9 @@ struct NotificationSettingsView: View {
             
             do {
                 try await userVM.saveNotificationSettings(settings)
+                if let completion {
+                    completion()
+                }
                 dismiss()
             } catch {
                 self.alertErrorSavingSettings.toggle()

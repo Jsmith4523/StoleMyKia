@@ -24,7 +24,7 @@ struct FeedLocalView: View {
             case .loaded:
                 FeedListView(reports: $reportsVM.localReports)
             case .empty:
-                UserReportsEmptyView()
+                NoReportsAvaliableView()
             case .error:
                 ErrorView()
             case .locationDisabled:
@@ -48,5 +48,9 @@ struct FeedLocalView: View {
 }
 
 #Preview {
-    FeedLocalView()
+    NavigationStack {
+        FeedLocalView()
+            .environmentObject(UserViewModel())
+            .environmentObject(ReportsViewModel())
+    }
 }

@@ -38,7 +38,12 @@ final class CarLicenseScannerViewModel: NSObject, ObservableObject {
     private let sessionQueue = DispatchQueue(label: "session_queue", qos: .userInteractive)
     private let modelQueue = DispatchQueue(label: "model_queue", qos: .userInteractive)
     
-    func setupCamera() {
+    override init() {
+        self.preview = AVCaptureVideoPreviewLayer()
+        super.init()
+    }
+    
+    private func setupCamera() {
         do {
             let captureSession = AVCaptureSession()
             captureSession.beginConfiguration()
@@ -53,7 +58,7 @@ final class CarLicenseScannerViewModel: NSObject, ObservableObject {
             guard captureSession.canAddInput(captureDeviceInput) else { throw ScannerError.captureDeviceError }
             captureSession.addInput(captureDeviceInput)
             
-            let previewLayer = AVCaptureVideoPreviewLayer(session: captureSession)
+            self.preview.session = captureSession
             
             let videoDataOutput = AVCaptureVideoDataOutput()
             videoDataOutput.setSampleBufferDelegate(self, queue: sessionQueue)
@@ -67,12 +72,16 @@ final class CarLicenseScannerViewModel: NSObject, ObservableObject {
             videoDataOutput.connection(with: .video)?.videoOrientation = .portrait
             photoCaptureOutput.connection(with: .video)?.videoOrientation = .portrait
             
-            self.preview            = previewLayer
+            captureSession.commitConfiguration()
+            
             self.captureDevice      = captureDevice
             self.videoDeviceInput   = captureDeviceInput
             self.photoCaptureOutput = photoCaptureOutput
             self.captureSession     = captureSession
             
+            sessionQueue.async {
+                captureSession.startRunning()
+            }
         } catch {
             displayError(.genericError)
         }
@@ -149,6 +158,8 @@ extension CarLicenseScannerViewModel {
     }
     
     private func displayError(_ error: ScannerError = .genericError) {
-        self.alertError = error
+        DispatchQueue.main.async {
+            self.alertError = error
+        }
     }
 }

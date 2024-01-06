@@ -52,12 +52,12 @@ public class ReportManager {
     /// - Returns: An array of reports ascending within the desired location or latest.
     /// - Throws: Error if the user location settings are not enabled or documents could not be retrieved.
     func fetch() async throws -> [Report] {
-        let desiredLocation = await FirebaseUserManager.shared.getUserLocationConfiguration()?.coordinate
+        let desiredLocation = await FirebaseUserManager.shared.getUserLocationConfiguration()
         
         let reports = try await fetchReports()
         
         if let desiredLocation {
-            return reports.filterBasedUponLocation(desiredLocation).sorted(by: >)
+            return reports.filterBasedUponLocation(desiredLocation.coordinate, radius: desiredLocation.radius).sorted(by: >)
         } else {
             return reports.sorted(by: >)
         }
@@ -80,7 +80,8 @@ public class ReportManager {
         let reports = try await fetchReports()
         
         if let userLocation {
-            return reports.filterBasedUponLocation(userLocation).sorted(by: >)
+            //7 miles from user's location
+            return reports.filterBasedUponLocation(userLocation, radius: 11265).sorted(by: >)
         } else {
             throw ReportManagerError.locationServicesDenied
         }

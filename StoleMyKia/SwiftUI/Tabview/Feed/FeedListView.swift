@@ -26,7 +26,7 @@ struct FeedListView: View {
         ZStack {
             LazyVStack {
                 LazyVStack(spacing: 25) {
-                    LazyVStack(spacing: 15) {
+                    LazyVStack(spacing: 12) {
                         ForEach(reports) { report in
                             ReportCellView(report: report, imageMode: cellImageMode)
                                 .onTapGesture {

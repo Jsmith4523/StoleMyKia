@@ -11,16 +11,29 @@ struct ReportComposeVehicleYearView: View {
     
     @EnvironmentObject var composeVM: ReportComposeViewModel
     
+    var canPushToNextView = true
+    
     var body: some View {
         Form {
             ForEach(composeVM.vehicleModel.year.reversed(), id: \.self) { year in
                 vehicleYearCellView(year)
                     .onTapGesture {
+                        UIImpactFeedbackGenerator(style: .medium).impactOccurred()
                         composeVM.vehicleYear = year
                     }
             }
         }
         .navigationTitle("\(composeVM.vehicleModel.rawValue)")
+        .toolbar {
+            if canPushToNextView {
+                ToolbarItem(placement: .navigationBarTrailing) {
+                    NavigationLink("Next") {
+                        ReportComposeView()
+                            .environmentObject(composeVM)
+                    }
+                }
+            }
+        }
     }
     
     func vehicleYearCellView(_ year: Int) -> some View {

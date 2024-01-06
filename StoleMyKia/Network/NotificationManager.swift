@@ -119,6 +119,18 @@ final class NotificationManager {
         }
     }
     
+    ///Delete a user's notification
+    func deleteNotification(_ notification: AppUserNotification) async {
+        guard let currentUser = Auth.auth().currentUser else { return }
+        
+        try? await Firestore.firestore()
+            .collection(FirebaseDatabasesPaths.usersDatabasePath)
+            .document(currentUser.uid)
+            .collection(FirebaseDatabasesPaths.userNotificationPath)
+            .document(notification.id)
+            .delete()
+    }
+    
     ///Remove the notification listener. This will be called when the instance class is deallocated.
     static func removeNotificationListener() {
         guard let listener else { return }

@@ -13,6 +13,8 @@ enum FeedLoadStatus {
 
 struct FeedDesiredView: View {
     
+    @State private var isShowingDesiredSettingsView = false
+    
     @EnvironmentObject var reportsVM: ReportsViewModel
     @EnvironmentObject var userVM: UserViewModel
     
@@ -35,6 +37,18 @@ struct FeedDesiredView: View {
         .refreshable {
             await fetchReports(override: true)
         }
+        .toolbar {
+            Button {
+                self.isShowingDesiredSettingsView.toggle()
+            } label: {
+                Image(systemName: "gear")
+                    .foregroundColor(Color(uiColor: .label))
+            }
+        }
+        .sheet(isPresented: $isShowingDesiredSettingsView) {
+            NotificationSettingsView(completion: refreshReportsForDesiredLocation)
+                .environmentObject(userVM)
+        }
     }
     
     private func fetchReports(override: Bool = false) async {
@@ -43,8 +57,18 @@ struct FeedDesiredView: View {
         }
         await reportsVM.fetchReports()
     }
+    
+    private func refreshReportsForDesiredLocation() {
+        Task {
+            await reportsVM.fetchReports(showProgress: true)
+        }
+    }
 }
 
 #Preview {
-    FeedDesiredView()
+    NavigationStack {
+        FeedDesiredView()
+            .environmentObject(UserViewModel())
+            .environmentObject(ReportsViewModel())
+    }
 }

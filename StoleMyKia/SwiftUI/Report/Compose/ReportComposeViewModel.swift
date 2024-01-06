@@ -19,6 +19,9 @@ enum NewReportError: String, Error {
 
 final class ReportComposeViewModel: NSObject, ObservableObject {
     
+    
+    @Published var dismissView = false
+    
     @Published var vehicleImage: UIImage?
     
     @Published var location: Location!
@@ -27,8 +30,23 @@ final class ReportComposeViewModel: NSObject, ObservableObject {
     @Published var distinguishableDescription: String = ""
     
     @Published var vehicleYear: Int = 2011
-    @Published var vehicleMake: VehicleMake = .hyundai
-    @Published var vehicleModel: VehicleModel = .elantra
+    @Published var vehicleMake: VehicleMake = .hyundai {
+        didSet {
+            if !(vehicleModel.make == vehicleMake) {
+                self.vehicleModel = VehicleModel.allCases.filter({$0.make == vehicleMake}).first!
+            }
+        }
+    }
+    
+    @Published var vehicleModel: VehicleModel = .elantra {
+        didSet {
+            if !(vehicleModel.year.contains(vehicleYear)) {
+                self.vehicleYear = vehicleModel.year.lowerBound
+            }
+        }
+    }
+    
+    
     @Published var vehicleColor: VehicleColor = .gray
     
     @Published var licensePlate: String = ""
@@ -128,6 +146,7 @@ final class ReportComposeViewModel: NSObject, ObservableObject {
                 }
                 
                 isUploading = false
+                self.dismissView = true
             } catch NewReportError.locationError {
                 self.isUploading = false
                 self.alertSelectLocation.toggle()

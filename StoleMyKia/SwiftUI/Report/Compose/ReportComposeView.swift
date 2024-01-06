@@ -34,24 +34,27 @@ struct ReportComposeView: View {
             Section("Details") {
                 LabeledContent("Report Type", value: composeVM.reportType.rawValue)
                 LabeledContent("Vehicle", value: composeVM.vehicleDescription)
+                NavigationLink("Edit Details") {
+                    ReportComposeEditVehicleView()
+                        .environmentObject(composeVM)
+                }
+                .foregroundColor(.blue)
             }
             
             Section {
                 Toggle("Hide Location", isOn: $composeVM.discloseLocation)
-                    .tint(.green)
                 Toggle("Allow For Updates", isOn: $composeVM.allowsForUpdates)
-                    .tint(.green)
                 Toggle("Contact Me", isOn: $composeVM.allowsForContact)
-                    .tint(.green)
             } header: {
                 Text("Options")
             }
+            .tint(.blue)
             
             if !composeVM.disablesLicensePlateAndVinSection {
                 Section {
                     Toggle("Not avaliable", isOn: $composeVM.doesNotHaveVehicleIdentification)
                         .disabled(composeVM.reportType.requiresLicensePlateInformation)
-                        .tint(.green)
+                        .tint(.blue)
                     if !composeVM.doesNotHaveVehicleIdentification {
                         TextField("License Plate", text: $composeVM.licensePlate)
                             .keyboardType(.alphabet)
@@ -64,9 +67,9 @@ struct ReportComposeView: View {
                     Text("Vehicle Identification")
                 } footer: {
                     if composeVM.doesNotHaveVehicleIdentification {
-                        Text("Difficulty identifying the vehicle and the likelihood of receiving a 'False Report' increases.")
+                        Text("There is no license plate and/or VIN avaliable.")
                     } else {
-                        Text("Please enter the vehicles full license plate and/or VIN. Depending on the report type, at least one field is required. When including a VIN, it decreases the likelihood of receiving a 'False Report'. Do not include any spaces and/or special characters.")
+                        Text("Enter the vehicles full license plate and/or VIN. Depending on the report type, at least one field is required. Including a VIN will require users to verify in order to 'Update' the report.")
                     }
                 }
             }

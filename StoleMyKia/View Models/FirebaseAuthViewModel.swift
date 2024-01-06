@@ -107,8 +107,22 @@ enum LoginStatus {
         Task {
             self.loginStatus = .loading
             do {
-                let (_, uid) = try await authManager.fetchCurrentUserDocument()
-                self.prepareForSignIn(uid: uid)
+                let (user, uid) = try await authManager.fetchCurrentUserDocument()
+                
+                var loginStatus: LoginStatus
+                
+                switch user.status {
+                case .newUser:
+                    loginStatus = .onboarding
+                case .active:
+                    loginStatus = .signedIn
+                case .disabled:
+                    loginStatus = .signedIn
+                case .banned:
+                    loginStatus = .signedOut
+                }
+                
+                self.prepareForSignIn(uid: uid, loginStatus: loginStatus)
             } catch {
                 prepareForSignOut(fatal: false)
             }
@@ -132,7 +146,7 @@ enum LoginStatus {
     }
     
     func completeOnboarding() async throws {
-        let (_, _) = try await  authManager.fetchCurrentUserDocument()
+        try await authManager.setCurrentUserToActive()
         self.loginStatus = .signedIn
     }
     

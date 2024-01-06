@@ -9,9 +9,13 @@ import SwiftUI
 
 struct ReportComposeReportTypeView: View {
     
-    @StateObject private var composeVM = ReportComposeViewModel()
+    @Binding var isPresented: Bool
+    
+    @EnvironmentObject var composeVM: ReportComposeViewModel
     
     @Environment (\.dismiss) var dismiss
+    
+    var canPushToNextView: Bool = true
     
     var body: some View {
         NavigationStack {
@@ -25,20 +29,26 @@ struct ReportComposeReportTypeView: View {
             }
             .navigationTitle("Report Type")
             .toolbar {
-                ToolbarItem(placement: .navigationBarLeading) {
-                    Button("Cancel") {
-                        dismiss()
+                if canPushToNextView {
+                    ToolbarItem(placement: .navigationBarLeading) {
+                        Button("Cancel") {
+                            dismiss()
+                        }
                     }
-                }
-                ToolbarItem(placement: .navigationBarTrailing) {
-                    NavigationLink("Next") {
-                        ReportComposeVehicleColorView()
-                            .environmentObject(composeVM)
+                    ToolbarItem(placement: .navigationBarTrailing) {
+                        NavigationLink("Next") {
+                            ReportComposeVehicleColorView()
+                                .environmentObject(composeVM)
+                        }
                     }
                 }
             }
             .onChange(of: composeVM.reportType) { _ in
                 UIImpactFeedbackGenerator(style: .medium).impactOccurred()
+            }
+            .onReceive(composeVM.$dismissView) { status in
+                guard status else { return }
+                self.isPresented = false
             }
         }
     }
@@ -85,7 +95,8 @@ extension Image {
 }
 
 #Preview {
-    ReportComposeReportTypeView()
+    ReportComposeReportTypeView(isPresented: .constant(true))
         .environmentObject(ReportsViewModel())
         .environmentObject(UserViewModel())
+        .environmentObject(ReportComposeViewModel())
 }

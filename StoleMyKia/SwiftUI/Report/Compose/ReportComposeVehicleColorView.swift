@@ -11,6 +11,8 @@ struct ReportComposeVehicleColorView: View {
     
     @EnvironmentObject var composeVM: ReportComposeViewModel
     
+    var canPushToNextView: Bool = true
+    
     var body: some View {
         Form {
             ForEach(VehicleColor.allCases.sorted(by: <)) { color in
@@ -23,9 +25,11 @@ struct ReportComposeVehicleColorView: View {
         }
         .navigationTitle("Vehicle Color")
         .toolbar {
-            NavigationLink("Next") {
-                ReportComposeVehicleModelView()
-                    .environmentObject(composeVM)
+            if canPushToNextView {
+                NavigationLink("Next") {
+                    ReportComposeVehicleMakeView()
+                        .environmentObject(composeVM)
+                }
             }
         }
     }

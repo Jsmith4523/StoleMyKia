@@ -46,12 +46,14 @@ struct MyStuffView: View {
             VStack(spacing: 0) {
                 Color.brand
                     .frame(height: 100)
+                //Offsetting the scrollview due to a very-thin but visible white gap during modal presentations
                 ScrollView {
                     VStack(spacing: 0) {
                         header
                         buttons
                     }
                 }
+                .offset(y: -0.5)
             }
             .navigationBarHidden(true)
             .navigationTitle(ApplicationTabViewSelection.myStuff.title)
@@ -101,6 +103,7 @@ struct MyStuffView: View {
             .multilineTextAlignment(.center)
             .padding(.horizontal)
         }
+        .frame(maxWidth: .infinity)
         .frame(height: 125)
     }
     

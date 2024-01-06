@@ -8,16 +8,21 @@
 import Foundation
 import UIKit
 import SwiftUI
+import AVFoundation
 
 struct CarLicenseScannerCameraFeedView: UIViewRepresentable {
     
-    @ObservedObject var cameraVM: CarLicenseScannerViewModel
+    let preview: AVCaptureVideoPreviewLayer
     
     func makeUIView(context: Context) -> UIView {
-        UIView()
+        let view = UIView()
+        view.frame.size = UIScreen.main.bounds.size
+        preview.frame = view.frame
+        preview.videoGravity = .resizeAspectFill
+        view.layer.addSublayer(preview)
+        return view
     }
     
     func updateUIView(_ uiView: UIView, context: Context) {}
     
-    typealias UIViewType = UIView
 }

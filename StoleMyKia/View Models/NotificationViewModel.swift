@@ -46,9 +46,9 @@ final class NotificationViewModel: NSObject, ObservableObject {
     }
     
     func userDidReadNotification(_ notification: AppUserNotification) {
-        if let notificationIndex = notifications.firstIndex(where: {$0.id == notification.id}), !(notification.isRead) {
+        if let notificationIndex = notifications.firstIndex(where: {$0.id == notification.id}) {
             notifications[notificationIndex].isRead = true
-            if !(notificationUnreadQuantity == 0) {
+            if !(notificationUnreadQuantity == 0 && notification.isRead) {
                 notificationUnreadQuantity = notificationUnreadQuantity - 1
             }
             self.notification = notification
@@ -102,6 +102,13 @@ final class NotificationViewModel: NSObject, ObservableObject {
             } catch {
                 print("Unable to retrieve more notifications from user \(error.localizedDescription)")
             }
+        }
+    }
+    
+    func deleteNotification(_ notification: AppUserNotification) {
+        Task {
+            await NotificationManager.shared.deleteNotification(notification)
+            fetchNotifications()
         }
     }
     

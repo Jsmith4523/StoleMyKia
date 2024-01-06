@@ -51,6 +51,7 @@ extension AppDelegate: UNUserNotificationCenterDelegate {
     func userNotificationCenter(_ center: UNUserNotificationCenter, didReceive response: UNNotificationResponse) async {
         guard Auth.auth().currentUser.isSignedIn else { return }
         let payload = response.notification.request.content.userInfo
+        print(payload)
         await handleNotificationPayload(for: payload)
     }
     
@@ -61,8 +62,8 @@ extension AppDelegate: UNUserNotificationCenterDelegate {
     private func setContentNotificationCategory() {
         let updateNotificationCategory = UNNotificationCategory(identifier: "MEDIA", actions: [], intentIdentifiers: [], options: [])
         
-        let mapNotificationAction      = UNNotificationAction(identifier: "change_notification_settiongs", title: "Modify Desired Location")
-        let mapNotificationCategory    = UNNotificationCategory(identifier: "MAP", actions: [mapNotificationAction], intentIdentifiers: [], options: [])
+        //let mapNotificationAction      = UNNotificationAction(identifier: "change_notification_settiongs", title: "Modify Desired Location")
+        let mapNotificationCategory    = UNNotificationCategory(identifier: "MAP", actions: [], intentIdentifiers: [], options: [])
         
         UNUserNotificationCenter.current().setNotificationCategories([updateNotificationCategory, mapNotificationCategory])
     }
@@ -74,7 +75,6 @@ extension AppDelegate: MessagingDelegate {
     func messaging(_ messaging: Messaging, didReceiveRegistrationToken fcmToken: String?) {
         //Saving the device token for later...
         if let fcmToken {
-            print(fcmToken)
             UserDefaults.standard.set(fcmToken, forKey: Constants.deviceToken)
         }
     }
@@ -88,14 +88,31 @@ extension AppDelegate {
         }
         
         let progressView = Self.createProgressView()
-        let rootViewController = Self.rootViewController()
-        rootViewController?.present(progressView, animated: true) {
-            do {
-                let data = try JSONSerialization.data(withJSONObject: payload)
-                let notification = try JSONDecoder().decode(AppUserNotification.self, from: data)
-            } catch {
+        let rootViewController = Self.selectedViewController()
+        rootViewController?.present(progressView, animated: true) { [weak self] in
+            guard let notificationType = payload["notificationType"] as? String, let reportId = payload["reportId"] as? String, let id = UUID(uuidString: reportId) else {
                 progressView.dismiss(animated: true) {
-                    self.presentNotificationErrorAlert(on: rootViewController)
+                    self?.presentNotificationErrorAlert(on: rootViewController)
+                }
+                return
+            }
+                        
+            switch notificationType {
+            case "Report":
+                let hostingController = UIHostingController(rootView: ReportDetailView(reportId: id).environmentObject(ReportsViewModel()))
+                hostingController.modalPresentationStyle = .fullScreen
+                progressView.dismiss(animated: true) {
+                    rootViewController?.present(hostingController, animated: true)
+                }
+            case "Update":
+                let hostingController = UIHostingController(rootView: TimelineMapView(reportAssociatedId: id, dismissStyle: .dismiss))
+                hostingController.modalPresentationStyle = .fullScreen
+                progressView.dismiss(animated: true) {
+                    rootViewController?.present(hostingController, animated: true)
+                }
+            default:
+                progressView.dismiss(animated: true) {
+                    self?.presentNotificationErrorAlert(on: rootViewController)
                 }
             }
         }
@@ -105,10 +122,10 @@ extension AppDelegate {
         let viewController = UIViewController()
         let activityIndicator = UIActivityIndicatorView(style: .large)
         
-        activityIndicator.color = .white
+        activityIndicator.color = .gray
         activityIndicator.startAnimating()
         
-        viewController.view.backgroundColor = .black.withAlphaComponent(0.65)
+        viewController.view.backgroundColor = .systemBackground
         
         viewController.view.addSubview(activityIndicator)
         activityIndicator.translatesAutoresizingMaskIntoConstraints = false
@@ -118,7 +135,7 @@ extension AppDelegate {
             activityIndicator.centerYAnchor.constraint(equalTo: viewController.view.centerYAnchor)
         ])
         
-        viewController.modalPresentationStyle = .overCurrentContext
+        viewController.modalPresentationStyle = .fullScreen
         return viewController
     }
     
@@ -134,13 +151,25 @@ extension AppDelegate {
         viewController.present(ac, animated: true)
     }
     
+    ///Access and returns the current selected view controller
+    static func selectedViewController() -> UIViewController? {
+        let keyWindow = (UIApplication.shared.connectedScenes.first as? UIWindowScene)?.keyWindow
+        
+        //Cheking if the view has a view controller presented
+        //If not, immediately fall back to the root view controller
+        guard let keyWindow, let viewController = keyWindow.rootViewController?.presentedViewController ?? keyWindow.rootViewController else {
+            return nil
+        }
+        return viewController
+    }
+    
     ///Access and returns the current root view controller
     static func rootViewController() -> UIViewController? {
         let keyWindow = (UIApplication.shared.connectedScenes.first as? UIWindowScene)?.keyWindow
         
         //Cheking if the view has a view controller presented
         //If not, immediately fall back to the root view controller
-        guard let keyWindow, let viewController = keyWindow.rootViewController?.presentedViewController ?? keyWindow.rootViewController else {
+        guard let keyWindow, let viewController = keyWindow.rootViewController?.presentedViewController else {
             return nil
         }
         return viewController

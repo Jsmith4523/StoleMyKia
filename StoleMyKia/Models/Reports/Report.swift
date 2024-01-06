@@ -284,11 +284,19 @@ extension [Report] {
         return reports
     }
     
-    func filterBasedUponLocation(_ location: CLLocationCoordinate2D) -> [Report] {
+    func filterBasedUponLocation(_ location: CLLocationCoordinate2D, radius: Double? = nil) -> [Report] {
         return self.sorted { lhs, rhs in
             let distanceOne = pow(Double(lhs.location.coordinates.latitude - location.latitude), 2) + pow(Double(lhs.location.coordinates.longitude - location.longitude), 2)
             let distanceTwo = pow(Double(rhs.location.coordinates.latitude - location.latitude), 2) + pow(Double(rhs.location.coordinates.longitude - location.longitude), 2)
             return distanceOne < distanceTwo
+        }
+        .filter { report in
+            if let radius {
+                let location = CLLocation(latitude: location.latitude, longitude: location.longitude)
+                return report.location.location.distance(from: location) <= radius
+            } else {
+                return true
+            }
         }
     }
 }
