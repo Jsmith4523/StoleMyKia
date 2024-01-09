@@ -183,6 +183,8 @@ public class ReportManager {
     func upload(_ report: Report, image: UIImage? = nil) async throws {
         var report = report
         
+        try await FirebaseAuthManager.manager.userCanPerformAction()
+        
         if let image {
             //Saving the vehicle image to Firebase Storage...
             let imageUrl = try await StorageManager.shared.saveVehicleImage(image,

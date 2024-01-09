@@ -12,12 +12,12 @@
 		<key>SMKNotificationContent.xcscheme_^#shared#^_</key>
 		<dict>
 			<key>orderHint</key>
-			<integer>30</integer>
+			<integer>29</integer>
 		</dict>
 		<key>SMKNotificationMapContent.xcscheme_^#shared#^_</key>
 		<dict>
 			<key>orderHint</key>
-			<integer>29</integer>
+			<integer>30</integer>
 		</dict>
 		<key>SMKNotificationService.xcscheme_^#shared#^_</key>
 		<dict>

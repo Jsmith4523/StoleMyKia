@@ -30,9 +30,7 @@ struct PhotoPicker: UIViewControllerRepresentable {
     
     @Binding var selectedImage: UIImage?
     var source: UIImagePickerController.SourceType
-    
-    @StateObject private var photoPickerCoordinator = PhotoPickerCoordinator()
-    
+        
     func makeUIViewController(context: Context) -> UIImagePickerController {
         let imagePicker           = UIImagePickerController()
         imagePicker.sourceType    = source
@@ -43,24 +41,26 @@ struct PhotoPicker: UIViewControllerRepresentable {
     }
     
     func makeCoordinator() -> PhotoPickerCoordinator {
-        photoPickerCoordinator
+        return PhotoPickerCoordinator(photoPicker: self)
     }
     
     func updateUIViewController(_ uiViewController: UIImagePickerController, context: Context) {
-        if let image = context.coordinator.image {
-            self.selectedImage = image
-        }
+        
     }
     
     typealias UIViewControllerType = UIImagePickerController
     
     final class PhotoPickerCoordinator: NSObject, UIImagePickerControllerDelegate, UINavigationControllerDelegate, ObservableObject {
         
-        @Published var image: UIImage?
+        var photoPicker: PhotoPicker
+        
+        init(photoPicker: PhotoPicker) {
+            self.photoPicker = photoPicker
+        }
         
         func imagePickerController(_ picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [UIImagePickerController.InfoKey : Any]) {
             if let image = info[.editedImage] as? UIImage {
-                self.image = image
+                self.photoPicker.selectedImage = image
             }
             
             picker.dismiss(animated: true)

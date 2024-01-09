@@ -24,9 +24,9 @@ struct MyStuffUserReportsEmptyView: View {
         var description: String {
             switch self {
             case .myReports:
-                return "Any Reports and Updates you make will appear here."
+                return "Any reports and updates you submit will be displayed in this section."
             case .bookmarks:
-                return "Reports and Updates that you bookmark will appear here."
+                return "Reports and updates that you bookmark will appear here."
             }
         }
     }

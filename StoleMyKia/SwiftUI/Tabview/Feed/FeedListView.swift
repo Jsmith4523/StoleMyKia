@@ -26,7 +26,7 @@ struct FeedListView: View {
         ZStack {
             LazyVStack {
                 LazyVStack(spacing: 25) {
-                    LazyVStack(spacing: 12) {
+                    LazyVStack(spacing: 8) {
                         ForEach(reports) { report in
                             ReportCellView(report: report, imageMode: cellImageMode)
                                 .onTapGesture {
@@ -34,7 +34,7 @@ struct FeedListView: View {
                                 }
                         }
                     }
-                    .background(Color(uiColor: .opaqueSeparator).opacity(0.16))
+                    .background(Color(uiColor: .opaqueSeparator).opacity(0.14))
                 }
                 Spacer()
                     .frame(height: 70)

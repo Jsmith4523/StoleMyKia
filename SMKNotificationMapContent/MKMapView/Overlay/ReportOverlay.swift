@@ -10,5 +10,5 @@ import MapKit
 
 class ReportOverlay: MKCircle {
 
-    var reportType: ReportType!
+    var reportType: ReportType! 
 }

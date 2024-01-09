@@ -140,7 +140,7 @@ struct UpdateReportView: View {
             } header: {
                 Text("Options")
             } footer: {
-                Text("The 'Contact User' option is visible to other users, but is disabled if the initial report is deleted or has been resolved. You can manually disable contacting as well.")
+                Text("Contacting is automatically disabled when the initial report is marked resolved or deleted. You can manually disable contacting within the detail screen of your update.")
             }
         }
         .navigationTitle("Update Report")
@@ -183,7 +183,9 @@ struct UpdateReportView: View {
         .customSheetView(isPresented: $isShowingDescriptionView, detents: [.large()], showsIndicator: true) {
             ReportComposeDescriptionView(description: $description)
         }
-        .imagePicker(source: $photoPickerSourceType, image: $vehicleImage)
+        .fullScreenCover(item: $photoPickerSourceType) { source in
+            PhotoPicker(selectedImage: $vehicleImage, source: source)
+        }
         .fullScreenCover(isPresented: $isShowingBeSafeView) {
             SafetyView()
         }

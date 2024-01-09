@@ -36,10 +36,12 @@ class FirebaseAuthManager {
     /// - Parameter phoneNumber: The users phone number
     func authWithPhoneNumber(_ phoneNumber: String) async throws {
         let verificationId = try await PhoneAuthProvider.provider().verifyPhoneNumber(phoneNumber, uiDelegate: nil)
+        print(verificationId)
         self.verificationId = verificationId
     }
     
     func verifyCode(_ code: String, phoneNumber: String) async throws -> LoginStatus {
+        print(verificationId)
         guard let verificationId else {
             throw FirebaseAuthManagerError.verificationIdError
         }
@@ -106,13 +108,19 @@ class FirebaseAuthManager {
             .collection(FirebaseDatabasesPaths.usersDatabasePath)
             .document(currentUser.uid)
         
-        let deletionListener = userDocument.addSnapshotListener { snapshot, err in
+        let deletionListener = userDocument.addSnapshotListener(includeMetadataChanges: true) { snapshot, err in
             guard let snapshot, err == nil else { return }
             
-            guard let rawValue = snapshot.get(AppUser.statusKey) as? String else {
+            guard snapshot.exists else {
+                deleteCompletion()
                 return
             }
             
+            guard let rawValue = snapshot.get(AppUser.statusKey) as? String else {
+                deleteCompletion()
+                return
+            }
+                        
             let userStatus = AppUser.Status(rawValue: rawValue)
             
             guard let userStatus, (userStatus == .active || userStatus == .disabled || userStatus == .newUser) else {
@@ -122,6 +130,11 @@ class FirebaseAuthManager {
         }
         
         self.accountDeletionListener = deletionListener
+    }
+    
+    func removeListener() {
+        self.accountDeletionListener?.remove()
+        self.accountDeletionListener = nil
     }
     
     ///Determines if another user can have actions performed to their account such as having a report updated by another user
@@ -134,6 +147,10 @@ class FirebaseAuthManager {
             .collection(FirebaseDatabasesPaths.usersDatabasePath)
             .document(uid)
             .getDocument()
+        
+        guard userSnapshot.exists else {
+            throw FirebaseAuthManagerError.userDoesNotExist
+        }
         
         //If the parameter uid passed through does not have a document at the collection, or the status is not "Active"
         //Then we cannot perform an action for that user
@@ -148,7 +165,7 @@ class FirebaseAuthManager {
     
     
     ///The logged in user can perform destructive actions such as deleting their account or deleting a report
-    private func userCanPerformDestructiveAction() async throws {
+    func userCanPerformDestructiveAction() async throws {
         guard let currentUser = Auth.auth().currentUser else {
             throw FirebaseAuthManagerError.error
         }
@@ -218,93 +235,6 @@ class FirebaseAuthManager {
             .collection(FirebaseDatabasesPaths.usersDatabasePath)
             .document(currentUser.uid)
             .updateData([AppUser.CodingKeys.status.rawValue: AppUser.Status.active.rawValue])
-    }
-    
-    ///Deletes signed in users information (reports, device tokens, notifications, etc.)
-    func permanentlyDeleteUser() async throws {
-        guard let currentUser = Auth.auth().currentUser else {
-            throw FirebaseAuthManagerError.error
-        }
-        
-        try await userCanPerformDestructiveAction()
-        
-        let reportsCollection = Firestore.firestore()
-            .collection(FirebaseDatabasesPaths.reportsDatabasePath)
-            
-        //Delete reports...
-        try await reportsCollection
-            .whereFilter(.whereField("uid", isEqualTo: currentUser.uid))
-            .getDocuments()
-            .documents
-            .forEach { doc in
-                reportsCollection
-                    .document(doc.documentID)
-                    .delete()
-            }
-        
-        let userDocumentRef = try await Firestore.firestore()
-            .collection(FirebaseDatabasesPaths.usersDatabasePath)
-            .document(currentUser.uid)
-            .getDocument()
-            .reference
-        
-        //Delete bookmarks
-        try await userDocumentRef
-            .collection(FirebaseDatabasesPaths.userBookmarksPath)
-            .getDocuments()
-            .documents
-            .forEach { doc in
-                userDocumentRef
-                    .collection(FirebaseDatabasesPaths.userBookmarksPath)
-                    .document(doc.documentID)
-                    .delete()
-            }
-        
-        //Delete Notifications
-        try await userDocumentRef
-            .collection(FirebaseDatabasesPaths.userNotificationPath)
-            .getDocuments()
-            .documents
-            .forEach { doc in
-                userDocumentRef
-                    .collection(FirebaseDatabasesPaths.userNotificationPath)
-                    .document(doc.documentID)
-                    .delete()
-            }
-        
-        //Delete device tokens
-        try await userDocumentRef
-            .collection(FirebaseDatabasesPaths.fcmTokenPath)
-            .getDocuments()
-            .documents
-            .forEach { doc in
-                userDocumentRef
-                    .collection(FirebaseDatabasesPaths.fcmTokenPath)
-                    .document(doc.documentID)
-                    .delete()
-            }
-        
-        //Delete settings
-        try await userDocumentRef
-            .collection(FirebaseDatabasesPaths.userSettingsPath)
-            .getDocuments()
-            .documents
-            .forEach { doc in
-                userDocumentRef
-                    .collection(FirebaseDatabasesPaths.userSettingsPath)
-                    .document(doc.documentID)
-                    .delete()
-            }
-        
-        try await userDocumentRef.delete()
-        
-        try? await Auth.auth().currentUser?.delete()
-        notifyOfSignOut()
-    }
-    
-    func signOutUser() {
-        try? Auth.auth().signOut()
-        notifyOfSignOut()
     }
     
     func userCanHandleNotification() async throws -> Bool {

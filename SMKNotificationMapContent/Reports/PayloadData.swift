@@ -16,6 +16,7 @@ struct PayloadData: Decodable {
     let discloseLocation: String
     let vehicleDetails: String
     let notificationType: String
+    let imageURL: String?
 }
 
 extension PayloadData {
@@ -26,6 +27,10 @@ extension PayloadData {
     
     var coordinate: CLLocationCoordinate2D {
         return CLLocationCoordinate2D(latitude: Double(lat)!, longitude: Double(long)!)
+    }
+    
+    var location: CLLocation {
+        return CLLocation(latitude: Double(lat)!, longitude: Double(long)!)
     }
     
     var region: MKCoordinateRegion {

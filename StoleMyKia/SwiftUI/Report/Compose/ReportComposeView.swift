@@ -143,7 +143,6 @@ struct ReportComposeView: View {
                 composeVM.doesNotHaveVehicleIdentification = false
             }
         }
-        .interactiveDismissDisabled()
         .tint(Color(uiColor: .label))
         .disabled(composeVM.isUploading)
         .fullScreenCover(isPresented: $composeVM.isShowingImagePicker) {

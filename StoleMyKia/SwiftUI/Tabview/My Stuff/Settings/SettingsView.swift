@@ -62,6 +62,7 @@ struct SettingsView: View {
     @State private var settingsRoute: SettingsRoutes?
     
     @EnvironmentObject var userVM: UserViewModel
+    @EnvironmentObject var authVM: FirebaseAuthViewModel
     
     @Environment (\.dismiss) var dismiss
     
@@ -190,7 +191,7 @@ struct SettingsView: View {
         isLoading = true
         Task {
             do {
-                try await userVM.deleteUserAccount()
+                try await authVM.permanentlyDeleteUser()
                 dismiss()
                 isLoading = false
             } catch {

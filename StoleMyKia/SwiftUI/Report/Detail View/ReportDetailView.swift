@@ -103,6 +103,68 @@ struct ReportDetailView: View {
                     }
                 }
             }
+            .fullScreenCover(isPresented: $isShowingFalseReportView) {
+                FalseReportView(report: report)
+                    .environmentObject(userVM)
+            }
+            .sheet(isPresented: $isShowingUpdateReportView) {
+                UpdateReportTypeView(report: report)
+                    .environmentObject(userVM)
+                    .environmentObject(reportsVM)
+            }
+            .fullScreenCover(isPresented: $isShowingVehicleImageView) {
+                VehicleImageView(vehicleImage: $vehicleImage)
+            }
+            .alert("Delete Report?", isPresented: $presentDeleteAlert) {
+                Button("Yes", role: .destructive) {
+                    beginDeletingReport()
+                }
+            } message: {
+                Text(report?.deletionBodyText ?? "This change cannot be undo!")
+            }
+            .alert("Unable to delete", isPresented: $presentFailedDeletingReportAlert) {
+                Button("OK") {}
+            } message: {
+                Text("Something went wrong trying to delete this report. Please try again!")
+            }
+            .alert("Resolve Report", isPresented: $presentResolveReportsAlert) {
+                Button("Yes") { resolveReport() }
+                Button("Never mind"){}
+            } message: {
+                Text("When resolving a report, it will no longer receive updates and users can no longer contact you (if enabled). Once resolved, it CANNOT be reversed. Do you wish to continue?")
+            }
+            .alert("Disable Updates", isPresented: $presentDisableUpdatesAlert) {
+                Button("Yes", role: .destructive) { disableUpdates() }
+            } message: {
+                Text("When disabling updates, users can no longer update your report, but can still contact you (if enabled) Once disabled, it CANNOT be re-enabled. Do you wish to continue?")
+            }
+            .alert("There was an error completing that request", isPresented: $presentGenericErrorAlert) {
+                Button("OK") {}
+            } message: {
+                Text("An error occurred attempting to process that request. Please try again.")
+            }
+            .alert("Please Verify VIN", isPresented: $presentVinVerificationView) {
+                TextField("VIN", text: $vehicleVin)
+                Button("Cancel") {}
+                Button("Verify", action: verifyVin)
+            } message: {
+                Text("This report includes a Vehicle Identification Number (VIN). Pleas enter the full VIN to continue")
+            }
+            .alert("Verification Error", isPresented: $presentVinInvalidAlert) {
+                Button("OK") {}
+            } message: {
+                Text("Sorry, that VIN does not match.")
+            }
+            .onChange(of: vehicleVin) { _ in
+                if vehicleVin.count > 17 {
+                    self.vehicleVin = ""
+                }
+            }
+            .task {
+                if updateQuantity.isNil() {
+                    await getUpdateQuantity()
+                }
+            }
         }
         
         .overlay {
@@ -271,68 +333,6 @@ struct ReportDetailView: View {
                         self.isShowingFalseReportView.toggle()
                     }
                 }
-            }
-        }
-        .fullScreenCover(isPresented: $isShowingFalseReportView) {
-            FalseReportView(report: report)
-                .environmentObject(userVM)
-        }
-        .sheet(isPresented: $isShowingUpdateReportView) {
-            UpdateReportTypeView(report: report)
-                .environmentObject(userVM)
-                .environmentObject(reportsVM)
-        }
-        .fullScreenCover(isPresented: $isShowingVehicleImageView) {
-            VehicleImageView(vehicleImage: $vehicleImage)
-        }
-        .alert("Delete Report?", isPresented: $presentDeleteAlert) {
-            Button("Yes", role: .destructive) {
-                beginDeletingReport()
-            }
-        } message: {
-            Text(report?.deletionBodyText ?? "This change cannot be undo!")
-        }
-        .alert("Unable to delete", isPresented: $presentFailedDeletingReportAlert) {
-            Button("OK") {}
-        } message: {
-            Text("Something went wrong trying to delete this report. Please try again!")
-        }
-        .alert("Resolve Report", isPresented: $presentResolveReportsAlert) {
-            Button("Yes") { resolveReport() }
-            Button("Never mind"){}
-        } message: {
-            Text("When resolving a report, it will no longer receive updates and users can no longer contact you (if enabled). Once resolved, it CANNOT be reversed. Do you wish to continue?")
-        }
-        .alert("Disable Updates", isPresented: $presentDisableUpdatesAlert) {
-            Button("Yes", role: .destructive) { disableUpdates() }
-        } message: {
-            Text("When disabling updates, users can no longer update your report, but can still contact you (if enabled) Once disabled, it CANNOT be re-enabled. Do you wish to continue?")
-        }
-        .alert("There was an error completing that request", isPresented: $presentGenericErrorAlert) {
-            Button("OK") {}
-        } message: {
-            Text("An error occurred attempting to process that request. Please try again.")
-        }
-        .alert("Please Verify VIN", isPresented: $presentVinVerificationView) {
-            TextField("VIN", text: $vehicleVin)
-            Button("Cancel") {}
-            Button("Verify", action: verifyVin)
-        } message: {
-            Text("This report includes a Vehicle Identification Number (VIN). Pleas enter the full VIN to continue")
-        }
-        .alert("Verification Error", isPresented: $presentVinInvalidAlert) {
-            Button("OK") {}
-        } message: {
-            Text("Sorry, that VIN does not match.")
-        }
-        .onChange(of: vehicleVin) { _ in
-            if vehicleVin.count > 17 {
-                self.vehicleVin = ""
-            }
-        }
-        .task {
-            if updateQuantity.isNil() {
-                await getUpdateQuantity()
             }
         }
     }

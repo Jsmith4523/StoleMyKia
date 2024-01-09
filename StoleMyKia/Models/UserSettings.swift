@@ -31,8 +31,20 @@ struct UserNotificationSettings: Codable {
         var long: Double
         var radius: Double = NearbyDistance.fiveMiles.distance
     }
+    
+    //These key values must match the raw value of 'ReportType'
+    enum CodingKeys: String, CodingKey {
+        case location
+        case notifyAttempt    = "Attempt"
+        case notifyBreakIn    = "Break-In"
+        case notifyCarjacking = "Car Jacking"
+        case notifyRecovered  = "Recovered"
+        case notifyIncident   = "Incident"
+        case notifyLocated    = "Located"
+        case notifyStolen     = "Stolen"
+        case notifyWitnessed  = "Witnessed"
+    }
 }
-
 
 extension UserNotificationSettings.UserNotificationLocation {
     

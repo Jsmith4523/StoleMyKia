@@ -19,7 +19,7 @@ struct UserReportsListView: View {
     @EnvironmentObject var userVM: UserViewModel
     
     var body: some View {
-        VStack {
+        LazyVStack {
             ForEach(reports.sorted(by: >)) { report in
                 ReportCellView(report: report, imageMode: .thumbnail)
                     .onTapGesture {

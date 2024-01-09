@@ -55,16 +55,19 @@ fileprivate struct NotificationCellView: View {
         HStack {
             VStack(alignment: .leading, spacing: 7) {
                 HStack(alignment: .top) {
-                    VStack(alignment: .leading) {
+                    VStack(alignment: .leading, spacing: 0) {
                         HStack {
                             Text(notification.title)
                                 .font(.system(size: 15).bold())
                         }
-                        HStack {
+                        VStack {
                             Text(notification.body)
-                                .font(.system(size: 13))
+                                .font(.system(size: 14.5))
+                                .lineLimit(4)
                                 .foregroundColor(.gray)
+                            Spacer()
                         }
+                        .frame(maxHeight: .infinity)
                     }
                     Spacer()
                     if notification.hasImage {
@@ -97,7 +100,7 @@ fileprivate struct NotificationCellView: View {
                         Image(systemName: "ellipsis")
                             .resizable()
                             .scaledToFit()
-                            .frame(width: 15, height: 15)
+                            .frame(width: 17, height: 17)
                             .padding(.horizontal, 4)
                     }
                 }
@@ -126,7 +129,7 @@ fileprivate struct NotificationCellView: View {
     }
     
     func getVehicleImage() {
-        ImageCache.shared.getImage(notification.imageUrl) { image in
+        ImageCache.shared.getImage(notification.imageURL) { image in
             DispatchQueue.main.async {
                 self.vehicleImage = image
             }
@@ -142,6 +145,8 @@ extension UUID: Identifiable {
 
 struct NotificationListView_Previews: PreviewProvider {
     static var previews: some View {
-        NotificationCellView(notification: .init(id: "", dt: Date.now.addingTimeInterval(-86400*9).epoch, title: "Stolen - 2017 Hyundai Elanta", body: "The 2020 Red Hyundai Elantra report has received an update.", notificationType: .report, isRead: false, reportId: UUID(), imageUrl: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcT0GcDq4DYvOB86BmsxrxCp18U8T2ckXPBBqw&usqp=CAU"))
+        ScrollView {
+            NotificationCellView(notification: .init(id: "", dt: Date.now.addingTimeInterval(-86400*9).epoch, title: "Stolen - 2017 Hyundai Elanta", body: "The 2020 Red Hyundai Elantra report has received an update.", notificationType: .report, isRead: false, reportId: UUID(), imageURL: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcT0GcDq4DYvOB86BmsxrxCp18U8T2ckXPBBqw&usqp=CAU"))
+        }
     }
 }

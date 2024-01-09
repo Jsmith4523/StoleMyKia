@@ -61,7 +61,22 @@ class NotificationViewController: UIViewController, UNNotificationContentExtensi
             circleOverlay.reportType = data.reportType
             mapView.addOverlay(circleOverlay)
             mapView.setVisibleMapRect(circleOverlay.boundingMapRect, edgePadding: .init(top: 15, left: 15, bottom: 10, right: 25), animated: false)
+            self.displayCircleLabel(data)
         }
+    }
+    
+    private func displayCircleLabel(_ data: PayloadData) {
+        let label = CircleOverTextLabel(data: data)
+        
+        mapView.addSubview(label)
+        
+        label.translatesAutoresizingMaskIntoConstraints = false
+        NSLayoutConstraint.activate([
+            label.bottomAnchor.constraint(equalTo: view.bottomAnchor, constant: -35),
+            label.centerXAnchor.constraint(equalTo: view.centerXAnchor),
+            label.widthAnchor.constraint(equalToConstant: 300),
+            label.heightAnchor.constraint(equalToConstant: 25)
+        ])
     }
 }
 

@@ -15,6 +15,7 @@ struct ApplicationRootView: View {
     var body: some View {
         ZStack {
             ApplicationTabView()
+                .environmentObject(firebaseAuthModel)
                 .environmentObject(userVM)
         }
     }

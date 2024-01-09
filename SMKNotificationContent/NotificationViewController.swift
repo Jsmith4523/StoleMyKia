@@ -15,27 +15,31 @@ class NotificationViewController: UIViewController, UNNotificationContentExtensi
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        self.imageView.contentMode = .scaleAspectFill
     }
     
     func didReceive(_ notification: UNNotification) {
-        let userInfo = notification.request.content.userInfo
-        
-        let progressView = self.presentProgressView()
+        if let attachment = notification.request.content.attachments.first, attachment.url.startAccessingSecurityScopedResource() {
+            let image = self.retrieveImageAttachment(attachment.url.path())
+            
+            DispatchQueue.main.async {
+                self.imageView.image = image
+            }
+            
+            attachment.url.stopAccessingSecurityScopedResource()
+        } else {
+            
+            DispatchQueue.main.async {
+                self.imageView.image = UIImage(named: "vehicle-placeholder")
+            }
+        }
     }
     
-    private func presentProgressView() -> UIActivityIndicatorView {
-        let progressView = UIActivityIndicatorView(style: .large)
-        progressView.tintColor = .white
-        progressView.startAnimating()
+    private func retrieveImageAttachment(_ path: String) -> UIImage? {
+        let manager = FileManager.default
+        guard manager.fileExists(atPath: path) else { return nil }
         
-        imageView.addSubview(progressView)
-        progressView.translatesAutoresizingMaskIntoConstraints = false
-        
-        NSLayoutConstraint.activate([
-            progressView.centerXAnchor.constraint(equalTo: imageView.centerXAnchor),
-            progressView.centerYAnchor.constraint(equalTo: imageView.centerYAnchor)
-        ])
-        
-        return progressView
+        guard let data = manager.contents(atPath: path), let image = UIImage(data: data) else { return nil }
+        return image
     }
 }

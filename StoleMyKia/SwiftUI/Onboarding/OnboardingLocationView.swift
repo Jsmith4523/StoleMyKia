@@ -24,6 +24,7 @@ struct OnboardingLocationView: View {
                 Text("Enable Location Services")
                     .font(.system(size: 25).weight(.heavy))
                 Text("When enabling location services, your location will be used within reports, updates, and other setting configuration. Your location within reports and updates can be disclosed for your safety.")
+                    .multilineTextAlignment(.center)
             }
             Spacer()
             Group {

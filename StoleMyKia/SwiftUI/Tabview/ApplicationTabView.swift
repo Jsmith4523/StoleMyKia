@@ -51,6 +51,7 @@ struct ApplicationTabView: View {
     @StateObject private var reportsVM = ReportsViewModel()
     @StateObject private var notificationVM = NotificationViewModel()
     @EnvironmentObject var userVM: UserViewModel
+    @EnvironmentObject var authVM: FirebaseAuthViewModel
     
     var body: some View {
         TabView(selection: $selection) {
@@ -71,6 +72,7 @@ struct ApplicationTabView: View {
                     ApplicationTabViewSelection.notification.tabItemLabel
                 }
             MyStuffView(userVM: userVM, reportsVM: reportsVM)
+                .environmentObject(authVM)
                 .tag(ApplicationTabViewSelection.myStuff)
                 .tabItem {
                     ApplicationTabViewSelection.myStuff.tabItemLabel

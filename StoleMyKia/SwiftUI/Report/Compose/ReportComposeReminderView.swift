@@ -15,10 +15,8 @@ struct ReportComposeReminderView: View {
     
     var body: some View {
         NavigationView {
-            ScrollView {
+            Form {
                 VStack {
-                    Spacer()
-                        .frame(height: 25)
                     VStack(spacing: 45) {
                         VStack(spacing: 10) {
                             Image(systemName: "exclamationmark.octagon.fill")
@@ -26,29 +24,35 @@ struct ReportComposeReminderView: View {
                                 .scaledToFit()
                                 .frame(width: 60, height: 60)
                                 .foregroundColor(.orange)
-                            Text("Please Read Before You Post!")
-                                .font(.system(size: 25).bold())
+                            Text("Before You Post...")
+                                .font(.system(size: 25).weight(.heavy))
                         }
                         VStack(alignment: .leading, spacing: 15) {
-                            bulletPoint("In the event of an emergency, before uploading this report, contact local authorities or 9-1-1. Local authorities do not actively monitor this application for reports.")
-                            bulletPoint("If enabled, your exact location will be included with this report; and is visible to anyone viewing this report. Please be sure you want to include it.")
-                            bulletPoint("We cannot guarantee that your vehicle will be safely recovered. We are not responsible for the loss or damages made to your vehicle.")
-                            bulletPoint("If enabled, your exact location will be included with this report. Please ensure you want to include it.")
-                        }
-                        VStack {
-                            Button {
-                              postCompletion?()
-                              dismiss()
-                            } label: {
-                                Text("Proceed")
-                                    .authButtonStyle(background: .orange)
-                            }
+                            bulletPoint("In the event of an emergency, before uploading this report, contact your local authorities and inform them of your situation. Emergency personnel do not actively monitor reports within this application.")
+                            bulletPoint("Your device's current location will be tied with this report; and can be disclosed for privacy. Please ensure you are comfortable including your device's location.")
+                            bulletPoint("The '\(UIApplication.appName ?? "application")' team is not responsible for any loss, damages, accidents, or any other unfortunate events involving persons and/or vehicles.")
+                            bulletPoint("Uploading this report does not guarantee the vehicle you're reporting will be safely recovered; or would you receive phone calls and/or updates regarding your report (if enabled).")
+                            bulletPoint(" If your report appears to be false or breaks other app guidelines, the '\(UIApplication.appName ?? "application")' team will evaluate and determine if such. Based upon our investigation, your account will be subject to a ban if required.")
                         }
                     }
-                    Spacer()
                 }
                 .padding()
                 .multilineTextAlignment(.center)
+                
+                Section {
+                    Button {
+                        confirm()
+                    } label: {
+                        HStack {
+                            Spacer()
+                            Text("I Agree")
+                                .foregroundColor(.orange)
+                                .font(.system(size: 22).weight(.medium))
+                            Spacer()
+                        }
+                        .padding()
+                    }
+                }
             }
             .toolbar {
                 ToolbarItem(placement: .navigationBarLeading) {
@@ -67,15 +71,17 @@ struct ReportComposeReminderView: View {
     @ViewBuilder
     func bulletPoint(_ text: String) -> some View {
         HStack {
-            Image(systemName: "circle.fill")
-                .resizable()
-                .scaledToFit()
-                .frame(width: 10, height: 10)
-                .padding(.trailing, 5)
-            Text(text)
-                .font(.system(size: 17))
+            Text("- \(text)")
+                .font(.system(size: 15).weight(.medium))
         }
         .multilineTextAlignment(.leading)
+    }
+    
+    private func confirm() {
+        if let postCompletion {
+            postCompletion()
+            dismiss()
+        }
     }
 }
 

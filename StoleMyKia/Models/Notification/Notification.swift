@@ -53,7 +53,7 @@ struct AppUserNotification: Identifiable, Decodable, Comparable {
     let notificationType: UserNotificationType
     var isRead: Bool
     let reportId: UUID?
-    var imageUrl: String?
+    var imageURL: String?
     var falseReportId: UUID?
     
     static func < (lhs: AppUserNotification, rhs: AppUserNotification) -> Bool {
@@ -68,7 +68,7 @@ struct AppUserNotification: Identifiable, Decodable, Comparable {
 extension AppUserNotification {
     
     var hasImage: Bool {
-        !(imageUrl == nil)
+        !(imageURL == nil)
     }
     
     var dateAndTime: String {

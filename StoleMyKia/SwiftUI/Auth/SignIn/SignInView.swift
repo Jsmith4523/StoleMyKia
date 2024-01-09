@@ -36,6 +36,9 @@ struct SignInView: View {
                     Text("Please enter your phone number")
                         .font(.system(size: 17))
                         .foregroundColor(.gray)
+                    Text("US Phone Numbers only")
+                        .font(.system(size: 16))
+                        .foregroundColor(.gray)
                 }
                 TextField("Phone Number", text: $phoneNumber)
                     .authTextFieldStyle()

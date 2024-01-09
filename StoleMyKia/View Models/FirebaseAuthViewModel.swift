@@ -14,6 +14,8 @@ enum LoginStatus {
 
 @MainActor class FirebaseAuthViewModel: NSObject, ObservableObject {
     
+    @Published private var isSigningOut = false
+    
     @Published private(set) var loginStatus: LoginStatus = .loading
         
     private let authManager = FirebaseAuthManager.manager
@@ -54,6 +56,7 @@ enum LoginStatus {
     
     @objc 
     private func userHasSignedOut() {
+        self.isSigningOut = true
         self.prepareForSignOut(fatal: true)
     }
     
@@ -76,24 +79,34 @@ enum LoginStatus {
     ///Begin setting up the application for sign out.
     private func prepareForSignOut(fatal: Bool = false) {
         Task {
-            try? Auth.auth().signOut()
-            
-            suspendListeningForFCMToken()
-            self.loginStatus = .loading
-            try? await removeDeviceFCMToken()
-            NotificationManager.removeNotificationListener()
-            
-            //Removing notifications and resetting application badge...
-            UNUserNotificationCenter.current().removeAllDeliveredNotifications()
-            UNUserNotificationCenter.current().removeAllPendingNotificationRequests()
-            
-            if #available(iOS 17.0, *) {
-                try await UNUserNotificationCenter.current().setBadgeCount(0)
-            } else {
-                UIApplication.shared.applicationIconBadgeNumber = 0
+            do {
+                try Auth.auth().signOut()
+                FirebaseAuthManager.manager.removeListener()
+                
+                suspendListeningForFCMToken()
+                self.loginStatus = .loading
+                try? await removeDeviceFCMToken()
+                NotificationManager.removeNotificationListener()
+                
+                //Removing notifications and resetting application badge...
+                UNUserNotificationCenter.current().removeAllDeliveredNotifications()
+                UNUserNotificationCenter.current().removeAllPendingNotificationRequests()
+                
+                if #available(iOS 17.0, *) {
+                    try? await UNUserNotificationCenter.current().setBadgeCount(0)
+                } else {
+                    UIApplication.shared.applicationIconBadgeNumber = 0
+                }
+                
+                self.loginStatus = .signedOut
+                DispatchQueue.main.asyncAfter(deadline: .now() + 3) {
+                    self.isSigningOut = false
+                }
+            } catch {
+                DispatchQueue.main.asyncAfter(deadline: .now() + 0.5) {
+                    self.isSigningOut = false
+                }
             }
-            
-            self.loginStatus = .signedOut
         }
     }
     
@@ -131,7 +144,9 @@ enum LoginStatus {
     
     private func setupAccountDeletionListener() {
         authManager.beginListeningForAccountDeletion {
-            notifyUserOfSignOut()
+            if !(self.isSigningOut) {
+                notifyUserOfSignOut()
+            }
         }
         
         func notifyUserOfSignOut() {
@@ -140,8 +155,7 @@ enum LoginStatus {
                 self?.prepareForSignOut(fatal: true)
             }
             ac.addAction(action)
-            
-            UIApplication.shared.windows.first?.rootViewController?.show(ac, sender: nil)
+            UIApplication.shared.topViewController()?.present(ac, animated: true)
         }
     }
     
@@ -161,6 +175,96 @@ enum LoginStatus {
     
     private func beginListeningForSignOut() {
         NotificationCenter.default.addObserver(self, selector: #selector(userHasSignedOut), name: .signOut, object: nil)
+    }
+    
+    ///Deletes signed in users information (reports, device tokens, notifications, etc.)
+    func permanentlyDeleteUser() async throws {
+        guard let currentUser = Auth.auth().currentUser else {
+            throw FirebaseAuthManager.FirebaseAuthManagerError.error
+        }
+        
+        try await FirebaseAuthManager.manager.userCanPerformDestructiveAction()
+        
+        let reportsCollection = Firestore.firestore()
+            .collection(FirebaseDatabasesPaths.reportsDatabasePath)
+        
+        self.isSigningOut = true
+            
+        //Delete reports...
+        try await reportsCollection
+            .whereFilter(.whereField("uid", isEqualTo: currentUser.uid))
+            .getDocuments()
+            .documents
+            .forEach { doc in
+                reportsCollection
+                    .document(doc.documentID)
+                    .delete()
+            }
+        
+        let userDocumentRef = try await Firestore.firestore()
+            .collection(FirebaseDatabasesPaths.usersDatabasePath)
+            .document(currentUser.uid)
+            .getDocument()
+            .reference
+        
+        //Delete bookmarks
+        try await userDocumentRef
+            .collection(FirebaseDatabasesPaths.userBookmarksPath)
+            .getDocuments()
+            .documents
+            .forEach { doc in
+                userDocumentRef
+                    .collection(FirebaseDatabasesPaths.userBookmarksPath)
+                    .document(doc.documentID)
+                    .delete()
+            }
+        
+        //Delete Notifications
+        try await userDocumentRef
+            .collection(FirebaseDatabasesPaths.userNotificationPath)
+            .getDocuments()
+            .documents
+            .forEach { doc in
+                userDocumentRef
+                    .collection(FirebaseDatabasesPaths.userNotificationPath)
+                    .document(doc.documentID)
+                    .delete()
+            }
+        
+        //Delete device tokens
+        try await userDocumentRef
+            .collection(FirebaseDatabasesPaths.fcmTokenPath)
+            .getDocuments()
+            .documents
+            .forEach { doc in
+                userDocumentRef
+                    .collection(FirebaseDatabasesPaths.fcmTokenPath)
+                    .document(doc.documentID)
+                    .delete()
+            }
+        
+        //Delete settings
+        try await userDocumentRef
+            .collection(FirebaseDatabasesPaths.userSettingsPath)
+            .getDocuments()
+            .documents
+            .forEach { doc in
+                userDocumentRef
+                    .collection(FirebaseDatabasesPaths.userSettingsPath)
+                    .document(doc.documentID)
+                    .delete()
+            }
+        
+        try await userDocumentRef.delete()
+        
+        try? await Auth.auth().currentUser?.delete()
+        FirebaseAuthManager.manager.removeListener()
+        userHasSignedOut()
+    }
+    
+    func signOutUser() {
+        try? Auth.auth().signOut()
+        userHasSignedOut()
     }
     
     deinit {

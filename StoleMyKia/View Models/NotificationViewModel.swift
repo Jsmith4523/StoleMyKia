@@ -48,8 +48,10 @@ final class NotificationViewModel: NSObject, ObservableObject {
     func userDidReadNotification(_ notification: AppUserNotification) {
         if let notificationIndex = notifications.firstIndex(where: {$0.id == notification.id}) {
             notifications[notificationIndex].isRead = true
-            if !(notificationUnreadQuantity == 0 && notification.isRead) {
-                notificationUnreadQuantity = notificationUnreadQuantity - 1
+            if !(notificationUnreadQuantity == 0) {
+                if !(notification.isRead) {
+                    notificationUnreadQuantity = notificationUnreadQuantity - 1
+                }
             }
             self.notification = notification
         }

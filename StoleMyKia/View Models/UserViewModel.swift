@@ -63,14 +63,6 @@ final class UserViewModel: NSObject, ObservableObject {
         return await FirebaseUserManager.shared.getUserAccountStatus()
     }
     
-    func signOut() {
-        FirebaseAuthManager.manager.signOutUser()
-    }
-    
-    func deleteUserAccount() async throws {
-        try await FirebaseAuthManager.manager.permanentlyDeleteUser()
-    }
-    
     deinit {
         print("Dead: UserViewModel")
     }

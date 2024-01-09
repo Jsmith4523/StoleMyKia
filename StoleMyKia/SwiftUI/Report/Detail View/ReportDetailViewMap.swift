@@ -20,6 +20,7 @@ struct ReportDetailMapView: UIViewRepresentable {
         let mapView = MKMapView()
         mapView.delegate = context.coordinator
         mapView.mapType = .mutedStandard
+        mapView.tintColor = .systemBlue
         mapView.showsUserLocation = true
         mapView.isUserInteractionEnabled = false
         

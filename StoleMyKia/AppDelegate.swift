@@ -37,6 +37,8 @@ class AppDelegate: UIScene, UIApplicationDelegate {
         if Auth.auth().canHandleNotification(userInfo) {
             completionHandler(.noData)
         }
+        
+        completionHandler(.newData)
     }
     
     func application(_ application: UIApplication, didRegisterForRemoteNotificationsWithDeviceToken deviceToken: Data) {
@@ -50,8 +52,10 @@ extension AppDelegate: UNUserNotificationCenterDelegate {
     
     func userNotificationCenter(_ center: UNUserNotificationCenter, didReceive response: UNNotificationResponse) async {
         guard Auth.auth().currentUser.isSignedIn else { return }
+        Self.deleteNotificationImageAttachment(response.notification)
+        
+        print(response.notification.request.content.attachments)
         let payload = response.notification.request.content.userInfo
-        print(payload)
         await handleNotificationPayload(for: payload)
     }
     
@@ -96,7 +100,7 @@ extension AppDelegate {
                 }
                 return
             }
-                        
+            
             switch notificationType {
             case "Report":
                 let hostingController = UIHostingController(rootView: ReportDetailView(reportId: id).environmentObject(ReportsViewModel()))
@@ -167,11 +171,26 @@ extension AppDelegate {
     static func rootViewController() -> UIViewController? {
         let keyWindow = (UIApplication.shared.connectedScenes.first as? UIWindowScene)?.keyWindow
         
-        //Cheking if the view has a view controller presented
+        //Checking if the view has a view controller presented
         //If not, immediately fall back to the root view controller
         guard let keyWindow, let viewController = keyWindow.rootViewController?.presentedViewController else {
             return nil
         }
         return viewController
+    }
+    
+    static func deleteNotificationImageAttachment(_ notification: UNNotification) {
+        let category = notification.request.content.categoryIdentifier
+        
+        if (category == "MEDIA"),
+           let attachment = notification.request.content.attachments.filter({$0.identifier == "image"}).first {
+            
+            let manager = FileManager.default
+            let path = attachment.url.path()
+            print(path)
+            
+            guard manager.fileExists(atPath: path) else { return }
+            try? manager.removeItem(atPath: path)
+        }
     }
 }

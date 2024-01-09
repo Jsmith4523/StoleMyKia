@@ -40,6 +40,7 @@ struct MyStuffView: View {
                 
     @ObservedObject var userVM: UserViewModel
     @ObservedObject var reportsVM: ReportsViewModel
+    @EnvironmentObject var authVM: FirebaseAuthViewModel
         
     var body: some View {
         NavigationStack {
@@ -71,7 +72,7 @@ struct MyStuffView: View {
         .alert("Sign Out", isPresented: $alertSignOut) {
             Button("Cancel") {}
             Button("Yes") {
-                userVM.signOut()
+                authVM.signOutUser()
             }
         } message: {
             Text("You'll be signed out of \(userVM.getAuthUserPhoneNumber() ?? "the application"). Are you sure?")
@@ -79,6 +80,7 @@ struct MyStuffView: View {
         .sheet(isPresented: $isShowingSettingsView) {
             SettingsView()
                 .presentationDragIndicator(.visible)
+                .environmentObject(authVM)
                 .environmentObject(userVM)
         }
     }

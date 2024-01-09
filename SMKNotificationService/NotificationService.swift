@@ -7,6 +7,7 @@
 
 import UserNotifications
 import CoreLocation
+import UIKit
 
 class NotificationService: UNNotificationServiceExtension { 
 
@@ -31,7 +32,13 @@ class NotificationService: UNNotificationServiceExtension {
             case "Update":
                 handleContentWithUpdate(bestAttemptContent)
             default:
-                contentHandler(request.content)
+                contentHandler(bestAttemptContent.mutableCopy() as! UNNotificationContent)
+            }
+            
+            if let imageUrlString = apnsData["imageURL"] as? String, let imageUrl = URL(string: imageUrlString) {
+                downloadAndAttachImage(from: imageUrl, to: bestAttemptContent)
+            } else {
+                contentHandler(bestAttemptContent)
             }
         }
         
@@ -47,18 +54,10 @@ class NotificationService: UNNotificationServiceExtension {
             //Inform through the content
             let (isNearby, distance) = location.isCloseToUser()
             
-            guard isNearby else {
-                contentHandler(bestAttemptContent)
-                return
-            }
-            
-            guard let vehicleDetails = bestAttemptContent.userInfo["vehicleDetails"] as? String else {
-                contentHandler(bestAttemptContent)
-                return
-            }
-            
-            if let distance {
-                
+            if let distance, isNearby, distance <= 0.35 {
+                let vehicleDetails = bestAttemptContent.userInfo["vehicleDetails"]
+                bestAttemptContent.title = "🚨 \(bestAttemptContent.title)"
+                bestAttemptContent.body = "The \(vehicleDetails ?? "vehicle") has been reported near your current location! An update indicates that a report regarding your vehicle is \(String(format: "%.2f", distance)) mi. away from your current location."
             }
         }
         
@@ -86,9 +85,33 @@ class NotificationService: UNNotificationServiceExtension {
             } else {
                 bestAttemptContent.title = "🚨 \(bestAttemptContent.title)"
             }
-            
-            contentHandler(bestAttemptContent)
         }
+    }
+    
+    private func downloadAndAttachImage(from url: URL, to content: UNMutableNotificationContent) {
+        let task = URLSession.shared.dataTask(with: url) { data, response, error in
+            if let data = data, let fileURL = self.saveAttachmentImageForPersistence(data: data) {
+                if let attachment = try? UNNotificationAttachment(identifier: "image", url: fileURL, options: nil) {
+                    content.attachments = [attachment]
+                    content.userInfo["attachment_url"] = fileURL.absoluteString
+                }
+            }
+            if let contentHandler = self.contentHandler {
+                contentHandler(content.mutableCopy() as! UNNotificationContent)
+            }
+        }
+        task.resume()
+    }
+    
+    private func saveAttachmentImageForPersistence(data: Data) -> URL? {
+        let fileManager = FileManager.default
+        let temporaryFolder = fileManager.urls(for: .documentDirectory, in: .userDomainMask).first
+        let imageFileURL = temporaryFolder?.appendingPathComponent("downloadedImage.jpg")
+        
+        guard let imageFileURL else { return nil }
+        
+        try? data.write(to: imageFileURL)
+        return imageFileURL
     }
     
     override func serviceExtensionTimeWillExpire() {
@@ -99,6 +122,7 @@ class NotificationService: UNNotificationServiceExtension {
         }
     }
 }
+
 
 private extension CLLocation {
     

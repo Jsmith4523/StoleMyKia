@@ -63,10 +63,6 @@ struct NotificationMapView: View {
                     }
                 }
                 VStack {
-                    Text("Increasing the size of the circle will result in the increase of notifications and reports.")
-                        .multilineTextAlignment(.center)
-                        .font(.system(size: 12))
-                        .foregroundColor(.gray)
                     Slider(value: $radiusAmount, in: NearbyDistance.oneMile.distance...NearbyDistance.allCases.last!.distance)
                     .disabled(location == nil)
                     .onChange(of: radiusAmount) { amount in
