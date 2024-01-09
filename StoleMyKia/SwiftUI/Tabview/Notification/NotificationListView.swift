@@ -44,7 +44,7 @@ struct NotificationListView: View {
 }
 
 fileprivate struct NotificationCellView: View {
-    
+        
     @State private var vehicleImage: UIImage?
     
     let notification: AppUserNotification
@@ -54,20 +54,21 @@ fileprivate struct NotificationCellView: View {
     var body: some View {
         HStack {
             VStack(alignment: .leading, spacing: 7) {
-                HStack(alignment: .top) {
+                HStack {
                     VStack(alignment: .leading, spacing: 0) {
-                        HStack {
+                        HStack(spacing: 5) {
                             Text(notification.title)
-                                .font(.system(size: 15).bold())
+                                .font(.system(size: 16).weight(.bold))
+                                .lineLimit(2)
                         }
                         VStack {
                             Text(notification.body)
-                                .font(.system(size: 14.5))
+                                .font(.system(size: 14))
                                 .lineLimit(4)
                                 .foregroundColor(.gray)
                             Spacer()
                         }
-                        .frame(maxHeight: .infinity)
+                        .frame(height: 65)
                     }
                     Spacer()
                     if notification.hasImage {
@@ -75,34 +76,19 @@ fileprivate struct NotificationCellView: View {
                     }
                 }
                 
-                HStack(alignment: .center) {
-                    if !notification.isRead {
+                HStack(alignment: .center, spacing: 5) {
+                    if !(notification.isRead) {
                         Circle()
                             .foregroundColor(.red)
                             .frame(width: 8, height: 8)
                     }
-                    HStack(spacing: 5) {
-                        Image(systemName: notification.notificationType.symbol)
-                            .resizable()
-                            .scaledToFit()
-                            .frame(width: 14, height: 14)
-                        Text(notification.dateAndTime)
-                            .font(.system(size: 13))
-                    }
+                    Image(systemName: notification.notificationType.symbol)
+                        .resizable()
+                        .scaledToFit()
+                        .frame(width: 14.5, height: 14.5)
+                    Text(notification.dateAndTime)
+                        .font(.system(size: 13))
                     Spacer()
-                    Menu {
-                        Button(role: .destructive) {
-                            notificationVM.deleteNotification(notification)
-                        } label: {
-                            Label("Delete", systemImage: "trash")
-                        }
-                    } label: {
-                        Image(systemName: "ellipsis")
-                            .resizable()
-                            .scaledToFit()
-                            .frame(width: 17, height: 17)
-                            .padding(.horizontal, 4)
-                    }
                 }
                 .foregroundColor(.gray)
             }
@@ -110,13 +96,19 @@ fileprivate struct NotificationCellView: View {
         }
         .padding()
         .multilineTextAlignment(.leading)
+        .background(notification.isRead ? Color(uiColor: .systemBackground) : Color(uiColor: .secondarySystemBackground).opacity(0.35))
+        .contextMenu {
+            Button("Delete", role: .destructive) {
+                notificationVM.deleteNotification(notification)
+            }
+        }
     }
     
     var imageView: some View {
         Image(uiImage: vehicleImage ?? .vehiclePlaceholder)
             .resizable()
             .scaledToFill()
-            .frame(width: 70, height: 70)
+            .frame(width: 82, height: 82)
             .clipShape(RoundedRectangle(cornerRadius: 5))
             .redacted(reason: vehicleImage.isNil() ? .placeholder : [])
             .onAppear {
@@ -131,7 +123,7 @@ fileprivate struct NotificationCellView: View {
     func getVehicleImage() {
         ImageCache.shared.getImage(notification.imageURL) { image in
             DispatchQueue.main.async {
-                self.vehicleImage = image
+                self.vehicleImage = image ?? .vehiclePlaceholder
             }
         }
     }
@@ -146,7 +138,8 @@ extension UUID: Identifiable {
 struct NotificationListView_Previews: PreviewProvider {
     static var previews: some View {
         ScrollView {
-            NotificationCellView(notification: .init(id: "", dt: Date.now.addingTimeInterval(-86400*9).epoch, title: "Stolen - 2017 Hyundai Elanta", body: "The 2020 Red Hyundai Elantra report has received an update.", notificationType: .report, isRead: false, reportId: UUID(), imageURL: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcT0GcDq4DYvOB86BmsxrxCp18U8T2ckXPBBqw&usqp=CAU"))
+            NotificationCellView(notification: .init(id: "", dt: Date.now.addingTimeInterval(-86400*9).epoch, title: "Incident: Light Gray 2017 Hyundai Elantra", body: "Someone has taken my car on a joyride through the city. Need help locating it please thank you", notificationType: .report, isRead: false, reportId: UUID(), imageURL: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcT0GcDq4DYvOB86BmsxrxCp18U8T2ckXPBBqw&usqp=CAU"))
         }
+        .preferredColorScheme(.dark)
     }
 }

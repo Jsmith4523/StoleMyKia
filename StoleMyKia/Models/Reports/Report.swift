@@ -176,7 +176,12 @@ extension Report {
     }
     
     var appleMapsAnnotationTitle: String {
-        "\(type) \(self.vehicle.appleMapsAnnotationTitle)"
+        switch discloseLocation {
+        case true:
+            return "Not exact location \(type) \(self.vehicle.appleMapsAnnotationTitle)"
+        case false:
+            return "\(type) \(self.vehicle.appleMapsAnnotationTitle)"
+        }
     }
     
     var deletionBodyText: String {

@@ -29,6 +29,8 @@ enum ImagePickerSource: String, Identifiable, CaseIterable {
 
 struct UpdateReportView: View {
     
+    @Binding var isPresented: Bool
+    
     let originalReport: Report
     
     @State private var isShowingBeSafeView = false
@@ -134,9 +136,9 @@ struct UpdateReportView: View {
             
             Section {
                 Toggle("Hide Location", isOn: $discloseLocation)
-                    .tint(.green)
+                    .tint(.blue)
                 Toggle("Contact Me", isOn: $allowsForContact)
-                    .tint(.green)
+                    .tint(.blue)
             } header: {
                 Text("Options")
             } footer: {
@@ -191,7 +193,7 @@ struct UpdateReportView: View {
         }
         .disabled(isUploading)
         .navigationBarBackButtonHidden(isUploading)
-        .interactiveDismissDisabled()
+        .interactiveDismissDisabled(self.isUploading)
     }
     
     private func prepareForUpload() {
@@ -221,9 +223,12 @@ struct UpdateReportView: View {
                     report.allowsForContact = allowsForContact
                     report.setAsUpdate(originalReport.role.associatedValue)
                     try await reportsVM.addUpdateToOriginalReport(originalReport: originalReport, report: report, vehicleImage: vehicleImage)
+                    self.isPresented = false
+                    UINotificationFeedbackGenerator().notificationOccurred(.success)
                 } catch {
                     isUploading = false
                     self.presentError.toggle()
+                    UINotificationFeedbackGenerator().notificationOccurred(.error)
                 }
             }
         }
@@ -232,5 +237,5 @@ struct UpdateReportView: View {
 
 
 #Preview {
-    UpdateReportView(originalReport: [Report].testReports().first!, updateReportType: .constant(.stolen))
+    UpdateReportView(isPresented: .constant(false), originalReport: [Report].testReports().first!, updateReportType: .constant(.stolen))
 }

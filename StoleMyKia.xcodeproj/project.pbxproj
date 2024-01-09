@@ -118,6 +118,8 @@
 		24B071A12A363E30000C6B75 /* ReportTimelimeAnnotationView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 24B071A02A363E30000C6B75 /* ReportTimelimeAnnotationView.swift */; };
 		24B16B162B44F2E2003E09DB /* CarLicenseScannerView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 24B16B152B44F2E2003E09DB /* CarLicenseScannerView.swift */; };
 		24B16B182B44F34C003E09DB /* CarLicenseScannerViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 24B16B172B44F34C003E09DB /* CarLicenseScannerViewModel.swift */; };
+		24B753542B4DF7D300D945B4 /* TimelineMapListNoUpdatesView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 24B753532B4DF7D300D945B4 /* TimelineMapListNoUpdatesView.swift */; };
+		24B753562B4DF89300D945B4 /* TimelineMapListNotAvaliableView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 24B753552B4DF89300D945B4 /* TimelineMapListNotAvaliableView.swift */; };
 		24B897EC29CF5A3B0003BCC8 /* UserViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 24B897EB29CF5A3B0003BCC8 /* UserViewModel.swift */; };
 		24BAC6112A8B034200E42BC6 /* MFMailComposeViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 24BAC6102A8B034200E42BC6 /* MFMailComposeViewController.swift */; };
 		24BAC6182A8F20E700E42BC6 /* NSNotificationCenter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 24BAC6172A8F20E700E42BC6 /* NSNotificationCenter.swift */; };
@@ -347,6 +349,8 @@
 		24B071A02A363E30000C6B75 /* ReportTimelimeAnnotationView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReportTimelimeAnnotationView.swift; sourceTree = "<group>"; };
 		24B16B152B44F2E2003E09DB /* CarLicenseScannerView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CarLicenseScannerView.swift; sourceTree = "<group>"; };
 		24B16B172B44F34C003E09DB /* CarLicenseScannerViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CarLicenseScannerViewModel.swift; sourceTree = "<group>"; };
+		24B753532B4DF7D300D945B4 /* TimelineMapListNoUpdatesView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TimelineMapListNoUpdatesView.swift; sourceTree = "<group>"; };
+		24B753552B4DF89300D945B4 /* TimelineMapListNotAvaliableView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TimelineMapListNotAvaliableView.swift; sourceTree = "<group>"; };
 		24B897EB29CF5A3B0003BCC8 /* UserViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserViewModel.swift; sourceTree = "<group>"; };
 		24BAC6102A8B034200E42BC6 /* MFMailComposeViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MFMailComposeViewController.swift; sourceTree = "<group>"; };
 		24BAC6172A8F20E700E42BC6 /* NSNotificationCenter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NSNotificationCenter.swift; sourceTree = "<group>"; };
@@ -952,6 +956,8 @@
 			children = (
 				24CC5F0C2A745DE70078C921 /* TimelineMapView.swift */,
 				2476E0D92AD9362700892A76 /* TimelineMapListView.swift */,
+				24B753552B4DF89300D945B4 /* TimelineMapListNotAvaliableView.swift */,
+				24B753532B4DF7D300D945B4 /* TimelineMapListNoUpdatesView.swift */,
 				2476E0DF2AD9CF1E00892A76 /* TimelineMapListSkeletonView.swift */,
 				2476E0DD2AD9524300892A76 /* TimelineListView.swift */,
 				24CC5F0D2A745DE70078C921 /* TimelineMKMapView.swift */,
@@ -1337,6 +1343,7 @@
 			files = (
 				244BD3FE2ABAC4F600192AD1 /* SettingsView.swift in Sources */,
 				245B391D29E39E49001DD213 /* VehicleMake.swift in Sources */,
+				24B753562B4DF89300D945B4 /* TimelineMapListNotAvaliableView.swift in Sources */,
 				24CC5F3F2A745DE70078C921 /* ApplicationRootView.swift in Sources */,
 				24CC5F5D2A761B120078C921 /* Update.swift in Sources */,
 				244BD4052ABB669900192AD1 /* NotificationMapView.swift in Sources */,
@@ -1415,6 +1422,7 @@
 				24E7FE052AECD259006219F2 /* FeedDesiredView.swift in Sources */,
 				245B391F29E39E55001DD213 /* VehicleModel.swift in Sources */,
 				2450A71A2B468AFE003D64FF /* ReportComposeVehicleMakeView.swift in Sources */,
+				24B753542B4DF7D300D945B4 /* TimelineMapListNoUpdatesView.swift in Sources */,
 				24E7FE072AECD263006219F2 /* FeedLocalView.swift in Sources */,
 				24CC5F302A745DE70078C921 /* UpdateReportView.swift in Sources */,
 				2426A62A2A243F0E00E78647 /* AnnotationCalloutDelegate.swift in Sources */,

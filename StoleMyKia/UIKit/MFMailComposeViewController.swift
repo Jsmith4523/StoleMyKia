@@ -36,7 +36,7 @@ enum ComposeMode: Identifiable {
     case feature
     case issue
     
-    static let recipient = "studentlyko@gmail.com"
+    static let recipient = "6ftech@gmail.com"
     
     var id: Self {
         return self
@@ -45,7 +45,7 @@ enum ComposeMode: Identifiable {
     var subject: String {
         switch self {
         case .feature:
-            return "StoleMyKia Feature Request"
+            return "StoleMyKia Improvements Request"
         case .issue:
             return "Issue with StoleMyKia"
         }
@@ -56,7 +56,14 @@ enum ComposeMode: Identifiable {
         case .feature:
             return "**Remove this text and tell us what new features and/or improve you would like to see!**"
         case .issue:
-            return "**Remove this text and include your iOS version, phone number, and anything else that is happening...**"
+            return """
+            **Remove this text and include your phone number; with anything else that is happening...**
+            
+            DO NOT DELETE BELOW:
+            Device Model: \(UIDevice.current.model)
+            Device OS Version Name: \(UIDevice.current.systemName)
+            Device OS Version no.: \(UIDevice.current.systemVersion)
+            """
         }
     }
 }

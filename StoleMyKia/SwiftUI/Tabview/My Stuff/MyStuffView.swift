@@ -90,7 +90,7 @@ struct MyStuffView: View {
             GeometryReader { proxy in
                 Color.brand
                     .offset(y: -proxy.frame(in: .global).minY)
-                    .frame(height: proxy.frame(in: .global).minY + 125)
+                    .frame(height: (proxy.frame(in: .global).minY + 125) <= 0 ? 0 : proxy.frame(in: .global).minY + 125)
             }
             HStack {
                 VStack(alignment: .leading, spacing: 2) {

@@ -9,6 +9,8 @@ import SwiftUI
 
 struct UpdateReportTypeView: View {
     
+    @Binding var isPresented: Bool
+    
     @State private var reportType: ReportType = .found
     
     let report: Report
@@ -41,7 +43,7 @@ struct UpdateReportTypeView: View {
                 }
                 ToolbarItem(placement: .navigationBarTrailing) {
                     NavigationLink("Next") {
-                        UpdateReportView(originalReport: report, updateReportType: $reportType)
+                        UpdateReportView(isPresented: $isPresented, originalReport: report, updateReportType: $reportType)
                             .environmentObject(userVM)
                             .environmentObject(reportsVM)
                     }
@@ -61,29 +63,29 @@ struct UpdateReportTypeView: View {
                     .resizable()
                     .scaledToFit()
                     .frame(width: 20, height: 20)
-                VStack(alignment: .leading) {
-                    Text(reportType.rawValue)
-                        .font(.system(size: 15).bold())
-                    Text(reportType.description)
-                        .font(.system(size: 14))
-                }
                 Spacer()
-                if isSelected {
-                    Image(systemName: "checkmark")
-                        .resizable()
-                        .scaledToFit()
-                        .frame(width: 13, height: 13)
-                        .bold()
-                        .foregroundColor(.green)
+                    .frame(width: 20)
+                HStack {
+                    VStack(alignment: .leading) {
+                        Text(reportType.rawValue)
+                            .font(.system(size: 15).bold())
+                        Text(reportType.description)
+                            .font(.system(size: 14))
+                    }
+                    Spacer()
+                    if isSelected {
+                        Image.greenCheckMark
+                    }
                 }
+                .padding(8)
+
             }
-            .padding(8)
         }
     }
 }
 
 #Preview {
-    UpdateReportTypeView(report: [Report].testReports().first!)
+    UpdateReportTypeView(isPresented: .constant(false), report: [Report].testReports().first!)
         .environmentObject(UserViewModel())
         .environmentObject(ReportsViewModel())
 }

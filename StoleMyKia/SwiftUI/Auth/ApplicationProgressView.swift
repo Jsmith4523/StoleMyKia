@@ -8,11 +8,18 @@
 import SwiftUI
 
 struct ApplicationProgressView: View {
+    
+    @Environment (\.colorScheme) var colorScheme
+    
     var body: some View {
         ZStack {
-            ApplicationLauchScreen()
-                .ignoresSafeArea()
-                .statusBarHidden()
+            Group {
+                if colorScheme == .light {
+                    Color(uiColor: .secondarySystemBackground)
+                }
+            }
+            .ignoresSafeArea()
+            ProgressView()
         }
     }
 }
@@ -38,5 +45,6 @@ fileprivate struct ApplicationLauchScreen: UIViewControllerRepresentable {
 struct MyPreviewProvider69Nice_Previews: PreviewProvider {
     static var previews: some View {
         ApplicationProgressView()
+            .preferredColorScheme(.dark)
     }
 }

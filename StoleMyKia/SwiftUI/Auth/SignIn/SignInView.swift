@@ -8,7 +8,9 @@
 import SwiftUI
 
 struct SignInView: View {
-        
+    
+    @State private var isShowingEmailComposeView = false
+    
     @State private var pushToVerificationCodeView = false
     @State private var alertErrorPhoneNumber = false
     @State private var isLoading = false
@@ -74,13 +76,16 @@ struct SignInView: View {
                 }
             }
         }
+        .emailComposerView(isPresented: $isShowingEmailComposeView, composeMode: .issue)
         .alert("Unable to send verification code", isPresented: $alertErrorPhoneNumber) {
             Button("OK") {}
+            Button("Contact Support") { isShowingEmailComposeView.toggle() }
+                .canSendEmail()
         } message: {
             Text("""
                  An error occurred sending a verification code to \(ApplicationFormats.authPhoneNumberFormat(phoneNumber, parentheses: true) ?? "the provided phone number"). Please try again.
                  
-                 Note: If a verification code has been sent to a phone number too frequently, an indefinite cooldown period is imposed.
+                 If a verification code is sent to a phone number too frequently, a cooldown period of unspecified duration will be imposed.
                  """)
         }
     }

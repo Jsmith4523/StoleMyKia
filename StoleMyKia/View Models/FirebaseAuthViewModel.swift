@@ -12,7 +12,8 @@ enum LoginStatus {
     case signedOut, loading, onboarding, signedIn
 }
 
-@MainActor class FirebaseAuthViewModel: NSObject, ObservableObject {
+@MainActor 
+final class FirebaseAuthViewModel: NSObject, ObservableObject {
     
     @Published private var isSigningOut = false
     

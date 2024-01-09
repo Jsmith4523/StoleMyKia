@@ -26,7 +26,7 @@ final class NotificationManager {
     
     /// Retrieve the current signed in users notifications
     /// - Returns: The users notifications.
-    func fetchUserCurrentNotifications(notifications: [AppUserNotification]) async throws -> [AppUserNotification] {
+    func fetchUserCurrentNotifications() async throws -> [AppUserNotification] {
         guard let currentUser = Auth.auth().currentUser else {
             throw NotificationManagerError.userError
         }
@@ -36,7 +36,7 @@ final class NotificationManager {
             .document(currentUser.uid)
             .collection(FirebaseDatabasesPaths.userNotificationPath)
             .order(by: "dt", descending: true)
-            .limit(to: notifications.isEmpty ? 5 : notifications.count)
+            .limit(to: 10)
             .getDocuments()
             .documents
             .map({$0.data()})
@@ -57,7 +57,7 @@ final class NotificationManager {
             .collection(FirebaseDatabasesPaths.userNotificationPath)
             .order(by: "dt", descending: true)
             .start(after: [notification.dt])
-            .limit(to: 5)
+            .limit(to: 7)
             .getDocuments()
             .documents
             .map({$0.data()})

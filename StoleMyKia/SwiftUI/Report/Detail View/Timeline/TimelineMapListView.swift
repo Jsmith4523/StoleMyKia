@@ -34,9 +34,9 @@ struct TimelineMapListView: View {
                     case .error:
                         ErrorView()
                     case .empty:
-                        updatesEmptyView
+                        TimelineMapListNoUpdatesView()
                     case .noLongerAvaliable:
-                        reportNoLongerAvaliable
+                        TimelineMapListNotAvaliableView()
                     }
                 }
                 .navigationTitle("Timeline")
@@ -49,42 +49,6 @@ struct TimelineMapListView: View {
                 dismiss()
             }
         }
-    }
-    
-    var updatesEmptyView: some View {
-        VStack {
-            Spacer()
-                .frame(height: 85)
-            VStack(spacing: 11) {
-                Image.updateImageIcon
-                    .resizable()
-                    .scaledToFit()
-                    .frame(width: 35, height: 35)
-                Text("There are no updates available at the moment...")
-                    .font(.system(size: 18))
-            }
-            .foregroundColor(.gray)
-        }
-        .padding()
-        .multilineTextAlignment(.center)
-    }
-    
-    var reportNoLongerAvaliable: some View {
-        VStack {
-            Spacer()
-                .frame(height: 85)
-            VStack(spacing: 11) {
-                Image(systemName: "archivebox")
-                    .resizable()
-                    .scaledToFit()
-                    .frame(width: 35, height: 35)
-                Text("Sorry, the initial report is no longer available.")
-                    .font(.system(size: 18))
-            }
-            .foregroundColor(.gray)
-        }
-        .padding()
-        .multilineTextAlignment(.center)
     }
     
     private func fetchUpdates() {

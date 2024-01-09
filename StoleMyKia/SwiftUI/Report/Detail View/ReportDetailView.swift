@@ -108,7 +108,7 @@ struct ReportDetailView: View {
                     .environmentObject(userVM)
             }
             .sheet(isPresented: $isShowingUpdateReportView) {
-                UpdateReportTypeView(report: report)
+                UpdateReportTypeView(isPresented: $isShowingUpdateReportView, report: report)
                     .environmentObject(userVM)
                     .environmentObject(reportsVM)
             }
@@ -148,7 +148,7 @@ struct ReportDetailView: View {
                 Button("Cancel") {}
                 Button("Verify", action: verifyVin)
             } message: {
-                Text("This report includes a Vehicle Identification Number (VIN). Pleas enter the full VIN to continue")
+                Text("This report includes a Vehicle Identification Number (VIN). Please enter the full VIN to continue")
             }
             .alert("Verification Error", isPresented: $presentVinInvalidAlert) {
                 Button("OK") {}
@@ -531,10 +531,12 @@ struct ReportDetailView: View {
     }
     
     private func verifyVin() {
-        guard let report, vehicleVin == report.vehicle.vinString else {
+        guard let report, vehicleVin.lowercased() == report.vehicle.vinString else {
+            self.vehicleVin = ""
             presentVinInvalidAlert.toggle()
             return
         }
+        self.vehicleVin = ""
         isShowingUpdateReportView.toggle()
     }
     

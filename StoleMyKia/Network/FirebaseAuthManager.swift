@@ -36,12 +36,10 @@ class FirebaseAuthManager {
     /// - Parameter phoneNumber: The users phone number
     func authWithPhoneNumber(_ phoneNumber: String) async throws {
         let verificationId = try await PhoneAuthProvider.provider().verifyPhoneNumber(phoneNumber, uiDelegate: nil)
-        print(verificationId)
         self.verificationId = verificationId
     }
     
     func verifyCode(_ code: String, phoneNumber: String) async throws -> LoginStatus {
-        print(verificationId)
         guard let verificationId else {
             throw FirebaseAuthManagerError.verificationIdError
         }
@@ -60,8 +58,23 @@ class FirebaseAuthManager {
             
             let credential = PhoneAuthProvider.provider().credential(withVerificationID: verificationId, verificationCode: code)
             try await Auth.auth().signIn(with: credential)
-            self.verificationId = nil
             
+            if let userDocument, userDocument.exists {
+                let userData = try JSONSerialization.data(withJSONObject: userDocument.data())
+                let user = try JSONDecoder().decode(AppUser.self, from: userData)
+                
+                guard let currentUser = Auth.auth().currentUser else {
+                    throw FirebaseAuthManagerError.userSignedOut
+                }
+                
+                //If the user id is mismatch of the user, but the phone number provided is the user's phone number
+                //Update the user id field
+                guard currentUser.uid == user.uid && phoneNumber == user.phoneNumber else {
+                    throw FirebaseAuthManagerError.specificError("The user document id and phone number do not match with the signed in user")
+                }
+            }
+            
+            self.verificationId = nil
             return try await saveNewUser(phoneNumber: phoneNumber, userDocument: userDocument)
         } catch {
             print(error)

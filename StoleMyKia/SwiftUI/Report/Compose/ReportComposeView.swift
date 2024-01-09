@@ -69,7 +69,7 @@ struct ReportComposeView: View {
                     if composeVM.doesNotHaveVehicleIdentification {
                         Text("There is no license plate and/or VIN avaliable.")
                     } else {
-                        Text("Enter the vehicles full license plate and/or VIN. Depending on the report type, at least one field is required. Including a VIN will require users to verify in order to 'Update' the report.")
+                        Text("Enter the vehicles full license plate and/or VIN. Depending on the report type, at least one field is required. Including a VIN will require users to verify in order to 'Update' your report.")
                     }
                 }
             }
@@ -98,6 +98,7 @@ struct ReportComposeView: View {
             }
             .disabled(!composeVM.vehicleImage.isNil())
         }
+        .interactiveDismissDisabled(composeVM.isUploading)
         .navigationTitle("New Report")
         .navigationBarTitleDisplayMode(.inline)
         .navigationBarBackButtonHidden(composeVM.isUploading)

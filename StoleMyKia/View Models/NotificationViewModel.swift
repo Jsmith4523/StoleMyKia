@@ -74,7 +74,7 @@ final class NotificationViewModel: NSObject, ObservableObject {
     func fetchNotifications() {
         Task {
             do {
-                let notifications = try await NotificationManager.shared.fetchUserCurrentNotifications(notifications: notifications)
+                let notifications = try await NotificationManager.shared.fetchUserCurrentNotifications()
                 self.notifications = notifications
                 if notifications.isEmpty {
                     self.loadStatus = .empty
@@ -108,9 +108,15 @@ final class NotificationViewModel: NSObject, ObservableObject {
     }
     
     func deleteNotification(_ notification: AppUserNotification) {
-        Task {
-            await NotificationManager.shared.deleteNotification(notification)
-            fetchNotifications()
+        DispatchQueue.main.asyncAfter(deadline: .now() + 0.75) {
+            if let index = self.notifications.firstIndex(where: {$0.id == notification.id}) {
+                self.notifications.remove(at: index)
+            }
+            
+            Task { [weak self] in
+                await NotificationManager.shared.deleteNotification(notification)
+                self?.fetchNotifications()
+            }
         }
     }
     

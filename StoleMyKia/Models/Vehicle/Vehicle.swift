@@ -109,7 +109,7 @@ extension Vehicle {
     
     
     var vinString: String {
-        guard let vinData = vinEncryptedData, let vinString = vinData.decode() else {
+        guard let vinData = vinEncryptedData, let vinString = vinData.decode()?.lowercased() else {
             return ""
         }
         return vinString

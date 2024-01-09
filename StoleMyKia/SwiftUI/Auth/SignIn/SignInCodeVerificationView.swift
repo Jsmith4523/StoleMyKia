@@ -9,9 +9,10 @@ import SwiftUI
 
 struct SignInCodeVerificationView: View {
     
-    @State private var didResendVerificationCode = false
+    @State private var isShowingEmailComposeView = false
     
     @State private var isLoading = false
+    @State private var alertErrorResendingVerificationCode = false
     @State private var alertErrorVerificationCode = false
     @State private var verificationCode = ""
     
@@ -34,7 +35,7 @@ struct SignInCodeVerificationView: View {
                 VStack(spacing: 10) {
                     Text("Verification Code Sent!")
                         .font(.system(size: 21).weight(.heavy))
-                    Text("\(didResendVerificationCode ? "A new verification code has been sent to" : "We just sent a verification code to") \(ApplicationFormats.authPhoneNumberFormat(phoneNumber, parentheses: true) ?? "you"). Check your messages.")
+                    Text("We just sent a verification code to \(ApplicationFormats.authPhoneNumberFormat(phoneNumber, parentheses: true) ?? "the provided phone number"). Check your messages")
                         .font(.system(size: 15))
                         .foregroundColor(.gray)
                 }
@@ -68,15 +69,19 @@ struct SignInCodeVerificationView: View {
         }
         .disabled(isLoading)
         .alert("Verification Error", isPresented: $alertErrorVerificationCode) {
-//            if !didResendVerificationCode {
-//                Button("Resend Code") {
-//                    resendVerificationCode()
-//                }
-//            }
+            Button("OK") {}
+            Button("Resend Code") { resendVerificationCode() }
+            Button("Contact Support") { isShowingEmailComposeView.toggle() }
+                .canSendEmail()
+        } message: {
+            Text("Ensure that your verification is correct and try again. If this issue persist, contact support and try again.")
+        }
+        .alert("Unable to resend verification code", isPresented: $alertErrorResendingVerificationCode) {
             Button("OK") {}
         } message: {
-            Text("There was an error with that request. Please try again.")
+            Text("An issue occurred resending your verification code. Please try again later")
         }
+        .emailComposerView(isPresented: $isShowingEmailComposeView, composeMode: .issue)
     }
     
     private func beginVerifyingSmsCode() {
@@ -96,12 +101,13 @@ struct SignInCodeVerificationView: View {
         Task {
             do {
                 isLoading = true
-                didResendVerificationCode = false
                 try await firebaseAuthVM.authWithPhoneNumber(phoneNumber)
                 self.isLoading = false
+                UINotificationFeedbackGenerator().notificationOccurred(.success)
             } catch {
+                self.alertErrorResendingVerificationCode = true
+                UINotificationFeedbackGenerator().notificationOccurred(.error)
                 isLoading = false
-                alertErrorVerificationCode.toggle()
             }
         }
     }

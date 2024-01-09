@@ -79,9 +79,9 @@ class NotificationService: UNNotificationServiceExtension {
             }
             
             bestAttemptContent.interruptionLevel = .timeSensitive
-            
+                        
             if let distance {
-                bestAttemptContent.title = "🚨 \(bestAttemptContent.title) (\(String(format: "%.2f", distance)) mi. away)"
+                bestAttemptContent.title = "🚨 \(bestAttemptContent.title) \(distance <= 0.025 ? "(NEARBY)" : "(\(String(format: "%.2f", distance)) mi. away)")"
             } else {
                 bestAttemptContent.title = "🚨 \(bestAttemptContent.title)"
             }
