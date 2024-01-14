@@ -46,11 +46,11 @@ struct NotificationSettingsView: View {
             VStack(spacing: 0) {
                 Form {
                     Section {
-                        Button(locationIsNotSet ? "Add Location" : "Change Location") {
+                        Button(locationIsNotSet ? "Add Location" : "Adjust Location") {
                             isShowingNotificationMapView.toggle()
                         }
                     } footer: {
-                        Text(locationIsNotSet ? "Specify where to receive location based notifications and reports from." : "Modify where to receive location based notifications and reports from.")
+                        Text(locationIsNotSet ? "Specify the location from which you want to receive location-based notifications and reports" : "Adjust where you receive location-based notifications and reports from.")
                     }
                     Section {
                         Toggle("Attempt", isOn: $notifyAttempt)
@@ -64,7 +64,7 @@ struct NotificationSettingsView: View {
                     } header: {
                         Text("Report-based notifications")
                     } footer: {
-                        Text("When receiving notifications regarding updates to a report you've made, these settings are ignored.")
+                        Text("When you receive notifications about updates to a report you've made, these settings are not taken into account.")
                     }
                     .tint(.blue)
                     .disabled(locationIsNotSet)
@@ -109,10 +109,10 @@ struct NotificationSettingsView: View {
                 dismiss()
             }
         }
-        .alert("There was an error saving your settings", isPresented: $alertErrorSavingSettings) {
+        .alert("An Error Occurred", isPresented: $alertErrorSavingSettings) {
             Button("OK") {}
         } message: {
-            Text("We ran into an issue saving your settings. Check your internet connection and try again.")
+            Text("We ran into an issue saving your settings. Please try again.")
         }
     }
     

@@ -49,6 +49,8 @@ struct ReportDetailView: View {
     
     @State private var vehicleImage: UIImage?
     
+    @State private var onVerifiedOn: (() -> ())?
+    
     @EnvironmentObject var reportsVM: ReportsViewModel
     @EnvironmentObject var userVM: UserViewModel
     
@@ -89,7 +91,7 @@ struct ReportDetailView: View {
             .onAppear {
                 Task {
                     if (report == nil) {
-                        await fetchReportDetails(checkForMoreInfo: false)
+                        await fetchReportDetails(checkForMoreInfo: true)
                     }
                 }
             }
@@ -326,7 +328,8 @@ struct ReportDetailView: View {
                 } else {
                     if (report.allowsForContact && !(report.hasBeenResolved && report.belongsToUser)) {
                         Button("Contact User") {
-                            contactUser()
+                            self.onVerifiedOn = contactUser
+                            presentVinVerification()
                         }
                     }
                     Button("False Report") {
@@ -346,7 +349,8 @@ struct ReportDetailView: View {
                         if !(report.isFalseReport) {
                             if (report.allowsForUpdates && !report.hasBeenResolved) {
                                 Button {
-                                    presentUpdateReportView()
+                                    self.onVerifiedOn = presentUpdateReportView
+                                    presentVinVerification()
                                 } label: {
                                     Label("Update Report", systemImage: "arrow.2.squarepath")
                                 }
@@ -530,24 +534,32 @@ struct ReportDetailView: View {
         }
     }
     
+    private func presentVinVerification() {
+        if report.hasVin && !(report.belongsToUser) {
+            presentVinVerificationView.toggle()
+        } else {
+            if let onVerifiedOn {
+                onVerifiedOn()
+            }
+        }
+    }
+    
     private func verifyVin() {
         guard let report, vehicleVin.lowercased() == report.vehicle.vinString else {
             self.vehicleVin = ""
             presentVinInvalidAlert.toggle()
+            onVerifiedOn = nil
             return
         }
         self.vehicleVin = ""
-        isShowingUpdateReportView.toggle()
+        if let onVerifiedOn {
+            onVerifiedOn()
+            self.onVerifiedOn = nil
+        }
     }
     
     private func presentUpdateReportView() {
-        if let report {
-            if report.hasVin && !(report.belongsToUser) {
-                presentVinVerificationView.toggle()
-            } else {
-                isShowingUpdateReportView.toggle()
-            }
-        }
+        isShowingUpdateReportView.toggle()
     }
 }
 

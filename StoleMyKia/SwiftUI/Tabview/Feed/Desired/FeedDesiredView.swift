@@ -8,7 +8,7 @@
 import SwiftUI
 
 enum FeedLoadStatus {
-    case loading, loaded, empty, error
+    case loading, loaded, empty, error, desiredLocationNotSet
 }
 
 struct FeedDesiredView: View {
@@ -29,6 +29,8 @@ struct FeedDesiredView: View {
                 NoReportsAvaliableView()
             case .error:
                 ErrorView()
+            case .desiredLocationNotSet:
+                FeedNoDesiredLocationView()
             }
         }
         .task {
@@ -41,7 +43,7 @@ struct FeedDesiredView: View {
             Button {
                 self.isShowingDesiredSettingsView.toggle()
             } label: {
-                Image(systemName: "gear")
+                Image(systemName: "globe.americas.fill")
                     .foregroundColor(Color(uiColor: .label))
             }
         }

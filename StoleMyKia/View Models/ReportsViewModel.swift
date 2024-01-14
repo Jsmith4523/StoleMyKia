@@ -37,7 +37,13 @@ final class ReportsViewModel: NSObject, ObservableObject {
             }
             
             self.feedLoadStatus = .loaded
-        } catch {
+        }
+        catch let error as ReportManagerError {
+            if error == .desiredLocationNotSet {
+                self.feedLoadStatus = .desiredLocationNotSet
+            }
+        }
+        catch {
             self.feedLoadStatus = .error
         }
     }
@@ -78,7 +84,12 @@ final class ReportsViewModel: NSObject, ObservableObject {
     ///   - originalReportId: The UUID of the original report
     ///   - update: The Update object
     func addUpdateToOriginalReport(originalReport: Report, report: Report, vehicleImage: UIImage? = nil) async throws {
+        
+        //We need to check if the logged in firebase user and the user who uploaded the initial report
+        //Can perform actions of updating a report
+        try await FirebaseAuthManager.manager.userCanPerformAction()
         try await FirebaseAuthManager.manager.userCanPerformAction(uid: originalReport.uid)
+        
         guard let uid = Auth.auth().currentUser?.uid else {
             throw ReportManagerError.error
         }

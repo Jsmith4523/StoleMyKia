@@ -6,11 +6,13 @@
 //
 
 import SwiftUI
+import CoreLocation
 
 struct FeedNewReportButtonView: View {
     
     var backgroundColor: Color = .brand
     
+    @State private var alertLocationServicesDenied = false
     @State private var isShowingNewReportView = false
     
     @EnvironmentObject var userVM: UserViewModel
@@ -22,7 +24,7 @@ struct FeedNewReportButtonView: View {
             VStack {
                 Spacer()
                 Button {
-                    isShowingNewReportView.toggle()
+                    presentComposeView()
                 } label: {
                     Image(systemName: "plus")
                         .resizable()
@@ -41,6 +43,34 @@ struct FeedNewReportButtonView: View {
                     .environmentObject(userVM)
                     .environmentObject(ReportComposeViewModel())
             }
+        }
+        .alert("Location Services Disabled", isPresented: $alertLocationServicesDenied) {
+            Button("OK") {}
+            Button("Enable Location Services") { URL.openApplicationSettings() }
+        } message: {
+            Text("In order to create and upload reports, \(UIApplication.appName ?? "This application") requires the use of your device's location services. You can enable them by pressing 'Enable Location Services', or going to the 'Settings' app > '\(UIApplication.appName ?? "This application")' > 'Location Services'.")
+        }
+    }
+    
+    private func presentComposeView() {
+        switch CLLocationManager().authorizationStatus {
+        case .notDetermined:
+            CLLocationManager().requestWhenInUseAuthorization()
+        case .restricted:
+            UINotificationFeedbackGenerator().notificationOccurred(.warning)
+            self.alertLocationServicesDenied.toggle()
+        case .denied:
+            UINotificationFeedbackGenerator().notificationOccurred(.warning)
+            self.alertLocationServicesDenied.toggle()
+        case .authorizedAlways:
+            self.isShowingNewReportView.toggle()
+        case .authorizedWhenInUse:
+            self.isShowingNewReportView.toggle()
+        case .authorized:
+            self.isShowingNewReportView.toggle()
+        @unknown default:
+            UINotificationFeedbackGenerator().notificationOccurred(.warning)
+            self.alertLocationServicesDenied.toggle()
         }
     }
 }

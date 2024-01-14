@@ -9,12 +9,42 @@ import SwiftUI
 
 struct SignInCodeVerificationView: View {
     
+    private enum AlertReason {
+        case verificationError
+        case userBanned
+        case userDisabled
+        
+        var title: String {
+            switch self {
+            case .verificationError:
+                return "Verification Error"
+            case .userBanned:
+                return "You have been BANNED!"
+            case .userDisabled:
+                return "Your account is disabled"
+            }
+        }
+        
+        var description: String {
+            switch self {
+            case .verificationError:
+                return "Ensure that your verification code is correct and try again. If this issue persist, contact support."
+            case .userBanned:
+                return "Your account is permanently banned due to breaking one or more guidelines. If you think this is an error, please contact support."
+            case .userDisabled:
+                return "Your account is currently disabled. If you think this is an error, please contact support."
+            }
+        }
+    }
+    
     @State private var isShowingEmailComposeView = false
     
     @State private var isLoading = false
     @State private var alertErrorResendingVerificationCode = false
-    @State private var alertErrorVerificationCode = false
     @State private var verificationCode = ""
+    
+    @State private var alertReason: AlertReason = .verificationError
+    @State private var alertErrorVerificationCode = false
     
     let phoneNumber: String
     
@@ -68,18 +98,20 @@ struct SignInCodeVerificationView: View {
             }
         }
         .disabled(isLoading)
-        .alert("Verification Error", isPresented: $alertErrorVerificationCode) {
+        .alert(alertReason.title, isPresented: $alertErrorVerificationCode) {
             Button("OK") {}
-            Button("Resend Code") { resendVerificationCode() }
+            if alertReason == .verificationError {
+                Button("Resend Code") { resendVerificationCode() }
+            }
             Button("Contact Support") { isShowingEmailComposeView.toggle() }
                 .canSendEmail()
         } message: {
-            Text("Ensure that your verification is correct and try again. If this issue persist, contact support and try again.")
+            Text(alertReason.description)
         }
         .alert("Unable to resend verification code", isPresented: $alertErrorResendingVerificationCode) {
             Button("OK") {}
         } message: {
-            Text("An issue occurred resending your verification code. Please try again later")
+            Text("An issue occurred resending a new verification code. Please try again later.")
         }
         .emailComposerView(isPresented: $isShowingEmailComposeView, composeMode: .issue)
     }
@@ -90,9 +122,25 @@ struct SignInCodeVerificationView: View {
             do {
                 try await firebaseAuthVM.verifyCode(verificationCode, phoneNumber: phoneNumber)
                 self.isLoading = false
-            } catch {
+            } catch let error as FirebaseAuthManager.FirebaseAuthManagerError {
                 isLoading = false
+                switch error {
+                case .userBanned:
+                    alertReason = .userBanned
+                case .userDisabled:
+                    alertReason = .userDisabled
+                default:
+                    alertReason = .verificationError
+                }
+                print(error)
                 alertErrorVerificationCode.toggle()
+            }
+            catch {
+                DispatchQueue.main.async {
+                    isLoading = false
+                    alertReason = .verificationError
+                    alertErrorVerificationCode.toggle()
+                }
             }
         }
     }

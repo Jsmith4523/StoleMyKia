@@ -28,6 +28,7 @@ struct ReportComposeReportTypeView: View {
                 }
             }
             .navigationTitle("Report Type")
+            .navigationBarTitleDisplayMode(.inline)
             .toolbar {
                 if canPushToNextView {
                     ToolbarItem(placement: .navigationBarLeading) {

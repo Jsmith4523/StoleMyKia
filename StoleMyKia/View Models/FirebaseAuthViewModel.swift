@@ -35,9 +35,7 @@ final class FirebaseAuthViewModel: NSObject, ObservableObject {
     }
     
     func verifyCode(_ code: String, phoneNumber: String) async throws {
-        guard let loginStatus = try? await authManager.verifyCode(code, phoneNumber: phoneNumber) else {
-            throw FirebaseAuthManager.FirebaseAuthManagerError.userError
-        }
+        let loginStatus = try await authManager.verifyCode(code, phoneNumber: phoneNumber)
         
         guard let user = Auth.auth().currentUser else {
             throw FirebaseAuthManager.FirebaseAuthManagerError.userError

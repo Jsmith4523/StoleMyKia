@@ -17,6 +17,7 @@ enum ReportManagerError: String, Error {
     case codableError = "Codable Protocol Error"
     case updatesDisable = "Updates Disabled for this report."
     case locationServicesDenied = "User Location Services Denied"
+    case desiredLocationNotSet
     case error = "Generic Error"
 }
 
@@ -56,11 +57,11 @@ public class ReportManager {
         
         let reports = try await fetchReports()
         
-        if let desiredLocation {
-            return reports.filterBasedUponLocation(desiredLocation.coordinate, radius: desiredLocation.radius).sorted(by: >)
-        } else {
-            return reports.sorted(by: >)
+        guard let desiredLocation else {
+            throw ReportManagerError.desiredLocationNotSet
         }
+        
+        return reports.filterBasedUponLocation(desiredLocation.coordinate, radius: desiredLocation.radius).sorted(by: >)
     }
     
     ///Fetch reports from Firestore.
@@ -156,6 +157,8 @@ public class ReportManager {
     }
     
     func appendUpdateToReport(_ originalReportId: UUID, update: Update) async throws -> String {
+        try await FirebaseAuthManager.manager.userCanPerformAction()
+        
         //Check if the original report still exist
         guard try await reportDoesExist(originalReportId) else {
             throw ReportManagerError.doesNotExist

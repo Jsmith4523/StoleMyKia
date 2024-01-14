@@ -120,7 +120,7 @@ struct NotificationMapView: View {
                     }
                 }
             }
-            .alert("Navigate to your desired location on the map. Once located, press the 'Set' button to receive reports and notifications within that area.", isPresented: $showInfoAlert) {
+            .alert("Go to your preferred location on the map. Once you've found it, click the 'Set' button to start receiving reports and notifications specific to that area.", isPresented: $showInfoAlert) {
                 Button("OK") {}
             }
         }

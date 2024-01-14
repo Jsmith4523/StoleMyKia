@@ -71,6 +71,17 @@ extension AppUserNotification {
         !(imageURL == nil)
     }
     
+    var bodyText: String {
+        switch notificationType {
+        case .update:
+            return body
+        case .report:
+            return "\"\(body)\""
+        default:
+            return body
+        }
+    }
+    
     var dateAndTime: String {
         return ApplicationFormats.timeAgoFormat(self.dt)
     }

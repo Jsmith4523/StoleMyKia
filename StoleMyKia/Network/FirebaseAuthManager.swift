@@ -72,13 +72,19 @@ class FirebaseAuthManager {
                 guard currentUser.uid == user.uid && phoneNumber == user.phoneNumber else {
                     throw FirebaseAuthManagerError.specificError("The user document id and phone number do not match with the signed in user")
                 }
+                
+                if user.status == .newUser {
+                    self.verificationId = nil
+                    return .onboarding
+                }
             }
             
             self.verificationId = nil
             return try await saveNewUser(phoneNumber: phoneNumber, userDocument: userDocument)
+            
+        } catch let error as FirebaseAuthManagerError {
+            throw error
         } catch {
-            print(error)
-            self.verificationId = nil
             try? Auth.auth().signOut()
             throw FirebaseAuthManagerError.error
         }
@@ -88,8 +94,12 @@ class FirebaseAuthManager {
                 throw FirebaseAuthManagerError.userStatusError("Status field is missing!")
             }
             
-            guard !(AppUser.Status(rawValue: rawValue) == nil) else {
+            guard let status = AppUser.Status(rawValue: rawValue) else {
                 throw FirebaseAuthManagerError.userStatusError("Invalid user status!")
+            }
+            
+            guard !(status == .banned) else {
+                throw FirebaseAuthManagerError.userBanned
             }
         }
         
@@ -199,6 +209,10 @@ class FirebaseAuthManager {
     
     ///The logged in user can perform actions such as uploading or updating a report
     func userCanPerformAction() async throws {
+        guard let currentUser = Auth.auth().currentUser else {
+            throw FirebaseAuthManagerError.userSignedOut
+        }
+        
         let (user, _) = try await fetchCurrentUserDocument()
         
         guard (user.status == .active) else {

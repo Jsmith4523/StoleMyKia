@@ -54,22 +54,20 @@ fileprivate struct NotificationCellView: View {
     var body: some View {
         HStack {
             VStack(alignment: .leading, spacing: 7) {
-                HStack {
+                HStack(alignment: .top) {
                     VStack(alignment: .leading, spacing: 0) {
                         HStack(spacing: 5) {
                             Text(notification.title)
                                 .font(.system(size: 16).weight(.bold))
-                                .lineLimit(2)
                         }
                         VStack {
-                            Text(notification.body)
+                            Text(notification.bodyText)
                                 .font(.system(size: 14))
                                 .lineLimit(4)
                                 .foregroundColor(.gray)
-                            Spacer()
                         }
-                        .frame(height: 65)
                     }
+                    .frame(maxHeight: .infinity, alignment: .top)
                     Spacer()
                     if notification.hasImage {
                         imageView
@@ -138,7 +136,12 @@ extension UUID: Identifiable {
 struct NotificationListView_Previews: PreviewProvider {
     static var previews: some View {
         ScrollView {
-            NotificationCellView(notification: .init(id: "", dt: Date.now.addingTimeInterval(-86400*9).epoch, title: "Incident: Light Gray 2017 Hyundai Elantra", body: "Someone has taken my car on a joyride through the city. Need help locating it please thank you", notificationType: .report, isRead: false, reportId: UUID(), imageURL: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcT0GcDq4DYvOB86BmsxrxCp18U8T2ckXPBBqw&usqp=CAU"))
+            VStack {
+                NotificationCellView(notification: .init(id: "", dt: Date.now.addingTimeInterval(-86400*9).epoch, title: "Incident: Light Gray 2017 Hyundai Elantra", body: "Someone has taken my car through the city of Los Santos. If someone has any eyes on it, lemme know please and thank you", notificationType: .report, isRead: false, reportId: UUID(), imageURL: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcT0GcDq4DYvOB86BmsxrxCp18U8T2ckXPBBqw&usqp=CAU"))
+                NotificationCellView(notification: .init(id: "", dt: Date.now.addingTimeInterval(-86400*9).epoch, title: "Incident: Light Gray 2017 Hyundai Elantra", body: "Someone has taken my car on a joyride through the city. Need help locating it please thank you", notificationType: .report, isRead: false, reportId: UUID(), imageURL: nil))
+                NotificationCellView(notification: .init(id: "", dt: Date.now.addingTimeInterval(-86400*9).epoch, title: "Incident: Light Gray 2017 Hyundai Elantra", body: "Someone has taken my car on a joyride through the city. Need help locating it please thank you", notificationType: .report, isRead: false, reportId: UUID(), imageURL: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcT0GcDq4DYvOB86BmsxrxCp18U8T2ckXPBBqw&usqp=CAU"))
+                NotificationCellView(notification: .init(id: "", dt: Date.now.addingTimeInterval(-86400*9).epoch, title: "Incident: Light Gray 2017 Hyundai Elantra", body: "Someone has taken my car on a joyride through the city. Need help locating it please thank you", notificationType: .report, isRead: false, reportId: UUID(), imageURL: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcT0GcDq4DYvOB86BmsxrxCp18U8T2ckXPBBqw&usqp=CAU"))
+            }
         }
         .preferredColorScheme(.dark)
     }

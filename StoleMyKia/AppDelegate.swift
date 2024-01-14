@@ -103,13 +103,19 @@ extension AppDelegate {
             
             switch notificationType {
             case "Report":
-                let hostingController = UIHostingController(rootView: ReportDetailView(reportId: id).environmentObject(ReportsViewModel()))
+                let hostingController = UIHostingController(rootView: ReportDetailView(reportId: id)
+                    .environmentObject(ReportsViewModel())
+                    .environmentObject(UserViewModel())
+                )
                 hostingController.modalPresentationStyle = .fullScreen
                 progressView.dismiss(animated: true) {
                     rootViewController?.present(hostingController, animated: true)
                 }
             case "Update":
-                let hostingController = UIHostingController(rootView: TimelineMapView(reportAssociatedId: id, dismissStyle: .dismiss))
+                let hostingController = UIHostingController(rootView: TimelineMapView(reportAssociatedId: id, dismissStyle: .dismiss)
+                    .environmentObject(ReportsViewModel())
+                    .environmentObject(UserViewModel())
+                )
                 hostingController.modalPresentationStyle = .fullScreen
                 progressView.dismiss(animated: true) {
                     rootViewController?.present(hostingController, animated: true)

@@ -9,21 +9,23 @@ import SwiftUI
 
 struct NoReportsAvaliableView: View {
     var body: some View {
-        VStack(spacing: 30) {
+        VStack {
             Spacer()
-                .frame(height: 150)
-            Image(systemName: ApplicationTabViewSelection.feed.symbol)
-                .resizable()
-                .scaledToFit()
-                .frame(width: 45, height: 45)
-            VStack(spacing: 8) {
-                Text("Nothing to report")
-                    .font(.system(size: 19).bold())
-                Text("Refresh by pulling this screen down.")
-                    .font(.body)
-                    .foregroundColor(.gray)
+                .frame(height: 185)
+            VStack(spacing: 12) {
+                Image(systemName: "archivebox")
+                    .resizable()
+                    .scaledToFit()
+                    .frame(width: 40, height: 40)
+                VStack(spacing: 7) {
+                    Text("Look's like there's nothing to report here...")
+                        .font(.system(size: 19).bold())
+                    Text("You can refresh by pulling this screen down.")
+                        .font(.body)
+                        .foregroundColor(.gray)
+                }
+                Spacer()
             }
-            Spacer()
         }
         .multilineTextAlignment(.center)
         .padding()

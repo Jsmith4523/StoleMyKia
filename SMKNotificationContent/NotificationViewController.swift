@@ -10,6 +10,8 @@ import UserNotifications
 import UserNotificationsUI
 
 class NotificationViewController: UIViewController, UNNotificationContentExtension {
+    
+    private let placeholderImage = UIImage(named: "vehicle-placeholder")
                 
     @IBOutlet weak var imageView: UIImageView!
     
@@ -19,6 +21,8 @@ class NotificationViewController: UIViewController, UNNotificationContentExtensi
     }
     
     func didReceive(_ notification: UNNotification) {
+        let userInfo = notification.request.content.userInfo
+        
         if let attachment = notification.request.content.attachments.first, attachment.url.startAccessingSecurityScopedResource() {
             let image = self.retrieveImageAttachment(attachment.url.path())
             
@@ -28,10 +32,13 @@ class NotificationViewController: UIViewController, UNNotificationContentExtensi
             
             attachment.url.stopAccessingSecurityScopedResource()
         } else {
-            
-            DispatchQueue.main.async {
-                self.imageView.image = UIImage(named: "vehicle-placeholder")
+            guard let data = userInfo["data"] as? [String: Any], let urlString = data["imageURL"] as? String else {
+                DispatchQueue.main.async {
+                    self.imageView.image = self.placeholderImage
+                }
+                return
             }
+            downloadAndSaveImage(urlString)
         }
     }
     
@@ -41,5 +48,33 @@ class NotificationViewController: UIViewController, UNNotificationContentExtensi
         
         guard let data = manager.contents(atPath: path), let image = UIImage(data: data) else { return nil }
         return image
+    }
+    
+    private func downloadAndSaveImage(_ urlString: String?) {
+        guard let urlString, let url = URL(string: urlString) else {
+            self.imageView.image = placeholderImage
+            return
+        }
+        
+        URLSession.shared.dataTask(with: url) { [weak self] data, response, err in
+            guard let data, (err == nil) else {
+                DispatchQueue.main.async {
+                    self?.imageView.image = self?.placeholderImage
+                }
+                return
+            }
+            
+            guard let image = UIImage(data: data) else {
+                DispatchQueue.main.async {
+                    self?.imageView.image = self?.placeholderImage
+                }
+                return
+            }
+            
+            DispatchQueue.main.async {
+                self?.imageView.image = image
+            }
+        }
+        .resume()
     }
 }

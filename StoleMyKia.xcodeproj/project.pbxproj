@@ -32,6 +32,7 @@
 		24334D0629C1A0E10084B8EC /* View+EXT.swift in Sources */ = {isa = PBXBuildFile; fileRef = 24334D0529C1A0E10084B8EC /* View+EXT.swift */; };
 		24369A6D2AD202F400016A1C /* User.swift in Sources */ = {isa = PBXBuildFile; fileRef = 24369A6C2AD202F300016A1C /* User.swift */; };
 		2437328029BEF8FC008F4C4E /* NotificationViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2437327F29BEF8FC008F4C4E /* NotificationViewModel.swift */; };
+		243AF5912B5467FC00C59A31 /* FeedNoDesiredLocationView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 243AF5902B5467FC00C59A31 /* FeedNoDesiredLocationView.swift */; };
 		243CE8232A84978100E5A727 /* UserNotifications.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 243CE8222A84978100E5A727 /* UserNotifications.framework */; };
 		243CE8252A84978100E5A727 /* UserNotificationsUI.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 243CE8242A84978100E5A727 /* UserNotificationsUI.framework */; };
 		243CE8282A84978100E5A727 /* NotificationViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 243CE8272A84978100E5A727 /* NotificationViewController.swift */; };
@@ -257,6 +258,7 @@
 		24334D0529C1A0E10084B8EC /* View+EXT.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "View+EXT.swift"; sourceTree = "<group>"; };
 		24369A6C2AD202F300016A1C /* User.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = User.swift; sourceTree = "<group>"; };
 		2437327F29BEF8FC008F4C4E /* NotificationViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NotificationViewModel.swift; sourceTree = "<group>"; };
+		243AF5902B5467FC00C59A31 /* FeedNoDesiredLocationView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FeedNoDesiredLocationView.swift; sourceTree = "<group>"; };
 		243CE8212A84978100E5A727 /* SMKNotificationContent.appex */ = {isa = PBXFileReference; explicitFileType = "wrapper.app-extension"; includeInIndex = 0; path = SMKNotificationContent.appex; sourceTree = BUILT_PRODUCTS_DIR; };
 		243CE8222A84978100E5A727 /* UserNotifications.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = UserNotifications.framework; path = System/Library/Frameworks/UserNotifications.framework; sourceTree = SDKROOT; };
 		243CE8242A84978100E5A727 /* UserNotificationsUI.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = UserNotificationsUI.framework; path = System/Library/Frameworks/UserNotificationsUI.framework; sourceTree = SDKROOT; };
@@ -900,6 +902,7 @@
 				24CC5EF72A745DE70078C921 /* FeedListView.swift */,
 				24E8C7E62AE8E74800830AF2 /* FeedNewReportButtonView.swift */,
 				24CC5EF82A745DE70078C921 /* NoReportsAvaliableView.swift */,
+				243AF5902B5467FC00C59A31 /* FeedNoDesiredLocationView.swift */,
 			);
 			path = Feed;
 			sourceTree = "<group>";
@@ -1367,6 +1370,7 @@
 				24631C722AE4BBA1007940C4 /* ReportComposeReminderView.swift in Sources */,
 				240F22472A34FEF70078F97E /* FirebaseAuth.swift in Sources */,
 				24E8C7E72AE8E74800830AF2 /* FeedNewReportButtonView.swift in Sources */,
+				243AF5912B5467FC00C59A31 /* FeedNoDesiredLocationView.swift in Sources */,
 				24CC5F132A745DE70078C921 /* ApplicationAuthView.swift in Sources */,
 				24EE41182A5BB42D00AF2A11 /* QuerySnapshot.swift in Sources */,
 				24334D0429C19E100084B8EC /* UIImagePicker.swift in Sources */,
@@ -1745,7 +1749,7 @@
 				CODE_SIGN_ENTITLEMENTS = StoleMyKia/StoleMyKia.entitlements;
 				CODE_SIGN_IDENTITY = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 1;
+				CURRENT_PROJECT_VERSION = 2;
 				DEVELOPMENT_ASSET_PATHS = "\"StoleMyKia/Preview Content\"";
 				DEVELOPMENT_TEAM = H5L7QT5U7B;
 				ENABLE_PREVIEWS = YES;
@@ -1793,7 +1797,7 @@
 				CODE_SIGN_ENTITLEMENTS = StoleMyKia/StoleMyKia.entitlements;
 				CODE_SIGN_IDENTITY = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 1;
+				CURRENT_PROJECT_VERSION = 2;
 				DEVELOPMENT_ASSET_PATHS = "\"StoleMyKia/Preview Content\"";
 				DEVELOPMENT_TEAM = H5L7QT5U7B;
 				ENABLE_PREVIEWS = YES;
