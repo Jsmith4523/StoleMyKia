@@ -23,6 +23,13 @@ extension String {
     }
 }
 
+extension View {
+    
+    func legalPrompt() -> some View {
+        return Text("For further information regarding the use of this application, please review our 'Terms of Use' and 'Disclaimer' within '\(ApplicationTabViewSelection.myStuff.title)' > 'Settings'")
+    }
+}
+
 extension Text {
     func authButtonStyle(background: Color = .brand) -> some View {
         return self

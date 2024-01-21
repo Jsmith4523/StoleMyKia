@@ -19,7 +19,7 @@ struct SignInCodeVerificationView: View {
             case .verificationError:
                 return "Verification Error"
             case .userBanned:
-                return "You have been BANNED!"
+                return "You have been BANNED!👨🏽‍⚖️"
             case .userDisabled:
                 return "Your account is disabled"
             }

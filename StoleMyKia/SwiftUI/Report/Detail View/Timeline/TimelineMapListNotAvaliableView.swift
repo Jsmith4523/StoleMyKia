@@ -11,17 +11,17 @@ struct TimelineMapListNotAvaliableView: View {
     var body: some View {
         VStack {
             Spacer()
-                .frame(height: 135)
+                .frame(height: 115)
             VStack(spacing: 15) {
                 Image(systemName: "archivebox")
                     .resizable()
                     .scaledToFit()
                     .frame(width: 45, height: 45)
                 VStack(spacing: 5) {
-                    Text("No Longer Avaliable")
+                    Text("No Longer Available")
                         .font(.system(size: 22).weight(.heavy))
-                    Text("Sorry, the initial report is no longer available to receive updates.")
-                        .font(.system(size: 17))
+                    Text("Sorry, the initial report can no longer receive updates.")
+                        .font(.system(size: 16))
                 }
             }
         }

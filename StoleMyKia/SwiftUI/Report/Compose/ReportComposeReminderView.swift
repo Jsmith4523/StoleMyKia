@@ -40,6 +40,12 @@ struct ReportComposeReminderView: View {
                 .multilineTextAlignment(.center)
                 
                 Section {
+                    legalPrompt()
+                        .font(.system(size: 16))
+                        .multilineTextAlignment(.center)
+                }
+                
+                Section {
                     Button {
                         confirm()
                     } label: {

@@ -32,11 +32,16 @@ struct OnboardingInstructionsView: View {
                             }
                         }
                     }
-                    Button {
-                        dismiss()
-                    } label: {
-                        Text("Done")
-                            .authButtonStyle()
+                    VStack(spacing: 25) {
+                        legalPrompt()
+                            .font(.system(size: 16))
+                            .multilineTextAlignment(.center)
+                        Button {
+                            dismiss()
+                        } label: {
+                            Text("Done")
+                                .authButtonStyle()
+                        }
                     }
                 }
                 .padding()

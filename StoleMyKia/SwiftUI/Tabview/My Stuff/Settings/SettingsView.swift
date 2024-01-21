@@ -12,12 +12,14 @@ struct SettingsView: View {
     enum SettingsRoutes: Identifiable, CaseIterable {
         static let preferencesRoutes: [Self] = [.notifications]
         
-        static let supportRoutes: [Self] = [.email, .privacyPolicy, .appIntroduction]
+        static let supportRoutes: [Self] = [.email, .appIntroduction, .privacyPolicy, .termsOfUse, .disclaimer]
         
         case notifications
         case email
         case appIntroduction
         case privacyPolicy
+        case termsOfUse
+        case disclaimer
         
         var id: Self {
             return self
@@ -33,6 +35,10 @@ struct SettingsView: View {
                 return "Privacy Policy"
             case .appIntroduction:
                 return "How It Works"
+            case .termsOfUse:
+                return "Terms Of Use"
+            case .disclaimer:
+                return "Disclaimer"
             }
         }
         
@@ -46,6 +52,10 @@ struct SettingsView: View {
                 return "hand.raised"
             case .appIntroduction:
                 return "book"
+            case .termsOfUse:
+                return "person"
+            case .disclaimer:
+                return "text.book.closed"
             }
         }
     }
@@ -102,7 +112,7 @@ struct SettingsView: View {
                         }
                     }
                 } header: {
-                    Text("Support")
+                    Text("Support and Legal")
                 }
 
                 Section {
@@ -132,6 +142,10 @@ struct SettingsView: View {
                     PrivacyPolicyView()
                 case .appIntroduction:
                     OnboardingInstructionsView()
+                case .termsOfUse:
+                    TermsOfServiceView()
+                case .disclaimer:
+                    DisclaimerView()
                 }
             }
             .fullScreenCover(isPresented: $isShowingBeSafeView) {

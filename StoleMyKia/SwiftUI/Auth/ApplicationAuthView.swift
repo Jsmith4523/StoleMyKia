@@ -12,7 +12,7 @@ enum ApplicationPolicyViewMode: CaseIterable, Identifiable {
     
     var id: Self { self }
     
-    case safety, privacyPolicy
+    case safety, privacyPolicy, termsOfUse, disclaimer
 }
 
 struct ApplicationAuthView: View {
@@ -70,10 +70,24 @@ struct ApplicationAuthView: View {
                                 }
                                 Capsule()
                                     .frame(width: 0.65, height: 15)
-                                Button {
-                                    self.policyViewMode = .privacyPolicy
+                                Menu {
+                                    Button {
+                                        self.policyViewMode = .privacyPolicy
+                                    } label: {
+                                        Text("Privacy Policy")
+                                    }
+                                    Button {
+                                        self.policyViewMode = .termsOfUse
+                                    } label: {
+                                        Text("Terms of Use")
+                                    }
+                                    Button {
+                                        self.policyViewMode = .disclaimer
+                                    } label: {
+                                        Text("Disclaimers")
+                                    }
                                 } label: {
-                                    Text("Privacy Policy")
+                                    Text("Legal and Policy")
                                 }
                             }
                             if let applicationVersion = UIApplication.appVersion {
@@ -95,8 +109,15 @@ struct ApplicationAuthView: View {
                 switch mode {
                 case .privacyPolicy:
                     PrivacyPolicyView()
+                        .ignoresSafeArea()
                 case .safety:
                     SafetyView()
+                case .termsOfUse:
+                    TermsOfServiceView()
+                        .ignoresSafeArea()
+                case .disclaimer:
+                    DisclaimerView()
+                        .ignoresSafeArea()
                 }
             }
         }

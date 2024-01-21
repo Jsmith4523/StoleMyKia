@@ -11,7 +11,23 @@ import SwiftUI
 struct PrivacyPolicyView: View {
     
     var body: some View {
-        SafariView(url: URL(string: "https://www.google.com")!)
+        SafariView(url: .privacyPolicy)
             .edgesIgnoringSafeArea(.bottom)
+    }
+}
+
+struct TermsOfServiceView: View {
+    
+    var body: some View {
+        SafariView(url: .termsAndService)
+            .edgesIgnoringSafeArea(.bottom)
+    }
+}
+
+struct DisclaimerView: View {
+    
+    var body: some View {
+        SafariView(url: .disclaimerUrl)
+            .ignoresSafeArea()
     }
 }

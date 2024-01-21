@@ -77,10 +77,14 @@ extension View {
             }
     }
     
-    //TODO: Crete privacy policy
     func privacyPolicy(isPresented: Binding<Bool>) -> some View {
         return self
-            .safari(isPresented: isPresented, url: URL(string: "https://www.google.com")!)
+            .safari(isPresented: isPresented, url: URL.privacyPolicy)
+    }
+    
+    func termsAndConditions(isPresented: Binding<Bool>) -> some View {
+        return self
+            .safari(isPresented: isPresented, url: URL.termsAndService)
     }
     
     func twitterSupport(isPresented: Binding<Bool>) -> some View {

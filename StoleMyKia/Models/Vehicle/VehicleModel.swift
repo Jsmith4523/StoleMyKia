@@ -31,7 +31,7 @@ enum VehicleModel: String, CaseIterable, Codable, Comparable, Hashable, Identifi
     case elantra  = "Elantra"
     case kona     = "Kona"
     case santaFe  = "Santa Fe"
-    case tuscon   = "Tuscon"
+    case tucson   = "Tucson"
     case veloster = "Veloster"
     case sonata   = "Sonata"
     case venue    = "Venue"
@@ -52,7 +52,6 @@ enum VehicleModel: String, CaseIterable, Codable, Comparable, Hashable, Identifi
     ///Manufacturer
     var make: VehicleMake {
         switch self {
-            
         case .accent:
             return .hyundai
         case .elantra:
@@ -61,7 +60,7 @@ enum VehicleModel: String, CaseIterable, Codable, Comparable, Hashable, Identifi
             return .hyundai
         case .santaFe:
             return .hyundai
-        case .tuscon:
+        case .tucson:
             return .hyundai
         case .veloster:
             return .hyundai
@@ -101,14 +100,14 @@ enum VehicleModel: String, CaseIterable, Codable, Comparable, Hashable, Identifi
             return 2018...VehicleModel.lastAffectedYear
         case .santaFe:
             return 2011...VehicleModel.lastAffectedYear
-        case .tuscon:
+        case .tucson:
             return 2011...VehicleModel.lastAffectedYear
         case .veloster:
             return 2011...VehicleModel.lastAffectedYear
         case .sonata:
             return 2011...VehicleModel.lastAffectedYear
         case .venue:
-            return 2019...VehicleModel.lastAffectedYear
+            return 2020...VehicleModel.lastAffectedYear
         case .forte:
             return 2011...VehicleModel.lastAffectedYear
         case .rio:

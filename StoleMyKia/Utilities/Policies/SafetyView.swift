@@ -20,7 +20,7 @@ struct SafetyView: View {
                     VStack {
                         Spacer()
                             .frame(height: 25)
-                        VStack(spacing: 50) {
+                        VStack(spacing: 35) {
                             VStack(spacing: 10) {
                                 Image(systemName: "checkerboard.shield")
                                     .resizable()
@@ -46,11 +46,17 @@ struct SafetyView: View {
                         }
                         Spacer()
                             .frame(height: 50)
-                        Button {
-                            dismiss()
-                        } label: {
-                            Text("Done")
-                                .authButtonStyle(background: .green)
+                        VStack(spacing: 25) {
+                            legalPrompt()
+                                .font(.system(size: 16))
+                                .foregroundColor(.gray)
+                                .multilineTextAlignment(.center)
+                            Button {
+                                dismiss()
+                            } label: {
+                                Text("Done")
+                                    .authButtonStyle(background: .green)
+                            }
                         }
                     }
                     .padding()

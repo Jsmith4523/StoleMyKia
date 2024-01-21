@@ -107,6 +107,7 @@ extension AppDelegate {
                     .environmentObject(ReportsViewModel())
                     .environmentObject(UserViewModel())
                 )
+                hostingController.view.tintColor = .label
                 hostingController.modalPresentationStyle = .fullScreen
                 progressView.dismiss(animated: true) {
                     rootViewController?.present(hostingController, animated: true)
@@ -116,6 +117,7 @@ extension AppDelegate {
                     .environmentObject(ReportsViewModel())
                     .environmentObject(UserViewModel())
                 )
+                hostingController.view.tintColor = .label
                 hostingController.modalPresentationStyle = .fullScreen
                 progressView.dismiss(animated: true) {
                     rootViewController?.present(hostingController, animated: true)
