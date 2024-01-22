@@ -28,10 +28,12 @@ struct FeedListView: View {
                 LazyVStack(spacing: 25) {
                     LazyVStack(spacing: 8) {
                         ForEach(reports) { report in
-                            ReportCellView(report: report, imageMode: cellImageMode)
-                                .onTapGesture {
-                                    self.report = report
-                                }
+                            Button {
+                                UIImpactFeedbackGenerator(style: .light).impactOccurred()
+                                self.report = report
+                            } label: {
+                                ReportCellView(report: report, imageMode: cellImageMode)
+                            }
                         }
                     }
                     .background(Color(uiColor: .opaqueSeparator).opacity(0.14))

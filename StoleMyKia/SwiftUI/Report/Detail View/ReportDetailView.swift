@@ -22,7 +22,13 @@ struct ReportDetailView: View {
     }
     
     @State private var vehicleVin = ""
+    @State private var vehicleLicense = ""
     
+    @State private var presentVerificationMultipleChoice = false
+    
+    @State private var presentVinVerificationView = false
+    @State private var presentLicensePlateVerificationView = false
+
     @State private var report: Report!
     
     @State private var isBookmarked: Bool = false
@@ -31,8 +37,7 @@ struct ReportDetailView: View {
     @State private var showProgressView = false
     @State private var isLoading = false
     @State private var loadStatus: ReportLoadStatus = .loading
-    
-    @State private var presentVinVerificationView = false
+        
     @State private var presentDisableUpdatesAlert = false
     @State private var presentResolveReportsAlert = false
     @State private var presentVinInvalidAlert = false
@@ -46,6 +51,8 @@ struct ReportDetailView: View {
     @State private var isShowingTimelineMapView = false
     @State private var isShowingUpdateReportView = false
     @State private var isShowingReportOptions = false
+    
+    @State private var isVerified = false
     
     @State private var vehicleImage: UIImage?
     
@@ -145,17 +152,34 @@ struct ReportDetailView: View {
             } message: {
                 Text("An error occurred attempting to process that request. Please try again.")
             }
-            .alert("Please Verify VIN", isPresented: $presentVinVerificationView) {
+            .alert("Verify VIN", isPresented: $presentVinVerificationView) {
                 TextField("VIN", text: $vehicleVin)
                 Button("Cancel") {}
                 Button("Verify", action: verifyVin)
             } message: {
                 Text("This report includes a Vehicle Identification Number (VIN). Please enter the full VIN to continue")
             }
+            .alert("Verify License Plate", isPresented: $presentLicensePlateVerificationView) {
+                TextField("License Plate", text: $vehicleLicense)
+                Button("Cancel") {}
+                Button("Verify", action: verifyLicensePlate)
+            } message: {
+                Text("This report includes a License Plate that must be verified. Please enter the full license plate (disregarding any special characters)")
+            }
             .alert("Verification Error", isPresented: $presentVinInvalidAlert) {
                 Button("OK") {}
             } message: {
-                Text("Sorry, that VIN does not match.")
+                Text("Sorry, that VIN or License Plate does not match.")
+            }
+            .confirmationDialog("What would you like to verify?", isPresented: $presentVerificationMultipleChoice) {
+                Button("License Plate") {
+                    presentLicensePlateVerification()
+                }
+                Button("VIN") {
+                    presentVinVerification()
+                }
+            } message: {
+                Text("This report contains multiple verification methods where one may not be available. Please select an option of verification in order to continue..")
             }
             .onChange(of: vehicleVin) { _ in
                 if vehicleVin.count > 17 {
@@ -242,7 +266,7 @@ struct ReportDetailView: View {
                                                     if report.hasLicensePlateOrVin {
                                                         HStack {
                                                             if report.hasLicensePlate {
-                                                                Text(report.vehicle.licensePlateString)
+                                                                Text("Plate: \(report.licensePlateString)")
                                                             }
                                                             if (report.hasLicensePlateAndVin) {
                                                                 Divider()
@@ -329,7 +353,7 @@ struct ReportDetailView: View {
                     if (report.allowsForContact && !(report.hasBeenResolved && report.belongsToUser)) {
                         Button("Contact User") {
                             self.onVerifiedOn = contactUser
-                            presentVinVerification()
+                            self.performVerification()
                         }
                     }
                     Button("False Report") {
@@ -350,7 +374,7 @@ struct ReportDetailView: View {
                             if (report.allowsForUpdates && !report.hasBeenResolved) {
                                 Button {
                                     self.onVerifiedOn = presentUpdateReportView
-                                    presentVinVerification()
+                                    self.performVerification()
                                 } label: {
                                     Label("Update Report", systemImage: "arrow.2.squarepath")
                                 }
@@ -429,6 +453,24 @@ struct ReportDetailView: View {
         }
     }
     
+    private func performVerification() {
+        if let onVerifiedOn {
+            if report.belongsToUser {
+                onVerifiedOn()
+            } else if isVerified {
+                onVerifiedOn()
+            } else if (report.userMustVerifyLicense && report.hasVin) {
+                presentVerificationMultipleChoice.toggle()
+            } else if report.hasVin {
+                presentVinVerification()
+            } else if report.userMustVerifyLicense {
+                self.presentLicensePlateVerificationView.toggle()
+            } else {
+                onVerifiedOn()
+            }
+        }
+    }
+    
     private func fetchReportDetails(checkForMoreInfo: Bool = true) async {
         self.loadStatus = .loading
         guard let report = try? await ReportManager.manager.fetchSingleReport(reportId) else {
@@ -448,7 +490,7 @@ struct ReportDetailView: View {
     }
     
     private func disableUpdates() {
-        if let report {
+        if report != nil {
             isLoading = true
             self.loadStatus = .loading
             Task {
@@ -465,7 +507,7 @@ struct ReportDetailView: View {
     }
     
     private func disableContacting() {
-        if let report {
+        if report != nil {
             isLoading = true
             self.loadStatus = .loading
             Task {
@@ -534,8 +576,18 @@ struct ReportDetailView: View {
         }
     }
     
+    private func presentLicensePlateVerification() {
+        if report.hasLicensePlate && !(report.belongsToUser && self.isVerified) {
+            presentLicensePlateVerificationView.toggle()
+        } else {
+            if let onVerifiedOn {
+                onVerifiedOn()
+            }
+        }
+    }
+    
     private func presentVinVerification() {
-        if report.hasVin && !(report.belongsToUser) {
+        if report.hasVin && !(report.belongsToUser && self.isVerified) {
             presentVinVerificationView.toggle()
         } else {
             if let onVerifiedOn {
@@ -545,7 +597,7 @@ struct ReportDetailView: View {
     }
     
     private func verifyVin() {
-        guard let report, vehicleVin.lowercased() == report.vehicle.vinString else {
+        guard let report, vehicleVin.lowercased() == report.vehicle.vinString.lowercased() else {
             self.vehicleVin = ""
             presentVinInvalidAlert.toggle()
             onVerifiedOn = nil
@@ -555,6 +607,22 @@ struct ReportDetailView: View {
         if let onVerifiedOn {
             onVerifiedOn()
             self.onVerifiedOn = nil
+            self.isVerified = true
+        }
+    }
+    
+    private func verifyLicensePlate() {
+        guard let report, vehicleLicense.lowercased() == report.vehicle.licensePlateString.lowercased() else {
+            self.vehicleLicense = ""
+            presentVinInvalidAlert.toggle()
+            onVerifiedOn = nil
+            return
+        }
+        self.vehicleLicense = ""
+        if let onVerifiedOn {
+            onVerifiedOn()
+            self.onVerifiedOn = nil
+            self.isVerified = true
         }
     }
     

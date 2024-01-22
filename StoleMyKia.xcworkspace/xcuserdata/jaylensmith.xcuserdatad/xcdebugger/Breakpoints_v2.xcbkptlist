@@ -300,6 +300,83 @@
             endingLineNumber = "89"
             landmarkName = "verifyCode(_:phoneNumber:)"
             landmarkType = "7">
+            <Locations>
+               <Location
+                  uuid = "02B3AFB8-503B-483F-80D2-D61AC5A6AB14 - 8a5afa72a777a11d"
+                  shouldBeEnabled = "Yes"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "(7) suspend resume partial function for StoleMyKia.FirebaseAuthManager.verifyCode(_: Swift.String, phoneNumber: Swift.String) async throws -&gt; StoleMyKia.LoginStatus"
+                  moduleName = "StoleMyKia"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/jaylensmith/Desktop/Xcode/StoleMyKia/StoleMyKia/Network/FirebaseAuthManager.swift"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "89"
+                  endingLineNumber = "89"
+                  offsetFromSymbolStart = "3540">
+               </Location>
+               <Location
+                  uuid = "02B3AFB8-503B-483F-80D2-D61AC5A6AB14 - 50e1a2f1581865ea"
+                  shouldBeEnabled = "Yes"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "(10) suspend resume partial function for StoleMyKia.FirebaseAuthManager.verifyCode(_: Swift.String, phoneNumber: Swift.String) async throws -&gt; StoleMyKia.LoginStatus"
+                  moduleName = "StoleMyKia"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/jaylensmith/Desktop/Xcode/StoleMyKia/StoleMyKia/Network/FirebaseAuthManager.swift"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "89"
+                  endingLineNumber = "89"
+                  offsetFromSymbolStart = "684">
+               </Location>
+               <Location
+                  uuid = "02B3AFB8-503B-483F-80D2-D61AC5A6AB14 - 8ff3eb6b669a60cb"
+                  shouldBeEnabled = "Yes"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "(11) suspend resume partial function for StoleMyKia.FirebaseAuthManager.verifyCode(_: Swift.String, phoneNumber: Swift.String) async throws -&gt; StoleMyKia.LoginStatus"
+                  moduleName = "StoleMyKia"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/jaylensmith/Desktop/Xcode/StoleMyKia/StoleMyKia/Network/FirebaseAuthManager.swift"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "89"
+                  endingLineNumber = "89"
+                  offsetFromSymbolStart = "712">
+               </Location>
+               <Location
+                  uuid = "02B3AFB8-503B-483F-80D2-D61AC5A6AB14 - fa8535ed33045e28"
+                  shouldBeEnabled = "Yes"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "(12) suspend resume partial function for StoleMyKia.FirebaseAuthManager.verifyCode(_: Swift.String, phoneNumber: Swift.String) async throws -&gt; StoleMyKia.LoginStatus"
+                  moduleName = "StoleMyKia"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/jaylensmith/Desktop/Xcode/StoleMyKia/StoleMyKia/Network/FirebaseAuthManager.swift"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "89"
+                  endingLineNumber = "89"
+                  offsetFromSymbolStart = "740">
+               </Location>
+               <Location
+                  uuid = "02B3AFB8-503B-483F-80D2-D61AC5A6AB14 - 51977e67c1865d09"
+                  shouldBeEnabled = "Yes"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "(13) suspend resume partial function for StoleMyKia.FirebaseAuthManager.verifyCode(_: Swift.String, phoneNumber: Swift.String) async throws -&gt; StoleMyKia.LoginStatus"
+                  moduleName = "StoleMyKia"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/jaylensmith/Desktop/Xcode/StoleMyKia/StoleMyKia/Network/FirebaseAuthManager.swift"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "89"
+                  endingLineNumber = "89"
+                  offsetFromSymbolStart = "736">
+               </Location>
+            </Locations>
          </BreakpointContent>
       </BreakpointProxy>
    </Breakpoints>

@@ -138,6 +138,7 @@ struct SettingsView: View {
                 case .email:
                     EmailComposeView(composeMode: .feature)
                         .canSendEmail()
+                        .ignoresSafeArea()
                 case .privacyPolicy:
                     PrivacyPolicyView()
                 case .appIntroduction:

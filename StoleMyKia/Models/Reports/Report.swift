@@ -7,7 +7,7 @@
 
 import Foundation
 import UIKit
-import MapKit
+import CoreLocation
 import FirebaseAuth
 import SwiftUI
 
@@ -226,6 +226,34 @@ extension Report {
     
     var postDate: String {
         Date(timeIntervalSince1970: dt).formatted(.dateTime.month().day().year())
+    }
+    
+    var userMustVerifyLicense: Bool {
+        guard hasLicensePlate else { return false }
+        
+        if belongsToUser {
+            return false
+        }
+        
+        guard let userLocation = CLLocationManager().location, (location.location.distance(from: userLocation) * 0.000621371) <= 0.75 else {
+            return true
+        }
+        
+        return false
+    }
+    
+    var licensePlateString: String {
+        let licensePlate = self.vehicle.licensePlateString
+        
+        guard !(licensePlate.isEmpty) else {
+            return ""
+        }
+        
+        guard !(userMustVerifyLicense) else {
+            return ApplicationFormats.licenseFormat(licensePlate)
+        }
+        
+        return licensePlate
     }
     
     func vehicleImage(completion: @escaping (UIImage?)->Void) {

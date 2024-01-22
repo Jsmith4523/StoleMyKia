@@ -48,7 +48,7 @@ struct ReportCellView: View {
                                     if (report.hasVin || report.hasLicensePlate) {
                                         HStack {
                                             if report.hasLicensePlate {
-                                                Text(report.vehicle.licensePlateString)
+                                                Text("Plate: \(report.licensePlateString)")
                                             }
                                             if report.hasLicensePlateAndVin {
                                                 Divider()

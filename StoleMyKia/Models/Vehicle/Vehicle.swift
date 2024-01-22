@@ -104,6 +104,7 @@ extension Vehicle {
         guard let licensePlateData = licenseEncryptedData, let licensePlateString = licensePlateData.decode() else {
             return ""
         }
+        
         return licensePlateString.uppercased()
     }
     

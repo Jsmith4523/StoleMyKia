@@ -67,9 +67,9 @@ struct ReportComposeView: View {
                     Text("Vehicle Identification")
                 } footer: {
                     if composeVM.doesNotHaveVehicleIdentification {
-                        Text("There is no license plate and/or VIN avaliable.")
+                        Text("There is no license plate and/or VIN available.")
                     } else {
-                        Text("Enter the vehicles full license plate and/or VIN. Depending on the report type, at least one field is required. Including a VIN will require users to verify in order to 'Update' your report.")
+                        Text("Enter the vehicle's full license plate and/or VIN. Depending on the report type, at least one field is required.\n\nIncluding a VIN will require users to verify the VIN in order to update or contact you (if enabled) regarding your report. \n\nIncluding a license plate will only require users to verify based upon their distance from the location of this report.")
                     }
                 }
             }
