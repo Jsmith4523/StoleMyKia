@@ -65,8 +65,8 @@ class NotificationViewController: UIViewController, UNNotificationContentExtensi
         }
     }
     
-    private func displayCircleLabel(_ data: PayloadData) {
-        let label = CircleOverTextLabel(data: data)
+    private func displayCircleLabel(_ data: PayloadData, optionalText: String? = nil) {
+        let label = CircleOverTextLabel(data: data, optionalText: optionalText)
         
         mapView.addSubview(label)
         

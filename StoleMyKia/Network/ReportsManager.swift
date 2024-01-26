@@ -117,6 +117,35 @@ public class ReportManager {
         return report
     }
     
+    ///Retrieves a single report from Firestore Database.
+    ///- Parameters:
+    /// - id: The UUID value of a report.
+    /// - Returns: Report that matches the UUID value.
+    /// - Throws: Error if reports could not be retrieved or no longer exist.
+    func fetchSingleReport(_ id: String, errorIfUnavaliable: Bool = true) async throws -> Report? {
+        let document = try await collection
+            .document(id)
+            .getDocument()
+                
+        guard document.exists else {
+            if errorIfUnavaliable {
+                throw ReportManagerError.doesNotExist
+            } else {
+                return nil
+            }
+        }
+        
+        guard let data = document.data() else {
+            throw ReportManagerError.dataError
+        }
+        
+        guard let report = JSONSerialization.objectFromData(Report.self, jsonObject: data) else {
+            throw ReportManagerError.codableError
+        }
+                        
+        return report
+    }
+    
     /// Get any available updates for a original report
     /// - Parameter reportId: The UUID of the original report
     /// - Returns: An array of reports that are updates
@@ -212,6 +241,10 @@ public class ReportManager {
     /// - ImageId: The Image ID in Storage.
     /// - Throws: Error if either the report or it's vehicle image could not be deleted
     func delete(_ report: Report) async throws {
+        if !(report.updateId == nil) {
+            try await deleteUpdate(for: report)
+        }
+        
         try await StorageManager.shared.deleteVehicleImage(path: report.vehicleImagePath)
         try await self.collection
             .document(report.id.uuidString)
@@ -234,6 +267,16 @@ public class ReportManager {
         }
         
         return true
+    }
+    
+    private func deleteUpdate(for report: Report) async throws {
+        if let updateId = report.updateId {
+            try await collection
+                .document(report.role.associatedValue.uuidString)
+                .collection(FirebaseDatabasesPaths.reportUpdatesPath)
+                .document(updateId)
+                .delete()
+        }
     }
     
     

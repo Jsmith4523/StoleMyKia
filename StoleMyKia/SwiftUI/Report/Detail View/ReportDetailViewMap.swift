@@ -26,49 +26,50 @@ struct ReportDetailMapView: UIViewRepresentable {
         
         if report.discloseLocation {
             let circle = TimelineDiscloseCircle(center: report.location.coordinates, radius: report.role.discloseRadiusSize)
+            circle.report = report
             mapView.addOverlay(circle)
             mapView.setVisibleMapRect(circle.boundingMapRect, edgePadding: MKCircle.discloseLocationEdgePadding, animated: false)
         } else {
             let annotation = ReportAnnotation(report: report)
-       
             mapView.addAnnotation(annotation)
             mapView.setRegion(report.location.region, animated: true)
-
         }
         
         return mapView
     }
     
-    func updateUIView(_ uiView: MKMapView, context: Context) {}
-    
-    func makeCoordinator() -> SelectedReportDetailViewMapCoordinator {
-       SelectedReportDetailViewMapCoordinator()
+    func makeCoordinator() -> ReportDetailMapViewCoordinator {
+        ReportDetailMapViewCoordinator(reportType: report.reportType)
     }
+    
+    func updateUIView(_ uiView: MKMapView, context: Context) {}
     
     typealias UIViewType = MKMapView
     
-    final class SelectedReportDetailViewMapCoordinator: NSObject, MKMapViewDelegate {
+    final class ReportDetailMapViewCoordinator: NSObject, MKMapViewDelegate {
+        
+        private var reportType: ReportType
+        
+        init(reportType: ReportType) {
+            self.reportType = reportType
+        }
+        
         func mapView(_ mapView: MKMapView, viewFor annotation: MKAnnotation) -> MKAnnotationView? {
             if let annotation = annotation as? ReportAnnotation {
                 let annotationView = ReportTimelineAnnotationView(annotation: annotation)
                 return annotationView
             }
-            
             return nil
         }
         
         func mapView(_ mapView: MKMapView, rendererFor overlay: MKOverlay) -> MKOverlayRenderer {
             if let circleOverlay = overlay as? MKCircle {
                 let overlayRenderer = MKCircleRenderer(overlay: circleOverlay)
-                overlayRenderer.fillColor = MKCircle.discloseLocationFillColor
+                overlayRenderer.fillColor = reportType.annotationColor.withAlphaComponent(0.25)
                 return overlayRenderer
             }
             
             return MKOverlayRenderer()
-        }
-        
-        deinit {
-            print("Dead: SelectedReportDetailViewMapCoordinator")
         }
     }
 }

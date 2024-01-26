@@ -89,7 +89,7 @@ enum ReportType: String, CaseIterable, Hashable, Identifiable, Codable, Comparab
         case .attempt:
             return .orange
         case .breakIn:
-            return .systemOrange
+            return .orange
         case .incident:
             return .red
         }

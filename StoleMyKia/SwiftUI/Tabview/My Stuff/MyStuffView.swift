@@ -30,7 +30,7 @@ struct MyStuffView: View {
             case .bookmarks:
                 return "bookmark"
             case.reports:
-                return ApplicationTabViewSelection.feed.symbol
+                return .reportSymbolName
             }
         }
     }

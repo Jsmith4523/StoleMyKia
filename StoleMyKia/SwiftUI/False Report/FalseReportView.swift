@@ -107,7 +107,7 @@ struct FalseReportView: View {
         .alert("Thank you! Your complaint has been sent", isPresented: $presentSuccessAlert) {
             Button("OK") { dismiss() }
         } message: {
-            Text("Once received, we will review your submission and determine the best decision.")
+            Text("Once received, we will review your submission and take action on this report.")
         }
     }
     

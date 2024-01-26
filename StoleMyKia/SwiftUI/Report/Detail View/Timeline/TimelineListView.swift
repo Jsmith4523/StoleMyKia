@@ -41,7 +41,7 @@ fileprivate struct TimelineListCellView: View {
             VStack(alignment: .leading, spacing: 5) {
                 VStack(alignment: .leading) {
                     HStack(spacing: 0) {
-                        reportLabelsView(report: report)
+                        ReportLabelView(report: report)
                     }
                     Text(report.distinguishableDetails)
                         .font(.system(size: 14))

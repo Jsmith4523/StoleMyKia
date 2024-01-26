@@ -32,7 +32,7 @@ class NotificationViewController: UIViewController, UNNotificationContentExtensi
             
             attachment.url.stopAccessingSecurityScopedResource()
         } else {
-            guard let data = userInfo["data"] as? [String: Any], let urlString = data["imageURL"] as? String else {
+            guard let urlString = userInfo["imageURL"] as? String else {
                 DispatchQueue.main.async {
                     self.imageView.image = self.placeholderImage
                 }
@@ -56,6 +56,11 @@ class NotificationViewController: UIViewController, UNNotificationContentExtensi
             return
         }
         
+        if let image = getImage() {
+            self.imageView.image = image
+            return
+        }
+        
         URLSession.shared.dataTask(with: url) { [weak self] data, response, err in
             guard let data, (err == nil) else {
                 DispatchQueue.main.async {
@@ -73,8 +78,20 @@ class NotificationViewController: UIViewController, UNNotificationContentExtensi
             
             DispatchQueue.main.async {
                 self?.imageView.image = image
+                saveImage(imageData: data)
             }
         }
         .resume()
+        
+        func saveImage(imageData data: Data) {
+            UserDefaults.standard.setValue(data, forKey: urlString)
+        }
+        
+        func getImage() -> UIImage? {
+            guard let imageData = UserDefaults.standard.data(forKey: urlString), let image = UIImage(data: imageData) else {
+                return nil
+            }
+            return image
+        }
     }
 }

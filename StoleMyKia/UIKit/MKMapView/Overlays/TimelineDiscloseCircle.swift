@@ -11,7 +11,6 @@ import MapKit
 class TimelineDiscloseCircle: MKCircle {
     
     var report: Report!
-
     var distanceFromTapGesture: Int!
 }
 
@@ -22,6 +21,8 @@ extension TimelineDiscloseCircle {
     }
     
     var fillColor: UIColor {
+        guard let report else { return MKCircle.discloseLocationFillColor }
+        
         switch report.role.isInitial {
         case true:
             return report.reportType.annotationColor.withAlphaComponent(0.25)

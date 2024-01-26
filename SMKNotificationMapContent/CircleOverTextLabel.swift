@@ -10,10 +10,12 @@ import CoreLocation
 
 class CircleOverTextLabel: UILabel {
 
-    var data: PayloadData
+    private var optionalText: String?
+    private var data: PayloadData
     
-    init(data: PayloadData) {
+    init(data: PayloadData, optionalText: String? = nil) {
         self.data = data
+        self.optionalText = optionalText
         super.init(frame: .zero)
         self.configureTextView()
     }
@@ -22,7 +24,7 @@ class CircleOverTextLabel: UILabel {
         textAlignment = .center
         numberOfLines = 3
         font = .systemFont(ofSize: 14.5, weight: .bold)
-        text = "\(mileageDistanceFromUser(data.location) ?? "")"
+        text = "\(optionalText ?? mileageDistanceFromUser(data.location) ?? "")"
     }
     
     required init?(coder: NSCoder) {

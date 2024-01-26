@@ -14,6 +14,7 @@ struct AppUser: Codable {
     let uid: String
     let status: Status
     let phoneNumber: String
+    var cooldown: TimeInterval? = nil
     
     enum Status: String, Codable {
         case disabled = "Disabled"
@@ -37,6 +38,7 @@ struct AppUser: Codable {
         case uid = "uid"
         case status = "status"
         case phoneNumber = "phone_number"
+        case cooldown = "cooldown"
     }
     
     func encodeForUpload() throws -> [String: Any] {

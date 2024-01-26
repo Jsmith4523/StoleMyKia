@@ -38,8 +38,8 @@ struct ReportCellView: View {
                 HStack(alignment: .center) {
                     VStack(alignment: .leading, spacing: 20) {
                         VStack(alignment: .leading, spacing: 10) {
-                            VStack(alignment: .leading, spacing: 11) {
-                                ReportLabelView(report: report)
+                            VStack(alignment: .leading, spacing: 4) {
+                                reportLabel
                                 VStack(alignment: .leading, spacing: 8) {
                                     Text(report.vehicleDetails)
                                         .font(.system(size: 20).weight(.heavy))
@@ -101,6 +101,37 @@ struct ReportCellView: View {
         .multilineTextAlignment(.leading)
     }
     
+    private var reportLabel: some View {
+        HStack(spacing: 4) {
+            HStack(spacing: 4) {
+                if report.isFalseReport {
+                    Image.falseReportIcon
+                        
+                } else if report.role.isAnUpdate {
+                    Image.updateImageIcon
+                        .resizable()
+                        .scaledToFit()
+                        .frame(width: 20, height: 20)
+                }
+                Text(report.reportType.rawValue)
+            }
+            .padding(5)
+            .background(Color(uiColor: report.reportType.annotationColor).opacity(0.72))
+            .font(.system(size: 16).weight(.heavy))
+            .foregroundColor(.white)
+            .cornerRadius(10)
+            if report.hasBeenResolved {
+                reportResolvedLabel()
+            }
+            if report.discloseLocation {
+                reportDiscloseLocationLabel()
+            }
+            if report.belongsToUser {
+                reportCurrentUserLabel()
+            }
+        }
+    }
+    
     private func setBookmark() {
         UIImpactFeedbackGenerator(style: .medium).impactOccurred()
         Task {
@@ -138,7 +169,23 @@ struct ReportLabelView: View {
     
     var body: some View {
         HStack(spacing: 4) {
-            reportTypeLabelStyle(report: report)
+            HStack(spacing: 4) {
+                if report.isFalseReport {
+                    Image.falseReportIcon
+                        
+                } else if report.role.isAnUpdate {
+                    Image.updateImageIcon
+                        .resizable()
+                        .scaledToFit()
+                        .frame(width: 20, height: 20)
+                }
+                Text(report.reportType.rawValue)
+            }
+            .padding(5)
+            .background(Color(uiColor: report.reportType.annotationColor).opacity(0.72))
+            .font(.system(size: 16).weight(.heavy))
+            .foregroundColor(.white)
+            .cornerRadius(10)
             if report.hasBeenResolved {
                 reportResolvedLabel()
             }
@@ -153,24 +200,6 @@ struct ReportLabelView: View {
 }
 
 extension View  {
-    
-    func reportLabelsView(report: Report) -> some View {
-        HStack(spacing: 4) {
-            reportTypeLabelStyle(report: report)
-            if report.hasBeenResolved {
-                reportResolvedLabel()
-            }
-            if report.discloseLocation {
-                reportDiscloseLocationLabel()
-            }
-            if report.belongsToUser {
-                reportCurrentUserLabel()
-            }
-            Spacer()
-        }
-        .font(.system(size: 14))
-        .foregroundColor(.gray)
-    }
     
     @ViewBuilder
     func reportTypeLabelStyle(report: Report) -> some View {
@@ -229,7 +258,7 @@ private extension Image {
 
 struct ReportCellView_Previews: PreviewProvider {
     static var previews: some View {
-        ReportCellView(report: [Report].testReports().first!, imageMode: .thumbnail)
+        ReportCellView(report: [Report].testReports().first!, imageMode: .large)
             .environmentObject(ReportsViewModel())
             .environmentObject(UserViewModel())
     }

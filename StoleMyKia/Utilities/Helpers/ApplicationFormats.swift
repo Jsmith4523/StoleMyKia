@@ -55,7 +55,7 @@ class ApplicationFormats {
         
         let licenseArray = license.compactMap({$0})
         
-        for char in licenseArray[3...license.count-1] {
+        for char in licenseArray[abs(license.count / 2)...license.count-1] {
             str.append("\(char)")
         }
         return str

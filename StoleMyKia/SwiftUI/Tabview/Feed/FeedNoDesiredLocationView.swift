@@ -20,7 +20,7 @@ struct FeedNoDesiredLocationView: View {
                 VStack(spacing: 7) {
                     Text("Set Your Desired Location")
                         .font(.system(size: 19).weight(.heavy))
-                    Text("We've noticed that you do not have a desired location set. You can do so by pressing the icon on the top-right of this screen. This desired location is where you'll receive reports within that area.")
+                    Text("We've noticed that you do not have a desired location set. You can do so by pressing the icon on the top-right of this screen. Once set, any reports made within that area will appear here.")
                         .font(.system(size: 15.65))
                         .multilineTextAlignment(.center)
                 }

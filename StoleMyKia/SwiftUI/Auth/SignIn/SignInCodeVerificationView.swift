@@ -100,9 +100,10 @@ struct SignInCodeVerificationView: View {
         .disabled(isLoading)
         .alert(alertReason.title, isPresented: $alertErrorVerificationCode) {
             Button("OK") {}
-            if alertReason == .verificationError {
-                Button("Resend Code") { resendVerificationCode() }
-            }
+            //FIXME: Resending verification code does not work
+//            if alertReason == .verificationError {
+//                Button("Resend Code") { resendVerificationCode() }
+//            }
             Button("Contact Support") { isShowingEmailComposeView.toggle() }
                 .canSendEmail()
         } message: {

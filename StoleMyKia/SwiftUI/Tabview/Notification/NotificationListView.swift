@@ -23,7 +23,6 @@ struct NotificationListView: View {
                     .onAppear {
                         notificationVM.fetchMoreNotifications(after: notification)
                     }
-                Divider()
             }
         }
         .environmentObject(notificationVM)
@@ -54,11 +53,15 @@ fileprivate struct NotificationCellView: View {
     var body: some View {
         HStack {
             VStack(alignment: .leading, spacing: 7) {
-                HStack(alignment: .top) {
+                HStack {
                     VStack(alignment: .leading, spacing: 0) {
-                        HStack(spacing: 5) {
+                        VStack(alignment: .leading, spacing: 2) {
+                            if !(notification.isRead) {
+                                unreadLabel
+                            }
                             Text(notification.title)
                                 .font(.system(size: 16).weight(.bold))
+                                .lineLimit(1)
                         }
                         VStack {
                             Text(notification.bodyText)
@@ -68,18 +71,9 @@ fileprivate struct NotificationCellView: View {
                         }
                     }
                     .frame(maxHeight: .infinity, alignment: .top)
-                    Spacer()
-                    if notification.hasImage {
-                        imageView
-                    }
                 }
                 
                 HStack(alignment: .center, spacing: 5) {
-                    if !(notification.isRead) {
-                        Circle()
-                            .foregroundColor(.red)
-                            .frame(width: 8, height: 8)
-                    }
                     Image(systemName: notification.notificationType.symbol)
                         .resizable()
                         .scaledToFit()
@@ -90,11 +84,14 @@ fileprivate struct NotificationCellView: View {
                 }
                 .foregroundColor(.gray)
             }
-            Spacer()
+            .frame(maxWidth: .infinity)
+            if notification.hasImage {
+                imageView
+            }
         }
         .padding()
         .multilineTextAlignment(.leading)
-        .background(notification.isRead ? Color(uiColor: .systemBackground) : Color(uiColor: .secondarySystemBackground).opacity(0.35))
+        .background(notification.isRead ? Color(uiColor: .systemBackground) : Color(uiColor: .secondarySystemBackground).opacity(0.20))
         .contextMenu {
             Button("Delete", role: .destructive) {
                 notificationVM.deleteNotification(notification)
@@ -106,7 +103,7 @@ fileprivate struct NotificationCellView: View {
         Image(uiImage: vehicleImage ?? .vehiclePlaceholder)
             .resizable()
             .scaledToFill()
-            .frame(width: 82, height: 82)
+            .frame(width: 76, height: 76)
             .clipShape(RoundedRectangle(cornerRadius: 5))
             .redacted(reason: vehicleImage.isNil() ? .placeholder : [])
             .onAppear {
@@ -116,6 +113,12 @@ fileprivate struct NotificationCellView: View {
                 RoundedRectangle(cornerRadius: 5)
                     .stroke(Color.gray.opacity(0.2), lineWidth: 1)
             }
+    }
+    
+    private var unreadLabel: some View {
+        Text(notification.notificationType.unreadText)
+            .font(.system(size: 14).weight(.bold))
+            .foregroundColor(.red)
     }
     
     func getVehicleImage() {
@@ -138,7 +141,7 @@ struct NotificationListView_Previews: PreviewProvider {
         ScrollView {
             VStack {
                 NotificationCellView(notification: .init(id: "", dt: Date.now.addingTimeInterval(-86400*9).epoch, title: "Incident: Light Gray 2017 Hyundai Elantra", body: "Someone has taken my car through the city of Los Santos. If someone has any eyes on it, lemme know please and thank you", notificationType: .report, isRead: false, reportId: UUID(), imageURL: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcT0GcDq4DYvOB86BmsxrxCp18U8T2ckXPBBqw&usqp=CAU"))
-                NotificationCellView(notification: .init(id: "", dt: Date.now.addingTimeInterval(-86400*9).epoch, title: "Incident: Light Gray 2017 Hyundai Elantra", body: "Someone has taken my car on a joyride through the city. Need help locating it please thank you", notificationType: .report, isRead: false, reportId: UUID(), imageURL: nil))
+                NotificationCellView(notification: .init(id: "", dt: Date.now.addingTimeInterval(-86400*9).epoch, title: "Incident: Light Gray 2017 Hyundai Elantra", body: "Someone has taken my car on a joyride through the city. Need help locating it please thank you", notificationType: .update, isRead: false, reportId: UUID(), imageURL: nil))
                 NotificationCellView(notification: .init(id: "", dt: Date.now.addingTimeInterval(-86400*9).epoch, title: "Incident: Light Gray 2017 Hyundai Elantra", body: "Someone has taken my car on a joyride through the city. Need help locating it please thank you", notificationType: .report, isRead: false, reportId: UUID(), imageURL: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcT0GcDq4DYvOB86BmsxrxCp18U8T2ckXPBBqw&usqp=CAU"))
                 NotificationCellView(notification: .init(id: "", dt: Date.now.addingTimeInterval(-86400*9).epoch, title: "Incident: Light Gray 2017 Hyundai Elantra", body: "Someone has taken my car on a joyride through the city. Need help locating it please thank you", notificationType: .report, isRead: false, reportId: UUID(), imageURL: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcT0GcDq4DYvOB86BmsxrxCp18U8T2ckXPBBqw&usqp=CAU"))
             }

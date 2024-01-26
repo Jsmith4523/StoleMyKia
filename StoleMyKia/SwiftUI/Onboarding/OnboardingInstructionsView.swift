@@ -14,7 +14,7 @@ struct OnboardingInstructionsView: View {
     var body: some View {
         VStack {
             Color(uiColor: .systemBackground)
-                .frame(height: 50)
+                .frame(height: 20)
             ScrollView {
                 VStack(spacing: 75) {
                     VStack {
@@ -25,8 +25,8 @@ struct OnboardingInstructionsView: View {
                                 .font(.system(size: 30).weight(.heavy))
                             VStack(spacing: 30) {
                                 titleBodyLabel("Reports", body: "You can include essential information about your report, such as its type, details, vehicle information (license number, VIN, etc.), location, and more.", symbol: String.reportSymbolName)
-                                titleBodyLabel("Notifications", body: "When posting a report or update, users subscribed to the report type within your device's current location will receive notifications, and vice versa. \(UIApplication.appName ?? "The application") may use location services in order to tailor notifications on reports that are made less than two mile of your desired and current location. These notifications will only override certain device mute settings.", symbol: "antenna.radiowaves.left.and.right")
                                 titleBodyLabel("Updates", body: "You'll receive notifications if someone updates an initial report you uploaded. An update may include information such as the incident type, details, location, and more.", symbol: String.updateSymbolName)
+                                titleBodyLabel("Notifications", body: "You'll receive notifications regarding updates to reports you've uploaded. You can also customize what push notifications you would like to receive regarding reports happening in your desired location.", symbol: "antenna.radiowaves.left.and.right")
                                 titleBodyLabel("Timeline Map", body: "The map graphically displays location information about the initial report and any associated updates (if available).", symbol: "map")
                                 titleBodyLabel("Critical Alerts", body: "Critical alerts are only sent when updates are made to your initial report. If enabled, this setting overrides focus modes and other mute settings.", symbol: "exclamationmark.triangle.fill", symbolForegroundColor: .red)
                             }

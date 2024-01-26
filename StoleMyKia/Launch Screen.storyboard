@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="22505" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" launchScreen="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="01J-lp-oVM">
-    <device id="retina4_0" orientation="portrait" appearance="dark"/>
+    <device id="retina4_0" orientation="portrait" appearance="light"/>
     <dependencies>
         <deployment identifier="iOS"/>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="22504"/>
@@ -16,20 +16,29 @@
                         <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="car.fill" catalog="system" translatesAutoresizingMaskIntoConstraints="NO" id="kf0-ix-2D8">
-                                <rect key="frame" x="102.5" y="227.5" width="115" height="112.5"/>
+                            <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="app-icon" translatesAutoresizingMaskIntoConstraints="NO" id="kf0-ix-2D8">
+                                <rect key="frame" x="97.5" y="144" width="125" height="125"/>
                                 <color key="tintColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                 <constraints>
-                                    <constraint firstAttribute="height" constant="115" id="5KI-55-SAi"/>
-                                    <constraint firstAttribute="width" constant="115" id="lKT-iK-rEC"/>
+                                    <constraint firstAttribute="height" constant="125" id="5KI-55-SAi"/>
+                                    <constraint firstAttribute="width" constant="125" id="lKT-iK-rEC"/>
                                 </constraints>
                             </imageView>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="StoleMyKia" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="cfa-zd-ZgK">
+                                <rect key="frame" x="45" y="279" width="230" height="44.5"/>
+                                <fontDescription key="fontDescription" type="boldSystem" pointSize="37"/>
+                                <color key="textColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                <nil key="highlightedColor"/>
+                            </label>
                         </subviews>
                         <viewLayoutGuide key="safeArea" id="Bcu-3y-fUS"/>
                         <color key="backgroundColor" red="0.61960784310000006" green="0.0" blue="0.36470588240000001" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                         <constraints>
-                            <constraint firstItem="kf0-ix-2D8" firstAttribute="centerY" secondItem="Ze5-6b-2t3" secondAttribute="centerY" id="6Im-YA-v3H"/>
+                            <constraint firstItem="kf0-ix-2D8" firstAttribute="centerY" secondItem="Ze5-6b-2t3" secondAttribute="centerY" constant="-77.5" id="6Im-YA-v3H"/>
+                            <constraint firstItem="cfa-zd-ZgK" firstAttribute="centerX" secondItem="Ze5-6b-2t3" secondAttribute="centerX" id="Yn6-uo-DLC"/>
                             <constraint firstItem="kf0-ix-2D8" firstAttribute="centerX" secondItem="Ze5-6b-2t3" secondAttribute="centerX" id="ct8-R5-Bim"/>
+                            <constraint firstItem="cfa-zd-ZgK" firstAttribute="leading" secondItem="Bcu-3y-fUS" secondAttribute="leading" constant="45" id="uA1-4y-b3H"/>
+                            <constraint firstItem="cfa-zd-ZgK" firstAttribute="top" secondItem="kf0-ix-2D8" secondAttribute="bottom" constant="10" id="wkb-4n-fle"/>
                         </constraints>
                     </view>
                 </viewController>
@@ -39,6 +48,6 @@
         </scene>
     </scenes>
     <resources>
-        <image name="car.fill" catalog="system" width="128" height="95"/>
+        <image name="app-icon" width="625" height="625"/>
     </resources>
 </document>

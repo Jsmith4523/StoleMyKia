@@ -28,7 +28,7 @@ enum ApplicationTabViewSelection {
     var symbol: String {
         switch self {
         case .feed:
-            return .reportSymbolName
+            return "house"
         case .notification:
             return "bell"
         case .myStuff:
@@ -99,5 +99,6 @@ struct ApplicationTabView_Previews: PreviewProvider {
         ApplicationTabView()
             .environmentObject(ReportsViewModel())
             .environmentObject(UserViewModel())
+            .environmentObject(FirebaseAuthViewModel())
     }
 }

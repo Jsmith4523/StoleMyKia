@@ -231,15 +231,29 @@ extension Report {
     var userMustVerifyLicense: Bool {
         guard hasLicensePlate else { return false }
         
-        if belongsToUser {
+        //Even if the report is an update that was made by the logged in firebase user
+        //We're enabling verification!
+        if role.role == .update {
+            return true
+        } else if belongsToUser {
             return false
-        }
-        
-        guard let userLocation = CLLocationManager().location, (location.location.distance(from: userLocation) * 0.000621371) <= 0.75 else {
+        } else {
             return true
         }
+    }
+    
+    var userMustVerifyVin: Bool {
+        guard hasVin else { return false }
         
-        return false
+        //Even if the report is an update that was made by the logged in firebase user
+        //We're enabling verification!
+        if role.role == .update {
+            return true
+        } else if belongsToUser {
+            return false
+        } else {
+            return true
+        }
     }
     
     var licensePlateString: String {

@@ -79,7 +79,7 @@ final class ReportsViewModel: NSObject, ObservableObject {
         try await ReportManager.manager.upload(report, image: image)
     }
     
-    /// Update a original report
+    /// Adds update to a report that is either an initial or update report.
     /// - Parameters:
     ///   - originalReportId: The UUID of the original report
     ///   - update: The Update object
@@ -89,6 +89,17 @@ final class ReportsViewModel: NSObject, ObservableObject {
         //Can perform actions of updating a report
         try await FirebaseAuthManager.manager.userCanPerformAction()
         try await FirebaseAuthManager.manager.userCanPerformAction(uid: originalReport.uid)
+        
+        //If the report id and it's role id do not match
+        //Then we should check if the initial report can perform actions such as updates and such
+        if (originalReport.id != originalReport.role.associatedValue) {
+            guard let initialReport = try await ReportManager.manager.fetchSingleReport(originalReport.role.associatedValue) else {
+                throw ReportManagerError.error
+            }
+            
+            //Checking if the user who created the initial report can receive updates.
+            try await FirebaseAuthManager.manager.userCanPerformAction(uid: initialReport.uid)
+        }
         
         guard let uid = Auth.auth().currentUser?.uid else {
             throw ReportManagerError.error

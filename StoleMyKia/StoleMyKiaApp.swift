@@ -39,6 +39,9 @@ struct StoleMyKiaApp: App {
                 }
             }
             .accentColor(Color(uiColor: .label))
+            .onAppear {
+                print(FieldValue.serverTimestamp() as? TimeInterval)
+            }
         }
     }
 }

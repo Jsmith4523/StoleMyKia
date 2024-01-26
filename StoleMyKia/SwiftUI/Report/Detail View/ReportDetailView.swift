@@ -164,7 +164,7 @@ struct ReportDetailView: View {
                 Button("Cancel") {}
                 Button("Verify", action: verifyLicensePlate)
             } message: {
-                Text("This report includes a License Plate that must be verified. Please enter the full license plate (disregarding any special characters)")
+                Text("This report includes a License Plate that must be verified. Please enter the full license plate (Do not include any special characters)")
             }
             .alert("Verification Error", isPresented: $presentVinInvalidAlert) {
                 Button("OK") {}
@@ -455,16 +455,20 @@ struct ReportDetailView: View {
     
     private func performVerification() {
         if let onVerifiedOn {
-            if report.belongsToUser {
-                onVerifiedOn()
-            } else if isVerified {
-                onVerifiedOn()
-            } else if (report.userMustVerifyLicense && report.hasVin) {
+            if (report.userMustVerifyLicense && report.userMustVerifyVin) {
                 presentVerificationMultipleChoice.toggle()
-            } else if report.hasVin {
-                presentVinVerification()
+                
             } else if report.userMustVerifyLicense {
                 self.presentLicensePlateVerificationView.toggle()
+                
+            } else if report.userMustVerifyVin {
+                presentVinVerification()
+                
+            } else if report.belongsToUser {
+                onVerifiedOn()
+                
+            } else if isVerified {
+                onVerifiedOn()
             } else {
                 onVerifiedOn()
             }

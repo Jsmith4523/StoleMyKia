@@ -12,7 +12,11 @@ open class ImageCache {
     
     static let shared = ImageCache()
     
-    private var cache = NSCache<AnyObject, AnyObject>()
+    private lazy var cache: NSCache<AnyObject, AnyObject> = {
+        let cache = NSCache<AnyObject, AnyObject>()
+        cache.totalCostLimit = 1024 * 1024 * 100
+        return cache
+    }()
     
     private init() {
         listenForSignOut()
@@ -29,12 +33,16 @@ open class ImageCache {
             return
         }
         
+        self.downloadImage(with: url, completion: completion)
+    }
+    
+    private func downloadImage(with url: URL, completion: @escaping (UIImage?) -> Void) {
         URLSession.shared.getData(url) { [weak self] data in
             guard let data, let image = UIImage(data: data) else {
                 completion(nil)
                 return
             }
-            self?.cache.setObject(image, forKey: url.absoluteString as AnyObject)
+            self?.cache.setObject(image, forKey: url as AnyObject)
             completion(image)
         }
     }

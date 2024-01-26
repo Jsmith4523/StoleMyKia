@@ -24,9 +24,9 @@ struct MyStuffUserReportsEmptyView: View {
         var description: String {
             switch self {
             case .myReports:
-                return "Any reports and updates you submit will be displayed in this section."
+                return "Reports that you submit will appear here."
             case .bookmarks:
-                return "Reports and updates that you bookmark will appear here."
+                return "Reports that you bookmark will appear here."
             }
         }
     }
@@ -41,9 +41,9 @@ struct MyStuffUserReportsEmptyView: View {
                 Image(systemName: selection.symbol)
                     .resizable()
                     .scaledToFit()
-                    .frame(width: 30, height: 30)
+                    .frame(width: 40, height: 40)
                 Text(selection.description)
-                    .font(.system(size: 18))
+                    .font(.system(size: 20).weight(.bold))
             }
             Spacer()
         }
@@ -53,5 +53,5 @@ struct MyStuffUserReportsEmptyView: View {
 }
 
 #Preview {
-    MyStuffUserReportsEmptyView(selection: .bookmarks)
+    MyStuffUserReportsEmptyView(selection: .myReports)
 }

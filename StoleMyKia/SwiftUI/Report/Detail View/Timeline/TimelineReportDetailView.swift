@@ -33,12 +33,13 @@ struct TimelineReportDetailView: View {
                                         imageView
                                     }
                                     VStack(alignment: .leading, spacing: 2) {
-                                        reportLabelsView(report: report)
+                                        ReportLabelView(report: report)
                                         Text(report.vehicleDetails)
-                                            .font(.system(size: 19).weight(.heavy))
+                                            .font(.system(size: 17).weight(.bold))
                                             .lineLimit(2)
                                         Text(report.timeSinceString())
                                             .font(.system(size: 15))
+                                            .foregroundColor(.gray)
                                         Text(report.location.distanceFromUser)
                                             .font(.system(size: 15))
                                             .foregroundColor(.gray)
@@ -48,7 +49,7 @@ struct TimelineReportDetailView: View {
                                     if (report.hasVin || report.hasLicensePlate) {
                                         HStack {
                                             if report.hasLicensePlate {
-                                                Text(report.vehicle.licensePlateString)
+                                                Text("Plate: \(report.licensePlateString)")
                                             }
                                             if (report.hasLicensePlate && report.hasVin) {
                                                 Divider()
@@ -61,7 +62,7 @@ struct TimelineReportDetailView: View {
                                         .font(.system(size: 17).bold())
                                     }
                                     Text(report.distinguishableDetails)
-                                        .font(.system(size: 16))
+                                        .font(.system(size: 15))
                                 }
                             }
                             Spacer()
@@ -102,6 +103,7 @@ struct TimelineReportDetailView: View {
                 .environmentObject(reportsVM)
                 .environmentObject(userVM)
         }
+        .tint(Color(uiColor: .label))
     }
     
     var imageView: some View {
@@ -109,7 +111,7 @@ struct TimelineReportDetailView: View {
             .resizable()
             .scaledToFill()
             .frame(width: 100, height: 100)
-            .clipShape(RoundedRectangle(cornerRadius: 10))
+            .clipShape(RoundedRectangle(cornerRadius: 5))
             .redacted(reason: vehicleImage.isNil() ? .placeholder : [])
             .onAppear {
                 getVehicleImage()

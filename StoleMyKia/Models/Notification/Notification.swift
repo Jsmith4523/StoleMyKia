@@ -43,6 +43,17 @@ struct AppUserNotification: Identifiable, Decodable, Comparable {
                 return .falseReport
             }
         }
+        
+        var unreadText: String {
+            switch self {
+            case .report:
+                return "NEW"
+            case .update:
+                return "URGENT"
+            case .falseReport:
+                return "INFO"
+            }
+        }
     }
     
     //The id is applied through the firebase functions

@@ -167,7 +167,7 @@ extension AppDelegate {
     static func selectedViewController() -> UIViewController? {
         let keyWindow = (UIApplication.shared.connectedScenes.first as? UIWindowScene)?.keyWindow
         
-        //Cheking if the view has a view controller presented
+        //Checking if the view has a view controller presented
         //If not, immediately fall back to the root view controller
         guard let keyWindow, let viewController = keyWindow.rootViewController?.presentedViewController ?? keyWindow.rootViewController else {
             return nil
@@ -197,8 +197,15 @@ extension AppDelegate {
             let path = attachment.url.path()
             print(path)
             
-            guard manager.fileExists(atPath: path) else { return }
-            try? manager.removeItem(atPath: path)
+            if manager.fileExists(atPath: path) {
+                try? manager.removeItem(atPath: path)
+            } 
+            else if let imageURL = notification.request.content.userInfo["imageURL"] as? String {
+                if !(UserDefaults.standard.value(forKey: imageURL) == nil) {
+                    UserDefaults.standard.removeObject(forKey: imageURL)
+                    fatalError()
+                }
+            }
         }
     }
 }

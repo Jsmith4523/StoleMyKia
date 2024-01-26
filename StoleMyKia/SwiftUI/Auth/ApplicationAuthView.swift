@@ -29,14 +29,15 @@ struct ApplicationAuthView: View {
             ZStack {
                 VStack {
                     Spacer()
-                    VStack(spacing: 30) {
-                        Image(systemName: "car.fill")
+                        .frame(height: 100)
+                    VStack(spacing: 25) {
+                        Image("app-icon")
                             .resizable()
                             .scaledToFit()
-                            .frame(width: 115, height: 115)
-                            .foregroundColor(colorScheme == .light ? .brand : .white)
-                        Text("Help your community!")
-                            .font(.system(size: 19))
+                            .frame(width: 125, height: 125)
+                            .clipShape(RoundedRectangle(cornerRadius: 35))
+                        Text("Help Your Community!")
+                            .font(.system(size: 25).weight(.medium))
                             .foregroundColor(.gray)
                     }
                     Spacer()

@@ -44,7 +44,6 @@ class NotificationService: UNNotificationServiceExtension {
         
         func handleContentWithUpdate(_ bestAttemptContent: UNMutableNotificationContent) {
             guard let latitudeString = bestAttemptContent.userInfo["lat"] as? String, let longitudeString = bestAttemptContent.userInfo["long"] as? String, let latitude = Double(latitudeString), let longitude = Double(longitudeString) else {
-                contentHandler(bestAttemptContent)
                 return
             }
             
@@ -55,15 +54,12 @@ class NotificationService: UNNotificationServiceExtension {
             let (isNearby, distance) = location.isCloseToUser()
             
             if let distance, isNearby, distance <= 0.35 {
-                let vehicleDetails = bestAttemptContent.userInfo["vehicleDetails"]
-                bestAttemptContent.title = "🚨 \(bestAttemptContent.title)"
-                bestAttemptContent.body = "The \(vehicleDetails ?? "vehicle") has been reported near your current location! An update indicates that a report regarding your vehicle is \(String(format: "%.2f", distance)) mi. away from your current location."
+                bestAttemptContent.title = "🚨 \(bestAttemptContent.title) (\(String(format: "%.2f", distance)) mi. away)"
             }
         }
         
         func handleContentWithReport(_ bestAttemptContent: UNMutableNotificationContent) {
             guard let latitudeString = bestAttemptContent.userInfo["lat"] as? String, let longitudeString = bestAttemptContent.userInfo["long"] as? String, let latitude = Double(latitudeString), let longitude = Double(longitudeString) else {
-                contentHandler(bestAttemptContent)
                 return
             }
             
@@ -89,7 +85,7 @@ class NotificationService: UNNotificationServiceExtension {
     }
     
     private func downloadAndAttachImage(from url: URL, to content: UNMutableNotificationContent) {
-        let task = URLSession.shared.dataTask(with: url) { data, response, error in
+        URLSession.shared.dataTask(with: url) { data, response, error in
             if let data = data, let fileURL = self.saveAttachmentImageForPersistence(data: data) {
                 if let attachment = try? UNNotificationAttachment(identifier: "image", url: fileURL, options: nil) {
                     content.attachments = [attachment]
@@ -100,7 +96,7 @@ class NotificationService: UNNotificationServiceExtension {
                 contentHandler(content.mutableCopy() as! UNNotificationContent)
             }
         }
-        task.resume()
+        .resume()
     }
     
     private func saveAttachmentImageForPersistence(data: Data) -> URL? {

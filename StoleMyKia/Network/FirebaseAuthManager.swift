@@ -156,7 +156,9 @@ class FirebaseAuthManager {
     }
     
     func removeListener() {
-        self.accountDeletionListener?.remove()
+        if let accountDeletionListener {
+            accountDeletionListener.remove()
+        }
         self.accountDeletionListener = nil
     }
     
@@ -243,7 +245,7 @@ class FirebaseAuthManager {
         }
     }
     
-    ///Sets the current signed in user docu
+    ///Sets the current signed in Firebase user document status as an active user
     func setCurrentUserToActive() async throws {
         guard let currentUser = Auth.auth().currentUser else {
             throw FirebaseAuthManagerError.userSignedOut
@@ -277,6 +279,14 @@ class FirebaseAuthManager {
             .exists
         
         return status
+    }
+    
+    func setFiveMinuteCooldownForUser() throws {
+        guard let user = Auth.auth().currentUser else {
+            return
+        }
+        
+        let serverTimeStamp = 
     }
         
     private func notifyOfSignOut() {

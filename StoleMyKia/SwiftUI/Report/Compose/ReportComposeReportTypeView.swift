@@ -21,7 +21,7 @@ struct ReportComposeReportTypeView: View {
         NavigationStack {
             Form {
                 ForEach(ReportType.allCases.sorted(by: <)) { type in
-                    ReportComposeCellView(reportType: type, isSelected: composeVM.reportType == type)
+                    ReportComposeReportTypeCellView(reportType: type, isSelected: composeVM.reportType == type)
                         .onTapGesture {
                             self.composeVM.reportType = type
                         }
@@ -53,33 +53,33 @@ struct ReportComposeReportTypeView: View {
             }
         }
     }
+}
+
+struct ReportComposeReportTypeCellView: View {
     
-    private struct ReportComposeCellView: View {
-        
-        let reportType: ReportType
-        var isSelected: Bool
-        
-        var body: some View {
-            HStack {
-                Image(systemName: reportType.annotationImage)
-                    .resizable()
-                    .scaledToFit()
-                    .frame(width: 22, height: 22)
-                Spacer()
-                    .frame(width: 15)
-                VStack(alignment: .leading) {
-                    Text(reportType.rawValue)
-                        .font(.system(size: 16).bold())
-                    Text(reportType.description)
-                        .font(.system(size: 12))
-                }
-                Spacer()
-                if isSelected {
-                    Image.greenCheckMark
-                }
+    let reportType: ReportType
+    var isSelected: Bool
+    
+    var body: some View {
+        HStack {
+            Image(systemName: reportType.annotationImage)
+                .resizable()
+                .scaledToFit()
+                .frame(width: 22, height: 22)
+            Spacer()
+                .frame(width: 15)
+            VStack(alignment: .leading) {
+                Text(reportType.rawValue)
+                    .font(.system(size: 16).bold())
+                Text(reportType.description)
+                    .font(.system(size: 12))
             }
-            .padding(.vertical, 10)
+            Spacer()
+            if isSelected {
+                Image.greenCheckMark
+            }
         }
+        .padding(.vertical, 10)
     }
 }
 

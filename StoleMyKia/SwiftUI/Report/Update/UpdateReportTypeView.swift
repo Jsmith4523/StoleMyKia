@@ -24,7 +24,7 @@ struct UpdateReportTypeView: View {
         NavigationStack {
             Form {
                 ForEach(ReportType.updateCases.sorted(by: <)) { type in
-                    UpdateReportTypeCellView(reportType: type, isSelected: self.reportType == type)
+                    ReportComposeReportTypeCellView(reportType: type, isSelected: self.reportType == type)
                         .onTapGesture {
                             self.reportType = type
                         }
@@ -48,37 +48,6 @@ struct UpdateReportTypeView: View {
                             .environmentObject(reportsVM)
                     }
                 }
-            }
-        }
-    }
-    
-    private struct UpdateReportTypeCellView: View {
-        
-        let reportType: ReportType
-        let isSelected: Bool
-        
-        var body: some View {
-            HStack {
-                Image(systemName: reportType.annotationImage)
-                    .resizable()
-                    .scaledToFit()
-                    .frame(width: 20, height: 20)
-                Spacer()
-                    .frame(width: 20)
-                HStack {
-                    VStack(alignment: .leading) {
-                        Text(reportType.rawValue)
-                            .font(.system(size: 15).bold())
-                        Text(reportType.description)
-                            .font(.system(size: 14))
-                    }
-                    Spacer()
-                    if isSelected {
-                        Image.greenCheckMark
-                    }
-                }
-                .padding(8)
-
             }
         }
     }
