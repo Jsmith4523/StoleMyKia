@@ -39,7 +39,7 @@ class CircleOverTextLabel: UILabel {
         
         let distance = ((location.distance(from: userLocation)) * 0.000621371)
                 
-        return "\(String(format: "%.2f", distance)) mi. away"
+        return "\(String(format: distance == 0.0 ? "%.1f" : "%.2f", distance)) mi. away"
     }
     
     override func drawText(in rect: CGRect) {

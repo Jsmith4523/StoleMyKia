@@ -45,6 +45,11 @@ class FirebaseAuthManager {
         }
         
         do {
+            //Signing in before checking the user's account status in order to satisfy firestore rules.
+            //Of course if this fails, we can go ahead and sign the user back out.
+            let credential = PhoneAuthProvider.provider().credential(withVerificationID: verificationId, verificationCode: code)
+            try await Auth.auth().signIn(with: credential)
+            
             let userDocument = try await Firestore.firestore()
                 .collection(FirebaseDatabasesPaths.usersDatabasePath)
                 .whereField(AppUser.CodingKeys.phoneNumber.rawValue, isEqualTo: phoneNumber)
@@ -55,9 +60,6 @@ class FirebaseAuthManager {
             if let userDocument, userDocument.exists {
                 try await checkUserStatus(userDoc: userDocument)
             }
-            
-            let credential = PhoneAuthProvider.provider().credential(withVerificationID: verificationId, verificationCode: code)
-            try await Auth.auth().signIn(with: credential)
             
             if let userDocument, userDocument.exists {
                 let userData = try JSONSerialization.data(withJSONObject: userDocument.data())
@@ -83,6 +85,7 @@ class FirebaseAuthManager {
             return try await saveNewUser(phoneNumber: phoneNumber, userDocument: userDocument)
             
         } catch let error as FirebaseAuthManagerError {
+            try? Auth.auth().signOut()
             throw error
         } catch {
             try? Auth.auth().signOut()
@@ -286,7 +289,7 @@ class FirebaseAuthManager {
             return
         }
         
-        let serverTimeStamp = 
+        //let serverTimeStamp =
     }
         
     private func notifyOfSignOut() {

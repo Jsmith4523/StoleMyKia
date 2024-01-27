@@ -46,7 +46,8 @@ extension CLLocation {
     func calculateDistanceInMilesString(to destinationLocation: CLLocation) -> String {
         let meters = self.distance(from: destinationLocation)
         let miles = meters * 0.000621371 // Convert meters to miles
-        return "\(String(format: "%.1f", miles)) mi."
+        
+        return miles <= 0.1 ? "Nearby" : "\(String(format: "%.1f", miles)) mi."
     }
 }
 

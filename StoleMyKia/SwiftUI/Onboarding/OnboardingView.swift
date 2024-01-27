@@ -8,9 +8,7 @@
 import SwiftUI
 
 struct OnboardingView: View {
-    
-    @State private var alertSkippingOnboarding = false
-    
+        
     @EnvironmentObject var firebaseAuthVM: FirebaseAuthViewModel
     @StateObject private var onboardingVM = OnboardingViewModel()
     
@@ -25,9 +23,9 @@ struct OnboardingView: View {
                             .resizable()
                             .scaledToFit()
                             .frame(width: 55, height: 55)
-                        Text("Thanks for using \(UIApplication.appName ?? "the application")!")
+                        Text("Welcome to \(UIApplication.appName ?? "the application")!")
                             .font(.system(size: 25).weight(.heavy))
-                        Text("Before you begin, we want to ensure you're receiving the best experience when using the application.")
+                        Text("\(UIApplication.appName ?? "This application") is the quickest and fastest way to stay notified of vehicle thefts and incidents within your community! Press 'Get Started' to begin customizing your experience.")
                             .font(.system(size: 17))
                     }
                     Spacer()
@@ -37,7 +35,7 @@ struct OnboardingView: View {
                                 .environmentObject(firebaseAuthVM)
                                 .environmentObject(onboardingVM)
                         } label: {
-                            Text("Continue")
+                            Text("Get Started")
                                 .authButtonStyle()
                         }
                     }
@@ -50,12 +48,6 @@ struct OnboardingView: View {
             .navigationBarTitleDisplayMode(.inline)
             .hideNavigationTitle()
             .navigationBarBackButtonHidden(true)
-            .alert("Skip Onboarding?", isPresented: $alertSkippingOnboarding) {
-                Button("Skip") { }
-                Button("Cancel") { }
-            } message: {
-                Text("We want to ensure you're receiving the best experience with \(UIApplication.appName ?? "using the application"). Are you sure?")
-            }
         }
     }
 }
@@ -63,6 +55,6 @@ struct OnboardingView: View {
 struct OnboardingView_Previews: PreviewProvider {
     static var previews: some View {
         OnboardingView()
-           // .environmentObject(FirebaseAuthViewModel())
+           .environmentObject(FirebaseAuthViewModel())
     }
 }

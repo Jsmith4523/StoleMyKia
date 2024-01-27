@@ -80,7 +80,6 @@ struct FalseReportView: View {
                     } label: {
                         Image(systemName: "xmark")
                     }
-                    .disabled(falseReportType == nil)
                 }
                 ToolbarItem(placement: .navigationBarTrailing) {
                     if !(falseReportType == nil) {

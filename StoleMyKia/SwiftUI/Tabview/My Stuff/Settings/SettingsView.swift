@@ -60,7 +60,7 @@ struct SettingsView: View {
         }
     }
     
-    @State private var accountStatus = "Loading..."
+    @State private var accountStatus: String?
     
     @State private var alertErrorDeletingAccount = false
     @State private var isLoading = false
@@ -81,7 +81,7 @@ struct SettingsView: View {
             Form {
                 Section("Profile Details") {
                     LabeledContent("Phone Number", value: userVM.getAuthUserPhoneNumber() ?? "N/A")
-                    LabeledContent("Account Status", value: self.accountStatus)
+                    LabeledContent("Account Status", value: accountStatus ?? "Checking...")
                 }
                 
                 Section("About This App") {

@@ -15,7 +15,12 @@ final class SearchViewModel: NSObject, ObservableObject {
     
     @Published var reports = [Report]()
     
-    func fetchReportsForSearch() async {
+    func fetchReportsForSearch(override: Bool = false) async {
+        if override {
+            self.searchLoadStatus = .loading
+            self.reports = []
+        }
+        
         DispatchQueue.main.asyncAfter(deadline: .now() + 0.5) {
             Task {
                 do {

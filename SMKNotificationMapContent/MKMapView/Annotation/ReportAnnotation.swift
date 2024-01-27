@@ -32,6 +32,6 @@ final class ReportAnnotation: NSObject, MKAnnotation {
         let reportLocation = CLLocation(latitude: self.coordinate.latitude, longitude: self.coordinate.longitude)
         let distance = ((reportLocation.distance(from: userLocation)) * 0.000621371)
                 
-        return "\(String(format: "%.2f", distance)) mi. away from your current location"
+        return "\(String(format: distance == 0.0 ? "%.1f" : "%.2f", distance)) mi. away from your current location"
     }
 }

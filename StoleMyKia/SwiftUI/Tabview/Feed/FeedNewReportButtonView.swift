@@ -29,7 +29,7 @@ struct FeedNewReportButtonView: View {
                     Image(systemName: "plus")
                         .resizable()
                         .scaledToFit()
-                        .frame(width: 18, height: 18)
+                        .frame(width: 22, height: 22)
                         .padding()
                         .background(backgroundColor)
                         .foregroundColor(.white)
@@ -48,7 +48,7 @@ struct FeedNewReportButtonView: View {
             Button("OK") {}
             Button("Enable Location Services") { URL.openApplicationSettings() }
         } message: {
-            Text("In order to create and upload reports, \(UIApplication.appName ?? "This application") requires the use of your device's location services. You can enable them by pressing 'Enable Location Services', or going to the 'Settings' app > '\(UIApplication.appName ?? "This application")' > 'Location Services'.")
+            Text("\(UIApplication.appName ?? "This application") requires the use of your device's location services in order to create a report. You can enable them by pressing 'Enable Location Services', or going to the 'Settings' app > '\(UIApplication.appName ?? "This application")' > 'Location Services'.")
         }
     }
     

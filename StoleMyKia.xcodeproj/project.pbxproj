@@ -610,6 +610,7 @@
 		2450A7162B467EAF003D64FF /* Misc */ = {
 			isa = PBXGroup;
 			children = (
+				24BFA1852A8338580049F306 /* ErrorView.swift */,
 				2450A7172B467EDB003D64FF /* CustomTabViewPicker.swift */,
 			);
 			path = Misc;
@@ -837,9 +838,8 @@
 		24CC5ECB2A745DE70078C921 /* SwiftUI */ = {
 			isa = PBXGroup;
 			children = (
-				2450A7162B467EAF003D64FF /* Misc */,
-				24BFA1852A8338580049F306 /* ErrorView.swift */,
 				24CC5F102A745DE70078C921 /* ApplicationRootView.swift */,
+				2450A7162B467EAF003D64FF /* Misc */,
 				244CE7892AE04B4200BC594E /* Onboarding */,
 				24CC5F542A75B8C20078C921 /* False Report */,
 				24CC5ECC2A745DE70078C921 /* Auth */,

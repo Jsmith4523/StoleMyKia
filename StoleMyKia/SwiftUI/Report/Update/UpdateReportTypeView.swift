@@ -30,7 +30,7 @@ struct UpdateReportTypeView: View {
                         }
                 }
             }
-            .navigationTitle("Update Report Type")
+            .navigationTitle("Update Type")
             .navigationBarTitleDisplayMode(.inline)
             .onChange(of: reportType) { _ in
                 UIImpactFeedbackGenerator(style: .medium).impactOccurred()

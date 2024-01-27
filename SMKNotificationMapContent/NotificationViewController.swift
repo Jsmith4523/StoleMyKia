@@ -86,6 +86,7 @@ extension NotificationViewController: MKMapViewDelegate {
     func mapView(_ mapView: MKMapView, viewFor annotation: MKAnnotation) -> MKAnnotationView? {
         if let reportAnnotation = annotation as? ReportAnnotation {
             let annotationView = MKMarkerAnnotationView(annotation: annotation, reuseIdentifier: MKMapViewDefaultAnnotationViewReuseIdentifier)
+            annotationView.zPriority = .defaultSelected
             annotationView.glyphImage = UIImage(systemName: reportAnnotation.reportType.annotationImage)
             annotationView.markerTintColor = reportAnnotation.reportType.annotationColor
             annotationView.subtitleVisibility = .visible

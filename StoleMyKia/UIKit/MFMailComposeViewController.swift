@@ -63,6 +63,7 @@ enum ComposeMode: Identifiable {
             Device Model: \(UIDevice.current.model)
             Device OS Version Name: \(UIDevice.current.systemName)
             Device OS Version no.: \(UIDevice.current.systemVersion)
+            App Version no.: \(UIApplication.appVersion ?? "Unknown")
             """
         }
     }

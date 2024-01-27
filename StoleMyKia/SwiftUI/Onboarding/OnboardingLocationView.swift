@@ -21,18 +21,18 @@ struct OnboardingLocationView: View {
                     .resizable()
                     .scaledToFit()
                     .frame(width: 45, height: 45)
-                Text("Enable Location Services")
+                Text("Location Services")
                     .font(.system(size: 25).weight(.heavy))
-                Text("When enabling location services, your location will be used within reports, updates, and other setting configuration. Your location within reports and updates can be disclosed for your safety.")
+                Text("When enabling location services, your location will be utilized within reports, updates, and other setting configuration. Privacy features such as location disclosing allow you to disclose your current location within reports and updates you create.")
                     .multilineTextAlignment(.center)
             }
             Spacer()
             Group {
                 switch onboardingVM.userLocationAuthStatus {
                 case .authorized:
-                    Text("Location Services Enabled!")
+                    Text("Location Services Enabled")
                 case .disabled:
-                    Text("Location Services Disabled!")
+                    Text("Location Services Disabled")
                 case .notDetermined:
                     Text("Requesting...")
                 case .error:
@@ -47,7 +47,7 @@ struct OnboardingLocationView: View {
                     .environmentObject(firebaseAuthVM)
                     .environmentObject(onboardingVM)
             } label: {
-                Text("Continue")
+                Text("Next")
                     .authButtonStyle()
             }
             Spacer()

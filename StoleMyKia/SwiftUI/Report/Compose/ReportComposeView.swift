@@ -42,8 +42,18 @@ struct ReportComposeView: View {
             }
             
             Section {
-                Toggle("Hide Location", isOn: $composeVM.discloseLocation)
-                Toggle("Allow For Updates", isOn: $composeVM.allowsForUpdates)
+                Button("Description") {
+                    composeVM.isShowingReportDescriptionView.toggle()
+                }
+            } header: {
+                Text("Description")
+            } footer: {
+                Text("Please tell us more information about the vehicle you're reporting and the situation you're currently in.")
+            }
+            
+            Section {
+                Toggle("Disclose Location", isOn: $composeVM.discloseLocation)
+                Toggle("Updates", isOn: $composeVM.allowsForUpdates)
                 Toggle("Contact Me", isOn: $composeVM.allowsForContact)
             } header: {
                 Text("Options")
@@ -56,7 +66,7 @@ struct ReportComposeView: View {
                         .disabled(composeVM.reportType.requiresLicensePlateInformation)
                         .tint(.blue)
                     if !composeVM.doesNotHaveVehicleIdentification {
-                        TextField("License Plate", text: $composeVM.licensePlate)
+                        TextField("License Plate No.", text: $composeVM.licensePlate)
                             .keyboardType(.alphabet)
                             .submitLabel(.done)
                         TextField("VIN", text: $composeVM.vin)
@@ -69,19 +79,9 @@ struct ReportComposeView: View {
                     if composeVM.doesNotHaveVehicleIdentification {
                         Text("There is no license plate and/or VIN available.")
                     } else {
-                        Text("If available, please enter the vehicle's full license plate and/or VIN. Depending on the report type, at least one field is required. Do not include any special characters.")
+                        Text("If available, please enter the vehicle's full license plate no. and/or VIN. Depending on the report type, at least one field is required. Do not include any special characters.\n\nThe included license plate no. and/or VIN is used for verification purposes for actions such as updating your report and/or phone contacting (If enabled).")
                     }
                 }
-            }
-            
-            Section {
-                Button("Add Description") {
-                    composeVM.isShowingReportDescriptionView.toggle()
-                }
-            } header: {
-                Text("Description")
-            } footer: {
-                Text("Please describe your situation.")
             }
             
             Section {
@@ -94,7 +94,7 @@ struct ReportComposeView: View {
             } header: {
                 Text("Photo")
             } footer: {
-                Text("Please include an appropriate and identifiable image of the vehicle.")
+                Text("(Optional) Please include an appropriate and identifiable image of the vehicle.")
             }
             .disabled(!composeVM.vehicleImage.isNil())
         }

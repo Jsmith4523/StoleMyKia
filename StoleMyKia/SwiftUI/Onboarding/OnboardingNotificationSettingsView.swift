@@ -26,9 +26,9 @@ struct OnboardingNotificationSettingsView: View {
                     .resizable()
                     .scaledToFit()
                     .frame(width: 45, height: 45)
-                Text("Set Your Desired Location")
+                Text("Desired Location")
                     .font(.system(size: 25).weight(.heavy))
-                Text("Locate and set where you would like to receive location-based reports and notifications. You can modify what type of reports you would like to receive frequent notifications for.")
+                Text("Stay up-to-date with reports happening within your neighborhood or city. Once you have a location, you can customize what report type you would like to notified through in-app and push notifications. Press 'Configure' to get started..")
                     .font(.system(size: 17))
             }
             Spacer()
@@ -46,7 +46,7 @@ struct OnboardingNotificationSettingsView: View {
                             dismissOnboarding()
                         }
                 } label: {
-                    Text("Continue")
+                    Text("Next")
                         .authButtonStyle(background: .blue)
                 }
             }
@@ -56,7 +56,7 @@ struct OnboardingNotificationSettingsView: View {
         .overlay {
             if isLoading {
                 FilmProgressView()
-                    .ignoresSafeArea()
+                    .frame(maxWidth: .infinity, maxHeight: .infinity)
             }
         }
         .multilineTextAlignment(.center)

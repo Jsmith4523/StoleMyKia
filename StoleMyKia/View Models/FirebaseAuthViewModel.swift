@@ -25,9 +25,10 @@ final class FirebaseAuthViewModel: NSObject, ObservableObject {
     
     override init() {
         super.init()
-        checkForDeviceID()
-        checkForCurrentUser()
-        beginListeningForSignOut()
+        //FIXME: One of these methods are causes preview's to crash when injecting the environment object
+        self.checkForDeviceID()
+        self.checkForCurrentUser()
+        self.beginListeningForSignOut()
     }
     
     func authWithPhoneNumber(_ phoneNumber: String) async throws {
@@ -41,7 +42,7 @@ final class FirebaseAuthViewModel: NSObject, ObservableObject {
             throw FirebaseAuthManager.FirebaseAuthManagerError.userError
         }
                 
-        prepareForSignIn(uid: user.uid, loginStatus: loginStatus)
+        self.prepareForSignIn(uid: user.uid, loginStatus: loginStatus)
     }
     
     /// Begin setting up the application after successful sign in.

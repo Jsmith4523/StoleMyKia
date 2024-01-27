@@ -32,7 +32,7 @@ struct UpdateReportView: View {
     @Binding var isPresented: Bool
     
     let originalReport: Report
-    
+        
     @State private var isShowingBeSafeView = false
     @State private var isShowingWarningView = false
     @State private var isUploading = false
@@ -88,12 +88,6 @@ struct UpdateReportView: View {
                             .foregroundColor(.gray)
                     }
                 }
-                HStack {
-                    Text("Report Details: \n\n\(originalReport.distinguishableDetails)")
-                        .font(.system(size: 17))
-                        .lineLimit(4)
-                        .foregroundColor(.gray)
-                }
             } header: {
                 Text("Vehicle Details")
             }
@@ -131,7 +125,7 @@ struct UpdateReportView: View {
             } header: {
                 Text("Description")
             } footer: {
-                Text("Describe your situation with the \(originalReport.vehicleDetails)")
+                Text("Please describe the current situation with the \(originalReport.vehicleDetails)")
             }
             
             Section {
@@ -142,7 +136,7 @@ struct UpdateReportView: View {
             } header: {
                 Text("Options")
             } footer: {
-                Text("Contacting is automatically disabled when the initial report is marked resolved or deleted. You can manually disable contacting within the detail screen of your update.")
+                Text("Contacting is automatically disabled when the initial report is marked resolved or deleted. You can also manually disable contacting.")
             }
         }
         .navigationTitle("Update Report")
@@ -159,7 +153,7 @@ struct UpdateReportView: View {
                     ProgressView()
                 } else {
                     Button("Update") {
-                        prepareForUpload()
+                        self.isShowingWarningView.toggle()
                     }
                     .disabled(isSatisfied)
                 }

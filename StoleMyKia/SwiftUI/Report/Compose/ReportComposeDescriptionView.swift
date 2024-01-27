@@ -36,7 +36,7 @@ struct ReportComposeDescriptionView: View {
                     TextEditor(text: $description)
                         .focused($presentKeyboard)
                     if description.isEmpty {
-                        Text("Please Tell Us What Happened...")
+                        Text("Please tell us more information about the vehicle you're reporting and the situation you're in.")
                             .font(.system(size: 17))
                             .foregroundColor(.gray)
                             .padding(7)

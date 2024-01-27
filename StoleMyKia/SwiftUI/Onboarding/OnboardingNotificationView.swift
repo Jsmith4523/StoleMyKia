@@ -23,7 +23,7 @@ struct OnboardingNotificationView: View {
                     .frame(width: 45, height: 45)
                 Text("Enable Notifications")
                     .font(.system(size: 25).weight(.heavy))
-                Text("When enabling notifications, you'll be receiving instant alerts about reports, updates, and more.")
+                Text("When enabling notifications, you'll be receiving device push notifications regarding reports, updates, and more.")
             }
             Spacer()
             Group {
@@ -46,7 +46,7 @@ struct OnboardingNotificationView: View {
                     .environmentObject(firebaseAuthVM)
                     .environmentObject(onboardingVM)
             } label: {
-                Text("Continue")
+                Text("Next")
                     .authButtonStyle()
             }
             Spacer()

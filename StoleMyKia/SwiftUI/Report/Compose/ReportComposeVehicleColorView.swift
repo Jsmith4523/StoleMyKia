@@ -46,7 +46,7 @@ struct ReportComposeVehicleColorView: View {
                 }
             Text(color.rawValue)
                 .font(.system(size: 20).bold())
-            Spacer()
+                .frame(maxWidth: .infinity, alignment: .leading)
             if composeVM.vehicleColor == color {
                 Image.greenCheckMark
             }

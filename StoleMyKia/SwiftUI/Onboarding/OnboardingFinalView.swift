@@ -36,13 +36,13 @@ struct OnboardingFinalView: View {
             Spacer()
                 .frame(height: 85)
             VStack(spacing: 10) {
-                Image(systemName: "book")
+                Image(systemName: "eyeglasses")
                     .resizable()
                     .scaledToFit()
                     .frame(width: 55, height: 55)
-                Text("Last Step")
+                Text("Final Step!")
                     .font(.system(size: 25).weight(.heavy))
-                Text("Before continuing, make sure to read over how to use the application safely and responsibly.")
+                Text("Please read over the ways you can use '\(UIApplication.appName ?? "this application") safely and responsibly.")
                     .font(.system(size: 17))
             }
             Spacer()

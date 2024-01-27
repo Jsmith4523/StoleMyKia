@@ -26,7 +26,7 @@ class AppDelegate: UIScene, UIApplicationDelegate {
                         
         UITabBar.appearance().barTintColor = .systemBackground
         UITabBar.appearance().shadowImage = nil
-        UINavigationBar.appearance().barTintColor = .systemBackground
+        //UINavigationBar.appearance().barTintColor = .systemBackground
 
         UNUserNotificationCenter.current().delegate = self
                         
@@ -195,7 +195,6 @@ extension AppDelegate {
             
             let manager = FileManager.default
             let path = attachment.url.path()
-            print(path)
             
             if manager.fileExists(atPath: path) {
                 try? manager.removeItem(atPath: path)
@@ -203,7 +202,6 @@ extension AppDelegate {
             else if let imageURL = notification.request.content.userInfo["imageURL"] as? String {
                 if !(UserDefaults.standard.value(forKey: imageURL) == nil) {
                     UserDefaults.standard.removeObject(forKey: imageURL)
-                    fatalError()
                 }
             }
         }

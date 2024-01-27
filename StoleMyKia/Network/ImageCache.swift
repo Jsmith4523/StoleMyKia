@@ -10,11 +10,12 @@ import UIKit
 
 open class ImageCache {
     
+    ///Shared instance
     static let shared = ImageCache()
     
     private lazy var cache: NSCache<AnyObject, AnyObject> = {
         let cache = NSCache<AnyObject, AnyObject>()
-        cache.totalCostLimit = 1024 * 1024 * 100
+        cache.countLimit = 150
         return cache
     }()
     
@@ -42,15 +43,13 @@ open class ImageCache {
                 completion(nil)
                 return
             }
-            self?.cache.setObject(image, forKey: url as AnyObject)
+            self?.cache.setObject(image as AnyObject, forKey: url.absoluteString as AnyObject)
             completion(image)
         }
     }
     
     func removeFromCache(_ urlString: String?) {
-        guard let urlString else {
-            return
-        }
+        guard let urlString else { return }
         cache.removeObject(forKey: urlString as AnyObject)
     }
     

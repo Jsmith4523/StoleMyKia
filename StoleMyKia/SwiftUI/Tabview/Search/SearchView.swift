@@ -23,20 +23,20 @@ struct SearchView: View {
                     VStack {
                         Spacer()
                         VStack(spacing: 25) {
-                            Image(systemName: ApplicationTabViewSelection.search.symbol)
-                                .resizable()
-                                .scaledToFit()
-                                .frame(width: 35, height: 35)
-                            Text("Start searching for reports or information you have regarding a vehicle.")
-                                .font(.system(size: 18))
-                                .foregroundColor(.gray)
+                            VStack {
+                                Text("Search")
+                                    .font(.system(size: 23).weight(.bold))
+                                Text("Search for information you have regarding a report or vehicle.")
+                                    .font(.system(size: 18))
+                                    .foregroundColor(.gray)
+                            }
+                            .padding()
                         }
                         .multilineTextAlignment(.center)
                         Spacer()
                     }
                 }
-                .padding()
-                NavigationLink("", isActive: $pushToResultsView) {
+                .navigationDestination(isPresented: $pushToResultsView) {
                     SearchResultsView()
                         .environmentObject(searchVM)
                         .environmentObject(reportsVM)

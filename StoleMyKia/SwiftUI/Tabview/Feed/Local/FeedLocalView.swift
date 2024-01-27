@@ -22,7 +22,7 @@ struct FeedLocalView: View {
             case .loading:
                 ReportsSkeletonLoadingListView()
             case .loaded:
-                FeedListView(reports: $reportsVM.localReports)
+                FeedListView(reports: $reportsVM.localReports, onDeleteCompletion: resetLocationReports)
             case .empty:
                 NoReportsAvaliableView()
             case .error:
@@ -36,6 +36,12 @@ struct FeedLocalView: View {
         }
         .task {
             await fetchLocalReports()
+        }
+    }
+    
+    private func resetLocationReports() {
+        Task {
+            await fetchLocalReports(override: true)
         }
     }
     

@@ -30,7 +30,7 @@ struct SignInCodeVerificationView: View {
             case .verificationError:
                 return "Ensure that your verification code is correct and try again. If this issue persist, contact support."
             case .userBanned:
-                return "Your account is permanently banned due to breaking one or more guidelines. If you think this is an error, please contact support."
+                return "Your account is permanently banned due to breaking one or more app guidelines. If you think this is an error, please contact support."
             case .userDisabled:
                 return "Your account is currently disabled. If you think this is an error, please contact support."
             }
@@ -133,7 +133,6 @@ struct SignInCodeVerificationView: View {
                 default:
                     alertReason = .verificationError
                 }
-                print(error)
                 alertErrorVerificationCode.toggle()
             }
             catch {
