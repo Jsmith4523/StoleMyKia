@@ -284,14 +284,6 @@ class FirebaseAuthManager {
         return status
     }
     
-    func setFiveMinuteCooldownForUser() throws {
-        guard let user = Auth.auth().currentUser else {
-            return
-        }
-        
-        //let serverTimeStamp =
-    }
-        
     private func notifyOfSignOut() {
         NotificationCenter.default.post(Notification.signOut)
     }

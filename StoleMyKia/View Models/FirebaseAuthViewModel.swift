@@ -179,6 +179,8 @@ final class FirebaseAuthViewModel: NSObject, ObservableObject {
     
     ///Deletes signed in users information (reports, device tokens, notifications, etc.)
     func permanentlyDeleteUser() async throws {
+        try await FirebaseUserManager.shared.checkCooldown()
+        
         guard let currentUser = Auth.auth().currentUser else {
             throw FirebaseAuthManager.FirebaseAuthManagerError.error
         }

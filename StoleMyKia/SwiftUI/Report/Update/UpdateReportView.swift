@@ -42,6 +42,7 @@ struct UpdateReportView: View {
     @State private var discloseLocation = false
     @State private var allowsForContact = false
     
+    @State private var alertUserInCooldown = false
     @State private var alertPresentLocationServicesDenied = false
     @State private var presentError = false
     
@@ -170,6 +171,11 @@ struct UpdateReportView: View {
         } message: {
             Text("Please check your location services settings and/or network connectivity and try again.")
         }
+        .alert("Please wait!", isPresented: $alertUserInCooldown) {
+            Button("OK") {}
+        } message: {
+            Text("You've recently uploaded a report. In our efforts to preventing spam, please wait a few minutes until you can update this report.")
+        }
         .sheet(isPresented: $isShowingLocationSearchView) {
             NearbyLocationSearchView(location: $location)
         }
@@ -219,6 +225,12 @@ struct UpdateReportView: View {
                     try await reportsVM.addUpdateToOriginalReport(originalReport: originalReport, report: report, vehicleImage: vehicleImage)
                     self.isPresented = false
                     UINotificationFeedbackGenerator().notificationOccurred(.success)
+                } catch let error as FirebaseUserManager.FirebaseUserManagerError {
+                    if error == .userInCooldown {
+                        UINotificationFeedbackGenerator().notificationOccurred(.warning)
+                        isUploading = false
+                        self.alertUserInCooldown.toggle()
+                    }
                 } catch {
                     isUploading = false
                     self.presentError.toggle()

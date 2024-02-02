@@ -17,8 +17,8 @@ enum NewReportError: String, Error {
     case detailIsEmpty = "Please enter details regarding your vehicle and the incident you are reporting"
 }
 
+@MainActor
 final class ReportComposeViewModel: NSObject, ObservableObject {
-    
     
     @Published var dismissView = false
     
@@ -72,9 +72,11 @@ final class ReportComposeViewModel: NSObject, ObservableObject {
     
     @Published var isShowingPhotoRemoveConfirmation = false
     @Published var isUploading = false
+    
     @Published var alertReason: NewReportError?
     @Published var alertErrorUploading = false
     @Published var alertSelectLocation = false
+    @Published var alertUserInCooldown = false
     
     var vehicleDescription: String {
         return "\(vehicleColor.rawValue) \(vehicleYear) \(vehicleMake.rawValue) \(vehicleModel.rawValue)"
@@ -141,12 +143,14 @@ final class ReportComposeViewModel: NSObject, ObservableObject {
                 report.allowsForUpdates = allowsForUpdates
                 report.allowsForContact = allowsForContact
                 
-                guard let _ = try? await ReportManager.manager.upload(report, image: vehicleImage) else {
-                    throw NewReportError.error
-                }
+                try await ReportManager.manager.upload(report, image: vehicleImage)
                 
                 isUploading = false
                 self.dismissView = true
+            } catch FirebaseUserManager.FirebaseUserManagerError.userInCooldown {
+                UINotificationFeedbackGenerator().notificationOccurred(.warning)
+                self.alertUserInCooldown.toggle()
+                self.isUploading = false
             } catch NewReportError.locationError {
                 self.isUploading = false
                 self.alertSelectLocation.toggle()

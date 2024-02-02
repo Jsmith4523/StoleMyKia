@@ -49,7 +49,6 @@ struct UserReportsView: View {
     }
         
     private func reportDeleted() {
-        self.reportsLoadStatus = .loading
         Task {
             await fetchUserReports()
         }

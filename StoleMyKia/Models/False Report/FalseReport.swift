@@ -21,11 +21,11 @@ enum FalseReportType: String, Identifiable, CaseIterable, Codable {
     var description: String {
         switch self {
         case .misinforming:
-            return "This report is misinforming. It does not contain information that offers any reasoning."
+            return "This report is misinforming. It does not contain information that offers any significant information."
         case .invalid:
             return "This report is invalid. It does not appear as a report and has no relevance."
         case .abusive:
-            return "This report contains abusive content such as extreme vulgar, trolling, and/or more offensive content."
+            return "This report contains abusive content such as extreme vulgar, trolling, and/or other offensive content."
         case .spam:
             return "This report is spam."
         }

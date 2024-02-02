@@ -37,8 +37,6 @@ class FalseReportManager {
         
         try await Firestore.firestore()
             .collection(FirebaseDatabasesPaths.falseReportsPath)
-            .document(falseReport.authorUid)
-            .collection(FirebaseDatabasesPaths.userOpenFalseReports)
             .document(falseReport.id.uuidString)
             .setData(data)
     }

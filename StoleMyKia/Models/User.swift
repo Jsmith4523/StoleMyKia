@@ -14,6 +14,7 @@ struct AppUser: Codable {
     let uid: String
     let status: Status
     let phoneNumber: String
+    ///Cooldown for making reports and updates
     var cooldown: TimeInterval? = nil
     
     enum Status: String, Codable {

@@ -34,17 +34,17 @@ final class TimelineMapViewModel: NSObject, ObservableObject {
     
     override init() {
         super.init()
-        setupMapViewForGesture()
+        //setupMapViewForGesture()
     }
     
-    private func setupMapViewForGesture() {
-        DispatchQueue.main.asyncAfter(deadline: .now() + 0.25) { [weak self] in
-            if let mapView = self?.mapView {
-                let tapGesture = UITapGestureRecognizer(target: self, action: #selector(self?.mapTapGestureRecognized(_:)))
-                mapView.addGestureRecognizer(tapGesture)
-            }
-        }
-    }
+//    private func setupMapViewForGesture() {
+//        DispatchQueue.main.asyncAfter(deadline: .now() + 0.25) { [weak self] in
+//            if let mapView = self?.mapView {
+//                let tapGesture = UITapGestureRecognizer(target: self, action: #selector(self?.mapTapGestureRecognized(_:)))
+//                mapView.addGestureRecognizer(tapGesture)
+//            }
+//        }
+//    }
     
     func getUpdatesForReport(_ id: UUID) async throws {
         self.reportId = id
@@ -205,7 +205,7 @@ extension TimelineMapViewModel: MKMapViewDelegate {
             }
             
             mapView.addOverlays(timelinePolylines, level: .aboveLabels)
-             
+            
             if let latestTimelineRect = timelinePolylines.latestTimelineRect() {
                 mapView.setVisibleMapRect(latestTimelineRect, edgePadding: TimelinePolyline.edgePadding, animated: false)
             } else {
@@ -218,42 +218,41 @@ extension TimelineMapViewModel: MKMapViewDelegate {
         }
     }
     
-    @objc
-    private func mapTapGestureRecognized(_ gesture: UITapGestureRecognizer) {
-        if let mapView {
-            let gestureLocation = gesture.location(in: mapView)
-            let coordinate = mapView.convert(gestureLocation, toCoordinateFrom: mapView)
-            
-            DispatchQueue.main.asyncAfter(deadline: .now() + 0.5) {
-                
-                var circleOverlays = [TimelineDiscloseCircle]()
-                
-                let tapLocation = CLLocation(latitude: coordinate.latitude, longitude: coordinate.longitude)
-                
-                guard (mapView.selectedAnnotations.isEmpty) else { return }
-                
-                for overlay in mapView.overlays {
-                    if let overlay = overlay as? TimelineDiscloseCircle {
-                        let distance = overlay.coordinate.location.distance(from: tapLocation)
-                        if distance <= overlay.radius {
-                            overlay.distanceFromTapGesture = Int(distance)
-                            circleOverlays.append(overlay)
-                        }
-                    }
-                }
-                
-                if (circleOverlays.count == 1) {
-                    if let firstCircle = circleOverlays.first {
-                        self.selectAnnotation(firstCircle.report)
-                    }
-                } else {
-                    if let bestCircle = circleOverlays.sorted(by: {$0.distanceFromTapGesture < $1.distanceFromTapGesture}).first {
-                        self.selectAnnotation(bestCircle.report)
-                    }
-                }
-            }
-        }
-    }
+    //    @objc
+    //    private func mapTapGestureRecognized(_ gesture: UITapGestureRecognizer) {
+    //        if let mapView {
+    //            let gestureLocation = gesture.location(in: mapView)
+    //            let coordinate = mapView.convert(gestureLocation, toCoordinateFrom: mapView)
+    //            
+    //            DispatchQueue.main.asyncAfter(deadline: .now() + 0.5) {
+    //                
+    //                var circleOverlays = [TimelineDiscloseCircle]()
+    //                
+    //                let tapLocation = CLLocation(latitude: coordinate.latitude, longitude: coordinate.longitude)
+    //                
+    //                guard (mapView.selectedAnnotations.isEmpty) else { return }
+    //                
+    //                for overlay in mapView.overlays {
+    //                    if let overlay = overlay as? TimelineDiscloseCircle {
+    //                        let distance = overlay.coordinate.location.distance(from: tapLocation)
+    //                        if distance <= overlay.radius {
+    //                            overlay.distanceFromTapGesture = Int(distance)
+    //                            circleOverlays.append(overlay)
+    //                        }
+    //                    }
+    //                }
+    //                
+    //                if (circleOverlays.count == 1) {
+    //                    if let firstCircle = circleOverlays.first {
+    //                        self.selectAnnotation(firstCircle.report)
+    //                    }
+    //                } else {
+    //                    if let bestCircle = circleOverlays.sorted(by: {$0.distanceFromTapGesture < $1.distanceFromTapGesture}).first {
+    //                        self.selectAnnotation(bestCircle.report)
+    //                    }
+    //                }
+    //            }
+    //        }
 }
 
 

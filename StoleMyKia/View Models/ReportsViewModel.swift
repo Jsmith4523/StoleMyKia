@@ -85,6 +85,9 @@ final class ReportsViewModel: NSObject, ObservableObject {
     ///   - update: The Update object
     func addUpdateToOriginalReport(originalReport: Report, report: Report, vehicleImage: UIImage? = nil) async throws {
         
+        //Checking if the user is in a active cooldown
+        try await FirebaseUserManager.shared.checkCooldown()
+        
         //We need to check if the logged in firebase user and the user who uploaded the initial report
         //Can perform actions of updating a report
         try await FirebaseAuthManager.manager.userCanPerformAction()

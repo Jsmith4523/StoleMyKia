@@ -8,6 +8,21 @@
 import SwiftUI
 
 struct SettingsView: View {
+    
+    enum AccountDeleteStatus {
+        case loading, disabled, enabled
+        
+        var title: String {
+            switch self {
+            case .loading:
+                return "Checking your account..."
+            case .disabled:
+                return "You are unable to delete your account at the moment. Please try again later."
+            case .enabled:
+                return "All of your information, reports, and bookmarks will be permanently deleted once approved. This is a permanent action and cannot be reversed. Continue at your own risk!"
+            }
+        }
+    }
             
     enum SettingsRoutes: Identifiable, CaseIterable {
         static let preferencesRoutes: [Self] = [.notifications]
@@ -60,12 +75,14 @@ struct SettingsView: View {
         }
     }
     
+    @State private var accountDeleteStatus: AccountDeleteStatus = .loading
     @State private var accountStatus: String?
     
     @State private var alertErrorDeletingAccount = false
     @State private var isLoading = false
     
     @State private var alertUserDeletingAccount = false
+    @State private var alertUserInCooldown = false
     
     @State private var isShowingBeSafeView = false
     @State private var isShowingNotificationSettingsView = false
@@ -120,12 +137,13 @@ struct SettingsView: View {
                         alertUserDeletingAccount.toggle()
                     } label: {
                         Label("Delete My Account", systemImage: "trash")
-                            .foregroundColor(.red)
+                            .foregroundColor(accountDeleteStatus == .enabled ? .red : .gray)
                     }
+                    .disabled(accountDeleteStatus != .enabled)
                 } header: {
                     Text("Permanent Actions")
                 } footer: {
-                    Text("All of your information will be permanently deleted once approved. This is a permanent action and cannot be reversed. Continue at your own risk!")
+                    Text(self.accountDeleteStatus.title)
                 }
             }
             .navigationTitle("Settings")
@@ -190,8 +208,14 @@ struct SettingsView: View {
         } message: {
             Text("An error occurred during the deletion process. Please try again.")
         }
+        .alert("Unable to delete your account", isPresented: $alertUserInCooldown) {
+            Button("OK") {}
+        } message: {
+            Text("You cannot delete your account whilst in a active cooldown. Please try again once the cooldown has ended.")
+        }
         .onAppear {
             getUserAccountStatus()
+            getUserCooldownStatus()
         }
     }
     
@@ -202,6 +226,17 @@ struct SettingsView: View {
         }
     }
     
+    private func getUserCooldownStatus() {
+        Task {
+            do {
+                try await FirebaseUserManager.shared.checkCooldown()
+                self.accountDeleteStatus = .enabled
+            } catch {
+                self.accountDeleteStatus = .disabled
+            }
+        }
+    }
+    
     private func deleteAccount() {
         isLoading = true
         Task {
@@ -209,7 +244,12 @@ struct SettingsView: View {
                 try await authVM.permanentlyDeleteUser()
                 dismiss()
                 isLoading = false
-            } catch {
+            } 
+            catch FirebaseUserManager.FirebaseUserManagerError.userInCooldown {
+                isLoading = false
+                
+            }
+            catch {
                 isLoading = false
                 alertErrorDeletingAccount = true
             }

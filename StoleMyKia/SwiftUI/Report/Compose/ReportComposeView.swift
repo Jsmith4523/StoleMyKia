@@ -166,6 +166,11 @@ struct ReportComposeView: View {
         } message: {
             Text("Remove Image?")
         }
+        .alert("Please wait!", isPresented: $composeVM.alertUserInCooldown) {
+            Button("OK") {}
+        } message: {
+            Text("You've recently uploaded a report. In our efforts to preventing spam, please wait a few minutes until you can upload this report.")
+        }
         .alert("Unable to upload", isPresented: $composeVM.alertErrorUploading) {
             Button("OK") {}
         } message: {

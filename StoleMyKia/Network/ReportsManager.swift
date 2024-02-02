@@ -213,9 +213,13 @@ public class ReportManager {
     /// - image: The optional image of a vehicle associated with a report and uploaded to Firebase Storage. nill by default.
     /// - Returns: The image url of the report if possibe.
     func upload(_ report: Report, image: UIImage? = nil) async throws {
+        //Checking if the user is in a active cooldown
+        try await FirebaseUserManager.shared.checkCooldown()
+        
         var report = report
         
         try await FirebaseAuthManager.manager.userCanPerformAction()
+        try await FirebaseUserManager.shared.setTenMinuteCooldown()
         
         if let image {
             //Saving the vehicle image to Firebase Storage...

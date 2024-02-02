@@ -22,6 +22,7 @@ class FirebaseUserManager {
         case dataError
         case codableError
         case contactNumberError
+        case userInCooldown
     }
     
     static let shared = FirebaseUserManager()
@@ -345,6 +346,51 @@ class FirebaseUserManager {
         }
         
         await UIApplication.shared.open(url)
+    }
+    
+    ///Set a cooldown for the signed in Firebase user.
+    func setTenMinuteCooldown() async throws {
+        guard let user = Auth.auth().currentUser else {
+            throw FirebaseUserManagerError.userError
+        }
+        
+        let userRef = Firestore.firestore()
+            .collection(FirebaseDatabasesPaths.usersDatabasePath)
+            .document(user.uid)
+        
+        //Ten minutes just in case these dumbass Kia boys think they're funny
+        /*NOTE: modifying the device time above the 10 minutes does in fact allow them to upload reports.
+         What happens is that even if they got far ahead doing so, it comes at a cost of them using other apps
+         and deleting their account
+         
+         If anyone bitches or complains about it, then so be it. Blame Kia and Hyundai that this app even exists!!!
+         */
+        let tenMinuteInterval = Date().addingTimeInterval(60 * 10).timeIntervalSince1970
+        try await userRef.setData([AppUser.CodingKeys.cooldown.rawValue: tenMinuteInterval], merge: true)
+    }
+    
+    ///Checks if the signed in Firebase User has an active cooldown. Throws a specific error if the cooldown is still active
+    func checkCooldown() async throws {
+        guard let user = Auth.auth().currentUser else {
+            throw FirebaseUserManagerError.userError
+        }
+        
+        let userRef = Firestore.firestore()
+            .collection(FirebaseDatabasesPaths.usersDatabasePath)
+            .document(user.uid)
+        
+        let userDoc = try await userRef
+            .getDocument(as: AppUser.self)
+        
+        guard let cooldownInterval = userDoc.cooldown else {
+            return
+        }
+        
+        let currentTimeInterval = Date().timeIntervalSince1970
+        
+        guard currentTimeInterval > cooldownInterval else {
+            throw FirebaseUserManagerError.userInCooldown
+        }
     }
         
     deinit {

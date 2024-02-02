@@ -34,6 +34,9 @@ struct NotificationRadiusMapView: UIViewRepresentable {
             let notificationCircleOverlay = MKCircle(center: location.coordinate, radius: location.radius)
             mapView.addOverlay(notificationCircleOverlay)
             mapView.setVisibleMapRect(notificationCircleOverlay.boundingMapRect, edgePadding: .init(top: 50, left: 50, bottom: 50, right: 50), animated: false)
+        } else if let userLocation = CLLocationManager.shared.usersCurrentLocation {
+            let region = MKCoordinateRegion(center: userLocation, span: .init(latitudeDelta: 0.05, longitudeDelta: 0.05))
+            mapView.setRegion(region, animated: false)
         }
         
         return mapView

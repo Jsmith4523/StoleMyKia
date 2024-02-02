@@ -457,5 +457,306 @@
             </Locations>
          </BreakpointContent>
       </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            uuid = "2669E97C-1B14-4E35-BAA6-5B083434A4E3"
+            shouldBeEnabled = "No"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "StoleMyKia/Network/FirebaseUserManager.swift"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "375"
+            endingLineNumber = "375"
+            landmarkName = "checkCooldown()"
+            landmarkType = "7">
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            uuid = "FE66FD3A-8001-4340-A62D-06AF02C9374C"
+            shouldBeEnabled = "No"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "StoleMyKia/Network/FirebaseUserManager.swift"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "380"
+            endingLineNumber = "380"
+            landmarkName = "checkCooldown()"
+            landmarkType = "7">
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            uuid = "EBF05A00-296A-4A3B-9126-36360EADA0B5"
+            shouldBeEnabled = "No"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "StoleMyKia/Network/FirebaseUserManager.swift"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "383"
+            endingLineNumber = "383"
+            landmarkName = "checkCooldown()"
+            landmarkType = "7">
+            <Locations>
+               <Location
+                  uuid = "EBF05A00-296A-4A3B-9126-36360EADA0B5 - 12073310edf72d2f"
+                  shouldBeEnabled = "Yes"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "(1) suspend resume partial function for StoleMyKia.FirebaseUserManager.checkCooldown() async throws -&gt; ()"
+                  moduleName = "StoleMyKia"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/jaylensmith/Desktop/Xcode/StoleMyKia/StoleMyKia/Network/FirebaseUserManager.swift"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "377"
+                  endingLineNumber = "377"
+                  offsetFromSymbolStart = "480">
+               </Location>
+               <Location
+                  uuid = "EBF05A00-296A-4A3B-9126-36360EADA0B5 - 209cae88f2a5cd05"
+                  shouldBeEnabled = "Yes"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "(2) await resume partial function for StoleMyKia.FirebaseUserManager.checkCooldown() async throws -&gt; ()"
+                  moduleName = "StoleMyKia"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/jaylensmith/Desktop/Xcode/StoleMyKia/StoleMyKia/Network/FirebaseUserManager.swift"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "377"
+                  endingLineNumber = "377"
+                  offsetFromSymbolStart = "36">
+               </Location>
+               <Location
+                  uuid = "EBF05A00-296A-4A3B-9126-36360EADA0B5 - d7c9f6c846566d2d"
+                  shouldBeEnabled = "Yes"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "(3) suspend resume partial function for StoleMyKia.FirebaseUserManager.checkCooldown() async throws -&gt; ()"
+                  moduleName = "StoleMyKia"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/jaylensmith/Desktop/Xcode/StoleMyKia/StoleMyKia/Network/FirebaseUserManager.swift"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "377"
+                  endingLineNumber = "377"
+                  offsetFromSymbolStart = "76">
+               </Location>
+               <Location
+                  uuid = "EBF05A00-296A-4A3B-9126-36360EADA0B5 - 7aa957546a990e15"
+                  shouldBeEnabled = "Yes"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "(4) suspend resume partial function for StoleMyKia.FirebaseUserManager.checkCooldown() async throws -&gt; ()"
+                  moduleName = "StoleMyKia"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/jaylensmith/Desktop/Xcode/StoleMyKia/StoleMyKia/Network/FirebaseUserManager.swift"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "368"
+                  endingLineNumber = "368"
+                  offsetFromSymbolStart = "44">
+               </Location>
+               <Location
+                  uuid = "EBF05A00-296A-4A3B-9126-36360EADA0B5 - 7aa957546a990d2c"
+                  shouldBeEnabled = "Yes"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "(4) suspend resume partial function for StoleMyKia.FirebaseUserManager.checkCooldown() async throws -&gt; ()"
+                  moduleName = "StoleMyKia"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/jaylensmith/Desktop/Xcode/StoleMyKia/StoleMyKia/Network/FirebaseUserManager.swift"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "377"
+                  endingLineNumber = "377"
+                  offsetFromSymbolStart = "68">
+               </Location>
+            </Locations>
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            uuid = "67540B51-1F63-45A7-AE83-44858B6C8582"
+            shouldBeEnabled = "No"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "StoleMyKia/Network/FirebaseUserManager.swift"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "386"
+            endingLineNumber = "386"
+            landmarkName = "checkCooldown()"
+            landmarkType = "7">
+            <Locations>
+               <Location
+                  uuid = "67540B51-1F63-45A7-AE83-44858B6C8582 - d7c9f6c846566d88"
+                  shouldBeEnabled = "Yes"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "(3) suspend resume partial function for StoleMyKia.FirebaseUserManager.checkCooldown() async throws -&gt; ()"
+                  moduleName = "StoleMyKia"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/jaylensmith/Desktop/Xcode/StoleMyKia/StoleMyKia/Network/FirebaseUserManager.swift"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "380"
+                  endingLineNumber = "380"
+                  offsetFromSymbolStart = "724">
+               </Location>
+               <Location
+                  uuid = "67540B51-1F63-45A7-AE83-44858B6C8582 - d7c9f6c846566c42"
+                  shouldBeEnabled = "Yes"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "(3) suspend resume partial function for StoleMyKia.FirebaseUserManager.checkCooldown() async throws -&gt; ()"
+                  moduleName = "StoleMyKia"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/jaylensmith/Desktop/Xcode/StoleMyKia/StoleMyKia/Network/FirebaseUserManager.swift"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "386"
+                  endingLineNumber = "386"
+                  offsetFromSymbolStart = "724">
+               </Location>
+            </Locations>
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            uuid = "E394137E-B13B-4D7B-A3DC-55E00BC02853"
+            shouldBeEnabled = "No"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "StoleMyKia/Network/FirebaseUserManager.swift"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "389"
+            endingLineNumber = "389"
+            landmarkName = "checkCooldown()"
+            landmarkType = "7">
+            <Locations>
+               <Location
+                  uuid = "E394137E-B13B-4D7B-A3DC-55E00BC02853 - d7c9f6c846566de7"
+                  shouldBeEnabled = "Yes"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "(3) suspend resume partial function for StoleMyKia.FirebaseUserManager.checkCooldown() async throws -&gt; ()"
+                  moduleName = "StoleMyKia"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/jaylensmith/Desktop/Xcode/StoleMyKia/StoleMyKia/Network/FirebaseUserManager.swift"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "383"
+                  endingLineNumber = "383"
+                  offsetFromSymbolStart = "260">
+               </Location>
+               <Location
+                  uuid = "E394137E-B13B-4D7B-A3DC-55E00BC02853 - d7c9f6c846566ca1"
+                  shouldBeEnabled = "Yes"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "(3) suspend resume partial function for StoleMyKia.FirebaseUserManager.checkCooldown() async throws -&gt; ()"
+                  moduleName = "StoleMyKia"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/jaylensmith/Desktop/Xcode/StoleMyKia/StoleMyKia/Network/FirebaseUserManager.swift"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "389"
+                  endingLineNumber = "389"
+                  offsetFromSymbolStart = "260">
+               </Location>
+            </Locations>
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            uuid = "993915B3-AEF8-4F8A-AB8A-79163A081135"
+            shouldBeEnabled = "No"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "StoleMyKia/Network/FirebaseUserManager.swift"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "392"
+            endingLineNumber = "392"
+            landmarkName = "checkCooldown()"
+            landmarkType = "7">
+            <Locations>
+               <Location
+                  uuid = "993915B3-AEF8-4F8A-AB8A-79163A081135 - d7c9f6c846566c42"
+                  shouldBeEnabled = "Yes"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "(3) suspend resume partial function for StoleMyKia.FirebaseUserManager.checkCooldown() async throws -&gt; ()"
+                  moduleName = "StoleMyKia"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/jaylensmith/Desktop/Xcode/StoleMyKia/StoleMyKia/Network/FirebaseUserManager.swift"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "386"
+                  endingLineNumber = "386"
+                  offsetFromSymbolStart = "500">
+               </Location>
+               <Location
+                  uuid = "993915B3-AEF8-4F8A-AB8A-79163A081135 - d7c9f6c846566b3c"
+                  shouldBeEnabled = "Yes"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "(3) suspend resume partial function for StoleMyKia.FirebaseUserManager.checkCooldown() async throws -&gt; ()"
+                  moduleName = "StoleMyKia"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/jaylensmith/Desktop/Xcode/StoleMyKia/StoleMyKia/Network/FirebaseUserManager.swift"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "392"
+                  endingLineNumber = "392"
+                  offsetFromSymbolStart = "500">
+               </Location>
+            </Locations>
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            uuid = "75DC9852-AE9B-46AB-A622-8AA3722D3470"
+            shouldBeEnabled = "No"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "StoleMyKia/SwiftUI/Tabview/My Stuff/Settings/SettingsView.swift"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "233"
+            endingLineNumber = "233"
+            landmarkName = "getUserCooldownStatus()"
+            landmarkType = "7">
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            uuid = "CC2D2495-7C34-4F14-AAED-829F3759BB8D"
+            shouldBeEnabled = "Yes"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "StoleMyKia/SwiftUI/Tabview/My Stuff/Settings/SettingsView.swift"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "235"
+            endingLineNumber = "235"
+            landmarkName = "getUserCooldownStatus()"
+            landmarkType = "7">
+         </BreakpointContent>
+      </BreakpointProxy>
    </Breakpoints>
 </Bucket>
