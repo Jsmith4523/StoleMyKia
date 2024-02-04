@@ -334,7 +334,7 @@
 		24A4CEDF29BFA65100B856BC /* URL+EXT.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "URL+EXT.swift"; sourceTree = "<group>"; };
 		24A4CEE329BFAC7100B856BC /* CLLocation+EXT.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "CLLocation+EXT.swift"; sourceTree = "<group>"; };
 		24A4CEE629C04CBA00B856BC /* ReportAnnotationCallout.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReportAnnotationCallout.swift; sourceTree = "<group>"; };
-		24A5791029BC552C00495E6F /* StoleMyKia.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = StoleMyKia.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		24A5791029BC552C00495E6F /* StreetSense.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = StreetSense.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		24A5791329BC552C00495E6F /* StoleMyKiaApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StoleMyKiaApp.swift; sourceTree = "<group>"; };
 		24A5791729BC552E00495E6F /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		24A5791A29BC552E00495E6F /* Preview Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = "Preview Assets.xcassets"; sourceTree = "<group>"; };
@@ -724,7 +724,7 @@
 		24A5791129BC552C00495E6F /* Products */ = {
 			isa = PBXGroup;
 			children = (
-				24A5791029BC552C00495E6F /* StoleMyKia.app */,
+				24A5791029BC552C00495E6F /* StreetSense.app */,
 				24CC5F482A74E0870078C921 /* SMKNotificationService.appex */,
 				243CE8212A84978100E5A727 /* SMKNotificationContent.appex */,
 				24CDE0AF2B4226A90075DADE /* SMKNotificationMapContent.appex */,
@@ -1141,9 +1141,9 @@
 			productReference = 243CE8212A84978100E5A727 /* SMKNotificationContent.appex */;
 			productType = "com.apple.product-type.app-extension";
 		};
-		24A5790F29BC552C00495E6F /* StoleMyKia */ = {
+		24A5790F29BC552C00495E6F /* StreetSense */ = {
 			isa = PBXNativeTarget;
-			buildConfigurationList = 24A5791E29BC552E00495E6F /* Build configuration list for PBXNativeTarget "StoleMyKia" */;
+			buildConfigurationList = 24A5791E29BC552E00495E6F /* Build configuration list for PBXNativeTarget "StreetSense" */;
 			buildPhases = (
 				20AA9D4B464BAC6B495344AA /* [CP] Check Pods Manifest.lock */,
 				24A5790C29BC552C00495E6F /* Sources */,
@@ -1159,11 +1159,11 @@
 				243CE82E2A84978100E5A727 /* PBXTargetDependency */,
 				24CDE0BA2B4226A90075DADE /* PBXTargetDependency */,
 			);
-			name = StoleMyKia;
+			name = StreetSense;
 			packageProductDependencies = (
 			);
 			productName = StoleMyKia;
-			productReference = 24A5791029BC552C00495E6F /* StoleMyKia.app */;
+			productReference = 24A5791029BC552C00495E6F /* StreetSense.app */;
 			productType = "com.apple.product-type.application";
 		};
 		24CC5F472A74E0870078C921 /* SMKNotificationService */ = {
@@ -1239,7 +1239,7 @@
 			projectDirPath = "";
 			projectRoot = "";
 			targets = (
-				24A5790F29BC552C00495E6F /* StoleMyKia */,
+				24A5790F29BC552C00495E6F /* StreetSense */,
 				24CC5F472A74E0870078C921 /* SMKNotificationService */,
 				243CE8202A84978100E5A727 /* SMKNotificationContent */,
 				24CDE0AE2B4226A90075DADE /* SMKNotificationMapContent */,
@@ -1755,7 +1755,7 @@
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = StoleMyKia/Info.plist;
-				INFOPLIST_KEY_CFBundleDisplayName = StoleMyKia;
+				INFOPLIST_KEY_CFBundleDisplayName = StreetSense;
 				INFOPLIST_KEY_LSApplicationCategoryType = "public.app-category.utilities";
 				INFOPLIST_KEY_NSCameraUsageDescription = "Your device's camera will be utilized to capture vehicle images.";
 				INFOPLIST_KEY_NSLocationAlwaysAndWhenInUseUsageDescription = "Your location is utilized when creating a report or update. We provide options such as hiding your location for privacy reasons. When filtering reports, your location is used to display reports that are relevant to your current location.";
@@ -1803,7 +1803,7 @@
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = StoleMyKia/Info.plist;
-				INFOPLIST_KEY_CFBundleDisplayName = StoleMyKia;
+				INFOPLIST_KEY_CFBundleDisplayName = StreetSense;
 				INFOPLIST_KEY_LSApplicationCategoryType = "public.app-category.utilities";
 				INFOPLIST_KEY_NSCameraUsageDescription = "Your device's camera will be utilized to capture vehicle images.";
 				INFOPLIST_KEY_NSLocationAlwaysAndWhenInUseUsageDescription = "Your location is utilized when creating a report or update. We provide options such as hiding your location for privacy reasons. When filtering reports, your location is used to display reports that are relevant to your current location.";
@@ -1981,7 +1981,7 @@
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
 		};
-		24A5791E29BC552E00495E6F /* Build configuration list for PBXNativeTarget "StoleMyKia" */ = {
+		24A5791E29BC552E00495E6F /* Build configuration list for PBXNativeTarget "StreetSense" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				24A5791F29BC552E00495E6F /* Debug */,

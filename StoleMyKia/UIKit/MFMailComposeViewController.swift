@@ -45,9 +45,9 @@ enum ComposeMode: Identifiable {
     var subject: String {
         switch self {
         case .feature:
-            return "StoleMyKia Improvements Request"
+            return "\(UIApplication.appName ?? "App") Improvements Request"
         case .issue:
-            return "Issue with StoleMyKia"
+            return "Issue with \(UIApplication.appName ?? "Stolen Car App")"
         }
     }
     

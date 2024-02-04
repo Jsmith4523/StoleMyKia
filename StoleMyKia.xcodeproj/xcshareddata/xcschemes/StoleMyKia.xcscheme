@@ -15,8 +15,8 @@
             <BuildableReference
                BuildableIdentifier = "primary"
                BlueprintIdentifier = "24A5790F29BC552C00495E6F"
-               BuildableName = "StoleMyKia.app"
-               BlueprintName = "StoleMyKia"
+               BuildableName = "StreetSense.app"
+               BlueprintName = "StreetSense"
                ReferencedContainer = "container:StoleMyKia.xcodeproj">
             </BuildableReference>
          </BuildActionEntry>
@@ -44,8 +44,8 @@
          <BuildableReference
             BuildableIdentifier = "primary"
             BlueprintIdentifier = "24A5790F29BC552C00495E6F"
-            BuildableName = "StoleMyKia.app"
-            BlueprintName = "StoleMyKia"
+            BuildableName = "StreetSense.app"
+            BlueprintName = "StreetSense"
             ReferencedContainer = "container:StoleMyKia.xcodeproj">
          </BuildableReference>
       </BuildableProductRunnable>
@@ -61,8 +61,8 @@
          <BuildableReference
             BuildableIdentifier = "primary"
             BlueprintIdentifier = "24A5790F29BC552C00495E6F"
-            BuildableName = "StoleMyKia.app"
-            BlueprintName = "StoleMyKia"
+            BuildableName = "StreetSense.app"
+            BlueprintName = "StreetSense"
             ReferencedContainer = "container:StoleMyKia.xcodeproj">
          </BuildableReference>
       </BuildableProductRunnable>
