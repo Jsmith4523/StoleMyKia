@@ -7,6 +7,7 @@
 
 import Foundation
 import Firebase
+import FirebaseAuth
 
 enum LoginStatus {
     case signedOut, loading, onboarding, signedIn

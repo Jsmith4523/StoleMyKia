@@ -45,20 +45,25 @@ struct ReportCellView: View {
                                         .font(.system(size: 20).weight(.heavy))
                                         .foregroundColor(Color(uiColor: .label))
                                         .lineLimit(imageMode == .thumbnail ? 2 : 1)
-                                    if (report.hasVin || report.hasLicensePlate) {
-                                        HStack {
-                                            if report.hasLicensePlate {
-                                                Text("Plate: \(report.licensePlateString)")
+                                    VStack(alignment: .leading, spacing: 4) {
+                                        if (report.hasVin || report.hasLicensePlate) {
+                                            HStack {
+                                                if report.hasLicensePlate {
+                                                    Text("Plate: \(report.licensePlateString)")
+                                                }
+                                                if report.hasLicensePlateAndVin {
+                                                    Divider()
+                                                        .frame(height: 10)
+                                                }
+                                                if report.hasVin {
+                                                    Text("VIN: \(report.vehicle.hiddenVinString)")
+                                                }
                                             }
-                                            if report.hasLicensePlateAndVin {
-                                                Divider()
-                                                    .frame(height: 10)
-                                            }
-                                            if report.hasVin {
-                                                Text("VIN: \(report.vehicle.hiddenVinString)")
-                                            }
+                                            .font(.system(size: 15))
                                         }
-                                        .font(.system(size: 15))
+                                        if report.hasLicensePlateOrVin && report.belongsToUser {
+                                            infoHiddenLabel()
+                                        }
                                     }
                                     Text(report.distinguishableDetails)
                                         .font(.system(size: 15))

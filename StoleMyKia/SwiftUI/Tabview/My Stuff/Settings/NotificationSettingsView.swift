@@ -22,14 +22,14 @@ struct NotificationSettingsView: View {
     
     @State private var isShowingNotificationMapView = false
     
-    @State private var notifyAttempt = false
-    @State private var notifyCarjacking = false
-    @State private var notifyStolen = false
-    @State private var notifyRecovered = false
-    @State private var notifyIncident = false
-    @State private var notifyWitnessed = false
-    @State private var notifyLocated = false
-    @State private var notifyBreakIn = false
+    @State private var notifyAttempt    = true
+    @State private var notifyCarjacking = true
+    @State private var notifyStolen     = true
+    @State private var notifyRecovered  = true
+    @State private var notifyIncident   = true
+    @State private var notifyWitnessed  = true
+    @State private var notifyLocated    = true
+    @State private var notifyBreakIn    = true
 
     @EnvironmentObject var userVM: UserViewModel
     
@@ -64,7 +64,7 @@ struct NotificationSettingsView: View {
                     } header: {
                         Text("Report-based notifications")
                     } footer: {
-                        Text("When you receive notifications about updates to a report you've made, these settings are not taken into account.")
+                        Text("Customize what reports you would like to be notified on.\nWhen receiving updates to your report(s), these settings are not taken into account.")
                     }
                     .tint(.blue)
                     .disabled(locationIsNotSet)
@@ -93,7 +93,7 @@ struct NotificationSettingsView: View {
                     } label: {
                         Text("Save")
                     }
-                    .disabled(isLoading)
+                    .disabled(isLoading || location == nil)
                 }
             }
             .customSheetView(isPresented: $isShowingNotificationMapView, detents: [.large()], showsIndicator: true) {

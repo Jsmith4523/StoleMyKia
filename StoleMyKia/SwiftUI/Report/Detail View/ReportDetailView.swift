@@ -263,20 +263,25 @@ struct ReportDetailView: View {
                                                 VStack(alignment: .leading, spacing: 7) {
                                                     Text(report.vehicleDetails)
                                                         .font(.system(size: 25).weight(.heavy))
-                                                    if report.hasLicensePlateOrVin {
-                                                        HStack {
-                                                            if report.hasLicensePlate {
-                                                                Text("Plate: \(report.licensePlateString)")
+                                                    VStack(alignment: .leading, spacing: 4) {
+                                                        if report.hasLicensePlateOrVin {
+                                                            HStack {
+                                                                if report.hasLicensePlate {
+                                                                    Text("Plate: \(report.licensePlateString)")
+                                                                }
+                                                                if (report.hasLicensePlateAndVin) {
+                                                                    Divider()
+                                                                        .frame(height: 15)
+                                                                }
+                                                                if report.hasVin {
+                                                                    Text("VIN: \(report.vehicle.hiddenVinString)")
+                                                                }
                                                             }
-                                                            if (report.hasLicensePlateAndVin) {
-                                                                Divider()
-                                                                    .frame(height: 15)
-                                                            }
-                                                            if report.hasVin {
-                                                                Text("VIN: \(report.vehicle.hiddenVinString)")
-                                                            }
+                                                            .font(.system(size: 18).bold())
                                                         }
-                                                        .font(.system(size: 18).bold())
+                                                        if report.hasLicensePlateOrVin && report.belongsToUser {
+                                                            infoHiddenLabel()
+                                                        }
                                                     }
                                                 }
                                                 HStack {

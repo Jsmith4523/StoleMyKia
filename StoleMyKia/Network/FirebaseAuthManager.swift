@@ -7,6 +7,7 @@
 
 import Foundation
 import Firebase
+import FirebaseAuth
 
 class FirebaseAuthManager {
     
@@ -29,8 +30,6 @@ class FirebaseAuthManager {
     
     ///Shared instance
     static let manager = FirebaseAuthManager()
-    
-    private init() {}
     
     /// Authenticate with users phone number
     /// - Parameter phoneNumber: The users phone number

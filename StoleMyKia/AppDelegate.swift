@@ -9,6 +9,7 @@ import Foundation
 import UIKit
 import SwiftUI
 import Firebase
+import FirebaseAuth
 
 class AppDelegate: UIScene, UIApplicationDelegate {
         

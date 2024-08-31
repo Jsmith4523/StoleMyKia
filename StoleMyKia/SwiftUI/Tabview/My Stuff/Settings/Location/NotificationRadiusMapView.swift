@@ -24,13 +24,15 @@ struct NotificationRadiusMapView: UIViewRepresentable {
         
     func makeUIView(context: Context) -> MKMapView {
         let mapView = self.mapView
-        mapView.delegate = context.coordinator
+        //The app is so f*cked. Better off rewriting everything again
+        mapView.delegate = radiusMapViewCoordinator
+        radiusMapViewCoordinator.radiusMapView = mapView
         mapView.showsUserLocation = true
         mapView.isUserInteractionEnabled = userInteractionEnabled
         mapView.isPitchEnabled = false
         mapView.isRotateEnabled = false
         
-        if let location {
+        if let location = location ?? radiusMapViewCoordinator.location {
             let notificationCircleOverlay = MKCircle(center: location.coordinate, radius: location.radius)
             mapView.addOverlay(notificationCircleOverlay)
             mapView.setVisibleMapRect(notificationCircleOverlay.boundingMapRect, edgePadding: .init(top: 50, left: 50, bottom: 50, right: 50), animated: false)
@@ -40,12 +42,6 @@ struct NotificationRadiusMapView: UIViewRepresentable {
         }
         
         return mapView
-    }
-    
-    func makeCoordinator() -> NotificationRadiusMapViewCoordinator {
-        let coordinator = self.radiusMapViewCoordinator
-        coordinator.radiusMapView = self.mapView
-        return coordinator
     }
     
     static func dismantleUIView(_ uiView: MKMapView, coordinator: ()) {

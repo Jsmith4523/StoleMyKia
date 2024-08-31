@@ -61,9 +61,7 @@ struct SearchResultsView: View {
             }
         }
         .task {
-            if searchVM.reports.isEmpty {
-                await searchVM.fetchReportsForSearch(override: true)
-            }
+            await searchVM.fetchReportsForSearch(override: true)
         }
         .refreshable {
             await searchVM.fetchReportsForSearch()

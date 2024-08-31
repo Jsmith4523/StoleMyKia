@@ -36,6 +36,12 @@ extension Text {
 
 extension View {
     
+    func infoHiddenLabel() -> some View {
+        Label("Sensitive Information is abbreviated to others", systemImage: "info.circle")
+            .font(.system(size: 16).weight(.medium))
+            .foregroundColor(.blue)
+    }
+    
     func titleBodyLabel(_ title: String, body: String, symbol: String? = nil, symbolForegroundColor symbolColor: Color = Color(uiColor: .label)) -> some View {
         HStack {
             if let symbol {

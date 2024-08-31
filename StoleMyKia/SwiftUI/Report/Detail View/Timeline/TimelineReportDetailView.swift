@@ -45,21 +45,26 @@ struct TimelineReportDetailView: View {
                                             .foregroundColor(.gray)
                                     }
                                 }
-                                VStack(alignment: .leading) {
-                                    if (report.hasVin || report.hasLicensePlate) {
-                                        HStack {
-                                            if report.hasLicensePlate {
-                                                Text("Plate: \(report.licensePlateString)")
+                                VStack(alignment: .leading, spacing: 10) {
+                                    VStack(alignment: .leading, spacing: 5) {
+                                        if (report.hasVin || report.hasLicensePlate) {
+                                            HStack {
+                                                if report.hasLicensePlate {
+                                                    Text("Plate: \(report.licensePlateString)")
+                                                }
+                                                if (report.hasLicensePlate && report.hasVin) {
+                                                    Divider()
+                                                        .frame(height: 10)
+                                                }
+                                                if report.hasVin {
+                                                    Text("VIN: \(report.vehicle.hiddenVinString)")
+                                                }
                                             }
-                                            if (report.hasLicensePlate && report.hasVin) {
-                                                Divider()
-                                                    .frame(height: 10)
-                                            }
-                                            if report.hasVin {
-                                                Text("VIN: \(report.vehicle.hiddenVinString)")
-                                            }
+                                            .font(.system(size: 17).bold())
                                         }
-                                        .font(.system(size: 17).bold())
+                                        if report.hasLicensePlateOrVin && report.belongsToUser {
+                                            infoHiddenLabel()
+                                        }
                                     }
                                     Text(report.distinguishableDetails)
                                         .font(.system(size: 15))

@@ -47,6 +47,37 @@ enum VehicleModel: String, CaseIterable, Codable, Comparable, Hashable, Identifi
     case seltos   = "Seltos"
     case k5       = "K5"
     
+    //MARK: - Dodge
+    case chargerSXT     = "Charger SXT"
+    case chargerGT      = "Charger GT"
+    case chargerRT      = "Charger RT"
+    case chargerScat    = "Charger Scat Pack"
+    case chargerHellCat = "Charger SRT Hellcat"
+    case chargerHellCatWideBody = "Charger SRT Hellcat Wide Body"
+
+    case challengerSXT     = "Challenger SXT"
+    case challengerGT      = "Challenger GT"
+    case challengerRT      = "Challenger RT"
+    case challengerRTScat  = "Challenger RT Scat Pack"
+    case challengerHellCat = "Challenger SRT Hellcat"
+    case challengerHellCatWideBody = "Challenger SRT Hellcat Wide Body"
+    
+    //MARK: - Infinity
+    case g35     = "G35"
+    case g37     = "G37"
+    case q50     = "Q50"
+    case q60     = "Q60"
+    case q70     = "Q70"
+    
+    //MARK: - Honda
+    case accord   = "Accord"
+    case civic    = "Civic"
+    case cr_v     = "CR-V"
+    case pilot   = "Pilot"
+    case hr_v    = "HR-V"
+    case odyssey = "Odyssey"
+    
+    
     var id: Self { self }
     
     ///Manufacturer
@@ -86,6 +117,52 @@ enum VehicleModel: String, CaseIterable, Codable, Comparable, Hashable, Identifi
             return .kia
         case .sedona:
             return .kia
+        case .chargerSXT:
+            return .dodge
+        case .chargerGT:
+            return .dodge
+        case .chargerRT:
+            return .dodge
+        case .chargerScat:
+            return .dodge
+        case .chargerHellCat:
+            return .dodge
+        case .challengerSXT:
+            return .dodge
+        case .challengerGT:
+            return .dodge
+        case .challengerRT:
+            return .dodge
+        case .challengerRTScat:
+            return .dodge
+        case .challengerHellCat:
+            return .dodge
+        case .chargerHellCatWideBody:
+            return .dodge
+        case .challengerHellCatWideBody:
+            return .dodge
+        case .g35:
+            return .infiniti
+        case .g37:
+            return .infiniti
+        case .q50:
+            return .infiniti
+        case .q60:
+            return .infiniti
+        case .q70:
+            return .infiniti
+        case .accord:
+            return .honda
+        case .civic:
+            return .honda
+        case .cr_v:
+            return .honda
+        case .pilot:
+            return .honda
+        case .hr_v:
+            return .honda
+        case .odyssey:
+            return .honda
         }
     }
     
@@ -126,6 +203,52 @@ enum VehicleModel: String, CaseIterable, Codable, Comparable, Hashable, Identifi
             return 2021...VehicleModel.lastAffectedYear
         case .sedona:
             return 2015...VehicleModel.lastAffectedYear
+        case .chargerSXT:
+            return 2015...2024
+        case .chargerGT:
+            return 2015...2024
+        case .chargerRT:
+            return 2015...2024
+        case .chargerScat:
+            return 2015...2024
+        case .chargerHellCat:
+            return 2015...2024
+        case .chargerHellCatWideBody:
+            return 2021...2024
+        case .challengerSXT:
+            return 2015...2024
+        case .challengerGT:
+            return 2015...2024
+        case .challengerRT:
+            return 2015...2024
+        case .challengerRTScat:
+            return 2015...2024
+        case .challengerHellCat:
+            return 2015...2024
+        case .challengerHellCatWideBody:
+            return 2018...2024
+        case .g35:
+            return 2003...2024
+        case .g37:
+            return 2008...2013
+        case .q50:
+            return 2014...2024
+        case .q60:
+            return 2017...2024
+        case .q70:
+            return 2014...2019
+        case .accord:
+            return 2011...2024
+        case .civic:
+            return 2011...2024
+        case .cr_v:
+            return 2011...2024
+        case .pilot:
+            return 2011...2024
+        case .hr_v:
+            return 2018...2024
+        case .odyssey:
+            return 2011...2024
         }
     }
     

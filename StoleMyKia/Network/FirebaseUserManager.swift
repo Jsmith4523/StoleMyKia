@@ -7,7 +7,7 @@
 
 import Foundation
 import Firebase
-
+import FirebaseAuth
 
 @MainActor
 class FirebaseUserManager {
