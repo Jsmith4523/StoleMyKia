@@ -33,8 +33,6 @@
 		24369A6D2AD202F400016A1C /* User.swift in Sources */ = {isa = PBXBuildFile; fileRef = 24369A6C2AD202F300016A1C /* User.swift */; };
 		2437328029BEF8FC008F4C4E /* NotificationViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2437327F29BEF8FC008F4C4E /* NotificationViewModel.swift */; };
 		243AF5912B5467FC00C59A31 /* FeedNoDesiredLocationView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 243AF5902B5467FC00C59A31 /* FeedNoDesiredLocationView.swift */; };
-		243CE8232A84978100E5A727 /* UserNotifications.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 243CE8222A84978100E5A727 /* UserNotifications.framework */; };
-		243CE8252A84978100E5A727 /* UserNotificationsUI.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 243CE8242A84978100E5A727 /* UserNotificationsUI.framework */; };
 		243CE8282A84978100E5A727 /* NotificationViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 243CE8272A84978100E5A727 /* NotificationViewController.swift */; };
 		243CE82B2A84978100E5A727 /* MainInterface.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 243CE8292A84978100E5A727 /* MainInterface.storyboard */; };
 		243CE82F2A84978100E5A727 /* SMKNotificationContent.appex in Embed Foundation Extensions */ = {isa = PBXBuildFile; fileRef = 243CE8212A84978100E5A727 /* SMKNotificationContent.appex */; settings = {ATTRIBUTES = (RemoveHeadersOnCopy, ); }; };
@@ -160,8 +158,6 @@
 		24CC5F5D2A761B120078C921 /* Update.swift in Sources */ = {isa = PBXBuildFile; fileRef = 24CC5F5C2A761B120078C921 /* Update.swift */; };
 		24CC5F6A2A7B84BB0078C921 /* notification_report.caf in Resources */ = {isa = PBXBuildFile; fileRef = 24CC5F412A747E9B0078C921 /* notification_report.caf */; };
 		24CC5F6E2A7CD8FF0078C921 /* FirebaseAuthManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 24CC5F6D2A7CD8FE0078C921 /* FirebaseAuthManager.swift */; };
-		24CDE0B02B4226A90075DADE /* UserNotifications.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 243CE8222A84978100E5A727 /* UserNotifications.framework */; };
-		24CDE0B12B4226A90075DADE /* UserNotificationsUI.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 243CE8242A84978100E5A727 /* UserNotificationsUI.framework */; };
 		24CDE0B42B4226A90075DADE /* NotificationViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 24CDE0B32B4226A90075DADE /* NotificationViewController.swift */; };
 		24CDE0B72B4226A90075DADE /* MainInterface.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 24CDE0B52B4226A90075DADE /* MainInterface.storyboard */; };
 		24CDE0BB2B4226A90075DADE /* SMKNotificationMapContent.appex in Embed Foundation Extensions */ = {isa = PBXBuildFile; fileRef = 24CDE0AF2B4226A90075DADE /* SMKNotificationMapContent.appex */; settings = {ATTRIBUTES = (RemoveHeadersOnCopy, ); }; };
@@ -176,6 +172,13 @@
 		24E7FE092AECDBBE006219F2 /* FeedLocationServicesDisabledView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 24E7FE082AECDBBE006219F2 /* FeedLocationServicesDisabledView.swift */; };
 		24E8C7E72AE8E74800830AF2 /* FeedNewReportButtonView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 24E8C7E62AE8E74800830AF2 /* FeedNewReportButtonView.swift */; };
 		24E8C7EA2AEA24B300830AF2 /* SearchView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 24E8C7E92AEA24B300830AF2 /* SearchView.swift */; };
+		24E9C6BA2C790A750084F9EC /* FirebaseFirestore in Frameworks */ = {isa = PBXBuildFile; productRef = 24E9C6B92C790A750084F9EC /* FirebaseFirestore */; };
+		24E9C6BC2C790A750084F9EC /* FirebaseFunctions in Frameworks */ = {isa = PBXBuildFile; productRef = 24E9C6BB2C790A750084F9EC /* FirebaseFunctions */; };
+		24E9C6BE2C790A750084F9EC /* FirebaseMessaging in Frameworks */ = {isa = PBXBuildFile; productRef = 24E9C6BD2C790A750084F9EC /* FirebaseMessaging */; };
+		24E9C6C02C790A750084F9EC /* FirebaseStorage in Frameworks */ = {isa = PBXBuildFile; productRef = 24E9C6BF2C790A750084F9EC /* FirebaseStorage */; };
+		24E9C6C22C79105F0084F9EC /* FirebaseAuth in Frameworks */ = {isa = PBXBuildFile; productRef = 24E9C6C12C79105F0084F9EC /* FirebaseAuth */; };
+		24E9C6C42C7912150084F9EC /* FirebaseAppCheck in Frameworks */ = {isa = PBXBuildFile; productRef = 24E9C6C32C7912150084F9EC /* FirebaseAppCheck */; };
+		24E9C6C62C7912150084F9EC /* FirebaseAppDistribution-Beta in Frameworks */ = {isa = PBXBuildFile; productRef = 24E9C6C52C7912150084F9EC /* FirebaseAppDistribution-Beta */; };
 		24EAF11729C2A02900B4CBFE /* SFSafariView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 24EAF11629C2A02900B4CBFE /* SFSafariView.swift */; };
 		24EAF11B29C2C10200B4CBFE /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 24EAF11A29C2C10200B4CBFE /* GoogleService-Info.plist */; };
 		24EE41142A59E0FD00AF2A11 /* LicensePlateDetectionManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 24EE41132A59E0FD00AF2A11 /* LicensePlateDetectionManager.swift */; };
@@ -188,7 +191,6 @@
 		24F790332A88CFB300E51794 /* UserDefaults.swift in Sources */ = {isa = PBXBuildFile; fileRef = 24F790322A88CFB300E51794 /* UserDefaults.swift */; };
 		24FA315D2AD92D17007BDE5A /* TimelineMapViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 24FA315C2AD92D17007BDE5A /* TimelineMapViewModel.swift */; };
 		24FA56BA2A29284D0074149B /* UIActivityVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 24FA56B92A29284D0074149B /* UIActivityVC.swift */; };
-		9A8DEA661C19F27F74C6B340 /* Pods_StoleMyKia.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 197A31A21B533A0B83DC4715 /* Pods_StoleMyKia.framework */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -232,7 +234,6 @@
 /* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
-		197A31A21B533A0B83DC4715 /* Pods_StoleMyKia.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_StoleMyKia.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		240910C32A64639E00DC699A /* FirebaseAuthViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FirebaseAuthViewModel.swift; sourceTree = "<group>"; };
 		240CD8C82A60A49800D04D1A /* FirebaseDatabasesPaths.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FirebaseDatabasesPaths.swift; sourceTree = "<group>"; };
 		240F22412A33F0020078F97E /* README.rtf */ = {isa = PBXFileReference; lastKnownFileType = text.rtf; path = README.rtf; sourceTree = "<group>"; };
@@ -260,8 +261,6 @@
 		2437327F29BEF8FC008F4C4E /* NotificationViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NotificationViewModel.swift; sourceTree = "<group>"; };
 		243AF5902B5467FC00C59A31 /* FeedNoDesiredLocationView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FeedNoDesiredLocationView.swift; sourceTree = "<group>"; };
 		243CE8212A84978100E5A727 /* SMKNotificationContent.appex */ = {isa = PBXFileReference; explicitFileType = "wrapper.app-extension"; includeInIndex = 0; path = SMKNotificationContent.appex; sourceTree = BUILT_PRODUCTS_DIR; };
-		243CE8222A84978100E5A727 /* UserNotifications.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = UserNotifications.framework; path = System/Library/Frameworks/UserNotifications.framework; sourceTree = SDKROOT; };
-		243CE8242A84978100E5A727 /* UserNotificationsUI.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = UserNotificationsUI.framework; path = System/Library/Frameworks/UserNotificationsUI.framework; sourceTree = SDKROOT; };
 		243CE8272A84978100E5A727 /* NotificationViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NotificationViewController.swift; sourceTree = "<group>"; };
 		243CE82A2A84978100E5A727 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/MainInterface.storyboard; sourceTree = "<group>"; };
 		243CE82C2A84978100E5A727 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
@@ -311,9 +310,6 @@
 		2476E0DF2AD9CF1E00892A76 /* TimelineMapListSkeletonView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TimelineMapListSkeletonView.swift; sourceTree = "<group>"; };
 		248278D62A03054C00C1E99D /* UISheetPC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UISheetPC.swift; sourceTree = "<group>"; };
 		24848AB62A61E38E003E037E /* LicenseTextDetectionManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LicenseTextDetectionManager.swift; sourceTree = "<group>"; };
-		248BD8B72A8605E70086CA42 /* FirebaseCore.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; path = FirebaseCore.framework; sourceTree = BUILT_PRODUCTS_DIR; };
-		248BD8B92A8605F20086CA42 /* FirebaseCore.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; path = FirebaseCore.framework; sourceTree = BUILT_PRODUCTS_DIR; };
-		248BD8BB2A8606870086CA42 /* FirebaseInstallations.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; path = FirebaseInstallations.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		248E13AA2ADF92BD003414EC /* UIApplication.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UIApplication.swift; sourceTree = "<group>"; };
 		248E13AD2ADF942D003414EC /* PrivacyPolicyView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PrivacyPolicyView.swift; sourceTree = "<group>"; };
 		248E13AF2ADF9539003414EC /* SafetyView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SafetyView.swift; sourceTree = "<group>"; };
@@ -334,7 +330,7 @@
 		24A4CEDF29BFA65100B856BC /* URL+EXT.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "URL+EXT.swift"; sourceTree = "<group>"; };
 		24A4CEE329BFAC7100B856BC /* CLLocation+EXT.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "CLLocation+EXT.swift"; sourceTree = "<group>"; };
 		24A4CEE629C04CBA00B856BC /* ReportAnnotationCallout.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReportAnnotationCallout.swift; sourceTree = "<group>"; };
-		24A5791029BC552C00495E6F /* StreetSense.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = StreetSense.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		24A5791029BC552C00495E6F /* StoleMyCar.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = StoleMyCar.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		24A5791329BC552C00495E6F /* StoleMyKiaApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StoleMyKiaApp.swift; sourceTree = "<group>"; };
 		24A5791729BC552E00495E6F /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		24A5791A29BC552E00495E6F /* Preview Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = "Preview Assets.xcassets"; sourceTree = "<group>"; };
@@ -393,7 +389,6 @@
 		24CC5F5A2A75BEA20078C921 /* FalseReportManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FalseReportManager.swift; sourceTree = "<group>"; };
 		24CC5F5C2A761B120078C921 /* Update.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Update.swift; sourceTree = "<group>"; };
 		24CC5F6D2A7CD8FE0078C921 /* FirebaseAuthManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FirebaseAuthManager.swift; sourceTree = "<group>"; };
-		24CDE0A42B4172510075DADE /* FirebaseFirestore.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; path = FirebaseFirestore.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		24CDE0AF2B4226A90075DADE /* SMKNotificationMapContent.appex */ = {isa = PBXFileReference; explicitFileType = "wrapper.app-extension"; includeInIndex = 0; path = SMKNotificationMapContent.appex; sourceTree = BUILT_PRODUCTS_DIR; };
 		24CDE0B32B4226A90075DADE /* NotificationViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NotificationViewController.swift; sourceTree = "<group>"; };
 		24CDE0B62B4226A90075DADE /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/MainInterface.storyboard; sourceTree = "<group>"; };
@@ -420,8 +415,6 @@
 		24F790322A88CFB300E51794 /* UserDefaults.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserDefaults.swift; sourceTree = "<group>"; };
 		24FA315C2AD92D17007BDE5A /* TimelineMapViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TimelineMapViewModel.swift; sourceTree = "<group>"; };
 		24FA56B92A29284D0074149B /* UIActivityVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UIActivityVC.swift; sourceTree = "<group>"; };
-		562368835F2B675102514EA4 /* Pods-StoleMyKia.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-StoleMyKia.release.xcconfig"; path = "Target Support Files/Pods-StoleMyKia/Pods-StoleMyKia.release.xcconfig"; sourceTree = "<group>"; };
-		CB1F3C6B9B65B1A9366554C7 /* Pods-StoleMyKia.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-StoleMyKia.debug.xcconfig"; path = "Target Support Files/Pods-StoleMyKia/Pods-StoleMyKia.debug.xcconfig"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -429,8 +422,6 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				243CE8252A84978100E5A727 /* UserNotificationsUI.framework in Frameworks */,
-				243CE8232A84978100E5A727 /* UserNotifications.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -438,7 +429,13 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				9A8DEA661C19F27F74C6B340 /* Pods_StoleMyKia.framework in Frameworks */,
+				24E9C6C62C7912150084F9EC /* FirebaseAppDistribution-Beta in Frameworks */,
+				24E9C6BE2C790A750084F9EC /* FirebaseMessaging in Frameworks */,
+				24E9C6C22C79105F0084F9EC /* FirebaseAuth in Frameworks */,
+				24E9C6BC2C790A750084F9EC /* FirebaseFunctions in Frameworks */,
+				24E9C6C02C790A750084F9EC /* FirebaseStorage in Frameworks */,
+				24E9C6C42C7912150084F9EC /* FirebaseAppCheck in Frameworks */,
+				24E9C6BA2C790A750084F9EC /* FirebaseFirestore in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -453,8 +450,6 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				24CDE0B12B4226A90075DADE /* UserNotificationsUI.framework in Frameworks */,
-				24CDE0B02B4226A90075DADE /* UserNotifications.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -716,15 +711,13 @@
 				243CE8262A84978100E5A727 /* SMKNotificationContent */,
 				24CDE0B22B4226A90075DADE /* SMKNotificationMapContent */,
 				24A5791129BC552C00495E6F /* Products */,
-				6038246990B0B9DAE005F8EA /* Pods */,
-				D5F7A8C256A07441AB8A53B9 /* Frameworks */,
 			);
 			sourceTree = "<group>";
 		};
 		24A5791129BC552C00495E6F /* Products */ = {
 			isa = PBXGroup;
 			children = (
-				24A5791029BC552C00495E6F /* StreetSense.app */,
+				24A5791029BC552C00495E6F /* StoleMyCar.app */,
 				24CC5F482A74E0870078C921 /* SMKNotificationService.appex */,
 				243CE8212A84978100E5A727 /* SMKNotificationContent.appex */,
 				24CDE0AF2B4226A90075DADE /* SMKNotificationMapContent.appex */,
@@ -1098,29 +1091,6 @@
 			path = CoreML;
 			sourceTree = "<group>";
 		};
-		6038246990B0B9DAE005F8EA /* Pods */ = {
-			isa = PBXGroup;
-			children = (
-				CB1F3C6B9B65B1A9366554C7 /* Pods-StoleMyKia.debug.xcconfig */,
-				562368835F2B675102514EA4 /* Pods-StoleMyKia.release.xcconfig */,
-			);
-			path = Pods;
-			sourceTree = "<group>";
-		};
-		D5F7A8C256A07441AB8A53B9 /* Frameworks */ = {
-			isa = PBXGroup;
-			children = (
-				24CDE0A42B4172510075DADE /* FirebaseFirestore.framework */,
-				248BD8BB2A8606870086CA42 /* FirebaseInstallations.framework */,
-				248BD8B92A8605F20086CA42 /* FirebaseCore.framework */,
-				248BD8B72A8605E70086CA42 /* FirebaseCore.framework */,
-				197A31A21B533A0B83DC4715 /* Pods_StoleMyKia.framework */,
-				243CE8222A84978100E5A727 /* UserNotifications.framework */,
-				243CE8242A84978100E5A727 /* UserNotificationsUI.framework */,
-			);
-			name = Frameworks;
-			sourceTree = "<group>";
-		};
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
@@ -1141,15 +1111,13 @@
 			productReference = 243CE8212A84978100E5A727 /* SMKNotificationContent.appex */;
 			productType = "com.apple.product-type.app-extension";
 		};
-		24A5790F29BC552C00495E6F /* StreetSense */ = {
+		24A5790F29BC552C00495E6F /* StoleMyCar */ = {
 			isa = PBXNativeTarget;
-			buildConfigurationList = 24A5791E29BC552E00495E6F /* Build configuration list for PBXNativeTarget "StreetSense" */;
+			buildConfigurationList = 24A5791E29BC552E00495E6F /* Build configuration list for PBXNativeTarget "StoleMyCar" */;
 			buildPhases = (
-				20AA9D4B464BAC6B495344AA /* [CP] Check Pods Manifest.lock */,
 				24A5790C29BC552C00495E6F /* Sources */,
 				24A5790D29BC552C00495E6F /* Frameworks */,
 				24A5790E29BC552C00495E6F /* Resources */,
-				93F76E43D2965F8C4FAED862 /* [CP] Embed Pods Frameworks */,
 				24CC5F502A74E0870078C921 /* Embed Foundation Extensions */,
 			);
 			buildRules = (
@@ -1159,11 +1127,18 @@
 				243CE82E2A84978100E5A727 /* PBXTargetDependency */,
 				24CDE0BA2B4226A90075DADE /* PBXTargetDependency */,
 			);
-			name = StreetSense;
+			name = StoleMyCar;
 			packageProductDependencies = (
+				24E9C6B92C790A750084F9EC /* FirebaseFirestore */,
+				24E9C6BB2C790A750084F9EC /* FirebaseFunctions */,
+				24E9C6BD2C790A750084F9EC /* FirebaseMessaging */,
+				24E9C6BF2C790A750084F9EC /* FirebaseStorage */,
+				24E9C6C12C79105F0084F9EC /* FirebaseAuth */,
+				24E9C6C32C7912150084F9EC /* FirebaseAppCheck */,
+				24E9C6C52C7912150084F9EC /* FirebaseAppDistribution-Beta */,
 			);
 			productName = StoleMyKia;
-			productReference = 24A5791029BC552C00495E6F /* StreetSense.app */;
+			productReference = 24A5791029BC552C00495E6F /* StoleMyCar.app */;
 			productType = "com.apple.product-type.application";
 		};
 		24CC5F472A74E0870078C921 /* SMKNotificationService */ = {
@@ -1224,7 +1199,7 @@
 					};
 				};
 			};
-			buildConfigurationList = 24A5790B29BC552C00495E6F /* Build configuration list for PBXProject "StoleMyKia" */;
+			buildConfigurationList = 24A5790B29BC552C00495E6F /* Build configuration list for PBXProject "StoleMyCar" */;
 			compatibilityVersion = "Xcode 14.0";
 			developmentRegion = en;
 			hasScannedForEncodings = 0;
@@ -1234,12 +1209,13 @@
 			);
 			mainGroup = 24A5790729BC552C00495E6F;
 			packageReferences = (
+				24E9C6B82C790A750084F9EC /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */,
 			);
 			productRefGroup = 24A5791129BC552C00495E6F /* Products */;
 			projectDirPath = "";
 			projectRoot = "";
 			targets = (
-				24A5790F29BC552C00495E6F /* StreetSense */,
+				24A5790F29BC552C00495E6F /* StoleMyCar */,
 				24CC5F472A74E0870078C921 /* SMKNotificationService */,
 				243CE8202A84978100E5A727 /* SMKNotificationContent */,
 				24CDE0AE2B4226A90075DADE /* SMKNotificationMapContent */,
@@ -1288,48 +1264,6 @@
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXResourcesBuildPhase section */
-
-/* Begin PBXShellScriptBuildPhase section */
-		20AA9D4B464BAC6B495344AA /* [CP] Check Pods Manifest.lock */ = {
-			isa = PBXShellScriptBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			inputFileListPaths = (
-			);
-			inputPaths = (
-				"${PODS_PODFILE_DIR_PATH}/Podfile.lock",
-				"${PODS_ROOT}/Manifest.lock",
-			);
-			name = "[CP] Check Pods Manifest.lock";
-			outputFileListPaths = (
-			);
-			outputPaths = (
-				"$(DERIVED_FILE_DIR)/Pods-StoleMyKia-checkManifestLockResult.txt",
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-			shellPath = /bin/sh;
-			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n# This output is used by Xcode 'outputs' to avoid re-running this script phase.\necho \"SUCCESS\" > \"${SCRIPT_OUTPUT_FILE_0}\"\n";
-			showEnvVarsInLog = 0;
-		};
-		93F76E43D2965F8C4FAED862 /* [CP] Embed Pods Frameworks */ = {
-			isa = PBXShellScriptBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			inputFileListPaths = (
-				"${PODS_ROOT}/Target Support Files/Pods-StoleMyKia/Pods-StoleMyKia-frameworks-${CONFIGURATION}-input-files.xcfilelist",
-			);
-			name = "[CP] Embed Pods Frameworks";
-			outputFileListPaths = (
-				"${PODS_ROOT}/Target Support Files/Pods-StoleMyKia/Pods-StoleMyKia-frameworks-${CONFIGURATION}-output-files.xcfilelist",
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-			shellPath = /bin/sh;
-			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-StoleMyKia/Pods-StoleMyKia-frameworks.sh\"\n";
-			showEnvVarsInLog = 0;
-		};
-/* End PBXShellScriptBuildPhase section */
 
 /* Begin PBXSourcesBuildPhase section */
 		243CE81D2A84978100E5A727 /* Sources */ = {
@@ -1741,7 +1675,6 @@
 		};
 		24A5791F29BC552E00495E6F /* Debug */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = CB1F3C6B9B65B1A9366554C7 /* Pods-StoleMyKia.debug.xcconfig */;
 			buildSettings = {
 				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
@@ -1755,7 +1688,7 @@
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = StoleMyKia/Info.plist;
-				INFOPLIST_KEY_CFBundleDisplayName = StreetSense;
+				INFOPLIST_KEY_CFBundleDisplayName = StoleMyKia;
 				INFOPLIST_KEY_LSApplicationCategoryType = "public.app-category.utilities";
 				INFOPLIST_KEY_NSCameraUsageDescription = "Your device's camera will be utilized to capture vehicle images.";
 				INFOPLIST_KEY_NSLocationAlwaysAndWhenInUseUsageDescription = "Your location is utilized when creating a report or update. We provide options such as hiding your location for privacy reasons. When filtering reports, your location is used to display reports that are relevant to your current location.";
@@ -1789,7 +1722,6 @@
 		};
 		24A5792029BC552E00495E6F /* Release */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = 562368835F2B675102514EA4 /* Pods-StoleMyKia.release.xcconfig */;
 			buildSettings = {
 				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
@@ -1803,7 +1735,7 @@
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = StoleMyKia/Info.plist;
-				INFOPLIST_KEY_CFBundleDisplayName = StreetSense;
+				INFOPLIST_KEY_CFBundleDisplayName = StoleMyKia;
 				INFOPLIST_KEY_LSApplicationCategoryType = "public.app-category.utilities";
 				INFOPLIST_KEY_NSCameraUsageDescription = "Your device's camera will be utilized to capture vehicle images.";
 				INFOPLIST_KEY_NSLocationAlwaysAndWhenInUseUsageDescription = "Your location is utilized when creating a report or update. We provide options such as hiding your location for privacy reasons. When filtering reports, your location is used to display reports that are relevant to your current location.";
@@ -1972,7 +1904,7 @@
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
 		};
-		24A5790B29BC552C00495E6F /* Build configuration list for PBXProject "StoleMyKia" */ = {
+		24A5790B29BC552C00495E6F /* Build configuration list for PBXProject "StoleMyCar" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				24A5791C29BC552E00495E6F /* Debug */,
@@ -1981,7 +1913,7 @@
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
 		};
-		24A5791E29BC552E00495E6F /* Build configuration list for PBXNativeTarget "StreetSense" */ = {
+		24A5791E29BC552E00495E6F /* Build configuration list for PBXNativeTarget "StoleMyCar" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				24A5791F29BC552E00495E6F /* Debug */,
@@ -2009,6 +1941,55 @@
 			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
+
+/* Begin XCRemoteSwiftPackageReference section */
+		24E9C6B82C790A750084F9EC /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/firebase/firebase-ios-sdk.git";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 11.1.0;
+			};
+		};
+/* End XCRemoteSwiftPackageReference section */
+
+/* Begin XCSwiftPackageProductDependency section */
+		24E9C6B92C790A750084F9EC /* FirebaseFirestore */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 24E9C6B82C790A750084F9EC /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */;
+			productName = FirebaseFirestore;
+		};
+		24E9C6BB2C790A750084F9EC /* FirebaseFunctions */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 24E9C6B82C790A750084F9EC /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */;
+			productName = FirebaseFunctions;
+		};
+		24E9C6BD2C790A750084F9EC /* FirebaseMessaging */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 24E9C6B82C790A750084F9EC /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */;
+			productName = FirebaseMessaging;
+		};
+		24E9C6BF2C790A750084F9EC /* FirebaseStorage */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 24E9C6B82C790A750084F9EC /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */;
+			productName = FirebaseStorage;
+		};
+		24E9C6C12C79105F0084F9EC /* FirebaseAuth */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 24E9C6B82C790A750084F9EC /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */;
+			productName = FirebaseAuth;
+		};
+		24E9C6C32C7912150084F9EC /* FirebaseAppCheck */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 24E9C6B82C790A750084F9EC /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */;
+			productName = FirebaseAppCheck;
+		};
+		24E9C6C52C7912150084F9EC /* FirebaseAppDistribution-Beta */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 24E9C6B82C790A750084F9EC /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */;
+			productName = "FirebaseAppDistribution-Beta";
+		};
+/* End XCSwiftPackageProductDependency section */
 	};
 	rootObject = 24A5790829BC552C00495E6F /* Project object */;
 }
